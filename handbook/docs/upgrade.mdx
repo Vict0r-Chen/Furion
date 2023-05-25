@@ -35,6 +35,7 @@ import Tag from "@site/src/components/Tag.js";
 
 - **新特性**
 
+  - &nbsp;<Tag>新增</Tag> 配置模块 `IgnoreConfigurationFiles` 支持完整的文件通配符 <sup>4.8.8.22</sup> <sup>⏱️2023.05.25</sup> [#I78ABL](https://gitee.com/dotnetchina/Furion/issues/I78ABL)
   - &nbsp;<Tag>新增</Tag> 定时任务支持二级虚拟目录 `VisualPath` 配置部署 <sup>4.8.8.20</sup> <sup>⏱️2023.05.18</sup> [#I740IA](https://gitee.com/dotnetchina/Sundial/issues/I740IA)
   - &nbsp;<Tag>新增</Tag> **监听日志 `LoggingMonitor` 支持 `Razor Pages`** <sup>4.8.8.16</sup> <sup>⏱️2023.05.15</sup> [#I7332C](https://gitee.com/dotnetchina/Furion/issues/I7332C)
   - &nbsp;<Tag>新增</Tag> 定时任务作业处理程序工厂 `IJobFactory` 支持 <sup>4.8.8.13</sup> <sup>⏱️2023.05.08</sup> [ad58dd3](https://gitee.com/dotnetchina/Furion/commit/ad58dd3141ed40e58cd486895ac6c1f21803797c)
@@ -202,6 +203,7 @@ public object Deserialize(string json, Type returnType, object jsonSerializerOpt
 
 - **问题修复**
 
+  - &nbsp;<Tag>修复</Tag> `Swagger` 进行分组后 `Tags` 不能进行分组过滤问题 <sup>4.8.8.22</sup> <sup>⏱️2023.05.25</sup> [#I78A55](https://gitee.com/dotnetchina/Furion/issues/I78A55)
   - &nbsp;<Tag>修复</Tag> 因 [9d8cb82](https://gitee.com/dotnetchina/Furion/commit/9d8cb82e4ce983839cf13c3c74640b08f258c325) 代码提交导致命名服务解析异常问题 <sup>4.8.8.21</sup> <sup>⏱️2023.05.18</sup> [#I76JZR](https://gitee.com/dotnetchina/Furion/issues/I76JZR)
   - &nbsp;<Tag>修复</Tag> 因 [9d8cb82](https://gitee.com/dotnetchina/Furion/commit/9d8cb82e4ce983839cf13c3c74640b08f258c325) 代码提交导致服务 `AOP` 异常拦截问题 <sup>4.8.8.17</sup> <sup>⏱️2023.05.15</sup> [#I73A8E](https://gitee.com/dotnetchina/Furion/issues/I73A8E)
   - &nbsp;<Tag>修复</Tag> 动态 `WebAPI` 自定义路由模板参数和自动拼接参数冲突问题 <sup>4.8.8.15</sup> <sup>⏱️2023.05.15</sup> [#I72ZZ2](https://gitee.com/dotnetchina/Furion/issues/I72ZZ2)
