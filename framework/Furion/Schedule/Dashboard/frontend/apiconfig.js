@@ -1,1 +1,0 @@
-window.apiconfig = { requestPath: "%(RequestPath)", syncRate: "%(SyncRate)", hostAddress: "%(RequestPath)/api", options: { headers: { Accept: "application/json" }, cachePolicy: "no-cache" } };
