@@ -1,0 +1,34 @@
+<Project>
+
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageOutputPath>../nupkgs</PackageOutputPath>
+		<PackageId>Furion</PackageId>
+		<PackageVersion>5.0.0-preview.1.20230528.1</PackageVersion>
+		<Authors>百小僧</Authors>
+		<Description>一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。</Description>
+		<Company>百签科技（广东）有限公司</Company>
+		<Product>Furion</Product>
+		<Copyright>版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司</Copyright>
+		<PackageProjectUrl>https://furion.baiqian.ltd</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://gitee.com/dotnetchina/Furion</RepositoryUrl>
+		<RepositoryType>Gitee</RepositoryType>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+		<None Include="..\icon.png" Pack="true" PackagePath="\"/>
+	</ItemGroup>
+
+</Project>
