@@ -170,7 +170,7 @@ body:
       label: 截图或视频
       description: 如果可以的话，上传任何关于 bug 的截图。
       placeholder: |
-        可在创建 Issue 后再次编辑 Issue 进行粘贴上传。
+        可在此处进行图片粘贴上传。
   - type: input
     id: demo
     attributes:
@@ -179,3 +179,9 @@ body:
       placeholder: https://gitee.com/your_id/your_test_project.git
     validations:
       required: true
+  - type: checkboxes
+    attributes:
+      label: 友好承诺
+      options:
+        - label: 我承诺将本着相互尊重、理解和友善的态度进行交流，共同维护好 Furion 来之不易的良好的社区氛围。
+          required: true
