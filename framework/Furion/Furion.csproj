@@ -10,6 +10,7 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0-1.final" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0-preview.4.23259.3" />
 		<PackageReference Include="System.Text.Json" Version="8.0.0-preview.4.23259.5" />
+		<PackageReference Include="Yarp.ReverseProxy" Version="2.0.0" />
 	</ItemGroup>
 
 </Project>
