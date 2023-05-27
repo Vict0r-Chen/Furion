@@ -15,7 +15,7 @@
 		<Description>一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。</Description>
 		<Company>百签科技（广东）有限公司</Company>
 		<Product>Furion</Product>
-		<Copyright>版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司</Copyright>
+		<Copyright>版权所有 (c) 2020-2023 百小僧, 百签科技（广东）有限公司</Copyright>
 		<PackageProjectUrl>https://furion.baiqian.ltd</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
