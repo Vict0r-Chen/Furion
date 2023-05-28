@@ -13,31 +13,15 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Furion.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace System;
 
 /// <summary>
-/// 依赖注入 - 服务注册拓展类
+/// 范围生存期依赖服务
 /// </summary>
-public static class DependencyInjectionServiceCollectionExtensions
+public interface IScopedDependency : ILifetimeDependency
 {
-    /// <summary>
-    /// 注册依赖注入服务
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
-    /// <param name="configure">依赖注入服务构建器委托</param>
-    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = default)
-    {
-        // 创建依赖注入构建器实例
-        var builder = new DependencyInjectionBuilder();
-
-        // 调用自定义委托
-        configure?.Invoke(builder);
-
-        // 构建服务
-        builder.Build(services);
-
-        return services;
-    }
+    /// <inheritdoc/>
+    ServiceLifetime ILifetimeDependency.Lifetime => ServiceLifetime.Scoped;
 }
