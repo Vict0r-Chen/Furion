@@ -14,6 +14,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Furion.DependencyInjection;
@@ -23,6 +24,11 @@ namespace Furion.DependencyInjection;
 /// </summary>
 public sealed partial class DependencyInjectionBuilder
 {
+    /// <summary>
+    /// 诊断日志
+    /// </summary>
+    private static readonly DiagnosticSource _diagnosticSource = new DiagnosticListener("Furion.DependencyInjection");
+
     /// <summary>
     /// 待注册的服务描述器集合
     /// </summary>
@@ -71,6 +77,17 @@ public sealed partial class DependencyInjectionBuilder
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     internal void Build(IServiceCollection services)
     {
+        // 写入构建开始诊断日志
+        if (_diagnosticSource.IsEnabled("BuildStart"))
+        {
+            _diagnosticSource.Write("BuildStart", new
+            {
+                _services,
+                _namedServices,
+                _assemblies
+            });
+        }
+
         // 判断是否禁用程序集扫描
         if (!SuppressAssemblyScanning)
         {
