@@ -13,6 +13,7 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Reflection;
 
 namespace Furion.DependencyInjection;
@@ -82,7 +83,8 @@ public sealed partial class DependencyInjectionBuilder
         {
             foreach (var serviceDescriptor in serviceDescriptors)
             {
-                services.Add(serviceDescriptor);
+                // 统一采用 TryAddEnumerable 方式注册，避免存在多个副本
+                services.TryAddEnumerable(serviceDescriptor);
             }
         }
 
