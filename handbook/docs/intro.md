@@ -23,7 +23,7 @@ Generate a new Docusaurus site using the **classic template**.
 
 The classic template will automatically be added to your project after you run the command:
 
-```bash
+```bash showLineNumbers
 npm init docusaurus@latest my-website classic
 ```
 
