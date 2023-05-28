@@ -116,16 +116,14 @@ public sealed partial class DependencyInjectionBuilder
             if (assembly == null) continue;
 
             // 查找所有类（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
-            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && !t.IsStatic() && t.IsClass && typeof(ILifetimeDependency).IsAssignableFrom(t));
-
-            if (serviceTypes == null) continue;
+            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && !t.IsStatic() && t.IsClass && lifetimeAction(t));
 
             // 遍历类型并创建 ServiceDescriptor 服务描述器类型
+            if (serviceTypes == null) continue;
             foreach (var serviceType in serviceTypes)
             {
                 // 查找所有排除特定接口的接口集合
                 var interfaces = serviceType.GetInterfaces().Where(i => _excludeInterfaces?.Contains(i) == false);
-
                 if (interfaces == null) continue;
 
                 // 获取注册服务生存器类型
