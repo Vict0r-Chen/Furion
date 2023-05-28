@@ -12,22 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.Diagnostics;
+namespace System;
 
 /// <summary>
-/// <see cref="DiagnosticSource"/> 类型拓展类
+/// <see cref="Type"/> 类型拓展类
 /// </summary>
-internal static class DiagnosticSourceExtensions
+internal static class TypeExtensions
 {
     /// <summary>
-    /// 写入诊断日志
+    /// 判断类型是否是静态类
     /// </summary>
-    /// <param name="diagnosticSource">诊断源</param>
-    /// <param name="name">事件名</param>
-    /// <param name="value">事件负载数据</param>
-    internal static void WriteIsEnabled(this DiagnosticSource diagnosticSource, string name, object? value)
+    /// <param name="type"><see cref="Type"/> - 类型</param>
+    /// <returns><see cref="bool"/> - true 表示是静态类；false 表示非静态类</returns>
+    internal static bool IsStatic(this Type type)
     {
-        if (!diagnosticSource.IsEnabled(name)) return;
-        diagnosticSource.Write(name, value);
+        return type.IsSealed && type.IsAbstract;
     }
 }

@@ -116,7 +116,7 @@ public sealed partial class DependencyInjectionBuilder
             if (assembly == null) continue;
 
             // 查找所有类（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
-            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && !t.IsSealed && t.IsClass && typeof(ILifetimeDependency).IsAssignableFrom(t));
+            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && !t.IsStatic() && t.IsClass && typeof(ILifetimeDependency).IsAssignableFrom(t));
 
             if (serviceTypes == null) continue;
 
