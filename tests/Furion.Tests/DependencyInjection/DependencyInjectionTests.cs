@@ -1,7 +1,7 @@
-namespace Furion.Tests.DependencyInjection;
+ï»¿namespace Furion.Tests.DependencyInjection;
 
 /// <summary>
-/// ÒÀÀµ×¢Èë - µ¥Ôª²âÊÔ
+/// ä¾èµ–æ³¨å…¥ - å•å…ƒæµ‹è¯•
 /// </summary>
 public class DependencyInjectionTests
 {
