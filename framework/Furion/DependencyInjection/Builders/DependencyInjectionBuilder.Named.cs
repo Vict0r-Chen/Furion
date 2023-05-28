@@ -78,4 +78,40 @@ public sealed partial class DependencyInjectionBuilder
     {
         return AddNamed(serviceKey, ServiceDescriptor.Singleton<TService, TImplementation>());
     }
+
+    /// <summary>
+    /// 添加暂时命名服务
+    /// </summary>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationType">服务实现类类型</param>
+    /// <param name="serviceKey">服务命名键</param>
+    /// <returns><see cref="DependencyInjectionBuilder"/> - 依赖注入服务构建器</returns>
+    public DependencyInjectionBuilder AddNamedTransient(Type serviceType, Type implementationType, string serviceKey)
+    {
+        return AddNamed(serviceKey, ServiceDescriptor.Transient(serviceType, implementationType));
+    }
+
+    /// <summary>
+    /// 添加范围命名服务
+    /// </summary>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationType">服务实现类类型</param>
+    /// <param name="serviceKey">服务命名键</param>
+    /// <returns><see cref="DependencyInjectionBuilder"/> - 依赖注入服务构建器</returns>
+    public DependencyInjectionBuilder AddNamedScoped(Type serviceType, Type implementationType, string serviceKey)
+    {
+        return AddNamed(serviceKey, ServiceDescriptor.Scoped(serviceType, implementationType));
+    }
+
+    /// <summary>
+    /// 添加单例命名服务
+    /// </summary>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationType">服务实现类类型</param>
+    /// <param name="serviceKey">服务命名键</param>
+    /// <returns><see cref="DependencyInjectionBuilder"/> - 依赖注入服务构建器</returns>
+    public DependencyInjectionBuilder AddNamedSingleton(Type serviceType, Type implementationType, string serviceKey)
+    {
+        return AddNamed(serviceKey, ServiceDescriptor.Singleton(serviceType, implementationType));
+    }
 }
