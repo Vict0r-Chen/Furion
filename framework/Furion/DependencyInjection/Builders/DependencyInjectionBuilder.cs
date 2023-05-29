@@ -23,9 +23,9 @@ namespace Furion.DependencyInjection;
 public sealed partial class DependencyInjectionBuilder
 {
     /// <summary>
-    /// 待注册的服务描述器集合
+    /// 待注册的服务模型集合
     /// </summary>
-    private List<ServiceModel>? _services = new();
+    private List<ServiceModel>? _serviceModels = new();
 
     /// <summary>
     /// 待扫描的程序集
@@ -74,7 +74,7 @@ public sealed partial class DependencyInjectionBuilder
         // 写入构建开始诊断日志
         _diagnosticSource.WriteIsEnabled("BuildStart", new
         {
-            _services,
+            _serviceModels,
             _assemblies
         });
 
@@ -85,9 +85,9 @@ public sealed partial class DependencyInjectionBuilder
         }
 
         // 批量注册服务
-        if (_services != null)
+        if (_serviceModels != null)
         {
-            foreach (var serviceModel in _services)
+            foreach (var serviceModel in _serviceModels)
             {
                 // 解析服务描述器
                 var serviceDescriptor = serviceModel.ServiceDescriptor;
@@ -157,7 +157,7 @@ public sealed partial class DependencyInjectionBuilder
                 // 如果类型只有一个接口，则直接注册类型
                 if (interfaces.LongCount() == 1)
                 {
-                    _services?.Add(new ServiceModel
+                    _serviceModels?.Add(new ServiceModel
                     {
                         ServiceDescriptor = ServiceDescriptor.Describe(serviceType, serviceType, lifetime),
                         ServiceRegister = serviceInjectionAttribute.ServiceRegister
@@ -170,7 +170,7 @@ public sealed partial class DependencyInjectionBuilder
                     {
                         if (lifetimeAction(interType)) continue;
 
-                        _services?.Add(new ServiceModel
+                        _serviceModels?.Add(new ServiceModel
                         {
                             ServiceDescriptor = ServiceDescriptor.Describe(interType, serviceType, lifetime),
                             ServiceRegister = serviceInjectionAttribute.ServiceRegister
@@ -182,7 +182,7 @@ public sealed partial class DependencyInjectionBuilder
                 var baseType = serviceType.BaseType;
                 if (baseType is null || baseType.IsNotPublic) continue;
 
-                _services?.Add(new ServiceModel
+                _serviceModels?.Add(new ServiceModel
                 {
                     ServiceDescriptor = ServiceDescriptor.Describe(baseType, serviceType, lifetime),
                     ServiceRegister = serviceInjectionAttribute.ServiceRegister
@@ -225,11 +225,11 @@ public sealed partial class DependencyInjectionBuilder
     /// </summary>
     private void Recycling()
     {
-        _services?.Clear();
+        _serviceModels?.Clear();
         _assemblies?.Clear();
         _excludeInterfaces?.Clear();
 
-        _services = null;
+        _serviceModels = null;
         _assemblies = null;
         _excludeInterfaces = null;
     }
