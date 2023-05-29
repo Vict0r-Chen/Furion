@@ -127,63 +127,71 @@ public sealed partial class DependencyInjectionBuilder
             if (assembly is null) continue;
 
             // 查找所有类（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
-            var serviceTypes = assembly.GetTypes()
+            var implementationTypes = assembly.GetTypes()
                                                       .Where(t => !t.IsAbstract
                                                                             && !t.IsStatic()
                                                                             && t.IsClass
                                                                             && lifetimeAction(t));
 
             // 遍历类型并创建 ServiceDescriptor 服务描述器类型
-            if (serviceTypes is null) continue;
-            foreach (var serviceType in serviceTypes)
+            if (implementationTypes is null) continue;
+            foreach (var implementationType in implementationTypes)
             {
                 // 获取 [ServiceInjection] 特性
-                var serviceInjectionAttribute = serviceType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new ServiceInjectionAttribute();
+                var serviceInjectionAttribute = implementationType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new ServiceInjectionAttribute();
 
                 // 跳过配置了 Ignore 属性
                 if (serviceInjectionAttribute is { Ignore: true }) continue;
 
                 // 查找所有排除特定接口的接口集合
-                var interfaces = serviceType.GetInterfaces().Where(i => _excludeInterfaces?.Contains(i) == false);
-                if (interfaces is null) continue;
+                var serviceTypes = implementationType.GetInterfaces().Where(i => _excludeInterfaces?.Contains(i) == false);
+                if (serviceTypes is null) continue;
 
                 // 获取注册服务生存器类型
-                var lifetimeDependency = interfaces.Single(lifetimeAction);
+                var lifetimeDependency = serviceTypes.Single(lifetimeAction);
 
                 // 获取服务注册生存期
                 var lifetime = GetServiceLifetime(lifetimeDependency);
 
                 // 如果类型只有一个接口，则直接注册类型
-                if (interfaces.LongCount() == 1)
+                if (serviceTypes.LongCount() == 1)
                 {
                     _serviceModels?.Add(new ServiceModel
                     {
-                        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, serviceType, lifetime),
+                        ServiceDescriptor = ServiceDescriptor.Describe(implementationType, implementationType, lifetime),
                         ServiceRegister = serviceInjectionAttribute.ServiceRegister
                     });
                 }
                 else
                 {
                     // 将每一个接口进行注册
-                    foreach (var interType in interfaces)
+                    foreach (var serviceType in serviceTypes)
                     {
-                        if (lifetimeAction(interType)) continue;
+                        if (lifetimeAction(serviceType)) continue;
+
+                        // 处理泛型类型
+                        var isGeneric = serviceType.IsGenericType;
+                        if (isGeneric)
+                        {
+                            var genericDefinitionType = serviceType.GetGenericTypeDefinition();
+                            var genericTypeArguments = serviceType.GenericTypeArguments;
+                        }
 
                         _serviceModels?.Add(new ServiceModel
                         {
-                            ServiceDescriptor = ServiceDescriptor.Describe(interType, serviceType, lifetime),
+                            ServiceDescriptor = ServiceDescriptor.Describe(serviceType, implementationType, lifetime),
                             ServiceRegister = serviceInjectionAttribute.ServiceRegister
                         });
                     }
                 }
 
                 // 注册基类类型，如果积累存在那么必须是公开类型
-                var baseType = serviceType.BaseType;
+                var baseType = implementationType.BaseType;
                 if (baseType is null || baseType.IsNotPublic) continue;
 
                 _serviceModels?.Add(new ServiceModel
                 {
-                    ServiceDescriptor = ServiceDescriptor.Describe(baseType, serviceType, lifetime),
+                    ServiceDescriptor = ServiceDescriptor.Describe(baseType, implementationType, lifetime),
                     ServiceRegister = serviceInjectionAttribute.ServiceRegister
                 });
             }
@@ -201,22 +209,13 @@ public sealed partial class DependencyInjectionBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(lifetimeDependency);
 
-        if (lifetimeDependency == typeof(ITransientDependency))
+        return lifetimeDependency switch
         {
-            return ServiceLifetime.Transient;
-        }
-        else if (lifetimeDependency == typeof(IScopedDependency))
-        {
-            return ServiceLifetime.Scoped;
-        }
-        else if (lifetimeDependency == typeof(ISingletonDependency))
-        {
-            return ServiceLifetime.Singleton;
-        }
-        else
-        {
-            throw new InvalidOperationException("Not supported service lifetime interface.");
-        }
+            var value when value == typeof(ITransientDependency) => ServiceLifetime.Transient,
+            var value when value == typeof(IScopedDependency) => ServiceLifetime.Scoped,
+            var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
+            _ => throw new InvalidOperationException("Not supported service lifetime interface.")
+        };
     }
 
     /// <summary>
