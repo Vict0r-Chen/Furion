@@ -128,23 +128,24 @@ public sealed partial class DependencyInjectionBuilder
 
             // 查找所有类（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
             var implementationTypes = assembly.GetTypes()
-                                                      .Where(t => !t.IsAbstract
-                                                                            && !t.IsStatic()
-                                                                            && t.IsClass
-                                                                            && lifetimeAction(t));
+                                                             .Where(t => !t.IsAbstract
+                                                                                   && !t.IsStatic()
+                                                                                   && t.IsClass
+                                                                                   && lifetimeAction(t));
 
             // 遍历类型并创建 ServiceDescriptor 服务描述器类型
             if (implementationTypes is null) continue;
             foreach (var implementationType in implementationTypes)
             {
                 // 获取 [ServiceInjection] 特性
-                var serviceInjectionAttribute = implementationType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new ServiceInjectionAttribute();
+                var serviceInjectionAttribute = implementationType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new();
 
                 // 跳过配置了 Ignore 属性
                 if (serviceInjectionAttribute is { Ignore: true }) continue;
 
                 // 查找所有排除特定接口的接口集合
-                var serviceTypes = implementationType.GetInterfaces().Where(i => _excludeInterfaces?.Contains(i) == false);
+                var serviceTypes = implementationType.GetInterfaces()
+                                                                    .Where(i => _excludeInterfaces?.Contains(i) == false);
                 if (serviceTypes is null) continue;
 
                 // 获取注册服务生存器类型
