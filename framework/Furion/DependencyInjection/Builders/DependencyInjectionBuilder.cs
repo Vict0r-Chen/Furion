@@ -25,7 +25,7 @@ public sealed partial class DependencyInjectionBuilder
     /// <summary>
     /// 待注册的服务描述器集合
     /// </summary>
-    private List<ServiceDescriptor>? _services = new();
+    private List<ServiceModel>? _services = new();
 
     /// <summary>
     /// 待扫描的程序集
@@ -87,10 +87,25 @@ public sealed partial class DependencyInjectionBuilder
         // 批量注册服务
         if (_services != null)
         {
-            foreach (var serviceDescriptor in _services)
+            foreach (var serviceModel in _services)
             {
-                // 统一采用 TryAddEnumerable 方式注册，避免存在多个副本
-                services.TryAddEnumerable(serviceDescriptor);
+                // 解析服务描述器
+                var serviceDescriptor = serviceModel.ServiceDescriptor;
+                if (serviceDescriptor is null) continue;
+
+                if (serviceModel.ServiceRegister is ServiceRegister.Default or ServiceRegister.TryAddEnumerable)
+                {
+                    services.TryAddEnumerable(serviceDescriptor);
+                }
+                else if (serviceModel.ServiceRegister == ServiceRegister.Add)
+                {
+                    services.Add(serviceDescriptor);
+                }
+                else if (serviceModel.ServiceRegister == ServiceRegister.TryAdd)
+                {
+                    services.TryAdd(serviceDescriptor);
+                }
+                else { }
             }
         }
 
@@ -123,6 +138,12 @@ public sealed partial class DependencyInjectionBuilder
             if (serviceTypes is null) continue;
             foreach (var serviceType in serviceTypes)
             {
+                // 获取 [ServiceInjection] 特性
+                var serviceInjectionAttribute = serviceType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new ServiceInjectionAttribute();
+
+                // 跳过配置了 Ignore 属性
+                if (serviceInjectionAttribute is { Ignore: true }) continue;
+
                 // 查找所有排除特定接口的接口集合
                 var interfaces = serviceType.GetInterfaces().Where(i => _excludeInterfaces?.Contains(i) == false);
                 if (interfaces is null) continue;
@@ -136,7 +157,11 @@ public sealed partial class DependencyInjectionBuilder
                 // 如果类型只有一个接口，则直接注册类型
                 if (interfaces.LongCount() == 1)
                 {
-                    _services?.Add(ServiceDescriptor.Describe(serviceType, serviceType, lifetime));
+                    _services?.Add(new ServiceModel
+                    {
+                        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, serviceType, lifetime),
+                        ServiceRegister = serviceInjectionAttribute.ServiceRegister
+                    });
                 }
                 else
                 {
@@ -145,7 +170,11 @@ public sealed partial class DependencyInjectionBuilder
                     {
                         if (lifetimeAction(interType)) continue;
 
-                        _services?.Add(ServiceDescriptor.Describe(interType, serviceType, lifetime));
+                        _services?.Add(new ServiceModel
+                        {
+                            ServiceDescriptor = ServiceDescriptor.Describe(interType, serviceType, lifetime),
+                            ServiceRegister = serviceInjectionAttribute.ServiceRegister
+                        });
                     }
                 }
 
@@ -153,7 +182,11 @@ public sealed partial class DependencyInjectionBuilder
                 var baseType = serviceType.BaseType;
                 if (baseType is null || baseType.IsNotPublic) continue;
 
-                _services?.Add(ServiceDescriptor.Describe(baseType, serviceType, lifetime));
+                _services?.Add(new ServiceModel
+                {
+                    ServiceDescriptor = ServiceDescriptor.Describe(baseType, serviceType, lifetime),
+                    ServiceRegister = serviceInjectionAttribute.ServiceRegister
+                });
             }
         }
     }
