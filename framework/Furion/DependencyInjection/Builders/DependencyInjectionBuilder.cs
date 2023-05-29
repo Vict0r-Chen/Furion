@@ -103,25 +103,29 @@ public sealed partial class DependencyInjectionBuilder
     /// </summary>
     private void ScanningAssemblyAndRegisteringServices()
     {
-        if (_assemblies == null) return;
+        if (_assemblies is null) return;
 
         // 声明服务接口生存期判断委托
         var lifetimeAction = (Type i) => typeof(ILifetimeDependency).IsAssignableFrom(i);
 
         foreach (var assembly in _assemblies)
         {
-            if (assembly == null) continue;
+            if (assembly is null) continue;
 
             // 查找所有类（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
-            var serviceTypes = assembly.GetTypes().Where(t => !t.IsAbstract && !t.IsStatic() && t.IsClass && lifetimeAction(t));
+            var serviceTypes = assembly.GetTypes()
+                                                      .Where(t => !t.IsAbstract
+                                                                            && !t.IsStatic()
+                                                                            && t.IsClass
+                                                                            && lifetimeAction(t));
 
             // 遍历类型并创建 ServiceDescriptor 服务描述器类型
-            if (serviceTypes == null) continue;
+            if (serviceTypes is null) continue;
             foreach (var serviceType in serviceTypes)
             {
                 // 查找所有排除特定接口的接口集合
                 var interfaces = serviceType.GetInterfaces().Where(i => _excludeInterfaces?.Contains(i) == false);
-                if (interfaces == null) continue;
+                if (interfaces is null) continue;
 
                 // 获取注册服务生存器类型
                 var lifetimeDependency = interfaces.Single(lifetimeAction);
@@ -147,7 +151,7 @@ public sealed partial class DependencyInjectionBuilder
 
                 // 注册基类类型，如果积累存在那么必须是公开类型
                 var baseType = serviceType.BaseType;
-                if (baseType == null || baseType.IsNotPublic) continue;
+                if (baseType is null || baseType.IsNotPublic) continue;
 
                 _services?.Add(ServiceDescriptor.Describe(baseType, serviceType, lifetime));
             }
