@@ -23,10 +23,10 @@ public static class NamedServiceCollectionExtensions
     /// 注册命名服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <param name="descriptor">服务描述器</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamed(this IServiceCollection services, string serviceKey, ServiceDescriptor descriptor)
+    public static IServiceCollection AddNamed(this IServiceCollection services, string name, ServiceDescriptor descriptor)
     {
         return services;
     }
@@ -37,13 +37,13 @@ public static class NamedServiceCollectionExtensions
     /// <typeparam name="TService">服务</typeparam>
     /// <typeparam name="TImplementation">服务实现类</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamedTransient<TService, TImplementation>(this IServiceCollection services, string serviceKey)
+    public static IServiceCollection AddNamedTransient<TService, TImplementation>(this IServiceCollection services, string name)
         where TService : class
         where TImplementation : class, TService
     {
-        return services.AddNamed(serviceKey, ServiceDescriptor.Transient<TService, TImplementation>());
+        return services.AddNamed(name, ServiceDescriptor.Transient<TService, TImplementation>());
     }
 
     /// <summary>
@@ -52,13 +52,13 @@ public static class NamedServiceCollectionExtensions
     /// <typeparam name="TService">服务</typeparam>
     /// <typeparam name="TImplementation">服务实现类</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamedScoped<TService, TImplementation>(this IServiceCollection services, string serviceKey)
+    public static IServiceCollection AddNamedScoped<TService, TImplementation>(this IServiceCollection services, string name)
         where TService : class
         where TImplementation : class, TService
     {
-        return services.AddNamed(serviceKey, ServiceDescriptor.Scoped<TService, TImplementation>());
+        return services.AddNamed(name, ServiceDescriptor.Scoped<TService, TImplementation>());
     }
 
     /// <summary>
@@ -67,13 +67,13 @@ public static class NamedServiceCollectionExtensions
     /// <typeparam name="TService">服务</typeparam>
     /// <typeparam name="TImplementation">服务实现类</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamedSingleton<TService, TImplementation>(this IServiceCollection services, string serviceKey)
+    public static IServiceCollection AddNamedSingleton<TService, TImplementation>(this IServiceCollection services, string name)
         where TService : class
         where TImplementation : class, TService
     {
-        return services.AddNamed(serviceKey, ServiceDescriptor.Singleton<TService, TImplementation>());
+        return services.AddNamed(name, ServiceDescriptor.Singleton<TService, TImplementation>());
     }
 
     /// <summary>
@@ -82,11 +82,11 @@ public static class NamedServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="serviceType">服务类型</param>
     /// <param name="implementationType">服务实现类类型</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamedTransient(this IServiceCollection services, Type serviceType, Type implementationType, string serviceKey)
+    public static IServiceCollection AddNamedTransient(this IServiceCollection services, Type serviceType, Type implementationType, string name)
     {
-        return services.AddNamed(serviceKey, ServiceDescriptor.Transient(serviceType, implementationType));
+        return services.AddNamed(name, ServiceDescriptor.Transient(serviceType, implementationType));
     }
 
     /// <summary>
@@ -95,11 +95,11 @@ public static class NamedServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="serviceType">服务类型</param>
     /// <param name="implementationType">服务实现类类型</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamedScoped(this IServiceCollection services, Type serviceType, Type implementationType, string serviceKey)
+    public static IServiceCollection AddNamedScoped(this IServiceCollection services, Type serviceType, Type implementationType, string name)
     {
-        return services.AddNamed(serviceKey, ServiceDescriptor.Scoped(serviceType, implementationType));
+        return services.AddNamed(name, ServiceDescriptor.Scoped(serviceType, implementationType));
     }
 
     /// <summary>
@@ -108,10 +108,10 @@ public static class NamedServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="serviceType">服务类型</param>
     /// <param name="implementationType">服务实现类类型</param>
-    /// <param name="serviceKey">服务命名键</param>
+    /// <param name="name">服务命名键</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
-    public static IServiceCollection AddNamedSingleton(this IServiceCollection services, Type serviceType, Type implementationType, string serviceKey)
+    public static IServiceCollection AddNamedSingleton(this IServiceCollection services, Type serviceType, Type implementationType, string name)
     {
-        return services.AddNamed(serviceKey, ServiceDescriptor.Singleton(serviceType, implementationType));
+        return services.AddNamed(name, ServiceDescriptor.Singleton(serviceType, implementationType));
     }
 }

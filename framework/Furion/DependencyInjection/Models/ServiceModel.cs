@@ -24,7 +24,7 @@ public sealed class ServiceModel
     /// <summary>
     /// 服务描述器
     /// </summary>
-    public ServiceDescriptor? ServiceDescriptor { get; init; }
+    public required ServiceDescriptor ServiceDescriptor { get; init; }
 
     /// <summary>
     /// 服务注册方式

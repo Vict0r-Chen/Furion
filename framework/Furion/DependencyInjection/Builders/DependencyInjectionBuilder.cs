@@ -85,13 +85,12 @@ public sealed partial class DependencyInjectionBuilder
         }
 
         // 批量注册服务
-        if (_serviceModels != null)
+        if (_serviceModels is not null)
         {
             foreach (var serviceModel in _serviceModels)
             {
                 // 解析服务描述器
                 var serviceDescriptor = serviceModel.ServiceDescriptor;
-                if (serviceDescriptor is null) continue;
 
                 if (serviceModel.ServiceRegister is ServiceRegister.Default or ServiceRegister.TryAddEnumerable)
                 {
