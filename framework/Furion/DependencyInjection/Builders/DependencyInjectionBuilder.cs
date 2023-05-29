@@ -14,8 +14,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace Furion.DependencyInjection;
 
@@ -41,7 +39,8 @@ public sealed partial class DependencyInjectionBuilder
     private HashSet<Type>? _excludeInterfaces = new()
     {
         typeof(IDisposable), typeof(IAsyncDisposable),
-        typeof(ILifetimeDependency)
+        typeof(ILifetimeDependency),
+        typeof(IEnumerator)
     };
 
     /// <summary>
@@ -76,7 +75,6 @@ public sealed partial class DependencyInjectionBuilder
         _diagnosticSource.WriteIsEnabled("BuildStart", new
         {
             _services,
-            _namedServices,
             _assemblies
         });
 
@@ -87,10 +85,9 @@ public sealed partial class DependencyInjectionBuilder
         }
 
         // 批量注册服务
-        var serviceDescriptors = _services?.Concat(_namedServices?.Values ?? new Dictionary<string, ServiceDescriptor>().Values);
-        if (serviceDescriptors != null)
+        if (_services != null)
         {
-            foreach (var serviceDescriptor in serviceDescriptors)
+            foreach (var serviceDescriptor in _services)
             {
                 // 统一采用 TryAddEnumerable 方式注册，避免存在多个副本
                 services.TryAddEnumerable(serviceDescriptor);
@@ -147,6 +144,12 @@ public sealed partial class DependencyInjectionBuilder
                         _services?.Add(ServiceDescriptor.Describe(interType, serviceType, lifetime));
                     }
                 }
+
+                // 注册基类类型，如果积累存在那么必须是公开类型
+                var baseType = serviceType.BaseType;
+                if (baseType == null || baseType.IsNotPublic) continue;
+
+                _services?.Add(ServiceDescriptor.Describe(baseType, serviceType, lifetime));
             }
         }
     }
@@ -163,13 +166,21 @@ public sealed partial class DependencyInjectionBuilder
         ArgumentNullException.ThrowIfNull(lifetimeDependency);
 
         if (lifetimeDependency == typeof(ITransientDependency))
+        {
             return ServiceLifetime.Transient;
+        }
         else if (lifetimeDependency == typeof(IScopedDependency))
+        {
             return ServiceLifetime.Scoped;
+        }
         else if (lifetimeDependency == typeof(ISingletonDependency))
+        {
             return ServiceLifetime.Singleton;
+        }
         else
+        {
             throw new InvalidOperationException("Not supported service lifetime interface.");
+        }
     }
 
     /// <summary>
@@ -178,12 +189,10 @@ public sealed partial class DependencyInjectionBuilder
     private void Recycling()
     {
         _services?.Clear();
-        _namedServices?.Clear();
         _assemblies?.Clear();
         _excludeInterfaces?.Clear();
 
         _services = null;
-        _namedServices = null;
         _assemblies = null;
         _excludeInterfaces = null;
     }

@@ -32,8 +32,8 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
-    public string GetName(ITestService testService, ITestExtraService testExtraService)
+    public string GetName(ITestService testService, ITestExtraService testExtraService, TestBaseSerivce testBaseSerivce)
     {
-        return testService.GetName() + " " + testExtraService.Extra();
+        return testService.GetName() + " " + testExtraService.Extra() + " " + testBaseSerivce.GetBase();
     }
 }

@@ -15,32 +15,27 @@
 namespace System;
 
 /// <summary>
-/// 服务注入元数据配置
+/// 服务注册方式
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-public sealed class ServiceInjectionAttribute : Attribute
+public enum ServiceRegister : uint
 {
     /// <summary>
-    /// 构造函数
+    /// 缺省值
     /// </summary>
-    public ServiceInjectionAttribute()
-    {
-    }
+    Default = 0,
 
     /// <summary>
-    /// 构造函数
+    /// 注册
     /// </summary>
-    /// <param name="serviceRegister"><see cref="ServiceRegister"/> - 服务注册方式</param>
-    public ServiceInjectionAttribute(ServiceRegister serviceRegister) => ServiceRegister = serviceRegister;
+    Add,
 
     /// <summary>
-    /// 服务注册方式
+    /// 服务未注册则注册，否则跳过
     /// </summary>
-    public ServiceRegister ServiceRegister { get; init; }
+    TryAdd,
 
     /// <summary>
-    /// 忽略注册
+    /// 服务和实现类型未注册则注册，否则跳过
     /// </summary>
-    /// <remarks>如果设置为 true，则该类型将不会被注册</remarks>
-    public bool Ignore { get; init; }
+    TryAddEnumerable = Default
 }
