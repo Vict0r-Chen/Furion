@@ -43,4 +43,9 @@ public sealed class ServiceInjectionAttribute : Attribute
     /// </summary>
     /// <remarks>如果设置为 true，则该类型将不会被注册</remarks>
     public bool Ignore { get; init; }
+
+    /// <summary>
+    /// 注册自身
+    /// </summary>
+    public bool IncludingSelf { get; init; }
 }

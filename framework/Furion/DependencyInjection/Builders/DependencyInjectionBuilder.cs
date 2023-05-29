@@ -92,6 +92,9 @@ public sealed partial class DependencyInjectionBuilder
                 // 解析服务描述器
                 var serviceDescriptor = serviceModel.ServiceDescriptor;
 
+                // 检查重复注册
+                if (services.Any(s => s.ServiceType == serviceDescriptor.ServiceType && s.ImplementationType == serviceDescriptor.ImplementationType)) continue;
+
                 if (serviceModel.ServiceRegister is ServiceRegister.Default or ServiceRegister.TryAddEnumerable)
                 {
                     services.TryAddEnumerable(serviceDescriptor);
@@ -157,6 +160,16 @@ public sealed partial class DependencyInjectionBuilder
                     {
                         ServiceDescriptor = ServiceDescriptor.Describe(serviceType, definition, serviceLifetime),
                         ServiceRegister = serviceType != definition ? serviceInjectionAttribute.ServiceRegister : ServiceRegister.Add    // 处理 TryAddEnumerable 不能注册服务类型等于注册类型的问题
+                    });
+                }
+
+                // 注册自身
+                if (serviceInjectionAttribute is { IncludingSelf: true })
+                {
+                    _serviceModels?.Add(new ServiceModel
+                    {
+                        ServiceDescriptor = ServiceDescriptor.Describe(definition, definition, serviceLifetime),
+                        ServiceRegister = ServiceRegister.Add
                     });
                 }
             }
