@@ -1,6 +1,6 @@
 ﻿namespace Furion.Tests.WebAPI.Services;
 
-[ServiceInjection(ServiceRegister.Default)]
+//[ServiceInjection(Ignore = true)]
 internal sealed class TestService : TestBaseSerivce, ITestService, ITestExtraService, IScopedDependency, IDisposable
 {
     public void Dispose() => Console.WriteLine(nameof(TestService) + ": " + nameof(Dispose));
@@ -13,4 +13,14 @@ internal sealed class TestService : TestBaseSerivce, ITestService, ITestExtraSer
 public abstract class TestBaseSerivce
 {
     public string GetBase() => nameof(TestBaseSerivce);
+}
+
+internal sealed class TestGService : TestSingleGeneric<string>, IScopedDependency
+{
+
+}
+
+public class TestSingleGeneric<T>
+{
+
 }

@@ -143,58 +143,22 @@ public sealed partial class DependencyInjectionBuilder
                 // 跳过配置了 Ignore 属性
                 if (serviceInjectionAttribute is { Ignore: true }) continue;
 
-                // 查找所有排除特定接口的接口集合
-                var serviceTypes = implementationType.GetInterfaces()
-                                                                    .Where(i => _excludeInterfaces?.Contains(i) == false);
-                if (serviceTypes is null) continue;
-
-                // 获取注册服务生存器类型
-                var lifetimeDependency = serviceTypes.Single(lifetimeAction);
+                // 获取所有匹配的服务类型
+                var (definition, inheritTypes, lifetimeDependencyType) = implementationType.GetMatchInheritTypes(typeof(ILifetimeDependency), _excludeInterfaces);
+                if (inheritTypes is null) continue;
 
                 // 获取服务注册生存期
-                var lifetime = GetServiceLifetime(lifetimeDependency);
+                var serviceLifetime = GetServiceLifetime(lifetimeDependencyType);
 
                 // 如果类型只有一个接口，则直接注册类型
-                if (serviceTypes.LongCount() == 1)
+                foreach (var serviceType in inheritTypes)
                 {
                     _serviceModels?.Add(new ServiceModel
                     {
-                        ServiceDescriptor = ServiceDescriptor.Describe(implementationType, implementationType, lifetime),
-                        ServiceRegister = serviceInjectionAttribute.ServiceRegister
+                        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, definition, serviceLifetime),
+                        ServiceRegister = serviceType != definition ? serviceInjectionAttribute.ServiceRegister : ServiceRegister.Add    // 处理 TryAddEnumerable 不能注册服务类型等于注册类型的问题
                     });
                 }
-                else
-                {
-                    // 将每一个接口进行注册
-                    foreach (var serviceType in serviceTypes)
-                    {
-                        if (lifetimeAction(serviceType)) continue;
-
-                        // 处理泛型类型
-                        var isGeneric = serviceType.IsGenericType;
-                        if (isGeneric)
-                        {
-                            var genericDefinitionType = serviceType.GetGenericTypeDefinition();
-                            var genericTypeArguments = serviceType.GenericTypeArguments;
-                        }
-
-                        _serviceModels?.Add(new ServiceModel
-                        {
-                            ServiceDescriptor = ServiceDescriptor.Describe(serviceType, implementationType, lifetime),
-                            ServiceRegister = serviceInjectionAttribute.ServiceRegister
-                        });
-                    }
-                }
-
-                // 注册基类类型，如果积累存在那么必须是公开类型
-                var baseType = implementationType.BaseType;
-                if (baseType is null || baseType.IsNotPublic) continue;
-
-                _serviceModels?.Add(new ServiceModel
-                {
-                    ServiceDescriptor = ServiceDescriptor.Describe(baseType, implementationType, lifetime),
-                    ServiceRegister = serviceInjectionAttribute.ServiceRegister
-                });
             }
         }
     }

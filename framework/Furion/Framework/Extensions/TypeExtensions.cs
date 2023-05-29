@@ -28,4 +28,60 @@ internal static class TypeExtensions
     {
         return type.IsSealed && type.IsAbstract;
     }
+
+    /// <summary>
+    /// 获取类型匹配的继承类型
+    /// </summary>
+    /// <remarks>包含派生类型和接口类型</remarks>
+    /// <param name="type"><see cref="Type"/> - 类型</param>
+    /// <param name="retrieveType">检索类型</param>
+    /// <param name="excludeTypes">排除的类型</param>
+    /// <returns><see cref="Tuple{T1, T2, T3}"/> - (定义类型，匹配的继承类型, 依赖类型）</returns>
+    internal static (Type Definition, IEnumerable<Type>? InheritTypes, Type? DependencyType) GetMatchInheritTypes(this Type type, Type? retrieveType, IEnumerable<Type>? excludeTypes = default)
+    {
+        // 获取类型定义类型
+        var typeDefinition = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+
+        // 获取类型定义参数
+        var typeDefinitionParameters = type.GetTypeInfo().GenericTypeParameters;
+
+        // 获取所有接口
+        IEnumerable<Type> interfaces = type.GetInterfaces();
+
+        // 获取依赖类型
+        var dependencyType = retrieveType is null
+                                    ? null
+                                    : interfaces.SingleOrDefault(i => i != retrieveType && retrieveType.IsAssignableFrom(i));
+
+        // 排除特定类型
+        if (excludeTypes is not null)
+        {
+            interfaces = interfaces.Where(t => !excludeTypes.Contains(t) && dependencyType?.IsAssignableFrom(t) == false);
+        }
+
+        // 获取基类
+        var baseType = type.BaseType is null
+                             || type.BaseType == typeof(object)
+                             || type.BaseType.IsNotPublic
+                             || (type.IsGenericType && !type.BaseType.IsGenericType)
+                           ? null
+                           : type.BaseType;
+
+        // 获取所有继承类
+        var inheritTypes = baseType is null
+                                            ? interfaces
+                                            : interfaces.Concat(new[] { baseType });
+
+        inheritTypes = !type.IsGenericType ?
+                            inheritTypes
+                            : inheritTypes.Where(i => i.IsGenericType
+                                                                && i.GenericTypeArguments.Length == typeDefinitionParameters.Length
+                                                                && i.GenericTypeArguments.SequenceEqual(typeDefinitionParameters))
+                                          .Select(i => i.GetGenericTypeDefinition());
+
+        // 处理没有接口或基类类型
+        inheritTypes = inheritTypes.Any() ? inheritTypes : new[] { typeDefinition };
+
+        return (typeDefinition, inheritTypes, dependencyType);
+    }
 }
