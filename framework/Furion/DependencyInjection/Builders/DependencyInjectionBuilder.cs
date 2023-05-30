@@ -23,18 +23,17 @@ namespace Furion.DependencyInjection;
 public sealed partial class DependencyInjectionBuilder
 {
     /// <summary>
-    /// 待注册的服务模型集合
+    /// 已添加的服务模型集合
     /// </summary>
-    private List<ServiceModel>? _serviceModels = new();
+    private HashSet<ServiceModel>? _serviceModels = new();
 
     /// <summary>
-    /// 待扫描的程序集
+    /// 已添加扫描的程序集集合
     /// </summary>
-    /// <remarks>默认添加启动程序集</remarks>
-    private HashSet<Assembly?>? _assemblies = new() { Assembly.GetEntryAssembly() };
+    private HashSet<Assembly?>? _assemblies = new();
 
     /// <summary>
-    /// 待排除的扫描接口
+    /// 已排除的非服务接口集合
     /// </summary>
     private HashSet<Type>? _excludeInterfaces = new()
     {
@@ -50,19 +49,69 @@ public sealed partial class DependencyInjectionBuilder
     public bool SuppressAssemblyScanning { get; set; } = false;
 
     /// <summary>
-    /// 添加待扫描的程序集
+    /// 服务模型筛选器
     /// </summary>
-    /// <param name="assemblies"></param>
-    /// <returns><see cref="DependencyInjectionBuilder"/> - 依赖注入服务构建器</returns>
-    public DependencyInjectionBuilder AddAssembliesToBeScanned(params Assembly[] assemblies)
+    public Func<ServiceModel, bool>? AddFilter { get; set; }
+
+    /// <summary>
+    /// 扫描程序集并添加到服务模型集合中
+    /// </summary>
+    /// <param name="assemblies">程序集</param>
+    public void AddAssemblies(params Assembly?[] assemblies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(assemblies);
 
-        // 批量添加
-        Array.ForEach(assemblies, assembly => _assemblies?.Add(assembly));
+        // 遍历程序集并创建服务模型集合
+        foreach (var assembly in assemblies)
+        {
+            if (assembly is null || _assemblies?.Add(assembly) == false) continue;
 
-        return this;
+            // 查找所有类型（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
+            var implementationTypes = assembly.GetTypes()
+                                                             .Where(t => !t.IsAbstract
+                                                                                   && !t.IsStatic()
+                                                                                   && t.IsClass
+                                                                                   && CheckIsAssignableFromILifetimeDependency(t));
+
+            // 遍历所有实现类型并创建服务模型
+            foreach (var implementationType in implementationTypes)
+            {
+                // 获取 [ServiceInjection] 特性
+                var serviceInjectionAttribute = implementationType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new();
+
+                // 配置 Ignore 属性则跳过
+                if (serviceInjectionAttribute is { Ignore: true }) continue;
+
+                // 获取所有匹配的服务类型
+                var (typeDefinition, inheritTypes, lifetimeDependencyType) = implementationType.GetMatchInheritTypes(_excludeInterfaces);
+
+                // 获取服务生存期
+                var serviceLifetime = GetServiceLifetime(lifetimeDependencyType);
+
+                // 创建服务模型
+                foreach (var serviceType in inheritTypes)
+                {
+                    _serviceModels?.Add(new ServiceModel
+                    {
+                        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, typeDefinition, serviceLifetime),
+                        ServiceRegister = serviceType != typeDefinition
+                                                            ? serviceInjectionAttribute.ServiceRegister
+                                                            : ServiceRegister.Add    // 处理 TryAddEnumerable 不能注册服务类型等于实现类型的问题
+                    });
+                }
+
+                // 注册自身
+                if (serviceInjectionAttribute is { IncludingSelf: true })
+                {
+                    _serviceModels?.Add(new ServiceModel
+                    {
+                        ServiceDescriptor = ServiceDescriptor.Describe(typeDefinition, typeDefinition, serviceLifetime),
+                        ServiceRegister = ServiceRegister.Add
+                    });
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -78,102 +127,46 @@ public sealed partial class DependencyInjectionBuilder
             _assemblies
         });
 
-        // 判断是否禁用程序集扫描
+        // 添加默认启动程序集扫描
         if (!SuppressAssemblyScanning)
         {
-            ScanningAssemblyAndRegisteringServices();
+            AddAssemblies(Assembly.GetEntryAssembly());
+            AddAssemblies(Assembly.GetEntryAssembly());
+            AddAssemblies(Assembly.GetEntryAssembly());
         }
 
-        // 批量注册服务
-        if (_serviceModels is not null)
+        // 过滤已经注册的服务模型
+        var canRegisterServiceModels = _serviceModels?.Where(m => m.CanRegister(services)) ?? Array.Empty<ServiceModel>();
+
+        // 遍历所有服务模型并注册服务
+        foreach (var serviceModel in canRegisterServiceModels)
         {
-            foreach (var serviceModel in _serviceModels)
+            // 服务模型过滤
+            if (AddFilter is not null && AddFilter(serviceModel)) continue;
+
+            // 解析服务描述器
+            var serviceDescriptor = serviceModel.ServiceDescriptor;
+
+            // TryAddEnumerable
+            if (serviceModel.ServiceRegister is ServiceRegister.Default or ServiceRegister.TryAddEnumerable)
             {
-                // 解析服务描述器
-                var serviceDescriptor = serviceModel.ServiceDescriptor;
-
-                // 检查重复注册
-                if (services.Any(s => s.ServiceType == serviceDescriptor.ServiceType && s.ImplementationType == serviceDescriptor.ImplementationType)) continue;
-
-                if (serviceModel.ServiceRegister is ServiceRegister.Default or ServiceRegister.TryAddEnumerable)
-                {
-                    services.TryAddEnumerable(serviceDescriptor);
-                }
-                else if (serviceModel.ServiceRegister == ServiceRegister.Add)
-                {
-                    services.Add(serviceDescriptor);
-                }
-                else if (serviceModel.ServiceRegister == ServiceRegister.TryAdd)
-                {
-                    services.TryAdd(serviceDescriptor);
-                }
-                else { }
+                services.TryAddEnumerable(serviceDescriptor);
             }
+            // Add
+            else if (serviceModel.ServiceRegister == ServiceRegister.Add)
+            {
+                services.Add(serviceDescriptor);
+            }
+            // TryAdd
+            else if (serviceModel.ServiceRegister == ServiceRegister.TryAdd)
+            {
+                services.TryAdd(serviceDescriptor);
+            }
+            else { }
         }
 
         // 回收（释放）集合对象
         Recycling();
-    }
-
-    /// <summary>
-    /// 扫描程序集并登录待注册的服务
-    /// </summary>
-    private void ScanningAssemblyAndRegisteringServices()
-    {
-        if (_assemblies is null) return;
-
-        // 声明服务接口生存期判断委托
-        var lifetimeAction = (Type i) => typeof(ILifetimeDependency).IsAssignableFrom(i);
-
-        foreach (var assembly in _assemblies)
-        {
-            if (assembly is null) continue;
-
-            // 查找所有类（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
-            var implementationTypes = assembly.GetTypes()
-                                                             .Where(t => !t.IsAbstract
-                                                                                   && !t.IsStatic()
-                                                                                   && t.IsClass
-                                                                                   && lifetimeAction(t));
-
-            // 遍历类型并创建 ServiceDescriptor 服务描述器类型
-            if (implementationTypes is null) continue;
-            foreach (var implementationType in implementationTypes)
-            {
-                // 获取 [ServiceInjection] 特性
-                var serviceInjectionAttribute = implementationType.GetCustomAttribute<ServiceInjectionAttribute>(true) ?? new();
-
-                // 跳过配置了 Ignore 属性
-                if (serviceInjectionAttribute is { Ignore: true }) continue;
-
-                // 获取所有匹配的服务类型
-                var (definition, inheritTypes, lifetimeDependencyType) = implementationType.GetMatchInheritTypes(typeof(ILifetimeDependency), _excludeInterfaces);
-                if (inheritTypes is null) continue;
-
-                // 获取服务注册生存期
-                var serviceLifetime = GetServiceLifetime(lifetimeDependencyType);
-
-                // 如果类型只有一个接口，则直接注册类型
-                foreach (var serviceType in inheritTypes)
-                {
-                    _serviceModels?.Add(new ServiceModel
-                    {
-                        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, definition, serviceLifetime),
-                        ServiceRegister = serviceType != definition ? serviceInjectionAttribute.ServiceRegister : ServiceRegister.Add    // 处理 TryAddEnumerable 不能注册服务类型等于注册类型的问题
-                    });
-                }
-
-                // 注册自身
-                if (serviceInjectionAttribute is { IncludingSelf: true })
-                {
-                    _serviceModels?.Add(new ServiceModel
-                    {
-                        ServiceDescriptor = ServiceDescriptor.Describe(definition, definition, serviceLifetime),
-                        ServiceRegister = ServiceRegister.Add
-                    });
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -187,11 +180,16 @@ public sealed partial class DependencyInjectionBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(lifetimeDependency);
 
+        // 返回服务生存期枚举对象
         return lifetimeDependency switch
         {
+            // 暂时
             var value when value == typeof(ITransientDependency) => ServiceLifetime.Transient,
+            // 范围
             var value when value == typeof(IScopedDependency) => ServiceLifetime.Scoped,
+            // 单例
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
+            // 不受支持服务生存期
             _ => throw new InvalidOperationException("Not supported service lifetime interface.")
         };
     }
@@ -209,4 +207,9 @@ public sealed partial class DependencyInjectionBuilder
         _assemblies = null;
         _excludeInterfaces = null;
     }
+
+    /// <summary>
+    /// 查找实现 <see cref="ILifetimeDependency"/> 服务生存期的接口
+    /// </summary>
+    internal static readonly Func<Type, bool> CheckIsAssignableFromILifetimeDependency = i => i != typeof(ILifetimeDependency) && typeof(ILifetimeDependency).IsAssignableFrom(i);
 }

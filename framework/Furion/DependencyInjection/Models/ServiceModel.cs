@@ -30,4 +30,31 @@ public sealed class ServiceModel
     /// 服务注册方式
     /// </summary>
     public ServiceRegister ServiceRegister { get; init; }
+
+    /// <summary>
+    /// 检查服务模型是否可以注册
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <returns><see cref="bool"/> - 返回 true 可以注册</returns>
+    public bool CanRegister(IServiceCollection services)
+    {
+        return !services.Any(s => s.ServiceType == ServiceDescriptor.ServiceType
+                                                      && (s.ImplementationType == ServiceDescriptor.ImplementationType || (s.ImplementationType is null && ServiceDescriptor.ServiceType == ServiceDescriptor.ImplementationType)));
+    }
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj)
+    {
+        return obj != null
+                && GetType() == obj.GetType()
+                && obj is ServiceModel model
+                && model.ServiceDescriptor.ServiceType == ServiceDescriptor.ServiceType
+                && model.ServiceDescriptor.ImplementationType == ServiceDescriptor.ImplementationType;
+    }
+
+    /// <inheritdoc/>
+    public override int GetHashCode()
+    {
+        return ServiceDescriptor.ServiceType.GetHashCode() + ServiceDescriptor.ImplementationType?.GetHashCode() ?? default;
+    }
 }
