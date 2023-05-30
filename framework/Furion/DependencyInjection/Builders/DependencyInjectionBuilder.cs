@@ -51,7 +51,7 @@ public sealed partial class DependencyInjectionBuilder
     /// <summary>
     /// 服务模型筛选器
     /// </summary>
-    public Func<ServiceModel, bool>? AddFilter { get; set; }
+    public Func<ServiceModel, bool>? FilterConfigure { get; set; }
 
     /// <summary>
     /// 扫描程序集并添加到服务模型集合中
@@ -142,7 +142,7 @@ public sealed partial class DependencyInjectionBuilder
         foreach (var serviceModel in canRegisterServiceModels)
         {
             // 服务模型过滤
-            if (AddFilter is not null && AddFilter(serviceModel)) continue;
+            if (FilterConfigure is not null && FilterConfigure(serviceModel) == false) continue;
 
             // 解析服务描述器
             var serviceDescriptor = serviceModel.ServiceDescriptor;
