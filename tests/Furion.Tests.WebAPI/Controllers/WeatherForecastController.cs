@@ -40,7 +40,8 @@ public class WeatherForecastController : ControllerBase
         , TestBaseSerivce<int, string> testBaseGeneric
         , TestSingleGeneric<string> c
         , IEnumerable<TestNotInterface> cs
-        , TestNotInterface2 testNotInterface2)
+        , TestNotInterface2 testNotInterface2
+        , IEnumerable<ITestService> testServices)
     {
         return testService.GetName() + " " + testExtraService.Extra() + " " + testBaseSerivce.GetBase();
     }

@@ -22,3 +22,8 @@ internal sealed class TestGService : TestSingleGeneric<string>, IScopedDependenc
 public class TestSingleGeneric<T>
 {
 }
+
+internal sealed class TestService2 : ITestService
+{
+    public string GetName() => nameof(ITestService);
+}

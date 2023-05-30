@@ -29,8 +29,6 @@ public static class DependencyInjectionServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = default)
     {
-        // TODO: 注册命名服务（先判断命名服务是否已注册，如果有则避免重复注册）
-
         // 创建依赖注入构建器实例
         var builder = new DependencyInjectionBuilder();
 

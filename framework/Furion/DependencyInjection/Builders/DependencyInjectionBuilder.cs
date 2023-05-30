@@ -216,7 +216,7 @@ public sealed partial class DependencyInjectionBuilder
             // 单例
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
             // 不受支持服务生存期
-            _ => throw new InvalidOperationException("Not supported service lifetime interface.")
+            _ => throw new ArgumentOutOfRangeException(nameof(lifetimeDependency), "Not supported service lifetime interface.")
         };
     }
 
