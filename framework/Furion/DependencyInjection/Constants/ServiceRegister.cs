@@ -20,9 +20,9 @@ namespace System;
 public enum ServiceRegister : uint
 {
     /// <summary>
-    /// 缺省值
+    /// 服务和实现类型未注册则注册，否则跳过
     /// </summary>
-    Default = 0,
+    TryAddEnumerable = 0,
 
     /// <summary>
     /// 注册
@@ -35,7 +35,7 @@ public enum ServiceRegister : uint
     TryAdd,
 
     /// <summary>
-    /// 服务和实现类型未注册则注册，否则跳过
+    /// 缺省值
     /// </summary>
-    TryAddEnumerable = Default
+    Default = TryAddEnumerable
 }

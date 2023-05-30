@@ -22,9 +22,27 @@ namespace Furion.DependencyInjection;
 public sealed class ServiceModel
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="serviceLifetime">服务生存期</param>
+    /// <param name="serviceRegister">服务注册方式</param>
+    public ServiceModel(Type serviceType
+        , Type implementationType
+        , ServiceLifetime serviceLifetime
+        , ServiceRegister? serviceRegister = null)
+    {
+        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, implementationType, serviceLifetime);
+        ServiceRegister = serviceType == implementationType || serviceRegister is null
+                                           ? ServiceRegister.Add // 处理 TryAddEnumerable 不能注册服务类型等于实现类型的问题
+                                           : serviceRegister.Value;
+    }
+
+    /// <summary>
     /// 服务描述器
     /// </summary>
-    public required ServiceDescriptor ServiceDescriptor { get; init; }
+    public ServiceDescriptor ServiceDescriptor { get; init; }
 
     /// <summary>
     /// 服务注册方式
@@ -56,5 +74,11 @@ public sealed class ServiceModel
     public override int GetHashCode()
     {
         return ServiceDescriptor.ServiceType.GetHashCode() + ServiceDescriptor.ImplementationType?.GetHashCode() ?? default;
+    }
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        return ServiceRegister.ToString() + " " + ServiceDescriptor.ToString();
     }
 }

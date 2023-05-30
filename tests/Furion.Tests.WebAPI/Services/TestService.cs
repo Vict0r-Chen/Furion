@@ -17,10 +17,8 @@ public abstract class TestBaseSerivce
 
 internal sealed class TestGService : TestSingleGeneric<string>, IScopedDependency
 {
-
 }
 
 public class TestSingleGeneric<T>
 {
-
 }

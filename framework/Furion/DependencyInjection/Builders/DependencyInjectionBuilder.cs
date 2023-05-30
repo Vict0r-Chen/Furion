@@ -93,23 +93,24 @@ public sealed partial class DependencyInjectionBuilder
                 // 创建服务模型
                 foreach (var serviceType in inheritTypes)
                 {
-                    _serviceModels?.Add(new ServiceModel
-                    {
-                        ServiceDescriptor = ServiceDescriptor.Describe(serviceType, typeDefinition, serviceLifetime),
-                        ServiceRegister = serviceType != typeDefinition
-                                                            ? serviceInjectionAttribute.ServiceRegister
-                                                            : ServiceRegister.Add    // 处理 TryAddEnumerable 不能注册服务类型等于实现类型的问题
-                    });
+                    var serviceModel = new ServiceModel(serviceType
+                        , typeDefinition
+                        , serviceLifetime
+                        , serviceInjectionAttribute.ServiceRegister);
+
+                    // 调用服务模型过滤委托
+                    if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
                 }
 
                 // 注册自身
                 if (serviceInjectionAttribute is { IncludingSelf: true })
                 {
-                    _serviceModels?.Add(new ServiceModel
-                    {
-                        ServiceDescriptor = ServiceDescriptor.Describe(typeDefinition, typeDefinition, serviceLifetime),
-                        ServiceRegister = ServiceRegister.Add
-                    });
+                    var serviceModel = new ServiceModel(typeDefinition
+                        , typeDefinition
+                        , serviceLifetime);
+
+                    // 调用服务模型过滤委托
+                    if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
                 }
             }
         }
@@ -121,30 +122,25 @@ public sealed partial class DependencyInjectionBuilder
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     internal void Build(IServiceCollection services)
     {
-        // 写入构建开始诊断日志
-        _diagnosticSource.WriteIsEnabled("BuildStart", new
-        {
-            _serviceModels,
-            _assemblies
-        });
-
         // 添加默认启动程序集扫描
         if (!SuppressAssemblyScanning)
         {
             AddAssemblies(Assembly.GetEntryAssembly());
-            AddAssemblies(Assembly.GetEntryAssembly());
-            AddAssemblies(Assembly.GetEntryAssembly());
         }
 
         // 过滤已经注册的服务模型
-        var canRegisterServiceModels = _serviceModels?.Where(m => m.CanRegister(services)) ?? Array.Empty<ServiceModel>();
+        var serviceModels = _serviceModels?.Where(m => m.CanRegister(services)) ?? Array.Empty<ServiceModel>();
+
+        // 写入构建开始诊断日志
+        _diagnosticSource.WriteIsEnabled("BuildStart", new
+        {
+            serviceModels,
+            _assemblies
+        });
 
         // 遍历所有服务模型并注册服务
-        foreach (var serviceModel in canRegisterServiceModels)
+        foreach (var serviceModel in serviceModels)
         {
-            // 服务模型过滤
-            if (FilterConfigure is not null && FilterConfigure(serviceModel) == false) continue;
-
             // 解析服务描述器
             var serviceDescriptor = serviceModel.ServiceDescriptor;
 
