@@ -40,7 +40,7 @@ internal static class TypeExtensions
         var interfaces = type.GetInterfaces();
 
         // 解析服务生存期类型
-        var lifetimeDependencyType = interfaces.SingleOrDefault(DependencyInjectionBuilder.CheckIsAssignableFromILifetimeDependency);
+        var lifetimeDependencyType = interfaces.SingleOrDefault(i => i != typeof(ILifetimeDependency) && typeof(ILifetimeDependency).IsAssignableFrom(i));
 
         // 过滤无效接口
         var filterInterfaces = excludeTypes is null

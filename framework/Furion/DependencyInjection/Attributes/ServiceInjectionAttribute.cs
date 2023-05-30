@@ -53,4 +53,10 @@ public sealed class ServiceInjectionAttribute : Attribute
     /// 忽略特定服务类型
     /// </summary>
     public Type[]? ExcludeServiceTypes { get; init; }
+
+    /// <summary>
+    /// 排序
+    /// </summary>
+    /// <remarks>值越大越靠后注册</remarks>
+    public int Order { get; init; }
 }

@@ -68,11 +68,7 @@ public sealed partial class DependencyInjectionBuilder
             if (assembly is null || _assemblies?.Add(assembly) == false) continue;
 
             // 查找所有类型（非接口、非静态类、非抽象类、非值类型或枚举）且实现 ILifetimeDependency 接口
-            var implementationTypes = assembly.GetTypes()
-                                                             .Where(t => !t.IsAbstract
-                                                                                   && !t.IsStatic()
-                                                                                   && t.IsClass
-                                                                                   && CheckIsAssignableFromILifetimeDependency(t));
+            var implementationTypes = assembly.GetTypes().Where(t => t.IsCanNewClass(typeof(ILifetimeDependency)));
 
             // 遍历所有实现类型并创建服务模型
             foreach (var implementationType in implementationTypes)
@@ -96,7 +92,10 @@ public sealed partial class DependencyInjectionBuilder
                     var serviceModel = new ServiceModel(serviceType
                         , typeDefinition
                         , serviceLifetime
-                        , serviceInjectionAttribute.ServiceRegister);
+                        , serviceInjectionAttribute.ServiceRegister)
+                    {
+                        Order = serviceInjectionAttribute.Order
+                    };
 
                     // 调用服务模型过滤委托
                     if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
@@ -107,7 +106,10 @@ public sealed partial class DependencyInjectionBuilder
                 {
                     var serviceModel = new ServiceModel(typeDefinition
                         , typeDefinition
-                        , serviceLifetime);
+                        , serviceLifetime)
+                    {
+                        Order = serviceInjectionAttribute.Order
+                    };
 
                     // 调用服务模型过滤委托
                     if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
@@ -129,7 +131,9 @@ public sealed partial class DependencyInjectionBuilder
         }
 
         // 过滤已经注册的服务模型
-        var serviceModels = _serviceModels?.Where(m => m.CanRegister(services)) ?? Array.Empty<ServiceModel>();
+        var serviceModels = (_serviceModels?.Where(m => m.CanRegister(services)) ?? Array.Empty<ServiceModel>())
+                                                                 .OrderBy(m => m.ServiceDescriptor.ServiceType.Name)
+                                                                 .ThenBy(m => m.Order);
 
         // 写入构建开始诊断日志
         _diagnosticSource.WriteIsEnabled("BuildStart", new
@@ -209,9 +213,4 @@ public sealed partial class DependencyInjectionBuilder
         _assemblies = null;
         _excludeInterfaces = null;
     }
-
-    /// <summary>
-    /// 查找实现 <see cref="ILifetimeDependency"/> 服务生存期的接口
-    /// </summary>
-    internal static readonly Func<Type, bool> CheckIsAssignableFromILifetimeDependency = i => i != typeof(ILifetimeDependency) && typeof(ILifetimeDependency).IsAssignableFrom(i);
 }

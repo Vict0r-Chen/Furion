@@ -4,7 +4,11 @@ public class TestNotInterface : IScopedDependency
 {
 }
 
-[ServiceInjection(IncludingSelf = true)]
+[ServiceInjection(IncludingSelf = true, Order = 2)]
 public class TestNotInterface2 : TestNotInterface
+{
+}
+
+public class TestNotInterface3 : TestNotInterface
 {
 }

@@ -47,7 +47,13 @@ public sealed class ServiceModel
     /// <summary>
     /// 服务注册方式
     /// </summary>
-    public ServiceRegister ServiceRegister { get; init; }
+    public ServiceRegister ServiceRegister { get; set; }
+
+    /// <summary>
+    /// 排序
+    /// </summary>
+    /// <remarks>值越大越靠后注册</remarks>
+    public int Order { get; set; }
 
     /// <summary>
     /// 检查服务模型是否可以注册

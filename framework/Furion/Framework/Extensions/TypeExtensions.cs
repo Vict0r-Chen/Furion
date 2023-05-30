@@ -28,4 +28,18 @@ internal static class TypeExtensions
     {
         return type.IsSealed && type.IsAbstract;
     }
+
+    /// <summary>
+    /// 判断类型是否是可实例化的类型
+    /// </summary>
+    /// <param name="type"><see cref="Type"/> - 类型</param>
+    /// <param name="dependencyType">依赖检查类型</param>
+    /// <returns><see cref="bool"/> - true 表示可实例化</returns>
+    internal static bool IsCanNewClass(this Type type, Type? dependencyType = default)
+    {
+        var canNew = !type.IsAbstract && !type.IsStatic() && type.IsClass;
+        return dependencyType == null
+                ? canNew
+                : canNew && type != dependencyType && dependencyType.IsAssignableFrom(type);
+    }
 }
