@@ -84,7 +84,8 @@ public sealed partial class DependencyInjectionBuilder
                 if (serviceInjectionAttribute is { Ignore: true }) continue;
 
                 // 获取所有匹配的服务类型
-                var (typeDefinition, inheritTypes, lifetimeDependencyType) = implementationType.GetMatchInheritTypes(_excludeInterfaces);
+                var (typeDefinition, inheritTypes, lifetimeDependencyType) = implementationType.GetMatchInheritTypes(
+                    _excludeInterfaces?.Concat(serviceInjectionAttribute.ExcludeServiceTypes ?? Array.Empty<Type>()));
 
                 // 获取服务生存期
                 var serviceLifetime = GetServiceLifetime(lifetimeDependencyType);

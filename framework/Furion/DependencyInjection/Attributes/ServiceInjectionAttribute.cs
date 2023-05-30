@@ -48,4 +48,9 @@ public sealed class ServiceInjectionAttribute : Attribute
     /// 注册自身
     /// </summary>
     public bool IncludingSelf { get; init; }
+
+    /// <summary>
+    /// 忽略特定服务类型
+    /// </summary>
+    public Type[]? ExcludeServiceTypes { get; init; }
 }
