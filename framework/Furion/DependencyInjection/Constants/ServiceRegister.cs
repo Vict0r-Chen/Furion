@@ -35,6 +35,11 @@ public enum ServiceRegister : uint
     TryAdd,
 
     /// <summary>
+    /// 替换
+    /// </summary>
+    Replace,
+
+    /// <summary>
     /// 缺省值
     /// </summary>
     Default = TryAddEnumerable

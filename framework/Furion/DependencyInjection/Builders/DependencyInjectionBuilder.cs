@@ -159,6 +159,11 @@ public sealed partial class DependencyInjectionBuilder
             {
                 services.TryAdd(serviceDescriptor);
             }
+            // Replace
+            else if (serviceModel.ServiceRegister == ServiceRegister.Replace)
+            {
+                services.Replace(serviceDescriptor);
+            }
             else { }
         }
 
