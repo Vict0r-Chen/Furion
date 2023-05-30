@@ -36,12 +36,19 @@ public static class NamedServiceCollectionExtensions
 
         var serviceType = descriptor.ServiceType;
         var implementationType = descriptor.ImplementationType;
+        var implementationFactory = descriptor.ImplementationFactory;
 
-        // 注册接口/实现
-        if (serviceType != implementationType) services.TryAddEnumerable(descriptor);
-
-        // 注册自身
-        services.Add(ServiceDescriptor.Describe(implementationType!, implementationType!, descriptor.Lifetime));
+        // 如果实现类型不为空
+        if (implementationType is not null)
+        {
+            if (serviceType != implementationType) services.TryAddEnumerable(descriptor);
+            services.Add(ServiceDescriptor.Describe(implementationType, implementationType, descriptor.Lifetime));
+        }
+        // 如果实现工厂不为空
+        else if (implementationFactory is not null)
+        {
+            services.Add(descriptor);
+        }
 
         return services;
     }
@@ -49,7 +56,7 @@ public static class NamedServiceCollectionExtensions
     /// <summary>
     /// 添加暂时命名服务
     /// </summary>
-    /// <typeparam name="TService">服务</typeparam>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">服务实现类</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="name">服务命名</param>
@@ -64,7 +71,7 @@ public static class NamedServiceCollectionExtensions
     /// <summary>
     /// 添加范围命名服务
     /// </summary>
-    /// <typeparam name="TService">服务</typeparam>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">服务实现类</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="name">服务命名</param>
@@ -79,7 +86,7 @@ public static class NamedServiceCollectionExtensions
     /// <summary>
     /// 添加单例命名服务
     /// </summary>
-    /// <typeparam name="TService">服务</typeparam>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">服务实现类</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="name">服务命名</param>
@@ -146,7 +153,7 @@ public static class NamedServiceCollectionExtensions
     /// <summary>
     /// 添加范围命名服务
     /// </summary>
-    /// <typeparam name="TService">服务</typeparam>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="name">服务命名</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
@@ -159,7 +166,7 @@ public static class NamedServiceCollectionExtensions
     /// <summary>
     /// 添加单例命名服务
     /// </summary>
-    /// <typeparam name="TService">服务</typeparam>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
     /// <param name="name">服务命名</param>
     /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
@@ -203,5 +210,86 @@ public static class NamedServiceCollectionExtensions
     public static IServiceCollection AddNamedSingleton(this IServiceCollection services, string name, Type serviceType)
     {
         return services.AddNamed(name, ServiceDescriptor.Singleton(serviceType));
+    }
+
+    /// <summary>
+    /// 添加暂时命名服务
+    /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <param name="name">服务命名</param>
+    /// <param name="implementationFactory">服务实现工厂</param>
+    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
+    public static IServiceCollection AddNamedTransient<TService>(this IServiceCollection services, string name, Func<IServiceProvider, TService> implementationFactory)
+        where TService : class
+    {
+        return services.AddNamed(name, ServiceDescriptor.Transient(implementationFactory));
+    }
+
+    /// <summary>
+    /// 添加范围命名服务
+    /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <param name="name">服务命名</param>
+    /// <param name="implementationFactory">服务实现工厂</param>
+    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
+    public static IServiceCollection AddNamedScoped<TService>(this IServiceCollection services, string name, Func<IServiceProvider, TService> implementationFactory)
+        where TService : class
+    {
+        return services.AddNamed(name, ServiceDescriptor.Scoped(implementationFactory));
+    }
+
+    /// <summary>
+    /// 添加单例命名服务
+    /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <param name="name">服务命名</param>
+    /// <param name="implementationFactory">服务实现工厂</param>
+    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
+    public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services, string name, Func<IServiceProvider, TService> implementationFactory)
+        where TService : class
+    {
+        return services.AddNamed(name, ServiceDescriptor.Singleton(implementationFactory));
+    }
+
+    /// <summary>
+    /// 添加暂时命名服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <param name="name">服务命名</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationFactory">服务实现工厂</param>
+    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
+    public static IServiceCollection AddNamedTransient(this IServiceCollection services, string name, Type serviceType, Func<IServiceProvider, object> implementationFactory)
+    {
+        return services.AddNamed(name, ServiceDescriptor.Transient(serviceType, implementationFactory));
+    }
+
+    /// <summary>
+    /// 添加范围命名服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <param name="name">服务命名</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationFactory">服务实现工厂</param>
+    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
+    public static IServiceCollection AddNamedScoped(this IServiceCollection services, string name, Type serviceType, Func<IServiceProvider, object> implementationFactory)
+    {
+        return services.AddNamed(name, ServiceDescriptor.Scoped(serviceType, implementationFactory));
+    }
+
+    /// <summary>
+    /// 添加单例命名服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/> - 服务描述器集合</param>
+    /// <param name="name">服务命名</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <param name="implementationFactory">服务实现工厂</param>
+    /// <returns><see cref="IServiceCollection"/> - 服务描述器集合</returns>
+    public static IServiceCollection AddNamedSingleton(this IServiceCollection services, string name, Type serviceType, Func<IServiceProvider, object> implementationFactory)
+    {
+        return services.AddNamed(name, ServiceDescriptor.Singleton(serviceType, implementationFactory));
     }
 }

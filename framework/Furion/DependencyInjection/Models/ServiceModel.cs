@@ -31,12 +31,12 @@ public sealed class ServiceModel
     public ServiceModel(Type serviceType
         , Type implementationType
         , ServiceLifetime serviceLifetime
-        , ServiceRegister? serviceRegister = null)
+        , ServiceRegister serviceRegister)
     {
         ServiceDescriptor = ServiceDescriptor.Describe(serviceType, implementationType, serviceLifetime);
-        ServiceRegister = serviceType == implementationType || serviceRegister is null
+        ServiceRegister = serviceType == implementationType
                                            ? ServiceRegister.Add // 处理 TryAddEnumerable 不能注册服务类型等于实现类型的问题
-                                           : serviceRegister.Value;
+                                           : serviceRegister;
     }
 
     /// <summary>

@@ -49,7 +49,7 @@ public sealed class NamedServiceFactoryOptions
         var isExists = NamedServiceDescriptors.TryGetValue(name, out descriptor);
         if (!isExists
             || descriptor is null
-            || descriptor is { ImplementationType: null }
+            || descriptor is { ImplementationType: null, ImplementationFactory: null }
             || descriptor.ServiceType != serviceType) return false;
 
         return true;
@@ -87,10 +87,22 @@ public sealed class NamedServiceFactoryOptions
     /// <returns><see cref="object"/> - 服务实例</returns>
     public object? GetService(string name, Type serviceType, IServiceProvider serviceProvider)
     {
-        if (TryGet(name, serviceType, out var descriptor))
+        if (!TryGet(name, serviceType, out var descriptor)) return null;
+
+        // 解析服务类型
+        if (descriptor is { ImplementationType: not null })
         {
             // 解析服务
-            return serviceProvider.GetService(descriptor!.ImplementationType!);
+            return serviceProvider.GetService(descriptor.ImplementationType);
+        }
+
+        // 解析委托类型
+        if (descriptor is { ImplementationFactory: not null })
+        {
+            var func = descriptor.ImplementationFactory;
+
+            // 解析服务
+            return func(serviceProvider);
         }
 
         return null;
@@ -118,10 +130,22 @@ public sealed class NamedServiceFactoryOptions
     /// <returns><see cref="object"/> - 服务实例</returns>
     public object GetRequiredService(string name, Type serviceType, IServiceProvider serviceProvider)
     {
-        if (TryGet(name, serviceType, out var descriptor))
+        if (!TryGet(name, serviceType, out var descriptor)) return null!;
+
+        // 解析服务类型
+        if (descriptor is { ImplementationType: not null })
         {
             // 解析服务
-            return serviceProvider.GetRequiredService(descriptor!.ImplementationType!);
+            return serviceProvider.GetRequiredService(descriptor.ImplementationType);
+        }
+
+        // 解析委托类型
+        if (descriptor is { ImplementationFactory: not null })
+        {
+            var func = descriptor.ImplementationFactory;
+
+            // 解析服务
+            return func(serviceProvider);
         }
 
         return null!;

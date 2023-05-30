@@ -65,7 +65,8 @@ public sealed partial class DependencyInjectionBuilder
         // 遍历所有追加的服务模型集合
         foreach (var serviceModel in serviceModels)
         {
-            if (serviceModel is null) continue;
+            // 如果是实现类工厂则忽略（手动注册）
+            if (serviceModel is null || serviceModel.ServiceDescriptor is { ImplementationType: null }) continue;
 
             // 调用服务模型过滤委托
             if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
@@ -124,7 +125,8 @@ public sealed partial class DependencyInjectionBuilder
                     AddServiceModels(
                         new ServiceModel(typeDefinition
                         , typeDefinition
-                        , serviceLifetime)
+                        , serviceLifetime
+                        , ServiceRegister.Add)
                         {
                             Order = serviceInjectionAttribute.Order
                         });
