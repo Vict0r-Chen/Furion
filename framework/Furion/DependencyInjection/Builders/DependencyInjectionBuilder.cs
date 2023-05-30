@@ -183,6 +183,11 @@ public sealed partial class DependencyInjectionBuilder
             {
                 services.Replace(serviceDescriptor);
             }
+            // Remove
+            else if (serviceModel.ServiceRegister == ServiceRegister.Remove)
+            {
+                services.Remove(serviceDescriptor);
+            }
             else { }
         }
 

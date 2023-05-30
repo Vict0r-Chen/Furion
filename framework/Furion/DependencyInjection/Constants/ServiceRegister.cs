@@ -40,6 +40,11 @@ public enum ServiceRegister : uint
     Replace,
 
     /// <summary>
+    /// 移除
+    /// </summary>
+    Remove,
+
+    /// <summary>
     /// 缺省值
     /// </summary>
     Default = TryAddEnumerable
