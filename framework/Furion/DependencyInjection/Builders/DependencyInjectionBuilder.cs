@@ -54,6 +54,25 @@ public sealed partial class DependencyInjectionBuilder
     public Func<ServiceModel, bool>? FilterConfigure { get; set; }
 
     /// <summary>
+    /// 添加服务模型
+    /// </summary>
+    /// <param name="serviceModels">服务模型集合</param>
+    public void AddServiceModels(params ServiceModel?[] serviceModels)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(serviceModels);
+
+        // 遍历所有追加的服务模型集合
+        foreach (var serviceModel in serviceModels)
+        {
+            if (serviceModel is null) continue;
+
+            // 调用服务模型过滤委托
+            if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
+        }
+    }
+
+    /// <summary>
     /// 扫描程序集并添加到服务模型集合中
     /// </summary>
     /// <param name="assemblies">程序集</param>
@@ -89,30 +108,26 @@ public sealed partial class DependencyInjectionBuilder
                 // 创建服务模型
                 foreach (var serviceType in inheritTypes)
                 {
-                    var serviceModel = new ServiceModel(serviceType
+                    AddServiceModels(
+                        new ServiceModel(serviceType
                         , typeDefinition
                         , serviceLifetime
                         , serviceInjectionAttribute.ServiceRegister)
-                    {
-                        Order = serviceInjectionAttribute.Order
-                    };
-
-                    // 调用服务模型过滤委托
-                    if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
+                        {
+                            Order = serviceInjectionAttribute.Order
+                        });
                 }
 
                 // 注册自身
                 if (serviceInjectionAttribute is { IncludingSelf: true })
                 {
-                    var serviceModel = new ServiceModel(typeDefinition
+                    AddServiceModels(
+                        new ServiceModel(typeDefinition
                         , typeDefinition
                         , serviceLifetime)
-                    {
-                        Order = serviceInjectionAttribute.Order
-                    };
-
-                    // 调用服务模型过滤委托
-                    if (FilterConfigure is null || FilterConfigure(serviceModel)) _serviceModels?.Add(serviceModel);
+                        {
+                            Order = serviceInjectionAttribute.Order
+                        });
                 }
             }
         }
@@ -132,8 +147,8 @@ public sealed partial class DependencyInjectionBuilder
 
         // 过滤已经注册的服务模型
         var serviceModels = (_serviceModels?.Where(m => m.CanRegister(services)) ?? Array.Empty<ServiceModel>())
-                                                                 .OrderBy(m => m.ServiceDescriptor.ServiceType.Name)
-                                                                 .ThenBy(m => m.Order);
+                                                                       .OrderBy(m => m.ServiceDescriptor.ServiceType.Name)
+                                                                       .ThenBy(m => m.Order);
 
         // 写入构建开始诊断日志
         _diagnosticSource.WriteIsEnabled("BuildStart", new
