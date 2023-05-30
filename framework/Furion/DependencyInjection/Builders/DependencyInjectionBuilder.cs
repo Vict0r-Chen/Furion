@@ -135,7 +135,7 @@ public sealed partial class DependencyInjectionBuilder
         _diagnosticSource.WriteIsEnabled("BuildStart", new
         {
             serviceModels,
-            _assemblies
+            assemblies = _assemblies
         });
 
         // 遍历所有服务模型并注册服务
