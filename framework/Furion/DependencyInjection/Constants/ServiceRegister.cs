@@ -20,19 +20,28 @@ namespace System;
 public enum ServiceRegister : uint
 {
     /// <summary>
-    /// 服务和实现类型未注册则注册，否则跳过
+    /// 缺省值
     /// </summary>
-    TryAddEnumerable = 0,
+    /// <remarks>
+    /// <para>>如果服务类型喝实现类型一样，则默认为 TryAdd</para>
+    /// <para>如果不一样，则默认为 TryAddEnumerable</para>
+    /// </remarks>
+    Default = 0,
 
     /// <summary>
-    /// 注册
+    /// 服务和实现类型未注册则注册，否则跳过
     /// </summary>
-    Add,
+    TryAddEnumerable,
 
     /// <summary>
     /// 服务未注册则注册，否则跳过
     /// </summary>
     TryAdd,
+
+    /// <summary>
+    /// 注册
+    /// </summary>
+    Add,
 
     /// <summary>
     /// 替换
@@ -42,10 +51,5 @@ public enum ServiceRegister : uint
     /// <summary>
     /// 移除
     /// </summary>
-    Remove,
-
-    /// <summary>
-    /// 缺省值
-    /// </summary>
-    Default = TryAddEnumerable
+    Remove
 }
