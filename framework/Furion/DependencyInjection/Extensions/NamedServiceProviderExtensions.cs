@@ -12,8 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.DependencyInjection;
-
 namespace System;
 
 /// <summary>
@@ -49,6 +47,9 @@ public static class NamedServiceProviderExtensions
         var implementationType = serviceDescriptor.ImplementationType;
         if (implementationType is not null)
         {
+            // 事件记录
+            NamedServiceProviderEventSource.Log.ResolveTypeStarted();
+
             return serviceProvider.GetRequiredService<IServiceProviderIsService>().IsService(implementationType)
                    ? serviceProvider.GetService(implementationType)
                    : ActivatorUtilities.CreateInstance(serviceProvider, implementationType);
@@ -57,14 +58,23 @@ public static class NamedServiceProviderExtensions
         // 解析实例类型
         if (serviceDescriptor.ImplementationInstance is not null)
         {
+            // 事件记录
+            NamedServiceProviderEventSource.Log.ResolveInstanceStarted();
+
             return serviceDescriptor.ImplementationInstance;
         }
 
         // 解析实现工厂
         if (serviceDescriptor.ImplementationFactory is not null)
         {
+            // 事件记录
+            NamedServiceProviderEventSource.Log.ResolveFactoryStarted();
+
             return serviceDescriptor.ImplementationFactory(serviceProvider);
         }
+
+        // 事件记录
+        NamedServiceProviderEventSource.Log.ResolveNullStarted();
 
         return null;
     }
