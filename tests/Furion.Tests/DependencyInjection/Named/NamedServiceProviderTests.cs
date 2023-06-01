@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Furion.Tests.DependencyInjection.Named;
+﻿namespace Furion.Tests.DependencyInjection.Named;
 
 public class NamedServiceProviderTests
 {

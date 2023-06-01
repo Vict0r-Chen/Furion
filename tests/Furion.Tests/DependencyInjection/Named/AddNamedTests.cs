@@ -1,8 +1,4 @@
-﻿using Furion.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-
-namespace Furion.Tests.DependencyInjection.Named;
+﻿namespace Furion.Tests.DependencyInjection.Named;
 
 public class AddNamedTests
 {
