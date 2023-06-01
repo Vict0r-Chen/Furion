@@ -47,7 +47,7 @@ internal sealed class NamedServiceProviderEventSource : EventSource
     internal void ResolveFactoryStarted(string? message = default) => WriteEvent(3, message);
 
     /// <summary>
-    /// 解析空服务开始事件
+    /// 解析空服务事件
     /// </summary>
     /// <param name="message">负载数据</param>
     [Event(4)]
