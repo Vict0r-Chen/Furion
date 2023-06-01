@@ -12,34 +12,66 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using System.Runtime.CompilerServices;
+
 namespace System;
 
 /// <summary>
-/// <see cref="Type"/> 类型拓展类
+/// <see cref="Type"/> 类型拓展
 /// </summary>
 internal static class TypeExtensions
 {
     /// <summary>
-    /// 判断类型是否是静态类
+    /// 判断类型是否是静态类型
     /// </summary>
-    /// <param name="type"><see cref="Type"/> - 类型</param>
-    /// <returns><see cref="bool"/> - true 表示是静态类；false 表示非静态类</returns>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see langword="true"/> 标识为静态类型；<see langword="false"/> 标识为非静态类</returns>
     internal static bool IsStatic(this Type type)
     {
         return type.IsSealed && type.IsAbstract;
     }
 
     /// <summary>
-    /// 判断类型是否是可实例化的类型
+    /// 判断类型是否是匿名类型
     /// </summary>
-    /// <param name="type"><see cref="Type"/> - 类型</param>
-    /// <param name="dependencyType">依赖检查类型</param>
-    /// <returns><see cref="bool"/> - true 表示可实例化</returns>
-    internal static bool IsCanNewClass(this Type type, Type? dependencyType = default)
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see langword="true"/> 标识为匿名类型；<see langword="false"/> 标识为非匿名类型</returns>
+    internal static bool IsAnonymousType(this Type type)
     {
-        var canNew = !type.IsAbstract && !type.IsStatic() && type.IsClass;
-        return dependencyType == null
-                ? canNew
-                : canNew && type != dependencyType && dependencyType.IsAssignableFrom(type);
+        // 首先需要判断类型是否定义了 CompilerGeneratedAttribute 特性，因为匿名类型是通过编译器生成的，并且都会加上这个特性
+        if (type.IsDefined(typeof(CompilerGeneratedAttribute), false))
+        {
+            // 接下来判断类型名称是否是以 "<>" 开头，以 Encoding 类型结尾，这是匿名类型名称的一般规则
+            if (type.FullName != null && type.FullName.StartsWith("<>") && type.FullName.Contains("AnonymousType"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 判断类型是否可实例化
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see langword="true"/> 标识可实例化；<see langword="false"/> 标识不可实例化</returns>
+    internal static bool IsInstantiatedType(this Type type)
+    {
+        return !type.IsAbstract && !type.IsStatic() && type.IsClass;
+    }
+
+    /// <summary>
+    /// 判断类型是否可实例化且派生特定类型
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="derivedType">派生类型</param>
+    /// <returns><see langword="true"/> 标识可实例化且派生特定类型；<see langword="false"/> 标识不能实例化或不派生特定类型</returns>
+    internal static bool IsInstantiatedTypeWithAssignableFrom(this Type type, Type derivedType)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(derivedType);
+
+        return type.IsInstantiatedType() && derivedType != type && derivedType.IsAssignableFrom(type);
     }
 }

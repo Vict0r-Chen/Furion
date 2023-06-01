@@ -15,19 +15,20 @@
 namespace System.Diagnostics;
 
 /// <summary>
-/// <see cref="DiagnosticSource"/> 类型拓展类
+/// <see cref="DiagnosticSource"/> 类型拓展
 /// </summary>
 internal static class DiagnosticSourceExtensions
 {
     /// <summary>
-    /// 写入诊断日志
+    /// 写入事件
     /// </summary>
-    /// <param name="diagnosticSource">诊断源</param>
+    /// <param name="diagnosticSource"><see cref="DiagnosticSource"/></param>
     /// <param name="name">事件名</param>
-    /// <param name="value">事件负载数据</param>
+    /// <param name="value">负载数据</param>
     internal static void WriteIsEnabled(this DiagnosticSource diagnosticSource, string name, object? value)
     {
         if (!diagnosticSource.IsEnabled(name)) return;
+
         diagnosticSource.Write(name, value);
     }
 }

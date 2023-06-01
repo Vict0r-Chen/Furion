@@ -12,16 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
-namespace System;
-
-/// <summary>
-/// 单例生存期依赖服务
-/// </summary>
-public interface ISingletonDependency : ILifetimeDependency
-{
-    /// <inheritdoc/>
-    ServiceLifetime ILifetimeDependency.Lifetime => ServiceLifetime.Singleton;
-}
+// 配置友元程序集
+[assembly: InternalsVisibleTo("Furion.Tests")]
+[assembly: InternalsVisibleTo("Furion.Tests.WebAPI")]

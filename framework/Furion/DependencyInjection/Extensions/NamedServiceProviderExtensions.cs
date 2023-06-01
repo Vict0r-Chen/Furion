@@ -13,67 +13,101 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Furion.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace System;
 
 /// <summary>
-/// 命名服务提供器拓展类
+/// <see cref="IServiceProvider"/> 类型拓展
 /// </summary>
+/// <remarks>支持基于名称解析服务</remarks>
 public static class NamedServiceProviderExtensions
 {
     /// <summary>
     /// 解析命名服务
     /// </summary>
-    /// <typeparam name="TService">服务类型</typeparam>
-    /// <param name="serviceProvider">服务提供器</param>
-    /// <param name="name">服务名称</param>
-    /// <returns><typeparamref name="TService"/> - 服务实例</returns>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务命名</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <returns><see cref="object"/></returns>
+    public static object? GetNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(serviceType);
+
+        // 获取命名服务描述器选项
+        var namedServiceCollectionOptions = serviceProvider.GetRequiredService<IOptionsMonitor<NamedServiceCollectionOptions>>().CurrentValue;
+
+        // 查找命名配置是否存在
+        var isExists = namedServiceCollectionOptions.NamedServices.TryGetValue(name, out var serviceDescriptor);
+        if (!isExists || serviceDescriptor is null)
+        {
+            return null;
+        }
+
+        // 解析实现类型
+        var implementationType = serviceDescriptor.ImplementationType;
+        if (implementationType is not null)
+        {
+            return serviceProvider.GetRequiredService<IServiceProviderIsService>().IsService(implementationType)
+                   ? serviceProvider.GetService(implementationType)
+                   : ActivatorUtilities.CreateInstance(serviceProvider, implementationType);
+        }
+
+        // 解析实例类型
+        if (serviceDescriptor.ImplementationInstance is not null)
+        {
+            return serviceDescriptor.ImplementationInstance;
+        }
+
+        // 解析实现工厂
+        if (serviceDescriptor.ImplementationFactory is not null)
+        {
+            return serviceDescriptor.ImplementationFactory(serviceProvider);
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 解析命名服务
+    /// </summary>
+    /// <typeparam name="TService"><typeparamref name="TService"/></typeparam>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务命名</param>
+    /// <returns><typeparamref name="TService"/></returns>
     public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
     {
-        var namedServiceFactoryOptions = serviceProvider.GetRequiredService<IOptionsMonitor<NamedServiceFactoryOptions>>().CurrentValue;
-        return namedServiceFactoryOptions.GetService<TService>(name, serviceProvider);
+        return serviceProvider.GetNamedService(name, typeof(TService)) as TService;
     }
 
     /// <summary>
     /// 解析命名服务
     /// </summary>
-    /// <typeparam name="TService">服务类型</typeparam>
-    /// <param name="serviceProvider">服务提供器</param>
-    /// <param name="name">服务名称</param>
-    /// <returns><typeparamref name="TService"/> - 服务实例</returns>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务命名</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <returns><see cref="object"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static object GetNamedRequiredService(this IServiceProvider serviceProvider, string name, Type serviceType)
+    {
+        var service = serviceProvider.GetNamedService(name, serviceType);
+        return service is null
+            ? throw new InvalidOperationException($"No service for type '{serviceType.FullName}' has been registered.")
+            : service;
+    }
+
+    /// <summary>
+    /// 解析命名服务
+    /// </summary>
+    /// <typeparam name="TService"><typeparamref name="TService"/></typeparam>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务命名</param>
+    /// <returns><typeparamref name="TService"/></returns>
     public static TService GetNamedRequiredService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
     {
-        var namedServiceFactoryOptions = serviceProvider.GetRequiredService<IOptionsMonitor<NamedServiceFactoryOptions>>().CurrentValue;
-        return namedServiceFactoryOptions.GetRequiredService<TService>(name, serviceProvider);
-    }
-
-    /// <summary>
-    /// 解析命名服务
-    /// </summary>
-    /// <param name="serviceProvider">服务提供器</param>
-    /// <param name="name">服务名称</param>
-    /// <param name="serviceType">服务类型</param>
-    /// <returns><see cref="object"/> - 服务实例</returns>
-    public static object? GetNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
-    {
-        var namedServiceFactoryOptions = serviceProvider.GetRequiredService<IOptionsMonitor<NamedServiceFactoryOptions>>().CurrentValue;
-        return namedServiceFactoryOptions.GetService(name, serviceType, serviceProvider);
-    }
-
-    /// <summary>
-    /// 解析命名服务
-    /// </summary>
-    /// <param name="serviceProvider">服务提供器</param>
-    /// <param name="name">服务名称</param>
-    /// <param name="serviceType">服务类型</param>
-    /// <returns><see cref="object"/> - 服务实例</returns>
-    public static object GetNamedRequiredService(this IServiceProvider serviceProvider, string name, Type serviceType)
-    {
-        var namedServiceFactoryOptions = serviceProvider.GetRequiredService<IOptionsMonitor<NamedServiceFactoryOptions>>().CurrentValue;
-        return namedServiceFactoryOptions.GetRequiredService(name, serviceType, serviceProvider);
+        return (TService)serviceProvider.GetNamedRequiredService(name, typeof(TService));
     }
 }

@@ -12,16 +12,18 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Concurrent;
 
-namespace System;
+namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 暂时生存期依赖服务
+/// 命名服务描述器集合选项
 /// </summary>
-public interface ITransientDependency : ILifetimeDependency
+/// <remarks>存储命名服务注册信息供运行时解析</remarks>
+public sealed class NamedServiceCollectionOptions
 {
-    /// <inheritdoc/>
-    ServiceLifetime ILifetimeDependency.Lifetime => ServiceLifetime.Transient;
+    /// <summary>
+    /// 命名服务描述器集合
+    /// </summary>
+    public ConcurrentDictionary<string, ServiceDescriptor> NamedServices { get; } = new();
 }

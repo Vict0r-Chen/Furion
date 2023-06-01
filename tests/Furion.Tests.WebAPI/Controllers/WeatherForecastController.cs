@@ -1,4 +1,3 @@
-using Furion.Tests.WebAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Furion.Tests.WebAPI.Controllers;
@@ -29,20 +28,5 @@ public class WeatherForecastController : ControllerBase
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();
-    }
-
-    [HttpGet]
-    public string GetName(ITestService testService
-        , ITestExtraService testExtraService
-        , TestBaseSerivce testBaseSerivce
-        , TestNotInterface testNotInterface
-        , ITestGeneric<int, string> testGeneric
-        , TestBaseSerivce<int, string> testBaseGeneric
-        , TestSingleGeneric<string> c
-        , IEnumerable<TestNotInterface> cs
-        , TestNotInterface2 testNotInterface2
-        , IEnumerable<ITestService> testServices)
-    {
-        return testService.GetName() + " " + testExtraService.Extra() + " " + testBaseSerivce.GetBase();
     }
 }
