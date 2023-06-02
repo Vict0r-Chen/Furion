@@ -71,7 +71,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">服务名称</param>
@@ -84,7 +84,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">服务名称</param>
@@ -97,7 +97,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
@@ -111,7 +111,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">实现类类型</typeparam>
@@ -126,7 +126,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">实现类类型</typeparam>
@@ -311,7 +311,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">服务名称</param>
@@ -324,7 +324,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">服务名称</param>
@@ -337,7 +337,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
@@ -351,7 +351,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">实现类类型</typeparam>
@@ -366,7 +366,7 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加暂时命名服务
+    /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <typeparam name="TImplementation">实现类类型</typeparam>
