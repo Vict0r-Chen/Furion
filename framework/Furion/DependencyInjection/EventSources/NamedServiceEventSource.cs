@@ -26,14 +26,14 @@ internal sealed class NamedServiceEventSource : EventSource
     internal static NamedServiceEventSource Log { get; } = new();
 
     /// <summary>
-    /// 注册命名服务
+    /// <see cref="NamedServiceCollectionExtensions.AddNamed(IServiceCollection, string, ServiceDescriptor)"/> 事件
     /// </summary>
     /// <param name="message">负载数据</param>
     [Event(1)]
     internal void AddNamed(string? message = default) => WriteEvent(1, message);
 
     /// <summary>
-    /// 注册命名服务
+    /// <see cref="NamedServiceCollectionExtensions.TryAddNamed(IServiceCollection, string, ServiceDescriptor)"/> 事件
     /// </summary>
     /// <param name="message">负载数据</param>
     [Event(2)]
