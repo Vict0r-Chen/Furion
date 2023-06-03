@@ -20,6 +20,38 @@ namespace Microsoft.Extensions.DependencyInjection;
 internal static class ServiceDescriptorExtensions
 {
     /// <summary>
+    /// 创建服务描述器代理
+    /// </summary>
+    /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>
+    /// <param name="name">服务名称</param>
+    /// <returns><see cref="ServiceDescriptor"/></returns>
+    internal static ServiceDescriptor? CreateDelegator(this ServiceDescriptor serviceDescriptor, string name)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(serviceDescriptor);
+
+        var serviceTypeDelegator = new NamedType(name, serviceDescriptor.ServiceType);
+
+        if (serviceDescriptor.ImplementationType is not null)
+        {
+            return new(serviceTypeDelegator, serviceDescriptor.ImplementationType, serviceDescriptor.Lifetime);
+        }
+
+        if (serviceDescriptor.ImplementationInstance is not null)
+        {
+            return new(serviceTypeDelegator, serviceDescriptor.ImplementationInstance);
+        }
+
+        if (serviceDescriptor.ImplementationFactory is not null)
+        {
+            return new(serviceTypeDelegator, serviceDescriptor.ImplementationFactory, serviceDescriptor.Lifetime);
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// 获取服务描述器实现类型
     /// </summary>
     /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>

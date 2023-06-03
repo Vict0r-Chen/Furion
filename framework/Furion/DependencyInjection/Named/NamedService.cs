@@ -14,14 +14,30 @@
 
 namespace Furion.DependencyInjection;
 
-/// <summary>
-/// 命名服务描述器集合选项
-/// </summary>
-/// <remarks>存储命名服务注册信息供运行时解析</remarks>
-public sealed class NamedServiceCollectionOptions
+/// <inheritdoc />
+internal sealed class NamedService<TService> : INamedService<TService>
+    where TService : class
 {
     /// <summary>
-    /// 命名服务描述器集合
+    /// 服务提供器
     /// </summary>
-    public ConcurrentDictionary<string, ServiceDescriptor> NamedServices { get; } = new();
+    private readonly IServiceProvider _serviceProvider;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="serviceProvider">服务提供器</param>
+    public NamedService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    /// <inheritdoc />
+    public TService this[string name] => _serviceProvider.GetRequiredNamedService<TService>(name);
+
+    /// <inheritdoc />
+    public TService? Get(string name) => _serviceProvider.GetNamedService<TService>(name);
+
+    /// <inheritdoc />
+    public IEnumerable<TService> GetEnumerator(string name) => _serviceProvider.GetNamedServices<TService>(name);
 }

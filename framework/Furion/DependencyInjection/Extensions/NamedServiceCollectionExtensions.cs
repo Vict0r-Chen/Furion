@@ -24,6 +24,19 @@ public static class NamedServiceCollectionExtensions
     /// 添加命名服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddNamed(this IServiceCollection services)
+    {
+        // 注册泛型命名服务
+        services.TryAddTransient(typeof(INamedService<>), typeof(NamedService<>));
+
+        return services;
+    }
+
+    /// <summary>
+    /// 添加命名服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">服务名称</param>
     /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
@@ -34,17 +47,17 @@ public static class NamedServiceCollectionExtensions
         ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(serviceDescriptor);
 
-        // 注册命名服务描述器集合选项，同时绑定服务名称和服务描述器
-        services.Configure<NamedServiceCollectionOptions>(options =>
-        {
-            // 如果服务名称已存在则抛异常
-            if (!options.NamedServices.TryAdd(name, serviceDescriptor))
-            {
-                throw new InvalidOperationException($"The service named '{name}' already exists.");
-            }
-        });
+        // 创建服务描述器代理类型
+        var serviceDescriptorDelegator = serviceDescriptor.CreateDelegator(name);
+        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
 
-        services.Add(serviceDescriptor);
+        // 日志事件记录
+        NamedServiceEventSource.Log.AddNamed($"{serviceDescriptorDelegator}");
+
+        services.Add(serviceDescriptorDelegator);
+
+        // 注册泛型命名服务
+        services.AddNamed();
 
         return services;
     }
@@ -62,10 +75,17 @@ public static class NamedServiceCollectionExtensions
         ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(serviceDescriptor);
 
-        // 注册命名服务描述器集合选项，同时绑定服务名称和服务描述器
-        services.Configure<NamedServiceCollectionOptions>(options => options.NamedServices.TryAdd(name, serviceDescriptor));
+        // 创建服务描述器代理类型
+        var serviceDescriptorDelegator = serviceDescriptor.CreateDelegator(name);
+        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
 
-        services.TryAdd(serviceDescriptor);
+        // 日志事件记录
+        NamedServiceEventSource.Log.TryAddNamed($"{serviceDescriptorDelegator}");
+
+        services.TryAdd(serviceDescriptorDelegator);
+
+        // 注册泛型命名服务
+        services.AddNamed();
 
         return services;
     }

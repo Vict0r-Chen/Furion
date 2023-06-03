@@ -21,10 +21,10 @@ namespace System;
 public static class NamedServiceProviderExtensions
 {
     /// <summary>
-    /// 解析命名服务
+    /// 获取命名服务
     /// </summary>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务命名</param>
+    /// <param name="name">服务名称</param>
     /// <param name="serviceType">服务类型</param>
     /// <returns><see cref="object"/></returns>
     public static object? GetNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
@@ -33,58 +33,31 @@ public static class NamedServiceProviderExtensions
         ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentNullException.ThrowIfNull(serviceType);
 
-        // 获取命名服务描述器选项
-        var namedServiceCollectionOptions = serviceProvider.GetRequiredService<IOptionsMonitor<NamedServiceCollectionOptions>>().CurrentValue;
-
-        // 查找命名配置是否存在
-        var isExists = namedServiceCollectionOptions.NamedServices.TryGetValue(name, out var serviceDescriptor);
-        if (!isExists || serviceDescriptor is null)
-        {
-            return null;
-        }
-
-        // 解析实现类型
-        var implementationType = serviceDescriptor.ImplementationType;
-        if (implementationType is not null)
-        {
-            // 事件记录
-            NamedServiceProviderEventSource.Log.ResolveTypeStarted();
-
-            return serviceProvider.GetRequiredService<IServiceProviderIsService>().IsService(implementationType)
-                   ? serviceProvider.GetService(implementationType)
-                   : ActivatorUtilities.CreateInstance(serviceProvider, implementationType);
-        }
-
-        // 解析实例类型
-        if (serviceDescriptor.ImplementationInstance is not null)
-        {
-            // 事件记录
-            NamedServiceProviderEventSource.Log.ResolveInstanceStarted();
-
-            return serviceDescriptor.ImplementationInstance;
-        }
-
-        // 解析实现工厂
-        if (serviceDescriptor.ImplementationFactory is not null)
-        {
-            // 事件记录
-            NamedServiceProviderEventSource.Log.ResolveFactoryStarted();
-
-            return serviceDescriptor.ImplementationFactory(serviceProvider);
-        }
-
-        // 事件记录
-        NamedServiceProviderEventSource.Log.ResolveNullStarted();
-
-        return null;
+        return serviceProvider.GetService(new NamedType(name, serviceType));
     }
 
     /// <summary>
-    /// 解析命名服务
+    /// 获取命名服务
     /// </summary>
-    /// <typeparam name="TService"><typeparamref name="TService"/></typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务命名</param>
+    /// <param name="name">服务名称</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <returns><see cref="object"/></returns>
+    public static object GetRequiredNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(serviceType);
+
+        return serviceProvider.GetRequiredService(new NamedType(name, serviceType));
+    }
+
+    /// <summary>
+    /// 获取命名服务
+    /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务名称</param>
     /// <returns><typeparamref name="TService"/></returns>
     public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
@@ -93,31 +66,47 @@ public static class NamedServiceProviderExtensions
     }
 
     /// <summary>
-    /// 解析命名服务
+    /// 获取命名服务
     /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务命名</param>
-    /// <param name="serviceType">服务类型</param>
-    /// <returns><see cref="object"/></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    public static object GetNamedRequiredService(this IServiceProvider serviceProvider, string name, Type serviceType)
+    /// <param name="name">服务名称</param>
+    /// <returns><typeparamref name="TService"/></returns>
+    public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
+        where TService : class
     {
-        var service = serviceProvider.GetNamedService(name, serviceType);
-        return service is null
-            ? throw new InvalidOperationException($"No service for type '{serviceType.FullName}' has been registered.")
-            : service;
+        return (TService)serviceProvider.GetRequiredNamedService(name, typeof(TService));
     }
 
     /// <summary>
-    /// 解析命名服务
+    /// 获取命名服务
     /// </summary>
-    /// <typeparam name="TService"><typeparamref name="TService"/></typeparam>
+    /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务命名</param>
-    /// <returns><typeparamref name="TService"/></returns>
-    public static TService GetNamedRequiredService<TService>(this IServiceProvider serviceProvider, string name)
-        where TService : class
+    /// <param name="name">服务名称</param>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider serviceProvider, string name)
+         where TService : class
     {
-        return (TService)serviceProvider.GetNamedRequiredService(name, typeof(TService));
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name);
+
+        return serviceProvider.GetServices(new NamedType(name, typeof(TService))).OfType<TService>();
+    }
+
+    /// <summary>
+    /// 获取命名服务
+    /// </summary>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务名称</param>
+    /// <param name="serviceType">服务类型</param>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    public static IEnumerable<object?> GetNamedServices(this IServiceProvider serviceProvider, string name, Type serviceType)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(serviceType);
+
+        return serviceProvider.GetServices(new NamedType(name, serviceType)).Where(serviceType.IsInstanceOfType);
     }
 }

@@ -2,11 +2,6 @@
 
 public class TypeExtensionsTests
 {
-    /// <summary>
-    /// 判断是否是静态类型
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="ok"></param>
     [Theory]
     [InlineData(typeof(StaticClass), true)]
     [InlineData(typeof(InstanceClass), false)]
@@ -18,11 +13,6 @@ public class TypeExtensionsTests
         Assert.Equal(ok, result);
     }
 
-    /// <summary>
-    /// 判断是否是匿名类型
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="ok"></param>
     [Fact]
     public void IsAnonymousType_ReturnOK()
     {
@@ -44,11 +34,6 @@ public class TypeExtensionsTests
         Assert.False(result3);
     }
 
-    /// <summary>
-    /// 判断是否是可实例化类型
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="ok"></param>
     [Theory]
     [InlineData(typeof(StaticClass), false)]
     [InlineData(typeof(InstanceClass), true)]
@@ -60,11 +45,6 @@ public class TypeExtensionsTests
         Assert.Equal(ok, result);
     }
 
-    /// <summary>
-    /// 判断是否是可实例化类型且派生自特定类型
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="ok"></param>
     [Theory]
     [InlineData(typeof(StaticClass), false)]
     [InlineData(typeof(InstanceClass), false)]
@@ -77,9 +57,6 @@ public class TypeExtensionsTests
         Assert.Equal(ok, result);
     }
 
-    /// <summary>
-    /// 判断是否是可实例化类型且派生自特定类型且派生类型为 null
-    /// </summary>
     [Fact]
     public void IsInstantiatedTypeWithAssignableFrom_EmptyDerivedType_ReturnOops()
     {

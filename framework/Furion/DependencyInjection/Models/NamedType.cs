@@ -15,41 +15,48 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 命名服务事件记录
+/// 支持别名的类型代理
 /// </summary>
-[EventSource(Name = "Furion.DependencyInjection.Named")]
-internal sealed class NamedServiceProviderEventSource : EventSource
+internal sealed class NamedType : TypeDelegator
 {
     /// <summary>
-    /// 日志对象
+    /// 类型别名
     /// </summary>
-    internal static NamedServiceProviderEventSource Log { get; } = new();
+    private readonly string _typeName;
 
     /// <summary>
-    /// 解析服务类型事件
+    /// 构造函数
     /// </summary>
-    /// <param name="message">负载数据</param>
-    [Event(1)]
-    internal void ResolveTypeStarted(string? message = default) => WriteEvent(1, message);
+    /// <param name="typeName">类型别名</param>
+    /// <param name="delegatingType">被代理类型</param>
+    internal NamedType(string typeName, Type delegatingType)
+        : base(delegatingType)
+    {
+        _typeName = typeName;
+    }
 
     /// <summary>
-    /// 解析服务实例事件
+    /// 被代理类型
     /// </summary>
-    /// <param name="message">负载数据</param>
-    [Event(2)]
-    internal void ResolveInstanceStarted(string? message = default) => WriteEvent(2, message);
+    internal Type DelegatingType => typeImpl;
 
-    /// <summary>
-    /// 解析服务工厂事件
-    /// </summary>
-    /// <param name="message">负载数据</param>
-    [Event(3)]
-    internal void ResolveFactoryStarted(string? message = default) => WriteEvent(3, message);
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        return _typeName.GetHashCode();
+    }
 
-    /// <summary>
-    /// 解析空服务事件
-    /// </summary>
-    /// <param name="message">负载数据</param>
-    [Event(4)]
-    internal void ResolveNullStarted(string? message = default) => WriteEvent(4, message);
+    /// <inheritdoc />
+    public override bool Equals(object? o)
+    {
+        return Equals(o as NamedType);
+    }
+
+    /// <inheritdoc />
+    public override bool Equals(Type? o)
+    {
+        return o is NamedType namedType
+                && namedType._typeName == _typeName
+                && namedType.DelegatingType == DelegatingType;
+    }
 }
