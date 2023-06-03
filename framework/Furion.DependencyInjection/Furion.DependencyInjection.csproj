@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="Furion.Core" Version="5.0.0-preview.1.20230528.1" />
+	</ItemGroup>
+
+</Project>

@@ -9,7 +9,6 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageOutputPath>../nupkgs</PackageOutputPath>
-		<PackageId>Furion</PackageId>
 		<PackageVersion>5.0.0-preview.1.20230528.1</PackageVersion>
 		<Authors>百小僧</Authors>
 		<Description>一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。</Description>
