@@ -200,7 +200,7 @@
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="T:System.NamedService`1">
-            <inheritdoc />
+            <inheritdoc cref="T:System.INamedService`1"/>
         </member>
         <member name="F:System.NamedService`1._serviceProvider">
             <summary>

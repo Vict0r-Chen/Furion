@@ -14,7 +14,7 @@
 
 namespace System;
 
-/// <inheritdoc />
+/// <inheritdoc cref="INamedService{TService}"/>
 internal sealed class NamedService<TService> : INamedService<TService>
     where TService : class
 {
