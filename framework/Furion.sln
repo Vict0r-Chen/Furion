@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.DependencyInjection.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Core.Tests", "Furion.Core\test\Furion.Core.Tests.csproj", "{301F0DCA-F406-4572-8080-9DDE1FB81969}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{72C34485-4FF3-487E-BE07-16A1D61907E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyInjection", "DependencyInjection", "{5D868F96-9797-40CA-AF53-68BE4E762916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{66C32D7B-EF1E-43BB-83A3-B99661FB911B} = {72C34485-4FF3-487E-BE07-16A1D61907E6}
+		{B19A1E2E-CC95-4873-B4E2-0E210C0862A4} = {5D868F96-9797-40CA-AF53-68BE4E762916}
+		{D2388692-0258-4F5B-B14B-746B441AFC3B} = {5D868F96-9797-40CA-AF53-68BE4E762916}
+		{301F0DCA-F406-4572-8080-9DDE1FB81969} = {72C34485-4FF3-487E-BE07-16A1D61907E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E66EA3E6-2FE9-44EB-B8F6-7E49CDBD6C3C}

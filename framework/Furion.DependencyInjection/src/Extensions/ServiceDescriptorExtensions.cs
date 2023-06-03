@@ -33,16 +33,19 @@ internal static class ServiceDescriptorExtensions
 
         var serviceTypeDelegator = new NamedType(name, serviceDescriptor.ServiceType);
 
+        // 返回实现类型服务描述器
         if (serviceDescriptor.ImplementationType is not null)
         {
             return new(serviceTypeDelegator, serviceDescriptor.ImplementationType, serviceDescriptor.Lifetime);
         }
 
+        // 返回实现实例服务描述器
         if (serviceDescriptor.ImplementationInstance is not null)
         {
             return new(serviceTypeDelegator, serviceDescriptor.ImplementationInstance);
         }
 
+        // 返回实现工厂服务描述器
         if (serviceDescriptor.ImplementationFactory is not null)
         {
             return new(serviceTypeDelegator, serviceDescriptor.ImplementationFactory, serviceDescriptor.Lifetime);

@@ -6,50 +6,50 @@
     <members>
         <member name="T:System.Diagnostics.DiagnosticSourceExtensions">
             <summary>
-            <see cref="T:System.Diagnostics.DiagnosticSource" /> 类型拓展
+            <see cref="T:System.Diagnostics.DiagnosticSource"/> 类型拓展
             </summary>
         </member>
         <member name="M:System.Diagnostics.DiagnosticSourceExtensions.WriteIsEnabled(System.Diagnostics.DiagnosticSource,System.String,System.Object)">
             <summary>
             写入事件
             </summary>
-            <param name="diagnosticSource"><see cref="T:System.Diagnostics.DiagnosticSource" /></param>
+            <param name="diagnosticSource"><see cref="T:System.Diagnostics.DiagnosticSource"/></param>
             <param name="name">事件名</param>
             <param name="value">负载数据</param>
         </member>
         <member name="T:System.TypeExtensions">
             <summary>
-            <see cref="T:System.Type" /> 类型拓展
+            <see cref="T:System.Type"/> 类型拓展
             </summary>
         </member>
         <member name="M:System.TypeExtensions.IsStatic(System.Type)">
             <summary>
             判断类型是否是静态类型
             </summary>
-            <param name="type"><see cref="T:System.Type" /></param>
-            <returns><see langword="true" /> 标识为静态类型；<see langword="false" /> 标识为非静态类</returns>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see langword="true"/> 标识为静态类型；<see langword="false"/> 标识为非静态类</returns>
         </member>
         <member name="M:System.TypeExtensions.IsAnonymousType(System.Type)">
             <summary>
             判断类型是否是匿名类型
             </summary>
-            <param name="type"><see cref="T:System.Type" /></param>
-            <returns><see langword="true" /> 标识为匿名类型；<see langword="false" /> 标识为非匿名类型</returns>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see langword="true"/> 标识为匿名类型；<see langword="false"/> 标识为非匿名类型</returns>
         </member>
         <member name="M:System.TypeExtensions.IsInstantiatedType(System.Type)">
             <summary>
             判断类型是否可实例化
             </summary>
-            <param name="type"><see cref="T:System.Type" /></param>
-            <returns><see langword="true" /> 标识可实例化；<see langword="false" /> 标识不可实例化</returns>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see langword="true"/> 标识可实例化；<see langword="false"/> 标识不可实例化</returns>
         </member>
         <member name="M:System.TypeExtensions.IsInstantiatedTypeWithAssignableFrom(System.Type,System.Type)">
             <summary>
             判断类型是否可实例化且派生特定类型
             </summary>
-            <param name="type"><see cref="T:System.Type" /></param>
+            <param name="type"><see cref="T:System.Type"/></param>
             <param name="derivedType">派生类型</param>
-            <returns><see langword="true" /> 标识可实例化且派生特定类型；<see langword="false" /> 标识不能实例化或不派生特定类型</returns>
+            <returns><see langword="true"/> 标识可实例化且派生特定类型；<see langword="false"/> 标识不能实例化或不派生特定类型</returns>
         </member>
     </members>
 </doc>
