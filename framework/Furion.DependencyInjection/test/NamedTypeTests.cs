@@ -1,4 +1,4 @@
-﻿namespace Furion.Tests.DependencyInjection.Named;
+﻿namespace Furion.DependencyInjection.Tests;
 
 public class NamedTypeTests
 {

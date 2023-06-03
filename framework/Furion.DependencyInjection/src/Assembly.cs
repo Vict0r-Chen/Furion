@@ -13,4 +13,4 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 // 配置测试有元程序集
-[assembly: InternalsVisibleTo("Furion.Tests")]
+[assembly: InternalsVisibleTo("Furion.DependencyInjection.Tests")]

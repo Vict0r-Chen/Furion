@@ -1,6 +1,4 @@
-﻿using Furion.Tests.DependencyInjection.Named;
-
-namespace Furion.Tests.DependencyInjection;
+﻿namespace Furion.DependencyInjection.Tests;
 
 public class NamedServiceTests
 {

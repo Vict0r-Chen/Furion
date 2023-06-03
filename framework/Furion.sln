@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33711.374
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Tests", "..\tests\Furion.Tests\Furion.Tests.csproj", "{5CC3D87E-9FEC-4D9C-990B-A8721B757F1D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Tests.WebAPI", "..\tests\Furion.Tests.WebAPI\Furion.Tests.WebAPI.csproj", "{31CBB890-1BD0-4B41-AA54-6E9E0E496D1F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Core", "Furion.Core\src\Furion.Core.csproj", "{66C32D7B-EF1E-43BB-83A3-B99661FB911B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.DependencyInjection", "Furion.DependencyInjection\src\Furion.DependencyInjection.csproj", "{B19A1E2E-CC95-4873-B4E2-0E210C0862A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion", "Furion\src\Furion.csproj", "{7AFBEBC4-8B48-4BA9-A339-C62726826F04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.DependencyInjection.Tests", "Furion.DependencyInjection\test\Furion.DependencyInjection.Tests.csproj", "{D2388692-0258-4F5B-B14B-746B441AFC3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Core.Tests", "Furion.Core\test\Furion.Core.Tests.csproj", "{301F0DCA-F406-4572-8080-9DDE1FB81969}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5CC3D87E-9FEC-4D9C-990B-A8721B757F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CC3D87E-9FEC-4D9C-990B-A8721B757F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CC3D87E-9FEC-4D9C-990B-A8721B757F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CC3D87E-9FEC-4D9C-990B-A8721B757F1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31CBB890-1BD0-4B41-AA54-6E9E0E496D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31CBB890-1BD0-4B41-AA54-6E9E0E496D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31CBB890-1BD0-4B41-AA54-6E9E0E496D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31CBB890-1BD0-4B41-AA54-6E9E0E496D1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66C32D7B-EF1E-43BB-83A3-B99661FB911B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{66C32D7B-EF1E-43BB-83A3-B99661FB911B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66C32D7B-EF1E-43BB-83A3-B99661FB911B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +31,14 @@ Global
 		{7AFBEBC4-8B48-4BA9-A339-C62726826F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AFBEBC4-8B48-4BA9-A339-C62726826F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AFBEBC4-8B48-4BA9-A339-C62726826F04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2388692-0258-4F5B-B14B-746B441AFC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2388692-0258-4F5B-B14B-746B441AFC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2388692-0258-4F5B-B14B-746B441AFC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2388692-0258-4F5B-B14B-746B441AFC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301F0DCA-F406-4572-8080-9DDE1FB81969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301F0DCA-F406-4572-8080-9DDE1FB81969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301F0DCA-F406-4572-8080-9DDE1FB81969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301F0DCA-F406-4572-8080-9DDE1FB81969}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

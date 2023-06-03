@@ -1,4 +1,4 @@
-﻿namespace Furion.Tests.Framework.Extensions;
+﻿namespace Furion.Core.Tests;
 
 internal static class StaticClass
 {

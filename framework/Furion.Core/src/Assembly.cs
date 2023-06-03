@@ -16,4 +16,4 @@
 [assembly: InternalsVisibleTo("Furion.DependencyInjection")]
 
 // 配置测试有元程序集
-[assembly: InternalsVisibleTo("Furion.Tests")]
+[assembly: InternalsVisibleTo("Furion.Core.Tests")]
