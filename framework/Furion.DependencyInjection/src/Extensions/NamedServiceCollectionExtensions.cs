@@ -52,7 +52,7 @@ public static class NamedServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
 
         // 日志事件记录
-        NamedServiceEventSource.Log.AddNamed($"{serviceDescriptorDelegator}");
+        DependencyInjectionEventSource.Log.AddNamed($"{serviceDescriptorDelegator}");
 
         services.Add(serviceDescriptorDelegator);
 
@@ -80,7 +80,7 @@ public static class NamedServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
 
         // 日志事件记录
-        NamedServiceEventSource.Log.TryAddNamed($"{serviceDescriptorDelegator}");
+        DependencyInjectionEventSource.Log.TryAddNamed($"{serviceDescriptorDelegator}");
 
         services.TryAdd(serviceDescriptorDelegator);
 

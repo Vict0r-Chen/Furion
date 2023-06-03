@@ -15,23 +15,23 @@
             </summary>
             <remarks>派生接口需提供显式实现</remarks>
         </member>
-        <member name="T:Furion.DependencyInjection.NamedServiceEventSource">
+        <member name="T:Furion.DependencyInjection.DependencyInjectionEventSource">
             <summary>
-            命名服务日志事件
+            依赖注入模块日志事件
             </summary>
         </member>
-        <member name="P:Furion.DependencyInjection.NamedServiceEventSource.Log">
+        <member name="P:Furion.DependencyInjection.DependencyInjectionEventSource.Log">
             <summary>
             日志对象
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.NamedServiceEventSource.AddNamed(System.String)">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.AddNamed(System.String)">
             <summary>
             <see cref="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)"/> 事件
             </summary>
             <param name="message">负载数据</param>
         </member>
-        <member name="M:Furion.DependencyInjection.NamedServiceEventSource.TryAddNamed(System.String)">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.TryAddNamed(System.String)">
             <summary>
             <see cref="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)"/> 事件
             </summary>

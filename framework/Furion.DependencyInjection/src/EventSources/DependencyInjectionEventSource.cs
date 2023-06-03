@@ -15,15 +15,15 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 命名服务日志事件
+/// 依赖注入模块日志事件
 /// </summary>
-[EventSource(Name = "Furion.DependencyInjection.NamedService")]
-internal sealed class NamedServiceEventSource : EventSource
+[EventSource(Name = "Furion.DependencyInjection")]
+internal sealed class DependencyInjectionEventSource : EventSource
 {
     /// <summary>
     /// 日志对象
     /// </summary>
-    internal static NamedServiceEventSource Log { get; } = new();
+    internal static DependencyInjectionEventSource Log { get; } = new();
 
     /// <summary>
     /// <see cref="NamedServiceCollectionExtensions.AddNamed(IServiceCollection, string, ServiceDescriptor)"/> 事件
