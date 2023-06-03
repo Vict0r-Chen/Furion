@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<Description>Furion 框架核心模块。</Description>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
