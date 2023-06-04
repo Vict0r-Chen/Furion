@@ -48,7 +48,7 @@ public static class NamedServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(serviceDescriptor);
 
         // 创建服务描述器代理类型
-        var serviceDescriptorDelegator = serviceDescriptor.CreateDelegator(name);
+        var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
 
         // 日志事件记录
@@ -76,7 +76,7 @@ public static class NamedServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(serviceDescriptor);
 
         // 创建服务描述器代理类型
-        var serviceDescriptorDelegator = serviceDescriptor.CreateDelegator(name);
+        var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
 
         // 日志事件记录
@@ -568,5 +568,40 @@ public static class NamedServiceCollectionExtensions
         where TImplementation : class, TService
     {
         return services.TryAddNamed(name, ServiceDescriptor.Singleton<TService, TImplementation>());
+    }
+
+    /// <summary>
+    /// 创建服务描述器代理
+    /// </summary>
+    /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>
+    /// <param name="name">服务名称</param>
+    /// <returns><see cref="ServiceDescriptor"/></returns>
+    private static ServiceDescriptor? CreateDelegator(ServiceDescriptor serviceDescriptor, string name)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentNullException.ThrowIfNull(serviceDescriptor);
+
+        var serviceTypeDelegator = new NamedType(name, serviceDescriptor.ServiceType);
+
+        // 返回实现类类型服务描述器
+        if (serviceDescriptor.ImplementationType is not null)
+        {
+            return new(serviceTypeDelegator, serviceDescriptor.ImplementationType, serviceDescriptor.Lifetime);
+        }
+
+        // 返回对象实例服务描述器
+        if (serviceDescriptor.ImplementationInstance is not null)
+        {
+            return new(serviceTypeDelegator, serviceDescriptor.ImplementationInstance);
+        }
+
+        // 返回泛型工厂实例服务描述器
+        if (serviceDescriptor.ImplementationFactory is not null)
+        {
+            return new(serviceTypeDelegator, serviceDescriptor.ImplementationFactory, serviceDescriptor.Lifetime);
+        }
+
+        return null;
     }
 }

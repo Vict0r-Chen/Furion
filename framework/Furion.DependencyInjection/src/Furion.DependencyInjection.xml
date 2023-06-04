@@ -6,7 +6,7 @@
     <members>
         <member name="T:System.ServiceInjectionAttribute">
             <summary>
-            服务注册配置
+            服务注册特性配置
             </summary>
             <remarks>用于扫描程序集添加服务时配置</remarks>
         </member>
@@ -229,6 +229,17 @@
         <member name="M:System.NamedService`1.GetEnumerator(System.String)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.DependencyInjection.DependencyInjectionBuilder">
+            <summary>
+            依赖注入模块构建器
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            构建模块
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+        </member>
         <member name="T:Furion.DependencyInjection.IDependency">
             <summary>
             服务扫描注册依赖接口
@@ -262,26 +273,6 @@
             </summary>
             <param name="message">负载数据</param>
         </member>
-        <member name="T:Furion.DependencyInjection.ServiceDescriptorExtensions">
-            <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/> 类型拓展
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.ServiceDescriptorExtensions.CreateDelegator(Microsoft.Extensions.DependencyInjection.ServiceDescriptor,System.String)">
-            <summary>
-            创建服务描述器代理
-            </summary>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.ServiceDescriptorExtensions.GetImplementationType(Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
-            <summary>
-            获取服务描述器实现类型
-            </summary>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <returns><see cref="T:System.Type"/></returns>
-        </member>
         <member name="T:Furion.DependencyInjection.NamedType">
             <summary>
             支持别名的类型代理
@@ -311,6 +302,32 @@
             <inheritdoc />
         </member>
         <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.DependencyInjection.ServiceDescriptorModel">
+            <summary>
+            服务描述器模型
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,System.ServiceAddition)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="serviceType">服务类型</param>
+            <param name="implementationType">实现类型</param>
+            <param name="serviceLifetime">服务生存器</param>
+            <param name="serviceAddition">服务添加方式</param>
+        </member>
+        <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Descriptor">
+            <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Addition">
+            <inheritdoc cref="T:System.ServiceAddition"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Order">
+            <inheritdoc cref="P:System.ServiceInjectionAttribute.Order"/>
+        </member>
+        <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.ToString">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">
@@ -690,6 +707,14 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="name">服务名称</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.CreateDelegator(Microsoft.Extensions.DependencyInjection.ServiceDescriptor,System.String)">
+            <summary>
+            创建服务描述器代理
+            </summary>
+            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
+            <param name="name">服务名称</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
         </member>
     </members>
 </doc>

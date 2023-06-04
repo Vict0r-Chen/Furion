@@ -15,7 +15,7 @@
 namespace System;
 
 /// <summary>
-/// 服务注册配置
+/// 服务注册特性配置
 /// </summary>
 /// <remarks>用于扫描程序集添加服务时配置</remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
