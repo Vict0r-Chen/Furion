@@ -33,19 +33,19 @@ internal static class ServiceDescriptorExtensions
 
         var serviceTypeDelegator = new NamedType(name, serviceDescriptor.ServiceType);
 
-        // 返回实现类型服务描述器
+        // 返回实现类类型服务描述器
         if (serviceDescriptor.ImplementationType is not null)
         {
             return new(serviceTypeDelegator, serviceDescriptor.ImplementationType, serviceDescriptor.Lifetime);
         }
 
-        // 返回实现实例服务描述器
+        // 返回对象实例服务描述器
         if (serviceDescriptor.ImplementationInstance is not null)
         {
             return new(serviceTypeDelegator, serviceDescriptor.ImplementationInstance);
         }
 
-        // 返回实现工厂服务描述器
+        // 返回泛型工厂实例服务描述器
         if (serviceDescriptor.ImplementationFactory is not null)
         {
             return new(serviceTypeDelegator, serviceDescriptor.ImplementationFactory, serviceDescriptor.Lifetime);
@@ -67,13 +67,13 @@ internal static class ServiceDescriptorExtensions
             return serviceDescriptor.ImplementationType;
         }
 
-        // 如果实现类实例不为空直接返回
+        // 如果对象实例不为空直接返回
         if (serviceDescriptor.ImplementationInstance is not null)
         {
             return serviceDescriptor.ImplementationInstance.GetType();
         }
 
-        // 如果实现类工厂不为空则获取泛型参数第二个参数返回
+        // 如果泛型工厂实例不为空则获取泛型参数的第二个参数返回
         if (serviceDescriptor.ImplementationFactory is not null)
         {
             var genericTypeArguments = serviceDescriptor.ImplementationFactory.GetType().GenericTypeArguments;
