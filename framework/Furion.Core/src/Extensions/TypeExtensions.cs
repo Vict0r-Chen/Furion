@@ -60,7 +60,7 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 判断类型是否可实例化且派生特定类型
+    /// 判断类型是否可实例化且派生自特定类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="derivedType">派生类型</param>
@@ -71,5 +71,24 @@ internal static class TypeExtensions
         ArgumentNullException.ThrowIfNull(derivedType);
 
         return type.IsInstantiatedType() && derivedType != type && derivedType.IsAssignableFrom(type);
+    }
+
+    /// <summary>
+    /// 获取类型指定的特性
+    /// </summary>
+    /// <typeparam name="TAttribute">特性类型</typeparam>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="inherit">是否支持特性继承查找</param>
+    /// <returns><typeparamref name="TAttribute"/></returns>
+    internal static TAttribute? GetCustomAttributeIfIsDefined<TAttribute>(this Type type, bool inherit = false)
+        where TAttribute : Attribute
+    {
+        // 如果未定义则直接返回
+        if (!type.IsDefined(typeof(TAttribute), inherit))
+        {
+            return null;
+        }
+
+        return type.GetCustomAttribute<TAttribute>(inherit);
     }
 }

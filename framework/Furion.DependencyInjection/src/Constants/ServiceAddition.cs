@@ -48,12 +48,6 @@ public enum ServiceAddition : uint
     Replace,
 
     /// <summary>
-    /// 移除
-    /// </summary>
-    /// <remarks>如果服务存在则移除</remarks>
-    Remove,
-
-    /// <summary>
     /// 缺省值，同 <see cref="Add"/>
     /// </summary>
     Default = Add

@@ -36,8 +36,14 @@ internal sealed class NamedService<TService> : INamedService<TService>
     public TService this[string name] => _serviceProvider.GetRequiredNamedService<TService>(name);
 
     /// <inheritdoc />
-    public TService? Get(string name) => _serviceProvider.GetNamedService<TService>(name);
+    public TService? Get(string name)
+    {
+        return _serviceProvider.GetNamedService<TService>(name);
+    }
 
     /// <inheritdoc />
-    public IEnumerable<TService> GetEnumerator(string name) => _serviceProvider.GetNamedServices<TService>(name);
+    public IEnumerable<TService> GetEnumerator(string name)
+    {
+        return _serviceProvider.GetNamedServices<TService>(name);
+    }
 }

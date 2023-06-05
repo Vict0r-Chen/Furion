@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 服务描述器模型
 /// </summary>
-internal sealed class ServiceDescriptorModel
+public sealed class ServiceDescriptorModel
 {
     /// <summary>
     /// 构造函数
@@ -36,13 +36,13 @@ internal sealed class ServiceDescriptorModel
     }
 
     /// <inheritdoc cref="ServiceDescriptor"/>
-    internal ServiceDescriptor Descriptor { get; init; }
+    public ServiceDescriptor Descriptor { get; init; }
 
     /// <inheritdoc cref="ServiceAddition"/>
-    internal ServiceAddition Addition { get; init; }
+    public ServiceAddition Addition { get; set; }
 
     /// <inheritdoc cref="ServiceInjectionAttribute.Order"/>
-    internal int Order { get; set; }
+    public int Order { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

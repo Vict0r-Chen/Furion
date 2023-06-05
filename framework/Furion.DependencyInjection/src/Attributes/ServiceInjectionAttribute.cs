@@ -62,8 +62,7 @@ public sealed class ServiceInjectionAttribute : Attribute
     public bool IncludingBase { get; init; }
 
     /// <summary>
-    /// 禁用指定派生类型注册
+    /// 禁用指定派生类型作为服务注册
     /// </summary>
-    /// <remarks>如若类型继承或实现了多个类型，但不希望其中一些类型注册为服务则可在这里配置</remarks>
     public Type[]? SuppressDerivedTypes { get; init; }
 }

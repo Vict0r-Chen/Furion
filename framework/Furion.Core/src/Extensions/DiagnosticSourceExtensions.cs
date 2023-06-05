@@ -27,7 +27,10 @@ internal static class DiagnosticSourceExtensions
     /// <param name="value">负载数据</param>
     internal static void WriteIsEnabled(this DiagnosticSource diagnosticSource, string name, object? value)
     {
-        if (!diagnosticSource.IsEnabled(name)) return;
+        if (!diagnosticSource.IsEnabled(name))
+        {
+            return;
+        }
 
         diagnosticSource.Write(name, value);
     }

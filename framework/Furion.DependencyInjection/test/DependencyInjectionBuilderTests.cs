@@ -14,29 +14,15 @@
 
 namespace Furion.DependencyInjection.Tests;
 
-internal class NamedClass : INamedClass
+public class DependencyInjectionBuilderTests
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-}
-
-internal interface INamedClass
-{
-    Guid Id { get; set; }
-}
-
-internal class NamedClass2 : INamedClass2
-{
-    public Guid Id { get; set; } = Guid.NewGuid();
-}
-
-internal interface INamedClass2
-{
-}
-
-internal class NotPublicTestDependency : IScopedDependency
-{
-}
-
-public class PublicTestDependency : IScopedDependency
-{
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void AddAssemblies_WhenSuppressNotPublicType(bool suppress)
+    {
+        var builder = new DependencyInjectionBuilder();
+        builder.SuppressNotPublicType = suppress;
+        builder.AddAssemblies(GetType().Assembly);
+    }
 }
