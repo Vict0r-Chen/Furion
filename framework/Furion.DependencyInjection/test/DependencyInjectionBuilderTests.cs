@@ -202,6 +202,7 @@ public class DependencyInjectionBuilderTests
         var includeGenericClassIncludeSelf = services.Any(s => s.ServiceType == typeof(GenericClassIncludeSelf<>) && s.ImplementationType == typeof(GenericClassIncludeSelf<>));
         var includeMultipleGenericClass = services.Any(s => s.ServiceType == typeof(IMultipleGenericClass<string, object>) && s.ImplementationType == typeof(MultipleGenericClass));
         var includeMultipleGenericClass2 = services.Any(s => s.ServiceType == typeof(IMultipleGenericClass<,>) && s.ImplementationType == typeof(MultipleGenericClass<,>));
+        var includeManyGenericClass = services.Any(s => s.ImplementationType == typeof(ManyGenericClass<,>));
 
         Assert.True(includeNormalClassWithGenericClass);
         Assert.True(includeNormalClassWithBaseClass);
@@ -214,6 +215,7 @@ public class DependencyInjectionBuilderTests
         Assert.True(includeGenericClassIncludeSelf);
         Assert.True(includeMultipleGenericClass);
         Assert.True(includeMultipleGenericClass2);
+        Assert.True(includeManyGenericClass);
 
         var serviceProvider = services.BuildServiceProvider();
         Assert.NotNull(serviceProvider);

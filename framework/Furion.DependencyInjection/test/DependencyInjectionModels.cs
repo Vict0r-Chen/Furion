@@ -145,6 +145,14 @@ internal class MultipleGenericClass<T, M> : IMultipleGenericClass<T, M>, IScoped
 {
 }
 
+public interface IManyGenericClass<T, M, Z>
+{
+}
+
+internal class ManyGenericClass<T, M> : IManyGenericClass<T, M, string>, IScopedDependency
+{
+}
+
 public interface IAddClass
 {
 }
