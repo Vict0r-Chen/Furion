@@ -133,6 +133,18 @@ internal class GenericClassIncludeSelf<T2> : IScopedDependency
 {
 }
 
+public interface IMultipleGenericClass<T, M>
+{
+}
+
+internal class MultipleGenericClass : IMultipleGenericClass<string, object>, IScopedDependency
+{
+}
+
+internal class MultipleGenericClass<T, M> : IMultipleGenericClass<T, M>, IScopedDependency
+{
+}
+
 public interface IAddClass
 {
 }
