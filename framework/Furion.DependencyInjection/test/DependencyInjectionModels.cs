@@ -80,3 +80,111 @@ internal class OrderClass2 : ITestClass, IScopedDependency
 internal class OrderClass1 : ITestClass, IScopedDependency
 {
 }
+
+public interface ISuppressDerivedType
+{
+}
+
+[ServiceInjection(SuppressDerivedTypes = new[] { typeof(ISuppressDerivedType) })]
+internal class SuppressDerivedTypeClass : ISuppressDerivedType, ITestClass, IScopedDependency
+{
+}
+
+[ServiceInjection(Ignore = true)]
+internal class IgnoreClass : ITestClass, IScopedDependency
+{
+}
+
+public interface IGenericClass<T>
+{
+}
+
+public class BaseGenericClass<T>
+{
+}
+
+internal class NormalClassWithGenericClass : IGenericClass<string>, IScopedDependency
+{
+}
+
+[ServiceInjection(IncludingBase = true)]
+internal class NormalClassWithBaseClass : BaseGenericClass<string>, IScopedDependency
+{
+}
+
+internal class GenericClass<T> : IGenericClass<T>, IScopedDependency
+{
+}
+
+internal class GenericClassWithFixedGenericClass<T> : IGenericClass<string>, IScopedDependency
+{
+}
+
+[ServiceInjection(IncludingBase = true)]
+internal class GenericClassAll<T> : BaseGenericClass<T>, IGenericClass<T>, IScopedDependency
+{
+}
+
+internal class NotTGenericClass<T2> : IGenericClass<T2>, IScopedDependency
+{
+}
+
+internal class GenericClassIncludeSelf<T2> : IScopedDependency
+{
+}
+
+public interface IAddClass
+{
+}
+
+internal class AddClass1 : IAddClass, IScopedDependency
+{
+}
+
+[ServiceInjection(ServiceAddition.Add, Order = 2)]
+internal class AddClass2 : IAddClass, IScopedDependency
+{
+}
+
+public interface ITryAddClass
+{
+}
+
+internal class TryAddClass1 : ITryAddClass, IScopedDependency
+{
+}
+
+[ServiceInjection(ServiceAddition.TryAdd, Order = 2)]
+internal class TryAddClass2 : ITryAddClass, IScopedDependency
+{
+}
+
+public interface ITryAddEnumerableClass
+{
+}
+
+internal class TryAddEnumerableClass1 : ITryAddEnumerableClass, IScopedDependency
+{
+}
+
+[ServiceInjection(ServiceAddition.TryAddEnumerable, Order = 2)]
+internal class TryAddEnumerableClass2 : ITryAddEnumerableClass, IScopedDependency
+{
+}
+
+public interface IReplaceClass
+{
+}
+
+internal class ReplaceClass1 : IReplaceClass, IScopedDependency
+{
+}
+
+[ServiceInjection(ServiceAddition.Replace, Order = 2)]
+internal class ReplaceClass2 : IReplaceClass, IScopedDependency
+{
+}
+
+internal class FilterConfigureClass : ITestClass, IScopedDependency
+{
+}

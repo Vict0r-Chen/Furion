@@ -16,6 +16,7 @@ global using Furion.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using System.Collections;
+global using System.Diagnostics;
 global using System.Diagnostics.Tracing;
 global using System.Dynamic;
 global using System.Reflection;

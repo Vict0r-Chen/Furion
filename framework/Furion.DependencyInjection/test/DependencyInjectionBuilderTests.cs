@@ -145,4 +145,165 @@ public class DependencyInjectionBuilderTests
         var serviceProvider = services.BuildServiceProvider();
         Assert.NotNull(serviceProvider);
     }
+
+    [Fact]
+    public void SuppressDerivedTypes_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includeISuppressDerivedType = services.Any(s => s.ServiceType == typeof(ISuppressDerivedType));
+        var includeISuppressDerivedType2 = services.Any(s => s.ServiceType == typeof(ITestClass) && s.ImplementationType == typeof(SuppressDerivedTypeClass));
+
+        Assert.False(includeISuppressDerivedType);
+        Assert.True(includeISuppressDerivedType2);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void Ignore_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includeIgnoreClass = services.Any(s => s.ImplementationType == typeof(IgnoreClass));
+
+        Assert.False(includeIgnoreClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void Generic_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includeNormalClassWithGenericClass = services.Any(s => s.ServiceType == typeof(IGenericClass<string>) && s.ImplementationType == typeof(NormalClassWithGenericClass));
+        var includeNormalClassWithBaseClass = services.Any(s => s.ServiceType == typeof(BaseGenericClass<string>) && s.ImplementationType == typeof(NormalClassWithBaseClass));
+        var includeGenericClass = services.Any(s => s.ServiceType == typeof(IGenericClass<>) && s.ImplementationType == typeof(GenericClass<>));
+        var includeGenericClassWithFixedGenericClass = services.Any(s => s.ServiceType == typeof(IGenericClass<string>) && s.ImplementationType == typeof(GenericClassWithFixedGenericClass<>));
+        var includeGenericClassWithFixedGenericClass2 = services.Any(s => s.ServiceType == typeof(GenericClassWithFixedGenericClass<>) && s.ImplementationType == typeof(GenericClassWithFixedGenericClass<>));
+        var includeGenericClassAll = services.Any(s => s.ServiceType == typeof(IGenericClass<>) && s.ImplementationType == typeof(GenericClassAll<>));
+        var includeGenericClassAll2 = services.Any(s => s.ServiceType == typeof(BaseGenericClass<>) && s.ImplementationType == typeof(GenericClassAll<>));
+        var includeNotTGenericClass = services.Any(s => s.ServiceType == typeof(IGenericClass<>) && s.ImplementationType == typeof(NotTGenericClass<>));
+        var includeGenericClassIncludeSelf = services.Any(s => s.ServiceType == typeof(GenericClassIncludeSelf<>) && s.ImplementationType == typeof(GenericClassIncludeSelf<>));
+
+        Assert.True(includeNormalClassWithGenericClass);
+        Assert.True(includeNormalClassWithBaseClass);
+        Assert.True(includeGenericClass);
+        Assert.False(includeGenericClassWithFixedGenericClass);
+        Assert.True(includeGenericClassWithFixedGenericClass2);
+        Assert.True(includeGenericClassAll);
+        Assert.True(includeGenericClassAll2);
+        Assert.True(includeNotTGenericClass);
+        Assert.True(includeGenericClassIncludeSelf);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void Add_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var count = services.Where(s => s.ServiceType == typeof(IAddClass)).LongCount();
+        Assert.Equal(2, count);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void TryAdd_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var count = services.Where(s => s.ServiceType == typeof(ITryAddClass)).LongCount();
+        Assert.Equal(1, count);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void TryAddEnumerable_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var count = services.Where(s => s.ServiceType == typeof(ITryAddEnumerableClass)).LongCount();
+        Assert.Equal(2, count);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void Replace_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var count = services.Where(s => s.ServiceType == typeof(IReplaceClass)).LongCount();
+        Assert.Equal(1, count);
+
+        var implementationType = services.First(u => u.ServiceType == typeof(IReplaceClass)).ImplementationType;
+        Assert.Equal(typeof(ReplaceClass2), implementationType);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void FilterConfigure_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+            builder.FilterConfigure = (s) =>
+            {
+                if (s.Descriptor.ImplementationType == typeof(FilterConfigureClass))
+                {
+                    return false;
+                }
+
+                return true;
+            };
+        });
+
+        var includeFilterConfigureClass = services.Any(s => s.ImplementationType == typeof(FilterConfigureClass));
+        Assert.False(includeFilterConfigureClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
 }

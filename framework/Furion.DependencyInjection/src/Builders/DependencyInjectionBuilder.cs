@@ -20,6 +20,11 @@ namespace Furion.DependencyInjection;
 public sealed class DependencyInjectionBuilder
 {
     /// <summary>
+    /// 诊断日志
+    /// </summary>
+    private static readonly DiagnosticSource _diagnosticSource = new DiagnosticListener("Furion.DependencyInjection");
+
+    /// <summary>
     /// 已扫描的程序集
     /// </summary>
     private readonly HashSet<Assembly> _assemblies = new();
@@ -35,6 +40,13 @@ public sealed class DependencyInjectionBuilder
         typeof(IDictionary), typeof(IComparable),
         typeof(object), typeof(DynamicObject)
     };
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    internal DependencyInjectionBuilder()
+    {
+    }
 
     /// <summary>
     /// 禁用程序集扫描
@@ -84,10 +96,15 @@ public sealed class DependencyInjectionBuilder
 
         // 将服务描述器进行排序
         var sortedOfServiceDescriptors = serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
-                                                                                              .ThenBy(s => s.Order);
+                                                                                              .ThenBy(s => s.Order)
+                                                                                              .ToList();
 
         // 日志事件记录
         DependencyInjectionEventSource.Log.BuildStarted();
+        _diagnosticSource.WriteIsEnabled("BuildStarted", new
+        {
+            ServiceDescriptors = sortedOfServiceDescriptors
+        });
 
         // 将服务描述器添加到 IServiceCollection 中
         foreach (var serviceDescriptorModel in sortedOfServiceDescriptors)
