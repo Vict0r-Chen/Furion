@@ -86,9 +86,11 @@ public class TypeExtensionsTests
         var attribute1 = typeof(NotAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(true);
         var attribute2 = typeof(HasAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(true);
         var attribute3 = typeof(InheritAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(true);
+        var attribute4 = typeof(InheritAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(false);
 
         Assert.Null(attribute1);
         Assert.NotNull(attribute2);
         Assert.NotNull(attribute3);
+        Assert.Null(attribute4);
     }
 }
