@@ -25,11 +25,6 @@ public sealed class DependencyInjectionBuilder
     private readonly HashSet<Assembly> _assemblies = new();
 
     /// <summary>
-    /// 已标记注册的服务描述器集合
-    /// </summary>
-    private readonly IList<ServiceDescriptorModel> _serviceDescriptors;
-
-    /// <summary>
     /// 禁用指定派生类型作为服务注册
     /// </summary>
     private readonly HashSet<Type> _suppressDerivedTypes = new()
@@ -40,14 +35,6 @@ public sealed class DependencyInjectionBuilder
         typeof(IDictionary), typeof(IComparable),
         typeof(object), typeof(DynamicObject)
     };
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public DependencyInjectionBuilder()
-    {
-        _serviceDescriptors = new List<ServiceDescriptorModel>();
-    }
 
     /// <summary>
     /// 禁用程序集扫描
@@ -74,25 +61,81 @@ public sealed class DependencyInjectionBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(assemblies);
 
-        // 检查是否禁用程序集扫描
-        if (SuppressAssemblyScanning)
+        Array.ForEach(assemblies, ass => _assemblies.Add(ass));
+    }
+
+    /// <summary>
+    /// 构建模块
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    internal void Build(IServiceCollection services)
+    {
+        // 扫描程序集创建服务描述器集合
+        var serviceDescriptors = CreateServiceDescriptors();
+
+        // 空检查
+        if (!serviceDescriptors.Any())
         {
+            // 清空集合
+            ClearAll();
+
             return;
         }
 
-        // 遍历程序集并创建待注册的服务
-        foreach (var assembly in assemblies)
-        {
-            // 避免重复扫描
-            if (!_assemblies.Add(assembly))
-            {
-                continue;
-            }
+        // 将服务描述器进行排序
+        var sortedOfServiceDescriptors = serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
+                                                                                              .ThenBy(s => s.Order);
 
+        // 日志事件记录
+        DependencyInjectionEventSource.Log.BuildStarted();
+
+        // 将服务描述器添加到 IServiceCollection 中
+        foreach (var serviceDescriptorModel in sortedOfServiceDescriptors)
+        {
+            AddToServiceCollection(services, serviceDescriptorModel);
+        }
+
+        // 清空集合
+        ClearAll();
+    }
+
+    /// <summary>
+    /// 清空集合
+    /// </summary>
+    private void ClearAll()
+    {
+        // 清空集合
+        _assemblies.Clear();
+        _suppressDerivedTypes.Clear();
+    }
+
+    /// <summary>
+    /// 扫描程序集创建服务描述器集合
+    /// </summary>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    private IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors()
+    {
+        // 检查是否禁用程序集扫描
+        if (SuppressAssemblyScanning)
+        {
+            return Array.Empty<ServiceDescriptorModel>();
+        }
+
+        var serviceDescriptors = new List<ServiceDescriptorModel>();
+
+        // 遍历程序集并创建待注册的服务
+        foreach (var assembly in _assemblies)
+        {
             // 查找所有实现 IDependency 的类型
             var exportedTypes = assembly.GetTypes()
                                                        .Where(t => (!SuppressNotPublicType ? (t.IsPublic || t.IsNotPublic) : t.IsPublic)
                                                                              && t.IsInstantiatedTypeWithAssignableFrom(typeof(IDependency)));
+
+            // 空检查
+            if (!exportedTypes.Any())
+            {
+                continue;
+            }
 
             // 遍历所有实现类型并创建服务描述器模型
             foreach (var exportedType in exportedTypes)
@@ -127,52 +170,16 @@ public sealed class DependencyInjectionBuilder
                         Order = serviceInjectionAttribute.Order
                     };
 
-                    AddServiceDescriptor(serviceDescriptorModel);
+                    // 调用服务描述器模型过滤配置
+                    if (FilterConfigure is null || FilterConfigure.Invoke(serviceDescriptorModel))
+                    {
+                        serviceDescriptors.Add(serviceDescriptorModel);
+                    }
                 }
             }
         }
-    }
 
-    /// <summary>
-    /// 构建模块
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    internal void Build(IServiceCollection services)
-    {
-        // 添加默认启动程序集
-        AddAssemblies(Assembly.GetEntryAssembly()!);
-
-        // 将服务描述器进行排序
-        var sortedOfServiceDescriptions = _serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
-                                                                                                .ThenBy(s => s.Order);
-        if (!sortedOfServiceDescriptions.Any())
-        {
-            return;
-        }
-
-        // 将服务描述器添加到 IServiceCollection 中
-        foreach (var serviceDescriptorModel in sortedOfServiceDescriptions)
-        {
-            AddToServiceCollection(services, serviceDescriptorModel);
-        }
-
-        // 清空集合
-        _assemblies.Clear();
-        _serviceDescriptors.Clear();
-        _suppressDerivedTypes.Clear();
-    }
-
-    /// <summary>
-    /// 添加服务描述器
-    /// </summary>
-    /// <param name="serviceDescriptor"><see cref="ServiceDescriptorModel"/></param>
-    private void AddServiceDescriptor(ServiceDescriptorModel serviceDescriptor)
-    {
-        // 调用服务描述器模型过滤配置
-        if (FilterConfigure is null || FilterConfigure.Invoke(serviceDescriptor))
-        {
-            _serviceDescriptors.Add(serviceDescriptor);
-        }
+        return serviceDescriptors;
     }
 
     /// <summary>
@@ -266,22 +273,22 @@ public sealed class DependencyInjectionBuilder
 
         // 过滤无效服务类型
         var suppressDerivedTypes = _suppressDerivedTypes.Concat(serviceInjectionAttribute.SuppressDerivedTypes ?? Array.Empty<Type>());
-        var filteredServiceTypes = allInterfaces.Concat(new[] { baseType })
-                                                               .Where(t => t is not null
-                                                                                      && !suppressDerivedTypes.Contains(t)
-                                                                                      && !dependencyType.IsAssignableFrom(t))
-                                                               .Select(t => t!);
+        var filteredOfServiceTypes = allInterfaces.Concat(new[] { baseType })
+                                                                 .Where(t => t is not null
+                                                                                        && !suppressDerivedTypes.Contains(t)
+                                                                                        && !dependencyType.IsAssignableFrom(t))
+                                                                 .Select(t => t!);
 
         // 获取类型定义参数
         var typeDefinitionParameters = type.GetTypeInfo().GenericTypeParameters;
 
         // 获取服务类型集合
         var serviceTypes = !type.IsGenericType
-                                             ? filteredServiceTypes
-                                             : filteredServiceTypes.Where(i => i.IsGenericType
-                                                                                         && i.GenericTypeArguments.Length == typeDefinitionParameters.Length
-                                                                                         && i.GenericTypeArguments.SequenceEqual(typeDefinitionParameters))
-                                                                   .Select(i => i.GetGenericTypeDefinition());
+                                             ? filteredOfServiceTypes
+                                             : filteredOfServiceTypes.Where(i => i.IsGenericType
+                                                                                           && i.GenericTypeArguments.Length == typeDefinitionParameters.Length
+                                                                                           && i.GenericTypeArguments.SequenceEqual(typeDefinitionParameters))
+                                                                     .Select(i => i.GetGenericTypeDefinition());
 
         // 判断是否将自身作为服务类型
         if (!serviceInjectionAttribute.IncludingSelf)

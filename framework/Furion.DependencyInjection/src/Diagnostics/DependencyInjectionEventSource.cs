@@ -38,4 +38,11 @@ internal sealed class DependencyInjectionEventSource : EventSource
     /// <param name="message">负载数据</param>
     [Event(2)]
     internal void TryAddNamed(string? message = default) => WriteEvent(2, message);
+
+    /// <summary>
+    /// <see cref="DependencyInjectionBuilder.Build(IServiceCollection)"/>
+    /// </summary>
+    /// <param name="message">负载数据</param>
+    [Event(3)]
+    internal void BuildStarted(string? message = default) => WriteEvent(3, message);
 }

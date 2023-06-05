@@ -32,11 +32,3 @@ internal class NamedClass2 : INamedClass2
 internal interface INamedClass2
 {
 }
-
-internal class NotPublicTestDependency : IScopedDependency
-{
-}
-
-public class PublicTestDependency : IScopedDependency
-{
-}

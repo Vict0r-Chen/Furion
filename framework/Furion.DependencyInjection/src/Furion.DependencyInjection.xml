@@ -232,19 +232,9 @@
             已扫描的程序集
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._serviceDescriptors">
-            <summary>
-            已标记注册的服务描述器集合
-            </summary>
-        </member>
         <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._suppressDerivedTypes">
             <summary>
             禁用指定派生类型作为服务注册
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
-            <summary>
-            构造函数
             </summary>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressAssemblyScanning">
@@ -275,11 +265,16 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddServiceDescriptor(Furion.DependencyInjection.ServiceDescriptorModel)">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.ClearAll">
             <summary>
-            添加服务描述器
+            清空集合
             </summary>
-            <param name="serviceDescriptor"><see cref="T:Furion.DependencyInjection.ServiceDescriptorModel"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.CreateServiceDescriptors">
+            <summary>
+            扫描程序集创建服务描述器集合
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceLifetime(System.Type)">
             <summary>
@@ -339,6 +334,12 @@
             </summary>
             <param name="message">负载数据</param>
         </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.BuildStarted(System.String)">
+            <summary>
+            <see cref="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
+            </summary>
+            <param name="message">负载数据</param>
+        </member>
         <member name="T:Furion.DependencyInjection.NamedType">
             <summary>
             支持别名的类型代理
@@ -395,6 +396,19 @@
         </member>
         <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.ToString">
             <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">
+            <summary>
+            依赖注入模块拓展
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions.AddDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.DependencyInjection.DependencyInjectionBuilder})">
+            <summary>
+            添加依赖注入服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="configure">自定义配置</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">
             <summary>

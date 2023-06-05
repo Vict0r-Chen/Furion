@@ -16,13 +16,72 @@ namespace Furion.DependencyInjection.Tests;
 
 public class DependencyInjectionBuilderTests
 {
+    [Fact]
+    public void AddDependencyInjection_Default_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            var assembly = GetType().Assembly;
+            builder.AddAssemblies(assembly);
+            builder.AddAssemblies(assembly);
+        });
+
+        var count = services.Count;
+        Assert.True(count > 0);
+
+        var includePublicTestClass = services.Any(s => s.ImplementationType == typeof(PublicTestClass));
+        var includeNotPublicTestClass = services.Any(s => s.ImplementationType == typeof(NotPublicTestClass));
+        var includeAbstractPublicTestClass = services.Any(s => s.ImplementationType == typeof(AbstractPublicTestClass));
+
+        Assert.True(includePublicTestClass);
+        Assert.True(includeNotPublicTestClass);
+        Assert.False(includeAbstractPublicTestClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public void AddAssemblies_WhenSuppressNotPublicType(bool suppress)
+    public void SuppressNotPublicType_ReturnOK(bool enable)
     {
-        var builder = new DependencyInjectionBuilder();
-        builder.SuppressNotPublicType = suppress;
-        builder.AddAssemblies(GetType().Assembly);
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+            builder.SuppressNotPublicType = enable;
+        });
+
+        var count = services.Count;
+        Assert.True(count > 0);
+
+        var includePublicTestClass = services.Any(s => s.ImplementationType == typeof(PublicTestClass));
+        var includeNotPublicTestClass = services.Any(s => s.ImplementationType == typeof(NotPublicTestClass));
+        var includeAbstractPublicTestClass = services.Any(s => s.ImplementationType == typeof(AbstractPublicTestClass));
+
+        Assert.True(includePublicTestClass);
+        Assert.True(enable ? includeNotPublicTestClass == false : includeNotPublicTestClass == true);
+        Assert.False(includeAbstractPublicTestClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void SuppressAssemblyScanning_ReturnOK(bool enable)
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+            builder.SuppressAssemblyScanning = enable;
+        });
+
+        var count = services.Count;
+        Assert.True(enable ? count == 0 : count > 0);
     }
 }
