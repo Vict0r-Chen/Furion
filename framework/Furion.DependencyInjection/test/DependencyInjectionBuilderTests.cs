@@ -23,8 +23,8 @@ public class DependencyInjectionBuilderTests
         services.AddDependencyInjection(builder =>
         {
             var assembly = GetType().Assembly;
-            builder.AddAssemblies(assembly);
-            builder.AddAssemblies(assembly);
+            builder.AddAssemblies(assembly)
+                   .AddAssemblies(assembly);
         });
 
         var count = services.Count;
@@ -288,20 +288,61 @@ public class DependencyInjectionBuilderTests
         var services = new ServiceCollection();
         services.AddDependencyInjection(builder =>
         {
-            builder.AddAssemblies(GetType().Assembly);
-            builder.FilterConfigure = (s) =>
-            {
-                if (s.Descriptor.ImplementationType == typeof(FilterConfigureClass))
-                {
-                    return false;
-                }
+            builder.AddAssemblies(GetType().Assembly)
+                   .FilterConfigure = (s) =>
+                   {
+                       if (s.Descriptor.ImplementationType == typeof(FilterConfigureClass))
+                       {
+                           return false;
+                       }
 
-                return true;
-            };
+                       return true;
+                   };
         });
 
         var includeFilterConfigureClass = services.Any(s => s.ImplementationType == typeof(FilterConfigureClass));
         Assert.False(includeFilterConfigureClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void Muliple_Interfaces_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includeIMultiple1 = services.Any(s => s.ServiceType == typeof(IMultiple1));
+        var includeIMultiple2 = services.Any(s => s.ServiceType == typeof(IMultiple2));
+        var includeIMultiple3 = services.Any(s => s.ServiceType == typeof(IMultiple3));
+
+        Assert.True(includeIMultiple1);
+        Assert.True(includeIMultiple2);
+        Assert.True(includeIMultiple3);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void GlobalSuppressDerivedType_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly)
+                   .SuppressDerivedTypes(typeof(IGlobalSuppressDerivedType1));
+        });
+
+        var includeGlobalSuppressDerivedType1 = services.Any(s => s.ServiceType == typeof(IGlobalSuppressDerivedType1));
+        var includeGlobalSuppressDerivedType2 = services.Any(s => s.ServiceType == typeof(IGlobalSuppressDerivedType2));
+
+        Assert.False(includeGlobalSuppressDerivedType1);
+        Assert.True(includeGlobalSuppressDerivedType2);
 
         var serviceProvider = services.BuildServiceProvider();
         Assert.NotNull(serviceProvider);

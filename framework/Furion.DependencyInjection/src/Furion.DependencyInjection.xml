@@ -229,7 +229,7 @@
         </member>
         <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._diagnosticSource">
             <summary>
-            诊断日志
+            诊断日志对象
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._assemblies">
@@ -265,9 +265,17 @@
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddAssemblies(System.Reflection.Assembly[])">
             <summary>
-            追加程序集扫描
+            添加程序集扫描
             </summary>
             <param name="assemblies">可变数量程序集</param>
+            <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressDerivedTypes(System.Type[])">
+            <summary>
+            添加程序集扫描需排除的服务类型
+            </summary>
+            <param name="types">可变数量类型</param>
+            <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>

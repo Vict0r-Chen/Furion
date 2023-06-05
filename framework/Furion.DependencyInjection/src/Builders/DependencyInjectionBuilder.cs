@@ -20,7 +20,7 @@ namespace Furion.DependencyInjection;
 public sealed class DependencyInjectionBuilder
 {
     /// <summary>
-    /// 诊断日志
+    /// 诊断日志对象
     /// </summary>
     private static readonly DiagnosticSource _diagnosticSource = new DiagnosticListener("Furion.DependencyInjection");
 
@@ -65,15 +65,33 @@ public sealed class DependencyInjectionBuilder
     public Func<ServiceDescriptorModel, bool>? FilterConfigure { get; set; }
 
     /// <summary>
-    /// 追加程序集扫描
+    /// 添加程序集扫描
     /// </summary>
     /// <param name="assemblies">可变数量程序集</param>
-    public void AddAssemblies(params Assembly[] assemblies)
+    /// <returns><see cref="DependencyInjectionBuilder"/></returns>
+    public DependencyInjectionBuilder AddAssemblies(params Assembly[] assemblies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(assemblies);
 
         Array.ForEach(assemblies, ass => _assemblies.Add(ass));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加程序集扫描需排除的服务类型
+    /// </summary>
+    /// <param name="types">可变数量类型</param>
+    /// <returns><see cref="DependencyInjectionBuilder"/></returns>
+    public DependencyInjectionBuilder SuppressDerivedTypes(params Type[] types)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(types);
+
+        Array.ForEach(types, type => _suppressDerivedTypes.Add(type));
+
+        return this;
     }
 
     /// <summary>

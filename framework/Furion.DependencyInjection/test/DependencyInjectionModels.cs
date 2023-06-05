@@ -188,3 +188,31 @@ internal class ReplaceClass2 : IReplaceClass, IScopedDependency
 internal class FilterConfigureClass : ITestClass, IScopedDependency
 {
 }
+
+public interface IMultiple1
+{
+}
+
+public interface IMultiple2
+{
+}
+
+public interface IMultiple3
+{
+}
+
+internal class MulipleClass : IMultiple1, IMultiple2, IMultiple3, IScopedDependency
+{
+}
+
+public interface IGlobalSuppressDerivedType1
+{
+}
+
+public interface IGlobalSuppressDerivedType2
+{
+}
+
+internal class GlobalSuppressDerivedType : IGlobalSuppressDerivedType1, IGlobalSuppressDerivedType2, IScopedDependency
+{
+}
