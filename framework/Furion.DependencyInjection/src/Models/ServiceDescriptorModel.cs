@@ -47,6 +47,6 @@ public sealed class ServiceDescriptorModel
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{Addition} {nameof(Order)}: {Order} {Descriptor}";
+        return $"{Addition} {nameof(Order)}: {Order}, {Descriptor}";
     }
 }

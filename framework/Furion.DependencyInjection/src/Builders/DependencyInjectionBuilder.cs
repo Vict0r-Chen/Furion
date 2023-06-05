@@ -123,7 +123,7 @@ public sealed class DependencyInjectionBuilder
 
         var serviceDescriptors = new List<ServiceDescriptorModel>();
 
-        // 遍历程序集并创建待注册的服务
+        // 遍历所有程序集创建服务描述器集合
         foreach (var assembly in _assemblies)
         {
             // 查找所有实现 IDependency 的类型
@@ -137,7 +137,7 @@ public sealed class DependencyInjectionBuilder
                 continue;
             }
 
-            // 遍历所有实现类型并创建服务描述器模型
+            // 遍历所有实现类型创建服务描述器模型
             foreach (var exportedType in exportedTypes)
             {
                 // 获取 [ServiceInjection] 特性
@@ -291,7 +291,8 @@ public sealed class DependencyInjectionBuilder
                                                                      .Select(i => i.GetGenericTypeDefinition());
 
         // 判断是否将自身作为服务类型
-        if (!serviceInjectionAttribute.IncludingSelf)
+        if (!serviceInjectionAttribute.IncludingSelf
+            && serviceTypes.Any())
         {
             return serviceTypes;
         }

@@ -41,3 +41,42 @@ internal class NotPublicTestClass : ITestClass, IScopedDependency
 public abstract class AbstractPublicTestClass : ITestClass, IScopedDependency
 {
 }
+
+[ServiceInjection(IncludingBase = true)]
+internal class IncludePublicBaseClass : PublicBaseClass, ITestClass, IScopedDependency
+{
+}
+
+[ServiceInjection(IncludingBase = true)]
+internal class IncludeNotPublicBaseClass : NotPublicBaseClass, ITestClass, IScopedDependency
+{
+}
+
+[ServiceInjection(IncludingBase = true)]
+internal class IncludeAbstractBaseClass : AbstractBaseClass, ITestClass, IScopedDependency
+{
+}
+
+[ServiceInjection(IncludingSelf = true)]
+internal class IncludeSelfClass : ITestClass, IScopedDependency
+{
+}
+
+internal class IncludeSelfClassWithNotInterface : IScopedDependency
+{
+}
+
+[ServiceInjection(IncludingBase = true)]
+internal class IncludeSelfClassWithBaseClass : PublicBaseClass, IScopedDependency
+{
+}
+
+[ServiceInjection(Order = 2)]
+internal class OrderClass2 : ITestClass, IScopedDependency
+{
+}
+
+[ServiceInjection(Order = 1)]
+internal class OrderClass1 : ITestClass, IScopedDependency
+{
+}

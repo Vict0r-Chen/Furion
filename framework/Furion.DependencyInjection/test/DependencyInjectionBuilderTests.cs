@@ -84,4 +84,65 @@ public class DependencyInjectionBuilderTests
         var count = services.Count;
         Assert.True(enable ? count == 0 : count > 0);
     }
+
+    [Fact]
+    public void IncludingBase_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includePublicBaseClass = services.Any(s => s.ServiceType == typeof(PublicBaseClass));
+        var includeNotPublicBaseClass = services.Any(s => s.ServiceType == typeof(NotPublicBaseClass));
+        var includeAbstractBaseClass = services.Any(s => s.ServiceType == typeof(AbstractBaseClass));
+
+        Assert.True(includePublicBaseClass);
+        Assert.False(includeNotPublicBaseClass);
+        Assert.True(includeAbstractBaseClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void IncludingSelf_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includeIncludeSelfClass = services.Any(s => s.ServiceType == typeof(IncludeSelfClass));
+        var includeIncludeSelfClassWithNotInterface = services.Any(s => s.ServiceType == typeof(IncludeSelfClassWithNotInterface));
+        var includeIncludeSelfClassWithBaseClass = services.Any(s => s.ServiceType == typeof(IncludeSelfClassWithBaseClass));
+
+        Assert.True(includeIncludeSelfClass);
+        Assert.True(includeIncludeSelfClassWithNotInterface);
+        Assert.False(includeIncludeSelfClassWithBaseClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
+    public void Order_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var indexedServices = services.Select((s, i) => new { s.ImplementationType, i });
+        var orderClass1 = indexedServices.First(u => u.ImplementationType == typeof(OrderClass1)).i;
+        var orderClass2 = indexedServices.First(u => u.ImplementationType == typeof(OrderClass2)).i;
+
+        Assert.True(orderClass2 > orderClass1);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
 }
