@@ -296,6 +296,16 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="serviceDescriptorModel">服务描述器模型</param>
         </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceTypes(System.Type,System.ServiceInjectionAttribute,System.Type@,System.Type@)">
+            <summary>
+            获取类型的服务类型
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <param name="serviceInjectionAttribute"><see cref="T:System.ServiceInjectionAttribute"/></param>
+            <param name="implementationType">实现类型</param>
+            <param name="lifetimeDependencyType">服务生存期类型</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
         <member name="T:Furion.DependencyInjection.IDependency">
             <summary>
             服务扫描注册依赖接口
