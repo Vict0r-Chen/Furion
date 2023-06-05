@@ -103,7 +103,8 @@ public sealed class DependencyInjectionBuilder
         DependencyInjectionEventSource.Log.BuildStarted();
         _diagnosticSource.WriteIsEnabled("BuildStarted", new
         {
-            ServiceDescriptors = sortedOfServiceDescriptors
+            ServiceDescriptors = sortedOfServiceDescriptors,
+            Assemblies = _assemblies
         });
 
         // 将服务描述器添加到 IServiceCollection 中

@@ -37,3 +37,21 @@ internal class DerivedType : IDerivedType
 internal interface IDerivedType
 {
 }
+
+public class NotAttributeClass
+{
+}
+
+[DisplayName("CustomAttribute")]
+public class HasAttributeClass
+{
+}
+
+[DisplayName("CustomAttribute")]
+public abstract class BaseAttributeClass
+{
+}
+
+public class InheritAttributeClass : BaseAttributeClass
+{
+}
