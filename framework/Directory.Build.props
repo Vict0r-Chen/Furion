@@ -16,10 +16,10 @@
 		<Company>百签科技（广东）有限公司</Company>
 		<Product>Furion</Product>
 		<Copyright>版权所有 (c) 2020-2023 百小僧，百签科技（广东）有限公司</Copyright>
-		<PackageProjectUrl>https://furion.baiqian.ltd</PackageProjectUrl>
+		<PackageProjectUrl>https://furion.net</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<RepositoryUrl>https://gitee.com/dotnetchina/Furion</RepositoryUrl>
+		<RepositoryUrl>https://gitee.com/furion-net/furion</RepositoryUrl>
 		<RepositoryType>Gitee</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
