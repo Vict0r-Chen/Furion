@@ -18,8 +18,7 @@ namespace Furion.DependencyInjection;
 /// 代理方法调用器
 /// </summary>
 /// <remarks>负责动态调用方法</remarks>
-public class Invocation<TService>
-    where TService : class
+public class Invocation
 {
     /// <summary>
     /// 构造函数
@@ -30,7 +29,7 @@ public class Invocation<TService>
     /// <param name="properties">额外数据</param>
     public Invocation(MethodInfo targetMethod
         , object?[]? args
-        , TService? target = null
+        , object? target = null
         , Dictionary<object, object?>? properties = null)
     {
         Args = args;
@@ -66,7 +65,7 @@ public class Invocation<TService>
     /// <summary>
     /// 目标实例对象
     /// </summary>
-    public TService? Target { get; }
+    public object? Target { get; }
 
     /// <summary>
     /// 被代理方法
@@ -158,27 +157,5 @@ public class Invocation<TService>
     public async Task<T?> ProceedAsync<T>()
     {
         return (T)await (Task<object>)Proceed()!;
-    }
-}
-
-/// <summary>
-/// 代理方法调用器
-/// </summary>
-/// <remarks>负责动态调用方法</remarks>
-public sealed class Invocation : Invocation<object>
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="targetMethod">接口方法</param>
-    /// <param name="args">调用参数</param>
-    /// <param name="target">目标实例对象</param>
-    /// <param name="properties">额外数据</param>
-    public Invocation(MethodInfo targetMethod
-        , object?[]? args
-        , object? target = null
-        , Dictionary<object, object?>? properties = null)
-        : base(targetMethod, args, target, properties)
-    {
     }
 }

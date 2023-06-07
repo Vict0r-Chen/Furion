@@ -42,7 +42,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
     /// 生成代理装饰类
     /// </summary>
     /// <param name="interfaceType">接口类型</param>
-    /// <param name="proxyType"><see cref="DispatchProxyDecorator{TService}"/> 类型</param>
+    /// <param name="proxyType"><see cref="DispatchProxyDecorator"/> 类型</param>
     /// <param name="target">目标实例对象</param>
     /// <param name="properties">额外数据</param>
     /// <returns><see cref="object"/></returns>
@@ -61,7 +61,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
         }
 
         // 检查 target 是否是接口实例类型
-        if (!interfaceType.IsInstanceOfType(target))
+        if (target is not null && !interfaceType.IsInstanceOfType(target))
         {
             throw new InvalidOperationException($"The target object is not instance of type '{interfaceType.Name}'.");
         }
@@ -83,29 +83,29 @@ public abstract class DispatchProxyDecorator : DispatchProxy
     /// 生成代理装饰类
     /// </summary>
     /// <typeparam name="TService">接口类型</typeparam>
-    /// <param name="proxyType"><see cref="DispatchProxyDecorator{TService}"/> 类型</param>
+    /// <param name="proxyType"><see cref="DispatchProxyDecorator"/> 类型</param>
     /// <param name="target">目标实例对象</param>
     /// <param name="properties">额外数据</param>
-    /// <returns><see cref="object"/></returns>
-    public static object? Decorate<TService>(Type proxyType, TService? target = null, Dictionary<object, object?>? properties = null)
+    /// <returns><typeparamref name="TService"/></returns>
+    public static TService? Decorate<TService>(Type proxyType, TService? target = null, Dictionary<object, object?>? properties = null)
         where TService : class
     {
-        return Decorate(typeof(TService), proxyType, target, properties);
+        return Decorate(typeof(TService), proxyType, target, properties) as TService;
     }
 
     /// <summary>
     /// 生成代理装饰类
     /// </summary>
     /// <typeparam name="TService">接口类型</typeparam>
-    /// <typeparam name="TProxy"><see cref="DispatchProxyDecorator{TService}"/> 类型</typeparam>
+    /// <typeparam name="TProxy"><see cref="DispatchProxyDecorator"/> 类型</typeparam>
     /// <param name="target">目标实例对象</param>
     /// <param name="properties">额外数据</param>
-    /// <returns><see cref="object"/></returns>
-    public static object? Decorate<TService, TProxy>(TService? target = null, Dictionary<object, object?>? properties = null)
+    /// <returns><typeparamref name="TService"/></returns>
+    public static TService? Decorate<TService, TProxy>(TService? target = null, Dictionary<object, object?>? properties = null)
         where TService : class
         where TProxy : DispatchProxyDecorator
     {
-        return Decorate(typeof(TService), typeof(TProxy), target, properties);
+        return Decorate(typeof(TService), typeof(TProxy), target, properties) as TService;
     }
 
     /// <summary>

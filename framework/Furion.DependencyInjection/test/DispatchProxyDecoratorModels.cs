@@ -68,33 +68,6 @@ public class TestProxyClassWithNotInterface
 {
 }
 
-public class TestDispatchProxyDecoratorOfT : DispatchProxyDecorator<ITestProxyClass>
-{
-    public override object? Invoke(Invocation<ITestProxyClass> invocation)
-    {
-        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
-
-        var result = invocation.Proceed();
-        return result;
-    }
-
-    public override async Task InvokeAsync(Invocation<ITestProxyClass> invocation)
-    {
-        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
-
-        await invocation.ProceedAsync();
-    }
-
-    public override async Task<T?> InvokeAsync<T>(Invocation<ITestProxyClass> invocation)
-        where T : default
-    {
-        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
-
-        var result = await invocation.ProceedAsync<T>();
-        return result;
-    }
-}
-
 public class TestDispatchProxyDecorator : DispatchProxyDecorator
 {
     public override object? Invoke(Invocation invocation)
@@ -122,23 +95,23 @@ public class TestDispatchProxyDecorator : DispatchProxyDecorator
     }
 }
 
-public class TestDispatchProxyDecoratorOfT_NotClass : DispatchProxyDecorator<ITestProxyClass>
+public class TestDispatchProxyDecorator_NotClass : DispatchProxyDecorator
 {
-    public override object? Invoke(Invocation<ITestProxyClass> invocation)
+    public override object? Invoke(Invocation invocation)
     {
         ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
 
         return invocation.Args![0];
     }
 
-    public override async Task InvokeAsync(Invocation<ITestProxyClass> invocation)
+    public override async Task InvokeAsync(Invocation invocation)
     {
         ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
 
         await Task.CompletedTask;
     }
 
-    public override async Task<T?> InvokeAsync<T>(Invocation<ITestProxyClass> invocation)
+    public override async Task<T?> InvokeAsync<T>(Invocation invocation)
         where T : default
     {
         ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
