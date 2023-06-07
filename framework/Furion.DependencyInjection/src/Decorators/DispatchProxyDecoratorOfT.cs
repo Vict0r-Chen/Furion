@@ -122,7 +122,7 @@ public abstract class DispatchProxyDecorator<TService> : DispatchProxy
         // 创建代理方法调用器
         var invocation = new Invocation<TService>(targetMethod, args, Target, Properties);
 
-        // 方法返回值类型
+        // 获取方法返回值类型
         var returnType = targetMethod.ReturnType;
 
         // 处理返回值 Task 方法

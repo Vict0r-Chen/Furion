@@ -26,7 +26,7 @@ public class Invocation<TService>
     /// </summary>
     /// <param name="targetMethod">接口方法</param>
     /// <param name="args">调用参数</param>
-    /// <param name="target">代理实例</param>
+    /// <param name="target">目标实例对象</param>
     /// <param name="properties">额外数据</param>
     public Invocation(MethodInfo targetMethod
         , object?[]? args
@@ -51,7 +51,7 @@ public class Invocation<TService>
         var targetMethodDefined = declaringType.GetMethods()
                                                          .First(m => m.MetadataToken == targetMethod.MetadataToken);
 
-        // 查找代理方法
+        // 查找被代理方法
         Method = target.GetType().GetMethods().Single(m => m.ToString() == targetMethodDefined.ToString());
 
         // 处理泛型方法
@@ -89,7 +89,7 @@ public class Invocation<TService>
     /// <summary>
     /// 调用同步方法
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="object"/></returns>
     public object? Proceed()
     {
         // 空检查
@@ -142,7 +142,7 @@ public class Invocation<TService>
     /// <summary>
     /// 调用异步方法
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="Task"/></returns>
     public Task ProceedAsync()
     {
         return (Task)Proceed()!;
@@ -170,7 +170,7 @@ public sealed class Invocation : Invocation<object>
     /// </summary>
     /// <param name="targetMethod">接口方法</param>
     /// <param name="args">调用参数</param>
-    /// <param name="target">代理实例</param>
+    /// <param name="target">目标实例对象</param>
     /// <param name="properties">额外数据</param>
     public Invocation(MethodInfo targetMethod
         , object?[]? args
