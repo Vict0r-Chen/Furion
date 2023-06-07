@@ -44,12 +44,12 @@ public static class NamedServiceCollectionExtensions
     public static IServiceCollection AddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptor);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
 
         // 创建服务描述器代理类型
         var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
+        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
 
         // 日志事件记录
         DependencyInjectionEventSource.Log.AddNamed($"{serviceDescriptorDelegator}");
@@ -72,12 +72,12 @@ public static class NamedServiceCollectionExtensions
     public static IServiceCollection TryAddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptor);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
 
         // 创建服务描述器代理类型
         var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator);
+        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
 
         // 日志事件记录
         DependencyInjectionEventSource.Log.TryAddNamed($"{serviceDescriptorDelegator}");
@@ -579,8 +579,8 @@ public static class NamedServiceCollectionExtensions
     private static ServiceDescriptor? CreateDelegator(ServiceDescriptor serviceDescriptor, string name)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptor);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
 
         var serviceTypeDelegator = new NamedType(name, serviceDescriptor.ServiceType);
 

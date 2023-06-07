@@ -30,8 +30,8 @@ public static class NamedServiceProviderExtensions
     public static object? GetNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentNullException.ThrowIfNull(serviceType);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
         return serviceProvider.GetService(new NamedType(name, serviceType));
     }
@@ -46,8 +46,8 @@ public static class NamedServiceProviderExtensions
     public static object GetRequiredNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentNullException.ThrowIfNull(serviceType);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
         return serviceProvider.GetRequiredService(new NamedType(name, serviceType));
     }
@@ -89,7 +89,7 @@ public static class NamedServiceProviderExtensions
          where TService : class
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
 
         return serviceProvider.GetServices(new NamedType(name, typeof(TService))).OfType<TService>();
     }
@@ -104,8 +104,8 @@ public static class NamedServiceProviderExtensions
     public static IEnumerable<object?> GetNamedServices(this IServiceProvider serviceProvider, string name, Type serviceType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name);
-        ArgumentNullException.ThrowIfNull(serviceType);
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
         return serviceProvider.GetServices(new NamedType(name, serviceType)).Where(serviceType.IsInstanceOfType);
     }

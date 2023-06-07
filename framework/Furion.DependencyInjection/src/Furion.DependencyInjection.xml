@@ -354,9 +354,83 @@
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.BuildStarted(System.String)">
             <summary>
-            <see cref="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
+            <see cref="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> 事件
             </summary>
             <param name="message">负载数据</param>
+        </member>
+        <member name="T:Furion.DependencyInjection.Invocation`1">
+            <summary>
+            代理方法调用器
+            </summary>
+            <remarks>负责动态调用方法</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.Invocation`1.#ctor(System.Reflection.MethodInfo,System.Object[],`0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">调用参数</param>
+            <param name="target">代理实例</param>
+            <param name="properties">额外数据</param>
+        </member>
+        <member name="P:Furion.DependencyInjection.Invocation`1.Target">
+            <summary>
+            代理实例
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.Invocation`1.Method">
+            <summary>
+            调用方法
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.Invocation`1.TargetMethod">
+            <summary>
+            接口方法
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.Invocation`1.Args">
+            <summary>
+            调用参数
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.Invocation`1.Properties">
+            <summary>
+            额外数据
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.Invocation`1.Proceed">
+            <summary>
+            调用同步方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.Invocation`1.ProceedAsync">
+            <summary>
+            调用异步方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.Invocation`1.ProceedAsync``1">
+            <summary>
+            调用异步方法带返回值
+            </summary>
+            <typeparam name="T">泛型值</typeparam>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="T:Furion.DependencyInjection.Invocation">
+            <summary>
+            代理方法调用器
+            </summary>
+            <remarks>负责动态调用方法</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.Invocation.#ctor(System.Reflection.MethodInfo,System.Object[],System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">调用参数</param>
+            <param name="target">代理实例</param>
+            <param name="properties">额外数据</param>
         </member>
         <member name="T:Furion.DependencyInjection.NamedType">
             <summary>
@@ -414,6 +488,164 @@
         </member>
         <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.ToString">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.DependencyInjection.DispatchProxyDecorator">
+            <summary>
+            <see cref="T:System.Reflection.DispatchProxy"/> 装饰器
+            </summary>
+            <remarks>用于生成接口代理</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DispatchProxyDecorator.Target">
+            <summary>
+            实现类实例
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DispatchProxyDecorator.Properties">
+            <summary>
+            额外数据
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Decorate(System.Type,System.Type,System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <param name="interfaceType">接口类型</param>
+            <param name="proxyType"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator`1"/> 类型</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Decorate``1(System.Type,``0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <typeparam name="TService">接口类型</typeparam>
+            <param name="proxyType"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator`1"/> 类型</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Decorate``2(``0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <typeparam name="TService">接口类型</typeparam>
+            <typeparam name="TProxy"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator`1"/> 类型</typeparam>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Invoke(Furion.DependencyInjection.Invocation)">
+            <summary>
+            同步拦截
+            </summary>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.InvokeAsync(Furion.DependencyInjection.Invocation)">
+            <summary>
+            异步无返回值拦截
+            </summary>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.InvokeAsync``1(Furion.DependencyInjection.Invocation)">
+            <summary>
+            异步带返回值拦截
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns><typeparamref name="T"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Invoke(System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            重写拦截调用方法
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">方法传递参数</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="F:Furion.DependencyInjection.DispatchProxyDecorator._invokeAsyncOfTMethod">
+            <summary>
+            <see cref="M:Furion.DependencyInjection.DispatchProxyDecorator.InvokeAsync``1(Furion.DependencyInjection.Invocation)"/>
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.DispatchProxyDecorator`1">
+            <summary>
+            <see cref="T:System.Reflection.DispatchProxy"/> 装饰器
+            </summary>
+            <typeparam name="TService">接口类型</typeparam>
+            <remarks>用于生成接口代理</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DispatchProxyDecorator`1.Target">
+            <summary>
+            <typeparamref name="TService"/> 实现类实例
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DispatchProxyDecorator`1.Properties">
+            <summary>
+            额外数据
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.Decorate(System.Type,`0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <param name="proxyType"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator`1"/> 类型</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.Decorate``1(`0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <typeparam name="TProxy"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator`1"/> 类型</typeparam>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.Invoke(Furion.DependencyInjection.Invocation{`0})">
+            <summary>
+            同步拦截
+            </summary>
+            <param name="invocation"><typeparamref name="TService"/></param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.InvokeAsync(Furion.DependencyInjection.Invocation{`0})">
+            <summary>
+            异步无返回值拦截
+            </summary>
+            <param name="invocation"><typeparamref name="TService"/></param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.InvokeAsync``1(Furion.DependencyInjection.Invocation{`0})">
+            <summary>
+            异步带返回值拦截
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <param name="invocation"><typeparamref name="TService"/></param>
+            <returns><typeparamref name="T"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator`1.Invoke(System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            重写拦截调用方法
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">方法传递参数</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="F:Furion.DependencyInjection.DispatchProxyDecorator`1._invokeAsyncOfTMethod">
+            <summary>
+            <see cref="M:Furion.DependencyInjection.DispatchProxyDecorator`1.InvokeAsync``1(Furion.DependencyInjection.Invocation{`0})"/>
+            </summary>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">
             <summary>

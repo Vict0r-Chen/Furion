@@ -72,7 +72,7 @@ public sealed class DependencyInjectionBuilder
     public DependencyInjectionBuilder AddAssemblies(params Assembly[] assemblies)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(assemblies);
+        ArgumentNullException.ThrowIfNull(assemblies, nameof(assemblies));
 
         Array.ForEach(assemblies, ass => _assemblies.Add(ass));
 
@@ -87,7 +87,7 @@ public sealed class DependencyInjectionBuilder
     public DependencyInjectionBuilder SuppressDerivedTypes(params Type[] types)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(types);
+        ArgumentNullException.ThrowIfNull(types, nameof(types));
 
         Array.ForEach(types, type => _suppressDerivedTypes.Add(type));
 

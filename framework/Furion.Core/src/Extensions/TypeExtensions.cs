@@ -68,7 +68,7 @@ internal static class TypeExtensions
     internal static bool IsInstantiatedTypeWithAssignableFrom(this Type type, Type derivedType)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(derivedType);
+        ArgumentNullException.ThrowIfNull(derivedType, nameof(derivedType));
 
         return type.IsInstantiatedType() && derivedType != type && derivedType.IsAssignableFrom(type);
     }
