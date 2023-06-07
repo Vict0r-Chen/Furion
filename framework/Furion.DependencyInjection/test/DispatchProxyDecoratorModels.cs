@@ -23,6 +23,10 @@ public interface ITestProxyClass
     Task<int> AsyncMethodWithResult(int num);
 
     T GenericMethod<T>(T obj);
+
+    Task AsyncGenericMethod<T>();
+
+    Task<T> AsyncGenericMethodWithResult<T>(T obj);
 }
 
 public class TestProxyClass : ITestProxyClass
@@ -47,6 +51,17 @@ public class TestProxyClass : ITestProxyClass
     {
         return obj;
     }
+
+    public async Task AsyncGenericMethod<T>()
+    {
+        await Task.Delay(10);
+    }
+
+    public async Task<T> AsyncGenericMethodWithResult<T>(T num)
+    {
+        await Task.Delay(10);
+        return num;
+    }
 }
 
 public class TestProxyClassWithNotInterface
@@ -57,18 +72,24 @@ public class TestDispatchProxyDecoratorOfT : DispatchProxyDecorator<ITestProxyCl
 {
     public override object? Invoke(Invocation<ITestProxyClass> invocation)
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         var result = invocation.Proceed();
         return result;
     }
 
     public override async Task InvokeAsync(Invocation<ITestProxyClass> invocation)
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         await invocation.ProceedAsync();
     }
 
     public override async Task<T?> InvokeAsync<T>(Invocation<ITestProxyClass> invocation)
         where T : default
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         var result = await invocation.ProceedAsync<T>();
         return result;
     }
@@ -78,18 +99,24 @@ public class TestDispatchProxyDecorator : DispatchProxyDecorator
 {
     public override object? Invoke(Invocation invocation)
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         var result = invocation.Proceed();
         return result;
     }
 
     public override async Task InvokeAsync(Invocation invocation)
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         await invocation.ProceedAsync();
     }
 
     public override async Task<T?> InvokeAsync<T>(Invocation invocation)
         where T : default
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         var result = await invocation.ProceedAsync<T>();
         return result;
     }
@@ -99,17 +126,23 @@ public class TestDispatchProxyDecoratorOfT_NotClass : DispatchProxyDecorator<ITe
 {
     public override object? Invoke(Invocation<ITestProxyClass> invocation)
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         return invocation.Args![0];
     }
 
     public override async Task InvokeAsync(Invocation<ITestProxyClass> invocation)
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         await Task.CompletedTask;
     }
 
     public override async Task<T?> InvokeAsync<T>(Invocation<ITestProxyClass> invocation)
         where T : default
     {
+        ((ITestOutputHelper)invocation.Properties!["output"]!).WriteLine($"{invocation.Method}");
+
         return await Task.FromResult((T)invocation.Args![0]!);
     }
 }
