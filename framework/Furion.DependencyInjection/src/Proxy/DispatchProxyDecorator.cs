@@ -60,7 +60,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
             throw new InvalidOperationException($"Type '{proxyType.Name}' is not assignable from '{nameof(DispatchProxyDecorator)}'.");
         }
 
-        // 检查 target 是否是某个类型
+        // 检查 target 是否是接口实例类型
         if (!interfaceType.IsInstanceOfType(target))
         {
             throw new InvalidOperationException($"The target object is not instance of type '{interfaceType.Name}'.");
