@@ -19,7 +19,7 @@ public class DispatchProxyDecoratorTests
     [Fact]
     public async Task DecorateOfT_ReturnOK()
     {
-        var proxyObject = DispatchProxyDecorator<ITestProxyClass>.Decorate<TestDispatchProxyDecoratorOf>(new TestProxyClass());
+        var proxyObject = DispatchProxyDecorator<ITestProxyClass>.Decorate<TestDispatchProxyDecoratorOfT>(new TestProxyClass());
         Assert.NotNull(proxyObject);
 
         var syncResult = proxyObject.SyncMethod("test");
@@ -37,7 +37,7 @@ public class DispatchProxyDecoratorTests
     [Fact]
     public async Task DecorateOfT2_ReturnOK()
     {
-        var proxyObject = DispatchProxyDecorator<ITestProxyClass>.Decorate(typeof(TestDispatchProxyDecoratorOf), new TestProxyClass());
+        var proxyObject = DispatchProxyDecorator<ITestProxyClass>.Decorate(typeof(TestDispatchProxyDecoratorOfT), new TestProxyClass());
         Assert.NotNull(proxyObject);
 
         var syncResult = proxyObject.SyncMethod("test");
@@ -92,6 +92,70 @@ public class DispatchProxyDecoratorTests
     public async Task DecorateOfObject3_ReturnOK()
     {
         var proxyObject = DispatchProxyDecorator.Decorate<ITestProxyClass>(typeof(TestDispatchProxyDecorator), new TestProxyClass()) as ITestProxyClass;
+        Assert.NotNull(proxyObject);
+
+        var syncResult = proxyObject.SyncMethod("test");
+        Assert.Equal("test", syncResult);
+
+        await proxyObject.AsyncMethod();
+
+        var asyncResult = await proxyObject.AsyncMethodWithResult(100);
+        Assert.Equal(100, asyncResult);
+
+        var GenericResult = proxyObject.GenericMethod(true);
+        Assert.True(GenericResult);
+    }
+
+    [Fact]
+    public void DecorateOfObject_NotInstanceOf_ReturnOops()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var proxyObject = DispatchProxyDecorator.Decorate(typeof(ITestProxyClass), typeof(TestDispatchProxyDecorator), new TestProxyClassWithNotInterface()) as ITestProxyClass;
+        });
+
+        Assert.Equal("The target object is not instance of type 'ITestProxyClass'.", exception.Message);
+    }
+
+    [Fact]
+    public void DecorateOfObject_NotAssignableFrom_ReturnOops()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var proxyObject = DispatchProxyDecorator.Decorate(typeof(ITestProxyClass), typeof(TestDispatchProxyDecoratorOfT), new TestProxyClass()) as ITestProxyClass;
+        });
+
+        Assert.Equal("Type 'TestDispatchProxyDecoratorOfT' is not assignable from 'DispatchProxyDecorator'.", exception.Message);
+    }
+
+    [Fact]
+    public async Task DecorateOfT_NullTarget_ReturnOops()
+    {
+        var proxyObject = DispatchProxyDecorator<ITestProxyClass>.Decorate<TestDispatchProxyDecoratorOfT>();
+        Assert.NotNull(proxyObject);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var syncResult = proxyObject.SyncMethod("test");
+        });
+
+        await Assert.ThrowsAsync<ArgumentNullException>(proxyObject.AsyncMethod);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+        {
+            var asyncResult = await proxyObject.AsyncMethodWithResult(100);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var GenericResult = proxyObject.GenericMethod(true);
+        });
+    }
+
+    [Fact]
+    public async Task DecorateOfT_NullTarget_ReturnOK()
+    {
+        var proxyObject = DispatchProxyDecorator<ITestProxyClass>.Decorate<TestDispatchProxyDecoratorOfT_NotClass>();
         Assert.NotNull(proxyObject);
 
         var syncResult = proxyObject.SyncMethod("test");

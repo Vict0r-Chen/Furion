@@ -142,9 +142,7 @@ public abstract class DispatchProxyDecorator<TService> : DispatchProxy
         // 处理同步方法
         else
         {
-            return !targetMethod.IsGenericMethod
-                      ? Invoke(invocation)
-                      : invocation.Proceed();
+            return Invoke(invocation);
         }
     }
 

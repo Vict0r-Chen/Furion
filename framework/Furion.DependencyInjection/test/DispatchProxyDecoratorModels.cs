@@ -49,7 +49,11 @@ public class TestProxyClass : ITestProxyClass
     }
 }
 
-public class TestDispatchProxyDecoratorOf : DispatchProxyDecorator<ITestProxyClass>
+public class TestProxyClassWithNotInterface
+{
+}
+
+public class TestDispatchProxyDecoratorOfT : DispatchProxyDecorator<ITestProxyClass>
 {
     public override object? Invoke(Invocation<ITestProxyClass> invocation)
     {
@@ -88,5 +92,24 @@ public class TestDispatchProxyDecorator : DispatchProxyDecorator
     {
         var result = await invocation.ProceedAsync<T>();
         return result;
+    }
+}
+
+public class TestDispatchProxyDecoratorOfT_NotClass : DispatchProxyDecorator<ITestProxyClass>
+{
+    public override object? Invoke(Invocation<ITestProxyClass> invocation)
+    {
+        return invocation.Args![0];
+    }
+
+    public override async Task InvokeAsync(Invocation<ITestProxyClass> invocation)
+    {
+        await Task.CompletedTask;
+    }
+
+    public override async Task<T?> InvokeAsync<T>(Invocation<ITestProxyClass> invocation)
+        where T : default
+    {
+        return await Task.FromResult((T)invocation.Args![0]!);
     }
 }

@@ -92,6 +92,9 @@ public class Invocation<TService>
     /// <returns></returns>
     public object? Proceed()
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(Target, nameof(Target));
+
         //方法返回值
         var returnType = Method.ReturnType;
 
