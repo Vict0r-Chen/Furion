@@ -91,4 +91,16 @@ internal static class TypeExtensions
 
         return type.GetCustomAttribute<TAttribute>(inherit);
     }
+
+    /// <summary>
+    /// 获取公开的实例方法
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="name">方法名称</param>
+    /// <returns><see cref="MethodInfo"/></returns>
+    internal static MethodInfo? GetPublicInstanceMethod(this Type type, string name)
+    {
+        var methodInfo = type.GetMethod(name, BindingFlags.Public | BindingFlags.Instance);
+        return methodInfo;
+    }
 }

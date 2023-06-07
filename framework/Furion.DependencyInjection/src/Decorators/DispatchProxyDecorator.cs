@@ -67,16 +67,16 @@ public abstract class DispatchProxyDecorator : DispatchProxy
         }
 
         // 创建代理类对象
-        var proxy = Create(interfaceType, proxyType) as DispatchProxyDecorator;
+        var proxyObject = Create(interfaceType, proxyType) as DispatchProxyDecorator;
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(proxy, nameof(proxy));
+        ArgumentNullException.ThrowIfNull(proxyObject, nameof(proxyObject));
 
         // 设置目标对象数据
-        proxy.Target = target;
-        proxy.Properties = properties ?? new();
+        proxyObject.Target = target;
+        proxyObject.Properties = properties;
 
-        return proxy;
+        return proxyObject;
     }
 
     /// <summary>

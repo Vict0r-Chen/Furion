@@ -93,4 +93,15 @@ public class TypeExtensionsTests
         Assert.NotNull(attribute3);
         Assert.Null(attribute4);
     }
+
+    [Theory]
+    [InlineData(nameof(WithMethodClass.GetStatic), false)]
+    [InlineData(nameof(WithMethodClass.GetInternal), false)]
+    [InlineData(nameof(WithMethodClass.GetPublic), true)]
+    public void GetPublicInstanceMethod_ReturnOK(string methodName, bool isPublicInstance)
+    {
+        var type = typeof(WithMethodClass);
+        var method = type.GetPublicInstanceMethod(methodName);
+        Assert.Equal(isPublicInstance, method != null);
+    }
 }

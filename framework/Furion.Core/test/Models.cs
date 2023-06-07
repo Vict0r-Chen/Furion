@@ -55,3 +55,15 @@ public abstract class BaseAttributeClass
 public class InheritAttributeClass : BaseAttributeClass
 {
 }
+
+public class WithMethodClass
+{
+    public static void GetStatic()
+    { }
+
+    internal void GetInternal()
+    { }
+
+    public void GetPublic()
+    { }
+}

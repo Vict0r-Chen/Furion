@@ -34,6 +34,10 @@ public class DispatchProxyDecoratorTests
         var proxyObject = DispatchProxyDecorator.Decorate<ITestProxyClass, TestDispatchProxyDecorator>(new TestProxyClass(), _properties);
         Assert.NotNull(proxyObject);
 
+        proxyObject.Name = "Furion";
+        var name = proxyObject.Name;
+        Assert.Equal("Furion", name);
+
         var syncResult = proxyObject.SyncMethod("test");
         Assert.Equal("test", syncResult);
 
@@ -49,6 +53,15 @@ public class DispatchProxyDecoratorTests
 
         var asyncResult2 = await proxyObject.AsyncGenericMethodWithResult(100);
         Assert.Equal(100, asyncResult2);
+
+        var internalCallResult = proxyObject.InternalCallSyncMethod("test");
+        Assert.Equal("test", internalCallResult);
+
+        var displayResult = proxyObject.DisplayImplementation("test");
+        Assert.Equal("test", displayResult);
+
+        var defaultResult = proxyObject.Default("test");
+        Assert.Equal("test", defaultResult);
     }
 
     [Fact]
@@ -57,6 +70,10 @@ public class DispatchProxyDecoratorTests
         var proxyObject = DispatchProxyDecorator.Decorate(typeof(ITestProxyClass), typeof(TestDispatchProxyDecorator), new TestProxyClass(), _properties) as ITestProxyClass;
         Assert.NotNull(proxyObject);
 
+        proxyObject.Name = "Furion";
+        var name = proxyObject.Name;
+        Assert.Equal("Furion", name);
+
         var syncResult = proxyObject.SyncMethod("test");
         Assert.Equal("test", syncResult);
 
@@ -72,6 +89,15 @@ public class DispatchProxyDecoratorTests
 
         var asyncResult2 = await proxyObject.AsyncGenericMethodWithResult(100);
         Assert.Equal(100, asyncResult2);
+
+        var internalCallResult = proxyObject.InternalCallSyncMethod("test");
+        Assert.Equal("test", internalCallResult);
+
+        var displayResult = proxyObject.DisplayImplementation("test");
+        Assert.Equal("test", displayResult);
+
+        var defaultResult = proxyObject.Default("test");
+        Assert.Equal("test", defaultResult);
     }
 
     [Fact]
@@ -80,6 +106,10 @@ public class DispatchProxyDecoratorTests
         var proxyObject = DispatchProxyDecorator.Decorate<ITestProxyClass>(typeof(TestDispatchProxyDecorator), new TestProxyClass(), _properties);
         Assert.NotNull(proxyObject);
 
+        proxyObject.Name = "Furion";
+        var name = proxyObject.Name;
+        Assert.Equal("Furion", name);
+
         var syncResult = proxyObject.SyncMethod("test");
         Assert.Equal("test", syncResult);
 
@@ -95,6 +125,15 @@ public class DispatchProxyDecoratorTests
 
         var asyncResult2 = await proxyObject.AsyncGenericMethodWithResult(100);
         Assert.Equal(100, asyncResult2);
+
+        var internalCallResult = proxyObject.InternalCallSyncMethod("test");
+        Assert.Equal("test", internalCallResult);
+
+        var displayResult = proxyObject.DisplayImplementation("test");
+        Assert.Equal("test", displayResult);
+
+        var defaultResult = proxyObject.Default("test");
+        Assert.Equal("test", defaultResult);
     }
 
     [Fact]
@@ -127,6 +166,16 @@ public class DispatchProxyDecoratorTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
+            proxyObject.Name = "Furion";
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var name = proxyObject.Name;
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
             var syncResult = proxyObject.SyncMethod("test");
         });
 
@@ -148,6 +197,21 @@ public class DispatchProxyDecoratorTests
         {
             var asyncResult2 = await proxyObject.AsyncGenericMethodWithResult(100);
         });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var internalCallResult = proxyObject.InternalCallSyncMethod("test");
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var displayResult = proxyObject.DisplayImplementation("test");
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var defaultResult = proxyObject.Default("test");
+        });
     }
 
     [Fact]
@@ -155,6 +219,13 @@ public class DispatchProxyDecoratorTests
     {
         var proxyObject = DispatchProxyDecorator.Decorate<ITestProxyClass, TestDispatchProxyDecorator_NotClass>(properties: _properties);
         Assert.NotNull(proxyObject);
+
+        proxyObject.Name = "Furion";
+
+        Assert.Throws<IndexOutOfRangeException>(() =>
+        {
+            var name = proxyObject.Name;
+        });
 
         var syncResult = proxyObject.SyncMethod("test");
         Assert.Equal("test", syncResult);
@@ -171,5 +242,14 @@ public class DispatchProxyDecoratorTests
 
         var asyncResult2 = await proxyObject.AsyncGenericMethodWithResult(100);
         Assert.Equal(100, asyncResult2);
+
+        var internalCallResult = proxyObject.InternalCallSyncMethod("test");
+        Assert.Equal("test", internalCallResult);
+
+        var displayResult = proxyObject.DisplayImplementation("test");
+        Assert.Equal("test", displayResult);
+
+        var defaultResult = proxyObject.Default("test");
+        Assert.Equal("test", defaultResult);
     }
 }

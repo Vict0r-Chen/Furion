@@ -18,7 +18,7 @@ namespace Furion.DependencyInjection;
 /// 代理方法调用器
 /// </summary>
 /// <remarks>负责动态调用方法</remarks>
-public class Invocation
+public sealed class Invocation
 {
     /// <summary>
     /// 构造函数
@@ -37,29 +37,7 @@ public class Invocation
         Target = target;
         Properties = properties;
 
-        if (target == null)
-        {
-            Method = targetMethod;
-            return;
-        }
-
-        var declaringType = targetMethod.DeclaringType;
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(declaringType, nameof(declaringType));
-
-        // 查找方法定义
-        var targetMethodDefined = declaringType.GetMethods()
-                                                         .First(m => m.MetadataToken == targetMethod.MetadataToken);
-
-        // 查找被代理方法
-        Method = target.GetType().GetMethods().Single(m => m.ToString() == targetMethodDefined.ToString());
-
-        // 处理泛型方法
-        if (targetMethod.IsGenericMethod)
-        {
-            Method = Method.MakeGenericMethod(targetMethod.GetGenericArguments());
-        }
+        Method = GetRealMethod(targetMethod, target);
     }
 
     /// <summary>
@@ -157,5 +135,39 @@ public class Invocation
     public async Task<T?> ProceedAsync<T>()
     {
         return (T)await (Task<object>)Proceed()!;
+    }
+
+    /// <summary>
+    /// 解析真实的方法对象
+    /// </summary>
+    /// <param name="targetMethod">接口方法</param>
+    /// <param name="target">目标实例对象</param>
+    /// <returns><see cref="MethodInfo"/></returns>
+    private static MethodInfo GetRealMethod(MethodInfo targetMethod, object? target)
+    {
+        // 处理无目标实例对象情况
+        if (target is null)
+        {
+            return targetMethod;
+        }
+
+        // 查找被代理方法
+        var method = target.GetType()
+                                     .GetMethods()
+                                     .SingleOrDefault(m => m.GetRuntimeBaseDefinition() == targetMethod.GetRuntimeBaseDefinition());
+
+        // 接口默认实现方法
+        if (method is null)
+        {
+            return targetMethod;
+        }
+
+        // 处理泛型方法
+        if (targetMethod.IsGenericMethod)
+        {
+            method = method.MakeGenericMethod(targetMethod.GetGenericArguments());
+        }
+
+        return method;
     }
 }

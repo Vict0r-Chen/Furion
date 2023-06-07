@@ -500,6 +500,14 @@
             <typeparam name="T">泛型值</typeparam>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
+        <member name="M:Furion.DependencyInjection.Invocation.GetRealMethod(System.Reflection.MethodInfo,System.Object)">
+            <summary>
+            解析真实的方法对象
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="target">目标实例对象</param>
+            <returns><see cref="T:System.Reflection.MethodInfo"/></returns>
+        </member>
         <member name="T:Furion.DependencyInjection.NamedType">
             <summary>
             支持别名的类型代理

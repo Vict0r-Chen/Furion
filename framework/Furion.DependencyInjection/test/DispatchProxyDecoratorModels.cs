@@ -16,6 +16,8 @@ namespace Furion.DependencyInjection.Tests;
 
 public interface ITestProxyClass
 {
+    string? Name { get; set; }
+
     string SyncMethod(string str);
 
     Task AsyncMethod();
@@ -27,10 +29,21 @@ public interface ITestProxyClass
     Task AsyncGenericMethod<T>();
 
     Task<T> AsyncGenericMethodWithResult<T>(T obj);
+
+    string InternalCallSyncMethod(string str);
+
+    string DisplayImplementation(string str);
+
+    string Default(string str)
+    {
+        return str;
+    }
 }
 
 public class TestProxyClass : ITestProxyClass
 {
+    public string? Name { get; set; }
+
     public string SyncMethod(string str)
     {
         return str;
@@ -61,6 +74,19 @@ public class TestProxyClass : ITestProxyClass
     {
         await Task.Delay(10);
         return num;
+    }
+
+    public string InternalCallSyncMethod(string str)
+    {
+        var method = GetType().GetMethod(nameof(SyncMethod), BindingFlags.Public | BindingFlags.Instance);
+        var invocation = new Invocation(method!, new object[] { str }, this);
+
+        return (invocation.Proceed() as string)!;
+    }
+
+    string ITestProxyClass.DisplayImplementation(string str)
+    {
+        return str;
     }
 }
 
