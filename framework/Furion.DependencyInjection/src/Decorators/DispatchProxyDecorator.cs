@@ -29,7 +29,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
     }
 
     /// <summary>
-    /// 实现类实例
+    /// 目标实例对象
     /// </summary>
     public object? Target { get; private set; }
 

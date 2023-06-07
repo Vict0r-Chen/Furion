@@ -62,7 +62,7 @@ public class Invocation<TService>
     }
 
     /// <summary>
-    /// 代理实例
+    /// 目标实例对象
     /// </summary>
     public TService? Target { get; }
 

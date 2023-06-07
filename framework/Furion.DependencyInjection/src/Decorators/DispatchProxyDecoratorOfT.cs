@@ -36,7 +36,7 @@ public abstract class DispatchProxyDecorator<TService> : DispatchProxy
     }
 
     /// <summary>
-    /// <typeparamref name="TService"/> 实现类实例
+    /// <typeparamref name="TService"/> 目标实例对象
     /// </summary>
     public TService? Target { get; private set; }
 
