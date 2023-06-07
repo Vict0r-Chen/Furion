@@ -45,6 +45,8 @@ public class Invocation<TService>
         }
 
         var declaringType = targetMethod.DeclaringType;
+
+        // 空检查
         ArgumentNullException.ThrowIfNull(declaringType, nameof(declaringType));
 
         // 查找方法定义
@@ -67,7 +69,7 @@ public class Invocation<TService>
     public TService? Target { get; }
 
     /// <summary>
-    /// 调用方法
+    /// 被代理方法
     /// </summary>
     public MethodInfo Method { get; }
 

@@ -416,7 +416,7 @@
         </member>
         <member name="P:Furion.DependencyInjection.DispatchProxyDecorator`1.Target">
             <summary>
-            <typeparamref name="TService"/> 目标实例对象
+            目标实例对象
             </summary>
         </member>
         <member name="P:Furion.DependencyInjection.DispatchProxyDecorator`1.Properties">
@@ -538,7 +538,7 @@
         </member>
         <member name="P:Furion.DependencyInjection.Invocation`1.Method">
             <summary>
-            调用方法
+            被代理方法
             </summary>
         </member>
         <member name="P:Furion.DependencyInjection.Invocation`1.TargetMethod">
