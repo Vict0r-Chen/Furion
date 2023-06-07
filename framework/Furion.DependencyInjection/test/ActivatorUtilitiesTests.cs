@@ -35,4 +35,46 @@ public class ActivatorUtilitiesTests
 
         Assert.True(activatorClass.IsDisposed);
     }
+
+    [Fact]
+    public void ActivatorUtilities_WithParameters_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IActivatorClass>(serviceProvider =>
+        {
+            return ActivatorUtilities.CreateInstance<ActivatorClassWithParameters>(serviceProvider, "Furion", 3);
+        });
+
+        var serviceProvider = services.BuildServiceProvider();
+        var activatorClass = serviceProvider.GetRequiredService<IActivatorClass>();
+        Assert.NotNull(activatorClass);
+    }
+
+    [Fact]
+    public void ActivatorUtilities_WithParameters2_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IActivatorClass>(serviceProvider =>
+        {
+            return ActivatorUtilities.CreateInstance<ActivatorClassWithParameters2>(serviceProvider, "Furion", 3);
+        });
+
+        var serviceProvider = services.BuildServiceProvider();
+        var activatorClass = serviceProvider.GetRequiredService<IActivatorClass>();
+        Assert.NotNull(activatorClass);
+    }
+
+    [Fact]
+    public void ActivatorUtilities_MultipleConstructors_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IActivatorClass>(serviceProvider =>
+        {
+            return ActivatorUtilities.CreateInstance<ActivatorClassWithParameters3>(serviceProvider, "Furion", 3);
+        });
+
+        var serviceProvider = services.BuildServiceProvider();
+        var activatorClass = serviceProvider.GetRequiredService<IActivatorClass>();
+        Assert.NotNull(activatorClass);
+    }
 }

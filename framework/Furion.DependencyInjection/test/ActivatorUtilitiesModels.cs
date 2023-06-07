@@ -14,6 +14,8 @@
 
 namespace Furion.DependencyInjection.Tests;
 
+#pragma warning disable IDE0052
+
 public interface IActivatorClass
 {
     bool IsDisposed { get; }
@@ -26,5 +28,97 @@ public class ActivatorClass : IActivatorClass, IDisposable
     public void Dispose()
     {
         IsDisposed = true;
+        GC.SuppressFinalize(this);
+    }
+}
+
+public class ActivatorClassWithParameters : IActivatorClass, IDisposable
+{
+    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly string _name;
+    private readonly int _age;
+
+    public ActivatorClassWithParameters(
+        IServiceProvider provider
+        , IServiceScopeFactory scopeFactory
+        , string name
+        , int age)
+    {
+        _serviceProvider = provider;
+        _scopeFactory = scopeFactory;
+        _name = name;
+        _age = age;
+    }
+
+    public bool IsDisposed { get; private set; }
+
+    public void Dispose()
+    {
+        IsDisposed = true;
+        GC.SuppressFinalize(this);
+    }
+}
+
+public class ActivatorClassWithParameters2 : IActivatorClass, IDisposable
+{
+    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly string _name;
+    private readonly int _age;
+
+    public ActivatorClassWithParameters2(
+        IServiceProvider provider
+        , string name
+        , IServiceScopeFactory scopeFactory
+        , int age)
+    {
+        _serviceProvider = provider;
+        _scopeFactory = scopeFactory;
+        _name = name;
+        _age = age;
+    }
+
+    public bool IsDisposed { get; private set; }
+
+    public void Dispose()
+    {
+        IsDisposed = true;
+        GC.SuppressFinalize(this);
+    }
+}
+
+public class ActivatorClassWithParameters3 : IActivatorClass, IDisposable
+{
+    private readonly IServiceProvider? _serviceProvider;
+    private readonly IServiceScopeFactory? _scopeFactory;
+    private readonly string _name;
+    private readonly int _age;
+
+    public ActivatorClassWithParameters3(
+        IServiceProvider provider
+        , string name
+        , IServiceScopeFactory scopeFactory
+        , int age)
+    {
+        _serviceProvider = provider;
+        _scopeFactory = scopeFactory;
+        _name = name;
+        _age = age;
+    }
+
+    [ActivatorUtilitiesConstructor]
+    public ActivatorClassWithParameters3(string name, int age)
+    {
+        _name = name;
+        _age = age;
+    }
+
+    public bool IsDisposed { get; private set; }
+
+    public void Dispose()
+    {
+        IsDisposed = true;
+        GC.SuppressFinalize(this);
     }
 }
