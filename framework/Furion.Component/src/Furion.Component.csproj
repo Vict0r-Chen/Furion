@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Description>Furion 框架依赖注入模块。</Description>
-		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Dependency Injection</PackageTags>
+		<Description>Furion 框架组件注册模块。</Description>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Module;Component</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
