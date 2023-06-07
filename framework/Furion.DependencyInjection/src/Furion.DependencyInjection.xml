@@ -657,7 +657,15 @@
             添加依赖注入服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configure">自定义配置</param>
+            <param name="configure">自定义依赖注入构建器配置</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions.AddDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.DependencyInjectionBuilder)">
+            <summary>
+            添加依赖注入服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="dependencyInjectionBuilder"><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">

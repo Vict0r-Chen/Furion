@@ -42,6 +42,31 @@ public class DependencyInjectionBuilderTests
         Assert.NotNull(serviceProvider);
     }
 
+    [Fact]
+    public void AddDependencyInjection_Default2_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        var assembly = GetType().Assembly;
+        var builder = new DependencyInjectionBuilder()
+                                                .AddAssemblies(assembly)
+                                                .AddAssemblies(assembly);
+        services.AddDependencyInjection(builder);
+
+        var count = services.Count;
+        Assert.True(count > 0);
+
+        var includePublicTestClass = services.Any(s => s.ImplementationType == typeof(PublicTestClass));
+        var includeNotPublicTestClass = services.Any(s => s.ImplementationType == typeof(NotPublicTestClass));
+        var includeAbstractPublicTestClass = services.Any(s => s.ImplementationType == typeof(AbstractPublicTestClass));
+
+        Assert.True(includePublicTestClass);
+        Assert.True(includeNotPublicTestClass);
+        Assert.False(includeAbstractPublicTestClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
     [Theory]
     [InlineData(true)]
     [InlineData(false)]

@@ -23,21 +23,35 @@ public static class DependencyInjectionServiceCollectionExtensions
     /// 添加依赖注入服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configure">自定义配置</param>
+    /// <param name="configure">自定义依赖注入构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = null)
     {
         // 创建依赖注入模块构建器
-        var builder = new DependencyInjectionBuilder();
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
 
         // 添加默认启动程序集
-        builder.AddAssemblies(Assembly.GetEntryAssembly()!);
+        dependencyInjectionBuilder.AddAssemblies(Assembly.GetEntryAssembly()!);
 
         // 调用自定义配置
-        configure?.Invoke(builder);
+        configure?.Invoke(dependencyInjectionBuilder);
+
+        return services.AddDependencyInjection(dependencyInjectionBuilder);
+    }
+
+    /// <summary>
+    /// 添加依赖注入服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="dependencyInjectionBuilder"><see cref="DependencyInjectionBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddDependencyInjection(this IServiceCollection services, DependencyInjectionBuilder dependencyInjectionBuilder)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencyInjectionBuilder, nameof(dependencyInjectionBuilder));
 
         // 构建服务
-        builder.Build(services);
+        dependencyInjectionBuilder.Build(services);
 
         return services;
     }
