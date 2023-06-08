@@ -45,9 +45,21 @@
             将基类作为自身服务
             </summary>
         </member>
-        <member name="P:System.ServiceInjectionAttribute.SuppressDerivedTypes">
+        <member name="T:System.SuppressServicesAttribute">
             <summary>
-            禁用指定派生类型作为服务注册
+            禁用指定类型作为服务注册
+            </summary>
+            <remarks>用于扫描程序集添加服务时配置</remarks>
+        </member>
+        <member name="M:System.SuppressServicesAttribute.#ctor(System.Type[])">
+            <summary>
+            构造函数
+            </summary>
+            <param name="types">需禁用的服务类型</param>
+        </member>
+        <member name="P:System.SuppressServicesAttribute.Types">
+            <summary>
+            需禁用的服务类型
             </summary>
         </member>
         <member name="T:System.ServiceAddition">
@@ -237,9 +249,9 @@
             已扫描的程序集
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._suppressDerivedTypes">
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._suppressServices">
             <summary>
-            禁用指定派生类型作为服务注册
+            禁用指定类型作为服务注册
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
@@ -270,7 +282,7 @@
             <param name="assemblies">可变数量程序集</param>
             <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressDerivedTypes(System.Type[])">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressServices(System.Type[])">
             <summary>
             添加程序集扫描需排除的服务类型
             </summary>

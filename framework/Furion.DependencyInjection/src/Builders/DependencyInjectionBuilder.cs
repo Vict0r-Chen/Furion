@@ -30,9 +30,9 @@ public sealed class DependencyInjectionBuilder
     private readonly HashSet<Assembly> _assemblies = new();
 
     /// <summary>
-    /// 禁用指定派生类型作为服务注册
+    /// 禁用指定类型作为服务注册
     /// </summary>
-    private readonly HashSet<Type> _suppressDerivedTypes = new()
+    private readonly HashSet<Type> _suppressServices = new()
     {
         typeof(IDisposable), typeof(IAsyncDisposable),
         typeof(IDependency), typeof(IEnumerator),
@@ -84,12 +84,12 @@ public sealed class DependencyInjectionBuilder
     /// </summary>
     /// <param name="types">可变数量类型</param>
     /// <returns><see cref="DependencyInjectionBuilder"/></returns>
-    public DependencyInjectionBuilder SuppressDerivedTypes(params Type[] types)
+    public DependencyInjectionBuilder SuppressServices(params Type[] types)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(types, nameof(types));
 
-        Array.ForEach(types, type => _suppressDerivedTypes.Add(type));
+        Array.ForEach(types, type => _suppressServices.Add(type));
 
         return this;
     }
@@ -114,8 +114,8 @@ public sealed class DependencyInjectionBuilder
 
         // 将服务描述器进行排序
         var sortedOfServiceDescriptors = serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
-                                                                                              .ThenBy(s => s.Order)
-                                                                                              .ToList();
+                                                                                   .ThenBy(s => s.Order)
+                                                                                   .ToList();
 
         // 日志事件记录
         DependencyInjectionEventSource.Log.BuildStarted();
@@ -142,7 +142,7 @@ public sealed class DependencyInjectionBuilder
     {
         // 清空集合
         _assemblies.Clear();
-        _suppressDerivedTypes.Clear();
+        _suppressServices.Clear();
     }
 
     /// <summary>
@@ -307,11 +307,14 @@ public sealed class DependencyInjectionBuilder
                             ? null
                             : type.BaseType;
 
+        // 获取 [SuppressServices] 特性
+        var suppressServicesAttribute = type.GetCustomAttributeIfIsDefined<SuppressServicesAttribute>(true) ?? new();
+
         // 过滤无效服务类型
-        var suppressDerivedTypes = _suppressDerivedTypes.Concat(serviceInjectionAttribute.SuppressDerivedTypes ?? Array.Empty<Type>());
+        var suppressServices = _suppressServices.Concat(suppressServicesAttribute.Types);
         var filteredOfServiceTypes = allInterfaces.Concat(new[] { baseType })
                                                                  .Where(t => t is not null
-                                                                                        && !suppressDerivedTypes.Contains(t)
+                                                                                        && !suppressServices.Contains(t)
                                                                                         && !dependencyType.IsAssignableFrom(t))
                                                                  .Select(t => t!);
 

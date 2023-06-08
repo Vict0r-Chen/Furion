@@ -172,7 +172,7 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
-    public void SuppressDerivedTypes_ReturnOK()
+    public void SuppressServices_ReturnOK()
     {
         var services = new ServiceCollection();
         services.AddDependencyInjection(builder =>
@@ -360,13 +360,13 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
-    public void GlobalSuppressDerivedType_ReturnOK()
+    public void GlobalSuppressServices_ReturnOK()
     {
         var services = new ServiceCollection();
         services.AddDependencyInjection(builder =>
         {
             builder.AddAssemblies(GetType().Assembly)
-                   .SuppressDerivedTypes(typeof(IGlobalSuppressDerivedType1));
+                   .SuppressServices(typeof(IGlobalSuppressDerivedType1));
         });
 
         var includeGlobalSuppressDerivedType1 = services.Any(s => s.ServiceType == typeof(IGlobalSuppressDerivedType1));

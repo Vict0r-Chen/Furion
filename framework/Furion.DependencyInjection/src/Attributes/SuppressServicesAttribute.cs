@@ -12,8 +12,29 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-// 配置框架友元程序集
-[assembly: InternalsVisibleTo("Furion.DependencyInjection")]
+namespace System;
 
-// 配置测试友元程序集
-[assembly: InternalsVisibleTo("Furion.Component.Tests")]
+/// <summary>
+/// 禁用指定类型作为服务注册
+/// </summary>
+/// <remarks>用于扫描程序集添加服务时配置</remarks>
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+public sealed class SuppressServicesAttribute : Attribute
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="types">需禁用的服务类型</param>
+    public SuppressServicesAttribute(params Type[] types)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(types, nameof(types));
+
+        Types = types;
+    }
+
+    /// <summary>
+    /// 需禁用的服务类型
+    /// </summary>
+    public Type[] Types { get; init; }
+}

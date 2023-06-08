@@ -4,5 +4,15 @@
         <name>Furion.Component</name>
     </assembly>
     <members>
+        <member name="T:ComponentServiceCollectionExtensions">
+            <summary>
+            组件化模块拓展
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions">
+            <summary>
+            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展
+            </summary>
+        </member>
     </members>
 </doc>

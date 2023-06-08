@@ -60,9 +60,4 @@ public sealed class ServiceInjectionAttribute : Attribute
     /// 将基类作为自身服务
     /// </summary>
     public bool IncludingBase { get; init; }
-
-    /// <summary>
-    /// 禁用指定派生类型作为服务注册
-    /// </summary>
-    public Type[]? SuppressDerivedTypes { get; init; }
 }

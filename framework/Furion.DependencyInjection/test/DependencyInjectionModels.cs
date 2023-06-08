@@ -85,7 +85,7 @@ public interface ISuppressDerivedType
 {
 }
 
-[ServiceInjection(SuppressDerivedTypes = new[] { typeof(ISuppressDerivedType) })]
+[SuppressServices(typeof(ISuppressDerivedType))]
 internal class SuppressDerivedTypeClass : ISuppressDerivedType, ITestClass, IScopedDependency
 {
 }

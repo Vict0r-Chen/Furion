@@ -57,6 +57,7 @@ public class InheritAttributeClass : BaseAttributeClass
 }
 
 #pragma warning disable CA1822
+
 public class WithMethodClass
 {
     public static void GetStatic()
