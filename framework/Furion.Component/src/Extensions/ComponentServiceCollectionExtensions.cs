@@ -45,16 +45,16 @@ public static class ComponentServiceCollectionExtensions
             throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{nameof(Component)}'.");
         }
 
-        // 创建依赖关系图
+        // 创建组件依赖关系图
         var dependencies = Topological.CreateDependencies(componentType);
 
-        // 判断是否存在循环依赖
+        // 判断组件依赖链是否存在循环依赖
         if (Topological.HasCycle(dependencies))
         {
             throw new InvalidOperationException("The dependency relationship has a circular dependency.");
         }
 
-        // 通过拓扑排序获取排序后的节点列表
+        // 获取排序后的组件依赖链
         var sortedNodes = Topological.TopologicalSort(dependencies);
 
         return services;

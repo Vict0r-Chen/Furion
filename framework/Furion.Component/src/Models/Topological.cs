@@ -45,9 +45,9 @@ internal static class Topological
 
         if (!dependencies.ContainsKey(entryType))
         {
-            dependencies.Add(entryType, dependsOnAttribute.Types);
+            dependencies.Add(entryType, dependsOnAttribute.Dependencies);
 
-            Array.ForEach(dependsOnAttribute.Types, t =>
+            Array.ForEach(dependsOnAttribute.Dependencies, t =>
             {
                 CreateDependenciesHelper(t, dependencies);
             });

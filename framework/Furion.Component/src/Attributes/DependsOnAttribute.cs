@@ -15,25 +15,25 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖链配置
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-public class DependsOnAttribute : Attribute
+public sealed class DependsOnAttribute : Attribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="types"></param>
-    public DependsOnAttribute(params Type[] types)
+    /// <param name="dependencies"></param>
+    public DependsOnAttribute(params Type[] dependencies)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(types, nameof(types));
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
-        Types = types;
+        Dependencies = dependencies;
     }
 
     /// <summary>
-    /// 依赖的组件类型
+    /// 依赖组件列表
     /// </summary>
-    public Type[] Types { get; init; }
+    public Type[] Dependencies { get; init; }
 }

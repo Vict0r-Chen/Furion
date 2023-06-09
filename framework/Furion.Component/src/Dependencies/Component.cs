@@ -15,9 +15,9 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件化实现依赖基类
+/// 组件化依赖抽象基类
 /// </summary>
-public abstract partial class Component
+public abstract class Component
 {
     /// <summary>
     /// 构造函数

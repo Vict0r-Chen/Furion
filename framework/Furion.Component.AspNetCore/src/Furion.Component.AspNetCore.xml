@@ -25,9 +25,7 @@
             </summary>
         </member>
         <member name="T:Furion.Component.WebComponent">
-            <summary>
-            组件化实现依赖基类
-            </summary>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Component.WebComponent.#ctor">
             <summary>

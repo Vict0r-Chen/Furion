@@ -14,9 +14,7 @@
 
 namespace Furion.Component;
 
-/// <summary>
-/// 组件化实现依赖基类
-/// </summary>
+/// <inheritdoc />
 public abstract class WebComponent : Component
 {
     /// <summary>

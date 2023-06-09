@@ -6,18 +6,18 @@
     <members>
         <member name="T:Furion.Component.DependsOnAttribute">
             <summary>
-            组件依赖配置
+            组件依赖链配置
             </summary>
         </member>
         <member name="M:Furion.Component.DependsOnAttribute.#ctor(System.Type[])">
             <summary>
             构造函数
             </summary>
-            <param name="types"></param>
+            <param name="dependencies"></param>
         </member>
-        <member name="P:Furion.Component.DependsOnAttribute.Types">
+        <member name="P:Furion.Component.DependsOnAttribute.Dependencies">
             <summary>
-            依赖的组件类型
+            依赖组件列表
             </summary>
         </member>
         <member name="T:Furion.Component.ServiceContext">
@@ -42,7 +42,7 @@
         </member>
         <member name="T:Furion.Component.Component">
             <summary>
-            组件化实现依赖基类
+            组件化依赖抽象基类
             </summary>
         </member>
         <member name="M:Furion.Component.Component.#ctor">
@@ -111,11 +111,6 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="componentType">组件类型</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions">
-            <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展
-            </summary>
         </member>
     </members>
 </doc>
