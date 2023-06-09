@@ -34,8 +34,8 @@ public sealed class ServiceContext
     /// </summary>
     public IHostEnvironment? Environment { get; init; }
 
-    /// <summary>
-    /// <see cref="ILoggingBuilder"/>
-    /// </summary>
-    public ILoggingBuilder? Logging { get; init; }
+    ///// <summary>
+    ///// <see cref="ILoggingBuilder"/>
+    ///// </summary>
+    //public ILoggingBuilder? Logging { get; init; }
 }
