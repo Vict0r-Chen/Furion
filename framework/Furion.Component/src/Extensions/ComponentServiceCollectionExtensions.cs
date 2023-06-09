@@ -60,7 +60,7 @@ public static class ComponentServiceCollectionExtensions
         var sortedNodes = Topological.TopologicalSort(dependencies);
 
         // 获取环境对象
-        var environment = services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))?.ImplementationInstance as IHostEnvironment;
+        var environment = services.GetHostEnvironment();
 
         // 创建上下文
         var serviceContext = new ServiceContext

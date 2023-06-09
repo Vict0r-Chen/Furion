@@ -80,5 +80,24 @@
             <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
+        <member name="T:Microsoft.AspNetCore.Builder.IApplicationBuilderExtensions">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> 拓展
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.IApplicationBuilderExtensions.GetHostEnvironment(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            获取环境对象
+            </summary>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.IApplicationBuilderExtensions.GetConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            获取配置对象
+            </summary>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></returns>
+        </member>
     </members>
 </doc>

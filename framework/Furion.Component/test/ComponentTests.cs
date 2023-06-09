@@ -12,8 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Xunit;
-
 namespace Furion.Component.Tests;
 
 public class ComponentTests
@@ -23,6 +21,15 @@ public class ComponentTests
     {
         var services = new ServiceCollection();
         services.AddComponent<AComponent>(new ConfigurationManager());
+
+        Assert.True(true);
+    }
+
+    [Fact]
+    public void WebApplicationBuilder_ReturnOK()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.AddComponent<AComponent>();
 
         Assert.True(true);
     }

@@ -57,10 +57,10 @@ public static class ComponentApplicationBuilderExtensions
         // 获取排序后的组件依赖链
         var sortedNodes = Topological.TopologicalSort(dependencies);
 
-        var configuration = applicationBuilder.ApplicationServices.GetRequiredService<IConfiguration>();
+        var configuration = applicationBuilder.GetConfiguration();
 
         // 获取环境对象
-        var environment = applicationBuilder.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+        var environment = applicationBuilder.GetHostEnvironment();
 
         // 创建上下文
         var applicationContext = new ApplicationContext
