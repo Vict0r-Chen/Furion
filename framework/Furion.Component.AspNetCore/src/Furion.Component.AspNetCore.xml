@@ -59,12 +59,12 @@
             <param name="componentType"><see cref="T:Furion.Component.WebComponent"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
         </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.ComponentWebApplicationBuilderExtensions">
+        <member name="T:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions">
             <summary>
             组件化模块拓展
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentWebApplicationBuilderExtensions.AddComponent``1(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent``1(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>
             添加组件
             </summary>
@@ -72,7 +72,7 @@
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentWebApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Type)">
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Type)">
             <summary>
             添加组件
             </summary>

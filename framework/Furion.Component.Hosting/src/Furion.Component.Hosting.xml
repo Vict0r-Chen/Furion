@@ -4,12 +4,12 @@
         <name>Furion.Component.Hosting</name>
     </assembly>
     <members>
-        <member name="T:Microsoft.Extensions.DependencyInjection.ComponentHostApplicationBuilderExtensions">
+        <member name="T:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions">
             <summary>
             组件化模块拓展
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
             <summary>
             添加组件
             </summary>
@@ -17,7 +17,7 @@
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type)">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type)">
             <summary>
             添加组件
             </summary>
