@@ -22,22 +22,24 @@ public static class ComponentApplicationBuilderExtensions
     /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder)
+    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder, IConfiguration configuration)
         where TComponent : WebComponent, new()
     {
-        return applicationBuilder.AddComponent(typeof(TComponent));
+        return applicationBuilder.AddComponent(typeof(TComponent), configuration);
     }
 
     /// <summary>
     /// 添加组件
     /// </summary>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
-    /// <param name="componentType">组件类型</param>
+    /// <param name="componentType"><see cref="WebComponent"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType)
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType, IConfiguration configuration)
     {
         // 组件类型检查
         if (!typeof(WebComponent).IsAssignableFrom(componentType))

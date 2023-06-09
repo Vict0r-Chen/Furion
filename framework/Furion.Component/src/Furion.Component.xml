@@ -96,20 +96,22 @@
             组件化模块拓展
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             添加组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             添加组件
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="componentType">组件类型</param>
+            <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
     </members>

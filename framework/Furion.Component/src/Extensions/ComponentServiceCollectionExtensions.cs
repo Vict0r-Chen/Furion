@@ -24,20 +24,22 @@ public static class ComponentServiceCollectionExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services)
+    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration)
         where TComponent : Component, new()
     {
-        return services.AddComponent(typeof(TComponent));
+        return services.AddComponent(typeof(TComponent), configuration);
     }
 
     /// <summary>
     /// 添加组件
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="componentType">组件类型</param>
+    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration)
     {
         // 组件类型检查
         if (!typeof(Component).IsAssignableFrom(componentType))

@@ -22,7 +22,7 @@ public class ComponentTests
     public void CreateDependencies_ReturnOK()
     {
         var services = new ServiceCollection();
-        services.AddComponent<AComponent>();
+        services.AddComponent<AComponent>(new ConfigurationManager());
 
         Assert.True(true);
     }
