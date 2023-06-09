@@ -80,5 +80,26 @@
             <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
+        <member name="T:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions">
+            <summary>
+            组件化模块拓展
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
     </members>
 </doc>
