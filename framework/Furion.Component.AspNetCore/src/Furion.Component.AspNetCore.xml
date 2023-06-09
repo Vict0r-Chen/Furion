@@ -9,7 +9,7 @@
             应用组件上下文
             </summary>
         </member>
-        <member name="P:Furion.Component.ApplicationContext.App">
+        <member name="P:Furion.Component.ApplicationContext.Application">
             <summary>
             <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>
             </summary>

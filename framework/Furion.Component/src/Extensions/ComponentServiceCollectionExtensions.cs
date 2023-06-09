@@ -59,6 +59,25 @@ public static class ComponentServiceCollectionExtensions
         // 获取排序后的组件依赖链
         var sortedNodes = Topological.TopologicalSort(dependencies);
 
+        // 获取环境对象
+        var environment = services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))?.ImplementationInstance as IHostEnvironment;
+
+        // 创建上下文
+        var serviceContext = new ServiceContext
+        {
+            Configuration = configuration,
+            Environment = environment,
+            Services = services
+        };
+
+        foreach (var node in sortedNodes)
+        {
+            var component = Activator.CreateInstance(node) as Component;
+            ArgumentNullException.ThrowIfNull(component, nameof(component));
+
+            component.ConfigureServices(serviceContext);
+        }
+
         return services;
     }
 }

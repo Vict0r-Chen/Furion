@@ -22,7 +22,7 @@ public sealed class ApplicationContext
     /// <summary>
     /// <see cref="IApplicationBuilder"/>
     /// </summary>
-    public IApplicationBuilder? App { get; init; }
+    public IApplicationBuilder? Application { get; init; }
 
     /// <summary>
     /// <see cref="IConfiguration"/>

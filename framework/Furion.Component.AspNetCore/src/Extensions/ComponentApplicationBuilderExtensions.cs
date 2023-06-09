@@ -57,6 +57,27 @@ public static class ComponentApplicationBuilderExtensions
         // 获取排序后的组件依赖链
         var sortedNodes = Topological.TopologicalSort(dependencies);
 
+        var configuration = applicationBuilder.ApplicationServices.GetRequiredService<IConfiguration>();
+
+        // 获取环境对象
+        var environment = applicationBuilder.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+
+        // 创建上下文
+        var applicationContext = new ApplicationContext
+        {
+            Configuration = configuration,
+            Environment = environment,
+            Application = applicationBuilder
+        };
+
+        foreach (var node in sortedNodes)
+        {
+            var component = Activator.CreateInstance(node) as WebComponent;
+            ArgumentNullException.ThrowIfNull(component, nameof(component));
+
+            component.Configure(applicationContext);
+        }
+
         return applicationBuilder;
     }
 }
