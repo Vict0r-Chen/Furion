@@ -40,6 +40,11 @@
             <see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
             </summary>
         </member>
+        <member name="P:Furion.Component.ServiceContext.Logging">
+            <summary>
+            <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/>
+            </summary>
+        </member>
         <member name="T:Furion.Component.Component">
             <summary>
             组件化依赖抽象基类
