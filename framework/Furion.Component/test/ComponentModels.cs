@@ -24,7 +24,6 @@ public class AComponent : Component
     }
 }
 
-
 [DependsOn(typeof(CComponent)
     , typeof(DComponent))]
 public class BComponent : Component

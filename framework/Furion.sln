@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Component.Tests", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Tests", "Furion\test\Furion.Tests.csproj", "{E7A6970B-3AF7-4C84-902E-AE91CA401A23}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Component.AspNetCore", "Furion.Component.AspNetCore\src\Furion.Component.AspNetCore.csproj", "{9F66A890-DE92-40A5-9220-4B7679DA415D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{E7A6970B-3AF7-4C84-902E-AE91CA401A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7A6970B-3AF7-4C84-902E-AE91CA401A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7A6970B-3AF7-4C84-902E-AE91CA401A23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F66A890-DE92-40A5-9220-4B7679DA415D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F66A890-DE92-40A5-9220-4B7679DA415D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F66A890-DE92-40A5-9220-4B7679DA415D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F66A890-DE92-40A5-9220-4B7679DA415D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{301F0DCA-F406-4572-8080-9DDE1FB81969} = {72C34485-4FF3-487E-BE07-16A1D61907E6}
 		{49866735-8A86-4711-B8C9-E251E147AE71} = {205E6A86-75C8-4A52-9444-2E0F3640217F}
 		{1B8B0BEA-5710-44EE-9CE7-A27040CFB4DC} = {205E6A86-75C8-4A52-9444-2E0F3640217F}
+		{9F66A890-DE92-40A5-9220-4B7679DA415D} = {205E6A86-75C8-4A52-9444-2E0F3640217F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E66EA3E6-2FE9-44EB-B8F6-7E49CDBD6C3C}

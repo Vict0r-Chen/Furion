@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Furion.Component.AspNetCore</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AspNetCore.Builder.ComponentApplicationBuilderExtensions">
+            <summary>
+            组件化模块拓展
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentApplicationBuilderExtensions.AddComponent``1(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
+        </member>
+    </members>
+</doc>

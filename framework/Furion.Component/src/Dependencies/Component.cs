@@ -22,17 +22,20 @@ public abstract class Component
     /// <summary>
     /// 构造函数
     /// </summary>
-    protected Component() { }
+    protected Component()
+    { }
 
     /// <summary>
     /// 配置服务
     /// </summary>
     /// <param name="context"><see cref="ServiceContext"/></param>
-    public virtual void ConfigureServices(ServiceContext context) { }
+    public virtual void ConfigureServices(ServiceContext context)
+    { }
 
     /// <summary>
     /// 配置中间件
     /// </summary>
     /// <param name="context"><see cref="ApplicationContext"/></param>
-    public virtual void Configure(ApplicationContext context) { }
+    public virtual void Configure(ApplicationContext context)
+    { }
 }

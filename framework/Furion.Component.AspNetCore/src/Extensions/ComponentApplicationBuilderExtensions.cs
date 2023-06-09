@@ -12,20 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
 /// 组件化模块拓展
 /// </summary>
-public static class ComponentServiceCollectionExtensions
+public static class ComponentApplicationBuilderExtensions
 {
     /// <summary>
     /// 添加组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services)
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <returns><see cref="IApplicationBuilder"/></returns>
+    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder)
         where TComponent : Component
     {
         // 创建依赖关系图
@@ -40,6 +40,6 @@ public static class ComponentServiceCollectionExtensions
         // 通过拓扑排序获取排序后的节点列表
         var sortedNodes = Topological.TopologicalSort(dependencies).Reverse<Type>();
 
-        return services;
+        return applicationBuilder;
     }
 }
