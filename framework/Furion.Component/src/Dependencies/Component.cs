@@ -31,4 +31,65 @@ public abstract class Component
     /// <param name="context"><see cref="ServiceContext"/></param>
     public virtual void ConfigureServices(ServiceContext context)
     { }
+
+    /// <summary>
+    /// 生成组件依赖拓扑图
+    /// </summary>
+    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <param name="componentType">组件类型</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
+        where TBaseComponent : Component
+    {
+        // 创建空的组件依赖字典
+        var dependencies = new Dictionary<Type, Type[]>();
+        AddItems(componentType, dependencies);
+
+        // 判断组件是否存在循环依赖
+        if (Topological.HasCycle(dependencies))
+        {
+            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
+        }
+
+        // 返回依赖拓扑图
+        return Topological.Sort(dependencies);
+
+        // 添加组件依赖字典子项
+        static void AddItems(Type componentType, Dictionary<Type, Type[]> dependencies)
+        {
+            // 组件类型检查
+            CheckComponent<TBaseComponent>(componentType);
+
+            // 已访问过检查
+            if (dependencies.ContainsKey(componentType))
+            {
+                return;
+            }
+
+            // 查找 [DependsOn] 特性依赖配置
+            var dependsOn = componentType.GetCustomAttribute<DependsOnAttribute>(true)?.Dependencies ?? Array.Empty<Type>();
+            dependencies.Add(componentType, dependsOn);
+
+            // 递归生成组件依赖字典项
+            foreach (var dependency in dependsOn)
+            {
+                AddItems(dependency, dependencies);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 检查组件类型
+    /// </summary>
+    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <param name="componentType">组件类型</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static void CheckComponent<TBaseComponent>(Type componentType)
+        where TBaseComponent : Component
+    {
+        if (!typeof(TBaseComponent).IsAssignableFrom(componentType))
+        {
+            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{typeof(TBaseComponent).Name}'.");
+        }
+    }
 }

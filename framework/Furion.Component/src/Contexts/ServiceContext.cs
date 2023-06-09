@@ -20,9 +20,18 @@ namespace Furion.Component;
 public sealed class ServiceContext
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    public ServiceContext(IServiceCollection services)
+    {
+        Services = services;
+    }
+
+    /// <summary>
     /// <see cref="IServiceCollection"/>
     /// </summary>
-    public IServiceCollection? Services { get; init; }
+    public IServiceCollection Services { get; init; }
 
     /// <summary>
     /// <see cref="IConfiguration"/>

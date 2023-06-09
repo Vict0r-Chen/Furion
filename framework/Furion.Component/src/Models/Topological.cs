@@ -15,56 +15,21 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 拓扑查找依赖关系
+/// 拓扑算法
 /// </summary>
 internal static class Topological
 {
     /// <summary>
-    /// 创建依赖关系
-    /// </summary>
-    /// <param name="entryType"></param>
-    /// <returns></returns>
-    internal static Dictionary<Type, Type[]> CreateDependencies(Type entryType)
-    {
-        var dependencies = new Dictionary<Type, Type[]>();
-
-        CreateDependenciesHelper(entryType, dependencies);
-
-        return dependencies;
-    }
-
-    internal static void CreateDependenciesHelper(Type entryType, Dictionary<Type, Type[]> dependencies)
-    {
-        var isDefinedDependsOn = entryType.IsDefined(typeof(DependsOnAttribute), true);
-        if (!isDefinedDependsOn)
-        {
-            return;
-        }
-
-        var dependsOnAttribute = entryType.GetCustomAttribute<DependsOnAttribute>(true)!;
-
-        if (!dependencies.ContainsKey(entryType))
-        {
-            dependencies.Add(entryType, dependsOnAttribute.Dependencies);
-
-            Array.ForEach(dependsOnAttribute.Dependencies, t =>
-            {
-                CreateDependenciesHelper(t, dependencies);
-            });
-        }
-    }
-
-    /// <summary>
     /// 拓扑排序算法
     /// </summary>
-    /// <param name="dependencies"></param>
-    /// <returns></returns>
-    internal static List<Type> TopologicalSort(Dictionary<Type, Type[]> dependencies)
+    /// <param name="dependencies">依赖节点集合</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<Type> Sort(Dictionary<Type, Type[]> dependencies)
     {
         // 创建一个空列表来存储已排序的节点
         var sortedNodes = new List<Type>();
 
-        // 创建一个set来存储已访问过的节点
+        // 创建一个 Set 来存储已访问过的节点
         var visited = new HashSet<Type>();
 
         // 对每个未访问的节点进行深度优先搜索，将搜索到的节点插入到排序列表的头部
@@ -78,12 +43,12 @@ internal static class Topological
     }
 
     /// <summary>
-    /// 节点搜索
+    /// 节点访问
     /// </summary>
-    /// <param name="node"></param>
-    /// <param name="dependencies"></param>
-    /// <param name="visited"></param>
-    /// <param name="sortedNodes"></param>
+    /// <param name="node">当前节点</param>
+    /// <param name="dependencies">依赖节点集合</param>
+    /// <param name="visited">已访问过的节点</param>
+    /// <param name="sortedNodes">已排序的节点</param>
     internal static void VisitNode(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, List<Type> sortedNodes)
     {
         // 如果当前节点已经被访问过，则直接返回
@@ -111,14 +76,14 @@ internal static class Topological
     /// <summary>
     /// 检查依赖关系是否存在循环依赖
     /// </summary>
-    /// <param name="dependencies"></param>
-    /// <returns></returns>
+    /// <param name="dependencies">依赖节点集合</param>
+    /// <returns><see cref="bool"/></returns>
     internal static bool HasCycle(Dictionary<Type, Type[]> dependencies)
     {
-        // 创建一个set来存储已访问过的节点
+        // 创建一个 Set 来存储已访问过的节点
         var visited = new HashSet<Type>();
 
-        // 创建一个set来存储当前遍历路径上的节点
+        // 创建一个 Set 来存储当前遍历路径上的节点
         var currentPath = new HashSet<Type>();
 
         // 对每个未访问的节点进行深度优先搜索，检查是否存在循环依赖
@@ -134,6 +99,14 @@ internal static class Topological
         return false;
     }
 
+    /// <summary>
+    /// 检查依赖关系是否存在循环依赖（内部）
+    /// </summary>
+    /// <param name="node">当前节点</param>
+    /// <param name="dependencies">依赖节点集合</param>
+    /// <param name="visited">已访问过的节点</param>
+    /// <param name="currentPath">单曲遍历路径上的节点</param>
+    /// <returns><see cref="bool"/></returns>
     internal static bool HasCycleHelper(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, HashSet<Type> currentPath)
     {
         // 将当前节点标记为已访问，并将其加入到遍历路径中
@@ -146,8 +119,8 @@ internal static class Topological
             foreach (var neighbor in neighbors)
             {
                 // 如果遍历路径上已经包含了该邻居节点，则存在循环依赖，直接返回true
-                if (currentPath.Contains(neighbor) ||
-                    (!visited.Contains(neighbor) && HasCycleHelper(neighbor, dependencies, visited, currentPath)))
+                if (currentPath.Contains(neighbor)
+                    || (!visited.Contains(neighbor) && HasCycleHelper(neighbor, dependencies, visited, currentPath)))
                 {
                     return true;
                 }

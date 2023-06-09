@@ -26,10 +26,13 @@ public static class IServiceCollectionExtensions
     /// <returns><see cref="IHostEnvironment"/></returns>
     public static IHostEnvironment? GetHostEnvironment(this IServiceCollection services)
     {
+        // 查找 Web 主机环境是否配置
         var webHostEnvironment = services.FirstOrDefault(s => s.ServiceType.FullName == "Microsoft.AspNetCore.Hosting.IWebHostEnvironment")
                                                 ?.ImplementationInstance as IHostEnvironment;
+
+        // 如果没配置则查找泛型主机环境是否配置
         var hostEnvironment = webHostEnvironment ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))
-                                                ?.ImplementationInstance as IHostEnvironment;
+                                               ?.ImplementationInstance as IHostEnvironment;
 
         return hostEnvironment;
     }

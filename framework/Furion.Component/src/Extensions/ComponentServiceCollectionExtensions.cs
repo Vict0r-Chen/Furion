@@ -41,36 +41,21 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration)
     {
-        // 组件类型检查
-        if (!typeof(Component).IsAssignableFrom(componentType))
-        {
-            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{nameof(Component)}'.");
-        }
-
-        // 创建组件依赖关系图
-        var dependencies = Topological.CreateDependencies(componentType);
-
-        // 判断组件依赖链是否存在循环依赖
-        if (Topological.HasCycle(dependencies))
-        {
-            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
-        }
-
-        // 获取排序后的组件依赖链
-        var sortedNodes = Topological.TopologicalSort(dependencies);
-
         // 获取环境对象
         var environment = services.GetHostEnvironment();
 
         // 创建上下文
-        var serviceContext = new ServiceContext
+        var serviceContext = new ServiceContext(services)
         {
             Configuration = configuration,
             Environment = environment,
-            Services = services
         };
 
-        foreach (var node in sortedNodes)
+        // 生成组件依赖拓扑图
+        var topologicalMap = Component.GenerateTopologicalMap<Component>(componentType);
+
+        // 依次初始化组件实例
+        foreach (var node in topologicalMap)
         {
             var component = Activator.CreateInstance(node) as Component;
             ArgumentNullException.ThrowIfNull(component, nameof(component));

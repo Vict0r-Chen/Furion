@@ -29,15 +29,6 @@ public sealed class DependsOnAttribute : Attribute
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
-        // 组件类型检查
-        Array.ForEach(dependencies, t =>
-        {
-            if (!typeof(Component).IsAssignableFrom(t))
-            {
-                throw new InvalidOperationException($"Type '{t.Name}' is not assignable from '{nameof(Component)}'.");
-            }
-        });
-
         Dependencies = dependencies;
     }
 

@@ -20,9 +20,18 @@ namespace Furion.Component;
 public sealed class ApplicationContext
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="application"><see cref="IApplicationBuilder"/></param>
+    public ApplicationContext(IApplicationBuilder application)
+    {
+        Application = application;
+    }
+
+    /// <summary>
     /// <see cref="IApplicationBuilder"/>
     /// </summary>
-    public IApplicationBuilder? Application { get; init; }
+    public IApplicationBuilder Application { get; init; }
 
     /// <summary>
     /// <see cref="IConfiguration"/>

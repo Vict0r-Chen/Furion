@@ -39,38 +39,24 @@ public static class ComponentApplicationBuilderExtensions
     /// <returns><see cref="IApplicationBuilder"/></returns>
     public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType)
     {
-        // 组件类型检查
-        if (!typeof(WebComponent).IsAssignableFrom(componentType))
-        {
-            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{nameof(WebComponent)}'.");
-        }
-
-        // 创建组件依赖关系图
-        var dependencies = Topological.CreateDependencies(componentType);
-
-        // 判断组件依赖链是否存在循环依赖
-        if (Topological.HasCycle(dependencies))
-        {
-            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
-        }
-
-        // 获取排序后的组件依赖链
-        var sortedNodes = Topological.TopologicalSort(dependencies);
-
-        var configuration = applicationBuilder.GetConfiguration();
-
         // 获取环境对象
         var environment = applicationBuilder.GetHostEnvironment();
 
+        // 获取配置对象
+        var configuration = applicationBuilder.GetConfiguration();
+
         // 创建上下文
-        var applicationContext = new ApplicationContext
+        var applicationContext = new ApplicationContext(applicationBuilder)
         {
             Configuration = configuration,
             Environment = environment,
-            Application = applicationBuilder
         };
 
-        foreach (var node in sortedNodes)
+        // 生成组件依赖拓扑图
+        var topologicalMap = Component.GenerateTopologicalMap<WebComponent>(componentType);
+
+        // 依次初始化组件实例
+        foreach (var node in topologicalMap)
         {
             var component = Activator.CreateInstance(node) as WebComponent;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
