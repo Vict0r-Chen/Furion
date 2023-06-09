@@ -12,5 +12,27 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-// 配置测试友元程序集
-[assembly: InternalsVisibleTo("Furion.Component.Tests")]
+namespace Furion.Component;
+
+/// <summary>
+/// 组件依赖配置
+/// </summary>
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+public class DependsOnAttribute : Attribute
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="types"></param>
+    public DependsOnAttribute(params Type[] types)
+    {
+        ArgumentNullException.ThrowIfNull(types, nameof(types));
+
+        Types = types;
+    }
+
+    /// <summary>
+    /// 依赖的组件类型
+    /// </summary>
+    public Type[] Types { get; init; }
+}

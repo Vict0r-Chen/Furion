@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Furion.DependencyInjection" Version="5.0.0-preview.1.20230608.4" />
+		<PackageReference Include="Furion.DependencyInjection" Version="5.0.0-preview.1.20230609.4" />
 	</ItemGroup>
 
 </Project>
