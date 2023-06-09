@@ -17,18 +17,20 @@ namespace Furion.Component;
 /// <summary>
 /// 组件化实现依赖基类
 /// </summary>
-public abstract partial class Component
+public abstract class WebComponent : Component
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    protected Component()
-    { }
+    protected WebComponent()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// 配置服务
+    /// 配置中间件
     /// </summary>
-    /// <param name="context"><see cref="ServiceContext"/></param>
-    public virtual void ConfigureServices(ServiceContext context)
+    /// <param name="context"><see cref="ApplicationContext"/></param>
+    public virtual void Configure(ApplicationContext context)
     { }
 }

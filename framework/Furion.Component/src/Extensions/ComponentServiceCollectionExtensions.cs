@@ -26,10 +26,27 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services)
-        where TComponent : Component
+        where TComponent : Component, new()
     {
+        return services.AddComponent(typeof(TComponent));
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="componentType">组件类型</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType)
+    {
+        // 组件类型检查
+        if (!typeof(Component).IsAssignableFrom(componentType))
+        {
+            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{nameof(Component)}'.");
+        }
+
         // 创建依赖关系图
-        var dependencies = Topological.CreateDependencies(typeof(TComponent));
+        var dependencies = Topological.CreateDependencies(componentType);
 
         // 判断是否存在循环依赖
         if (Topological.HasCycle(dependencies))
@@ -38,7 +55,7 @@ public static class ComponentServiceCollectionExtensions
         }
 
         // 通过拓扑排序获取排序后的节点列表
-        var sortedNodes = Topological.TopologicalSort(dependencies).Reverse<Type>();
+        var sortedNodes = Topological.TopologicalSort(dependencies);
 
         return services;
     }

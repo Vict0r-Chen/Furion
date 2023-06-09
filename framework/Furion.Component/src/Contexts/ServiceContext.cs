@@ -19,4 +19,18 @@ namespace Furion.Component;
 /// </summary>
 public sealed class ServiceContext
 {
+    /// <summary>
+    /// <see cref="IServiceCollection"/>
+    /// </summary>
+    public IServiceCollection? Services { get; init; }
+
+    /// <summary>
+    /// <see cref="IConfiguration"/>
+    /// </summary>
+    public IConfiguration? Configuration { get; init; }
+
+    /// <summary>
+    /// <see cref="IHostEnvironment"/>
+    /// </summary>
+    public IHostEnvironment? Environment { get; init; }
 }

@@ -26,10 +26,27 @@ public static class ComponentApplicationBuilderExtensions
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
     /// <returns><see cref="IApplicationBuilder"/></returns>
     public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder)
-        where TComponent : Component
+        where TComponent : WebComponent, new()
     {
+        return applicationBuilder.AddComponent(typeof(TComponent));
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <param name="componentType">组件类型</param>
+    /// <returns><see cref="IApplicationBuilder"/></returns>
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType)
+    {
+        // 组件类型检查
+        if (!typeof(WebComponent).IsAssignableFrom(componentType))
+        {
+            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{nameof(Component)}'.");
+        }
+
         // 创建依赖关系图
-        var dependencies = Topological.CreateDependencies(typeof(TComponent));
+        var dependencies = Topological.CreateDependencies(componentType);
 
         // 判断是否存在循环依赖
         if (Topological.HasCycle(dependencies))

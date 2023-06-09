@@ -104,8 +104,8 @@ internal static class Topological
             }
         }
 
-        // 将当前节点插入到排序列表的头部
-        sortedNodes.Insert(0, node);
+        // 将当前节点插入到排序列表的尾部
+        sortedNodes.Add(node);
     }
 
     /// <summary>

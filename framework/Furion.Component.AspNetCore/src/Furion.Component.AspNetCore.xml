@@ -4,6 +4,42 @@
         <name>Furion.Component.AspNetCore</name>
     </assembly>
     <members>
+        <member name="T:Furion.Component.ApplicationContext">
+            <summary>
+            应用组件上下文
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ApplicationContext.App">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ApplicationContext.Configuration">
+            <summary>
+            <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ApplicationContext.Environment">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Component.WebComponent">
+            <summary>
+            组件化实现依赖基类
+            </summary>
+        </member>
+        <member name="M:Furion.Component.WebComponent.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.Component.WebComponent.Configure(Furion.Component.ApplicationContext)">
+            <summary>
+            配置中间件
+            </summary>
+            <param name="context"><see cref="T:Furion.Component.ApplicationContext"/></param>
+        </member>
         <member name="T:Microsoft.AspNetCore.Builder.ComponentApplicationBuilderExtensions">
             <summary>
             组件化模块拓展
@@ -15,6 +51,14 @@
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
             <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Type)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <param name="componentType">组件类型</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
         </member>
     </members>

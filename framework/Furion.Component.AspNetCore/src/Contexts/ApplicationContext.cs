@@ -19,4 +19,18 @@ namespace Furion.Component;
 /// </summary>
 public sealed class ApplicationContext
 {
+    /// <summary>
+    /// <see cref="IApplicationBuilder"/>
+    /// </summary>
+    public IApplicationBuilder? App { get; init; }
+
+    /// <summary>
+    /// <see cref="IConfiguration"/>
+    /// </summary>
+    public IConfiguration? Configuration { get; init; }
+
+    /// <summary>
+    /// <see cref="IWebHostEnvironment"/>
+    /// </summary>
+    public IWebHostEnvironment? Environment { get; init; }
 }

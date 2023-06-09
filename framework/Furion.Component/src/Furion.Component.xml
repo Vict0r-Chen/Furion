@@ -20,14 +20,24 @@
             依赖的组件类型
             </summary>
         </member>
-        <member name="T:Furion.Component.ApplicationContext">
-            <summary>
-            应用组件上下文
-            </summary>
-        </member>
         <member name="T:Furion.Component.ServiceContext">
             <summary>
             服务组件上下文
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ServiceContext.Services">
+            <summary>
+            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ServiceContext.Configuration">
+            <summary>
+            <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ServiceContext.Environment">
+            <summary>
+            <see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
             </summary>
         </member>
         <member name="T:Furion.Component.Component">
@@ -45,12 +55,6 @@
             配置服务
             </summary>
             <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
-        </member>
-        <member name="M:Furion.Component.Component.Configure(Furion.Component.ApplicationContext)">
-            <summary>
-            配置中间件
-            </summary>
-            <param name="context"><see cref="T:Furion.Component.ApplicationContext"/></param>
         </member>
         <member name="T:Furion.Component.Topological">
             <summary>
@@ -98,6 +102,14 @@
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="componentType">组件类型</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions">
