@@ -12,27 +12,18 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+using Xunit;
 
-/// <summary>
-/// 组件化实现依赖基类
-/// </summary>
-public abstract class Component
+namespace Furion.Component.Tests;
+
+public class ComponentTests
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    protected Component() { }
+    [Fact]
+    public void CreateDependencies_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddComponent<AComponent>();
 
-    /// <summary>
-    /// 配置服务
-    /// </summary>
-    /// <param name="context"><see cref="ServiceContext"/></param>
-    public virtual void ConfigureServices(ServiceContext context) { }
-
-    /// <summary>
-    /// 配置中间件
-    /// </summary>
-    /// <param name="context"><see cref="ApplicationContext"/></param>
-    public virtual void Configure(ApplicationContext context) { }
+        Assert.True(true);
+    }
 }

@@ -26,6 +26,7 @@ public class DependsOnAttribute : Attribute
     /// <param name="types"></param>
     public DependsOnAttribute(params Type[] types)
     {
+        // 空检查
         ArgumentNullException.ThrowIfNull(types, nameof(types));
 
         Types = types;

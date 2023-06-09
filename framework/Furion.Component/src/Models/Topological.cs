@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+
+
 namespace Furion.Component;
 
 /// <summary>
@@ -20,11 +22,46 @@ namespace Furion.Component;
 internal static class Topological
 {
     /// <summary>
+    /// 创建依赖关系
+    /// </summary>
+    /// <param name="entryType"></param>
+    /// <returns></returns>
+    internal static Dictionary<Type, Type[]> CreateDependencies(Type entryType)
+    {
+        var dependencies = new Dictionary<Type, Type[]>();
+
+        CreateDependenciesHelper(entryType, dependencies);
+
+        return dependencies;
+    }
+
+    internal static void CreateDependenciesHelper(Type entryType, Dictionary<Type, Type[]> dependencies)
+    {
+        var isDefinedDependsOn = entryType.IsDefined(typeof(DependsOnAttribute), true);
+        if (!isDefinedDependsOn)
+        {
+            return;
+        }
+
+        var dependsOnAttribute = entryType.GetCustomAttribute<DependsOnAttribute>(true)!;
+
+        if (!dependencies.ContainsKey(entryType))
+        {
+            dependencies.Add(entryType, dependsOnAttribute.Types);
+
+            Array.ForEach(dependsOnAttribute.Types, t =>
+            {
+                CreateDependenciesHelper(t, dependencies);
+            });
+        }
+    }
+
+    /// <summary>
     /// 拓扑排序算法
     /// </summary>
     /// <param name="dependencies"></param>
     /// <returns></returns>
-    internal static List<Type> TopologicalSort(Dictionary<Type, List<Type>> dependencies)
+    internal static List<Type> TopologicalSort(Dictionary<Type, Type[]> dependencies)
     {
         // 创建一个空列表来存储已排序的节点
         var sortedNodes = new List<Type>();
@@ -49,7 +86,7 @@ internal static class Topological
     /// <param name="dependencies"></param>
     /// <param name="visited"></param>
     /// <param name="sortedNodes"></param>
-    internal static void VisitNode(Type node, Dictionary<Type, List<Type>> dependencies, HashSet<Type> visited, List<Type> sortedNodes)
+    internal static void VisitNode(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, List<Type> sortedNodes)
     {
         // 如果当前节点已经被访问过，则直接返回
         if (visited.Contains(node))
@@ -78,7 +115,7 @@ internal static class Topological
     /// </summary>
     /// <param name="dependencies"></param>
     /// <returns></returns>
-    internal static bool HasCycle(Dictionary<Type, List<Type>> dependencies)
+    internal static bool HasCycle(Dictionary<Type, Type[]> dependencies)
     {
         // 创建一个set来存储已访问过的节点
         var visited = new HashSet<Type>();
@@ -99,7 +136,7 @@ internal static class Topological
         return false;
     }
 
-    internal static bool HasCycleHelper(Type node, Dictionary<Type, List<Type>> dependencies, HashSet<Type> visited, HashSet<Type> currentPath)
+    internal static bool HasCycleHelper(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, HashSet<Type> currentPath)
     {
         // 将当前节点标记为已访问，并将其加入到遍历路径中
         visited.Add(node);

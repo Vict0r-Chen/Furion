@@ -14,3 +14,4 @@
 
 global using Furion.Component;
 global using System.Runtime.CompilerServices;
+global using System.Reflection;

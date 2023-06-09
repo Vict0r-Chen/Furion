@@ -57,14 +57,21 @@
             拓扑查找依赖关系
             </summary>
         </member>
-        <member name="M:Furion.Component.Topological.TopologicalSort(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Type}})">
+        <member name="M:Furion.Component.Topological.CreateDependencies(System.Type)">
+            <summary>
+            创建依赖关系
+            </summary>
+            <param name="entryType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Component.Topological.TopologicalSort(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
             拓扑排序算法
             </summary>
             <param name="dependencies"></param>
             <returns></returns>
         </member>
-        <member name="M:Furion.Component.Topological.VisitNode(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Type}},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
+        <member name="M:Furion.Component.Topological.VisitNode(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
             <summary>
             节点搜索
             </summary>
@@ -73,7 +80,7 @@
             <param name="visited"></param>
             <param name="sortedNodes"></param>
         </member>
-        <member name="M:Furion.Component.Topological.HasCycle(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Type}})">
+        <member name="M:Furion.Component.Topological.HasCycle(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
             检查依赖关系是否存在循环依赖
             </summary>
