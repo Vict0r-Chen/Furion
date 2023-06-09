@@ -24,12 +24,11 @@ public static class ComponentApplicationBuilderExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder, IConfiguration configuration)
+    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder)
         where TComponent : WebComponent, new()
     {
-        return applicationBuilder.AddComponent(typeof(TComponent), configuration);
+        return applicationBuilder.AddComponent(typeof(TComponent));
     }
 
     /// <summary>
@@ -37,9 +36,8 @@ public static class ComponentApplicationBuilderExtensions
     /// </summary>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
     /// <param name="componentType"><see cref="WebComponent"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType, IConfiguration configuration)
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType)
     {
         // 组件类型检查
         if (!typeof(WebComponent).IsAssignableFrom(componentType))
