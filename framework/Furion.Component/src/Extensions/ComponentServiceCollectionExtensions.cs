@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using System.Xml.Linq;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -141,6 +143,9 @@ public static class ComponentServiceCollectionExtensions
             component.Options = componentOptions;
             components.Add(component);
         }
+
+        // 打印组件依赖链
+        Debug.WriteLine(string.Join(" ← ", components.Select(c => c.GetType().Name)));
 
         // 调用前置配置服务
         components.ForEach(component => component.PreConfigureServices(serviceContext));
