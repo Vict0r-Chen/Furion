@@ -40,6 +40,13 @@
         <member name="P:Furion.Component.ServiceContext.Environment">
             <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
         </member>
+        <member name="M:Furion.Component.ServiceContext.GetOptions``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOption">组件参数类型</typeparam>
+            <returns><typeparamref name="TOption"/></returns>
+        </member>
         <member name="T:Furion.Component.Component">
             <summary>
             组件化依赖抽象基类
@@ -49,6 +56,22 @@
             <summary>
             构造函数
             </summary>
+        </member>
+        <member name="P:Furion.Component.Component.Options">
+            <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
+        </member>
+        <member name="M:Furion.Component.Component.Configure``1(System.Action{``0})">
+            <summary>
+            配置组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <param name="configure">配置委托</param>
+        </member>
+        <member name="M:Furion.Component.Component.PreConfigureServices(Furion.Component.ServiceContext)">
+            <summary>
+            前置配置服务
+            </summary>
+            <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
         </member>
         <member name="M:Furion.Component.Component.ConfigureServices(Furion.Component.ServiceContext)">
             <summary>
@@ -130,6 +153,30 @@
             <summary>
             组件配置选项
             </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ComponentOptions.OptionsActions">
+            <summary>
+            组件参数委托
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.AddOrUpdateOptionsAction``1(System.Action{``0})">
+            <summary>
+            添加或更新组件参数委托
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <param name="configure">配置委托</param>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.GetOptions``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>

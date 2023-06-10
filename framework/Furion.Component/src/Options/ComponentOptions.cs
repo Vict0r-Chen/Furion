@@ -19,4 +19,76 @@ namespace Furion.Component;
 /// </summary>
 public sealed class ComponentOptions
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public ComponentOptions()
+    {
+        OptionsActions = new();
+    }
+
+    /// <summary>
+    /// 组件参数委托
+    /// </summary>
+    public Dictionary<Type, List<Action<object>>> OptionsActions { get; }
+
+    /// <summary>
+    /// 添加或更新组件参数委托
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <param name="configure">配置委托</param>
+    internal void AddOrUpdateOptionsAction<TOptions>(Action<TOptions> configure)
+        where TOptions : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        // 创建 Action<object> 委托
+        void configureObject(object obj) => configure((TOptions)obj);
+
+        // 组件参数 Key
+        var typeOptionsKey = typeof(TOptions);
+
+        // 如果组件参数未配置则插入新的
+        if (!OptionsActions.ContainsKey(typeOptionsKey))
+        {
+            OptionsActions.Add(typeOptionsKey, new List<Action<object>> { configureObject });
+        }
+        // 更新
+        else
+        {
+            var oldValue = OptionsActions[typeOptionsKey];
+            oldValue.Add(configureObject);
+            OptionsActions[typeOptionsKey] = oldValue;
+        }
+    }
+
+    /// <summary>
+    /// 获取组件参数
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    internal TOptions? GetOptions<TOptions>()
+        where TOptions : class, new()
+    {
+        // 组件参数 Key
+        var typeOptionsKey = typeof(TOptions);
+
+        // 如果未找到组件类型参数则返回空
+        if (!OptionsActions.ContainsKey(typeOptionsKey))
+        {
+            return null;
+        }
+
+        var actions = OptionsActions[typeOptionsKey];
+        TOptions currentValue = Activator.CreateInstance<TOptions>();
+
+        // 遍历委托并调用
+        foreach (Action<object> action in actions)
+        {
+            action(currentValue);
+        }
+
+        return currentValue;
+    }
 }

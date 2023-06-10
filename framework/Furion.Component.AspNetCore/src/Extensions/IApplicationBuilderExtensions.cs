@@ -26,7 +26,6 @@ public static class IApplicationBuilderExtensions
     /// <returns><see cref="IWebHostEnvironment"/></returns>
     public static IWebHostEnvironment GetHostEnvironment(this IApplicationBuilder applicationBuilder)
     {
-        // 获取环境对象
         var webHostEnvironment = applicationBuilder.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
         return webHostEnvironment;
     }
@@ -38,8 +37,19 @@ public static class IApplicationBuilderExtensions
     /// <returns><see cref="IConfiguration"/></returns>
     public static IConfiguration GetConfiguration(this IApplicationBuilder applicationBuilder)
     {
-        // 获取环境对象
         var configuration = applicationBuilder.ApplicationServices.GetRequiredService<IConfiguration>();
         return configuration;
+    }
+
+    /// <summary>
+    /// 获取组件配置选项对象
+    /// </summary>
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <returns><see cref="ComponentOptions"/></returns>
+    public static ComponentOptions GetComponentOptions(this IApplicationBuilder applicationBuilder)
+    {
+        // 获取环境对象
+        var componentOptions = applicationBuilder.ApplicationServices.GetRequiredService<ComponentOptions>();
+        return componentOptions;
     }
 }

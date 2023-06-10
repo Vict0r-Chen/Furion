@@ -109,4 +109,15 @@ public class TopologicalTests
 
         Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
     }
+
+    [Fact]
+    public void ComponentOptions_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddComponent<AComponent>(new ConfigurationManager());
+        var componentArgs = services.GetComponentOptions().GetOptions<ComponentArgs>();
+
+        Assert.NotNull(componentArgs);
+        Assert.Equal(nameof(AComponent), componentArgs.Name);
+    }
 }

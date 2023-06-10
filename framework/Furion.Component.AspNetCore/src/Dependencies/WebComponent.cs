@@ -26,6 +26,13 @@ public abstract class WebComponent : Component
     }
 
     /// <summary>
+    /// 前置配置中间件
+    /// </summary>
+    /// <param name="context"><see cref="ApplicationContext"/></param>
+    public virtual void PreConfigure(ApplicationContext context)
+    { }
+
+    /// <summary>
     /// 配置中间件
     /// </summary>
     /// <param name="context"><see cref="ApplicationContext"/></param>

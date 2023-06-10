@@ -24,6 +24,13 @@
         <member name="P:Furion.Component.ApplicationContext.Environment">
             <inheritdoc cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/>
         </member>
+        <member name="M:Furion.Component.ApplicationContext.GetOptions``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOption">组件参数类型</typeparam>
+            <returns><typeparamref name="TOption"/></returns>
+        </member>
         <member name="T:Furion.Component.WebComponent">
             <inheritdoc />
         </member>
@@ -31,6 +38,12 @@
             <summary>
             构造函数
             </summary>
+        </member>
+        <member name="M:Furion.Component.WebComponent.PreConfigure(Furion.Component.ApplicationContext)">
+            <summary>
+            前置配置中间件
+            </summary>
+            <param name="context"><see cref="T:Furion.Component.ApplicationContext"/></param>
         </member>
         <member name="M:Furion.Component.WebComponent.Configure(Furion.Component.ApplicationContext)">
             <summary>
@@ -114,6 +127,13 @@
             </summary>
             <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.IApplicationBuilderExtensions.GetComponentOptions(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            获取组件配置选项对象
+            </summary>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
         </member>
     </members>
 </doc>

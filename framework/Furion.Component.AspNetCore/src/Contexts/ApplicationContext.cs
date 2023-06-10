@@ -36,4 +36,16 @@ public sealed class ApplicationContext
 
     /// <inheritdoc cref="IWebHostEnvironment"/>
     public IWebHostEnvironment? Environment { get; init; }
+
+    /// <summary>
+    /// 获取组件参数
+    /// </summary>
+    /// <typeparam name="TOption">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOption"/></returns>
+    public TOption? GetOptions<TOption>()
+        where TOption : class, new()
+    {
+        var componentOptions = Application.GetComponentOptions();
+        return componentOptions?.GetOptions<TOption>();
+    }
 }

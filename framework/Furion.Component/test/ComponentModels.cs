@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+#pragma warning disable IDE0059
+
 namespace Furion.Component.Tests;
 
 [DependsOn(typeof(BComponent)
@@ -19,6 +21,14 @@ namespace Furion.Component.Tests;
     , typeof(FComponent))]
 public class AComponent : Component
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Configure<ComponentArgs>(options =>
+        {
+            options.Name = nameof(AComponent);
+        });
+    }
+
     public override void ConfigureServices(ServiceContext context)
     {
     }
@@ -28,6 +38,14 @@ public class AComponent : Component
     , typeof(DComponent))]
 public class BComponent : Component
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Configure<ComponentArgs>(options =>
+        {
+            options.Name = nameof(BComponent);
+        });
+    }
+
     public override void ConfigureServices(ServiceContext context)
     {
     }
@@ -38,6 +56,7 @@ public class CComponent : Component
 {
     public override void ConfigureServices(ServiceContext context)
     {
+        var options = context.GetOptions<ComponentArgs>();
     }
 }
 
@@ -59,8 +78,17 @@ public class EComponent : Component
 
 public class FComponent : Component
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Configure<ComponentArgs>(options =>
+        {
+            options.Name = nameof(FComponent);
+        });
+    }
+
     public override void ConfigureServices(ServiceContext context)
     {
+        var options = context.GetOptions<ComponentArgs>();
     }
 }
 
@@ -80,4 +108,9 @@ public class AWebComponent : WebComponent
 
 public class NotComponent
 {
+}
+
+public class ComponentArgs
+{
+    public string? Name { get; set; }
 }

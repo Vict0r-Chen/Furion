@@ -25,6 +25,31 @@ public abstract class Component
     protected Component()
     { }
 
+    /// <inheritdoc cref="ComponentOptions"/>
+    public ComponentOptions? Options { get; internal set; }
+
+    /// <summary>
+    /// 配置组件参数
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <param name="configure">配置委托</param>
+    public void Configure<TOptions>(Action<TOptions> configure)
+        where TOptions : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+        ArgumentNullException.ThrowIfNull(Options);
+
+        Options.AddOrUpdateOptionsAction(configure);
+    }
+
+    /// <summary>
+    /// 前置配置服务
+    /// </summary>
+    /// <param name="context"><see cref="ServiceContext"/></param>
+    public virtual void PreConfigureServices(ServiceContext context)
+    { }
+
     /// <summary>
     /// 配置服务
     /// </summary>

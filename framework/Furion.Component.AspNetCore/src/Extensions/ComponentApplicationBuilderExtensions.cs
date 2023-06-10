@@ -69,14 +69,27 @@ public static class ComponentApplicationBuilderExtensions
         // 生成组件依赖拓扑图
         var topologicalMap = Component.GenerateTopologicalMap<WebComponent>(dependencies);
 
+        // 获取组件化配置选项
+        var componentOptions = applicationBuilder.GetComponentOptions();
+
+        // 组件对象集合
+        var components = new List<WebComponent>();
+
         // 依次初始化组件实例
         foreach (var node in topologicalMap)
         {
             var component = Activator.CreateInstance(node) as WebComponent;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
-            component.Configure(applicationContext);
+            component.Options = componentOptions;
+            components.Add(component);
         }
+
+        // 调用前置配置中间件
+        components.ForEach(component => component.PreConfigure(applicationContext));
+
+        // 调用配置中间件
+        components.ForEach(component => component.Configure(applicationContext));
 
         return applicationBuilder;
     }

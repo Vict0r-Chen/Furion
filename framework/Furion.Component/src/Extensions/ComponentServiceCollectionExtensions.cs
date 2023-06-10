@@ -72,14 +72,27 @@ public static class ComponentServiceCollectionExtensions
         // 生成组件依赖拓扑图
         var topologicalMap = Component.GenerateTopologicalMap<Component>(dependencies);
 
+        // 获取组件化配置选项
+        var componentOptions = services.GetComponentOptions();
+
+        // 组件对象集合
+        var components = new List<Component>();
+
         // 依次初始化组件实例
         foreach (var node in topologicalMap)
         {
             var component = Activator.CreateInstance(node) as Component;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
-            component.ConfigureServices(serviceContext);
+            component.Options = componentOptions;
+            components.Add(component);
         }
+
+        // 调用前置配置服务
+        components.ForEach(component => component.PreConfigureServices(serviceContext));
+
+        // 调用配置服务
+        components.ForEach(component => component.ConfigureServices(serviceContext));
 
         return services;
     }
