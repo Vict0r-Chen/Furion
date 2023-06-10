@@ -102,4 +102,21 @@ public class TopologicalTests
 
         Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
     }
+
+    [Fact]
+    public void CheckComponent_Inherited_ReturnOK()
+    {
+        ComponentBase.CheckComponent(typeof(AComponent));
+    }
+
+    [Fact]
+    public void CheckComponent_Inherited_ReturnOops()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.CheckComponent(typeof(InheritedComponent));
+        });
+
+        Assert.Equal("Components are not allowed to inherit from each other.", exception.Message);
+    }
 }

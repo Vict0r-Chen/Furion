@@ -103,4 +103,28 @@ internal static class TypeExtensions
         var methodInfo = type.GetMethod(name, BindingFlags.Public | BindingFlags.Instance);
         return methodInfo;
     }
+
+    /// <summary>
+    /// 查找所有的父类类型且包含自己
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<Type> GetParentAndSelfTypes(this Type type)
+    {
+        var parentTypes = new List<Type>();
+        var parentType = type.BaseType;
+
+        // 递归查找所有的父类
+        while (parentType != null && parentType != typeof(object))
+        {
+            // 插入起始位置
+            parentTypes.Insert(0, parentType);
+            parentType = parentType.BaseType;
+        }
+
+        // 添加自身类型
+        parentTypes.Add(type);
+
+        return parentTypes;
+    }
 }

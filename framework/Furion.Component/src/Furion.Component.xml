@@ -128,19 +128,19 @@
             </summary>
             <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.GenerateDependencyMap(System.Type)">
-            <summary>
-            生成组件依赖字典
-            </summary>
-            <param name="componentType">组件类型</param>
-            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
-        </member>
         <member name="M:Furion.Component.ComponentBase.GenerateTopologicalMap(System.Type)">
             <summary>
             生成组件依赖拓扑图
             </summary>
             <param name="componentType">组件类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.GenerateDependencyMap(System.Type)">
+            <summary>
+            生成组件依赖字典
+            </summary>
+            <param name="componentType">组件类型</param>
+            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBase.GenerateTopologicalMap(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>

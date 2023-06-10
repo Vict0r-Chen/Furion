@@ -115,3 +115,7 @@ public class ComponentArgs
 {
     public string? Name { get; set; }
 }
+
+public class InheritedComponent : AComponent
+{
+}

@@ -58,6 +58,17 @@ public abstract class ComponentBase
     { }
 
     /// <summary>
+    /// 生成组件依赖拓扑图
+    /// </summary>
+    /// <param name="componentType">组件类型</param>
+    /// <returns><see cref="List{T}"/></returns>
+    public static List<Type> GenerateTopologicalMap(Type componentType)
+    {
+        var dependencies = GenerateDependencyMap(componentType);
+        return GenerateTopologicalMap(dependencies);
+    }
+
+    /// <summary>
     /// 生成组件依赖字典
     /// </summary>
     /// <param name="componentType">组件类型</param>
@@ -83,7 +94,7 @@ public abstract class ComponentBase
             }
 
             // 查找 [DependsOn] 特性依赖配置
-            var dependsOn = componentType.GetCustomAttribute<DependsOnAttribute>(true)?.Dependencies ?? Array.Empty<Type>();
+            var dependsOn = componentType.GetCustomAttribute<DependsOnAttribute>(false)?.Dependencies ?? Array.Empty<Type>();
             dependencies.Add(componentType, dependsOn);
 
             // 递归生成组件依赖字典项
@@ -92,17 +103,6 @@ public abstract class ComponentBase
                 AddItems(dependency, dependencies);
             }
         }
-    }
-
-    /// <summary>
-    /// 生成组件依赖拓扑图
-    /// </summary>
-    /// <param name="componentType">组件类型</param>
-    /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> GenerateTopologicalMap(Type componentType)
-    {
-        var dependencies = GenerateDependencyMap(componentType);
-        return GenerateTopologicalMap(dependencies);
     }
 
     /// <summary>
@@ -146,6 +146,13 @@ public abstract class ComponentBase
         if (!componentBaseType.IsAssignableFrom(componentType))
         {
             throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{componentBaseType.Name}'.");
+        }
+
+        // 判断组件是否相互继承（禁止继承）
+        var baseType = componentType.BaseType!;
+        if (!(baseType == componentBaseType || baseType.FullName == $"{baseType.Namespace}.WebComponent"))
+        {
+            throw new InvalidOperationException("Components are not allowed to inherit from each other.");
         }
     }
 }

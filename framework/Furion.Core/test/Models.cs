@@ -69,3 +69,19 @@ public class WithMethodClass
     public void GetPublic()
     { }
 }
+
+public class Base1
+{
+}
+
+public class Base2 : Base1
+{
+}
+
+public class Base3 : Base2
+{
+}
+
+public class Self : Base3
+{
+}

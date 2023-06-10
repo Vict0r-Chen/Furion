@@ -104,4 +104,15 @@ public class TypeExtensionsTests
         var method = type.GetPublicInstanceMethod(methodName);
         Assert.Equal(isPublicInstance, method != null);
     }
+
+    [Fact]
+    public void GetParentAndSelfTypes_ReturnOK()
+    {
+        var type = typeof(Self);
+        var types = type.GetParentAndSelfTypes();
+        Assert.Equal(typeof(Base1), types[0]);
+        Assert.Equal(typeof(Base2), types[1]);
+        Assert.Equal(typeof(Base3), types[2]);
+        Assert.Equal(typeof(Self), types[3]);
+    }
 }

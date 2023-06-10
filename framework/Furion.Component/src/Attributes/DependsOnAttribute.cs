@@ -17,7 +17,7 @@ namespace Furion.Component;
 /// <summary>
 /// 组件依赖链配置
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public sealed class DependsOnAttribute : Attribute
 {
     /// <summary>
