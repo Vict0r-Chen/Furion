@@ -77,32 +77,37 @@ public abstract class ComponentBase
     {
         // 创建空的组件依赖字典
         var dependencies = new Dictionary<Type, Type[]>();
-        AddItems(componentType, dependencies);
 
-        return dependencies;
+        // 创建一个待访问的组件类型列表，并将初始组件类型添加到列表中
+        var toVisit = new List<Type> { componentType };
 
-        // 添加组件依赖字典子项
-        static void AddItems(Type componentType, Dictionary<Type, Type[]> dependencies)
+        // 遍历待访问的组件类型列表，直到列表为空
+        while (toVisit.Count > 0)
         {
+            // 取出列表中的第一个组件类型
+            var currentType = toVisit[0];
+
+            // 移除已访问的组件类型
+            toVisit.RemoveAt(0);
+
             // 组件类型检查
-            CheckComponent(componentType);
+            CheckComponent(currentType);
 
             // 已访问过检查
-            if (dependencies.ContainsKey(componentType))
+            if (dependencies.ContainsKey(currentType))
             {
-                return;
+                continue;
             }
 
             // 查找 [DependsOn] 特性依赖配置
-            var dependsOn = componentType.GetCustomAttribute<DependsOnAttribute>(false)?.Dependencies ?? Array.Empty<Type>();
-            dependencies.Add(componentType, dependsOn);
+            var dependsOn = currentType.GetCustomAttribute<DependsOnAttribute>(false)?.Dependencies ?? Array.Empty<Type>();
+            dependencies.Add(currentType, dependsOn);
 
-            // 递归生成组件依赖字典项
-            foreach (var dependency in dependsOn)
-            {
-                AddItems(dependency, dependencies);
-            }
+            // 将当前组件类型的依赖项添加到待访问列表中
+            toVisit.AddRange(dependsOn);
         }
+
+        return dependencies;
     }
 
     /// <summary>
