@@ -302,6 +302,14 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/></returns>
         </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.GetSingletonInstance``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,``0)">
+            <summary>
+            获取单例服务对象
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="instance"><typeparamref name="T"/></param>
+            <returns><typeparamref name="T"/></returns>
+        </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.GetComponentOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             获取组件配置选项

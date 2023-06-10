@@ -170,24 +170,36 @@ public static class ComponentServiceCollectionExtensions
     }
 
     /// <summary>
+    /// 获取单例服务对象
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <returns><typeparamref name="T"/></returns>
+    public static T GetSingletonInstance<T>(this IServiceCollection services, T? instance = null)
+        where T : class
+    {
+        // 如果组件配置选项不存在则添加
+        if (!services.Any(s => s.ServiceType == typeof(T)))
+        {
+            services.TryAddSingleton(instance ?? Activator.CreateInstance<T>());
+        }
+
+        // 获取组件配置选项
+        var singletonInstance = services.First(s => s.ServiceType == typeof(T)).ImplementationInstance as T;
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(singletonInstance, nameof(singletonInstance));
+
+        return singletonInstance;
+    }
+
+    /// <summary>
     /// 获取组件配置选项
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>
     internal static ComponentOptions GetComponentOptions(this IServiceCollection services)
     {
-        // 如果组件配置选项不存在则添加
-        if (!services.Any(s => s.ServiceType == typeof(ComponentOptions)))
-        {
-            services.TryAddSingleton(new ComponentOptions());
-        }
-
-        // 获取组件配置选项
-        var componentOptions = services.First(s => s.ServiceType == typeof(ComponentOptions)).ImplementationInstance as ComponentOptions;
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
-
-        return componentOptions;
+        return services.GetSingletonInstance<ComponentOptions>();
     }
 }
