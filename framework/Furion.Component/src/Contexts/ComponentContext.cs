@@ -12,32 +12,25 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Tests;
+namespace Furion.Component;
 
-[DependsOn(typeof(DependencyInjectionComponent))]
-public class EntryComponent : WebComponent
+/// <summary>
+/// 组件上下文
+/// </summary>
+public abstract class ComponentContext
 {
-    public override void ConfigureServices(ServiceContext context)
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    public ComponentContext(IConfiguration configuration)
     {
-        context.Services.AddControllers();
-        context.Services.AddEndpointsApiExplorer();
-        context.Services.AddSwaggerGen();
+        Configuration = configuration;
     }
 
-    public override void Configure(ApplicationContext context)
-    {
-        var app = context.Application;
+    /// <inheritdoc cref="IConfiguration"/>
+    public IConfiguration Configuration { get; }
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-    }
+    /// <inheritdoc cref="IHostEnvironment"/>
+    public IHostEnvironment? Environment { get; protected set; }
 }

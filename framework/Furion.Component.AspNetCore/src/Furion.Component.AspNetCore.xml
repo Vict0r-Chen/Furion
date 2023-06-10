@@ -38,13 +38,17 @@
         <member name="P:Furion.Component.ApplicationContext.Application">
             <inheritdoc cref="T:Microsoft.AspNetCore.Builder.WebApplication"/>
         </member>
-        <member name="P:Furion.Component.ApplicationContext.Configuration">
-            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
-        </member>
         <member name="P:Furion.Component.ApplicationContext.Environment">
             <inheritdoc cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/>
         </member>
         <member name="M:Furion.Component.ApplicationContext.GetOptions``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOption">组件参数类型</typeparam>
+            <returns><typeparamref name="TOption"/></returns>
+        </member>
+        <member name="M:Furion.Component.ApplicationContext.GetOptionsOrDefault``1">
             <summary>
             获取组件参数
             </summary>

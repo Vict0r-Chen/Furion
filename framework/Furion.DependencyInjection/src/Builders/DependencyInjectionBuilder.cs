@@ -42,6 +42,15 @@ public sealed class DependencyInjectionBuilder
     };
 
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public DependencyInjectionBuilder()
+    {
+        // 添加默认启动程序集
+        AddAssemblies(Assembly.GetEntryAssembly()!);
+    }
+
+    /// <summary>
     /// 禁用程序集扫描
     /// </summary>
     public bool SuppressAssemblyScanning { get; set; }

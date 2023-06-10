@@ -252,6 +252,11 @@
             禁用指定类型作为服务注册
             </summary>
         </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressAssemblyScanning">
             <summary>
             禁用程序集扫描
@@ -568,6 +573,14 @@
             <inheritdoc cref="P:System.ServiceInjectionAttribute.Order"/>
         </member>
         <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Component.DependencyInjectionComponent">
+            <summary>
+            依赖注入组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.DependencyInjectionComponent.ConfigureServices(Furion.Component.ServiceContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">

@@ -17,7 +17,7 @@ namespace Furion.Component;
 /// <summary>
 /// 服务组件上下文
 /// </summary>
-public sealed class ServiceContext
+public sealed class ServiceContext : ComponentContext
 {
     /// <summary>
     /// 构造函数
@@ -25,9 +25,9 @@ public sealed class ServiceContext
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     internal ServiceContext(IServiceCollection services, IConfiguration configuration)
+        : base(configuration)
     {
         Services = services;
-        Configuration = configuration;
         Environment = services.GetHostEnvironment();
     }
 
@@ -43,12 +43,6 @@ public sealed class ServiceContext
     /// <inheritdoc cref="IServiceCollection"/>
     public IServiceCollection Services { get; }
 
-    /// <inheritdoc cref="IConfiguration"/>
-    public IConfiguration Configuration { get; }
-
-    /// <inheritdoc cref="IHostEnvironment"/>
-    public IHostEnvironment? Environment { get; }
-
     ///// <inheritdoc cref="ILoggingBuilder"/>
     //public ILoggingBuilder? Logging { get; init; }
 
@@ -62,5 +56,16 @@ public sealed class ServiceContext
     {
         var componentOptions = Services.GetComponentOptions();
         return componentOptions?.OptionsActions.GetOptions<TOption>();
+    }
+
+    /// <summary>
+    /// 获取组件参数
+    /// </summary>
+    /// <typeparam name="TOption">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOption"/></returns>
+    public TOption GetOptionsOrDefault<TOption>()
+        where TOption : class, new()
+    {
+        return GetOptions<TOption>() ?? Activator.CreateInstance<TOption>();
     }
 }

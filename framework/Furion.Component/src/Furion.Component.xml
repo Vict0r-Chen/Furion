@@ -44,6 +44,23 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
+        <member name="T:Furion.Component.ComponentContext">
+            <summary>
+            组件上下文
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentContext.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+        </member>
+        <member name="P:Furion.Component.ComponentContext.Configuration">
+            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
+        </member>
+        <member name="P:Furion.Component.ComponentContext.Environment">
+            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
+        </member>
         <member name="T:Furion.Component.ServiceContext">
             <summary>
             服务组件上下文
@@ -65,13 +82,14 @@
         <member name="P:Furion.Component.ServiceContext.Services">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
         </member>
-        <member name="P:Furion.Component.ServiceContext.Configuration">
-            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
-        </member>
-        <member name="P:Furion.Component.ServiceContext.Environment">
-            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
-        </member>
         <member name="M:Furion.Component.ServiceContext.GetOptions``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOption">组件参数类型</typeparam>
+            <returns><typeparamref name="TOption"/></returns>
+        </member>
+        <member name="M:Furion.Component.ServiceContext.GetOptionsOrDefault``1">
             <summary>
             获取组件参数
             </summary>

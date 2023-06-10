@@ -30,9 +30,6 @@ public static class DependencyInjectionServiceCollectionExtensions
         // 创建依赖注入模块构建器
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
 
-        // 添加默认启动程序集
-        dependencyInjectionBuilder.AddAssemblies(Assembly.GetEntryAssembly()!);
-
         // 调用自定义配置
         configure?.Invoke(dependencyInjectionBuilder);
 

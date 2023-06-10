@@ -17,16 +17,16 @@ namespace Furion.Component;
 /// <summary>
 /// 应用组件上下文
 /// </summary>
-public sealed class ApplicationContext
+public sealed class ApplicationContext : ComponentContext
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="application"><see cref="WebApplication"/></param>
     internal ApplicationContext(WebApplication application)
+        : base(application.Configuration)
     {
         Application = application;
-        Configuration = application.Configuration;
         Environment = application.Environment;
     }
 
@@ -42,11 +42,8 @@ public sealed class ApplicationContext
     /// <inheritdoc cref="WebApplication"/>
     public WebApplication Application { get; }
 
-    /// <inheritdoc cref="IConfiguration"/>
-    public IConfiguration Configuration { get; }
-
     /// <inheritdoc cref="IWebHostEnvironment"/>
-    public IWebHostEnvironment Environment { get; }
+    public new IWebHostEnvironment Environment { get; }
 
     /// <summary>
     /// 获取组件参数
@@ -58,5 +55,16 @@ public sealed class ApplicationContext
     {
         var componentOptions = Application.GetComponentOptions();
         return componentOptions?.OptionsActions.GetOptions<TOption>();
+    }
+
+    /// <summary>
+    /// 获取组件参数
+    /// </summary>
+    /// <typeparam name="TOption">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOption"/></returns>
+    public TOption GetOptionsOrDefault<TOption>()
+        where TOption : class, new()
+    {
+        return GetOptions<TOption>() ?? Activator.CreateInstance<TOption>();
     }
 }
