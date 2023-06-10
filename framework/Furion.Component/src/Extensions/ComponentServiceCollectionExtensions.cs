@@ -12,8 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using System.Xml.Linq;
-
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -119,20 +117,14 @@ public static class ComponentServiceCollectionExtensions
         // 添加组件配置选项
         services.TryAddSingleton(new ComponentOptions());
 
-        // 获取环境对象
-        var environment = services.GetHostEnvironment();
-
-        // 创建上下文
-        var serviceContext = new ServiceContext(services, configuration);
-
-        // 生成组件依赖拓扑图
-        var topologicalMap = ComponentBase.GenerateTopologicalMap(dependencies);
-
         // 获取组件化配置选项
         var componentOptions = services.GetComponentOptions();
 
         // 组件对象集合
         var components = new List<ComponentBase>();
+
+        // 生成组件依赖拓扑图
+        var topologicalMap = ComponentBase.GenerateTopologicalMap(dependencies);
 
         // 依次初始化组件实例
         foreach (var node in topologicalMap)
@@ -146,6 +138,9 @@ public static class ComponentServiceCollectionExtensions
 
         // 打印组件依赖链
         Debug.WriteLine(string.Join(" ← ", components.Select(c => c.GetType().Name)));
+
+        // 创建上下文
+        var serviceContext = new ServiceContext(services, configuration);
 
         // 调用前置配置服务
         components.ForEach(component => component.PreConfigureServices(serviceContext));

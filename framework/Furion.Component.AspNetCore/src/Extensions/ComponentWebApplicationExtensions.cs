@@ -110,17 +110,14 @@ public static class ComponentWebApplicationExtensions
         // 构建组件模块
         componentBuilder.Build(webApplication);
 
-        // 创建上下文
-        var applicationContext = new ApplicationContext(webApplication);
-
-        // 生成组件依赖拓扑图
-        var topologicalMap = ComponentBase.GenerateTopologicalMap(dependencies);
-
         // 获取组件化配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
         // 组件对象集合
         var components = new List<WebComponent>();
+
+        // 生成组件依赖拓扑图
+        var topologicalMap = ComponentBase.GenerateTopologicalMap(dependencies);
 
         // 依次初始化组件实例
         foreach (var node in topologicalMap)
@@ -136,6 +133,9 @@ public static class ComponentWebApplicationExtensions
 
         // 打印组件依赖链
         Debug.WriteLine(string.Join(" ← ", components.Select(c => c.GetType().Name)));
+
+        // 创建上下文
+        var applicationContext = new ApplicationContext(webApplication);
 
         // 调用前置配置服务
         components.ForEach(component => component.PreConfigure(applicationContext));
