@@ -55,7 +55,7 @@ public static class ComponentWebApplicationExtensions
     public static WebApplication AddComponent(this WebApplication webApplication, Type componentType, Action<WebComponentBuilder>? configure = null)
     {
         // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateDependencyMap<WebComponent>(componentType);
+        var dependencies = ComponentBase.GenerateDependencyMap(componentType);
 
         return webApplication.AddComponent(dependencies, configure);
     }
@@ -70,7 +70,7 @@ public static class ComponentWebApplicationExtensions
     public static WebApplication AddComponent(this WebApplication webApplication, Type componentType, WebComponentBuilder componentBuilder)
     {
         // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateDependencyMap<WebComponent>(componentType);
+        var dependencies = ComponentBase.GenerateDependencyMap(componentType);
 
         return webApplication.AddComponent(dependencies, componentBuilder);
     }
@@ -112,7 +112,7 @@ public static class ComponentWebApplicationExtensions
         var applicationContext = new ApplicationContext(webApplication);
 
         // 生成组件依赖拓扑图
-        var topologicalMap = ComponentBase.GenerateTopologicalMap<WebComponent>(dependencies);
+        var topologicalMap = ComponentBase.GenerateTopologicalMap(dependencies);
 
         // 获取组件化配置选项
         var componentOptions = webApplication.GetComponentOptions();
@@ -123,8 +123,10 @@ public static class ComponentWebApplicationExtensions
         // 依次初始化组件实例
         foreach (var node in topologicalMap)
         {
-            var component = Activator.CreateInstance(node) as WebComponent;
-            ArgumentNullException.ThrowIfNull(component, nameof(component));
+            if (Activator.CreateInstance(node) is not WebComponent component)
+            {
+                continue;
+            }
 
             component.Options = componentOptions;
             components.Add(component);

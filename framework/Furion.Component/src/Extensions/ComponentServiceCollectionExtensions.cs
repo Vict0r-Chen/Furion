@@ -58,7 +58,7 @@ public static class ComponentServiceCollectionExtensions
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilder>? configure = null)
     {
         // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateDependencyMap<ComponentBase>(componentType);
+        var dependencies = ComponentBase.GenerateDependencyMap(componentType);
 
         return services.AddComponent(dependencies, configuration, configure);
     }
@@ -74,7 +74,7 @@ public static class ComponentServiceCollectionExtensions
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, ComponentBuilder componentBuilder)
     {
         // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateDependencyMap<ComponentBase>(componentType);
+        var dependencies = ComponentBase.GenerateDependencyMap(componentType);
 
         return services.AddComponent(dependencies, configuration, componentBuilder);
     }
@@ -124,7 +124,7 @@ public static class ComponentServiceCollectionExtensions
         var serviceContext = new ServiceContext(services, configuration);
 
         // 生成组件依赖拓扑图
-        var topologicalMap = ComponentBase.GenerateTopologicalMap<ComponentBase>(dependencies);
+        var topologicalMap = ComponentBase.GenerateTopologicalMap(dependencies);
 
         // 获取组件化配置选项
         var componentOptions = services.GetComponentOptions();

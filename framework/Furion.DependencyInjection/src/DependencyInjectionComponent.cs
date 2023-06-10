@@ -22,6 +22,9 @@ public sealed class DependencyInjectionComponent : ComponentBase
     /// <inheritdoc />
     public override void ConfigureServices(ServiceContext context)
     {
+        // 调试日志
+        Debug.WriteLine(nameof(DependencyInjectionComponent));
+
         // 获取组件配置
         var dependencyInjectionBuilder = context.GetOptionsOrDefault<DependencyInjectionBuilder>();
 

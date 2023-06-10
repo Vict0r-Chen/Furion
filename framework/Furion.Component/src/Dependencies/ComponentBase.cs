@@ -60,11 +60,9 @@ public abstract class ComponentBase
     /// <summary>
     /// 生成组件依赖字典
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
-    public static Dictionary<Type, Type[]> GenerateDependencyMap<TBaseComponent>(Type componentType)
-        where TBaseComponent : ComponentBase
+    public static Dictionary<Type, Type[]> GenerateDependencyMap(Type componentType)
     {
         // 创建空的组件依赖字典
         var dependencies = new Dictionary<Type, Type[]>();
@@ -76,7 +74,7 @@ public abstract class ComponentBase
         static void AddItems(Type componentType, Dictionary<Type, Type[]> dependencies)
         {
             // 组件类型检查
-            CheckComponent<TBaseComponent>(componentType);
+            CheckComponent(componentType);
 
             // 已访问过检查
             if (dependencies.ContainsKey(componentType))
@@ -99,24 +97,20 @@ public abstract class ComponentBase
     /// <summary>
     /// 生成组件依赖拓扑图
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
-        where TBaseComponent : ComponentBase
+    public static List<Type> GenerateTopologicalMap(Type componentType)
     {
-        var dependencies = GenerateDependencyMap<TBaseComponent>(componentType);
-        return GenerateTopologicalMap<TBaseComponent>(dependencies);
+        var dependencies = GenerateDependencyMap(componentType);
+        return GenerateTopologicalMap(dependencies);
     }
 
     /// <summary>
     /// 生成组件依赖拓扑图
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="dependencies">组件依赖字典</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> GenerateTopologicalMap<TBaseComponent>(Dictionary<Type, Type[]> dependencies)
-        where TBaseComponent : ComponentBase
+    public static List<Type> GenerateTopologicalMap(Dictionary<Type, Type[]> dependencies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
@@ -126,7 +120,7 @@ public abstract class ComponentBase
         foreach (var type in componentTypes)
         {
             // 组件类型检查
-            CheckComponent<TBaseComponent>(type);
+            CheckComponent(type);
         }
 
         // 判断组件是否存在循环依赖
@@ -142,21 +136,16 @@ public abstract class ComponentBase
     /// <summary>
     /// 检查组件类型
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <exception cref="InvalidOperationException"></exception>
-    public static void CheckComponent<TBaseComponent>(Type componentType)
-        where TBaseComponent : ComponentBase
+    public static void CheckComponent(Type componentType)
     {
-        // 限制 TBaseComponent 只能是 Component 或者 WebComponent"
-        if (!(typeof(TBaseComponent) == typeof(ComponentBase) || typeof(TBaseComponent).FullName == "Furion.Component.WebComponent"))
-        {
-            throw new InvalidOperationException("Generic type can only be ComponentBase or WebComponent type.");
-        }
+        var componentBaseType = typeof(ComponentBase);
 
-        if (!typeof(TBaseComponent).IsAssignableFrom(componentType))
+        // 判断组件类型是否是 ComponentBase 派生类型
+        if (!componentBaseType.IsAssignableFrom(componentType))
         {
-            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{typeof(TBaseComponent).Name}'.");
+            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{componentBaseType.Name}'.");
         }
     }
 }

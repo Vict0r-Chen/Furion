@@ -19,7 +19,7 @@ public class TopologicalTests
     [Fact]
     public void GenerateTopologicalMap_ReturnOK()
     {
-        var topologicalMap = ComponentBase.GenerateTopologicalMap<ComponentBase>(typeof(AComponent));
+        var topologicalMap = ComponentBase.GenerateTopologicalMap(typeof(AComponent));
         Assert.NotNull(topologicalMap);
 
         var firstComponent = topologicalMap.First();
@@ -31,17 +31,10 @@ public class TopologicalTests
     {
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
-            var topologicalMap = ComponentBase.GenerateTopologicalMap<WebComponent>(typeof(AComponent));
+            var topologicalMap = ComponentBase.GenerateTopologicalMap(typeof(NotComponent));
         });
 
-        Assert.Equal("Type 'AComponent' is not assignable from 'WebComponent'.", exception.Message);
-
-        var exception2 = Assert.Throws<InvalidOperationException>(() =>
-        {
-            var topologicalMap = ComponentBase.GenerateTopologicalMap<AComponent>(typeof(AComponent));
-        });
-
-        Assert.Equal("Generic type can only be ComponentBase or WebComponent type.", exception2.Message);
+        Assert.Equal("Type 'NotComponent' is not assignable from 'ComponentBase'.", exception.Message);
     }
 
     [Fact]
@@ -59,7 +52,7 @@ public class TopologicalTests
         };
 
         // A B C D E F G
-        var sortedNodes = ComponentBase.GenerateTopologicalMap<ComponentBase>(dependencies);
+        var sortedNodes = ComponentBase.GenerateTopologicalMap(dependencies);
         Assert.Equal(dependencies.Keys.ElementAt(0), sortedNodes[0]);
         Assert.Equal(dependencies.Keys.ElementAt(1), sortedNodes[1]);
         Assert.Equal(dependencies.Keys.ElementAt(2), sortedNodes[2]);
@@ -81,7 +74,7 @@ public class TopologicalTests
         };
 
         // F D E C B A G
-        var sortedNodes = ComponentBase.GenerateTopologicalMap<ComponentBase>(dependencies);
+        var sortedNodes = ComponentBase.GenerateTopologicalMap(dependencies);
         Assert.Equal(typeof(FComponent), sortedNodes[0]);
         Assert.Equal(typeof(DComponent), sortedNodes[1]);
         Assert.Equal(typeof(EComponent), sortedNodes[2]);
@@ -104,7 +97,7 @@ public class TopologicalTests
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
-            var sortedNodes = ComponentBase.GenerateTopologicalMap<ComponentBase>(dependencies);
+            var sortedNodes = ComponentBase.GenerateTopologicalMap(dependencies);
         });
 
         Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
