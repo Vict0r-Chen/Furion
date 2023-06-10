@@ -25,11 +25,26 @@ public static class ComponentServiceCollectionExtensions
     /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, Action<ComponentBuilder>? configure = null)
         where TComponent : Component, new()
     {
-        return services.AddComponent(typeof(TComponent), configuration);
+        return services.AddComponent(typeof(TComponent), configuration, configure);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, ComponentBuilder componentBuilder)
+        where TComponent : Component, new()
+    {
+        return services.AddComponent(typeof(TComponent), configuration, componentBuilder);
     }
 
     /// <summary>
@@ -38,13 +53,30 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="componentType"><see cref="Component"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilder>? configure = null)
     {
         // 生成组件依赖字典
         var dependencies = Component.GenerateDependencyMap<Component>(componentType);
 
-        return services.AddComponent(dependencies, configuration);
+        return services.AddComponent(dependencies, configuration, configure);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, ComponentBuilder componentBuilder)
+    {
+        // 生成组件依赖字典
+        var dependencies = Component.GenerateDependencyMap<Component>(componentType);
+
+        return services.AddComponent(dependencies, configuration, componentBuilder);
     }
 
     /// <summary>
@@ -53,9 +85,35 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="dependencies">组件依赖字典</param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilder>? configure = null)
     {
+        // 创建组件模块构建器
+        var componentBuilder = new ComponentBuilder();
+
+        // 调用自定义配置
+        configure?.Invoke(componentBuilder);
+
+        return services.AddComponent(dependencies, configuration, componentBuilder);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, ComponentBuilder componentBuilder)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 构建组件模块
+        componentBuilder.Build(services);
+
         // 添加组件配置选项
         services.TryAddSingleton(new ComponentOptions());
 

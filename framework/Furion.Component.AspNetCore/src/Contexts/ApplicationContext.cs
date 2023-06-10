@@ -46,6 +46,6 @@ public sealed class ApplicationContext
         where TOption : class, new()
     {
         var componentOptions = Application.GetComponentOptions();
-        return componentOptions?.GetOptions<TOption>();
+        return componentOptions?.OptionsActions.GetOptions<TOption>();
     }
 }

@@ -22,27 +22,61 @@ public static class ComponentApplicationBuilderExtensions
     /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
-    /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder)
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder, IConfiguration configuration, Action<WebComponentBuilder>? configure = null)
         where TComponent : WebComponent, new()
     {
-        return applicationBuilder.AddComponent(typeof(TComponent));
+        return applicationBuilder.AddComponent(typeof(TComponent), configuration, configure);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IApplicationBuilder AddComponent<TComponent>(this IApplicationBuilder applicationBuilder, IConfiguration configuration, WebComponentBuilder componentBuilder)
+        where TComponent : WebComponent, new()
+    {
+        return applicationBuilder.AddComponent(typeof(TComponent), configuration, componentBuilder);
     }
 
     /// <summary>
     /// 添加组件
     /// </summary>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="WebComponent"/></param>
-    /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType)
+    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType, IConfiguration configuration, Action<WebComponentBuilder>? configure = null)
     {
         // 生成组件依赖字典
         var dependencies = Component.GenerateDependencyMap<WebComponent>(componentType);
 
-        return applicationBuilder.AddComponent(dependencies);
+        return applicationBuilder.AddComponent(dependencies, configuration, configure);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType, IConfiguration configuration, WebComponentBuilder componentBuilder)
+    {
+        // 生成组件依赖字典
+        var dependencies = Component.GenerateDependencyMap<WebComponent>(componentType);
+
+        return applicationBuilder.AddComponent(dependencies, configuration, componentBuilder);
     }
 
     /// <summary>
@@ -50,14 +84,38 @@ public static class ComponentApplicationBuilderExtensions
     /// </summary>
     /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
     /// <param name="dependencies">组件依赖字典</param>
-    /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Dictionary<Type, Type[]> dependencies)
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<WebComponentBuilder>? configure = null)
     {
+        // 创建组件模块构建器
+        var componentBuilder = new WebComponentBuilder();
+
+        // 调用自定义配置
+        configure?.Invoke(componentBuilder);
+
+        return applicationBuilder.AddComponent(dependencies, configuration, componentBuilder);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, WebComponentBuilder componentBuilder)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 构建组件模块
+        componentBuilder.Build(applicationBuilder);
+
         // 获取环境对象
         var environment = applicationBuilder.GetHostEnvironment();
-
-        // 获取配置对象
-        var configuration = applicationBuilder.GetConfiguration();
 
         // 创建上下文
         var applicationContext = new ApplicationContext(applicationBuilder)
@@ -85,10 +143,10 @@ public static class ComponentApplicationBuilderExtensions
             components.Add(component);
         }
 
-        // 调用前置配置中间件
+        // 调用前置配置服务
         components.ForEach(component => component.PreConfigure(applicationContext));
 
-        // 调用配置中间件
+        // 调用配置服务
         components.ForEach(component => component.Configure(applicationContext));
 
         return applicationBuilder;

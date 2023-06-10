@@ -24,11 +24,29 @@ public static class ComponentHostApplicationBuilderExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder)
+    /// <param name="configure">自定义构建器配置</param>
+    /// <returns><see cref="HostApplicationBuilder"/></returns>
+    public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
         where TComponent : Component, new()
     {
-        return hostApplicationBuilder.AddComponent(typeof(TComponent));
+        hostApplicationBuilder.Services.AddComponent<TComponent>(hostApplicationBuilder.Configuration, configure);
+
+        return hostApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="HostApplicationBuilder"/></returns>
+    public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
+        where TComponent : Component, new()
+    {
+        hostApplicationBuilder.Services.AddComponent<TComponent>(hostApplicationBuilder.Configuration, componentBuilder);
+
+        return hostApplicationBuilder;
     }
 
     /// <summary>
@@ -36,10 +54,53 @@ public static class ComponentHostApplicationBuilderExtensions
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
-    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Type componentType)
+    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Type componentType, Action<ComponentBuilder>? configure = null)
     {
-        hostApplicationBuilder.Services.AddComponent(componentType, hostApplicationBuilder.Configuration);
+        hostApplicationBuilder.Services.AddComponent(componentType, hostApplicationBuilder.Configuration, configure);
+
+        return hostApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="HostApplicationBuilder"/></returns>
+    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Type componentType, ComponentBuilder componentBuilder)
+    {
+        hostApplicationBuilder.Services.AddComponent(componentType, hostApplicationBuilder.Configuration, componentBuilder);
+
+        return hostApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="configure">自定义构建器配置</param>
+    /// <returns><see cref="HostApplicationBuilder"/></returns>
+    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilder>? configure = null)
+    {
+        hostApplicationBuilder.Services.AddComponent(dependencies, hostApplicationBuilder.Configuration, configure);
+
+        return hostApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="HostApplicationBuilder"/></returns>
+    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, ComponentBuilder componentBuilder)
+    {
+        hostApplicationBuilder.Services.AddComponent(dependencies, hostApplicationBuilder.Configuration, componentBuilder);
 
         return hostApplicationBuilder;
     }

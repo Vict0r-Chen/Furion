@@ -24,11 +24,29 @@ public static class ComponentWebApplicationBuilderExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder)
+    /// <param name="configure">自定义构建器配置</param>
+    /// <returns><see cref="WebApplicationBuilder"/></returns>
+    public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
         where TComponent : Component, new()
     {
-        return webApplicationBuilder.AddComponent(typeof(TComponent));
+        webApplicationBuilder.Services.AddComponent<TComponent>(webApplicationBuilder.Configuration, configure);
+
+        return webApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="WebApplicationBuilder"/></returns>
+    public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
+        where TComponent : Component, new()
+    {
+        webApplicationBuilder.Services.AddComponent<TComponent>(webApplicationBuilder.Configuration, componentBuilder);
+
+        return webApplicationBuilder;
     }
 
     /// <summary>
@@ -36,10 +54,25 @@ public static class ComponentWebApplicationBuilderExtensions
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType)
+    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType, Action<ComponentBuilder>? configure = null)
     {
-        webApplicationBuilder.Services.AddComponent(componentType, webApplicationBuilder.Configuration);
+        webApplicationBuilder.Services.AddComponent(componentType, webApplicationBuilder.Configuration, configure);
+
+        return webApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="WebApplicationBuilder"/></returns>
+    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType, ComponentBuilder componentBuilder)
+    {
+        webApplicationBuilder.Services.AddComponent(componentType, webApplicationBuilder.Configuration, componentBuilder);
 
         return webApplicationBuilder;
     }
@@ -49,10 +82,25 @@ public static class ComponentWebApplicationBuilderExtensions
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies)
+    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilder>? configure = null)
     {
-        webApplicationBuilder.Services.AddComponent(dependencies, webApplicationBuilder.Configuration);
+        webApplicationBuilder.Services.AddComponent(dependencies, webApplicationBuilder.Configuration, configure);
+
+        return webApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="WebApplicationBuilder"/></returns>
+    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies, ComponentBuilder componentBuilder)
+    {
+        webApplicationBuilder.Services.AddComponent(dependencies, webApplicationBuilder.Configuration, componentBuilder);
 
         return webApplicationBuilder;
     }

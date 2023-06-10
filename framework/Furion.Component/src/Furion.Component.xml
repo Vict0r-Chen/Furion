@@ -20,6 +20,29 @@
             依赖组件列表
             </summary>
         </member>
+        <member name="T:Furion.Component.ComponentBuilder">
+            <summary>
+            组件模块构建器
+            </summary>
+        </member>
+        <member name="F:Furion.Component.ComponentBuilder._optionsActions">
+            <summary>
+            组件参数委托字典
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentBuilder.Configure``1(System.Action{``0})">
+            <summary>
+            配置组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <param name="configure">配置委托</param>
+        </member>
+        <member name="M:Furion.Component.ComponentBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            构建模块
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+        </member>
         <member name="T:Furion.Component.ServiceContext">
             <summary>
             服务组件上下文
@@ -111,6 +134,34 @@
             <param name="componentType">组件类型</param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
+        <member name="T:Furion.Component.ComponentOptionsActionsExtensions">
+            <summary>
+            组件参数委托字典拓展
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate``1(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}},System.Action{``0})">
+            <summary>
+            添加或更新
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <param name="dictionary">组件参数委托字典</param>
+            <param name="configure">配置委托</param>
+        </member>
+        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}},System.Type,System.Action{System.Object})">
+            <summary>
+            添加或更新
+            </summary>
+            <param name="optionsType">组件参数类型</param>
+            <param name="optionsActions">组件参数委托字典</param>
+            <param name="configure">配置委托</param>
+        </member>
+        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.GetOptions``1(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}})">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
+        </member>
         <member name="T:Furion.Component.Topological">
             <summary>
             拓扑算法
@@ -161,53 +212,72 @@
         </member>
         <member name="P:Furion.Component.ComponentOptions.OptionsActions">
             <summary>
-            组件参数委托
+            组件参数委托字典
             </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentOptions.AddOrUpdateOptionsAction``1(System.Action{``0})">
-            <summary>
-            添加或更新组件参数委托
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <param name="configure">配置委托</param>
-        </member>
-        <member name="M:Furion.Component.ComponentOptions.GetOptions``1">
-            <summary>
-            获取组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>
             组件化模块拓展
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfiguration,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="dependencies">组件依赖字典</param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configure">自定义构建器配置</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfiguration,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="dependencies">组件依赖字典</param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions">

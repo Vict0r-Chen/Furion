@@ -96,6 +96,7 @@ public class GComponent : Component
 {
     public override void ConfigureServices(ServiceContext context)
     {
+        var options = context.GetOptions<ComponentArgs>();
     }
 }
 

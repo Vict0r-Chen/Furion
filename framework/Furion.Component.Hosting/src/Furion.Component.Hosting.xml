@@ -9,20 +9,58 @@
             组件化模块拓展
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+            <param name="configure">自定义构建器配置</param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type)">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="configure">自定义构建器配置</param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.ComponentBuilder})">
+            <summary>
+            添加组件
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <param name="dependencies">组件依赖字典</param>
+            <param name="configure">自定义构建器配置</param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentBuilder)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <param name="dependencies">组件依赖字典</param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
         </member>
     </members>

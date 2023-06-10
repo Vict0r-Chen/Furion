@@ -252,11 +252,6 @@
             禁用指定类型作为服务注册
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
         <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressAssemblyScanning">
             <summary>
             禁用程序集扫描
@@ -585,7 +580,7 @@
             添加依赖注入服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configure">自定义依赖注入构建器配置</param>
+            <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions.AddDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.DependencyInjectionBuilder)">

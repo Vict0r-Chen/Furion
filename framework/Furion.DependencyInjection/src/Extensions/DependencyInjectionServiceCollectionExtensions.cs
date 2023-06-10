@@ -23,7 +23,7 @@ public static class DependencyInjectionServiceCollectionExtensions
     /// 添加依赖注入服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configure">自定义依赖注入构建器配置</param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = null)
     {

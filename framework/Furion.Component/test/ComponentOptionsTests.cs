@@ -12,23 +12,19 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+namespace Furion.Component.Tests;
 
-/// <summary>
-/// 组件配置选项
-/// </summary>
-public sealed class ComponentOptions
+public class ComponentOptionsTests
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ComponentOptions()
+    [Fact]
+    public void ComponentOptions_ReturnOK()
     {
-        OptionsActions ??= new();
-    }
+        var services = new ServiceCollection();
+        services.AddComponent<AComponent>(new ConfigurationManager());
+        var componentOptions = services.GetComponentOptions();
+        var componentArgs = componentOptions.OptionsActions.GetOptions<ComponentArgs>();
 
-    /// <summary>
-    /// 组件参数委托字典
-    /// </summary>
-    public Dictionary<Type, List<Action<object>>> OptionsActions { get; internal set; }
+        Assert.NotNull(componentArgs);
+        Assert.Equal(nameof(AComponent), componentArgs.Name);
+    }
 }

@@ -37,10 +37,10 @@ public abstract class Component
         where TOptions : class, new()
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure);
-        ArgumentNullException.ThrowIfNull(Options);
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+        ArgumentNullException.ThrowIfNull(Options, nameof(Options));
 
-        Options.AddOrUpdateOptionsAction(configure);
+        Options.OptionsActions.AddOrUpdate(configure);
     }
 
     /// <summary>

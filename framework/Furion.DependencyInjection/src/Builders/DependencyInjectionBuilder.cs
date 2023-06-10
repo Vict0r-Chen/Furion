@@ -42,13 +42,6 @@ public sealed class DependencyInjectionBuilder
     };
 
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    internal DependencyInjectionBuilder()
-    {
-    }
-
-    /// <summary>
     /// 禁用程序集扫描
     /// </summary>
     public bool SuppressAssemblyScanning { get; set; }
