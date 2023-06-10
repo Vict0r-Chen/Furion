@@ -17,27 +17,13 @@ namespace Furion.Component;
 /// <summary>
 /// 组件模块构建器
 /// </summary>
-public sealed class WebComponentBuilder
+public sealed class WebComponentBuilder : ComponentBuilder
 {
-    /// <summary>
-    /// 组件参数委托字典
-    /// </summary>
-    public readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
-
-    /// <summary>
-    /// 配置组件参数
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <param name="configure">配置委托</param>
-    public WebComponentBuilder Configure<TOptions>(Action<TOptions> configure)
+    /// <inheritdoc cref="ComponentBuilder.Configure{TOptions}(Action{TOptions})" />
+    public new WebComponentBuilder Configure<TOptions>(Action<TOptions> configure)
         where TOptions : class, new()
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
-
-        _optionsActions.AddOrUpdate(configure);
-
-        return this;
+        return (base.Configure(configure) as WebComponentBuilder)!;
     }
 
     /// <summary>

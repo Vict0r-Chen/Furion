@@ -9,17 +9,8 @@
             组件模块构建器
             </summary>
         </member>
-        <member name="F:Furion.Component.WebComponentBuilder._optionsActions">
-            <summary>
-            组件参数委托字典
-            </summary>
-        </member>
         <member name="M:Furion.Component.WebComponentBuilder.Configure``1(System.Action{``0})">
-            <summary>
-            配置组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <param name="configure">配置委托</param>
+            <inheritdoc cref="M:Furion.Component.ComponentBuilder.Configure``1(System.Action{``0})" />
         </member>
         <member name="M:Furion.Component.WebComponentBuilder.Build(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>

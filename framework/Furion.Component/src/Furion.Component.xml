@@ -36,6 +36,7 @@
             </summary>
             <typeparam name="TOptions">组件参数类型</typeparam>
             <param name="configure">配置委托</param>
+            <returns><see cref="T:Furion.Component.ComponentBuilder"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>

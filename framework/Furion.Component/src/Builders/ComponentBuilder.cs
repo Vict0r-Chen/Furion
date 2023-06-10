@@ -17,18 +17,19 @@ namespace Furion.Component;
 /// <summary>
 /// 组件模块构建器
 /// </summary>
-public sealed class ComponentBuilder
+public class ComponentBuilder
 {
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    public readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
+    internal readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
 
     /// <summary>
     /// 配置组件参数
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <param name="configure">配置委托</param>
+    /// <returns><see cref="ComponentBuilder"/></returns>
     public ComponentBuilder Configure<TOptions>(Action<TOptions> configure)
         where TOptions : class, new()
     {
