@@ -22,19 +22,39 @@ internal static class ComponentOptionsActionsExtensions
     /// <summary>
     /// 添加或更新
     /// </summary>
+    /// <param name="optionsActions">组件参数委托字典</param>
+    /// <param name="otherOptionsActions">其他组件参数委托字典</param>
+    internal static void AddOrUpdate(this Dictionary<Type, List<Action<object>>> optionsActions, Dictionary<Type, List<Action<object>>> otherOptionsActions)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(otherOptionsActions, nameof(otherOptionsActions));
+
+        // 添加组件配置参数
+        foreach (var (optionsType, actions) in otherOptionsActions)
+        {
+            foreach (var action in actions)
+            {
+                optionsActions.AddOrUpdate(optionsType, action);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 添加或更新
+    /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <param name="dictionary">组件参数委托字典</param>
+    /// <param name="optionsActions">组件参数委托字典</param>
     /// <param name="configure">配置委托</param>
-    internal static void AddOrUpdate<TOptions>(this Dictionary<Type, List<Action<object>>> dictionary, Action<TOptions> configure)
+    internal static void AddOrUpdate<TOptions>(this Dictionary<Type, List<Action<object>>> optionsActions, Action<TOptions> configure)
         where TOptions : class, new()
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure);
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
         // 创建 Action<object> 委托
         void configureObject(object obj) => configure((TOptions)obj);
 
-        dictionary.AddOrUpdate(typeof(TOptions), configureObject);
+        optionsActions.AddOrUpdate(typeof(TOptions), configureObject);
     }
 
     /// <summary>
@@ -46,7 +66,7 @@ internal static class ComponentOptionsActionsExtensions
     internal static void AddOrUpdate(this Dictionary<Type, List<Action<object>>> optionsActions, Type optionsType, Action<object> configure)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure);
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
         // 如果组件参数未配置则插入新的
         if (!optionsActions.ContainsKey(optionsType))

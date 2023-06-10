@@ -33,7 +33,7 @@ public sealed class WebComponentBuilder
         where TOptions : class, new()
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure);
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
         _optionsActions.AddOrUpdate(configure);
 
@@ -49,14 +49,7 @@ public sealed class WebComponentBuilder
         var componentOptions = applicationBuilder.GetComponentOptions();
 
         // 添加组件配置参数
-        foreach (var (optionsType, actions) in _optionsActions)
-        {
-            foreach (var action in actions)
-            {
-                componentOptions.OptionsActions.AddOrUpdate(optionsType, action);
-            }
-        }
-
+        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
         _optionsActions.Clear();
     }
 }

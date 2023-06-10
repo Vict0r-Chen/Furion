@@ -24,13 +24,13 @@ public class ComponentBuilderTests
         {
             builder.Configure<ComponentArgs>(options =>
             {
-                options.Name = "Builder";
+                options.Name = "FromBuilder";
             });
         });
         var componentOptions = services.GetComponentOptions();
         var componentArgs = componentOptions.OptionsActions.GetOptions<ComponentArgs>();
 
         Assert.NotNull(componentArgs);
-        Assert.Equal("Builder", componentArgs.Name);
+        Assert.Equal("FromBuilder", componentArgs.Name);
     }
 }
