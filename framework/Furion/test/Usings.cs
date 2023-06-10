@@ -14,3 +14,4 @@
 
 global using Furion.Component;
 global using Furion.Tests;
+global using Microsoft.AspNetCore.Mvc;
