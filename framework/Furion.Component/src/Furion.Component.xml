@@ -56,6 +56,14 @@
             </summary>
             <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
         </member>
+        <member name="M:Furion.Component.Component.GenerateDependencyMap``1(System.Type)">
+            <summary>
+            生成组件依赖字典
+            </summary>
+            <typeparam name="TBaseComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <param name="componentType">组件类型</param>
+            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
+        </member>
         <member name="M:Furion.Component.Component.GenerateTopologicalMap``1(System.Type)">
             <summary>
             生成组件依赖拓扑图
@@ -69,7 +77,7 @@
             生成组件依赖拓扑图
             </summary>
             <typeparam name="TBaseComponent"><see cref="T:Furion.Component.Component"/></typeparam>
-            <param name="dependencies">组件类型</param>
+            <param name="dependencies">组件依赖字典</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.Component.CheckComponent``1(System.Type)">
@@ -143,6 +151,15 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加组件
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="dependencies">组件依赖字典</param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>

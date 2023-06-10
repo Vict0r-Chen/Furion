@@ -41,6 +41,21 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration)
     {
+        // 生成组件依赖字典
+        var dependencies = Component.GenerateDependencyMap<Component>(componentType);
+
+        return services.AddComponent(dependencies, configuration);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration)
+    {
         // 添加组件配置选项
         services.TryAddSingleton(new ComponentOptions());
 
@@ -55,7 +70,7 @@ public static class ComponentServiceCollectionExtensions
         };
 
         // 生成组件依赖拓扑图
-        var topologicalMap = Component.GenerateTopologicalMap<Component>(componentType);
+        var topologicalMap = Component.GenerateTopologicalMap<Component>(dependencies);
 
         // 依次初始化组件实例
         foreach (var node in topologicalMap)

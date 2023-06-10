@@ -59,6 +59,14 @@
             <param name="componentType"><see cref="T:Furion.Component.WebComponent"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
         </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+            <summary>
+            添加组件
+            </summary>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <param name="dependencies">组件依赖字典</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
+        </member>
         <member name="T:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions">
             <summary>
             组件化模块拓展
@@ -78,6 +86,14 @@
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
             <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+            <summary>
+            添加组件
+            </summary>
+            <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
+            <param name="dependencies">组件依赖字典</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.IApplicationBuilderExtensions">

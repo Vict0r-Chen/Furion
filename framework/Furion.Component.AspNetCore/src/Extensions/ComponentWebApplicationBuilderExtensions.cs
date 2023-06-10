@@ -43,4 +43,17 @@ public static class ComponentWebApplicationBuilderExtensions
 
         return webApplicationBuilder;
     }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <returns><see cref="WebApplicationBuilder"/></returns>
+    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies)
+    {
+        webApplicationBuilder.Services.AddComponent(dependencies, webApplicationBuilder.Configuration);
+
+        return webApplicationBuilder;
+    }
 }

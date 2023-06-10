@@ -39,6 +39,20 @@ public static class ComponentApplicationBuilderExtensions
     /// <returns><see cref="IApplicationBuilder"/></returns>
     public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Type componentType)
     {
+        // 生成组件依赖字典
+        var dependencies = Component.GenerateDependencyMap<WebComponent>(componentType);
+
+        return applicationBuilder.AddComponent(dependencies);
+    }
+
+    /// <summary>
+    /// 添加组件
+    /// </summary>
+    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <returns><see cref="IApplicationBuilder"/></returns>
+    public static IApplicationBuilder AddComponent(this IApplicationBuilder applicationBuilder, Dictionary<Type, Type[]> dependencies)
+    {
         // 获取环境对象
         var environment = applicationBuilder.GetHostEnvironment();
 
@@ -53,7 +67,7 @@ public static class ComponentApplicationBuilderExtensions
         };
 
         // 生成组件依赖拓扑图
-        var topologicalMap = Component.GenerateTopologicalMap<WebComponent>(componentType);
+        var topologicalMap = Component.GenerateTopologicalMap<WebComponent>(dependencies);
 
         // 依次初始化组件实例
         foreach (var node in topologicalMap)

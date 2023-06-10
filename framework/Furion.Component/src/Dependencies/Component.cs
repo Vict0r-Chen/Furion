@@ -33,19 +33,19 @@ public abstract class Component
     { }
 
     /// <summary>
-    /// 生成组件依赖拓扑图
+    /// 生成组件依赖字典
     /// </summary>
     /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
     /// <param name="componentType">组件类型</param>
-    /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
+    /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
+    public static Dictionary<Type, Type[]> GenerateDependencyMap<TBaseComponent>(Type componentType)
         where TBaseComponent : Component
     {
         // 创建空的组件依赖字典
         var dependencies = new Dictionary<Type, Type[]>();
         AddItems(componentType, dependencies);
 
-        return GenerateTopologicalMap<TBaseComponent>(dependencies);
+        return dependencies;
 
         // 添加组件依赖字典子项
         static void AddItems(Type componentType, Dictionary<Type, Type[]> dependencies)
@@ -75,13 +75,34 @@ public abstract class Component
     /// 生成组件依赖拓扑图
     /// </summary>
     /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
-    /// <param name="dependencies">组件类型</param>
+    /// <param name="componentType">组件类型</param>
+    /// <returns><see cref="List{T}"/></returns>
+    public static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
+        where TBaseComponent : Component
+    {
+        var dependencies = GenerateDependencyMap<TBaseComponent>(componentType);
+        return GenerateTopologicalMap<TBaseComponent>(dependencies);
+    }
+
+    /// <summary>
+    /// 生成组件依赖拓扑图
+    /// </summary>
+    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <param name="dependencies">组件依赖字典</param>
     /// <returns><see cref="List{T}"/></returns>
     public static List<Type> GenerateTopologicalMap<TBaseComponent>(Dictionary<Type, Type[]> dependencies)
         where TBaseComponent : Component
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+
+        // 查找字典所有类型进行验证
+        var componentTypes = dependencies.Keys.Concat(dependencies.Values.SelectMany(t => t)).Distinct();
+        foreach (var type in componentTypes)
+        {
+            // 组件类型检查
+            CheckComponent<TBaseComponent>(type);
+        }
 
         // 判断组件是否存在循环依赖
         if (Topological.HasCycle(dependencies))
