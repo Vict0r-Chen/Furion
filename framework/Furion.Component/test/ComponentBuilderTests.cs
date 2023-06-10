@@ -17,7 +17,7 @@ namespace Furion.Component.Tests;
 public class ComponentBuilderTests
 {
     [Fact]
-    public void ComponentOptions_ReturnOK()
+    public void Configure_ReturnOK()
     {
         var services = new ServiceCollection();
         services.AddComponent<GComponent>(new ConfigurationManager(), builder =>

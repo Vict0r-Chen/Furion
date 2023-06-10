@@ -17,7 +17,7 @@ namespace Furion.Component.Tests;
 public class ComponentOptionsTests
 {
     [Fact]
-    public void ComponentOptions_ReturnOK()
+    public void PreConfigureServices_ReturnOK()
     {
         var services = new ServiceCollection();
         services.AddComponent<AComponent>(new ConfigurationManager());

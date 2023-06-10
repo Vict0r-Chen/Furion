@@ -20,14 +20,41 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ComponentWebApplicationBuilderExtensions
 {
     /// <summary>
+    /// 配置入口组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication Entry<TComponent>(this WebApplicationBuilder webApplicationBuilder)
+        where TComponent : WebComponent, new()
+    {
+        return webApplicationBuilder.Entry<TComponent, TComponent>();
+    }
+
+    /// <summary>
+    /// 配置入口组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
+    /// <typeparam name="TWebComponent"><see cref="WebComponent"/></typeparam>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication Entry<TComponent, TWebComponent>(this WebApplicationBuilder webApplicationBuilder)
+        where TComponent : ComponentBase, new()
+        where TWebComponent : WebComponent, new()
+    {
+        return webApplicationBuilder.AddComponent<TComponent>().Build()
+                               .AddComponent<TWebComponent>();
+    }
+
+    /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
-        where TComponent : Component, new()
+        where TComponent : ComponentBase, new()
     {
         webApplicationBuilder.Services.AddComponent<TComponent>(webApplicationBuilder.Configuration, configure);
 
@@ -37,12 +64,12 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
-        where TComponent : Component, new()
+        where TComponent : ComponentBase, new()
     {
         webApplicationBuilder.Services.AddComponent<TComponent>(webApplicationBuilder.Configuration, componentBuilder);
 
@@ -53,7 +80,7 @@ public static class ComponentWebApplicationBuilderExtensions
     /// 添加组件
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType, Action<ComponentBuilder>? configure = null)
@@ -67,7 +94,7 @@ public static class ComponentWebApplicationBuilderExtensions
     /// 添加组件
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType, ComponentBuilder componentBuilder)

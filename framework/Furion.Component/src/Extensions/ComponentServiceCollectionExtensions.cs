@@ -22,13 +22,13 @@ public static class ComponentServiceCollectionExtensions
     /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, Action<ComponentBuilder>? configure = null)
-        where TComponent : Component, new()
+        where TComponent : ComponentBase, new()
     {
         return services.AddComponent(typeof(TComponent), configuration, configure);
     }
@@ -36,13 +36,13 @@ public static class ComponentServiceCollectionExtensions
     /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, ComponentBuilder componentBuilder)
-        where TComponent : Component, new()
+        where TComponent : ComponentBase, new()
     {
         return services.AddComponent(typeof(TComponent), configuration, componentBuilder);
     }
@@ -51,14 +51,14 @@ public static class ComponentServiceCollectionExtensions
     /// 添加组件
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilder>? configure = null)
     {
         // 生成组件依赖字典
-        var dependencies = Component.GenerateDependencyMap<Component>(componentType);
+        var dependencies = ComponentBase.GenerateDependencyMap<ComponentBase>(componentType);
 
         return services.AddComponent(dependencies, configuration, configure);
     }
@@ -67,14 +67,14 @@ public static class ComponentServiceCollectionExtensions
     /// 添加组件
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, ComponentBuilder componentBuilder)
     {
         // 生成组件依赖字典
-        var dependencies = Component.GenerateDependencyMap<Component>(componentType);
+        var dependencies = ComponentBase.GenerateDependencyMap<ComponentBase>(componentType);
 
         return services.AddComponent(dependencies, configuration, componentBuilder);
     }
@@ -121,25 +121,21 @@ public static class ComponentServiceCollectionExtensions
         var environment = services.GetHostEnvironment();
 
         // 创建上下文
-        var serviceContext = new ServiceContext(services)
-        {
-            Configuration = configuration,
-            Environment = environment,
-        };
+        var serviceContext = new ServiceContext(services, configuration);
 
         // 生成组件依赖拓扑图
-        var topologicalMap = Component.GenerateTopologicalMap<Component>(dependencies);
+        var topologicalMap = ComponentBase.GenerateTopologicalMap<ComponentBase>(dependencies);
 
         // 获取组件化配置选项
         var componentOptions = services.GetComponentOptions();
 
         // 组件对象集合
-        var components = new List<Component>();
+        var components = new List<ComponentBase>();
 
         // 依次初始化组件实例
         foreach (var node in topologicalMap)
         {
-            var component = Activator.CreateInstance(node) as Component;
+            var component = Activator.CreateInstance(node) as ComponentBase;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
@@ -153,5 +149,45 @@ public static class ComponentServiceCollectionExtensions
         components.ForEach(component => component.ConfigureServices(serviceContext));
 
         return services;
+    }
+
+    /// <summary>
+    /// 获取环境对象
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IHostEnvironment"/></returns>
+    internal static IHostEnvironment? GetHostEnvironment(this IServiceCollection services)
+    {
+        // 查找 Web 主机环境是否配置
+        var webHostEnvironment = services.FirstOrDefault(s => s.ServiceType.FullName == "Microsoft.AspNetCore.Hosting.IWebHostEnvironment")
+                                                ?.ImplementationInstance as IHostEnvironment;
+
+        // 如果没配置则查找泛型主机环境是否配置
+        var hostEnvironment = webHostEnvironment ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))
+                                               ?.ImplementationInstance as IHostEnvironment;
+
+        return hostEnvironment;
+    }
+
+    /// <summary>
+    /// 获取组件配置选项
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="ComponentOptions"/></returns>
+    internal static ComponentOptions GetComponentOptions(this IServiceCollection services)
+    {
+        // 如果组件配置选项不存在则添加
+        if (!services.Any(s => s.ServiceType == typeof(ComponentOptions)))
+        {
+            services.TryAddSingleton(new ComponentOptions());
+        }
+
+        // 获取组件配置选项
+        var componentOptions = services.First(s => s.ServiceType == typeof(ComponentOptions)).ImplementationInstance as ComponentOptions;
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
+
+        return componentOptions;
     }
 }

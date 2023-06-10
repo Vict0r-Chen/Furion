@@ -23,19 +23,31 @@ public sealed class ServiceContext
     /// 构造函数
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    public ServiceContext(IServiceCollection services)
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    internal ServiceContext(IServiceCollection services, IConfiguration configuration)
     {
         Services = services;
+        Configuration = configuration;
+        Environment = services.GetHostEnvironment();
+    }
+
+    /// <summary>
+    /// 析构实例
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    public void Deconstruct(out IServiceCollection services)
+    {
+        services = Services;
     }
 
     /// <inheritdoc cref="IServiceCollection"/>
-    public IServiceCollection Services { get; init; }
+    public IServiceCollection Services { get; }
 
     /// <inheritdoc cref="IConfiguration"/>
-    public IConfiguration? Configuration { get; init; }
+    public IConfiguration Configuration { get; }
 
     /// <inheritdoc cref="IHostEnvironment"/>
-    public IHostEnvironment? Environment { get; init; }
+    public IHostEnvironment? Environment { get; }
 
     ///// <inheritdoc cref="ILoggingBuilder"/>
     //public ILoggingBuilder? Logging { get; init; }

@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <inheritdoc />
-public abstract class WebComponent : Component
+public abstract class WebComponent : ComponentBase
 {
     /// <summary>
     /// 构造函数

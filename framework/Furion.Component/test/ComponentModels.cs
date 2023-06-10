@@ -19,7 +19,7 @@ namespace Furion.Component.Tests;
 [DependsOn(typeof(BComponent)
     , typeof(CComponent)
     , typeof(FComponent))]
-public class AComponent : Component
+public class AComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceContext context)
     {
@@ -36,7 +36,7 @@ public class AComponent : Component
 
 [DependsOn(typeof(CComponent)
     , typeof(DComponent))]
-public class BComponent : Component
+public class BComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceContext context)
     {
@@ -52,7 +52,7 @@ public class BComponent : Component
 }
 
 [DependsOn(typeof(FComponent))]
-public class CComponent : Component
+public class CComponent : ComponentBase
 {
     public override void ConfigureServices(ServiceContext context)
     {
@@ -61,7 +61,7 @@ public class CComponent : Component
 }
 
 [DependsOn(typeof(FComponent))]
-public class DComponent : Component
+public class DComponent : ComponentBase
 {
     public override void ConfigureServices(ServiceContext context)
     {
@@ -69,14 +69,14 @@ public class DComponent : Component
 }
 
 [DependsOn(typeof(BComponent))]
-public class EComponent : Component
+public class EComponent : ComponentBase
 {
     public override void ConfigureServices(ServiceContext context)
     {
     }
 }
 
-public class FComponent : Component
+public class FComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceContext context)
     {
@@ -92,7 +92,7 @@ public class FComponent : Component
     }
 }
 
-public class GComponent : Component
+public class GComponent : ComponentBase
 {
     public override void ConfigureServices(ServiceContext context)
     {

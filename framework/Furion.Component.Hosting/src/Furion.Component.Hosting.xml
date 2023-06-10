@@ -9,11 +9,19 @@
             组件化模块拓展
             </summary>
         </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+            <summary>
+            配置入口组件
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
+        </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
             </summary>
-            <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
@@ -22,7 +30,7 @@
             <summary>
             添加组件
             </summary>
-            <typeparam name="TComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
@@ -32,7 +40,7 @@
             添加组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
         </member>
@@ -41,7 +49,7 @@
             添加组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.Component"/></param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
         </member>

@@ -22,20 +22,31 @@ public sealed class ApplicationContext
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="application"><see cref="IApplicationBuilder"/></param>
-    public ApplicationContext(IApplicationBuilder application)
+    /// <param name="application"><see cref="WebApplication"/></param>
+    internal ApplicationContext(WebApplication application)
     {
         Application = application;
+        Configuration = application.Configuration;
+        Environment = application.Environment;
     }
 
-    /// <inheritdoc cref="IApplicationBuilder"/>
-    public IApplicationBuilder Application { get; init; }
+    /// <summary>
+    /// 析构实例
+    /// </summary>
+    /// <param name="app"><see cref="WebApplication"/></param>
+    public void Deconstruct(out WebApplication app)
+    {
+        app = Application;
+    }
+
+    /// <inheritdoc cref="WebApplication"/>
+    public WebApplication Application { get; }
 
     /// <inheritdoc cref="IConfiguration"/>
-    public IConfiguration? Configuration { get; init; }
+    public IConfiguration Configuration { get; }
 
     /// <inheritdoc cref="IWebHostEnvironment"/>
-    public IWebHostEnvironment? Environment { get; init; }
+    public IWebHostEnvironment Environment { get; }
 
     /// <summary>
     /// 获取组件参数

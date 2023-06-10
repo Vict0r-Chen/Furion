@@ -12,30 +12,31 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+namespace Furion.Tests;
 
-/// <summary>
-/// 组件模块构建器
-/// </summary>
-public sealed class WebComponentBuilder : ComponentBuilder
+public class EntryComponent : WebComponent
 {
-    /// <inheritdoc cref="ComponentBuilder.Configure{TOptions}(Action{TOptions})" />
-    public new WebComponentBuilder Configure<TOptions>(Action<TOptions> configure)
-        where TOptions : class, new()
+    public override void ConfigureServices(ServiceContext context)
     {
-        return (base.Configure(configure) as WebComponentBuilder)!;
+        context.Services.AddControllers();
+        context.Services.AddEndpointsApiExplorer();
+        context.Services.AddSwaggerGen();
     }
 
-    /// <summary>
-    /// 构建模块
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    internal void Build(WebApplication webApplication)
+    public override void Configure(ApplicationContext context)
     {
-        var componentOptions = webApplication.GetComponentOptions();
+        var app = context.Application;
 
-        // 添加组件配置参数
-        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
-        _optionsActions.Clear();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
     }
 }

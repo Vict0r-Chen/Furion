@@ -17,12 +17,12 @@ namespace Furion.Component;
 /// <summary>
 /// 组件化依赖抽象基类
 /// </summary>
-public abstract class Component
+public abstract class ComponentBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    protected Component()
+    protected ComponentBase()
     { }
 
     /// <inheritdoc cref="ComponentOptions"/>
@@ -60,11 +60,11 @@ public abstract class Component
     /// <summary>
     /// 生成组件依赖字典
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
     public static Dictionary<Type, Type[]> GenerateDependencyMap<TBaseComponent>(Type componentType)
-        where TBaseComponent : Component
+        where TBaseComponent : ComponentBase
     {
         // 创建空的组件依赖字典
         var dependencies = new Dictionary<Type, Type[]>();
@@ -99,11 +99,11 @@ public abstract class Component
     /// <summary>
     /// 生成组件依赖拓扑图
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="List{T}"/></returns>
     public static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
-        where TBaseComponent : Component
+        where TBaseComponent : ComponentBase
     {
         var dependencies = GenerateDependencyMap<TBaseComponent>(componentType);
         return GenerateTopologicalMap<TBaseComponent>(dependencies);
@@ -112,11 +112,11 @@ public abstract class Component
     /// <summary>
     /// 生成组件依赖拓扑图
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="dependencies">组件依赖字典</param>
     /// <returns><see cref="List{T}"/></returns>
     public static List<Type> GenerateTopologicalMap<TBaseComponent>(Dictionary<Type, Type[]> dependencies)
-        where TBaseComponent : Component
+        where TBaseComponent : ComponentBase
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
@@ -142,16 +142,16 @@ public abstract class Component
     /// <summary>
     /// 检查组件类型
     /// </summary>
-    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TBaseComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <exception cref="InvalidOperationException"></exception>
     public static void CheckComponent<TBaseComponent>(Type componentType)
-        where TBaseComponent : Component
+        where TBaseComponent : ComponentBase
     {
         // 限制 TBaseComponent 只能是 Component 或者 WebComponent"
-        if (!(typeof(TBaseComponent) == typeof(Component) || typeof(TBaseComponent).FullName == "Furion.Component.WebComponent"))
+        if (!(typeof(TBaseComponent) == typeof(ComponentBase) || typeof(TBaseComponent).FullName == "Furion.Component.WebComponent"))
         {
-            throw new InvalidOperationException("Generic type can only be Component or WebComponent type.");
+            throw new InvalidOperationException("Generic type can only be ComponentBase or WebComponent type.");
         }
 
         if (!typeof(TBaseComponent).IsAssignableFrom(componentType))

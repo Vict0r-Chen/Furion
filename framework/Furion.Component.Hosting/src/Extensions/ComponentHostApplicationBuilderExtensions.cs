@@ -20,14 +20,26 @@ namespace Microsoft.Extensions.Hosting;
 public static class ComponentHostApplicationBuilderExtensions
 {
     /// <summary>
+    /// 配置入口组件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
+    /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <returns><see cref="IHost"/></returns>
+    public static IHost Entry<TComponent>(this HostApplicationBuilder hostApplicationBuilder)
+        where TComponent : ComponentBase, new()
+    {
+        return hostApplicationBuilder.AddComponent<TComponent>().Build();
+    }
+
+    /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
-        where TComponent : Component, new()
+        where TComponent : ComponentBase, new()
     {
         hostApplicationBuilder.Services.AddComponent<TComponent>(hostApplicationBuilder.Configuration, configure);
 
@@ -37,12 +49,12 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <summary>
     /// 添加组件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="Component"/></typeparam>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
-        where TComponent : Component, new()
+        where TComponent : ComponentBase, new()
     {
         hostApplicationBuilder.Services.AddComponent<TComponent>(hostApplicationBuilder.Configuration, componentBuilder);
 
@@ -53,7 +65,7 @@ public static class ComponentHostApplicationBuilderExtensions
     /// 添加组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Type componentType, Action<ComponentBuilder>? configure = null)
@@ -67,7 +79,7 @@ public static class ComponentHostApplicationBuilderExtensions
     /// 添加组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="Component"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Type componentType, ComponentBuilder componentBuilder)
