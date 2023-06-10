@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<Description>Furion 框架组件注册模块。</Description>
-		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Module;Component</PackageTags>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Module;Component;AspNetCore</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230609.35" />
+		<PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230610.47" />
 	</ItemGroup>
 
 </Project>

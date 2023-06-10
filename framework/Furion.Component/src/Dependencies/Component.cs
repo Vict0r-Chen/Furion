@@ -38,21 +38,14 @@ public abstract class Component
     /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
+    public static List<Type> GenerateTopologicalMap<TBaseComponent>(Type componentType)
         where TBaseComponent : Component
     {
         // 创建空的组件依赖字典
         var dependencies = new Dictionary<Type, Type[]>();
         AddItems(componentType, dependencies);
 
-        // 判断组件是否存在循环依赖
-        if (Topological.HasCycle(dependencies))
-        {
-            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
-        }
-
-        // 返回依赖拓扑图
-        return Topological.Sort(dependencies);
+        return GenerateTopologicalMap<TBaseComponent>(dependencies);
 
         // 添加组件依赖字典子项
         static void AddItems(Type componentType, Dictionary<Type, Type[]> dependencies)
@@ -79,14 +72,42 @@ public abstract class Component
     }
 
     /// <summary>
+    /// 生成组件依赖拓扑图
+    /// </summary>
+    /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
+    /// <param name="dependencies">组件类型</param>
+    /// <returns><see cref="List{T}"/></returns>
+    public static List<Type> GenerateTopologicalMap<TBaseComponent>(Dictionary<Type, Type[]> dependencies)
+        where TBaseComponent : Component
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+
+        // 判断组件是否存在循环依赖
+        if (Topological.HasCycle(dependencies))
+        {
+            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
+        }
+
+        // 返回依赖拓扑图
+        return Topological.Sort(dependencies);
+    }
+
+    /// <summary>
     /// 检查组件类型
     /// </summary>
     /// <typeparam name="TBaseComponent"><see cref="Component"/></typeparam>
     /// <param name="componentType">组件类型</param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static void CheckComponent<TBaseComponent>(Type componentType)
+    public static void CheckComponent<TBaseComponent>(Type componentType)
         where TBaseComponent : Component
     {
+        // 限制 TBaseComponent 只能是 Component 或者 WebComponent"
+        if (!(typeof(TBaseComponent) == typeof(Component) || typeof(TBaseComponent).FullName == "Furion.Component.WebComponent"))
+        {
+            throw new InvalidOperationException("Generic type can only be Component or WebComponent type.");
+        }
+
         if (!typeof(TBaseComponent).IsAssignableFrom(componentType))
         {
             throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{typeof(TBaseComponent).Name}'.");

@@ -36,4 +36,23 @@ public static class IServiceCollectionExtensions
 
         return hostEnvironment;
     }
+
+    /// <summary>
+    /// 获取组件配置选项
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="ComponentOptions"/></returns>
+    public static ComponentOptions GetComponentOptions(this IServiceCollection services)
+    {
+        // 如果组件配置选项不存在则添加
+        if (!services.Any(s => s.ServiceType == typeof(ComponentOptions)))
+        {
+            services.TryAddSingleton(new ComponentOptions());
+        }
+
+        // 获取组件配置选项
+        var componentOptions = services.First(s => s.ServiceType == typeof(ComponentOptions)).ImplementationInstance as ComponentOptions;
+
+        return componentOptions!;
+    }
 }

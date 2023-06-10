@@ -41,6 +41,9 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration)
     {
+        // 添加组件配置选项
+        services.TryAddSingleton(new ComponentOptions());
+
         // 获取环境对象
         var environment = services.GetHostEnvironment();
 

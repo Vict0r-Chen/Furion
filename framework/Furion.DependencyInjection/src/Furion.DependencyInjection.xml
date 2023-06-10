@@ -215,9 +215,7 @@
             <inheritdoc cref="T:System.INamedService`1"/>
         </member>
         <member name="F:System.NamedService`1._serviceProvider">
-            <summary>
-            服务提供器
-            </summary>
+            <inheritdoc cref="T:System.IServiceProvider"/>
         </member>
         <member name="M:System.NamedService`1.#ctor(System.IServiceProvider)">
             <summary>

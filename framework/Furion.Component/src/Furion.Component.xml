@@ -32,19 +32,13 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
         <member name="P:Furion.Component.ServiceContext.Services">
-            <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
-            </summary>
+            <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
         </member>
         <member name="P:Furion.Component.ServiceContext.Configuration">
-            <summary>
-            <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
-            </summary>
+            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
         </member>
         <member name="P:Furion.Component.ServiceContext.Environment">
-            <summary>
-            <see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
-            </summary>
+            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
         </member>
         <member name="T:Furion.Component.Component">
             <summary>
@@ -68,6 +62,14 @@
             </summary>
             <typeparam name="TBaseComponent"><see cref="T:Furion.Component.Component"/></typeparam>
             <param name="componentType">组件类型</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.Component.GenerateTopologicalMap``1(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+            <summary>
+            生成组件依赖拓扑图
+            </summary>
+            <typeparam name="TBaseComponent"><see cref="T:Furion.Component.Component"/></typeparam>
+            <param name="dependencies">组件类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.Component.CheckComponent``1(System.Type)">
@@ -116,6 +118,11 @@
             <param name="currentPath">单曲遍历路径上的节点</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="T:Furion.Component.ComponentOptions">
+            <summary>
+            组件配置选项
+            </summary>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>
             组件化模块拓展
@@ -150,6 +157,13 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.GetComponentOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            获取组件配置选项
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
         </member>
     </members>
 </doc>

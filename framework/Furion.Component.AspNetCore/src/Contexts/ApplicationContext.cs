@@ -28,18 +28,12 @@ public sealed class ApplicationContext
         Application = application;
     }
 
-    /// <summary>
-    /// <see cref="IApplicationBuilder"/>
-    /// </summary>
+    /// <inheritdoc cref="IApplicationBuilder"/>
     public IApplicationBuilder Application { get; init; }
 
-    /// <summary>
-    /// <see cref="IConfiguration"/>
-    /// </summary>
+    /// <inheritdoc cref="IConfiguration"/>
     public IConfiguration? Configuration { get; init; }
 
-    /// <summary>
-    /// <see cref="IWebHostEnvironment"/>
-    /// </summary>
+    /// <inheritdoc cref="IWebHostEnvironment"/>
     public IWebHostEnvironment? Environment { get; init; }
 }

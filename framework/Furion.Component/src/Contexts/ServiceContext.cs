@@ -28,23 +28,15 @@ public sealed class ServiceContext
         Services = services;
     }
 
-    /// <summary>
-    /// <see cref="IServiceCollection"/>
-    /// </summary>
+    /// <inheritdoc cref="IServiceCollection"/>
     public IServiceCollection Services { get; init; }
 
-    /// <summary>
-    /// <see cref="IConfiguration"/>
-    /// </summary>
+    /// <inheritdoc cref="IConfiguration"/>
     public IConfiguration? Configuration { get; init; }
 
-    /// <summary>
-    /// <see cref="IHostEnvironment"/>
-    /// </summary>
+    /// <inheritdoc cref="IHostEnvironment"/>
     public IHostEnvironment? Environment { get; init; }
 
-    ///// <summary>
-    ///// <see cref="ILoggingBuilder"/>
-    ///// </summary>
+    ///// <inheritdoc cref="ILoggingBuilder"/>
     //public ILoggingBuilder? Logging { get; init; }
 }

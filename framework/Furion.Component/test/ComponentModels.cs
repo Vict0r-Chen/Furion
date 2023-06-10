@@ -63,3 +63,21 @@ public class FComponent : Component
     {
     }
 }
+
+public class GComponent : Component
+{
+    public override void ConfigureServices(ServiceContext context)
+    {
+    }
+}
+
+public class AWebComponent : WebComponent
+{
+    public override void Configure(ApplicationContext context)
+    {
+    }
+}
+
+public class NotComponent
+{
+}

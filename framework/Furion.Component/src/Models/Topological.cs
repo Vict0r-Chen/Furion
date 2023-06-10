@@ -49,7 +49,7 @@ internal static class Topological
     /// <param name="dependencies">依赖节点集合</param>
     /// <param name="visited">已访问过的节点</param>
     /// <param name="sortedNodes">已排序的节点</param>
-    internal static void VisitNode(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, List<Type> sortedNodes)
+    private static void VisitNode(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, List<Type> sortedNodes)
     {
         // 如果当前节点已经被访问过，则直接返回
         if (visited.Contains(node))
@@ -107,7 +107,7 @@ internal static class Topological
     /// <param name="visited">已访问过的节点</param>
     /// <param name="currentPath">单曲遍历路径上的节点</param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool HasCycleHelper(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, HashSet<Type> currentPath)
+    private static bool HasCycleHelper(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, HashSet<Type> currentPath)
     {
         // 将当前节点标记为已访问，并将其加入到遍历路径中
         visited.Add(node);
@@ -122,6 +122,9 @@ internal static class Topological
                 if (currentPath.Contains(neighbor)
                     || (!visited.Contains(neighbor) && HasCycleHelper(neighbor, dependencies, visited, currentPath)))
                 {
+                    // 打印循环依赖类型
+                    Debug.WriteLine(node);
+
                     return true;
                 }
             }

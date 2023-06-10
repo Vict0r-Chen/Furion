@@ -18,9 +18,7 @@ namespace System;
 internal sealed class NamedService<TService> : INamedService<TService>
     where TService : class
 {
-    /// <summary>
-    /// 服务提供器
-    /// </summary>
+    /// <inheritdoc cref="IServiceProvider"/>
     private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
