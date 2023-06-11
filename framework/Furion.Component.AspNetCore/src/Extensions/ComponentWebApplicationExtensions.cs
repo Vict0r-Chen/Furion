@@ -114,13 +114,13 @@ public static class ComponentWebApplicationExtensions
         // 组件对象集合
         var components = new List<WebComponent>();
 
-        // 生成组件依赖拓扑图
-        var topologicalMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
+        // 生成组件依赖拓扑排序图
+        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
         // 依次初始化组件实例
-        foreach (var node in topologicalMap)
+        foreach (var componentType in topologicalSortedMap)
         {
-            if (Activator.CreateInstance(node) is not WebComponent component)
+            if (Activator.CreateInstance(componentType) is not WebComponent component)
             {
                 continue;
             }

@@ -123,13 +123,13 @@ public static class ComponentServiceCollectionExtensions
         // 组件对象集合
         var components = new List<ComponentBase>();
 
-        // 生成组件依赖拓扑图
-        var topologicalMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
+        // 生成组件依赖拓扑排序图
+        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
         // 依次初始化组件实例
-        foreach (var node in topologicalMap)
+        foreach (var componentType in topologicalSortedMap)
         {
-            var component = Activator.CreateInstance(node) as ComponentBase;
+            var component = Activator.CreateInstance(componentType) as ComponentBase;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
