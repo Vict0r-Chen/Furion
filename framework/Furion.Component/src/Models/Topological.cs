@@ -123,7 +123,7 @@ internal static class Topological
                     || (!visited.Contains(neighbor) && HasCycleHelper(neighbor, dependencies, visited, currentPath)))
                 {
                     // 打印循环依赖类型
-                    Debugging.WriteLine("The type '{0}' has circular dependencies.", node.Name);
+                    Debugging.Error("The type '{0}' has circular dependencies.", node.Name);
 
                     return true;
                 }

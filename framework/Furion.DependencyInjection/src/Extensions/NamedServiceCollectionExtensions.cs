@@ -52,7 +52,7 @@ public static class NamedServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
 
         // 输出调试事件
-        Debugging.WriteLine("Type '{0}' is being registered as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
+        Debugging.Trace("Type '{0}' is being registered as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
 
         services.Add(serviceDescriptorDelegator);
 
@@ -80,7 +80,7 @@ public static class NamedServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
 
         // 输出调试事件
-        Debugging.WriteLine("Type '{0}' is trying to register as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
+        Debugging.Trace("Type '{0}' is trying to register as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
 
         services.TryAdd(serviceDescriptorDelegator);
 

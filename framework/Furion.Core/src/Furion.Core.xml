@@ -9,15 +9,69 @@
             调试工具
             </summary>
         </member>
-        <member name="M:System.Debugging.WriteLine(System.String)">
+        <member name="M:System.Debugging.WriteLine(System.Int32,System.String)">
             <summary>
             输出一行消息
             </summary>
+            <param name="level">调试级别：1/跟踪；2/信息；3/警告；4/错误</param>
             <param name="message">消息</param>
         </member>
-        <member name="M:System.Debugging.WriteLine(System.String,System.Object[])">
+        <member name="M:System.Debugging.WriteLine(System.Int32,System.String,System.Object[])">
             <summary>
             输出一行消息
+            </summary>
+            <param name="level">调试级别：1/信息；2/警告；3/错误</param>
+            <param name="message">消息</param>
+            <param name="args">格式化参数</param>
+        </member>
+        <member name="M:System.Debugging.Trace(System.String)">
+            <summary>
+            输出跟踪消息
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:System.Debugging.Trace(System.String,System.Object[])">
+            <summary>
+            输出跟踪消息
+            </summary>
+            <param name="message">消息</param>
+            <param name="args">格式化参数</param>
+        </member>
+        <member name="M:System.Debugging.Info(System.String)">
+            <summary>
+            输出信息消息
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:System.Debugging.Info(System.String,System.Object[])">
+            <summary>
+            输出信息消息
+            </summary>
+            <param name="message">消息</param>
+            <param name="args">格式化参数</param>
+        </member>
+        <member name="M:System.Debugging.Warn(System.String)">
+            <summary>
+            输出警告消息
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:System.Debugging.Warn(System.String,System.Object[])">
+            <summary>
+            输出警告消息
+            </summary>
+            <param name="message">消息</param>
+            <param name="args">格式化参数</param>
+        </member>
+        <member name="M:System.Debugging.Error(System.String)">
+            <summary>
+            输出错误消息
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:System.Debugging.Error(System.String,System.Object[])">
+            <summary>
+            输出错误消息
             </summary>
             <param name="message">消息</param>
             <param name="args">格式化参数</param>

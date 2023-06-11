@@ -202,20 +202,20 @@ public abstract class ComponentBase
         // 组件不能是抽象类型或基组件类型
         if (componentType.IsAbstract || componentType == componentBaseType || componentType.FullName == WEBCOMPONENT_TYPE_FULLNAME)
         {
-            throw new InvalidOperationException("The component cannot be an abstract type or a ComponentBase or WebComponent type.");
+            throw new InvalidOperationException($"Type '{componentType.Name}' cannot be an abstract type or a ComponentBase or WebComponent type.");
         }
 
         // 判断组件是否相互继承（禁止继承）
         var baseType = componentType.BaseType;
         if (!(baseType is null || baseType == typeof(object) || baseType == componentBaseType || baseType.FullName == WEBCOMPONENT_TYPE_FULLNAME))
         {
-            throw new InvalidOperationException("Components are not allowed to inherit from each other.");
+            throw new InvalidOperationException($"'{componentType.Name}' component type cannot inherit from other component types.");
         }
 
         // 组件至少包含一个公开无参构造函数
         if (componentType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is null)
         {
-            throw new InvalidOperationException("A component must have at least one public parameterless constructor.");
+            throw new InvalidOperationException($"Component '{componentType.Name}' does not contain a public parameterless constructor.");
         }
     }
 

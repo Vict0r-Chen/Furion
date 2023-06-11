@@ -115,7 +115,7 @@ public sealed class DependencyInjectionBuilder
                                                                                    .ToList();
 
         // 输出调试事件
-        Debugging.WriteLine("Dependency injection module is under construction.");
+        Debugging.Trace("Dependency injection module is under construction.");
 
         // 将服务描述器添加到 IServiceCollection 中
         foreach (var serviceDescriptorModel in sortedOfServiceDescriptors)

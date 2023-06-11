@@ -67,7 +67,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
         }
 
         // 输出调试事件
-        Debugging.WriteLine("Creating {0} interface proxy class.", interfaceType.Name);
+        Debugging.Trace("Creating {0} interface proxy class.", interfaceType.Name);
 
         // 创建代理类对象
         var proxyObject = Create(interfaceType, proxyType) as DispatchProxyDecorator;

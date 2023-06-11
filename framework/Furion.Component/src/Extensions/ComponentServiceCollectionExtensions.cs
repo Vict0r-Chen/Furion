@@ -143,7 +143,7 @@ public static class ComponentServiceCollectionExtensions
         components.ForEach(component =>
         {
             // 输出调试事件
-            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(ComponentBase.PreConfigureServices), component.GetType().Name);
+            Debugging.Trace("Calling method '{0}' of component '{1}'.", nameof(ComponentBase.PreConfigureServices), component.GetType().Name);
 
             component.PreConfigureServices(componentContext);
         });
@@ -152,7 +152,7 @@ public static class ComponentServiceCollectionExtensions
         components.ForEach(component =>
         {
             // 输出调试事件
-            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(ComponentBase.ConfigureServices), component.GetType().Name);
+            Debugging.Trace("Calling method '{0}' of component '{1}'.", nameof(ComponentBase.ConfigureServices), component.GetType().Name);
 
             component.ConfigureServices(componentContext);
         });

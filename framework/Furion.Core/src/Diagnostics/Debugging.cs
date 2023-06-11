@@ -22,25 +22,112 @@ internal static class Debugging
     /// <summary>
     /// 输出一行消息
     /// </summary>
+    /// <param name="level">调试级别：1/跟踪；2/信息；3/警告；4/错误</param>
     /// <param name="message">消息</param>
-    internal static void WriteLine(string message)
+    internal static void WriteLine(int level, string message)
     {
+        var emoji = level switch
+        {
+            1 => "🛠️",
+            2 => "ℹ️",
+            3 => "⚠️",
+            4 => "❌",
+            _ => "🛠️"
+        };
+
         // 只有调试状态下输出
         if (!Debugger.IsAttached)
         {
             return;
         }
 
-        Debug.WriteLine(message, category: "🛠️");
+        Debug.WriteLine(message, category: emoji);
     }
 
     /// <summary>
     /// 输出一行消息
     /// </summary>
+    /// <param name="level">调试级别：1/信息；2/警告；3/错误</param>
     /// <param name="message">消息</param>
     /// <param name="args">格式化参数</param>
-    internal static void WriteLine(string message, params object?[] args)
+    internal static void WriteLine(int level, string message, params object?[] args)
     {
-        WriteLine(string.Format(message, args));
+        WriteLine(level, string.Format(message, args));
+    }
+
+    /// <summary>
+    /// 输出跟踪消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    internal static void Trace(string message)
+    {
+        WriteLine(1, message);
+    }
+
+    /// <summary>
+    /// 输出跟踪消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Trace(string message, params object?[] args)
+    {
+        Trace(string.Format(message, args));
+    }
+
+    /// <summary>
+    /// 输出信息消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    internal static void Info(string message)
+    {
+        WriteLine(2, message);
+    }
+
+    /// <summary>
+    /// 输出信息消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Info(string message, params object?[] args)
+    {
+        Info(string.Format(message, args));
+    }
+
+    /// <summary>
+    /// 输出警告消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    internal static void Warn(string message)
+    {
+        WriteLine(3, message);
+    }
+
+    /// <summary>
+    /// 输出警告消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Warn(string message, params object?[] args)
+    {
+        Warn(string.Format(message, args));
+    }
+
+    /// <summary>
+    /// 输出错误消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    internal static void Error(string message)
+    {
+        WriteLine(4, message);
+    }
+
+    /// <summary>
+    /// 输出错误消息
+    /// </summary>
+    /// <param name="message">消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Error(string message, params object?[] args)
+    {
+        Error(string.Format(message, args));
     }
 }

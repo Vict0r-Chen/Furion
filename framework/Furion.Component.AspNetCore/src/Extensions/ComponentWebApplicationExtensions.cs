@@ -136,7 +136,7 @@ public static class ComponentWebApplicationExtensions
         components.ForEach(component =>
         {
             // 输出调试事件
-            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(WebComponent.PreConfigure), component.GetType().Name);
+            Debugging.Trace("Calling method '{0}' of component '{1}'.", nameof(WebComponent.PreConfigure), component.GetType().Name);
 
             component.PreConfigure(componentContext);
         });
@@ -145,7 +145,7 @@ public static class ComponentWebApplicationExtensions
         components.ForEach(component =>
         {
             // 输出调试事件
-            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(WebComponent.Configure), component.GetType().Name);
+            Debugging.Trace("Calling method '{0}' of component '{1}'.", nameof(WebComponent.Configure), component.GetType().Name);
 
             component.Configure(componentContext);
         });

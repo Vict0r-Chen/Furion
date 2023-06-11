@@ -95,12 +95,12 @@ public class ComponentBaseTests
 
     [Theory]
     [InlineData(typeof(NotComponent), "Type 'NotComponent' is not assignable from 'ComponentBase'.")]
-    [InlineData(typeof(ComponentBase), "The component cannot be an abstract type or a ComponentBase or WebComponent type.")]
-    [InlineData(typeof(WebComponent), "The component cannot be an abstract type or a ComponentBase or WebComponent type.")]
-    [InlineData(typeof(AbstractComponent), "The component cannot be an abstract type or a ComponentBase or WebComponent type.")]
-    [InlineData(typeof(InheritComponent), "Components are not allowed to inherit from each other.")]
-    [InlineData(typeof(OneConstructorComponent), "A component must have at least one public parameterless constructor.")]
-    [InlineData(typeof(OneInternalConstructorComponent), "A component must have at least one public parameterless constructor.")]
+    [InlineData(typeof(ComponentBase), "Type 'ComponentBase' cannot be an abstract type or a ComponentBase or WebComponent type.")]
+    [InlineData(typeof(WebComponent), "Type 'WebComponent' cannot be an abstract type or a ComponentBase or WebComponent type.")]
+    [InlineData(typeof(AbstractComponent), "Type 'AbstractComponent' cannot be an abstract type or a ComponentBase or WebComponent type.")]
+    [InlineData(typeof(InheritComponent), "'InheritComponent' component type cannot inherit from other component types.")]
+    [InlineData(typeof(OneConstructorComponent), "Component 'OneConstructorComponent' does not contain a public parameterless constructor.")]
+    [InlineData(typeof(OneInternalConstructorComponent), "Component 'OneInternalConstructorComponent' does not contain a public parameterless constructor.")]
     public void CheckComponentDependencies_EveryComponent_ReturnOops(Type componentType, string message)
     {
         var dependencies = new Dictionary<Type, Type[]>
