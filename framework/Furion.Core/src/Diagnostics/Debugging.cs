@@ -23,7 +23,6 @@ internal static class Debugging
     /// 输出一行消息
     /// </summary>
     /// <param name="message">消息</param>
-    [Conditional("Furion")]
     internal static void WriteLine(string message)
     {
         // 只有调试状态下输出
@@ -32,7 +31,7 @@ internal static class Debugging
             return;
         }
 
-        Debug.WriteLine(message);
+        Debug.WriteLine(message, category: "🐞");
     }
 
     /// <summary>
