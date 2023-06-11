@@ -31,7 +31,7 @@ internal static class Debugging
             return;
         }
 
-        Debug.WriteLine(message, category: "🐞");
+        Debug.WriteLine(message, category: "🛠️");
     }
 
     /// <summary>
