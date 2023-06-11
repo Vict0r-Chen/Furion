@@ -12,8 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using System.Diagnostics;
-
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -131,17 +129,26 @@ public static class ComponentWebApplicationExtensions
             components.Add(component);
         }
 
-        // 打印组件依赖链
-        Debug.WriteLine(string.Join(" ← ", components.Select(c => c.GetType().Name)));
+        // 创建组件上下文
+        var componentContext = new ApplicationContext(webApplication);
 
-        // 创建上下文
-        var applicationContext = new ApplicationContext(webApplication);
+        // 调用前置配置中间件
+        components.ForEach(component =>
+        {
+            // 输出调试事件
+            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(WebComponent.PreConfigure), component.GetType().Name);
 
-        // 调用前置配置服务
-        components.ForEach(component => component.PreConfigure(applicationContext));
+            component.PreConfigure(componentContext);
+        });
 
-        // 调用配置服务
-        components.ForEach(component => component.Configure(applicationContext));
+        // 调用配置中间件
+        components.ForEach(component =>
+        {
+            // 输出调试事件
+            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(WebComponent.Configure), component.GetType().Name);
+
+            component.Configure(componentContext);
+        });
 
         return webApplication;
     }

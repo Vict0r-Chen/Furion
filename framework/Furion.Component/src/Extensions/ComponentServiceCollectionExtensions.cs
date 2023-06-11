@@ -136,17 +136,26 @@ public static class ComponentServiceCollectionExtensions
             components.Add(component);
         }
 
-        // 打印组件依赖链
-        Debug.WriteLine(string.Join(" ← ", components.Select(c => c.GetType().Name)));
-
-        // 创建上下文
-        var serviceContext = new ServiceContext(services, configuration);
+        // 创建组件上下文
+        var componentContext = new ServiceContext(services, configuration);
 
         // 调用前置配置服务
-        components.ForEach(component => component.PreConfigureServices(serviceContext));
+        components.ForEach(component =>
+        {
+            // 输出调试事件
+            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(ComponentBase.PreConfigureServices), component.GetType().Name);
+
+            component.PreConfigureServices(componentContext);
+        });
 
         // 调用配置服务
-        components.ForEach(component => component.ConfigureServices(serviceContext));
+        components.ForEach(component =>
+        {
+            // 输出调试事件
+            Debugging.WriteLine("Calling method '{0}' of component '{1}'.", nameof(ComponentBase.ConfigureServices), component.GetType().Name);
+
+            component.ConfigureServices(componentContext);
+        });
 
         return services;
     }

@@ -237,11 +237,6 @@
             依赖注入模块构建器
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._diagnosticSource">
-            <summary>
-            诊断日志对象
-            </summary>
-        </member>
         <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._assemblies">
             <summary>
             已扫描的程序集
@@ -422,34 +417,6 @@
             服务生存期
             </summary>
             <remarks>派生接口需提供显式实现</remarks>
-        </member>
-        <member name="T:Furion.DependencyInjection.DependencyInjectionEventSource">
-            <summary>
-            依赖注入模块日志事件
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.DependencyInjectionEventSource.Log">
-            <summary>
-            日志对象
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.AddNamed(System.String)">
-            <summary>
-            <see cref="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)"/> 事件
-            </summary>
-            <param name="message">负载数据</param>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.TryAddNamed(System.String)">
-            <summary>
-            <see cref="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)"/> 事件
-            </summary>
-            <param name="message">负载数据</param>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionEventSource.BuildStarted(System.String)">
-            <summary>
-            <see cref="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> 事件
-            </summary>
-            <param name="message">负载数据</param>
         </member>
         <member name="T:Furion.DependencyInjection.Invocation">
             <summary>

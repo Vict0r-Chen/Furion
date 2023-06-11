@@ -20,11 +20,6 @@ namespace Furion.DependencyInjection;
 public sealed class DependencyInjectionBuilder
 {
     /// <summary>
-    /// 诊断日志对象
-    /// </summary>
-    private static readonly DiagnosticSource _diagnosticSource = new DiagnosticListener("Furion.DependencyInjection");
-
-    /// <summary>
     /// 已扫描的程序集
     /// </summary>
     private readonly HashSet<Assembly> _assemblies = new();
@@ -119,13 +114,8 @@ public sealed class DependencyInjectionBuilder
                                                                                    .ThenBy(s => s.Order)
                                                                                    .ToList();
 
-        // 日志事件记录
-        DependencyInjectionEventSource.Log.BuildStarted();
-        _diagnosticSource.WriteIsEnabled("BuildStarted", new
-        {
-            ServiceDescriptors = sortedOfServiceDescriptors,
-            Assemblies = _assemblies
-        });
+        // 输出调试事件
+        Debugging.WriteLine("Dependency injection module is under construction.");
 
         // 将服务描述器添加到 IServiceCollection 中
         foreach (var serviceDescriptorModel in sortedOfServiceDescriptors)

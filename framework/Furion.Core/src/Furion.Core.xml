@@ -4,6 +4,24 @@
         <name>Furion.Core</name>
     </assembly>
     <members>
+        <member name="T:System.Debugging">
+            <summary>
+            调试工具
+            </summary>
+        </member>
+        <member name="M:System.Debugging.WriteLine(System.String)">
+            <summary>
+            输出一行消息
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:System.Debugging.WriteLine(System.String,System.Object[])">
+            <summary>
+            输出一行消息
+            </summary>
+            <param name="message">消息</param>
+            <param name="args">格式化参数</param>
+        </member>
         <member name="T:System.Diagnostics.DiagnosticSourceExtensions">
             <summary>
             <see cref="T:System.Diagnostics.DiagnosticSource"/> 类型拓展

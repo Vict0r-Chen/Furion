@@ -115,7 +115,7 @@ internal static class TypeExtensions
         var parentType = type.BaseType;
 
         // 递归查找所有的父类
-        while (parentType != null && parentType != typeof(object))
+        while (parentType is not null && parentType != typeof(object))
         {
             // 插入起始位置
             parentTypes.Insert(0, parentType);

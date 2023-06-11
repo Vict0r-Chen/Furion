@@ -51,8 +51,8 @@ public static class NamedServiceCollectionExtensions
         var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
 
-        // 日志事件记录
-        DependencyInjectionEventSource.Log.AddNamed($"{serviceDescriptorDelegator}");
+        // 输出调试事件
+        Debugging.WriteLine("Type '{0}' is being registered as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
 
         services.Add(serviceDescriptorDelegator);
 
@@ -79,8 +79,8 @@ public static class NamedServiceCollectionExtensions
         var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
         ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
 
-        // 日志事件记录
-        DependencyInjectionEventSource.Log.TryAddNamed($"{serviceDescriptorDelegator}");
+        // 输出调试事件
+        Debugging.WriteLine("Type '{0}' is trying to register as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
 
         services.TryAdd(serviceDescriptorDelegator);
 
