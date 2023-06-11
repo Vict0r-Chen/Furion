@@ -136,7 +136,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
     /// <param name="targetMethod">接口方法</param>
     /// <param name="args">方法传递参数</param>
     /// <returns><see cref="object"/></returns>
-    protected override object? Invoke(MethodInfo? targetMethod, object?[]? args)
+    protected sealed override object? Invoke(MethodInfo? targetMethod, object?[]? args)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(targetMethod, nameof(targetMethod));
