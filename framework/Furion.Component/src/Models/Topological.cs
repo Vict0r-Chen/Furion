@@ -43,6 +43,32 @@ internal static class Topological
     }
 
     /// <summary>
+    /// 检查依赖关系是否存在循环依赖
+    /// </summary>
+    /// <param name="dependencies">依赖节点集合</param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool HasCycle(Dictionary<Type, Type[]> dependencies)
+    {
+        // 创建一个 Set 来存储已访问过的节点
+        var visited = new HashSet<Type>();
+
+        // 创建一个 Set 来存储当前遍历路径上的节点
+        var currentPath = new HashSet<Type>();
+
+        // 对每个未访问的节点进行深度优先搜索，检查是否存在循环依赖
+        foreach (var node in dependencies.Keys)
+        {
+            if (HasCycleHelper(node, dependencies, visited, currentPath))
+            {
+                return true;
+            }
+        }
+
+        // 如果不存在循环依赖，则返回false
+        return false;
+    }
+
+    /// <summary>
     /// 节点访问
     /// </summary>
     /// <param name="node">当前节点</param>
@@ -71,32 +97,6 @@ internal static class Topological
 
         // 将当前节点插入到排序列表的尾部
         sortedNodes.Add(node);
-    }
-
-    /// <summary>
-    /// 检查依赖关系是否存在循环依赖
-    /// </summary>
-    /// <param name="dependencies">依赖节点集合</param>
-    /// <returns><see cref="bool"/></returns>
-    internal static bool HasCycle(Dictionary<Type, Type[]> dependencies)
-    {
-        // 创建一个 Set 来存储已访问过的节点
-        var visited = new HashSet<Type>();
-
-        // 创建一个 Set 来存储当前遍历路径上的节点
-        var currentPath = new HashSet<Type>();
-
-        // 对每个未访问的节点进行深度优先搜索，检查是否存在循环依赖
-        foreach (var node in dependencies.Keys)
-        {
-            if (HasCycleHelper(node, dependencies, visited, currentPath))
-            {
-                return true;
-            }
-        }
-
-        // 如果不存在循环依赖，则返回false
-        return false;
     }
 
     /// <summary>

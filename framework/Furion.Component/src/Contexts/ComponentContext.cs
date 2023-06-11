@@ -32,5 +32,5 @@ public abstract class ComponentContext
     public IConfiguration Configuration { get; }
 
     /// <inheritdoc cref="IHostEnvironment"/>
-    public IHostEnvironment? Environment { get; protected set; }
+    public IHostEnvironment? Environment { get; internal set; }
 }

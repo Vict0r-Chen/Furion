@@ -22,7 +22,7 @@ public class ComponentBuilder
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    protected readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
+    internal readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
 
     /// <summary>
     /// 配置组件参数
