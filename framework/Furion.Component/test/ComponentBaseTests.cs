@@ -158,4 +158,17 @@ public class ComponentBaseTests
 
         Assert.Equal("Type 'NotComponent' is not assignable from 'ComponentBase'.", exception.Message);
     }
+
+    [Fact]
+    public void GenerateTopologicalSortedMap_ReturnOK()
+    {
+        var sortedList = ComponentBase.GenerateTopologicalSortedMap(typeof(AComponent));
+        Assert.Equal(4, sortedList.Count);
+
+        // C D B A
+        Assert.Equal(typeof(CComponent), sortedList.ElementAt(0));
+        Assert.Equal(typeof(DComponent), sortedList.ElementAt(1));
+        Assert.Equal(typeof(BComponent), sortedList.ElementAt(2));
+        Assert.Equal(typeof(AComponent), sortedList.ElementAt(3));
+    }
 }
