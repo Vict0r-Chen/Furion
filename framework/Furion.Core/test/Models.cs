@@ -14,6 +14,8 @@
 
 namespace Furion.Core.Tests;
 
+#pragma warning disable
+
 internal static class StaticClass
 {
 }
@@ -56,8 +58,6 @@ public class InheritAttributeClass : BaseAttributeClass
 {
 }
 
-#pragma warning disable CA1822
-
 public class WithMethodClass
 {
     public static void GetStatic()
@@ -84,4 +84,40 @@ public class Base3 : Base2
 
 public class Self : Base3
 {
+}
+
+public class DefaultConstructorClass
+{
+}
+
+public class ParameterlessConstructorClass
+{
+    public ParameterlessConstructorClass()
+    {
+    }
+}
+
+public class InternalParameterlessConstructorClass
+{
+    internal InternalParameterlessConstructorClass()
+    {
+    }
+}
+
+public class OneConstructorClass
+{
+    public OneConstructorClass(string name)
+    {
+    }
+}
+
+public class ManyConstructoresClass
+{
+    public ManyConstructoresClass()
+    {
+    }
+
+    public ManyConstructoresClass(string name)
+    {
+    }
 }

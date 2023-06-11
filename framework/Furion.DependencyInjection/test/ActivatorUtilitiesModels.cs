@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection.Tests;
 
-#pragma warning disable IDE0052
+#pragma warning disable
 
 public interface IActivatorClass
 {

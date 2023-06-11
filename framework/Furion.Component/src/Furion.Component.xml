@@ -195,14 +195,14 @@
         </member>
         <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}},System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}})">
             <summary>
-            添加或更新
+            添加或更新组件参数
             </summary>
             <param name="optionsActions">组件参数委托字典</param>
             <param name="otherOptionsActions">其他组件参数委托字典</param>
         </member>
         <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate``1(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}},System.Action{``0})">
             <summary>
-            添加或更新
+            添加或更新组件参数
             </summary>
             <typeparam name="TOptions">组件参数类型</typeparam>
             <param name="optionsActions">组件参数委托字典</param>
@@ -210,7 +210,7 @@
         </member>
         <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Action{System.Object}}},System.Type,System.Action{System.Object})">
             <summary>
-            添加或更新
+            添加或更新组件参数
             </summary>
             <param name="optionsType">组件参数类型</param>
             <param name="optionsActions">组件参数委托字典</param>

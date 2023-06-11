@@ -33,7 +33,7 @@ internal static class TypeExtensions
     /// 判断类型是否是匿名类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
-    /// <returns><see langword="true"/> 标识为匿名类型；<see langword="false"/> 标识为非匿名类型</returns>
+    /// <returns><see cref="bool"/></returns>
     internal static bool IsAnonymousType(this Type type)
     {
         // 首先需要判断类型是否定义了 CompilerGeneratedAttribute 特性，因为匿名类型是通过编译器生成的，并且都会加上这个特性
@@ -53,7 +53,7 @@ internal static class TypeExtensions
     /// 判断类型是否可实例化
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
-    /// <returns><see langword="true"/> 标识可实例化；<see langword="false"/> 标识不可实例化</returns>
+    /// <returns><see cref="bool"/></returns>
     internal static bool IsInstantiatedType(this Type type)
     {
         return !type.IsAbstract && !type.IsStatic() && type.IsClass;
@@ -64,7 +64,7 @@ internal static class TypeExtensions
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="derivedType">派生类型</param>
-    /// <returns><see langword="true"/> 标识可实例化且派生特定类型；<see langword="false"/> 标识不能实例化或不派生特定类型</returns>
+    /// <returns><see cref="bool"/></returns>
     internal static bool IsInstantiatedTypeWithAssignableFrom(this Type type, Type derivedType)
     {
         // 空检查
@@ -126,5 +126,15 @@ internal static class TypeExtensions
         parentTypes.Add(type);
 
         return parentTypes;
+    }
+
+    /// <summary>
+    /// 是否定义公开无参构造函数
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsDefinedParameterlessConstructor(this Type type)
+    {
+        return type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is not null;
     }
 }

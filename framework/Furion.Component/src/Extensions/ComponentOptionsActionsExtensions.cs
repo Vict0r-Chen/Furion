@@ -20,7 +20,7 @@ namespace Furion.Component;
 internal static class ComponentOptionsActionsExtensions
 {
     /// <summary>
-    /// 添加或更新
+    /// 添加或更新组件参数
     /// </summary>
     /// <param name="optionsActions">组件参数委托字典</param>
     /// <param name="otherOptionsActions">其他组件参数委托字典</param>
@@ -40,7 +40,7 @@ internal static class ComponentOptionsActionsExtensions
     }
 
     /// <summary>
-    /// 添加或更新
+    /// 添加或更新组件参数
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <param name="optionsActions">组件参数委托字典</param>
@@ -51,14 +51,21 @@ internal static class ComponentOptionsActionsExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
+        // 组件参数类型至少包含一个公开无参构造函数
+        var optionsType = typeof(TOptions);
+        if (!optionsType.IsDefinedParameterlessConstructor())
+        {
+            throw new InvalidOperationException($"Component '{optionsType.Name}' does not contain a public parameterless constructor.");
+        }
+
         // 创建 Action<object> 委托
         void configureObject(object obj) => configure((TOptions)obj);
 
-        optionsActions.AddOrUpdate(typeof(TOptions), configureObject);
+        optionsActions.AddOrUpdate(optionsType, configureObject);
     }
 
     /// <summary>
-    /// 添加或更新
+    /// 添加或更新组件参数
     /// </summary>
     /// <param name="optionsType">组件参数类型</param>
     /// <param name="optionsActions">组件参数委托字典</param>

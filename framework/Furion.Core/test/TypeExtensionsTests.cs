@@ -115,4 +115,16 @@ public class TypeExtensionsTests
         Assert.Equal(typeof(Base3), types[2]);
         Assert.Equal(typeof(Self), types[3]);
     }
+
+    [Theory]
+    [InlineData(typeof(DefaultConstructorClass), true)]
+    [InlineData(typeof(ParameterlessConstructorClass), true)]
+    [InlineData(typeof(InternalParameterlessConstructorClass), false)]
+    [InlineData(typeof(OneConstructorClass), false)]
+    [InlineData(typeof(ManyConstructoresClass), true)]
+    public void IsDefinedParameterlessConstructor_ReturnOK(Type type, bool result)
+    {
+        var res = type.IsDefinedParameterlessConstructor();
+        Assert.Equal(result, res);
+    }
 }

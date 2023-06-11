@@ -213,7 +213,7 @@ public abstract class ComponentBase
         }
 
         // 组件至少包含一个公开无参构造函数
-        if (componentType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is null)
+        if (!componentType.IsDefinedParameterlessConstructor())
         {
             throw new InvalidOperationException($"Component '{componentType.Name}' does not contain a public parameterless constructor.");
         }
