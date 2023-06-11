@@ -14,17 +14,38 @@
 
 namespace Furion.Component.Tests;
 
-public class ComponentOptionsTests
+public class AWebComponent : WebComponent
 {
-    [Fact]
-    public void PreConfigureServices_ReturnOK()
-    {
-        var services = new ServiceCollection();
-        services.AddComponent<AComponent>(new ConfigurationManager());
-        var componentOptions = services.GetComponentOptions();
-        var componentArgs = componentOptions.OptionsActions.GetOptions<ComponentArgs>();
+}
 
-        Assert.NotNull(componentArgs);
-        Assert.Equal(nameof(AComponent), componentArgs.Name);
-    }
+public class BWebComponent : WebComponent
+{
+}
+
+public class CWebComponent : WebComponent
+{
+}
+
+public class DWebComponent : WebComponent
+{
+}
+
+public class EWebComponent : WebComponent
+{
+}
+
+public class FWebComponent : WebComponent
+{
+}
+
+public class GWebComponent : WebComponent
+{
+}
+
+public class InheritWebComponent : AWebComponent
+{
+}
+
+public class NotWebComponent
+{
 }

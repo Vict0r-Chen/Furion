@@ -14,23 +14,38 @@
 
 namespace Furion.Component.Tests;
 
-public class ComponentBuilderTests
+public class AComponent : ComponentBase
 {
-    [Fact]
-    public void Configure_ReturnOK()
-    {
-        var services = new ServiceCollection();
-        services.AddComponent<GComponent>(new ConfigurationManager(), builder =>
-        {
-            builder.Configure<ComponentArgs>(options =>
-            {
-                options.Name = "FromBuilder";
-            });
-        });
-        var componentOptions = services.GetComponentOptions();
-        var componentArgs = componentOptions.OptionsActions.GetOptions<ComponentArgs>();
+}
 
-        Assert.NotNull(componentArgs);
-        Assert.Equal("FromBuilder", componentArgs.Name);
-    }
+public class BComponent : ComponentBase
+{
+}
+
+public class CComponent : ComponentBase
+{
+}
+
+public class DComponent : ComponentBase
+{
+}
+
+public class EComponent : ComponentBase
+{
+}
+
+public class FComponent : ComponentBase
+{
+}
+
+public class GComponent : ComponentBase
+{
+}
+
+public class InheritComponent : AComponent
+{
+}
+
+public class NotComponent
+{
 }

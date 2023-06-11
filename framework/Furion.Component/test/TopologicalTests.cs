@@ -17,106 +17,67 @@ namespace Furion.Component.Tests;
 public class TopologicalTests
 {
     [Fact]
-    public void GenerateTopologicalMap_ReturnOK()
-    {
-        var topologicalMap = ComponentBase.GenerateTopologicalMap(typeof(AComponent));
-        Assert.NotNull(topologicalMap);
-
-        var firstComponent = topologicalMap.First();
-        Assert.Equal(typeof(FComponent), firstComponent);
-    }
-
-    [Fact]
-    public void GenerateTopologicalMap_ReturnOops()
-    {
-        var exception = Assert.Throws<InvalidOperationException>(() =>
-        {
-            var topologicalMap = ComponentBase.GenerateTopologicalMap(typeof(NotComponent));
-        });
-
-        Assert.Equal("Type 'NotComponent' is not assignable from 'ComponentBase'.", exception.Message);
-    }
-
-    [Fact]
-    public void Topological_Sort_EmptyDependences_ReturnOK()
+    public void Sort_ReturnOK()
     {
         var dependencies = new Dictionary<Type, Type[]>
         {
-            {typeof(AComponent), Array.Empty<Type>() },
-            {typeof(BComponent), Array.Empty<Type>() },
-            {typeof(CComponent), Array.Empty<Type>() },
-            {typeof(DComponent), Array.Empty<Type>() },
-            {typeof(EComponent), Array.Empty<Type>() },
-            {typeof(FComponent), Array.Empty<Type>() },
-            {typeof(GComponent), Array.Empty<Type>() },
+            { typeof(AComponent), new[]{ typeof(BComponent),typeof(CComponent)} },
+            { typeof(BComponent), new[]{ typeof(CComponent),typeof(DComponent)} },
+            { typeof(FComponent), new[]{ typeof(CComponent),typeof(EComponent)} },
+            { typeof(GComponent), Array.Empty<Type>() }
         };
 
-        // A B C D E F G
-        var sortedNodes = ComponentBase.GenerateTopologicalMap(dependencies);
-        Assert.Equal(dependencies.Keys.ElementAt(0), sortedNodes[0]);
-        Assert.Equal(dependencies.Keys.ElementAt(1), sortedNodes[1]);
-        Assert.Equal(dependencies.Keys.ElementAt(2), sortedNodes[2]);
-        Assert.Equal(dependencies.Keys.ElementAt(3), sortedNodes[3]);
-        Assert.Equal(dependencies.Keys.ElementAt(4), sortedNodes[4]);
-        Assert.Equal(dependencies.Keys.ElementAt(5), sortedNodes[5]);
-        Assert.Equal(dependencies.Keys.ElementAt(6), sortedNodes[6]);
+        var sortedTypes = Topological.Sort(dependencies);
+        // C D B A E F G
+        Assert.Equal(typeof(CComponent), sortedTypes[0]);
+        Assert.Equal(typeof(DComponent), sortedTypes[1]);
+        Assert.Equal(typeof(BComponent), sortedTypes[2]);
+        Assert.Equal(typeof(AComponent), sortedTypes[3]);
+        Assert.Equal(typeof(EComponent), sortedTypes[4]);
+        Assert.Equal(typeof(FComponent), sortedTypes[5]);
+        Assert.Equal(typeof(GComponent), sortedTypes[6]);
     }
 
     [Fact]
-    public void Topological_Sort_ReturnOK()
+    public void Sort_Circular_ReturnOK()
     {
         var dependencies = new Dictionary<Type, Type[]>
         {
-            {typeof(AComponent),new[]{ typeof(BComponent), typeof(CComponent) } },
-            {typeof(CComponent),new[]{ typeof(FComponent), typeof(DComponent), typeof(EComponent) } },
-            {typeof(BComponent),new[]{ typeof(CComponent), typeof(EComponent) } },
-            {typeof(GComponent), Array.Empty<Type>() }
+            { typeof(AComponent), new[]{ typeof(BComponent),typeof(CComponent)} },
+            { typeof(BComponent), new[]{ typeof(AComponent),typeof(DComponent)} },
+            { typeof(DComponent), new[]{ typeof(AComponent) } }
         };
 
-        // F D E C B A G
-        var sortedNodes = ComponentBase.GenerateTopologicalMap(dependencies);
-        Assert.Equal(typeof(FComponent), sortedNodes[0]);
-        Assert.Equal(typeof(DComponent), sortedNodes[1]);
-        Assert.Equal(typeof(EComponent), sortedNodes[2]);
-        Assert.Equal(typeof(CComponent), sortedNodes[3]);
-        Assert.Equal(typeof(BComponent), sortedNodes[4]);
-        Assert.Equal(typeof(AComponent), sortedNodes[5]);
-        Assert.Equal(typeof(GComponent), sortedNodes[6]);
+        var sortedTypes = Topological.Sort(dependencies);
+        Assert.Equal(4, sortedTypes.Count);
     }
 
     [Fact]
-    public void Topological_HasCycle_ReturnOops()
+    public void HasNotCycle_ReturnOK()
     {
         var dependencies = new Dictionary<Type, Type[]>
         {
-            {typeof(AComponent),new[]{ typeof(BComponent), typeof(CComponent) } },
-            {typeof(CComponent),new[]{ typeof(FComponent), typeof(DComponent), typeof(EComponent), typeof(AComponent) } },
-            {typeof(BComponent),new[]{ typeof(CComponent), typeof(EComponent) } },
-            {typeof(GComponent), Array.Empty<Type>() }
+            { typeof(AComponent), new[]{ typeof(BComponent),typeof(CComponent)} },
+            { typeof(BComponent), new[]{ typeof(CComponent),typeof(DComponent)} },
+            { typeof(FComponent), new[]{ typeof(CComponent),typeof(EComponent)} },
+            { typeof(GComponent), Array.Empty<Type>() }
         };
 
-        var exception = Assert.Throws<InvalidOperationException>(() =>
-        {
-            var sortedNodes = ComponentBase.GenerateTopologicalMap(dependencies);
-        });
-
-        Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
+        var result = Topological.HasCycle(dependencies);
+        Assert.False(result);
     }
 
     [Fact]
-    public void CheckComponent_Inherited_ReturnOK()
+    public void HasCycle_ReturnOK()
     {
-        ComponentBase.CheckComponent(typeof(AComponent));
-    }
-
-    [Fact]
-    public void CheckComponent_Inherited_ReturnOops()
-    {
-        var exception = Assert.Throws<InvalidOperationException>(() =>
+        var dependencies = new Dictionary<Type, Type[]>
         {
-            ComponentBase.CheckComponent(typeof(InheritedComponent));
-        });
+            { typeof(AComponent), new[]{ typeof(BComponent),typeof(CComponent)} },
+            { typeof(BComponent), new[]{ typeof(AComponent),typeof(DComponent)} },
+            { typeof(DComponent), new[]{ typeof(AComponent) } }
+        };
 
-        Assert.Equal("Components are not allowed to inherit from each other.", exception.Message);
+        var result = Topological.HasCycle(dependencies);
+        Assert.True(result);
     }
 }
