@@ -23,7 +23,10 @@ public sealed class WebComponentBuilder : ComponentBuilder
     public new WebComponentBuilder Configure<TOptions>(Action<TOptions> configure)
         where TOptions : class, new()
     {
-        return (base.Configure(configure) as WebComponentBuilder)!;
+        var builder = base.Configure(configure) as WebComponentBuilder;
+        ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+
+        return builder;
     }
 
     /// <summary>

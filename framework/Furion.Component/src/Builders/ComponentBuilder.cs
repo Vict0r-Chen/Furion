@@ -48,6 +48,7 @@ public class ComponentBuilder
     internal void Build(IServiceCollection services)
     {
         var componentOptions = services.GetComponentOptions();
+        ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
 
         // 添加组件配置参数
         componentOptions.OptionsActions.AddOrUpdate(_optionsActions);

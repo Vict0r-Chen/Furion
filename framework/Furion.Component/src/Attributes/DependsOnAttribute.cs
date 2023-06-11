@@ -23,7 +23,7 @@ public sealed class DependsOnAttribute : Attribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="dependencies"></param>
+    /// <param name="dependencies">依赖组件列表</param>
     public DependsOnAttribute(params Type[] dependencies)
     {
         // 空检查
