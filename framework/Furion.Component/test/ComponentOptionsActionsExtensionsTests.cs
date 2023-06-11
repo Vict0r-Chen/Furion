@@ -67,6 +67,22 @@ public class ComponentOptionsActionsExtensionsTests
     }
 
     [Fact]
+    public void AddOrUpdate_Null_ReturnOK()
+    {
+        var optionsActions = new Dictionary<Type, List<Action<object>>>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            optionsActions.AddOrUpdate(null!); ;
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            optionsActions.AddOrUpdate(configure: (Action<object>)null!);
+        });
+    }
+
+    [Fact]
     public void GetOptions_ReturnOK()
     {
         var optionsActions = new Dictionary<Type, List<Action<object>>>();
