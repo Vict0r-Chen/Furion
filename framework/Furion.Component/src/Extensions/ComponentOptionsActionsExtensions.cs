@@ -66,6 +66,7 @@ internal static class ComponentOptionsActionsExtensions
     internal static void AddOrUpdate(this Dictionary<Type, List<Action<object>>> optionsActions, Type optionsType, Action<object> configure)
     {
         // 空检查
+        ArgumentNullException.ThrowIfNull(optionsType, nameof(optionsType));
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
         // 如果组件参数未配置则插入新的
@@ -87,23 +88,24 @@ internal static class ComponentOptionsActionsExtensions
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
-    internal static TOptions? GetOptions<TOptions>(this Dictionary<Type, List<Action<object>>> dictionary)
+    internal static TOptions? GetOptions<TOptions>(this Dictionary<Type, List<Action<object>>> optionsActions)
         where TOptions : class, new()
     {
-        // 组件参数 Key
-        var typeOptionsKey = typeof(TOptions);
+        // 组件参数类型
+        var optionsType = typeof(TOptions);
 
         // 如果未找到组件类型参数则返回空
-        if (!dictionary.ContainsKey(typeOptionsKey))
+        if (!optionsActions.ContainsKey(optionsType))
         {
             return null;
         }
 
-        var actions = dictionary[typeOptionsKey];
+        // 取出委托集合
+        var actions = optionsActions[optionsType];
         var currentValue = Activator.CreateInstance<TOptions>();
 
-        // 遍历委托并调用
-        foreach (Action<object> action in actions)
+        // 遍历集合并调用
+        foreach (var action in actions)
         {
             action(currentValue);
         }
