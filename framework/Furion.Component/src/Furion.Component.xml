@@ -128,26 +128,53 @@
             </summary>
             <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.GenerateTopologicalMap(System.Type)">
+        <member name="M:Furion.Component.ComponentBase.GenerateTopologicalSortedMap``1">
             <summary>
-            生成组件依赖拓扑图
+            生成组件依赖拓扑排序图
+            </summary>
+            <typeparam name="TComponent">组件类型</typeparam>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.GenerateTopologicalSortedMap(System.Type)">
+            <summary>
+            生成组件依赖拓扑排序图
             </summary>
             <param name="componentType">组件类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.GenerateDependencyMap(System.Type)">
+        <member name="M:Furion.Component.ComponentBase.GenerateTopologicalSortedMap(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+            <summary>
+            生成组件依赖拓扑排序图
+            </summary>
+            <param name="dependencies">组件依赖字典</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.GenerateComponentDependencies``1">
+            <summary>
+            生成组件依赖字典
+            </summary>
+            <typeparam name="TComponent">组件类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.GenerateComponentDependencies(System.Type)">
             <summary>
             生成组件依赖字典
             </summary>
             <param name="componentType">组件类型</param>
             <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.GenerateTopologicalMap(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="M:Furion.Component.ComponentBase.CheckComponentDependencies(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
-            生成组件依赖拓扑图
+            检查组件依赖字典
             </summary>
             <param name="dependencies">组件依赖字典</param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.CheckComponent``1">
+            <summary>
+            检查组件类型
+            </summary>
+            <typeparam name="TComponent">组件类型</typeparam>
         </member>
         <member name="M:Furion.Component.ComponentBase.CheckComponent(System.Type)">
             <summary>
@@ -155,6 +182,11 @@
             </summary>
             <param name="componentType">组件类型</param>
             <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="F:Furion.Component.ComponentBase.WEBCOMPONENT_FULLNAME">
+            <summary>
+            WebComponent 类型全名
+            </summary>
         </member>
         <member name="T:Furion.Component.ComponentOptionsActionsExtensions">
             <summary>

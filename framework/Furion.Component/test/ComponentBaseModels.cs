@@ -14,10 +14,20 @@
 
 namespace Furion.Component.Tests;
 
+#pragma warning disable IDE0060
+
+[DependsOn(
+    typeof(BComponent)
+    , typeof(CComponent)
+    )]
 public class AComponent : ComponentBase
 {
 }
 
+[DependsOn(
+    typeof(CComponent)
+    , typeof(DComponent)
+    )]
 public class BComponent : ComponentBase
 {
 }
@@ -34,6 +44,10 @@ public class EComponent : ComponentBase
 {
 }
 
+[DependsOn(
+    typeof(CComponent)
+    , typeof(EComponent)
+    )]
 public class FComponent : ComponentBase
 {
 }
@@ -48,4 +62,52 @@ public class InheritComponent : AComponent
 
 public class NotComponent
 {
+}
+
+public abstract class AbstractComponent : ComponentBase
+{
+}
+
+[DependsOn(typeof(NotComponent), typeof(AComponent))]
+public class DependencyNotComponent : ComponentBase
+{
+}
+
+public class OneEmptyConstructorComponent : ComponentBase
+{
+    public OneEmptyConstructorComponent()
+    {
+    }
+}
+
+public class OneInternalConstructorComponent : ComponentBase
+{
+    internal OneInternalConstructorComponent()
+    {
+    }
+}
+
+public class OneConstructorComponent : ComponentBase
+{
+    public OneConstructorComponent(string name)
+    {
+    }
+}
+
+public class ManyConstructorComponent : ComponentBase
+{
+    public ManyConstructorComponent()
+    {
+    }
+
+    public ManyConstructorComponent(string name)
+    {
+    }
+}
+
+public class InnerCommponentClass
+{
+    public class InnerCommponent : ComponentBase
+    {
+    }
 }

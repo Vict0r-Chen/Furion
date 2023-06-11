@@ -58,14 +58,53 @@ public abstract class ComponentBase
     { }
 
     /// <summary>
-    /// 生成组件依赖拓扑图
+    /// 生成组件依赖拓扑排序图
+    /// </summary>
+    /// <typeparam name="TComponent">组件类型</typeparam>
+    /// <returns><see cref="List{T}"/></returns>
+    public static List<Type> GenerateTopologicalSortedMap<TComponent>()
+        where TComponent : ComponentBase, new()
+    {
+        return GenerateTopologicalSortedMap(typeof(TComponent));
+    }
+
+    /// <summary>
+    /// 生成组件依赖拓扑排序图
     /// </summary>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> GenerateTopologicalMap(Type componentType)
+    public static List<Type> GenerateTopologicalSortedMap(Type componentType)
     {
-        var dependencies = GenerateDependencyMap(componentType);
-        return GenerateTopologicalMap(dependencies);
+        var dependencies = GenerateComponentDependencies(componentType);
+        return GenerateTopologicalSortedMap(dependencies);
+    }
+
+    /// <summary>
+    /// 生成组件依赖拓扑排序图
+    /// </summary>
+    /// <param name="dependencies">组件依赖字典</param>
+    /// <returns><see cref="List{T}"/></returns>
+    public static List<Type> GenerateTopologicalSortedMap(Dictionary<Type, Type[]> dependencies)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+
+        // 检查组件依赖字典
+        CheckComponentDependencies(dependencies);
+
+        // 返回依赖拓扑图
+        return Topological.Sort(dependencies);
+    }
+
+    /// <summary>
+    /// 生成组件依赖字典
+    /// </summary>
+    /// <typeparam name="TComponent">组件类型</typeparam>
+    /// <returns></returns>
+    public static Dictionary<Type, Type[]> GenerateComponentDependencies<TComponent>()
+        where TComponent : ComponentBase, new()
+    {
+        return GenerateComponentDependencies(typeof(TComponent));
     }
 
     /// <summary>
@@ -73,8 +112,11 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="componentType">组件类型</param>
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
-    public static Dictionary<Type, Type[]> GenerateDependencyMap(Type componentType)
+    public static Dictionary<Type, Type[]> GenerateComponentDependencies(Type componentType)
     {
+        // 组件类型检查
+        CheckComponent(componentType);
+
         // 创建空的组件依赖字典
         var dependencies = new Dictionary<Type, Type[]>();
 
@@ -90,9 +132,6 @@ public abstract class ComponentBase
             // 移除已访问的组件类型
             toVisit.RemoveAt(0);
 
-            // 组件类型检查
-            CheckComponent(currentType);
-
             // 已访问过检查
             if (dependencies.ContainsKey(currentType))
             {
@@ -107,19 +146,19 @@ public abstract class ComponentBase
             toVisit.AddRange(dependsOn);
         }
 
+        // 检查组件依赖字典
+        CheckComponentDependencies(dependencies);
+
         return dependencies;
     }
 
     /// <summary>
-    /// 生成组件依赖拓扑图
+    /// 检查组件依赖字典
     /// </summary>
     /// <param name="dependencies">组件依赖字典</param>
-    /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> GenerateTopologicalMap(Dictionary<Type, Type[]> dependencies)
+    /// <exception cref="InvalidOperationException"></exception>
+    public static void CheckComponentDependencies(Dictionary<Type, Type[]> dependencies)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
-
         // 查找字典所有类型进行验证
         var componentTypes = dependencies.Keys.Concat(dependencies.Values.SelectMany(t => t)).Distinct();
         foreach (var type in componentTypes)
@@ -133,9 +172,16 @@ public abstract class ComponentBase
         {
             throw new InvalidOperationException("The dependency relationship has a circular dependency.");
         }
+    }
 
-        // 返回依赖拓扑图
-        return Topological.Sort(dependencies);
+    /// <summary>
+    /// 检查组件类型
+    /// </summary>
+    /// <typeparam name="TComponent">组件类型</typeparam>
+    public static void CheckComponent<TComponent>()
+        where TComponent : ComponentBase, new()
+    {
+        CheckComponent(typeof(TComponent));
     }
 
     /// <summary>
@@ -153,11 +199,28 @@ public abstract class ComponentBase
             throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{componentBaseType.Name}'.");
         }
 
+        // 组件不能是抽象类型或基组件类型
+        if (componentType.IsAbstract || componentType == componentBaseType || componentType.FullName == WEBCOMPONENT_FULLNAME)
+        {
+            throw new InvalidOperationException("The component cannot be an abstract type or a ComponentBase or WebComponent type.");
+        }
+
         // 判断组件是否相互继承（禁止继承）
-        var baseType = componentType.BaseType!;
-        if (!(baseType == componentBaseType || baseType.FullName == $"{baseType.Namespace}.WebComponent"))
+        var baseType = componentType.BaseType;
+        if (!(baseType is null || baseType == typeof(object) || baseType == componentBaseType || baseType.FullName == WEBCOMPONENT_FULLNAME))
         {
             throw new InvalidOperationException("Components are not allowed to inherit from each other.");
         }
+
+        // 组件至少包含一个公开无参构造函数
+        if (componentType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is null)
+        {
+            throw new InvalidOperationException("A component must have at least one public parameterless constructor.");
+        }
     }
+
+    /// <summary>
+    /// WebComponent 类型全名
+    /// </summary>
+    private const string WEBCOMPONENT_FULLNAME = "Furion.Component.WebComponent";
 }
