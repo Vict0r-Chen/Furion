@@ -6,7 +6,7 @@
     <members>
         <member name="T:System.Debugging">
             <summary>
-            调试工具
+            内部调试事件消息
             </summary>
         </member>
         <member name="M:System.Debugging.WriteLine(System.Int32,System.String)">

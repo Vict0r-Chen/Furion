@@ -15,7 +15,7 @@
 namespace System;
 
 /// <summary>
-/// 调试工具
+/// 内部调试事件消息
 /// </summary>
 internal static class Debugging
 {
