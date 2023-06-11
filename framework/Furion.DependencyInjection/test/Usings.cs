@@ -16,3 +16,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using System.Reflection;
 global using Xunit;
 global using Xunit.Abstractions;
+global using static Furion.DependencyInjection.Tests.InnerPublicClass;

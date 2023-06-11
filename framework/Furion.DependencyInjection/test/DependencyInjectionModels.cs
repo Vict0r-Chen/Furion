@@ -34,6 +34,13 @@ public class PublicTestClass : ITestClass, IScopedDependency
 {
 }
 
+public class InnerPublicClass
+{
+    public class PublicInner : ITestClass, IScopedDependency
+    {
+    }
+}
+
 internal class NotPublicTestClass : ITestClass, IScopedDependency
 {
 }

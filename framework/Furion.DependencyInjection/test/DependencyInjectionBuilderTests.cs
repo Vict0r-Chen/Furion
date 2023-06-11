@@ -85,10 +85,12 @@ public class DependencyInjectionBuilderTests
         var includePublicTestClass = services.Any(s => s.ImplementationType == typeof(PublicTestClass));
         var includeNotPublicTestClass = services.Any(s => s.ImplementationType == typeof(NotPublicTestClass));
         var includeAbstractPublicTestClass = services.Any(s => s.ImplementationType == typeof(AbstractPublicTestClass));
+        var includePublicInnerClass = services.Any(s => s.ImplementationType == typeof(PublicInner));
 
         Assert.True(includePublicTestClass);
         Assert.True(enable ? includeNotPublicTestClass == false : includeNotPublicTestClass == true);
         Assert.False(includeAbstractPublicTestClass);
+        Assert.True(includePublicInnerClass);
 
         var serviceProvider = services.BuildServiceProvider();
         Assert.NotNull(serviceProvider);

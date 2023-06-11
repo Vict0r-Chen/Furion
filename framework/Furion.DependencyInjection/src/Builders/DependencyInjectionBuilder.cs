@@ -165,9 +165,10 @@ public sealed class DependencyInjectionBuilder
         foreach (var assembly in _assemblies)
         {
             // 查找所有实现 IDependency 的类型
-            var exportedTypes = assembly.GetTypes()
-                                                       .Where(t => (!SuppressNotPublicType ? (t.IsPublic || t.IsNotPublic) : t.IsPublic)
-                                                                             && t.IsInstantiatedTypeWithAssignableFrom(typeof(IDependency)));
+            var exportedTypes = (SuppressNotPublicType
+                                                  ? assembly.GetExportedTypes()
+                                                  : assembly.GetTypes()
+                                                ).Where(t => t.IsInstantiatedTypeWithAssignableFrom(typeof(IDependency)));
 
             // 空检查
             if (!exportedTypes.Any())
