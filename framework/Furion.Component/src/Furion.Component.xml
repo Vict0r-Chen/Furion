@@ -44,6 +44,14 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
+        <member name="T:Furion.Component.ComponentService">
+            <summary>
+            组件服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentService.ConfigureServices(Furion.Component.ServiceContext)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Component.ComponentContext">
             <summary>
             组件上下文
@@ -280,6 +288,13 @@
             <summary>
             组件化模块拓展
             </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加组件服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilder})">
             <summary>

@@ -32,6 +32,18 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
+    /// 添加组件服务
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <returns><see cref="HostApplicationBuilder"/></returns>
+    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder)
+    {
+        hostApplicationBuilder.Services.AddComponent();
+
+        return hostApplicationBuilder;
+    }
+
+    /// <summary>
     /// 添加组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>

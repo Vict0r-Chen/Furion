@@ -14,32 +14,401 @@
 
 namespace Furion.Component.Tests;
 
+[DependsOn(
+    typeof(BWebComponent)
+    , typeof(CWebComponent)
+    )]
 public class AWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(AWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(AWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(AWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(AWebComponent));
+        });
+    }
 }
 
+[DependsOn(
+    typeof(CWebComponent)
+    , typeof(DWebComponent)
+    )]
 public class BWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(BWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(BWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(BWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(BWebComponent));
+        });
+    }
 }
 
 public class CWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(CWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(CWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(CWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(CWebComponent));
+        });
+    }
 }
 
 public class DWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(DWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(DWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(DWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(DWebComponent));
+        });
+    }
 }
 
 public class EWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(EWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(EWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(EWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(EWebComponent));
+        });
+    }
 }
 
+[DependsOn(
+    typeof(CWebComponent)
+    , typeof(EWebComponent)
+    )]
 public class FWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(FWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(FWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(FWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(FWebComponent));
+        });
+    }
 }
 
 public class GWebComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(GWebComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(GWebComponent));
+        });
+    }
+
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigure.Add(nameof(GWebComponent));
+        });
+    }
+
+    public override void Configure(ApplicationContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Application);
+        Assert.NotNull(context.Configuration);
+        Assert.NotNull(context.Environment);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.Configure.Add(nameof(GWebComponent));
+        });
+    }
 }
 
 public class InheritWebComponent : AWebComponent

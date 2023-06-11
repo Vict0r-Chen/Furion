@@ -103,7 +103,11 @@ public static class ComponentWebApplicationExtensions
     public static WebApplication AddComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, WebComponentBuilder componentBuilder)
     {
         // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
         ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 检查组件依赖字典
+        ComponentBase.CheckComponentDependencies(dependencies);
 
         // 构建组件模块
         componentBuilder.Build(webApplication);
@@ -149,6 +153,8 @@ public static class ComponentWebApplicationExtensions
 
             component.Configure(componentContext);
         });
+
+        components.Clear();
 
         return webApplication;
     }

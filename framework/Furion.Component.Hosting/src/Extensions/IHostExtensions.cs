@@ -12,51 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component.Tests;
+namespace Microsoft.Extensions.Hosting;
 
-#pragma warning disable
-
-public class DefaultOptions
+/// <summary>
+/// <see cref="IHost"/> 类型拓展
+/// </summary>
+internal static class IHostExtensions
 {
-    public int Num { get; set; }
-}
-
-public class WithParameterlessOptions
-{
-    public WithParameterlessOptions()
+    /// <summary>
+    /// 获取组件配置选项
+    /// </summary>
+    /// <param name="host"><see cref="IHost"/></param>
+    /// <returns><see cref="ComponentOptions"/></returns>
+    internal static ComponentOptions GetComponentOptions(this IHost host)
     {
+        return host.Services.GetRequiredService<ComponentOptions>();
     }
-}
-
-public class InternalWithParameterlessOptions
-{
-    internal InternalWithParameterlessOptions()
-    {
-    }
-}
-
-public class OneConstructorOptions
-{
-    public OneConstructorOptions(string name)
-    {
-    }
-}
-
-public class ManyConstructorOptions
-{
-    public ManyConstructorOptions()
-    {
-    }
-
-    public ManyConstructorOptions(string name)
-    {
-    }
-}
-
-public class AddComponentOptions
-{
-    public List<string> PreConfigureServices { get; set; } = new();
-    public List<string> ConfigureServices { get; set; } = new();
-    public List<string> PreConfigure { get; set; } = new();
-    public List<string> Configure { get; set; } = new();
 }

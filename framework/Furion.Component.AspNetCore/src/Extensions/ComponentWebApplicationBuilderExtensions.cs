@@ -47,6 +47,18 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
+    /// 添加组件服务
+    /// </summary>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <returns><see cref="WebApplicationBuilder"/></returns>
+    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder)
+    {
+        webApplicationBuilder.Services.AddComponent();
+
+        return webApplicationBuilder;
+    }
+
+    /// <summary>
     /// 添加组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>

@@ -159,6 +159,9 @@ public abstract class ComponentBase
     /// <exception cref="InvalidOperationException"></exception>
     public static void CheckComponentDependencies(Dictionary<Type, Type[]> dependencies)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+
         // 查找字典所有类型进行验证
         var componentTypes = dependencies.Keys.Concat(dependencies.Values.SelectMany(t => t)).Distinct();
         foreach (var type in componentTypes)

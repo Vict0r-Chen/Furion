@@ -95,10 +95,12 @@ public class ComponentBaseTests
 
     [Theory]
     [InlineData(typeof(NotComponent), "Type 'NotComponent' is not assignable from 'ComponentBase'.")]
+    [InlineData(typeof(NotWebComponent), "Type 'NotWebComponent' is not assignable from 'ComponentBase'.")]
     [InlineData(typeof(ComponentBase), "Type 'ComponentBase' cannot be an abstract type or a ComponentBase or WebComponent type.")]
     [InlineData(typeof(WebComponent), "Type 'WebComponent' cannot be an abstract type or a ComponentBase or WebComponent type.")]
     [InlineData(typeof(AbstractComponent), "Type 'AbstractComponent' cannot be an abstract type or a ComponentBase or WebComponent type.")]
     [InlineData(typeof(InheritComponent), "'InheritComponent' component type cannot inherit from other component types.")]
+    [InlineData(typeof(InheritWebComponent), "'InheritWebComponent' component type cannot inherit from other component types.")]
     [InlineData(typeof(OneConstructorComponent), "Component 'OneConstructorComponent' does not contain a public parameterless constructor.")]
     [InlineData(typeof(OneInternalConstructorComponent), "Component 'OneInternalConstructorComponent' does not contain a public parameterless constructor.")]
     public void CheckComponentDependencies_EveryComponent_ReturnOops(Type componentType, string message)

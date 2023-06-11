@@ -20,6 +20,19 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class ComponentServiceCollectionExtensions
 {
     /// <summary>
+    /// 添加组件服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddComponent(this IServiceCollection services)
+    {
+        // 添加组件配置选项
+        services.TryAddSingleton(new ComponentOptions());
+
+        return services;
+    }
+
+    /// <summary>
     /// 添加组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
@@ -109,13 +122,17 @@ public static class ComponentServiceCollectionExtensions
     public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, ComponentBuilder componentBuilder)
     {
         // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
         ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 检查组件依赖字典
+        ComponentBase.CheckComponentDependencies(dependencies);
+
+        // 添加组件服务
+        services.AddComponent();
 
         // 构建组件模块
         componentBuilder.Build(services);
-
-        // 添加组件配置选项
-        services.TryAddSingleton(new ComponentOptions());
 
         // 获取组件化配置选项
         var componentOptions = services.GetComponentOptions();
@@ -156,6 +173,8 @@ public static class ComponentServiceCollectionExtensions
 
             component.ConfigureServices(componentContext);
         });
+
+        components.Clear();
 
         return services;
     }

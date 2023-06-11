@@ -22,6 +22,29 @@ namespace Furion.Component.Tests;
     )]
 public class AComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(AComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(AComponent));
+        });
+    }
 }
 
 [DependsOn(
@@ -30,18 +53,110 @@ public class AComponent : ComponentBase
     )]
 public class BComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(BComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(BComponent));
+        });
+    }
 }
 
 public class CComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(CComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(CComponent));
+        });
+    }
 }
 
 public class DComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(DComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(DComponent));
+        });
+    }
 }
 
 public class EComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(EComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(EComponent));
+        });
+    }
 }
 
 [DependsOn(
@@ -50,10 +165,56 @@ public class EComponent : ComponentBase
     )]
 public class FComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(FComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(FComponent));
+        });
+    }
 }
 
 public class GComponent : ComponentBase
 {
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.PreConfigureServices.Add(nameof(GComponent));
+        });
+    }
+
+    public override void ConfigureServices(ServiceContext context)
+    {
+        Assert.NotNull(context);
+        Assert.NotNull(context.Services);
+        Assert.NotNull(context.Configuration);
+
+        Configure<AddComponentOptions>(options =>
+        {
+            options.ConfigureServices.Add(nameof(GComponent));
+        });
+    }
 }
 
 public class InheritComponent : AComponent

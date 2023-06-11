@@ -17,6 +17,13 @@
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
         </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+            <summary>
+            添加组件服务
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件
@@ -70,6 +77,18 @@
             <param name="dependencies">组件依赖字典</param>
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Hosting.IHostExtensions">
+            <summary>
+            <see cref="T:Microsoft.Extensions.Hosting.IHost"/> 类型拓展
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.IHostExtensions.GetComponentOptions(Microsoft.Extensions.Hosting.IHost)">
+            <summary>
+            获取组件配置选项
+            </summary>
+            <param name="host"><see cref="T:Microsoft.Extensions.Hosting.IHost"/></param>
+            <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
         </member>
     </members>
 </doc>

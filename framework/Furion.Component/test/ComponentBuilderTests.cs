@@ -48,4 +48,37 @@ public class ComponentBuilderTests
 
         Assert.Equal(2, componentOptions.OptionsActions.Count);
     }
+
+    [Fact]
+    public void WebConfigure_ReturnOK()
+    {
+        var builder = new WebComponentBuilder();
+
+        builder.Configure<DefaultOptions>(options => { });
+        Assert.Single(builder._optionsActions);
+
+        builder.Configure<DefaultOptions>(options => { });
+        Assert.Single(builder._optionsActions);
+
+        builder.Configure<WithParameterlessOptions>(options => { });
+        Assert.Equal(2, builder._optionsActions.Count);
+    }
+
+    [Fact]
+    public void WebBuild_ReturnOK()
+    {
+        var builder = new WebComponentBuilder();
+        builder.Configure<DefaultOptions>(options => { });
+        builder.Configure<WithParameterlessOptions>(options => { });
+
+        var webApplication = WebApplication.CreateBuilder().AddComponent().Build();
+        builder.Build(webApplication);
+
+        Assert.Empty(builder._optionsActions);
+
+        var componentOptions = webApplication.GetComponentOptions();
+        Assert.NotNull(componentOptions);
+
+        Assert.Equal(2, componentOptions.OptionsActions.Count);
+    }
 }
