@@ -200,14 +200,14 @@ public abstract class ComponentBase
         }
 
         // 组件不能是抽象类型或基组件类型
-        if (componentType.IsAbstract || componentType == componentBaseType || componentType.FullName == WEBCOMPONENT_FULLNAME)
+        if (componentType.IsAbstract || componentType == componentBaseType || componentType.FullName == WEBCOMPONENT_TYPE_FULLNAME)
         {
             throw new InvalidOperationException("The component cannot be an abstract type or a ComponentBase or WebComponent type.");
         }
 
         // 判断组件是否相互继承（禁止继承）
         var baseType = componentType.BaseType;
-        if (!(baseType is null || baseType == typeof(object) || baseType == componentBaseType || baseType.FullName == WEBCOMPONENT_FULLNAME))
+        if (!(baseType is null || baseType == typeof(object) || baseType == componentBaseType || baseType.FullName == WEBCOMPONENT_TYPE_FULLNAME))
         {
             throw new InvalidOperationException("Components are not allowed to inherit from each other.");
         }
@@ -222,5 +222,5 @@ public abstract class ComponentBase
     /// <summary>
     /// WebComponent 类型全名
     /// </summary>
-    private const string WEBCOMPONENT_FULLNAME = "Furion.Component.WebComponent";
+    private const string WEBCOMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
 }

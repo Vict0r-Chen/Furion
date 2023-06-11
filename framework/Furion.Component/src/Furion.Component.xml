@@ -183,7 +183,7 @@
             <param name="componentType">组件类型</param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="F:Furion.Component.ComponentBase.WEBCOMPONENT_FULLNAME">
+        <member name="F:Furion.Component.ComponentBase.WEBCOMPONENT_TYPE_FULLNAME">
             <summary>
             WebComponent 类型全名
             </summary>
