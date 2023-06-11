@@ -181,6 +181,7 @@ public static class ComponentServiceCollectionExtensions
     /// <summary>
     /// 获取单例服务对象
     /// </summary>
+    /// <remarks>如果服务不存在则将自动注册</remarks>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><typeparamref name="T"/></returns>

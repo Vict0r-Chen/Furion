@@ -23,6 +23,7 @@ internal static class Debugging
     /// 输出一行消息
     /// </summary>
     /// <param name="message">消息</param>
+    [Conditional("Furion")]
     internal static void WriteLine(string message)
     {
         // 只有调试状态下输出
@@ -41,12 +42,6 @@ internal static class Debugging
     /// <param name="args">格式化参数</param>
     internal static void WriteLine(string message, params object?[] args)
     {
-        // 只有调试状态下输出
-        if (!Debugger.IsAttached)
-        {
-            return;
-        }
-
-        Debug.WriteLine(message, args);
+        WriteLine(string.Format(message, args));
     }
 }
