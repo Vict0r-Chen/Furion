@@ -284,6 +284,11 @@
             组件参数委托字典
             </summary>
         </member>
+        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCall">
+            <summary>
+            禁用组件重复调用
+            </summary>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>
             组件化模块拓展

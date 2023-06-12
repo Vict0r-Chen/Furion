@@ -31,4 +31,9 @@ public sealed class ComponentOptions
     /// 组件参数委托字典
     /// </summary>
     public Dictionary<Type, List<Action<object>>> OptionsActions { get; internal set; }
+
+    /// <summary>
+    /// 禁用组件重复调用
+    /// </summary>
+    public bool SuppressDuplicateCall { get; internal set; }
 }
