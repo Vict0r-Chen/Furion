@@ -26,7 +26,7 @@ public abstract class ComponentBase
     { }
 
     /// <inheritdoc cref="ComponentOptions"/>
-    public ComponentOptions? Options { get; internal set; }
+    internal ComponentOptions? Options { get; set; }
 
     /// <summary>
     /// 配置组件参数

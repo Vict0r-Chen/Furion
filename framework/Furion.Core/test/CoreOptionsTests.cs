@@ -12,20 +12,34 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.Hosting;
+namespace Furion.Core.Tests;
 
-/// <summary>
-/// <see cref="IHost"/> 类型拓展
-/// </summary>
-internal static class IHostExtensions
+public class CoreOptionsTests
 {
-    /// <summary>
-    /// 获取组件配置选项
-    /// </summary>
-    /// <param name="host"><see cref="IHost"/></param>
-    /// <returns><see cref="ComponentOptions"/></returns>
-    internal static ComponentOptions GetComponentOptions(this IHost host)
+    [Fact]
+    public void AddCoreOptions_ReturnOK()
     {
-        return host.Services.GetRequiredService<CoreOptions>().Get<ComponentOptions>();
+        var services = new ServiceCollection();
+        services.AddCoreOptions();
+        services.AddCoreOptions();
+        services.AddCoreOptions();
+
+        Assert.Single(services);
+    }
+
+    [Fact]
+    public void GetCoreOptions_Get_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        var coreOptions = services.GetCoreOptions();
+        var someOptions1 = coreOptions.Get<SomeOptions>();
+        var someOptions1_1 = coreOptions.Get<SomeOptions>();
+
+        var someOptions2 = coreOptions.Get<SomeOptions2>();
+        var someOptions2_1 = coreOptions.Get<SomeOptions2>();
+
+        Assert.Equal(2, coreOptions._optionsInstances.Count);
+        Assert.Equal(someOptions1, someOptions1_1);
+        Assert.Equal(someOptions2, someOptions2_1);
     }
 }

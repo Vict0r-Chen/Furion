@@ -26,9 +26,7 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponentService(this IServiceCollection services)
     {
-        // 添加组件配置选项
-        services.TryAddSingleton(new ComponentOptions());
-
+        services.AddCoreOptions();
         return services;
     }
 
@@ -198,37 +196,12 @@ public static class ComponentServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 获取单例服务对象
-    /// </summary>
-    /// <remarks>如果服务不存在则将自动注册</remarks>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><typeparamref name="T"/></returns>
-    public static T GetSingletonInstance<T>(this IServiceCollection services, T? instance = null)
-        where T : class
-    {
-        // 检查单例实例类型是否已注册，如果没有则注册
-        if (!services.Any(s => s.ServiceType == typeof(T)))
-        {
-            services.TryAddSingleton(instance ?? Activator.CreateInstance<T>());
-        }
-
-        // 获取单例实例
-        var singletonInstance = services.First(s => s.ServiceType == typeof(T)).ImplementationInstance as T;
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(singletonInstance, nameof(singletonInstance));
-
-        return singletonInstance;
-    }
-
-    /// <summary>
     /// 获取组件配置选项
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>
     internal static ComponentOptions GetComponentOptions(this IServiceCollection services)
     {
-        return services.GetSingletonInstance<ComponentOptions>();
+        return services.GetCoreOptions().Get<ComponentOptions>();
     }
 }

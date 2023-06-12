@@ -154,5 +154,48 @@
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions">
+            <summary>
+            核心模块拓展
+            </summary>
+            <remarks>限制框架内置模块使用</remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions.AddCoreOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加核心模块选项服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions.GetCoreOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            获取核心模块选项
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Furion.CoreOptions"/></returns>
+        </member>
+        <member name="T:Furion.CoreOptions">
+            <summary>
+            框架核心选项
+            </summary>
+            <remarks>负责全局数据存储</remarks>
+        </member>
+        <member name="F:Furion.CoreOptions._optionsInstances">
+            <summary>
+            选项实例字典
+            </summary>
+        </member>
+        <member name="M:Furion.CoreOptions.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.CoreOptions.Get``1">
+            <summary>
+            获取选项实例
+            </summary>
+            <typeparam name="TOptions">选项类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
+        </member>
     </members>
 </doc>

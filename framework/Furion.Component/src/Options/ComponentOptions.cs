@@ -17,7 +17,7 @@ namespace Furion.Component;
 /// <summary>
 /// 组件配置选项
 /// </summary>
-public sealed class ComponentOptions
+internal sealed class ComponentOptions
 {
     /// <summary>
     /// 构造函数
@@ -30,10 +30,10 @@ public sealed class ComponentOptions
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    public Dictionary<Type, List<Action<object>>> OptionsActions { get; internal set; }
+    internal Dictionary<Type, List<Action<object>>> OptionsActions { get; set; }
 
     /// <summary>
     /// 禁用组件重复调用
     /// </summary>
-    public bool SuppressDuplicateCall { get; internal set; }
+    internal bool SuppressDuplicateCall { get; set; }
 }

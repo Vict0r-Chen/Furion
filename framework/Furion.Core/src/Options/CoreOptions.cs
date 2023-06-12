@@ -12,20 +12,39 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.Hosting;
+using System.Collections.Concurrent;
+
+namespace Furion;
 
 /// <summary>
-/// <see cref="IHost"/> 类型拓展
+/// 框架核心选项
 /// </summary>
-internal static class IHostExtensions
+/// <remarks>负责全局数据存储</remarks>
+internal sealed class CoreOptions
 {
     /// <summary>
-    /// 获取组件配置选项
+    /// 选项实例字典
     /// </summary>
-    /// <param name="host"><see cref="IHost"/></param>
-    /// <returns><see cref="ComponentOptions"/></returns>
-    internal static ComponentOptions GetComponentOptions(this IHost host)
+    internal readonly ConcurrentDictionary<Type, object> _optionsInstances = new();
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    internal CoreOptions()
     {
-        return host.Services.GetRequiredService<CoreOptions>().Get<ComponentOptions>();
+    }
+
+    /// <summary>
+    /// 获取选项实例
+    /// </summary>
+    /// <typeparam name="TOptions">选项类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    internal TOptions Get<TOptions>()
+        where TOptions : class, new()
+    {
+        var optionsType = typeof(TOptions);
+        _ = _optionsInstances.TryAdd(optionsType, Activator.CreateInstance<TOptions>());
+
+        return (TOptions)_optionsInstances[optionsType];
     }
 }

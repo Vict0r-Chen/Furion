@@ -22,9 +22,6 @@ public class ComponentTests
         var services = new ServiceCollection();
         services.AddComponent<AComponent>(new ConfigurationManager());
 
-        var includeComponentOptions = services.Any(u => u.ServiceType == typeof(ComponentOptions) && u.ImplementationInstance is not null);
-        Assert.True(includeComponentOptions);
-
         var componentOptions = services.GetComponentOptions();
         Assert.NotNull(componentOptions);
         Assert.Single(componentOptions.OptionsActions);

@@ -121,3 +121,13 @@ public class ManyConstructoresClass
     {
     }
 }
+
+public class SomeOptions
+{
+    public Guid Id => Guid.NewGuid();
+}
+
+public class SomeOptions2
+{
+    public Guid Id => Guid.NewGuid();
+}

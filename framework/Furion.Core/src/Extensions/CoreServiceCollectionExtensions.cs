@@ -12,20 +12,35 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.Hosting;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// <see cref="IHost"/> 类型拓展
+/// 核心模块拓展
 /// </summary>
-internal static class IHostExtensions
+/// <remarks>限制框架内置模块使用</remarks>
+public static class CoreServiceCollectionExtensions
 {
     /// <summary>
-    /// 获取组件配置选项
+    /// 添加核心模块选项服务
     /// </summary>
-    /// <param name="host"><see cref="IHost"/></param>
-    /// <returns><see cref="ComponentOptions"/></returns>
-    internal static ComponentOptions GetComponentOptions(this IHost host)
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddCoreOptions(this IServiceCollection services)
     {
-        return host.Services.GetRequiredService<CoreOptions>().Get<ComponentOptions>();
+        services.TryAddSingleton(new CoreOptions());
+        return services;
+    }
+
+    /// <summary>
+    /// 获取核心模块选项
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="CoreOptions"/></returns>
+    internal static CoreOptions GetCoreOptions(this IServiceCollection services)
+    {
+        services.AddCoreOptions();
+
+        var coreOptions = services.Single(s => s.ServiceType == typeof(CoreOptions)).ImplementationInstance as CoreOptions;
+        return coreOptions!;
     }
 }
