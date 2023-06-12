@@ -96,6 +96,9 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(nameof(configuration), nameof(configuration));
+
         // 生成组件依赖拓扑排序图
         var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
