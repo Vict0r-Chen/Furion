@@ -44,7 +44,7 @@ public class ComponentBuilder
     /// <summary>
     /// 禁用组件重复调用
     /// </summary>
-    public bool SuppressDuplicateCall { get; set; }
+    public bool SuppressDuplicateCall { get; set; } = true;
 
     /// <summary>
     /// 构建模块

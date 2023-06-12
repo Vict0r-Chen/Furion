@@ -105,10 +105,13 @@ public static class ComponentWebApplicationExtensions
         // 依次初始化组件实例
         foreach (var componentType in topologicalSortedMap)
         {
-            if (Activator.CreateInstance(componentType) is not WebComponent component)
+            if (componentType.BaseType != typeof(WebComponent))
             {
                 continue;
             }
+
+            var component = Activator.CreateInstance(componentType) as WebComponent;
+            ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
             components.Add(component);

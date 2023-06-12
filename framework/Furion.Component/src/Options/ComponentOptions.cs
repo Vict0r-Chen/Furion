@@ -35,5 +35,5 @@ internal sealed class ComponentOptions
     /// <summary>
     /// 禁用组件重复调用
     /// </summary>
-    internal bool SuppressDuplicateCall { get; set; }
+    internal bool SuppressDuplicateCall { get; set; } = true;
 }
