@@ -38,7 +38,7 @@
         </member>
         <member name="T:Furion.Component.ComponentBuilderBase">
             <summary>
-            组件模块构建器抽象基类
+            组件模块构建器基类
             </summary>
         </member>
         <member name="F:Furion.Component.ComponentBuilderBase._optionsActions">
@@ -53,6 +53,12 @@
             <typeparam name="TOptions">组件参数类型</typeparam>
             <param name="configure">配置委托</param>
             <returns><see cref="T:Furion.Component.ComponentBuilderBase"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentBuilderBase.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            构建模块
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
         <member name="T:Furion.Component.ComponentServiceComponent">
             <summary>

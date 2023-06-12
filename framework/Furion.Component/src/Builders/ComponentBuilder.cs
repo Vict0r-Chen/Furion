@@ -28,7 +28,7 @@ public sealed class ComponentBuilder : ComponentBuilderBase
     /// 构建模块
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    internal void Build(IServiceCollection services)
+    internal override void Build(IServiceCollection services)
     {
         // 将自身注册为组件参数
         Configure<ComponentBuilder>(builder =>

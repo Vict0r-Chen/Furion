@@ -15,9 +15,9 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块构建器抽象基类
+/// 组件模块构建器基类
 /// </summary>
-public abstract class ComponentBuilderBase
+public class ComponentBuilderBase
 {
     /// <summary>
     /// 组件参数委托字典
@@ -39,5 +39,19 @@ public abstract class ComponentBuilderBase
         _optionsActions.AddOrUpdate(configure);
 
         return this;
+    }
+
+    /// <summary>
+    /// 构建模块
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    internal virtual void Build(IServiceCollection services)
+    {
+        // 获取组件配置选项
+        var componentOptions = services.GetComponentOptions();
+
+        // 配置组件选项
+        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
+        _optionsActions.Clear();
     }
 }
