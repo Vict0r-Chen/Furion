@@ -55,7 +55,7 @@ public sealed class ServiceContext : ComponentContext
         where TOption : class, new()
     {
         var componentOptions = Services.GetComponentOptions();
-        return componentOptions?.OptionsActions.GetOptions<TOption>();
+        return componentOptions.OptionsActions.GetOptions<TOption>();
     }
 
     /// <summary>

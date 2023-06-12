@@ -67,7 +67,7 @@
         </member>
         <member name="M:Microsoft.Extensions.Hosting.IHostExtensions.GetComponentOptions(Microsoft.Extensions.Hosting.IHost)">
             <summary>
-            获取组件配置选项
+            获取组件模块配置选项
             </summary>
             <param name="host"><see cref="T:Microsoft.Extensions.Hosting.IHost"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>

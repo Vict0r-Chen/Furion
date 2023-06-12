@@ -98,7 +98,7 @@ public static class ComponentWebApplicationExtensions
         configure?.Invoke(componentBuilder);
         componentBuilder.Build(webApplication);
 
-        // 获取组件化配置选项
+        // 获取组件模块配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
         // 组件对象集合
@@ -164,7 +164,7 @@ public static class ComponentWebApplicationExtensions
     }
 
     /// <summary>
-    /// 获取组件配置选项
+    /// 获取组件模块配置选项
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>

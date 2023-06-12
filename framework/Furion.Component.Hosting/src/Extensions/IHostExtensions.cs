@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.Hosting;
 internal static class IHostExtensions
 {
     /// <summary>
-    /// 获取组件配置选项
+    /// 获取组件模块配置选项
     /// </summary>
     /// <param name="host"><see cref="IHost"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>

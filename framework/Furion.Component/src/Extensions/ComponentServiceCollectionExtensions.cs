@@ -107,7 +107,7 @@ public static class ComponentServiceCollectionExtensions
         configure?.Invoke(componentBuilder);
         componentBuilder.Build(services);
 
-        // 获取组件化配置选项
+        // 获取组件模块配置选项
         var componentOptions = services.GetComponentOptions();
 
         // 组件对象集合
@@ -185,7 +185,7 @@ public static class ComponentServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 获取组件配置选项
+    /// 获取组件模块配置选项
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>

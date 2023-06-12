@@ -51,7 +51,7 @@ public class WebComponentBuilderBase
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     internal virtual void Build(WebApplication webApplication)
     {
-        // 获取组件配置选项
+        // 获取组件模块配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
         // 配置组件选项

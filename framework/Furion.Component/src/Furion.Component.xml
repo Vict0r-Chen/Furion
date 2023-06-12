@@ -296,7 +296,7 @@
         </member>
         <member name="T:Furion.Component.ComponentOptions">
             <summary>
-            组件配置选项
+            组件模块配置选项
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentOptions.#ctor">
@@ -384,7 +384,7 @@
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.GetComponentOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            获取组件配置选项
+            获取组件模块配置选项
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>

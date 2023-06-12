@@ -51,7 +51,7 @@ public class ComponentBuilderBase
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal virtual void Build(IServiceCollection services)
     {
-        // 获取组件配置选项
+        // 获取组件模块配置选项
         var componentOptions = services.GetComponentOptions();
 
         // 配置组件选项

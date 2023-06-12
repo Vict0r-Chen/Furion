@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件配置选项
+/// 组件模块配置选项
 /// </summary>
 internal sealed class ComponentOptions
 {

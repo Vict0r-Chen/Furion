@@ -44,7 +44,7 @@ public sealed class WebComponentBuilder : WebComponentBuilderBase
             builder.SuppressDuplicateCall = SuppressDuplicateCall;
         });
 
-        // 获取组件配置选项
+        // 获取组件模块配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
         // 配置组件选项

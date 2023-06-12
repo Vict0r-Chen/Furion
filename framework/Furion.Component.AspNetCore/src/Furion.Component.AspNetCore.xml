@@ -233,7 +233,7 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.GetComponentOptions(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
-            获取组件配置选项
+            获取组件模块配置选项
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
