@@ -20,6 +20,14 @@ namespace Furion.Component;
 public sealed class WebComponentBuilder : WebComponentBuilderBase
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public WebComponentBuilder()
+        : base()
+    {
+    }
+
+    /// <summary>
     /// 禁用组件重复调用
     /// </summary>
     public bool SuppressDuplicateCall { get; set; } = true;

@@ -58,11 +58,12 @@ public static class ComponentWebApplicationExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication)
+    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication, Action<WebComponentBuilderBase>? configure = null)
         where TComponent : WebComponent, new()
     {
-        return webApplication.UseComponent(typeof(TComponent));
+        return webApplication.UseComponent(typeof(TComponent), configure);
     }
 
     /// <summary>
@@ -70,13 +71,14 @@ public static class ComponentWebApplicationExtensions
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType)
+    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType, Action<WebComponentBuilderBase>? configure = null)
     {
         // 生成组件依赖字典
         var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
 
-        return webApplication.UseComponent(dependencies);
+        return webApplication.UseComponent(dependencies, configure);
     }
 
     /// <summary>
@@ -84,23 +86,23 @@ public static class ComponentWebApplicationExtensions
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies)
+    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilderBase>? configure = null)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+        // 生成组件依赖拓扑排序图
+        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
-        // 检查组件依赖字典
-        ComponentBase.CheckComponentDependencies(dependencies);
+        // 创建组件模块构建器并构建
+        var componentBuilder = new WebComponentBuilderBase();
+        configure?.Invoke(componentBuilder);
+        componentBuilder.Build(webApplication);
 
         // 获取组件化配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
         // 组件对象集合
         var components = new List<WebComponent>();
-
-        // 生成组件依赖拓扑排序图
-        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
         // 依次初始化组件实例
         foreach (var componentType in topologicalSortedMap)

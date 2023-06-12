@@ -62,11 +62,12 @@ public static class ComponentServiceCollectionExtensions
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
         where TComponent : ComponentBase, new()
     {
-        return services.AddComponent(typeof(TComponent), configuration);
+        return services.AddComponent(typeof(TComponent), configuration, configure);
     }
 
     /// <summary>
@@ -75,13 +76,14 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
         // 生成组件依赖字典
         var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
 
-        return services.AddComponent(dependencies, configuration);
+        return services.AddComponent(dependencies, configuration, configure);
     }
 
     /// <summary>
@@ -90,23 +92,23 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="dependencies">组件依赖字典</param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+        // 生成组件依赖拓扑排序图
+        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
-        // 检查组件依赖字典
-        ComponentBase.CheckComponentDependencies(dependencies);
+        // 创建组件模块构建器并构建
+        var componentBuilder = new ComponentBuilderBase();
+        configure?.Invoke(componentBuilder);
+        componentBuilder.Build(services);
 
         // 获取组件化配置选项
         var componentOptions = services.GetComponentOptions();
 
         // 组件对象集合
         var components = new List<ComponentBase>();
-
-        // 生成组件依赖拓扑排序图
-        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
 
         // 依次初始化组件实例
         foreach (var componentType in topologicalSortedMap)

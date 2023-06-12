@@ -25,20 +25,24 @@ public class ComponentBuilderBase
     internal readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
 
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    internal ComponentBuilderBase()
+    {
+    }
+
+    /// <summary>
     /// 配置组件参数
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <param name="configure">配置委托</param>
-    /// <returns><see cref="ComponentBuilderBase"/></returns>
-    public ComponentBuilderBase Configure<TOptions>(Action<TOptions> configure)
+    public void Configure<TOptions>(Action<TOptions> configure)
         where TOptions : class, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
         _optionsActions.AddOrUpdate(configure);
-
-        return this;
     }
 
     /// <summary>
