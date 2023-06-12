@@ -307,7 +307,8 @@ public sealed class DependencyInjectionBuilder
         var suppressServices = _suppressServices.Concat(suppressServicesAttribute.Types);
         var filteredOfServiceTypes = allInterfaces.Concat(new[] { baseType })
                                                                  .Where(t => t is not null
-                                                                                        && !suppressServices.Contains(t)
+                                                                                        && !suppressServices.Any(s => s == t
+                                                                                                                                || (s.IsGenericTypeDefinition && t.IsGenericType && s == t.GetGenericTypeDefinition()))
                                                                                         && !dependencyType.IsAssignableFrom(t))
                                                                  .Select(t => t!);
 

@@ -243,3 +243,25 @@ public interface IGlobalSuppressDerivedType2
 internal class GlobalSuppressDerivedType : IGlobalSuppressDerivedType1, IGlobalSuppressDerivedType2, IScopedDependency
 {
 }
+
+public interface ISuppressGenericClass<T>
+{
+}
+
+public interface ISuppressNormalClass
+{
+}
+
+[SuppressServices(typeof(ISuppressGenericClass<string>))]
+internal class SuppressSpecificGenericClass : ISuppressGenericClass<string>, ISuppressNormalClass, IScopedDependency
+{
+}
+
+public interface ISuppressUnknoneGenericClass<T>
+{
+}
+
+[SuppressServices(typeof(ISuppressUnknoneGenericClass<>))]
+internal class SuppressUnknoneGenericClass : ISuppressUnknoneGenericClass<string>, IScopedDependency
+{
+}

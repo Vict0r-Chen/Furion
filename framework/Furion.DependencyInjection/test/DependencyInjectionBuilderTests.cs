@@ -193,6 +193,27 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
+    public void SuppressServices_Generic_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddDependencyInjection(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        var includeSuppressNormalClass = services.Any(s => s.ServiceType == typeof(ISuppressNormalClass));
+        var includeSuppressGenericClass = services.Any(s => s.ServiceType == typeof(ISuppressGenericClass<string>));
+        var includeSuppressUnknoneGenericClass = services.Any(s => s.ServiceType == typeof(ISuppressUnknoneGenericClass<string>));
+
+        Assert.True(includeSuppressNormalClass);
+        Assert.False(includeSuppressGenericClass);
+        Assert.False(includeSuppressUnknoneGenericClass);
+
+        var serviceProvider = services.BuildServiceProvider();
+        Assert.NotNull(serviceProvider);
+    }
+
+    [Fact]
     public void Ignore_ReturnOK()
     {
         var services = new ServiceCollection();
