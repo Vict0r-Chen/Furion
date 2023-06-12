@@ -17,13 +17,13 @@ namespace Furion.Component;
 /// <summary>
 /// 依赖注入组件
 /// </summary>
-[DependsOn(typeof(ComponentService))]
+[DependsOn(typeof(ComponentServiceComponent))]
 public sealed class DependencyInjectionComponent : ComponentBase
 {
     /// <inheritdoc />
     public override void ConfigureServices(ServiceContext context)
     {
-        // 获取组件配置
+        // 获取服务配置
         var dependencyInjectionBuilder = context.GetOptionsOrDefault<DependencyInjectionBuilder>();
 
         context.Services.AddDependencyInjection(dependencyInjectionBuilder);

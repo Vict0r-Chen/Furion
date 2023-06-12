@@ -17,7 +17,7 @@
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentService(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
             <summary>
             添加组件服务
             </summary>

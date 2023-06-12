@@ -36,9 +36,9 @@ public static class ComponentHostApplicationBuilderExtensions
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
-    public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder)
+    public static HostApplicationBuilder AddComponentService(this HostApplicationBuilder hostApplicationBuilder)
     {
-        hostApplicationBuilder.Services.AddComponent();
+        hostApplicationBuilder.Services.AddComponentService();
 
         return hostApplicationBuilder;
     }

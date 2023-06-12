@@ -17,11 +17,11 @@ namespace Furion.Component;
 /// <summary>
 /// 组件服务组件
 /// </summary>
-public sealed class ComponentService : ComponentBase
+public sealed class ComponentServiceComponent : ComponentBase
 {
     /// <inheritdoc />
     public override void ConfigureServices(ServiceContext context)
     {
-        context.Services.AddComponent();
+        context.Services.AddComponentService();
     }
 }

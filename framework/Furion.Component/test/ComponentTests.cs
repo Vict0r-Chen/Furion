@@ -49,7 +49,7 @@ public class ComponentTests
     [Fact]
     public void AddWebComponent_ReturnOK()
     {
-        var builder = WebApplication.CreateBuilder().AddComponent();
+        var builder = WebApplication.CreateBuilder().AddComponentService();
         var app = builder.Build();
         app.AddComponent<AWebComponent>();
 

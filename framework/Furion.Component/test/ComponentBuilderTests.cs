@@ -71,7 +71,7 @@ public class ComponentBuilderTests
         builder.Configure<DefaultOptions>(options => { });
         builder.Configure<WithParameterlessOptions>(options => { });
 
-        var webApplication = WebApplication.CreateBuilder().AddComponent().Build();
+        var webApplication = WebApplication.CreateBuilder().AddComponentService().Build();
         builder.Build(webApplication);
 
         Assert.Empty(builder._optionsActions);

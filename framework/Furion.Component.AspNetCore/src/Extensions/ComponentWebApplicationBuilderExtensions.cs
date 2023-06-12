@@ -51,9 +51,9 @@ public static class ComponentWebApplicationBuilderExtensions
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder)
+    public static WebApplicationBuilder AddComponentService(this WebApplicationBuilder webApplicationBuilder)
     {
-        webApplicationBuilder.Services.AddComponent();
+        webApplicationBuilder.Services.AddComponentService();
 
         return webApplicationBuilder;
     }

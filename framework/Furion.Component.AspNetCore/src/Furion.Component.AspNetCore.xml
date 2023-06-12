@@ -97,7 +97,7 @@
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponentService(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>
             添加组件服务
             </summary>
