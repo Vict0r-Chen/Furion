@@ -126,6 +126,7 @@ public static class ComponentServiceCollectionExtensions
                 continue;
             }
 
+            // 创建组件实例
             var component = Activator.CreateInstance(componentType) as ComponentBase;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
@@ -173,7 +174,7 @@ public static class ComponentServiceCollectionExtensions
     internal static IHostEnvironment? GetHostEnvironment(this IServiceCollection services)
     {
         // 查找 Web 主机环境是否配置
-        var webHostEnvironment = services.FirstOrDefault(s => s.ServiceType.FullName == "Microsoft.AspNetCore.Hosting.IWebHostEnvironment")
+        var webHostEnvironment = services.FirstOrDefault(s => s.ServiceType.FullName == IWEBHOSTENVIRONMENT_TYPE_FULLNAME)
                                                 ?.ImplementationInstance as IHostEnvironment;
 
         // 如果没配置则查找泛型主机环境是否配置
@@ -192,4 +193,9 @@ public static class ComponentServiceCollectionExtensions
     {
         return services.GetCoreOptions().Get<ComponentOptions>();
     }
+
+    /// <summary>
+    /// IWebHostEnvironment 类型全名
+    /// </summary>
+    private const string IWEBHOSTENVIRONMENT_TYPE_FULLNAME = "Microsoft.AspNetCore.Hosting.IWebHostEnvironment";
 }

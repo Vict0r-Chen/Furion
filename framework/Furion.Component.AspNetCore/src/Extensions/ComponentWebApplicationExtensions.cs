@@ -123,6 +123,7 @@ public static class ComponentWebApplicationExtensions
                 continue;
             }
 
+            // 创建组件实例
             var component = Activator.CreateInstance(componentType) as WebComponent;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 

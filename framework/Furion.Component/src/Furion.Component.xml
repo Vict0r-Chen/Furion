@@ -389,5 +389,10 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
         </member>
+        <member name="F:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.IWEBHOSTENVIRONMENT_TYPE_FULLNAME">
+            <summary>
+            IWebHostEnvironment 类型全名
+            </summary>
+        </member>
     </members>
 </doc>
