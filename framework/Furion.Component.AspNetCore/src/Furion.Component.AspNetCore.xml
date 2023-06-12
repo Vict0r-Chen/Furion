@@ -18,6 +18,14 @@
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
         </member>
+        <member name="T:Furion.Component.ComponentMiddlewareComponent">
+            <summary>
+            组件服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentMiddlewareComponent.Configure(Furion.Component.ApplicationContext)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Component.ApplicationContext">
             <summary>
             应用组件上下文
@@ -142,58 +150,44 @@
             组件化模块拓展
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent``1(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Component.WebComponentBuilder})">
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponentMiddleware(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Component.WebComponentBuilder})">
+            <summary>
+            添加组件中间件
+            </summary>
+            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <param name="configure">自定义构建器配置</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponentMiddleware(Microsoft.AspNetCore.Builder.WebApplication,Furion.Component.WebComponentBuilder)">
+            <summary>
+            添加组件中间件
+            </summary>
+            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.WebComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent``1(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
             添加组件中间件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent``1(Microsoft.AspNetCore.Builder.WebApplication,Furion.Component.WebComponentBuilder)">
-            <summary>
-            添加组件中间件
-            </summary>
-            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
-            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.WebComponentBuilder"/></param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent(Microsoft.AspNetCore.Builder.WebApplication,System.Type,System.Action{Furion.Component.WebComponentBuilder})">
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent(Microsoft.AspNetCore.Builder.WebApplication,System.Type)">
             <summary>
             添加组件中间件
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent(Microsoft.AspNetCore.Builder.WebApplication,System.Type,Furion.Component.WebComponentBuilder)">
-            <summary>
-            添加组件中间件
-            </summary>
-            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.WebComponentBuilder"/></param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent(Microsoft.AspNetCore.Builder.WebApplication,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.WebComponentBuilder})">
+        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent(Microsoft.AspNetCore.Builder.WebApplication,System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
             添加组件中间件
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <param name="dependencies">组件依赖字典</param>
-            <param name="configure">自定义构建器配置</param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponent(Microsoft.AspNetCore.Builder.WebApplication,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.WebComponentBuilder)">
-            <summary>
-            添加组件中间件
-            </summary>
-            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="dependencies">组件依赖字典</param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.WebComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.GetComponentOptions(Microsoft.AspNetCore.Builder.WebApplication)">

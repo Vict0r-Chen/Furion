@@ -12,32 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Tests;
+namespace Furion.Component;
 
-[DependsOn(typeof(ComponentMiddlewareComponent))]
-public class EntryComponent : WebComponent
+/// <summary>
+/// 组件服务组件
+/// </summary>
+[DependsOn(typeof(ComponentServiceComponent))]
+public sealed class ComponentMiddlewareComponent : WebComponent
 {
-    public override void ConfigureServices(ServiceContext context)
-    {
-        context.Services.AddControllers();
-        context.Services.AddEndpointsApiExplorer();
-        context.Services.AddSwaggerGen();
-    }
-
+    /// <inheritdoc />
     public override void Configure(ApplicationContext context)
     {
-        var app = context.Application;
+        // 获取服务配置
+        var componentBuilder = context.GetOptionsOrDefault<WebComponentBuilder>();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
+        context.Application.UseComponentMiddleware(componentBuilder);
     }
 }

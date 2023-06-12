@@ -22,67 +22,10 @@ public static class ComponentWebApplicationExtensions
     /// <summary>
     /// 添加组件中间件
     /// </summary>
-    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication, Action<WebComponentBuilder>? configure = null)
-        where TComponent : WebComponent, new()
-    {
-        return webApplication.UseComponent(typeof(TComponent), configure);
-    }
-
-    /// <summary>
-    /// 添加组件中间件
-    /// </summary>
-    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication, WebComponentBuilder componentBuilder)
-        where TComponent : WebComponent, new()
-    {
-        return webApplication.UseComponent(typeof(TComponent), componentBuilder);
-    }
-
-    /// <summary>
-    /// 添加组件中间件
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="configure">自定义构建器配置</param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType, Action<WebComponentBuilder>? configure = null)
-    {
-        // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
-
-        return webApplication.UseComponent(dependencies, configure);
-    }
-
-    /// <summary>
-    /// 添加组件中间件
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType, WebComponentBuilder componentBuilder)
-    {
-        // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
-
-        return webApplication.UseComponent(dependencies, componentBuilder);
-    }
-
-    /// <summary>
-    /// 添加组件中间件
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="dependencies">组件依赖字典</param>
-    /// <param name="configure">自定义构建器配置</param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilder>? configure = null)
+    public static WebApplication UseComponentMiddleware(this WebApplication webApplication, Action<WebComponentBuilder>? configure = null)
     {
         // 创建组件模块构建器
         var componentBuilder = new WebComponentBuilder();
@@ -90,7 +33,50 @@ public static class ComponentWebApplicationExtensions
         // 调用自定义配置
         configure?.Invoke(componentBuilder);
 
-        return webApplication.UseComponent(dependencies, componentBuilder);
+        return webApplication.UseComponentMiddleware(componentBuilder);
+    }
+
+    /// <summary>
+    /// 添加组件中间件
+    /// </summary>
+    /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication UseComponentMiddleware(this WebApplication webApplication, WebComponentBuilder componentBuilder)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 构建组件模块
+        componentBuilder.Build(webApplication);
+
+        return webApplication;
+    }
+
+    /// <summary>
+    /// 添加组件中间件
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
+    /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication)
+        where TComponent : WebComponent, new()
+    {
+        return webApplication.UseComponent(typeof(TComponent));
+    }
+
+    /// <summary>
+    /// 添加组件中间件
+    /// </summary>
+    /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType)
+    {
+        // 生成组件依赖字典
+        var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
+
+        return webApplication.UseComponent(dependencies);
     }
 
     /// <summary>
@@ -98,19 +84,14 @@ public static class ComponentWebApplicationExtensions
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="dependencies">组件依赖字典</param>
-    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, WebComponentBuilder componentBuilder)
+    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
-        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
 
         // 检查组件依赖字典
         ComponentBase.CheckComponentDependencies(dependencies);
-
-        // 构建组件模块
-        componentBuilder.Build(webApplication);
 
         // 获取组件化配置选项
         var componentOptions = webApplication.GetComponentOptions();

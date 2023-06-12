@@ -40,7 +40,7 @@ public static class ComponentServiceCollectionExtensions
     /// 添加组件服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="componentBuilder"></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponentService(this IServiceCollection services, ComponentBuilder componentBuilder)
     {
