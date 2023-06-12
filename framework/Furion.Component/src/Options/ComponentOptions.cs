@@ -36,7 +36,7 @@ internal sealed class ComponentOptions
     /// <summary>
     /// 组件调用登记
     /// </summary>
-    internal List<Type> CallRegistration { get; init; }
+    internal List<string> CallRegistration { get; init; }
 
     /// <summary>
     /// 禁用组件重复调用

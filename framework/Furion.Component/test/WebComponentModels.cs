@@ -418,3 +418,19 @@ public class InheritWebComponent : AWebComponent
 public class NotWebComponent
 {
 }
+
+public class SuppressDuplicateForWebOptions
+{
+    public int Num { get; set; }
+}
+
+public class SuppressDuplicateForWebComponent : WebComponent
+{
+    public override void PreConfigure(ApplicationContext context)
+    {
+        Configure<SuppressDuplicateForWebOptions>(o =>
+        {
+            o.Num += 1;
+        });
+    }
+}

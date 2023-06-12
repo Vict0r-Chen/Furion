@@ -272,3 +272,19 @@ public class InnerCommponentClass
     {
     }
 }
+
+public class SuppressDuplicateOptions
+{
+    public int Num { get; set; }
+}
+
+public class SuppressDuplicateComponent : ComponentBase
+{
+    public override void PreConfigureServices(ServiceContext context)
+    {
+        Configure<SuppressDuplicateOptions>(o =>
+        {
+            o.Num += 1;
+        });
+    }
+}

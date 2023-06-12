@@ -115,4 +115,65 @@ public class ComponentBuilderTests
 
         Assert.False(componentOptions.SuppressDuplicateCallForWeb);
     }
+
+    [Theory]
+    [InlineData(true, 2)]
+    [InlineData(false, 3)]
+    public void AddComponent_SuppressDuplicate_ReturnOK(bool supress, int count)
+    {
+        var services = new ServiceCollection();
+        services.AddComponentService(builder =>
+        {
+            builder.SuppressDuplicateCall = supress;
+            builder.Configure<SuppressDuplicateOptions>(o =>
+            {
+                o.Num = 1;
+            });
+        });
+        services.AddComponent<SuppressDuplicateComponent>(new ConfigurationManager());
+        services.AddComponent<SuppressDuplicateComponent>(new ConfigurationManager());
+
+        var options = services.GetComponentOptions().OptionsActions.GetOptions<SuppressDuplicateOptions>();
+        Assert.NotNull(options);
+        Assert.Equal(count, options.Num);
+    }
+
+    [Theory]
+    [InlineData(true, 2)]
+    [InlineData(false, 3)]
+    public void AddComponent_SuppressDuplicate_ForWeb_ReturnOK(bool supress, int count)
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.AddComponentService(builder =>
+        {
+            builder.SuppressDuplicateCall = supress;
+            builder.Configure<SuppressDuplicateOptions>(o =>
+            {
+                o.Num = 1;
+            });
+        });
+        builder.AddComponent<SuppressDuplicateComponent>();
+        builder.AddComponent<SuppressDuplicateComponent>();
+
+        var options = builder.Services.GetComponentOptions().OptionsActions.GetOptions<SuppressDuplicateOptions>();
+        Assert.NotNull(options);
+        Assert.Equal(count, options.Num);
+
+        var app = builder.Build();
+        app.UseComponentMiddleware(b =>
+        {
+            b.SuppressDuplicateCall = supress;
+            b.Configure<SuppressDuplicateForWebOptions>(o =>
+            {
+                o.Num = 1;
+            });
+        });
+
+        app.UseComponent<SuppressDuplicateForWebComponent>();
+        app.UseComponent<SuppressDuplicateForWebComponent>();
+
+        var options2 = app.GetComponentOptions().OptionsActions.GetOptions<SuppressDuplicateForWebOptions>();
+        Assert.NotNull(options2);
+        Assert.Equal(count, options2.Num);
+    }
 }

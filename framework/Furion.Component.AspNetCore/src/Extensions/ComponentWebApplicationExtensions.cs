@@ -111,7 +111,7 @@ public static class ComponentWebApplicationExtensions
             }
 
             // 组件多次调用检测
-            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Count(t => t == componentType) > 1)
+            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Any(t => t == componentType.FullName + ".Web"))
             {
                 // 输出调试事件
                 Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
@@ -128,7 +128,7 @@ public static class ComponentWebApplicationExtensions
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCallForWeb)
             {
-                componentOptions.CallRegistration.Add(componentType);
+                componentOptions.CallRegistration.Add(componentType.FullName + ".Web");
             }
         }
 
