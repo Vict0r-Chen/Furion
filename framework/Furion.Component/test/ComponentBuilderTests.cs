@@ -46,7 +46,7 @@ public class ComponentBuilderTests
         var componentOptions = services.GetComponentOptions();
         Assert.NotNull(componentOptions);
 
-        Assert.Equal(2, componentOptions.OptionsActions.Count);
+        Assert.Equal(3, componentOptions.OptionsActions.Count);
     }
 
     [Fact]
@@ -79,6 +79,40 @@ public class ComponentBuilderTests
         var componentOptions = webApplication.GetComponentOptions();
         Assert.NotNull(componentOptions);
 
-        Assert.Equal(2, componentOptions.OptionsActions.Count);
+        Assert.Equal(4, componentOptions.OptionsActions.Count);
+    }
+
+    [Fact]
+    public void SuppressDuplicateCall_ReturnOK()
+    {
+        var builder = new ComponentBuilder
+        {
+            SuppressDuplicateCall = true
+        };
+
+        var services = new ServiceCollection();
+        builder.Build(services);
+
+        var componentOptions = services.GetComponentOptions();
+        Assert.NotNull(componentOptions);
+
+        Assert.True(componentOptions.SuppressDuplicateCall);
+    }
+
+    [Fact]
+    public void Web_SuppressDuplicateCall_ReturnOK()
+    {
+        var builder = new WebComponentBuilder
+        {
+            SuppressDuplicateCall = true
+        };
+
+        var webApplication = WebApplication.CreateBuilder().AddComponentService().Build();
+        builder.Build(webApplication);
+
+        var componentOptions = webApplication.GetComponentOptions();
+        Assert.NotNull(componentOptions);
+
+        Assert.True(componentOptions.SuppressDuplicateCall);
     }
 }

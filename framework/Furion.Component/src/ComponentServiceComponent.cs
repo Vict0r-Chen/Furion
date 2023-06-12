@@ -22,6 +22,9 @@ public sealed class ComponentServiceComponent : ComponentBase
     /// <inheritdoc />
     public override void ConfigureServices(ServiceContext context)
     {
-        context.Services.AddComponentService();
+        // 获取服务配置
+        var componentBuilder = context.GetOptionsOrDefault<ComponentBuilder>();
+
+        context.Services.AddComponentService(componentBuilder);
     }
 }

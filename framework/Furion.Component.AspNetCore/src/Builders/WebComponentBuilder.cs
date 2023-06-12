@@ -35,9 +35,14 @@ public sealed class WebComponentBuilder : ComponentBuilder
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     internal void Build(WebApplication webApplication)
     {
+        // 将自身注册为组件参数
+        Configure<WebComponentBuilder>(_ => { });
+
+        // 获取组件配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
-        // 添加组件配置参数
+        // 配置组件选项
+        componentOptions.SuppressDuplicateCall = SuppressDuplicateCall;
         componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
         _optionsActions.Clear();
     }

@@ -42,15 +42,27 @@ public class ComponentBuilder
     }
 
     /// <summary>
+    /// 禁用组件重复调用
+    /// </summary>
+    public bool SuppressDuplicateCall { get; set; }
+
+    /// <summary>
     /// 构建模块
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
     {
-        var componentOptions = services.GetComponentOptions();
-        ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
+        // 将自身注册为组件参数
+        Configure<ComponentBuilder>(options =>
+        {
+            options.SuppressDuplicateCall = SuppressDuplicateCall;
+        });
 
-        // 添加组件配置参数
+        // 获取组件配置选项
+        var componentOptions = services.GetComponentOptions();
+
+        // 配置组件选项
+        componentOptions.SuppressDuplicateCall = SuppressDuplicateCall;
         componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
         _optionsActions.Clear();
     }

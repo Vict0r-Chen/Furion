@@ -44,16 +44,16 @@ public class ComponentTests
     }
 
     [Fact]
-    public void AddWebComponent_ReturnOK()
+    public void UseComponent_ReturnOK()
     {
         var builder = WebApplication.CreateBuilder().AddComponentService();
         var app = builder.Build();
-        app.AddComponent<AWebComponent>();
+        app.UseComponent<AWebComponent>();
 
         var componentOptions = app.GetComponentOptions();
         Assert.NotNull(componentOptions);
-        Assert.Single(componentOptions.OptionsActions);
-        Assert.Equal(8, componentOptions.OptionsActions.First().Value.Count);
+        Assert.Equal(3, componentOptions.OptionsActions.Count);
+        Assert.Equal(8, componentOptions.OptionsActions.ElementAt(2).Value.Count);
 
         // C D B A
         var addComponentOptions = componentOptions.OptionsActions.GetOptions<AddComponentOptions>();
@@ -78,8 +78,8 @@ public class ComponentTests
 
         var componentOptions = app.GetComponentOptions();
         Assert.NotNull(componentOptions);
-        Assert.Single(componentOptions.OptionsActions);
-        Assert.Equal(16, componentOptions.OptionsActions.First().Value.Count);
+        Assert.Equal(2, componentOptions.OptionsActions.Count);
+        Assert.Equal(16, componentOptions.OptionsActions.ElementAt(0).Value.Count);
 
         // C D B A
         var addComponentOptions = componentOptions.OptionsActions.GetOptions<AddComponentOptions>();
