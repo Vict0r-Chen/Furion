@@ -42,7 +42,7 @@ public sealed class WebComponentBuilder : ComponentBuilder
         var componentOptions = webApplication.GetComponentOptions();
 
         // 配置组件选项
-        componentOptions.SuppressDuplicateCall = SuppressDuplicateCall;
+        componentOptions.SuppressDuplicateCallForWeb = SuppressDuplicateCall;
         componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
         _optionsActions.Clear();
     }

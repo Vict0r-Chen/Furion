@@ -87,7 +87,7 @@ public class ComponentBuilderTests
     {
         var builder = new ComponentBuilder
         {
-            SuppressDuplicateCall = true
+            SuppressDuplicateCall = false
         };
 
         var services = new ServiceCollection();
@@ -96,7 +96,7 @@ public class ComponentBuilderTests
         var componentOptions = services.GetComponentOptions();
         Assert.NotNull(componentOptions);
 
-        Assert.True(componentOptions.SuppressDuplicateCall);
+        Assert.False(componentOptions.SuppressDuplicateCall);
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class ComponentBuilderTests
     {
         var builder = new WebComponentBuilder
         {
-            SuppressDuplicateCall = true
+            SuppressDuplicateCall = false
         };
 
         var webApplication = WebApplication.CreateBuilder().AddComponentService().Build();
@@ -113,6 +113,6 @@ public class ComponentBuilderTests
         var componentOptions = webApplication.GetComponentOptions();
         Assert.NotNull(componentOptions);
 
-        Assert.True(componentOptions.SuppressDuplicateCall);
+        Assert.False(componentOptions.SuppressDuplicateCallForWeb);
     }
 }

@@ -294,6 +294,11 @@
             禁用组件重复调用
             </summary>
         </member>
+        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCallForWeb">
+            <summary>
+            禁用组件重复调用（Web 组件）
+            </summary>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>
             组件化模块拓展
