@@ -53,9 +53,9 @@ public class ComponentBuilder
     internal void Build(IServiceCollection services)
     {
         // 将自身注册为组件参数
-        Configure<ComponentBuilder>(options =>
+        Configure<ComponentBuilder>(builder =>
         {
-            options.SuppressDuplicateCall = SuppressDuplicateCall;
+            builder.SuppressDuplicateCall = SuppressDuplicateCall;
         });
 
         // 获取组件配置选项

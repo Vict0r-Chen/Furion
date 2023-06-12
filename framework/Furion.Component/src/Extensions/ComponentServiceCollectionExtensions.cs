@@ -112,7 +112,8 @@ public static class ComponentServiceCollectionExtensions
         foreach (var componentType in topologicalSortedMap)
         {
             // 组件多次调用检测
-            if (componentOptions.SuppressDuplicateCall && componentOptions.CallRegistration.Any(t => t == componentType.FullName))
+            var checkName = componentType.FullName!;
+            if (componentOptions.SuppressDuplicateCall && componentOptions.CallRegistration.Any(t => t == checkName))
             {
                 // 输出调试事件
                 Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
@@ -129,7 +130,7 @@ public static class ComponentServiceCollectionExtensions
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCall)
             {
-                componentOptions.CallRegistration.Add(componentType.FullName!);
+                componentOptions.CallRegistration.Add(checkName);
             }
         }
 

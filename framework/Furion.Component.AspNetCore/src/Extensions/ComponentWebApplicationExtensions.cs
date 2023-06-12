@@ -105,13 +105,15 @@ public static class ComponentWebApplicationExtensions
         // 依次初始化组件实例
         foreach (var componentType in topologicalSortedMap)
         {
+            // 如果不是 Web 组件则跳过
             if (componentType.BaseType != typeof(WebComponent))
             {
                 continue;
             }
 
             // 组件多次调用检测
-            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Any(t => t == componentType.FullName + ".Web"))
+            var checkName = componentType.FullName + ".Web";
+            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Any(t => t == checkName))
             {
                 // 输出调试事件
                 Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
@@ -128,7 +130,7 @@ public static class ComponentWebApplicationExtensions
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCallForWeb)
             {
-                componentOptions.CallRegistration.Add(componentType.FullName + ".Web");
+                componentOptions.CallRegistration.Add(checkName);
             }
         }
 
