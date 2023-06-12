@@ -111,11 +111,26 @@ public static class ComponentServiceCollectionExtensions
         // 依次初始化组件实例
         foreach (var componentType in topologicalSortedMap)
         {
+            // 组件多次调用检测
+            if (componentOptions.SuppressDuplicateCall && componentOptions.CallRegistration.Any(t => t == componentType))
+            {
+                // 输出调试事件
+                Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
+
+                continue;
+            }
+
             var component = Activator.CreateInstance(componentType) as ComponentBase;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
             components.Add(component);
+
+            // 组件调用登记
+            if (componentOptions.SuppressDuplicateCall)
+            {
+                componentOptions.CallRegistration.Add(componentType);
+            }
         }
 
         // 创建组件上下文

@@ -289,6 +289,11 @@
             组件参数委托字典
             </summary>
         </member>
+        <member name="P:Furion.Component.ComponentOptions.CallRegistration">
+            <summary>
+            组件调用登记
+            </summary>
+        </member>
         <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCall">
             <summary>
             禁用组件重复调用

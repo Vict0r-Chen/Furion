@@ -110,11 +110,26 @@ public static class ComponentWebApplicationExtensions
                 continue;
             }
 
+            // 组件多次调用检测
+            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Count(t => t == componentType) > 1)
+            {
+                // 输出调试事件
+                Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
+
+                continue;
+            }
+
             var component = Activator.CreateInstance(componentType) as WebComponent;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
             components.Add(component);
+
+            // 组件调用登记
+            if (componentOptions.SuppressDuplicateCallForWeb)
+            {
+                componentOptions.CallRegistration.Add(componentType);
+            }
         }
 
         // 创建组件上下文

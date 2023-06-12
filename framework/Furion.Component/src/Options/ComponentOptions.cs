@@ -25,12 +25,18 @@ internal sealed class ComponentOptions
     public ComponentOptions()
     {
         OptionsActions ??= new();
+        CallRegistration ??= new();
     }
 
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    internal Dictionary<Type, List<Action<object>>> OptionsActions { get; set; }
+    internal Dictionary<Type, List<Action<object>>> OptionsActions { get; init; }
+
+    /// <summary>
+    /// 组件调用登记
+    /// </summary>
+    internal List<Type> CallRegistration { get; init; }
 
     /// <summary>
     /// 禁用组件重复调用
