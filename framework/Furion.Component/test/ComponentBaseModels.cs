@@ -288,3 +288,18 @@ public class SuppressDuplicateComponent : ComponentBase
         });
     }
 }
+
+public class CustomOptions
+{
+    public int Num { get; set; }
+}
+
+public class CustomOptionsComponent : ComponentBase
+{
+    public override void ConfigureServices(ServiceContext context)
+    {
+        var options = context.GetOptions<CustomOptions>();
+        ArgumentNullException.ThrowIfNull(options, nameof(options));
+        Assert.Equal(10, options.Num);
+    }
+}

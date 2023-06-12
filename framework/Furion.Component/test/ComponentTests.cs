@@ -136,4 +136,43 @@ public class ComponentTests
         Assert.Equal(nameof(BComponent), addComponentOptions.ConfigureServices.ElementAt(2));
         Assert.Equal(nameof(AComponent), addComponentOptions.ConfigureServices.ElementAt(3));
     }
+
+    [Fact]
+    public void AddComponent_Builder_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddComponent<CustomOptionsComponent>(new ConfigurationManager(), builder =>
+        {
+            builder.Configure<CustomOptions>(o =>
+            {
+                o.Num = 10;
+            });
+        });
+
+        var componentOptions = services.GetComponentOptions();
+        Assert.NotNull(componentOptions);
+        var options = componentOptions.OptionsActions.GetOptions<CustomOptions>();
+        Assert.NotNull(options);
+        Assert.Equal(10, options.Num);
+    }
+
+    [Fact]
+    public void UseComponent_Builder_ReturnOK()
+    {
+        var builder = WebApplication.CreateBuilder().AddComponentService();
+        var app = builder.Build();
+        app.UseComponent<CustomOptionsForWebComponent>(builder =>
+        {
+            builder.Configure<CustomOptionsForWeb>(o =>
+            {
+                o.Num = 10;
+            });
+        });
+
+        var componentOptions = app.GetComponentOptions();
+        Assert.NotNull(componentOptions);
+        var options = componentOptions.OptionsActions.GetOptions<CustomOptionsForWeb>();
+        Assert.NotNull(options);
+        Assert.Equal(10, options.Num);
+    }
 }

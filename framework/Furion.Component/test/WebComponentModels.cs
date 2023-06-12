@@ -434,3 +434,18 @@ public class SuppressDuplicateForWebComponent : WebComponent
         });
     }
 }
+
+public class CustomOptionsForWeb
+{
+    public int Num { get; set; }
+}
+
+public class CustomOptionsForWebComponent : WebComponent
+{
+    public override void Configure(ApplicationContext context)
+    {
+        var options = context.GetOptions<CustomOptionsForWeb>();
+        ArgumentNullException.ThrowIfNull(options, nameof(options));
+        Assert.Equal(10, options.Num);
+    }
+}
