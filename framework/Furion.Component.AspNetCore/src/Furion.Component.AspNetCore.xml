@@ -9,8 +9,13 @@
             组件模块构建器
             </summary>
         </member>
+        <member name="P:Furion.Component.WebComponentBuilder.SuppressDuplicateCall">
+            <summary>
+            禁用组件重复调用
+            </summary>
+        </member>
         <member name="M:Furion.Component.WebComponentBuilder.Configure``1(System.Action{``0})">
-            <inheritdoc cref="M:Furion.Component.ComponentBuilder.Configure``1(System.Action{``0})" />
+            <inheritdoc cref="M:Furion.Component.ComponentBuilderBase.Configure``1(System.Action{``0})" />
         </member>
         <member name="M:Furion.Component.WebComponentBuilder.Build(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>

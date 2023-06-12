@@ -15,33 +15,29 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块构建器
+/// 组件模块构建器抽象基类
 /// </summary>
-public sealed class ComponentBuilder : ComponentBuilderBase
+public abstract class ComponentBuilderBase
 {
     /// <summary>
-    /// 禁用组件重复调用
+    /// 组件参数委托字典
     /// </summary>
-    public bool SuppressDuplicateCall { get; set; } = true;
+    internal readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
 
     /// <summary>
-    /// 构建模块
+    /// 配置组件参数
     /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    internal void Build(IServiceCollection services)
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <param name="configure">配置委托</param>
+    /// <returns><see cref="ComponentBuilderBase"/></returns>
+    public ComponentBuilderBase Configure<TOptions>(Action<TOptions> configure)
+        where TOptions : class, new()
     {
-        // 将自身注册为组件参数
-        Configure<ComponentBuilder>(builder =>
-        {
-            builder.SuppressDuplicateCall = SuppressDuplicateCall;
-        });
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
-        // 获取组件配置选项
-        var componentOptions = services.GetComponentOptions();
+        _optionsActions.AddOrUpdate(configure);
 
-        // 配置组件选项
-        componentOptions.SuppressDuplicateCall = SuppressDuplicateCall;
-        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
-        _optionsActions.Clear();
+        return this;
     }
 }

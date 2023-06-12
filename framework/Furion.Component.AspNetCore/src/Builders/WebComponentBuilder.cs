@@ -17,9 +17,14 @@ namespace Furion.Component;
 /// <summary>
 /// 组件模块构建器
 /// </summary>
-public sealed class WebComponentBuilder : ComponentBuilder
+public sealed class WebComponentBuilder : ComponentBuilderBase
 {
-    /// <inheritdoc cref="ComponentBuilder.Configure{TOptions}(Action{TOptions})" />
+    /// <summary>
+    /// 禁用组件重复调用
+    /// </summary>
+    public bool SuppressDuplicateCall { get; set; } = true;
+
+    /// <inheritdoc cref="ComponentBuilderBase.Configure{TOptions}(Action{TOptions})" />
     public new WebComponentBuilder Configure<TOptions>(Action<TOptions> configure)
         where TOptions : class, new()
     {

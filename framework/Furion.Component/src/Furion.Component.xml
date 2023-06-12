@@ -25,19 +25,6 @@
             组件模块构建器
             </summary>
         </member>
-        <member name="F:Furion.Component.ComponentBuilder._optionsActions">
-            <summary>
-            组件参数委托字典
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentBuilder.Configure``1(System.Action{``0})">
-            <summary>
-            配置组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <param name="configure">配置委托</param>
-            <returns><see cref="T:Furion.Component.ComponentBuilder"/></returns>
-        </member>
         <member name="P:Furion.Component.ComponentBuilder.SuppressDuplicateCall">
             <summary>
             禁用组件重复调用
@@ -48,6 +35,24 @@
             构建模块
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+        </member>
+        <member name="T:Furion.Component.ComponentBuilderBase">
+            <summary>
+            组件模块构建器抽象基类
+            </summary>
+        </member>
+        <member name="F:Furion.Component.ComponentBuilderBase._optionsActions">
+            <summary>
+            组件参数委托字典
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentBuilderBase.Configure``1(System.Action{``0})">
+            <summary>
+            配置组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <param name="configure">配置委托</param>
+            <returns><see cref="T:Furion.Component.ComponentBuilderBase"/></returns>
         </member>
         <member name="T:Furion.Component.ComponentServiceComponent">
             <summary>
