@@ -17,14 +17,6 @@ namespace Furion.Tests;
 [DependsOn(typeof(DependencyInjectionComponent))]
 public class EntryComponent : WebComponent
 {
-    public override void PreConfigureServices(ServiceContext context)
-    {
-        //Configure<ComponentBuilder>(o =>
-        //{
-        //    o.SuppressDuplicateCall = true;
-        //});
-    }
-
     public override void ConfigureServices(ServiceContext context)
     {
         context.Services.AddControllers();
