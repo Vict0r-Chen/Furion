@@ -15,32 +15,42 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块构建器
+/// 组件模块构建器基类
 /// </summary>
-public sealed class WebComponentBuilder : WebComponentBuilderBase
+public class WebComponentBuilderBase
 {
     /// <summary>
-    /// 禁用组件重复调用
+    /// 组件参数委托字典
     /// </summary>
-    public bool SuppressDuplicateCall { get; set; } = true;
+    internal readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
+
+    /// <summary>
+    /// 配置组件参数
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <param name="configure">配置委托</param>
+    /// <returns><see cref="WebComponentBuilderBase"/></returns>
+    public WebComponentBuilderBase Configure<TOptions>(Action<TOptions> configure)
+        where TOptions : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+
+        _optionsActions.AddOrUpdate(configure);
+
+        return this;
+    }
 
     /// <summary>
     /// 构建模块
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    internal override void Build(WebApplication webApplication)
+    internal virtual void Build(WebApplication webApplication)
     {
-        // 将自身注册为组件参数
-        Configure<WebComponentBuilder>(builder =>
-        {
-            builder.SuppressDuplicateCall = SuppressDuplicateCall;
-        });
-
         // 获取组件配置选项
         var componentOptions = webApplication.GetComponentOptions();
 
         // 配置组件选项
-        componentOptions.SuppressDuplicateCallForWeb = SuppressDuplicateCall;
         componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
         _optionsActions.Clear();
     }
