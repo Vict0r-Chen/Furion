@@ -6,20 +6,20 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
+  title: "Furion",
+  tagline: "一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
-  url: "https://your-docusaurus-test-site.com",
+  url: "https://furion.net",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "facebook", // Usually your GitHub org/user name.
-  projectName: "docusaurus", // Usually your repo name.
+  organizationName: "Furion", // Usually your GitHub org/user name.
+  projectName: "Furion", // Usually your repo name.
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -28,8 +28,8 @@ const config = {
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
+    defaultLocale: "zh-CN",
+    locales: ["zh-CN"],
   },
 
   presets: [
@@ -62,9 +62,9 @@ const config = {
       // Replace with your project's social card
       image: "img/docusaurus-social-card.jpg",
       navbar: {
-        title: "My Site",
+        title: "Furion",
         logo: {
-          alt: "My Site Logo",
+          alt: "Furion Logo",
           src: "img/logo.svg",
         },
         items: [
@@ -72,12 +72,12 @@ const config = {
             type: "docSidebar",
             sidebarId: "tutorialSidebar",
             position: "left",
-            label: "Tutorial",
+            label: "教程",
           },
-          { to: "/blog", label: "Blog", position: "left" },
+          { to: "/blog", label: "博客", position: "left" },
           {
-            href: "https://github.com/facebook/docusaurus",
-            label: "GitHub",
+            href: "https://gitee.com/dotnetchina/Furion",
+            label: "Gitee",
             position: "right",
           },
         ],
@@ -125,7 +125,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `版权所有 (c) 2020-2023 百小僧，百签科技（广东）有限公司`,
       },
       prism: {
         theme: lightCodeTheme,
