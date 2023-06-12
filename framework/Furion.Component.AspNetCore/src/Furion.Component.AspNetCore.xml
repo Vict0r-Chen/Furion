@@ -153,7 +153,7 @@
             添加组件服务
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
-            <param name="componentBuilder"></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent``1(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">

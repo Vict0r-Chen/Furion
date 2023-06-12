@@ -63,7 +63,7 @@ public static class ComponentWebApplicationBuilderExtensions
     /// 添加组件服务
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="componentBuilder"></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponentService(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
     {
