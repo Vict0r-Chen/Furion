@@ -111,4 +111,37 @@ public class ComponentOptionsActionsExtensionsTests
         var options = optionsActions.GetOptions<DefaultOptions>();
         Assert.Null(options);
     }
+
+    [Fact]
+    public void GetOptionsAction_ReturnOK()
+    {
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
+
+        static void action1(DefaultOptions options)
+        {
+            options.Num += 1;
+        }
+        static void action2(DefaultOptions options)
+        {
+            options.Num += 1;
+        }
+
+        optionsActions.AddOrUpdate((Action<DefaultOptions>)action1);
+        optionsActions.AddOrUpdate((Action<DefaultOptions>)action2);
+
+        var cascadeAction = optionsActions.GetOptionsAction<DefaultOptions>();
+        Assert.NotNull(cascadeAction);
+
+        var options = new DefaultOptions();
+        cascadeAction(options);
+        Assert.Equal(2, options.Num);
+    }
+
+    [Fact]
+    public void GetOptionsAction_Null_ReturnOK()
+    {
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
+        var cascadeAction = optionsActions.GetOptionsAction<DefaultOptions>();
+        Assert.Null(cascadeAction);
+    }
 }

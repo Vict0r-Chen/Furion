@@ -88,26 +88,18 @@ internal static class ComponentOptionsActionsExtensions
     internal static TOptions? GetOptions<TOptions>(this Dictionary<Type, List<Delegate>> optionsActions)
         where TOptions : class, new()
     {
-        // 组件参数类型
-        var optionsType = typeof(TOptions);
-
-        // 如果未找到组件类型参数则返回空
-        if (!optionsActions.ContainsKey(optionsType))
+        // 生成级联委托
+        var cascadeAction = optionsActions.GetOptionsAction<TOptions>();
+        if (cascadeAction is null)
         {
             return null;
         }
 
-        // 取出委托集合
-        var actions = optionsActions[optionsType].Cast<Action<TOptions>>();
-        var currentValue = Activator.CreateInstance<TOptions>();
+        // 调用级联委托返回最新的值
+        var options = Activator.CreateInstance<TOptions>();
+        cascadeAction(options);
 
-        // 遍历集合并调用
-        foreach (var action in actions)
-        {
-            action(currentValue);
-        }
-
-        return currentValue;
+        return options;
     }
 
     /// <summary>
@@ -127,7 +119,14 @@ internal static class ComponentOptionsActionsExtensions
             return null;
         }
 
-        // 取出最后一个委托
-        return (Action<TOptions>)optionsActions[optionsType].Last();
+        // 生成级联委托
+        var cascadeAction = optionsActions[optionsType]
+                                            .Cast<Action<TOptions>>()
+                                            .Aggregate((previous, current) => (t) =>
+                                            {
+                                                previous(t);
+                                                current(t);
+                                            });
+        return cascadeAction;
     }
 }
