@@ -94,6 +94,33 @@
         <member name="P:Furion.Component.ComponentContext.Environment">
             <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
         </member>
+        <member name="M:Furion.Component.ComponentContext.GetGetComponentOptions">
+            <summary>
+            获取组件模块配置选项
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentContext.GetOptions``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentContext.GetOptionsOrDefault``1">
+            <summary>
+            获取组件参数
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentContext.GetOptionsAction``1">
+            <summary>
+            获取组件参数委托
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
+        </member>
         <member name="T:Furion.Component.ServiceContext">
             <summary>
             服务组件上下文
@@ -106,35 +133,11 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
         </member>
-        <member name="M:Furion.Component.ServiceContext.Deconstruct(Microsoft.Extensions.DependencyInjection.IServiceCollection@)">
-            <summary>
-            析构实例
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-        </member>
         <member name="P:Furion.Component.ServiceContext.Services">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
         </member>
-        <member name="M:Furion.Component.ServiceContext.GetOptions``1">
-            <summary>
-            获取组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
-        </member>
-        <member name="M:Furion.Component.ServiceContext.GetOptionsOrDefault``1">
-            <summary>
-            获取组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
-        </member>
-        <member name="M:Furion.Component.ServiceContext.GetOptionsAction``1">
-            <summary>
-            获取组件参数委托
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
+        <member name="M:Furion.Component.ServiceContext.GetGetComponentOptions">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Component.ComponentBase">
             <summary>
@@ -227,48 +230,6 @@
             <summary>
             WebComponent 类型全名
             </summary>
-        </member>
-        <member name="T:Furion.Component.ComponentOptionsActionsExtensions">
-            <summary>
-            组件参数委托字典拓展
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate``1(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Delegate}},System.Action{``0})">
-            <summary>
-            添加或更新组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <param name="optionsActions">组件参数委托字典</param>
-            <param name="configure">配置委托</param>
-        </member>
-        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Delegate}},System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Delegate}})">
-            <summary>
-            添加或更新组件参数
-            </summary>
-            <param name="optionsActions">组件参数委托字典</param>
-            <param name="otherOptionsActions">其他组件参数委托字典</param>
-        </member>
-        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.AddOrUpdate(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Delegate}},System.Type,System.Delegate)">
-            <summary>
-            添加或更新组件参数
-            </summary>
-            <param name="optionsType">组件参数类型</param>
-            <param name="optionsActions">组件参数委托字典</param>
-            <param name="configure">配置委托</param>
-        </member>
-        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.GetOptions``1(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Delegate}})">
-            <summary>
-            获取组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
-        </member>
-        <member name="M:Furion.Component.ComponentOptionsActionsExtensions.GetOptionsAction``1(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Delegate}})">
-            <summary>
-            获取组件参数委托
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
         </member>
         <member name="T:Furion.Component.Topological">
             <summary>

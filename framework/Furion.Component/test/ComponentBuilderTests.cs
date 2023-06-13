@@ -133,7 +133,8 @@ public class ComponentBuilderTests
         services.AddComponent<SuppressDuplicateComponent>(new ConfigurationManager());
         services.AddComponent<SuppressDuplicateComponent>(new ConfigurationManager());
 
-        var options = services.GetComponentOptions().OptionsActions.GetOptions<SuppressDuplicateOptions>();
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+        var options = serviceContext.GetOptions<SuppressDuplicateOptions>();
         Assert.NotNull(options);
         Assert.Equal(count, options.Num);
     }
@@ -155,7 +156,8 @@ public class ComponentBuilderTests
         builder.AddComponent<SuppressDuplicateComponent>();
         builder.AddComponent<SuppressDuplicateComponent>();
 
-        var options = builder.Services.GetComponentOptions().OptionsActions.GetOptions<SuppressDuplicateOptions>();
+        var serviceContext = new ServiceContext(builder.Services, new ConfigurationManager());
+        var options = serviceContext.GetOptions<SuppressDuplicateOptions>();
         Assert.NotNull(options);
         Assert.Equal(count, options.Num);
 
@@ -172,7 +174,8 @@ public class ComponentBuilderTests
         app.UseComponent<SuppressDuplicateForWebComponent>();
         app.UseComponent<SuppressDuplicateForWebComponent>();
 
-        var options2 = app.GetComponentOptions().OptionsActions.GetOptions<SuppressDuplicateForWebOptions>();
+        var applicationContext = new ApplicationContext(app);
+        var options2 = applicationContext.GetOptions<SuppressDuplicateForWebOptions>();
         Assert.NotNull(options2);
         Assert.Equal(count, options2.Num);
     }

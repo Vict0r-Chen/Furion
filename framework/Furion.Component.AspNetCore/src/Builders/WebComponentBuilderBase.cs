@@ -42,7 +42,7 @@ public class WebComponentBuilderBase
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
-        _optionsActions.AddOrUpdate(configure);
+        _optionsActions.AddOrUpdate(typeof(TOptions), configure);
     }
 
     /// <summary>

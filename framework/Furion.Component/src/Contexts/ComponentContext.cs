@@ -33,4 +33,74 @@ public abstract class ComponentContext
 
     /// <inheritdoc cref="IHostEnvironment"/>
     public IHostEnvironment? Environment { get; internal set; }
+
+    /// <summary>
+    /// 获取组件模块配置选项
+    /// </summary>
+    /// <returns></returns>
+    internal abstract ComponentOptions GetGetComponentOptions();
+
+    /// <summary>
+    /// 获取组件参数
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    public TOptions? GetOptions<TOptions>()
+        where TOptions : class, new()
+    {
+        // 生成级联委托
+        var cascadeAction = GetOptionsAction<TOptions>();
+        if (cascadeAction is null)
+        {
+            return null;
+        }
+
+        // 调用级联委托返回最新的值
+        var options = Activator.CreateInstance<TOptions>();
+        cascadeAction(options);
+
+        return options;
+    }
+
+    /// <summary>
+    /// 获取组件参数
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    public TOptions GetOptionsOrDefault<TOptions>()
+        where TOptions : class, new()
+    {
+        return GetOptions<TOptions>() ?? Activator.CreateInstance<TOptions>();
+    }
+
+    /// <summary>
+    /// 获取组件参数委托
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    public Action<TOptions>? GetOptionsAction<TOptions>()
+        where TOptions : class, new()
+    {
+        var componentOptions = GetGetComponentOptions();
+        var optionsActions = componentOptions.OptionsActions;
+
+        // 组件参数类型
+        var optionsType = typeof(TOptions);
+
+        // 如果未找到组件类型参数则返回空
+        if (!optionsActions.ContainsKey(optionsType))
+        {
+            return null;
+        }
+
+        // 生成级联委托
+        var cascadeAction = optionsActions[optionsType]
+                                            .Cast<Action<TOptions>>()
+                                            .Aggregate((previous, current) => (t) =>
+                                            {
+                                                previous(t);
+                                                current(t);
+                                            });
+        return cascadeAction;
+    }
 }

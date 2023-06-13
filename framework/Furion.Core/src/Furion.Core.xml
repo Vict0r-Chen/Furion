@@ -89,6 +89,30 @@
             <param name="name">事件名</param>
             <param name="value">负载数据</param>
         </member>
+        <member name="T:System.Collections.Generic.DictionaryExtensions">
+            <summary>
+            <see cref="T:System.Collections.Generic.Dictionary`2"/> 类型拓展
+            </summary>
+        </member>
+        <member name="M:System.Collections.Generic.DictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.Dictionary{``0,System.Collections.Generic.List{``1}},``0,``1)">
+            <summary>
+            添加或更新
+            </summary>
+            <typeparam name="TKey">字典 Key 类型</typeparam>
+            <typeparam name="TValue">字典 Value 类型</typeparam>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2"/></param>
+            <param name="key">键</param>
+            <param name="value">值</param>
+        </member>
+        <member name="M:System.Collections.Generic.DictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.Dictionary{``0,System.Collections.Generic.List{``1}},System.Collections.Generic.Dictionary{``0,System.Collections.Generic.List{``1}})">
+            <summary>
+            添加或更新
+            </summary>
+            <typeparam name="TKey">字典 Key 类型</typeparam>
+            <typeparam name="TValue">字典 Value 类型</typeparam>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2"/></param>
+            <param name="otherDictionary"><see cref="T:System.Collections.Generic.Dictionary`2"/></param>
+        </member>
         <member name="T:System.TypeExtensions">
             <summary>
             <see cref="T:System.Type"/> 类型拓展

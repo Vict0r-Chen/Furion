@@ -31,53 +31,15 @@ public sealed class ServiceContext : ComponentContext
         Environment = services.GetHostEnvironment();
     }
 
-    /// <summary>
-    /// 析构实例
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    public void Deconstruct(out IServiceCollection services)
-    {
-        services = Services;
-    }
-
     /// <inheritdoc cref="IServiceCollection"/>
     public IServiceCollection Services { get; }
 
     ///// <inheritdoc cref="ILoggingBuilder"/>
     //public ILoggingBuilder? Logging { get; init; }
 
-    /// <summary>
-    /// 获取组件参数
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions? GetOptions<TOptions>()
-        where TOptions : class, new()
+    /// <inheritdoc />
+    internal override ComponentOptions GetGetComponentOptions()
     {
-        var componentOptions = Services.GetComponentOptions();
-        return componentOptions.OptionsActions.GetOptions<TOptions>();
-    }
-
-    /// <summary>
-    /// 获取组件参数
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions GetOptionsOrDefault<TOptions>()
-        where TOptions : class, new()
-    {
-        return GetOptions<TOptions>() ?? Activator.CreateInstance<TOptions>();
-    }
-
-    /// <summary>
-    /// 获取组件参数委托
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public Action<TOptions>? GetOptionsAction<TOptions>()
-        where TOptions : class, new()
-    {
-        var componentOptions = Services.GetComponentOptions();
-        return componentOptions.OptionsActions.GetOptionsAction<TOptions>();
+        return Services.GetComponentOptions();
     }
 }

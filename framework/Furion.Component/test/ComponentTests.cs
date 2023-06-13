@@ -28,7 +28,8 @@ public class ComponentTests
         Assert.Equal(8, componentOptions.OptionsActions.First().Value.Count);
 
         // C D B A
-        var addComponentOptions = componentOptions.OptionsActions.GetOptions<AddComponentOptions>();
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+        var addComponentOptions = serviceContext.GetOptions<AddComponentOptions>();
         Assert.NotNull(addComponentOptions);
         Assert.Equal(4, addComponentOptions.PreConfigureServices.Count);
         Assert.Equal(nameof(CComponent), addComponentOptions.PreConfigureServices.ElementAt(0));
@@ -56,7 +57,8 @@ public class ComponentTests
         Assert.Equal(8, componentOptions.OptionsActions.ElementAt(1).Value.Count);
 
         // C D B A
-        var addComponentOptions = componentOptions.OptionsActions.GetOptions<AddComponentOptions>();
+        var applicationContext = new ApplicationContext(app);
+        var addComponentOptions = applicationContext.GetOptions<AddComponentOptions>();
         Assert.NotNull(addComponentOptions);
         Assert.Equal(4, addComponentOptions.PreConfigure.Count);
         Assert.Equal(nameof(CWebComponent), addComponentOptions.PreConfigure.ElementAt(0));
@@ -82,7 +84,8 @@ public class ComponentTests
         Assert.Equal(16, componentOptions.OptionsActions.ElementAt(0).Value.Count);
 
         // C D B A
-        var addComponentOptions = componentOptions.OptionsActions.GetOptions<AddComponentOptions>();
+        var applicationContext = new ApplicationContext(app);
+        var addComponentOptions = applicationContext.GetOptions<AddComponentOptions>();
         Assert.NotNull(addComponentOptions);
 
         Assert.Equal(4, addComponentOptions.PreConfigureServices.Count);
@@ -113,7 +116,8 @@ public class ComponentTests
     [Fact]
     public void HostApplicationBuilder_Entry_ReturnOK()
     {
-        var host = Host.CreateApplicationBuilder().Entry<AComponent>();
+        var builder = Host.CreateApplicationBuilder();
+        var host = builder.Entry<AComponent>();
 
         var componentOptions = host.GetComponentOptions();
         Assert.NotNull(componentOptions);
@@ -121,7 +125,8 @@ public class ComponentTests
         Assert.Equal(8, componentOptions.OptionsActions.First().Value.Count);
 
         // C D B A
-        var addComponentOptions = componentOptions.OptionsActions.GetOptions<AddComponentOptions>();
+        var serviceContext = new ServiceContext(builder.Services!, new ConfigurationManager());
+        var addComponentOptions = serviceContext.GetOptions<AddComponentOptions>();
         Assert.NotNull(addComponentOptions);
 
         Assert.Equal(4, addComponentOptions.PreConfigureServices.Count);
@@ -151,7 +156,8 @@ public class ComponentTests
 
         var componentOptions = services.GetComponentOptions();
         Assert.NotNull(componentOptions);
-        var options = componentOptions.OptionsActions.GetOptions<CustomOptions>();
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+        var options = serviceContext.GetOptions<CustomOptions>();
         Assert.NotNull(options);
         Assert.Equal(10, options.Num);
     }
@@ -171,7 +177,8 @@ public class ComponentTests
 
         var componentOptions = app.GetComponentOptions();
         Assert.NotNull(componentOptions);
-        var options = componentOptions.OptionsActions.GetOptions<CustomOptionsForWeb>();
+        var applicationContext = new ApplicationContext(app);
+        var options = applicationContext.GetOptions<CustomOptionsForWeb>();
         Assert.NotNull(options);
         Assert.Equal(10, options.Num);
     }

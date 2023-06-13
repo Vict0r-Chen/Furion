@@ -17,76 +17,8 @@ namespace Furion.Component.Tests;
 public class ComponentOptionsActionsExtensionsTests
 {
     [Fact]
-    public void AddOrUpdate_Generic_ReturnOK()
-    {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-
-        void action1(DefaultOptions options) { }
-        void action2(WithParameterlessOptions options) { }
-        static void action3(ManyConstructorOptions options) { }
-
-        optionsActions.AddOrUpdate((Action<DefaultOptions>)action1);
-        optionsActions.AddOrUpdate((Action<WithParameterlessOptions>)action2);
-        optionsActions.AddOrUpdate((Action<ManyConstructorOptions>)action3);
-
-        void action1Object(object obj) => action1((DefaultOptions)obj);
-        void action2Object(object obj) => action2((WithParameterlessOptions)obj);
-        void action3Object(object obj) => action3((ManyConstructorOptions)obj);
-
-        optionsActions.AddOrUpdate(typeof(DefaultOptions), action1Object);
-        optionsActions.AddOrUpdate(typeof(WithParameterlessOptions), action2Object);
-        optionsActions.AddOrUpdate(typeof(ManyConstructorOptions), action3Object);
-
-        Assert.Equal(3, optionsActions.Count);
-    }
-
-    [Fact]
-    public void AddOrUpdate_Other_ReturnOK()
-    {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-
-        void action1(DefaultOptions options) { }
-        void action2(WithParameterlessOptions options) { }
-        static void action3(ManyConstructorOptions options) { }
-
-        optionsActions.AddOrUpdate((Action<DefaultOptions>)action1);
-        optionsActions.AddOrUpdate((Action<WithParameterlessOptions>)action2);
-        optionsActions.AddOrUpdate((Action<ManyConstructorOptions>)action3);
-
-        var otherOptionsActions = new Dictionary<Type, List<Delegate>>();
-
-        void action1Object(object obj) => action1((DefaultOptions)obj);
-        void action2Object(object obj) => action2((WithParameterlessOptions)obj);
-        void action3Object(object obj) => action3((ManyConstructorOptions)obj);
-
-        otherOptionsActions.AddOrUpdate(typeof(DefaultOptions), action1Object);
-        otherOptionsActions.AddOrUpdate(typeof(WithParameterlessOptions), action2Object);
-        otherOptionsActions.AddOrUpdate(typeof(ManyConstructorOptions), action3Object);
-
-        Assert.Equal(3, optionsActions.Count);
-    }
-
-    [Fact]
-    public void AddOrUpdate_Null_ReturnOK()
-    {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            optionsActions.AddOrUpdate(null!); ;
-        });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            optionsActions.AddOrUpdate(configure: (Action<object>)null!);
-        });
-    }
-
-    [Fact]
     public void GetOptions_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-
         static void action1(DefaultOptions options)
         {
             options.Num += 1;
@@ -96,10 +28,16 @@ public class ComponentOptionsActionsExtensionsTests
             options.Num += 1;
         }
 
-        optionsActions.AddOrUpdate((Action<DefaultOptions>)action1);
-        optionsActions.AddOrUpdate((Action<DefaultOptions>)action2);
+        var componentBuilder = new ComponentBuilder();
+        componentBuilder.Configure<DefaultOptions>(action1);
+        componentBuilder.Configure<DefaultOptions>(action2);
 
-        var options = optionsActions.GetOptions<DefaultOptions>();
+        var services = new ServiceCollection();
+        componentBuilder.Build(services);
+
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+
+        var options = serviceContext.GetOptions<DefaultOptions>();
         Assert.NotNull(options);
         Assert.Equal(2, options.Num);
     }
@@ -107,16 +45,15 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void GetOptions_Null_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-        var options = optionsActions.GetOptions<DefaultOptions>();
+        var services = new ServiceCollection();
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+        var options = serviceContext.GetOptions<DefaultOptions>();
         Assert.Null(options);
     }
 
     [Fact]
     public void GetOptionsAction_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-
         static void action1(DefaultOptions options)
         {
             options.Num += 1;
@@ -126,10 +63,16 @@ public class ComponentOptionsActionsExtensionsTests
             options.Num += 1;
         }
 
-        optionsActions.AddOrUpdate((Action<DefaultOptions>)action1);
-        optionsActions.AddOrUpdate((Action<DefaultOptions>)action2);
+        var componentBuilder = new ComponentBuilder();
+        componentBuilder.Configure<DefaultOptions>(action1);
+        componentBuilder.Configure<DefaultOptions>(action2);
 
-        var cascadeAction = optionsActions.GetOptionsAction<DefaultOptions>();
+        var services = new ServiceCollection();
+        componentBuilder.Build(services);
+
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+
+        var cascadeAction = serviceContext.GetOptionsAction<DefaultOptions>();
         Assert.NotNull(cascadeAction);
 
         var options = new DefaultOptions();
@@ -140,8 +83,9 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void GetOptionsAction_Null_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Delegate>>();
-        var cascadeAction = optionsActions.GetOptionsAction<DefaultOptions>();
+        var services = new ServiceCollection();
+        var serviceContext = new ServiceContext(services, new ConfigurationManager());
+        var cascadeAction = serviceContext.GetOptionsAction<DefaultOptions>();
         Assert.Null(cascadeAction);
     }
 }

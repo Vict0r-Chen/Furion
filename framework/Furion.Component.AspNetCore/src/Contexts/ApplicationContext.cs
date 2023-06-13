@@ -30,53 +30,15 @@ public sealed class ApplicationContext : ComponentContext
         Environment = application.Environment;
     }
 
-    /// <summary>
-    /// 析构实例
-    /// </summary>
-    /// <param name="app"><see cref="WebApplication"/></param>
-    public void Deconstruct(out WebApplication app)
-    {
-        app = Application;
-    }
-
     /// <inheritdoc cref="WebApplication"/>
     public WebApplication Application { get; }
 
     /// <inheritdoc cref="IWebHostEnvironment"/>
     public new IWebHostEnvironment Environment { get; }
 
-    /// <summary>
-    /// 获取组件参数
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions? GetOptions<TOptions>()
-        where TOptions : class, new()
+    /// <inheritdoc />
+    internal override ComponentOptions GetGetComponentOptions()
     {
-        var componentOptions = Application.GetComponentOptions();
-        return componentOptions.OptionsActions.GetOptions<TOptions>();
-    }
-
-    /// <summary>
-    /// 获取组件参数
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions GetOptionsOrDefault<TOptions>()
-        where TOptions : class, new()
-    {
-        return GetOptions<TOptions>() ?? Activator.CreateInstance<TOptions>();
-    }
-
-    /// <summary>
-    /// 获取组件参数委托
-    /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public Action<TOptions>? GetOptionsAction<TOptions>()
-        where TOptions : class, new()
-    {
-        var componentOptions = Application.GetComponentOptions();
-        return componentOptions.OptionsActions.GetOptionsAction<TOptions>();
+        return Application.GetComponentOptions();
     }
 }

@@ -40,7 +40,7 @@ public abstract class ComponentBase
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
         ArgumentNullException.ThrowIfNull(Options, nameof(Options));
 
-        Options.OptionsActions.AddOrUpdate(configure);
+        Options.OptionsActions.AddOrUpdate(typeof(TOptions), configure);
     }
 
     /// <summary>

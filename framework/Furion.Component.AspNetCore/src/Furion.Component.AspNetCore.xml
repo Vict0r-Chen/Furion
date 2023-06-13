@@ -72,38 +72,14 @@
             </summary>
             <param name="application"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
         </member>
-        <member name="M:Furion.Component.ApplicationContext.Deconstruct(Microsoft.AspNetCore.Builder.WebApplication@)">
-            <summary>
-            析构实例
-            </summary>
-            <param name="app"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-        </member>
         <member name="P:Furion.Component.ApplicationContext.Application">
             <inheritdoc cref="T:Microsoft.AspNetCore.Builder.WebApplication"/>
         </member>
         <member name="P:Furion.Component.ApplicationContext.Environment">
             <inheritdoc cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/>
         </member>
-        <member name="M:Furion.Component.ApplicationContext.GetOptions``1">
-            <summary>
-            获取组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
-        </member>
-        <member name="M:Furion.Component.ApplicationContext.GetOptionsOrDefault``1">
-            <summary>
-            获取组件参数
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
-        </member>
-        <member name="M:Furion.Component.ApplicationContext.GetOptionsAction``1">
-            <summary>
-            获取组件参数委托
-            </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
+        <member name="M:Furion.Component.ApplicationContext.GetGetComponentOptions">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Component.WebComponent">
             <inheritdoc />
