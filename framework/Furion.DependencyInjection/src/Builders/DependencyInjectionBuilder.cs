@@ -319,7 +319,6 @@ public sealed class DependencyInjectionBuilder
         var serviceTypes = !type.IsGenericType
                                              ? filteredOfServiceTypes
                                              : filteredOfServiceTypes.Where(i => i.IsGenericType
-                                                                                           && i.GenericTypeArguments.Length == typeDefinitionParameters.Length
                                                                                            && i.GenericTypeArguments.SequenceEqual(typeDefinitionParameters))
                                                                      .Select(i => i.GetGenericTypeDefinition());
 
