@@ -19,7 +19,7 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void AddOrUpdate_Generic_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Action<object>>>();
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
 
         void action1(DefaultOptions options) { }
         void action2(WithParameterlessOptions options) { }
@@ -43,7 +43,7 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void AddOrUpdate_Other_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Action<object>>>();
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
 
         void action1(DefaultOptions options) { }
         void action2(WithParameterlessOptions options) { }
@@ -53,7 +53,7 @@ public class ComponentOptionsActionsExtensionsTests
         optionsActions.AddOrUpdate((Action<WithParameterlessOptions>)action2);
         optionsActions.AddOrUpdate((Action<ManyConstructorOptions>)action3);
 
-        var otherOptionsActions = new Dictionary<Type, List<Action<object>>>();
+        var otherOptionsActions = new Dictionary<Type, List<Delegate>>();
 
         void action1Object(object obj) => action1((DefaultOptions)obj);
         void action2Object(object obj) => action2((WithParameterlessOptions)obj);
@@ -69,7 +69,7 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void AddOrUpdate_Null_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Action<object>>>();
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -85,7 +85,7 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void GetOptions_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Action<object>>>();
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
 
         static void action1(DefaultOptions options)
         {
@@ -107,7 +107,7 @@ public class ComponentOptionsActionsExtensionsTests
     [Fact]
     public void GetOptions_Null_ReturnOK()
     {
-        var optionsActions = new Dictionary<Type, List<Action<object>>>();
+        var optionsActions = new Dictionary<Type, List<Delegate>>();
         var options = optionsActions.GetOptions<DefaultOptions>();
         Assert.Null(options);
     }

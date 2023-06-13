@@ -25,16 +25,13 @@ internal static class ComponentOptionsActionsExtensions
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <param name="optionsActions">组件参数委托字典</param>
     /// <param name="configure">配置委托</param>
-    internal static void AddOrUpdate<TOptions>(this Dictionary<Type, List<Action<object>>> optionsActions, Action<TOptions> configure)
+    internal static void AddOrUpdate<TOptions>(this Dictionary<Type, List<Delegate>> optionsActions, Action<TOptions> configure)
         where TOptions : class, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
-        // 创建 Action<object> 委托
-        void configureObject(object obj) => configure((TOptions)obj);
-
-        optionsActions.AddOrUpdate(typeof(TOptions), configureObject);
+        optionsActions.AddOrUpdate(typeof(TOptions), configure);
     }
 
     /// <summary>
@@ -42,7 +39,7 @@ internal static class ComponentOptionsActionsExtensions
     /// </summary>
     /// <param name="optionsActions">组件参数委托字典</param>
     /// <param name="otherOptionsActions">其他组件参数委托字典</param>
-    internal static void AddOrUpdate(this Dictionary<Type, List<Action<object>>> optionsActions, Dictionary<Type, List<Action<object>>> otherOptionsActions)
+    internal static void AddOrUpdate(this Dictionary<Type, List<Delegate>> optionsActions, Dictionary<Type, List<Delegate>> otherOptionsActions)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(otherOptionsActions, nameof(otherOptionsActions));
@@ -63,7 +60,7 @@ internal static class ComponentOptionsActionsExtensions
     /// <param name="optionsType">组件参数类型</param>
     /// <param name="optionsActions">组件参数委托字典</param>
     /// <param name="configure">配置委托</param>
-    internal static void AddOrUpdate(this Dictionary<Type, List<Action<object>>> optionsActions, Type optionsType, Action<object> configure)
+    internal static void AddOrUpdate(this Dictionary<Type, List<Delegate>> optionsActions, Type optionsType, Delegate configure)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(optionsType, nameof(optionsType));
@@ -72,7 +69,7 @@ internal static class ComponentOptionsActionsExtensions
         // 如果组件参数未配置则插入新的
         if (!optionsActions.ContainsKey(optionsType))
         {
-            optionsActions.Add(optionsType, new List<Action<object>> { configure });
+            optionsActions.Add(optionsType, new List<Delegate> { configure });
         }
         // 更新
         else
@@ -88,7 +85,7 @@ internal static class ComponentOptionsActionsExtensions
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
-    internal static TOptions? GetOptions<TOptions>(this Dictionary<Type, List<Action<object>>> optionsActions)
+    internal static TOptions? GetOptions<TOptions>(this Dictionary<Type, List<Delegate>> optionsActions)
         where TOptions : class, new()
     {
         // 组件参数类型
@@ -101,7 +98,7 @@ internal static class ComponentOptionsActionsExtensions
         }
 
         // 取出委托集合
-        var actions = optionsActions[optionsType];
+        var actions = optionsActions[optionsType].Cast<Action<TOptions>>();
         var currentValue = Activator.CreateInstance<TOptions>();
 
         // 遍历集合并调用
@@ -111,5 +108,26 @@ internal static class ComponentOptionsActionsExtensions
         }
 
         return currentValue;
+    }
+
+    /// <summary>
+    /// 获取组件参数委托
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    internal static Action<TOptions>? GetOptionsAction<TOptions>(this Dictionary<Type, List<Delegate>> optionsActions)
+        where TOptions : class, new()
+    {
+        // 组件参数类型
+        var optionsType = typeof(TOptions);
+
+        // 如果未找到组件类型参数则返回空
+        if (!optionsActions.ContainsKey(optionsType))
+        {
+            return null;
+        }
+
+        // 取出最后一个委托
+        return (Action<TOptions>)optionsActions[optionsType].Last();
     }
 }

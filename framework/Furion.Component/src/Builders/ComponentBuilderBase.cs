@@ -22,7 +22,7 @@ public class ComponentBuilderBase
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    internal readonly Dictionary<Type, List<Action<object>>> _optionsActions = new();
+    internal readonly Dictionary<Type, List<Delegate>> _optionsActions = new();
 
     /// <summary>
     /// 构造函数

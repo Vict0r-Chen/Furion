@@ -49,23 +49,35 @@ public sealed class ServiceContext : ComponentContext
     /// <summary>
     /// 获取组件参数
     /// </summary>
-    /// <typeparam name="TOption">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOption"/></returns>
-    public TOption? GetOptions<TOption>()
-        where TOption : class, new()
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    public TOptions? GetOptions<TOptions>()
+        where TOptions : class, new()
     {
         var componentOptions = Services.GetComponentOptions();
-        return componentOptions.OptionsActions.GetOptions<TOption>();
+        return componentOptions.OptionsActions.GetOptions<TOptions>();
     }
 
     /// <summary>
     /// 获取组件参数
     /// </summary>
-    /// <typeparam name="TOption">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOption"/></returns>
-    public TOption GetOptionsOrDefault<TOption>()
-        where TOption : class, new()
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    public TOptions GetOptionsOrDefault<TOptions>()
+        where TOptions : class, new()
     {
-        return GetOptions<TOption>() ?? Activator.CreateInstance<TOption>();
+        return GetOptions<TOptions>() ?? Activator.CreateInstance<TOptions>();
+    }
+
+    /// <summary>
+    /// 获取组件参数委托
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><typeparamref name="TOptions"/></returns>
+    public Action<TOptions>? GetOptionsAction<TOptions>()
+        where TOptions : class, new()
+    {
+        var componentOptions = Services.GetComponentOptions();
+        return componentOptions.OptionsActions.GetOptionsAction<TOptions>();
     }
 }
