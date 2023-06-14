@@ -39,7 +39,7 @@ internal static class TypeExtensions
         // 是否贴有 [CompilerGenerated] 特性
         if (type.IsDefined(typeof(CompilerGeneratedAttribute), false))
         {
-            // 是否以 <> 开头且以 AnonymousType 结尾
+            // 类型限定名是否以 <> 开头且以 AnonymousType 结尾
             if (type.FullName is not null
                 && type.FullName.StartsWith("<>")
                 && type.FullName.Contains("AnonymousType"))
