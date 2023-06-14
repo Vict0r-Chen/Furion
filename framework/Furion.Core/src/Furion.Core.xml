@@ -131,19 +131,6 @@
             </param>
             <returns><see cref="T:System.String"/></returns>
         </member>
-        <member name="T:System.Diagnostics.DiagnosticSourceExtensions">
-            <summary>
-            <see cref="T:System.Diagnostics.DiagnosticSource"/> 类型拓展
-            </summary>
-        </member>
-        <member name="M:System.Diagnostics.DiagnosticSourceExtensions.WriteIsEnabled(System.Diagnostics.DiagnosticSource,System.String,System.Object)">
-            <summary>
-            写入事件
-            </summary>
-            <param name="diagnosticSource"><see cref="T:System.Diagnostics.DiagnosticSource"/></param>
-            <param name="name">事件名</param>
-            <param name="value">负载数据</param>
-        </member>
         <member name="T:System.Collections.Generic.DictionaryExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.Dictionary`2"/> 类型拓展
