@@ -35,12 +35,12 @@
             </summary>
             <remarks>数值越大越靠后注册</remarks>
         </member>
-        <member name="P:System.ServiceInjectionAttribute.IncludingSelf">
+        <member name="P:System.ServiceInjectionAttribute.IncludeSelf">
             <summary>
             将自身作为服务
             </summary>
         </member>
-        <member name="P:System.ServiceInjectionAttribute.IncludingBase">
+        <member name="P:System.ServiceInjectionAttribute.IncludeBase">
             <summary>
             将基类作为自身服务
             </summary>
@@ -64,41 +64,37 @@
         </member>
         <member name="T:System.ServiceAddition">
             <summary>
-            服务添加方式
+            服务注册方式
             </summary>
-            <remarks>用于扫描程序集添加服务时配置</remarks>
         </member>
         <member name="F:System.ServiceAddition.Add">
             <summary>
             添加
             </summary>
-            <remarks>无论服务是否注册</remarks>
         </member>
         <member name="F:System.ServiceAddition.TryAdd">
             <summary>
             尝试添加
             </summary>
-            <remarks>如果服务不存在则添加，否则不添加</remarks>
+            <remarks>若服务存在则跳过</remarks>
         </member>
         <member name="F:System.ServiceAddition.TryAddEnumerable">
             <summary>
             尝试添加
             </summary>
-            <remarks>
-            如果服务和实现同时不存在则添加，否则不添加
-            <para>注意：服务类型和实现类型不能相同</para>
-            </remarks>
+            <remarks>若服务和实现类型同时存在则跳过</remarks>
         </member>
         <member name="F:System.ServiceAddition.Replace">
             <summary>
             替换
             </summary>
-            <remarks>如果服务存在则替换</remarks>
+            <remarks>若服务存在则替换</remarks>
         </member>
         <member name="F:System.ServiceAddition.Default">
             <summary>
-            缺省值，同 <see cref="F:System.ServiceAddition.Add"/>
+            缺省值
             </summary>
+            <remarks><seealso cref="F:System.ServiceAddition.Add"/></remarks>
         </member>
         <member name="T:System.IScopedDependency">
             <summary>

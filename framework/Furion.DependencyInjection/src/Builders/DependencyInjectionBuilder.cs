@@ -292,7 +292,7 @@ public sealed class DependencyInjectionBuilder
                                                                           && dependencyType.IsAssignableFrom(i));
 
         // 获取基类类型
-        var baseType = !serviceInjectionAttribute.IncludingBase
+        var baseType = !serviceInjectionAttribute.IncludeBase
                                 || type.BaseType is null
                                 || type.BaseType == typeof(object)
                                 || type.BaseType.IsNotPublic
@@ -323,7 +323,7 @@ public sealed class DependencyInjectionBuilder
                                                                      .Select(i => i.GetGenericTypeDefinition());
 
         // 判断是否将自身作为服务类型
-        if (!serviceInjectionAttribute.IncludingSelf
+        if (!serviceInjectionAttribute.IncludeSelf
             && serviceTypes.Any())
         {
             return serviceTypes;

@@ -6,7 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230615.1" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Furion.DependencyInjection" Version="5.0.0-preview.1.20230615.1" />
 	</ItemGroup>
 
 </Project>

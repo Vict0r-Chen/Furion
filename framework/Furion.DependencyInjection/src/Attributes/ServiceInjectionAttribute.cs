@@ -54,10 +54,10 @@ public sealed class ServiceInjectionAttribute : Attribute
     /// <summary>
     /// 将自身作为服务
     /// </summary>
-    public bool IncludingSelf { get; init; }
+    public bool IncludeSelf { get; init; }
 
     /// <summary>
     /// 将基类作为自身服务
     /// </summary>
-    public bool IncludingBase { get; init; }
+    public bool IncludeBase { get; init; }
 }

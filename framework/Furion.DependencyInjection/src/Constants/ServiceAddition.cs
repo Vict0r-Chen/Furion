@@ -15,40 +15,36 @@
 namespace System;
 
 /// <summary>
-/// 服务添加方式
+/// 服务注册方式
 /// </summary>
-/// <remarks>用于扫描程序集添加服务时配置</remarks>
-public enum ServiceAddition : uint
+public enum ServiceAddition : byte
 {
     /// <summary>
     /// 添加
     /// </summary>
-    /// <remarks>无论服务是否注册</remarks>
     Add = 0,
 
     /// <summary>
     /// 尝试添加
     /// </summary>
-    /// <remarks>如果服务不存在则添加，否则不添加</remarks>
+    /// <remarks>若服务存在则跳过</remarks>
     TryAdd,
 
     /// <summary>
     /// 尝试添加
     /// </summary>
-    /// <remarks>
-    /// 如果服务和实现同时不存在则添加，否则不添加
-    /// <para>注意：服务类型和实现类型不能相同</para>
-    /// </remarks>
+    /// <remarks>若服务和实现类型同时存在则跳过</remarks>
     TryAddEnumerable,
 
     /// <summary>
     /// 替换
     /// </summary>
-    /// <remarks>如果服务存在则替换</remarks>
+    /// <remarks>若服务存在则替换</remarks>
     Replace,
 
     /// <summary>
-    /// 缺省值，同 <see cref="Add"/>
+    /// 缺省值
     /// </summary>
+    /// <remarks><seealso cref="Add"/></remarks>
     Default = Add
 }

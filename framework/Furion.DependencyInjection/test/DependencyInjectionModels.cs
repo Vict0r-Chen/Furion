@@ -49,22 +49,22 @@ public abstract class AbstractPublicTestClass : ITestClass, IScopedDependency
 {
 }
 
-[ServiceInjection(IncludingBase = true)]
+[ServiceInjection(IncludeBase = true)]
 internal class IncludePublicBaseClass : PublicBaseClass, ITestClass, IScopedDependency
 {
 }
 
-[ServiceInjection(IncludingBase = true)]
+[ServiceInjection(IncludeBase = true)]
 internal class IncludeNotPublicBaseClass : NotPublicBaseClass, ITestClass, IScopedDependency
 {
 }
 
-[ServiceInjection(IncludingBase = true)]
+[ServiceInjection(IncludeBase = true)]
 internal class IncludeAbstractBaseClass : AbstractBaseClass, ITestClass, IScopedDependency
 {
 }
 
-[ServiceInjection(IncludingSelf = true)]
+[ServiceInjection(IncludeSelf = true)]
 internal class IncludeSelfClass : ITestClass, IScopedDependency
 {
 }
@@ -73,7 +73,7 @@ internal class IncludeSelfClassWithNotInterface : IScopedDependency
 {
 }
 
-[ServiceInjection(IncludingBase = true)]
+[ServiceInjection(IncludeBase = true)]
 internal class IncludeSelfClassWithBaseClass : PublicBaseClass, IScopedDependency
 {
 }
@@ -114,7 +114,7 @@ internal class NormalClassWithGenericClass : IGenericClass<string>, IScopedDepen
 {
 }
 
-[ServiceInjection(IncludingBase = true)]
+[ServiceInjection(IncludeBase = true)]
 internal class NormalClassWithBaseClass : BaseGenericClass<string>, IScopedDependency
 {
 }
@@ -127,7 +127,7 @@ internal class GenericClassWithFixedGenericClass<T> : IGenericClass<string>, ISc
 {
 }
 
-[ServiceInjection(IncludingBase = true)]
+[ServiceInjection(IncludeBase = true)]
 internal class GenericClassAll<T> : BaseGenericClass<T>, IGenericClass<T>, IScopedDependency
 {
 }
