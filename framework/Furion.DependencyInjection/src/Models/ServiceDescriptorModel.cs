@@ -15,17 +15,18 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 服务描述器模型
+/// <see cref="ServiceDescriptor"/> 模型
 /// </summary>
+/// <remarks>作用于程序集扫描</remarks>
 public sealed class ServiceDescriptorModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">实现类型</param>
-    /// <param name="serviceLifetime">服务生存器</param>
-    /// <param name="serviceAddition">服务添加方式</param>
+    /// <param name="implementationType">实现类类型</param>
+    /// <param name="serviceLifetime"><see cref="ServiceLifetime"/></param>
+    /// <param name="serviceAddition"><see cref="ServiceAddition"/></param>
     internal ServiceDescriptorModel(Type serviceType
         , Type implementationType
         , ServiceLifetime serviceLifetime

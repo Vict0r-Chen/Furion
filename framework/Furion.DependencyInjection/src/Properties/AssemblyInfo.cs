@@ -14,6 +14,7 @@
 
 // 配置框架友元程序集
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.AspNetCore")]
+[assembly: InternalsVisibleTo("Furion.DependencyInjection.Named")]
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.Tests")]

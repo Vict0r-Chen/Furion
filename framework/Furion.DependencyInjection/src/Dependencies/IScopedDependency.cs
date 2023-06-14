@@ -15,8 +15,9 @@
 namespace System;
 
 /// <summary>
-/// 范围服务扫描注册依赖接口
+/// 范围服务依赖接口
 /// </summary>
+/// <remarks>作用于程序集扫描</remarks>
 public interface IScopedDependency : IDependency
 {
     /// <inheritdoc/>

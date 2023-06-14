@@ -15,50 +15,30 @@
 namespace System;
 
 /// <summary>
-/// 服务注册配置
+/// 服务导出配置
 /// </summary>
-/// <remarks>作用于程序集扫描</remarks>
+/// <remarks>
+/// <para>作用于程序集扫描，若类型配置了该特性则将指定的类型作为服务。</para>
+/// <para>此配置优先级大于基类型和 <seealso cref="ServiceInjectionAttribute.IncludeSelf"/> 和 <seealso cref="ServiceInjectionAttribute.IncludeBase"/>。</para>
+/// <para>配置的类型集合须包含在基类链类型集合中</para>
+/// </remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-public sealed class ServiceInjectionAttribute : Attribute
+public sealed class ExposeServicesAttribute : Attribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ServiceInjectionAttribute()
+    /// <param name="serviceTypes"><see cref="ServiceTypes"/></param>
+    public ExposeServicesAttribute(params Type[] serviceTypes)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(serviceTypes, nameof(serviceTypes));
+
+        ServiceTypes = serviceTypes;
     }
 
     /// <summary>
-    /// 注册方式
+    /// 类型集合
     /// </summary>
-    /// <param name="addition"><see cref="ServiceAddition"/></param>
-    public ServiceInjectionAttribute(ServiceAddition addition)
-    {
-        Addition = addition;
-    }
-
-    /// <inheritdoc cref="ServiceAddition"/>
-    public ServiceAddition Addition { get; init; } = ServiceAddition.Default;
-
-    /// <summary>
-    /// 忽略注册
-    /// </summary>
-    /// <remarks>若设置为 true 则跳过配置类型扫描</remarks>
-    public bool Ignore { get; init; }
-
-    /// <summary>
-    /// 排序
-    /// </summary>
-    /// <remarks>值越大则越后注册</remarks>
-    public int Order { get; init; }
-
-    /// <summary>
-    /// 注册自身
-    /// </summary>
-    public bool IncludeSelf { get; init; }
-
-    /// <summary>
-    /// 注册基类
-    /// </summary>
-    public bool IncludeBase { get; init; }
+    public Type[] ServiceTypes { get; init; }
 }

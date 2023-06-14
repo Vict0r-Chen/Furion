@@ -15,8 +15,9 @@
 namespace System;
 
 /// <summary>
-/// 瞬时服务扫描注册依赖接口
+/// 瞬时服务依赖接口
 /// </summary>
+/// <remarks>作用于程序集扫描</remarks>
 public interface ITransientDependency : IDependency
 {
     /// <inheritdoc/>

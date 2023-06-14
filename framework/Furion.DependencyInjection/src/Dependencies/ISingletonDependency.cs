@@ -15,8 +15,9 @@
 namespace System;
 
 /// <summary>
-/// 单例服务扫描注册依赖接口
+/// 单例服务依赖接口
 /// </summary>
+/// <remarks>作用于程序集扫描</remarks>
 public interface ISingletonDependency : IDependency
 {
     /// <inheritdoc/>

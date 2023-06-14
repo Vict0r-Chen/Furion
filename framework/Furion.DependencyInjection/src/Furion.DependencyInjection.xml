@@ -4,11 +4,32 @@
         <name>Furion.DependencyInjection</name>
     </assembly>
     <members>
+        <member name="T:System.ExposeServicesAttribute">
+            <summary>
+            服务导出配置
+            </summary>
+            <remarks>
+            <para>作用于程序集扫描，若类型配置了该特性则将指定的类型作为服务。</para>
+            <para>此配置优先级大于基类型和 <seealso cref="P:System.ServiceInjectionAttribute.IncludeSelf"/> 和 <seealso cref="P:System.ServiceInjectionAttribute.IncludeBase"/>。</para>
+            <para>配置的类型集合须包含在基类链类型集合中</para>
+            </remarks>
+        </member>
+        <member name="M:System.ExposeServicesAttribute.#ctor(System.Type[])">
+            <summary>
+            构造函数
+            </summary>
+            <param name="serviceTypes"><see cref="P:System.ExposeServicesAttribute.ServiceTypes"/></param>
+        </member>
+        <member name="P:System.ExposeServicesAttribute.ServiceTypes">
+            <summary>
+            类型集合
+            </summary>
+        </member>
         <member name="T:System.ServiceInjectionAttribute">
             <summary>
-            服务注册特性配置
+            服务注册配置
             </summary>
-            <remarks>用于扫描程序集添加服务时配置</remarks>
+            <remarks>作用于程序集扫描</remarks>
         </member>
         <member name="M:System.ServiceInjectionAttribute.#ctor">
             <summary>
@@ -17,9 +38,9 @@
         </member>
         <member name="M:System.ServiceInjectionAttribute.#ctor(System.ServiceAddition)">
             <summary>
-            构造函数
+            注册方式
             </summary>
-            <param name="addition">服务注册方式</param>
+            <param name="addition"><see cref="T:System.ServiceAddition"/></param>
         </member>
         <member name="P:System.ServiceInjectionAttribute.Addition">
             <inheritdoc cref="T:System.ServiceAddition"/>
@@ -28,21 +49,22 @@
             <summary>
             忽略注册
             </summary>
+            <remarks>若设置为 true 则跳过配置类型扫描</remarks>
         </member>
         <member name="P:System.ServiceInjectionAttribute.Order">
             <summary>
             排序
             </summary>
-            <remarks>数值越大越靠后注册</remarks>
+            <remarks>值越大则越后注册</remarks>
         </member>
         <member name="P:System.ServiceInjectionAttribute.IncludeSelf">
             <summary>
-            将自身作为服务
+            注册自身
             </summary>
         </member>
         <member name="P:System.ServiceInjectionAttribute.IncludeBase">
             <summary>
-            将基类作为自身服务
+            注册基类
             </summary>
         </member>
         <member name="T:System.SuppressServicesAttribute">
@@ -98,24 +120,27 @@
         </member>
         <member name="T:System.IScopedDependency">
             <summary>
-            范围服务扫描注册依赖接口
+            范围服务依赖接口
             </summary>
+            <remarks>作用于程序集扫描</remarks>
         </member>
         <member name="P:System.IScopedDependency.Furion#DependencyInjection#IDependency#Lifetime">
             <inheritdoc/>
         </member>
         <member name="T:System.ISingletonDependency">
             <summary>
-            单例服务扫描注册依赖接口
+            单例服务依赖接口
             </summary>
+            <remarks>作用于程序集扫描</remarks>
         </member>
         <member name="P:System.ISingletonDependency.Furion#DependencyInjection#IDependency#Lifetime">
             <inheritdoc/>
         </member>
         <member name="T:System.ITransientDependency">
             <summary>
-            瞬时服务扫描注册依赖接口
+            瞬时服务依赖接口
             </summary>
+            <remarks>作用于程序集扫描</remarks>
         </member>
         <member name="P:System.ITransientDependency.Furion#DependencyInjection#IDependency#Lifetime">
             <inheritdoc/>
@@ -405,14 +430,12 @@
         </member>
         <member name="T:Furion.DependencyInjection.IDependency">
             <summary>
-            服务扫描注册依赖接口
+            服务依赖接口
             </summary>
+            <remarks>作用于程序集扫描</remarks>
         </member>
         <member name="P:Furion.DependencyInjection.IDependency.Lifetime">
-            <summary>
-            服务生存期
-            </summary>
-            <remarks>派生接口需提供显式实现</remarks>
+            <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
         </member>
         <member name="T:Furion.DependencyInjection.Invocation">
             <summary>
@@ -514,17 +537,18 @@
         </member>
         <member name="T:Furion.DependencyInjection.ServiceDescriptorModel">
             <summary>
-            服务描述器模型
+            <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/> 模型
             </summary>
+            <remarks>作用于程序集扫描</remarks>
         </member>
         <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,System.ServiceAddition)">
             <summary>
             构造函数
             </summary>
             <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类型</param>
-            <param name="serviceLifetime">服务生存器</param>
-            <param name="serviceAddition">服务添加方式</param>
+            <param name="implementationType">实现类类型</param>
+            <param name="serviceLifetime"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></param>
+            <param name="serviceAddition"><see cref="T:System.ServiceAddition"/></param>
         </member>
         <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Descriptor">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
