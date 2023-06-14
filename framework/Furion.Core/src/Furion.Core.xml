@@ -222,9 +222,8 @@
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions">
             <summary>
-            核心模块拓展
+            核心模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
-            <remarks>限制框架内置模块使用</remarks>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions.AddCoreOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
@@ -242,13 +241,12 @@
         </member>
         <member name="T:Furion.CoreOptions">
             <summary>
-            框架核心选项
+            核心模块选项
             </summary>
-            <remarks>负责全局数据存储</remarks>
         </member>
         <member name="F:Furion.CoreOptions._optionsInstances">
             <summary>
-            选项实例字典
+            子选项实例集合
             </summary>
         </member>
         <member name="M:Furion.CoreOptions.#ctor">
@@ -258,8 +256,9 @@
         </member>
         <member name="M:Furion.CoreOptions.Get``1">
             <summary>
-            获取选项实例
+            获取子选项实例
             </summary>
+            <remarks>若子选项实例不存在则添加</remarks>
             <typeparam name="TOptions">选项类型</typeparam>
             <returns><typeparamref name="TOptions"/></returns>
         </member>

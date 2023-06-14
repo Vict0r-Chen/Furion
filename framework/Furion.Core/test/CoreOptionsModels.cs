@@ -12,38 +12,9 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion;
+namespace Furion.Core.Tests;
 
-/// <summary>
-/// 核心模块选项
-/// </summary>
-internal sealed class CoreOptions
+public class ChildOptions
 {
-    /// <summary>
-    /// 子选项实例集合
-    /// </summary>
-    internal readonly ConcurrentDictionary<Type, object> _optionsInstances;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    internal CoreOptions()
-    {
-        _optionsInstances = new();
-    }
-
-    /// <summary>
-    /// 获取子选项实例
-    /// </summary>
-    /// <remarks>若子选项实例不存在则添加</remarks>
-    /// <typeparam name="TOptions">选项类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    internal TOptions Get<TOptions>()
-        where TOptions : class, new()
-    {
-        var optionsType = typeof(TOptions);
-        _ = _optionsInstances.TryAdd(optionsType, Activator.CreateInstance<TOptions>());
-
-        return (TOptions)_optionsInstances[optionsType];
-    }
+    public Guid Id { get; } = Guid.NewGuid();
 }

@@ -17,29 +17,42 @@ namespace Furion.Core.Tests;
 public class CoreOptionsTests
 {
     [Fact]
-    public void AddCoreOptions_ReturnOK()
+    public void Get_NotExists_WithAdd()
     {
-        var services = new ServiceCollection();
-        services.AddCoreOptions();
-        services.AddCoreOptions();
-        services.AddCoreOptions();
+        var coreOptions = new CoreOptions();
+        var childOptions = coreOptions.Get<ChildOptions>();
 
-        Assert.Single(services);
+        Assert.NotNull(childOptions);
+        Assert.Single(coreOptions._optionsInstances);
     }
 
     [Fact]
-    public void GetCoreOptions_Get_ReturnOK()
+    public void Get_Exists_WithNotAdd()
     {
-        var services = new ServiceCollection();
-        var coreOptions = services.GetCoreOptions();
-        var someOptions1 = coreOptions.Get<SomeOptions>();
-        var someOptions1_1 = coreOptions.Get<SomeOptions>();
+        var coreOptions = new CoreOptions();
+        var isAdded = coreOptions._optionsInstances.TryAdd(typeof(ChildOptions), new ChildOptions());
 
-        var someOptions2 = coreOptions.Get<SomeOptions2>();
-        var someOptions2_1 = coreOptions.Get<SomeOptions2>();
+        Assert.True(isAdded);
 
-        Assert.Equal(2, coreOptions._optionsInstances.Count);
-        Assert.Equal(someOptions1, someOptions1_1);
-        Assert.Equal(someOptions2, someOptions2_1);
+        var childOptions = coreOptions.Get<ChildOptions>();
+
+        Assert.NotNull(childOptions);
+        Assert.Single(coreOptions._optionsInstances);
+    }
+
+    [Fact]
+    public void CanNotBeNew()
+    {
+        Assert.Throws<MissingMethodException>(() =>
+        {
+            var coreOptions = Activator.CreateInstance<CoreOptions>();
+        });
+    }
+
+    [Fact]
+    public void OptionsInstances_NotNull()
+    {
+        var coreOptions = new CoreOptions();
+        Assert.NotNull(coreOptions._optionsInstances);
     }
 }

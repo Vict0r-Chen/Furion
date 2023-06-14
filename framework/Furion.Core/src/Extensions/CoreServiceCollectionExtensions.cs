@@ -15,9 +15,8 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 核心模块拓展
+/// 核心模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-/// <remarks>限制框架内置模块使用</remarks>
 public static class CoreServiceCollectionExtensions
 {
     /// <summary>
