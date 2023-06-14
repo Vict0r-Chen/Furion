@@ -133,7 +133,7 @@
         </member>
         <member name="T:System.Collections.Generic.IDictionaryExtensions">
             <summary>
-            <see cref="T:System.Collections.Generic.IDictionary`2"/> 类型拓展
+            <see cref="T:System.Collections.Generic.IDictionary`2"/> 拓展类
             </summary>
         </member>
         <member name="M:System.Collections.Generic.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,System.Collections.Generic.List{``1}},``0,``1)">

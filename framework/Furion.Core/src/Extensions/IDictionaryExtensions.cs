@@ -15,7 +15,7 @@
 namespace System.Collections.Generic;
 
 /// <summary>
-/// <see cref="IDictionary{TKey, TValue}"/> 类型拓展
+/// <see cref="IDictionary{TKey, TValue}"/> 拓展类
 /// </summary>
 internal static class IDictionaryExtensions
 {
