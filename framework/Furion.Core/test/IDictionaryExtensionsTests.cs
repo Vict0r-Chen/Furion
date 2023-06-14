@@ -57,7 +57,7 @@ public class IDictionaryExtensionsTests
     }
 
     [Fact]
-    public void AddOrUpdate_ContactNull_Throw()
+    public void AddOrUpdate_ConcatNull_Throw()
     {
         var dictionary = new Dictionary<string, List<string?>>();
         Dictionary<string, List<string?>>? concatDictionary = null;
@@ -69,7 +69,7 @@ public class IDictionaryExtensionsTests
     }
 
     [Fact]
-    public void AddOrUpdate_Contact_NewDictionary_WillAdd()
+    public void AddOrUpdate_Concat_NewDictionary_WillAdd()
     {
         var dictionary = new Dictionary<string, List<int>>();
         var concatDictionary = new Dictionary<string, List<int>>()
@@ -87,7 +87,7 @@ public class IDictionaryExtensionsTests
     }
 
     [Fact]
-    public void AddOrUpdate_Contact_ExistsDictionary_WillUpdate()
+    public void AddOrUpdate_Concat_ExistsDictionary_WillUpdate()
     {
         var dictionary = new Dictionary<string, List<int>>()
         {
@@ -107,7 +107,7 @@ public class IDictionaryExtensionsTests
     }
 
     [Fact]
-    public void AddOrUpdate_Contact_ExistsOrNotDictionary_WillAddOrUpdate()
+    public void AddOrUpdate_Concat_ExistsOrNotDictionary_WillAddOrUpdate()
     {
         var dictionary = new Dictionary<string, List<int>>()
         {
