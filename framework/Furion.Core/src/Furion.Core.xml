@@ -6,75 +6,130 @@
     <members>
         <member name="T:System.Debugging">
             <summary>
-            内部调试事件消息
+            向事件管理器中输出事件消息
             </summary>
         </member>
         <member name="M:System.Debugging.WriteLine(System.Int32,System.String)">
             <summary>
-            输出一行消息
+            输出一行事件消息
             </summary>
-            <param name="level">调试级别：1/跟踪；2/信息；3/警告；4/错误</param>
-            <param name="message">消息</param>
+            <param name="level">
+            <para>消息级别</para>
+            <list type="number">
+            <item>
+            <description>跟踪</description>
+            </item>
+            <item>
+            <description>信息</description>
+            </item>
+            <item>
+            <description>警告</description>
+            </item>
+            <item>
+            <description>错误</description>
+            </item>
+            </list>
+            </param>
+            <param name="message">事件消息</param>
         </member>
         <member name="M:System.Debugging.WriteLine(System.Int32,System.String,System.Object[])">
             <summary>
-            输出一行消息
+            输出一行事件消息
             </summary>
-            <param name="level">调试级别：1/信息；2/警告；3/错误</param>
-            <param name="message">消息</param>
+            <param name="level">
+            <para>消息级别</para>
+            <list type="number">
+            <item>
+            <description>跟踪</description>
+            </item>
+            <item>
+            <description>信息</description>
+            </item>
+            <item>
+            <description>警告</description>
+            </item>
+            <item>
+            <description>错误</description>
+            </item>
+            </list>
+            </param>
+            <param name="message">事件消息</param>
             <param name="args">格式化参数</param>
         </member>
         <member name="M:System.Debugging.Trace(System.String)">
             <summary>
-            输出跟踪消息
+            输出跟踪级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
         </member>
         <member name="M:System.Debugging.Trace(System.String,System.Object[])">
             <summary>
-            输出跟踪消息
+            输出跟踪级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
             <param name="args">格式化参数</param>
         </member>
         <member name="M:System.Debugging.Info(System.String)">
             <summary>
-            输出信息消息
+            输出信息级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
         </member>
         <member name="M:System.Debugging.Info(System.String,System.Object[])">
             <summary>
-            输出信息消息
+            输出信息级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
             <param name="args">格式化参数</param>
         </member>
         <member name="M:System.Debugging.Warn(System.String)">
             <summary>
-            输出警告消息
+            输出警告级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
         </member>
         <member name="M:System.Debugging.Warn(System.String,System.Object[])">
             <summary>
-            输出警告消息
+            输出警告级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
             <param name="args">格式化参数</param>
         </member>
         <member name="M:System.Debugging.Error(System.String)">
             <summary>
-            输出错误消息
+            输出错误级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
         </member>
         <member name="M:System.Debugging.Error(System.String,System.Object[])">
             <summary>
-            输出错误消息
+            输出错误级别事件消息
             </summary>
-            <param name="message">消息</param>
+            <param name="message">事件消息</param>
             <param name="args">格式化参数</param>
+        </member>
+        <member name="M:System.Debugging.GetLevelEmoji(System.Int32)">
+            <summary>
+            获取消息级别对应的 emoji
+            </summary>
+            <param name="level">
+            <para>消息级别</para>
+            <list type="number">
+            <item>
+            <description>跟踪</description>
+            </item>
+            <item>
+            <description>信息</description>
+            </item>
+            <item>
+            <description>警告</description>
+            </item>
+            <item>
+            <description>错误</description>
+            </item>
+            </list>
+            </param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="T:System.Diagnostics.DiagnosticSourceExtensions">
             <summary>

@@ -15,40 +15,59 @@
 namespace System;
 
 /// <summary>
-/// 内部调试事件消息
+/// 向事件管理器中输出事件消息
 /// </summary>
 internal static class Debugging
 {
     /// <summary>
-    /// 输出一行消息
+    /// 输出一行事件消息
     /// </summary>
-    /// <param name="level">调试级别：1/跟踪；2/信息；3/警告；4/错误</param>
-    /// <param name="message">消息</param>
+    /// <param name="level">
+    /// <para>消息级别</para>
+    /// <list type="number">
+    /// <item>
+    /// <description>跟踪</description>
+    /// </item>
+    /// <item>
+    /// <description>信息</description>
+    /// </item>
+    /// <item>
+    /// <description>警告</description>
+    /// </item>
+    /// <item>
+    /// <description>错误</description>
+    /// </item>
+    /// </list>
+    /// </param>
+    /// <param name="message">事件消息</param>
     internal static void WriteLine(int level, string message)
     {
-        var emoji = level switch
-        {
-            1 => "🛠️",
-            2 => "ℹ️",
-            3 => "⚠️",
-            4 => "❌",
-            _ => "🛠️"
-        };
-
-        // 只有调试状态下输出
-        if (!Debugger.IsAttached)
-        {
-            return;
-        }
-
-        Debug.WriteLine(message, category: emoji);
+        // 获取消息级别对应的 emoji
+        var category = GetLevelEmoji(level);
+        Debug.WriteLine(message, category);
     }
 
     /// <summary>
-    /// 输出一行消息
+    /// 输出一行事件消息
     /// </summary>
-    /// <param name="level">调试级别：1/信息；2/警告；3/错误</param>
-    /// <param name="message">消息</param>
+    /// <param name="level">
+    /// <para>消息级别</para>
+    /// <list type="number">
+    /// <item>
+    /// <description>跟踪</description>
+    /// </item>
+    /// <item>
+    /// <description>信息</description>
+    /// </item>
+    /// <item>
+    /// <description>警告</description>
+    /// </item>
+    /// <item>
+    /// <description>错误</description>
+    /// </item>
+    /// </list>
+    /// </param>
+    /// <param name="message">事件消息</param>
     /// <param name="args">格式化参数</param>
     internal static void WriteLine(int level, string message, params object?[] args)
     {
@@ -56,78 +75,111 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出跟踪消息
+    /// 输出跟踪级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     internal static void Trace(string message)
     {
         WriteLine(1, message);
     }
 
     /// <summary>
-    /// 输出跟踪消息
+    /// 输出跟踪级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     /// <param name="args">格式化参数</param>
     internal static void Trace(string message, params object?[] args)
     {
-        Trace(string.Format(message, args));
+        WriteLine(1, message, args);
     }
 
     /// <summary>
-    /// 输出信息消息
+    /// 输出信息级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     internal static void Info(string message)
     {
         WriteLine(2, message);
     }
 
     /// <summary>
-    /// 输出信息消息
+    /// 输出信息级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     /// <param name="args">格式化参数</param>
     internal static void Info(string message, params object?[] args)
     {
-        Info(string.Format(message, args));
+        WriteLine(2, message, args);
     }
 
     /// <summary>
-    /// 输出警告消息
+    /// 输出警告级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     internal static void Warn(string message)
     {
         WriteLine(3, message);
     }
 
     /// <summary>
-    /// 输出警告消息
+    /// 输出警告级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     /// <param name="args">格式化参数</param>
     internal static void Warn(string message, params object?[] args)
     {
-        Warn(string.Format(message, args));
+        WriteLine(3, message, args);
     }
 
     /// <summary>
-    /// 输出错误消息
+    /// 输出错误级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     internal static void Error(string message)
     {
         WriteLine(4, message);
     }
 
     /// <summary>
-    /// 输出错误消息
+    /// 输出错误级别事件消息
     /// </summary>
-    /// <param name="message">消息</param>
+    /// <param name="message">事件消息</param>
     /// <param name="args">格式化参数</param>
     internal static void Error(string message, params object?[] args)
     {
-        Error(string.Format(message, args));
+        WriteLine(4, message, args);
+    }
+
+    /// <summary>
+    /// 获取消息级别对应的 emoji
+    /// </summary>
+    /// <param name="level">
+    /// <para>消息级别</para>
+    /// <list type="number">
+    /// <item>
+    /// <description>跟踪</description>
+    /// </item>
+    /// <item>
+    /// <description>信息</description>
+    /// </item>
+    /// <item>
+    /// <description>警告</description>
+    /// </item>
+    /// <item>
+    /// <description>错误</description>
+    /// </item>
+    /// </list>
+    /// </param>
+    /// <returns><see cref="string"/></returns>
+    internal static string GetLevelEmoji(int level)
+    {
+        return level switch
+        {
+            1 => "🛠️",
+            2 => "ℹ️",
+            3 => "⚠️",
+            4 => "❌",
+            _ => string.Empty
+        };
     }
 }
