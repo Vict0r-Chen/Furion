@@ -23,7 +23,7 @@ internal static class AssemblyExtensions
     /// 获取所有类型
     /// </summary>
     /// <param name="assembly"><see cref="Assembly"/></param>
-    /// <param name="exported">是否只获取导出的类型</param>
+    /// <param name="exported">类型导出设置</param>
     /// <returns><see cref="Type"/>[]</returns>
     internal static Type[] GetTypes(this Assembly assembly, bool exported)
     {
@@ -36,7 +36,7 @@ internal static class AssemblyExtensions
     /// 获取所有可实例化类型
     /// </summary>
     /// <param name="assembly"><see cref="Assembly"/></param>
-    /// <param name="exported">是否只获取导出的类型</param>
+    /// <param name="exported">类型导出设置</param>
     /// <returns><see cref="Type"/>[]</returns>
     internal static IEnumerable<Type> GetInstantiableTypes(this Assembly assembly, bool exported)
     {
