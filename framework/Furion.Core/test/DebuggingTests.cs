@@ -28,9 +28,9 @@ public class DebuggingTests : IDisposable
 
     [Theory]
     [InlineData(1, "🛠️", "跟踪事件消息")]
-    [InlineData(2, "ℹ️", "跟踪事件消息")]
-    [InlineData(3, "⚠️", "跟踪事件消息")]
-    [InlineData(4, "❌", "跟踪事件消息")]
+    [InlineData(2, "ℹ️", "消息事件消息")]
+    [InlineData(3, "⚠️", "警告事件消息")]
+    [InlineData(4, "❌", "错误事件消息")]
     [InlineData(5, "", "其他事件消息")]
     public void WriteLine_OuputString(int level, string emoji, string message)
     {
@@ -43,9 +43,9 @@ public class DebuggingTests : IDisposable
 
     [Theory]
     [InlineData(1, "🛠️", "跟踪事件消息 {0}-{1}", "one", "two")]
-    [InlineData(2, "ℹ️", "跟踪事件消息 {0}-{1}", "one", "two")]
-    [InlineData(3, "⚠️", "跟踪事件消息 {0}-{1}", "one", "two")]
-    [InlineData(4, "❌", "跟踪事件消息 {0}-{1}", "one", "two")]
+    [InlineData(2, "ℹ️", "消息事件消息 {0}-{1}", "one", "two")]
+    [InlineData(3, "⚠️", "警告事件消息 {0}-{1}", "one", "two")]
+    [InlineData(4, "❌", "错误事件消息 {0}-{1}", "one", "two")]
     [InlineData(5, "", "其他事件消息 {0}-{1}", "one", "two")]
     public void WriteLine_OuputFormatString(int level, string emoji, string message, params string[] args)
     {
@@ -59,7 +59,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Trace_OutputString()
     {
-        var message = "事件消息";
+        var message = "跟踪事件消息";
         Debugging.Trace(message);
 
         var output = _stringWriter.ToString();
@@ -71,7 +71,7 @@ public class DebuggingTests : IDisposable
     public void Trace_OutputFormatString()
     {
         string[] args = { "one", "two" };
-        var message = "事件消息 {0}-{1}";
+        var message = "跟踪事件消息 {0}-{1}";
         Debugging.Trace(message, args);
 
         var output = _stringWriter.ToString();
@@ -82,7 +82,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Info_OutputString()
     {
-        var message = "事件消息";
+        var message = "信息事件消息";
         Debugging.Info(message);
 
         var output = _stringWriter.ToString();
@@ -94,7 +94,7 @@ public class DebuggingTests : IDisposable
     public void Info_OutputFormatString()
     {
         string[] args = { "one", "two" };
-        var message = "事件消息 {0}-{1}";
+        var message = "信息事件消息 {0}-{1}";
         Debugging.Info(message, args);
 
         var output = _stringWriter.ToString();
@@ -105,7 +105,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Warn_OutputString()
     {
-        var message = "事件消息";
+        var message = "警告事件消息";
         Debugging.Warn(message);
 
         var output = _stringWriter.ToString();
@@ -117,7 +117,7 @@ public class DebuggingTests : IDisposable
     public void Warn_OutputFormatString()
     {
         string[] args = { "one", "two" };
-        var message = "事件消息 {0}-{1}";
+        var message = "警告事件消息 {0}-{1}";
         Debugging.Warn(message, args);
 
         var output = _stringWriter.ToString();
@@ -128,7 +128,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Error_OutputString()
     {
-        var message = "事件消息";
+        var message = "错误事件消息";
         Debugging.Error(message);
 
         var output = _stringWriter.ToString();
@@ -140,7 +140,7 @@ public class DebuggingTests : IDisposable
     public void Error_OutputFormatString()
     {
         string[] args = { "one", "two" };
-        var message = "事件消息 {0}-{1}";
+        var message = "错误事件消息 {0}-{1}";
         Debugging.Error(message, args);
 
         var output = _stringWriter.ToString();
