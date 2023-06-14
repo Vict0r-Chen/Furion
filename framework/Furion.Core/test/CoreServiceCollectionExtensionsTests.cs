@@ -17,7 +17,7 @@ namespace Furion.Core.Tests;
 public class CoreServiceCollectionExtensionsTests
 {
     [Fact]
-    public void Duplicate_AddCoreOptions_OneTimeEffective()
+    public void AddCoreOptions_Duplicate__OneTimeEffective()
     {
         var services = new ServiceCollection();
         services.AddCoreOptions();

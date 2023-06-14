@@ -15,24 +15,25 @@
 namespace System.Collections.Generic;
 
 /// <summary>
-/// <see cref="Dictionary{TKey, TValue}"/> 类型拓展
+/// <see cref="IDictionary{TKey, TValue}"/> 类型拓展
 /// </summary>
-internal static class DictionaryExtensions
+internal static class IDictionaryExtensions
 {
     /// <summary>
     /// 添加或更新
     /// </summary>
-    /// <typeparam name="TKey">字典 Key 类型</typeparam>
-    /// <typeparam name="TValue">字典 Value 类型</typeparam>
-    /// <param name="dictionary"><see cref="Dictionary{TKey, TValue}"/></param>
-    /// <param name="key">键</param>
-    /// <param name="value">值</param>
-    internal static void AddOrUpdate<TKey, TValue>(this Dictionary<TKey, List<TValue>> dictionary, TKey key, TValue value)
+    /// <typeparam name="TKey">字典键类型</typeparam>
+    /// <typeparam name="TValue">字典值类型</typeparam>
+    /// <param name="dictionary"><see cref="IDictionary{TKey, TValue}"/></param>
+    /// <param name="key">字典键</param>
+    /// <param name="value">字典值</param>
+    internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value)
          where TKey : notnull
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(value, nameof(value));
 
+        // 尝试获取值
         if (!dictionary.TryGetValue(key, out var values))
         {
             values = new();
@@ -45,22 +46,27 @@ internal static class DictionaryExtensions
     /// <summary>
     /// 添加或更新
     /// </summary>
-    /// <typeparam name="TKey">字典 Key 类型</typeparam>
-    /// <typeparam name="TValue">字典 Value 类型</typeparam>
-    /// <param name="dictionary"><see cref="Dictionary{TKey, TValue}"/></param>
-    /// <param name="otherDictionary"><see cref="Dictionary{TKey, TValue}"/></param>
-    internal static void AddOrUpdate<TKey, TValue>(this Dictionary<TKey, List<TValue>> dictionary, Dictionary<TKey, List<TValue>> otherDictionary)
+    /// <typeparam name="TKey">字典键类型</typeparam>
+    /// <typeparam name="TValue">字典值类型</typeparam>
+    /// <param name="dictionary"><see cref="IDictionary{TKey, TValue}"/></param>
+    /// <param name="concatDictionary"><see cref="IDictionary{TKey, TValue}"/></param>
+    internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, IDictionary<TKey, List<TValue>> concatDictionary)
          where TKey : notnull
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(otherDictionary, nameof(otherDictionary));
+        ArgumentNullException.ThrowIfNull(concatDictionary, nameof(concatDictionary));
 
-        foreach (var (key, values) in otherDictionary)
+        // 逐条遍历合并更新
+        foreach (var (key, newValues) in concatDictionary)
         {
-            foreach (var value in values)
+            // 尝试获取值
+            if (!dictionary.TryGetValue(key, out var values))
             {
-                dictionary.AddOrUpdate(key, value);
+                values = new();
+                dictionary.Add(key, values);
             }
+
+            values.AddRange(newValues);
         }
     }
 }

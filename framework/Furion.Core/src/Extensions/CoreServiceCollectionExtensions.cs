@@ -43,6 +43,10 @@ public static class CoreServiceCollectionExtensions
         // 获取核心模块选项实例
         var coreOptions = services.Single(s => s.ServiceType == typeof(CoreOptions) && s.ImplementationInstance is not null)
                                             .ImplementationInstance as CoreOptions;
-        return coreOptions!;
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(coreOptions, nameof(coreOptions));
+
+        return coreOptions;
     }
 }
