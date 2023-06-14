@@ -107,4 +107,31 @@ internal static class TypeExtensions
         return type.IsInstantiable()
                 && type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is not null;
     }
+
+    /// <summary>
+    /// 类型定义是否相等
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="compareType"><see cref="Type"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsEqualTypeDefinition(this Type type, Type compareType)
+    {
+        return type == compareType
+                || (type.IsGenericTypeDefinition
+                    && compareType.IsGenericType
+                    && type == compareType.GetGenericTypeDefinition());
+    }
+
+    /// <summary>
+    /// 泛型类型是否兼容
+    /// </summary>
+    /// <remarks>检查泛型定义参数</remarks>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="compareType"><see cref="Type"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsGenericTypeCompatibility(this Type type, Type compareType)
+    {
+        return type.IsGenericType
+                && type.GenericTypeArguments.SequenceEqual(compareType.GetTypeInfo().GenericTypeParameters);
+    }
 }

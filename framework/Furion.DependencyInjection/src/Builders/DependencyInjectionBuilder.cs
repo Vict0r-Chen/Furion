@@ -288,8 +288,7 @@ public sealed class DependencyInjectionBuilder
 
         // 解析服务生存期类型
         var dependencyType = typeof(IDependency);
-        lifetimeDependencyType = allInterfaces.Single(i => i != dependencyType
-                                                                          && dependencyType.IsAssignableFrom(i));
+        lifetimeDependencyType = allInterfaces.Single(i => i.IsAlienAssignableFrom(dependencyType));
 
         // 获取基类类型
         var baseType = !serviceInjectionAttribute.IncludeBase
@@ -307,19 +306,14 @@ public sealed class DependencyInjectionBuilder
         var suppressServices = _suppressServices.Concat(suppressServicesAttribute.Types);
         var filteredOfServiceTypes = allInterfaces.Concat(new[] { baseType })
                                                                  .Where(t => t is not null
-                                                                                        && !suppressServices.Any(s => s == t
-                                                                                                                                || (s.IsGenericTypeDefinition && t.IsGenericType && s == t.GetGenericTypeDefinition()))
+                                                                                        && !suppressServices.Any(s => s.IsEqualTypeDefinition(t))
                                                                                         && !dependencyType.IsAssignableFrom(t))
                                                                  .Select(t => t!);
-
-        // 获取类型定义参数
-        var typeDefinitionParameters = type.GetTypeInfo().GenericTypeParameters;
 
         // 获取服务类型集合
         var serviceTypes = !type.IsGenericType
                                              ? filteredOfServiceTypes
-                                             : filteredOfServiceTypes.Where(i => i.IsGenericType
-                                                                                           && i.GenericTypeArguments.SequenceEqual(typeDefinitionParameters))
+                                             : filteredOfServiceTypes.Where(i => i.IsGenericTypeCompatibility(type))
                                                                      .Select(i => i.GetGenericTypeDefinition());
 
         // 判断是否将自身作为服务类型

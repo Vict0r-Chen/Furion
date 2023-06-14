@@ -119,4 +119,39 @@ public class TypeExtensionsTests
     {
         Assert.Equal(result, type.HasParameterlessConstructorDefined());
     }
+
+    [Theory]
+    [InlineData(typeof(IGenericType<string>), typeof(IEnumerable<string>), false)]
+    [InlineData(typeof(IGenericType<string>), typeof(IGenericType<string>), true)]
+    [InlineData(typeof(IGenericType<string>), typeof(IGenericType<int>), false)]
+    [InlineData(typeof(IGenericType<>), typeof(IGenericType<>), true)]
+    [InlineData(typeof(IGenericType<>), typeof(IGenericType<string>), true)]
+    [InlineData(typeof(IGenericType<string>), typeof(IGenericType<>), false)]
+    [InlineData(typeof(IGenericType<>), typeof(IGenericType<int>), true)]
+    [InlineData(typeof(IGenericType<,>), typeof(IGenericType<,>), true)]
+    [InlineData(typeof(IGenericType<string, int>), typeof(IGenericType<string, int>), true)]
+    [InlineData(typeof(IGenericType<int, string>), typeof(IGenericType<string, int>), false)]
+    [InlineData(typeof(IGenericType<,>), typeof(IGenericType<>), false)]
+    [InlineData(typeof(IGenericType<,>), typeof(IGenericType<string, int>), true)]
+    [InlineData(typeof(IGenericType<,>), typeof(IGenericType<int, string>), true)]
+    [InlineData(typeof(IGenericType<>), typeof(GenericType<>), false)]
+    [InlineData(typeof(IGenericType<,>), typeof(GenericType<,>), false)]
+    public void IsEqualTypeDefinition(Type type, Type compareType, bool result)
+    {
+        Assert.Equal(result, type.IsEqualTypeDefinition(compareType));
+    }
+
+    [Fact]
+    public void IsGenericTypeCompatibility()
+    {
+        var genericTypes = GetType().Assembly.GetTypes().Where(t => t.IsDefined(typeof(GenericAttribute), false));
+
+        foreach (var genericType in genericTypes)
+        {
+            var firstInterface = genericType.GetInterfaces()[0];
+            var lastInterface = genericType.GetInterfaces()[1];
+            Assert.True(firstInterface.IsGenericTypeCompatibility(genericType));
+            Assert.False(lastInterface.IsGenericTypeCompatibility(genericType));
+        }
+    }
 }

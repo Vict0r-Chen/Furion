@@ -14,19 +14,35 @@
 
 namespace Furion.Core.Tests;
 
-public class InstanceType { }
-public static class StaticType { }
-public sealed class SealedType { }
-public abstract class AbstractType { }
-public enum EnumType { }
-public record RecordType { }
-public struct StructType { }
+public class InstanceType
+{ }
 
-public interface IDependency { }
-public class Dependency : IDependency { }
+public static class StaticType
+{ }
+
+public sealed class SealedType
+{ }
+
+public abstract class AbstractType
+{ }
+
+public enum EnumType
+{ }
+
+public record RecordType { }
+
+public struct StructType
+{ }
+
+public interface IDependency
+{ }
+
+public class Dependency : IDependency
+{ }
 
 [AttributeUsage(AttributeTargets.Class)]
-public class CustomAttribute : Attribute { }
+public class CustomAttribute : Attribute
+{ }
 
 [Custom]
 public class WithAttribute
@@ -75,3 +91,27 @@ public class WithParameterAndParameterlessConstruct
     {
     }
 }
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
+public class GenericAttribute : Attribute
+{ }
+
+public interface IGenericType<T>
+{ }
+
+public interface IGenericType<T, U>
+{ }
+
+public interface IGenericType2<T>
+{ }
+
+public interface IGenericType2<T, U>
+{ }
+
+[Generic]
+public class GenericType<T> : IGenericType<T>, IGenericType2<string>
+{ }
+
+[Generic]
+public class GenericType<T, U> : IGenericType<T, U>, IGenericType2<T, string>
+{ }
