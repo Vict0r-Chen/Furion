@@ -17,114 +17,106 @@ namespace Furion.Core.Tests;
 public class TypeExtensionsTests
 {
     [Theory]
-    [InlineData(typeof(StaticClass), true)]
-    [InlineData(typeof(InstanceClass), false)]
-    [InlineData(typeof(SealedClass), false)]
-    [InlineData(typeof(AbstraceClass), false)]
-    public void IsStatic_ReturnOK(Type type, bool ok)
+    [InlineData(typeof(InstanceType), false)]
+    [InlineData(typeof(StaticType), true)]
+    [InlineData(typeof(SealedType), false)]
+    [InlineData(typeof(AbstractType), false)]
+    [InlineData(typeof(EnumType), false)]
+    [InlineData(typeof(RecordType), false)]
+    [InlineData(typeof(StructType), false)]
+    [InlineData(typeof(string), false)]
+    [InlineData(typeof(int), false)]
+    [InlineData(typeof(bool), false)]
+    [InlineData(typeof(object), false)]
+    [InlineData(typeof(IDependency), false)]
+    public void IsStatic(Type type, bool result)
     {
-        var result = type.IsStatic();
-        Assert.Equal(ok, result);
+        Assert.Equal(result, type.IsStatic());
     }
 
     [Fact]
-    public void IsAnonymousType_ReturnOK()
+    public void IsAnonymousType()
     {
-        var obj1 = new
-        {
-        };
-        var result1 = obj1.GetType().IsAnonymousType();
-        Assert.True(result1);
+        Assert.False(typeof(InstanceType).IsAnonymousType());
+        Assert.False(typeof(StaticType).IsAnonymousType());
+        Assert.False(typeof(SealedType).IsAnonymousType());
+        Assert.False(typeof(AbstractType).IsAnonymousType());
+        Assert.False(typeof(EnumType).IsAnonymousType());
+        Assert.False(typeof(RecordType).IsAnonymousType());
+        Assert.False(typeof(StructType).IsAnonymousType());
+        Assert.False(typeof(object).IsAnonymousType());
 
-        var obj2 = new
+        var anonymouse1 = new
         {
             Name = "Furion"
         };
-        var result2 = obj2.GetType().IsAnonymousType();
-        Assert.True(result2);
-
-        var obj3 = new InstanceClass();
-        var result3 = obj3.GetType().IsAnonymousType();
-        Assert.False(result3);
-    }
-
-    [Theory]
-    [InlineData(typeof(StaticClass), false)]
-    [InlineData(typeof(InstanceClass), true)]
-    [InlineData(typeof(SealedClass), true)]
-    [InlineData(typeof(AbstraceClass), false)]
-    public void IsInstantiatedType_ReturnOK(Type type, bool ok)
-    {
-        var result = type.IsInstantiatedType();
-        Assert.Equal(ok, result);
-    }
-
-    [Theory]
-    [InlineData(typeof(StaticClass), false)]
-    [InlineData(typeof(InstanceClass), false)]
-    [InlineData(typeof(SealedClass), false)]
-    [InlineData(typeof(AbstraceClass), false)]
-    [InlineData(typeof(DerivedType), true)]
-    public void IsInstantiatedTypeWithAssignableFrom_ReturnOK(Type type, bool ok)
-    {
-        var result = type.IsInstantiatedTypeWithAssignableFrom(typeof(IDerivedType));
-        Assert.Equal(ok, result);
-    }
-
-    [Fact]
-    public void IsInstantiatedTypeWithAssignableFrom_EmptyDerivedType_ReturnOops()
-    {
-        var exception = Assert.Throws<ArgumentNullException>(() =>
+        var anonymouse2 = new { };
+        var anonymouse3 = new
         {
-            var result = typeof(DerivedType).IsInstantiatedTypeWithAssignableFrom(null!);
-        });
-    }
+            Name = "Furion",
+            Age = DateTime.Now.Year - DateTime.Parse("2020/06/22").Year
+        };
 
-    [Fact]
-    public void GetCustomAttributeIfIsDefined_ReturnOK()
-    {
-        var attribute1 = typeof(NotAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(true);
-        var attribute2 = typeof(HasAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(true);
-        var attribute3 = typeof(InheritAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(true);
-        var attribute4 = typeof(InheritAttributeClass).GetCustomAttributeIfIsDefined<DisplayNameAttribute>(false);
-
-        Assert.Null(attribute1);
-        Assert.NotNull(attribute2);
-        Assert.NotNull(attribute3);
-        Assert.Null(attribute4);
+        Assert.True(anonymouse1.GetType().IsAnonymousType());
+        Assert.True(anonymouse2.GetType().IsAnonymousType());
+        Assert.True(anonymouse3.GetType().IsAnonymousType());
     }
 
     [Theory]
-    [InlineData(nameof(WithMethodClass.GetStatic), false)]
-    [InlineData(nameof(WithMethodClass.GetInternal), false)]
-    [InlineData(nameof(WithMethodClass.GetPublic), true)]
-    public void GetPublicInstanceMethod_ReturnOK(string methodName, bool isPublicInstance)
+    [InlineData(typeof(InstanceType), true)]
+    [InlineData(typeof(StaticType), false)]
+    [InlineData(typeof(SealedType), true)]
+    [InlineData(typeof(AbstractType), false)]
+    [InlineData(typeof(EnumType), false)]
+    [InlineData(typeof(RecordType), true)]
+    [InlineData(typeof(StructType), false)]
+    [InlineData(typeof(string), true)]
+    [InlineData(typeof(int), false)]
+    [InlineData(typeof(bool), false)]
+    [InlineData(typeof(object), true)]
+    [InlineData(typeof(IDependency), false)]
+    public void IsInstantiable(Type type, bool result)
     {
-        var type = typeof(WithMethodClass);
-        var method = type.GetPublicInstanceMethod(methodName);
-        Assert.Equal(isPublicInstance, method != null);
-    }
-
-    [Fact]
-    public void GetParentAndSelfTypes_ReturnOK()
-    {
-        var type = typeof(Self);
-        var types = type.GetParentAndSelfTypes();
-        Assert.Equal(typeof(Base1), types[0]);
-        Assert.Equal(typeof(Base2), types[1]);
-        Assert.Equal(typeof(Base3), types[2]);
-        Assert.Equal(typeof(Self), types[3]);
+        Assert.Equal(result, type.IsInstantiable());
     }
 
     [Theory]
-    [InlineData(typeof(DefaultConstructorClass), true)]
-    [InlineData(typeof(ParameterlessConstructorClass), true)]
-    [InlineData(typeof(InternalParameterlessConstructorClass), false)]
-    [InlineData(typeof(OneConstructorClass), false)]
-    [InlineData(typeof(ManyConstructoresClass), true)]
-    public void IsDefinedParameterlessConstructor_ReturnOK(Type type, bool result)
+    [InlineData(typeof(InstanceType), false)]
+    [InlineData(typeof(Dependency), true)]
+    [InlineData(typeof(IDependency), false)]
+    public void IsAlienAssignableFrom(Type type, bool result)
     {
-        var res = type.IsDefinedParameterlessConstructor();
-        Assert.Equal(result, res);
+        Assert.Equal(result, type.IsAlienAssignableFrom(typeof(IDependency)));
+    }
+
+    [Theory]
+    [InlineData(typeof(WithAttribute), true, false)]
+    [InlineData(typeof(WithAttribute), true, true)]
+    [InlineData(typeof(InheritWithAttribute), false, false)]
+    [InlineData(typeof(InheritWithAttribute), true, true)]
+    public void GetDefinedCustomAttribute(Type type, bool notNull, bool inherit)
+    {
+        var customAttribute = type.GetDefinedCustomAttribute<CustomAttribute>(inherit);
+        Assert.Equal(notNull, customAttribute is not null);
+    }
+
+    [Theory]
+    [InlineData(typeof(InstanceType), true)]
+    [InlineData(typeof(StaticType), false)]
+    [InlineData(typeof(SealedType), true)]
+    [InlineData(typeof(AbstractType), false)]
+    [InlineData(typeof(EnumType), false)]
+    [InlineData(typeof(RecordType), true)]
+    [InlineData(typeof(StructType), false)]
+    [InlineData(typeof(IDependency), false)]
+    [InlineData(typeof(WithAttribute), true)]
+    [InlineData(typeof(StaticConstruct), true)]
+    [InlineData(typeof(InternalConstruct), false)]
+    [InlineData(typeof(PrivateConstruct), false)]
+    [InlineData(typeof(WithParameterConstruct), false)]
+    [InlineData(typeof(WithParameterAndParameterlessConstruct), true)]
+    public void HasParameterlessConstructorDefined(Type type, bool result)
+    {
+        Assert.Equal(result, type.HasParameterlessConstructorDefined());
     }
 }

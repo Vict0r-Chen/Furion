@@ -157,66 +157,54 @@
         </member>
         <member name="T:System.TypeExtensions">
             <summary>
-            <see cref="T:System.Type"/> 类型拓展
+            <see cref="T:System.Type"/> 拓展类
             </summary>
         </member>
         <member name="M:System.TypeExtensions.IsStatic(System.Type)">
             <summary>
-            判断类型是否是静态类型
+            是否为静态类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
-            <returns><see langword="true"/> 标识为静态类型；<see langword="false"/> 标识为非静态类</returns>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:System.TypeExtensions.IsAnonymousType(System.Type)">
             <summary>
-            判断类型是否是匿名类型
+            是否为匿名类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsInstantiatedType(System.Type)">
+        <member name="M:System.TypeExtensions.IsInstantiable(System.Type)">
             <summary>
-            判断类型是否可实例化
+            是否可实例化
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsInstantiatedTypeWithAssignableFrom(System.Type,System.Type)">
+        <member name="M:System.TypeExtensions.IsAlienAssignableFrom(System.Type,System.Type)">
             <summary>
-            判断类型是否可实例化且派生自特定类型
+            是否派生自特定类型
             </summary>
+            <remarks>排除特定类型本身</remarks>
             <param name="type"><see cref="T:System.Type"/></param>
-            <param name="derivedType">派生类型</param>
+            <param name="fromType"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.GetCustomAttributeIfIsDefined``1(System.Type,System.Boolean)">
+        <member name="M:System.TypeExtensions.GetDefinedCustomAttribute``1(System.Type,System.Boolean)">
             <summary>
-            获取类型指定的特性
+            获取指定特性实例
             </summary>
+            <remarks>若特性不存在则返回 null</remarks>
             <typeparam name="TAttribute">特性类型</typeparam>
             <param name="type"><see cref="T:System.Type"/></param>
-            <param name="inherit">是否支持特性继承查找</param>
+            <param name="inherit">是否查找基类型特性</param>
             <returns><typeparamref name="TAttribute"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.GetPublicInstanceMethod(System.Type,System.String)">
+        <member name="M:System.TypeExtensions.HasParameterlessConstructorDefined(System.Type)">
             <summary>
-            获取公开的实例方法
+            是否包含公开无参构造函数
             </summary>
-            <param name="type"><see cref="T:System.Type"/></param>
-            <param name="name">方法名称</param>
-            <returns><see cref="T:System.Reflection.MethodInfo"/></returns>
-        </member>
-        <member name="M:System.TypeExtensions.GetParentAndSelfTypes(System.Type)">
-            <summary>
-            查找所有的父类类型且包含自己
-            </summary>
-            <param name="type"><see cref="T:System.Type"/></param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
-        </member>
-        <member name="M:System.TypeExtensions.IsDefinedParameterlessConstructor(System.Type)">
-            <summary>
-            是否定义公开无参构造函数
-            </summary>
+            <remarks>用于 <see cref="M:System.Activator.CreateInstance(System.Type)"/> 实例化</remarks>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>

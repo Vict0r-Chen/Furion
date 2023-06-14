@@ -158,7 +158,7 @@ public sealed class DependencyInjectionBuilder
             var exportedTypes = (SuppressNotPublicType
                                                   ? assembly.GetExportedTypes()
                                                   : assembly.GetTypes()
-                                                ).Where(t => t.IsInstantiatedTypeWithAssignableFrom(typeof(IDependency)));
+                                                ).Where(t => t.IsInstantiable() && t.IsAlienAssignableFrom(typeof(IDependency)));
 
             // 空检查
             if (!exportedTypes.Any())
@@ -170,7 +170,7 @@ public sealed class DependencyInjectionBuilder
             foreach (var exportedType in exportedTypes)
             {
                 // 获取 [ServiceInjection] 特性
-                var serviceInjectionAttribute = exportedType.GetCustomAttributeIfIsDefined<ServiceInjectionAttribute>(true) ?? new();
+                var serviceInjectionAttribute = exportedType.GetDefinedCustomAttribute<ServiceInjectionAttribute>(true) ?? new();
 
                 // 判断是否配置了 Ignore
                 if (serviceInjectionAttribute is { Ignore: true })
@@ -301,7 +301,7 @@ public sealed class DependencyInjectionBuilder
                             : type.BaseType;
 
         // 获取 [SuppressServices] 特性
-        var suppressServicesAttribute = type.GetCustomAttributeIfIsDefined<SuppressServicesAttribute>(true) ?? new();
+        var suppressServicesAttribute = type.GetDefinedCustomAttribute<SuppressServicesAttribute>(true) ?? new();
 
         // 过滤无效服务类型
         var suppressServices = _suppressServices.Concat(suppressServicesAttribute.Types);
