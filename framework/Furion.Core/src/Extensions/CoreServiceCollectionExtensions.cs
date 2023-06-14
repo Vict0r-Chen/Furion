@@ -37,9 +37,12 @@ public static class CoreServiceCollectionExtensions
     /// <returns><see cref="CoreOptions"/></returns>
     internal static CoreOptions GetCoreOptions(this IServiceCollection services)
     {
+        // 添加核心模块选项服务
         services.AddCoreOptions();
 
-        var coreOptions = services.Single(s => s.ServiceType == typeof(CoreOptions)).ImplementationInstance as CoreOptions;
+        // 获取核心模块选项实例
+        var coreOptions = services.Single(s => s.ServiceType == typeof(CoreOptions) && s.ImplementationInstance is not null)
+                                            .ImplementationInstance as CoreOptions;
         return coreOptions!;
     }
 }
