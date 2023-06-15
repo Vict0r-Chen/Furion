@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection.Tests;
 public class ExposeServicesAttributeTests
 {
     [Fact]
-    public void New_Parameterless_ReturnOK()
+    public void NewInstance_With_Parameterless_ReturnOK()
     {
         var exposeServicesAttribute = new ExposeServicesAttribute();
         Assert.NotNull(exposeServicesAttribute.ServiceTypes);
@@ -25,13 +25,13 @@ public class ExposeServicesAttributeTests
     }
 
     [Fact]
-    public void New_Parameter_Null_Throw()
+    public void NewInstance_With_Parameter_Null_Throw()
     {
         Assert.Throws<ArgumentNullException>(() => new ExposeServicesAttribute(null!));
     }
 
     [Fact]
-    public void New_Parameter_Set()
+    public void NewInstance_With_Parameters()
     {
         var exposeServicesAttribute = new ExposeServicesAttribute(typeof(IServiceProvider));
         Assert.NotNull(exposeServicesAttribute.ServiceTypes);
@@ -40,7 +40,7 @@ public class ExposeServicesAttributeTests
     }
 
     [Fact]
-    public void AttributeUsage_Check()
+    public void AttributeUsage_Attribute_Check()
     {
         var attributeUsageAttribute = typeof(ExposeServicesAttribute).GetCustomAttribute<AttributeUsageAttribute>();
         Assert.NotNull(attributeUsageAttribute);

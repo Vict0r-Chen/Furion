@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection.Tests;
 public class ServiceInjectionAttributeTests
 {
     [Fact]
-    public void New_Parameterless_ReturnOK()
+    public void NewInstance_With_Parameterless_ReturnOK()
     {
         var serviceInjectionAttribute = new ServiceInjectionAttribute();
         Assert.Equal(ServiceAddition.Default, serviceInjectionAttribute.Addition);
@@ -28,7 +28,7 @@ public class ServiceInjectionAttributeTests
     }
 
     [Fact]
-    public void New_Parameter_Set()
+    public void NewInstance_With_Parameters()
     {
         var serviceInjectionAttribute = new ServiceInjectionAttribute(ServiceAddition.TryAdd);
         Assert.Equal(ServiceAddition.TryAdd, serviceInjectionAttribute.Addition);
@@ -39,7 +39,7 @@ public class ServiceInjectionAttributeTests
     }
 
     [Fact]
-    public void AttributeUsage_Check()
+    public void AttributeUsage_Attribute_Check()
     {
         var serviceInjectionAttribute = typeof(ServiceInjectionAttribute).GetCustomAttribute<AttributeUsageAttribute>();
         Assert.NotNull(serviceInjectionAttribute);

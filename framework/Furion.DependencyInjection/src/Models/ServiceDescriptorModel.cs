@@ -32,6 +32,10 @@ public sealed class ServiceDescriptorModel
         , ServiceLifetime serviceLifetime
         , ServiceAddition serviceAddition)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
+        ArgumentNullException.ThrowIfNull(implementationType, nameof(implementationType));
+
         Descriptor = ServiceDescriptor.Describe(serviceType, implementationType, serviceLifetime);
         Addition = serviceAddition;
     }
@@ -48,6 +52,6 @@ public sealed class ServiceDescriptorModel
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{Addition} {nameof(Order)}: {Order}, {Descriptor}";
+        return $"[{Addition}] {nameof(Order)}: {Order} {Descriptor}";
     }
 }

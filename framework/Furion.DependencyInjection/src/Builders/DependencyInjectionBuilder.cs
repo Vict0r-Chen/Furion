@@ -119,6 +119,9 @@ public sealed class DependencyInjectionBuilder
         {
             // 释放对象
             Release();
+
+            // 输出事件消息
+            Debugging.Warn("Dependency Injection module assembly scanning has been disabled.");
             return;
         }
 
