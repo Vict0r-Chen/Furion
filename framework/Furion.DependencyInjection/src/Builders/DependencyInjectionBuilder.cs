@@ -190,6 +190,7 @@ public sealed class DependencyInjectionBuilder
             // 是否包含基类
             var baseType = type.BaseType;
             if (baseType is not null
+                && baseType != typeof(object)
                 && serviceInjectionAttribute is { IncludeBase: true }
                 && type.IsTypeCompatibilityTo(baseType))
             {
@@ -251,20 +252,20 @@ public sealed class DependencyInjectionBuilder
     internal List<Type> GetEffectiveServiceTypes(Type type, Type[] limitTypes, out Type dependencyType)
     {
         // 获取类型实现的所有接口
-        var allInterfaces = type.GetInterfaces();
+        var interfaces = type.GetInterfaces();
 
         // 获取类型实现的服务生存期类型
-        dependencyType = allInterfaces.Last(i => i.IsAlienAssignableTo(_dependencyType));
+        dependencyType = interfaces.Last(i => i.IsAlienAssignableTo(_dependencyType));
 
         // 查找不在黑名单且在限制类型集合中的服务类型集合
-        var serviceTypes = allInterfaces.Where(t => (_serviceTypeBlacklist.Count == 0 || !_serviceTypeBlacklist.Any(s => s.IsEqualTypeDefinition(t)))
-                                                                       && (limitTypes.Length == 0 || limitTypes.Any(s => s.IsEqualTypeDefinition(t)))
-                                                                       && !_dependencyType.IsAssignableFrom(t)
-                                                                       && type.IsTypeCompatibilityTo(t))
-                                                 .Select(t => !type.IsGenericType
-                                                                        ? t :
-                                                                        t.GetGenericTypeDefinition())
-                                                 .ToList();
+        var serviceTypes = interfaces.Where(t => (_serviceTypeBlacklist.Count == 0 || !_serviceTypeBlacklist.Any(s => s.IsEqualTypeDefinition(t)))
+                                                                    && (limitTypes.Length == 0 || limitTypes.Any(s => s.IsEqualTypeDefinition(t)))
+                                                                    && !_dependencyType.IsAssignableFrom(t)
+                                                                    && type.IsTypeCompatibilityTo(t))
+                                              .Select(t => !type.IsGenericType
+                                                                     ? t :
+                                                                     t.GetGenericTypeDefinition())
+                                              .ToList();
 
         return serviceTypes;
     }
@@ -276,6 +277,7 @@ public sealed class DependencyInjectionBuilder
     {
         _assemblies.Clear();
         _serviceTypeBlacklist.Clear();
+        _filterConfigure = null;
     }
 
     /// <summary>
@@ -295,7 +297,7 @@ public sealed class DependencyInjectionBuilder
             // Singleton
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
             // 无效类型
-            _ => throw new ArgumentOutOfRangeException(nameof(dependencyType), $"{dependencyType} type is not a valid service lifetime type.")
+            _ => throw new ArgumentOutOfRangeException(nameof(dependencyType), $"'{dependencyType}' type is not a valid service lifetime type.")
         };
     }
 
@@ -331,7 +333,7 @@ public sealed class DependencyInjectionBuilder
                 break;
             // 无效操作
             default:
-                throw new InvalidOperationException($"{serviceDescriptorModel.Addition} not supported.");
+                throw new InvalidOperationException($"'{serviceDescriptorModel.Addition}' not supported.");
         }
     }
 }

@@ -25,7 +25,7 @@ public class ServiceDescriptorModelTests
     }
 
     [Fact]
-    public void NewInstance_With_Parameter_Null_Throw()
+    public void NewInstance_With_Null_Parameter_Throw()
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
