@@ -15,29 +15,29 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 依赖注入模块拓展
+/// 依赖注入模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
 public static class DependencyInjectionServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加依赖注入服务
+    /// 添加依赖注入模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = null)
     {
-        // 创建依赖注入模块构建器
+        // 初始化依赖注入模块构建器
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
 
-        // 调用自定义配置
+        // 调用自定义配置委托
         configure?.Invoke(dependencyInjectionBuilder);
 
         return services.AddDependencyInjection(dependencyInjectionBuilder);
     }
 
     /// <summary>
-    /// 添加依赖注入服务
+    /// 添加依赖注入模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="dependencyInjectionBuilder"><see cref="DependencyInjectionBuilder"/></param>
@@ -47,7 +47,7 @@ public static class DependencyInjectionServiceCollectionExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencyInjectionBuilder, nameof(dependencyInjectionBuilder));
 
-        // 构建服务
+        // 构建模块服务
         dependencyInjectionBuilder.Build(services);
 
         return services;

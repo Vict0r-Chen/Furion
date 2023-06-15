@@ -90,10 +90,10 @@ public class TypeExtensionsTests
     }
 
     [Theory]
-    [InlineData(typeof(WithAttribute), true, false)]
-    [InlineData(typeof(WithAttribute), true, true)]
-    [InlineData(typeof(InheritWithAttribute), false, false)]
-    [InlineData(typeof(InheritWithAttribute), true, true)]
+    [InlineData(typeof(WithAttributeClass), true, false)]
+    [InlineData(typeof(WithAttributeClass), true, true)]
+    [InlineData(typeof(InheritWithAttributeClass), false, false)]
+    [InlineData(typeof(InheritWithAttributeClass), true, true)]
     public void GetDefinedCustomAttribute(Type type, bool notNull, bool inherit)
     {
         var customAttribute = type.GetDefinedCustomAttribute<CustomAttribute>(inherit);
@@ -101,10 +101,10 @@ public class TypeExtensionsTests
     }
 
     [Theory]
-    [InlineData(typeof(WithAttribute), true, false)]
-    [InlineData(typeof(WithAttribute), true, true)]
-    [InlineData(typeof(InheritWithAttribute), true, false)]
-    [InlineData(typeof(InheritWithAttribute), true, true)]
+    [InlineData(typeof(WithAttributeClass), true, false)]
+    [InlineData(typeof(WithAttributeClass), true, true)]
+    [InlineData(typeof(InheritWithAttributeClass), true, false)]
+    [InlineData(typeof(InheritWithAttributeClass), true, true)]
     public void GetDefinedCustomAttributeOrNew(Type type, bool notNull, bool inherit)
     {
         var customAttribute = type.GetDefinedCustomAttributeOrNew<CustomAttribute>(inherit);
@@ -120,12 +120,12 @@ public class TypeExtensionsTests
     [InlineData(typeof(RecordType), true)]
     [InlineData(typeof(StructType), false)]
     [InlineData(typeof(IDependency), false)]
-    [InlineData(typeof(WithAttribute), true)]
-    [InlineData(typeof(StaticConstruct), true)]
-    [InlineData(typeof(InternalConstruct), false)]
-    [InlineData(typeof(PrivateConstruct), false)]
-    [InlineData(typeof(WithParameterConstruct), false)]
-    [InlineData(typeof(WithParameterAndParameterlessConstruct), true)]
+    [InlineData(typeof(WithAttributeClass), true)]
+    [InlineData(typeof(StaticConstructClass), true)]
+    [InlineData(typeof(InternalConstructClass), false)]
+    [InlineData(typeof(PrivateConstructClass), false)]
+    [InlineData(typeof(WithParameterConstructClass), false)]
+    [InlineData(typeof(WithParameterAndParameterlessConstructClass), true)]
     public void HasParameterlessConstructorDefined(Type type, bool result)
     {
         Assert.Equal(result, type.HasParameterlessConstructorDefined());
@@ -154,20 +154,37 @@ public class TypeExtensionsTests
         Assert.Equal(result, type.IsEqualTypeDefinition(compareType));
     }
 
-    [Fact]
-    public void IsTypeCompatibilityTo()
+    [Theory]
+    [InlineData(typeof(ImplementationType))]
+    [InlineData(typeof(ImplementationType1), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
+    [InlineData(typeof(ImplementationType2), typeof(BaseServiceType), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
+    [InlineData(typeof(ImplementationType3), typeof(BaseServiceType<string>), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
+    [InlineData(typeof(ImplementationType4), typeof(BaseServiceType<string, int>), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
+    public void IsTypeCompatibilityTo_NonGenericType_ReturnOK(Type type, params Type[] types)
     {
-        var types = GetType().Assembly.GetTypes().Where(t => t.IsDefined(typeof(ScanningAttribute), false));
+        var baseTypes = new[] { type.BaseType }.Concat(type.GetInterfaces());
+        var serviceTypes = baseTypes.Where(t => type.IsTypeCompatibilityTo(t)).ToArray();
+        var isEqual = types.SequenceEqual(serviceTypes);
+        Assert.True(isEqual);
+    }
 
-        foreach (var type in types)
-        {
-            var firstInterface = type.GetInterfaces()[0];
-            var secondInterface = type.GetInterfaces()[1];
-            var lastInterface = type.GetInterfaces()[2];
-
-            Assert.True(type.IsTypeCompatibilityTo(firstInterface));
-            Assert.False(type.IsTypeCompatibilityTo(secondInterface));
-            Assert.False(type.IsTypeCompatibilityTo(lastInterface));
-        }
+    [Theory]
+    [InlineData(typeof(GenericImplementationType<>), typeof(ISecondGenericServiceType<>), typeof(IGenericServiceType<>))]
+    [InlineData(typeof(GenericImplementationTyp1<>), typeof(ISecondGenericServiceType<>), typeof(IGenericServiceType<>))]
+    [InlineData(typeof(GenericImplementationType2<>), typeof(ISecondGenericServiceType<>), typeof(IGenericServiceType<>))]
+    [InlineData(typeof(GenericImplementationType3<>), typeof(BaseServiceType<>), typeof(ISecondGenericServiceType<>), typeof(IGenericServiceType<>))]
+    [InlineData(typeof(GenericImplementationType4<>), typeof(ISecondGenericServiceType<>), typeof(IGenericServiceType<>))]
+    [InlineData(typeof(MultiGenericImplementationType<,>), typeof(IGenericServiceType<,>))]
+    [InlineData(typeof(MultiGenericImplementationType1<,>), typeof(IGenericServiceType<,>))]
+    [InlineData(typeof(MultiGenericImplementationType2<,>), typeof(IGenericServiceType<,>))]
+    [InlineData(typeof(MultiGenericImplementationType3<,>), typeof(BaseServiceType<,>), typeof(IGenericServiceType<,>), typeof(ISecondGenericServiceType<,>))]
+    [InlineData(typeof(MultiGenericImplementationType4<,>), typeof(IGenericServiceType<,>))]
+    public void IsTypeCompatibilityTo_GenericType_ReturnOK(Type genericType, params Type[] types)
+    {
+        var type = GetType().Assembly.GetTypes().Single(t => t.IsGenericType && t.GetGenericTypeDefinition() == genericType);
+        var baseTypes = new[] { type.BaseType }.Concat(type.GetInterfaces());
+        var serviceTypes = baseTypes.Where(t => type.IsTypeCompatibilityTo(t)).Select(t => t!.GetGenericTypeDefinition()).ToArray();
+        var isEqual = types.SequenceEqual(serviceTypes);
+        Assert.True(isEqual);
     }
 }

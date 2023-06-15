@@ -45,55 +45,132 @@ public class CustomAttribute : Attribute
 { }
 
 [Custom]
-public class WithAttribute
+public class WithAttributeClass
 {
 }
 
-public class InheritWithAttribute : WithAttribute
+public class InheritWithAttributeClass : WithAttributeClass
 {
 }
 
-public class StaticConstruct
+public class StaticConstructClass
 {
-    static StaticConstruct()
+    static StaticConstructClass()
     {
     }
 }
 
-public class InternalConstruct
+public class InternalConstructClass
 {
-    internal InternalConstruct()
+    internal InternalConstructClass()
     {
     }
 }
 
-public class PrivateConstruct
+public class PrivateConstructClass
 {
-    private PrivateConstruct()
+    private PrivateConstructClass()
     {
     }
 }
 
-public class WithParameterConstruct
+public class WithParameterConstructClass
 {
-    public WithParameterConstruct(string _)
+    public WithParameterConstructClass(string _)
     {
     }
 }
 
-public class WithParameterAndParameterlessConstruct
+public class WithParameterAndParameterlessConstructClass
 {
-    public WithParameterAndParameterlessConstruct()
+    public WithParameterAndParameterlessConstructClass()
     {
     }
 
-    public WithParameterAndParameterlessConstruct(string _)
+    public WithParameterAndParameterlessConstructClass(string _)
     {
     }
 }
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-public class ScanningAttribute : Attribute
+public interface IServiceType
+{ }
+
+public interface ISecondServiceType
+{ }
+
+public interface IOtherServiceType
+{ }
+
+public interface IGenericServiceType<T>
+{ }
+
+public interface IGenericServiceType<T, U>
+{ }
+
+public interface ISecondGenericServiceType<T>
+{ }
+
+public interface ISecondGenericServiceType<T, U>
+{ }
+
+public interface IOtherGenericServiceType<T>
+{ }
+
+public interface IOtherGenericServiceType<T, U>
+{ }
+
+public abstract class BaseServiceType
+{ }
+
+public class BaseServiceType<T>
+{ }
+
+public abstract class BaseServiceType<T, U>
+{ }
+
+public class ImplementationType
+{ }
+
+public class ImplementationType1 : IServiceType, ISecondServiceType, IOtherServiceType, IGenericServiceType<string>, IGenericServiceType<string, int>
+{ }
+
+public class ImplementationType2 : BaseServiceType, IServiceType, ISecondServiceType, IOtherServiceType, IGenericServiceType<string>, IGenericServiceType<string, int>
+{ }
+
+public class ImplementationType3 : BaseServiceType<string>, IServiceType, ISecondServiceType, IOtherServiceType, IGenericServiceType<string>, IGenericServiceType<string, int>
+{ }
+
+public class ImplementationType4 : BaseServiceType<string, int>, IServiceType, ISecondServiceType, IOtherServiceType, IGenericServiceType<string>, IGenericServiceType<string, int>
+{ }
+
+public class GenericImplementationType<T> : IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string>, ISecondGenericServiceType<T>, IGenericServiceType<T>, IGenericServiceType<T, int>
+{ }
+
+public class GenericImplementationTyp1<T> : BaseServiceType, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string>, ISecondGenericServiceType<T>, IGenericServiceType<T>, IGenericServiceType<T, int>
+{ }
+
+public class GenericImplementationType2<T> : BaseServiceType<string>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string>, ISecondGenericServiceType<T>, IGenericServiceType<T>, IGenericServiceType<T, int>
+{ }
+
+public class GenericImplementationType3<T> : BaseServiceType<T>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string>, ISecondGenericServiceType<T>, IGenericServiceType<T>, IGenericServiceType<T, int>
+{ }
+
+public class GenericImplementationType4<T> : BaseServiceType<T, string>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string>, ISecondGenericServiceType<T>, IGenericServiceType<T>, IGenericServiceType<T, int>
+{ }
+
+public class MultiGenericImplementationType<T, U> : IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string, int>, ISecondGenericServiceType<T>, IGenericServiceType<T, U>, ISecondGenericServiceType<T, int>
+{ }
+
+public class MultiGenericImplementationType1<T, U> : BaseServiceType, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string, int>, ISecondGenericServiceType<T>, IGenericServiceType<T, U>, ISecondGenericServiceType<T, int>
+{ }
+
+public class MultiGenericImplementationType2<T, U> : BaseServiceType<string>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string, int>, ISecondGenericServiceType<T>, IGenericServiceType<T, U>, ISecondGenericServiceType<T, int>
+{ }
+
+public class MultiGenericImplementationType3<T, U> : BaseServiceType<T, U>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string, int>, ISecondGenericServiceType<T>, IGenericServiceType<T, U>, ISecondGenericServiceType<T, U>
+{ }
+
+public class MultiGenericImplementationType4<T, U> : BaseServiceType<T, string>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string, int>, ISecondGenericServiceType<T>, IGenericServiceType<T, U>, ISecondGenericServiceType<T, int>
 { }
 
 public interface IGenericType<T>
@@ -102,16 +179,8 @@ public interface IGenericType<T>
 public interface IGenericType<T, U>
 { }
 
-public interface IGenericType2<T>
+public class GenericType<T> : IGenericType<T>, IGenericType<T, string>
 { }
 
-public interface IGenericType2<T, U>
-{ }
-
-[Scanning]
-public class GenericType<T> : IGenericType<T>, IGenericType2<string>, IGenericType<T, string>
-{ }
-
-[Scanning]
-public class GenericType<T, U> : IGenericType<T, U>, IGenericType2<T, string>, IGenericType<T>
+public class GenericType<T, U> : IGenericType<T, U>, IGenericType<T>
 { }

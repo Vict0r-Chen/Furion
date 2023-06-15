@@ -109,7 +109,7 @@ public sealed class DependencyInjectionBuilder
     }
 
     /// <summary>
-    /// 构建模块
+    /// 构建模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
@@ -247,7 +247,8 @@ public sealed class DependencyInjectionBuilder
         dependencyType = allInterfaces.Last(i => i.IsAlienAssignableTo(_dependencyType));
 
         // 过滤不兼容的服务类型
-        var serviceTypes = allInterfaces.Where(t => !_dependencyType.IsAssignableFrom(t)
+        var serviceTypes = allInterfaces.Where(t => !_serviceTypeBlacklist.Any(s => s.IsEqualTypeDefinition(t))
+                                                                             && !_dependencyType.IsAssignableFrom(t)
                                                                              && type.IsTypeCompatibilityTo(t))
                                                        .Select(t => !type.IsGenericType
                                                                               ? t :
