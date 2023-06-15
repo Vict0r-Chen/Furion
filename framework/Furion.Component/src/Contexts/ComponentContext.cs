@@ -88,14 +88,13 @@ public abstract class ComponentContext
         var optionsType = typeof(TOptions);
 
         // 如果未找到组件类型参数则返回空
-        if (!optionsActions.ContainsKey(optionsType))
+        if (!optionsActions.TryGetValue(optionsType, out var value))
         {
             return null;
         }
 
         // 生成级联委托
-        var cascadeAction = optionsActions[optionsType]
-                                            .Cast<Action<TOptions>>()
+        var cascadeAction = value.Cast<Action<TOptions>>()
                                             .Aggregate((previous, current) => (t) =>
                                             {
                                                 previous(t);

@@ -93,7 +93,7 @@ public class WithParameterAndParameterlessConstruct
 }
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-public class GenericAttribute : Attribute
+public class ScanningAttribute : Attribute
 { }
 
 public interface IGenericType<T>
@@ -108,10 +108,10 @@ public interface IGenericType2<T>
 public interface IGenericType2<T, U>
 { }
 
-[Generic]
-public class GenericType<T> : IGenericType<T>, IGenericType2<string>
+[Scanning]
+public class GenericType<T> : IGenericType<T>, IGenericType2<string>, IGenericType<T, string>
 { }
 
-[Generic]
-public class GenericType<T, U> : IGenericType<T, U>, IGenericType2<T, string>
+[Scanning]
+public class GenericType<T, U> : IGenericType<T, U>, IGenericType2<T, string>, IGenericType<T>
 { }

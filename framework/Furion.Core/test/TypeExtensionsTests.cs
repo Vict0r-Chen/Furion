@@ -157,14 +157,17 @@ public class TypeExtensionsTests
     [Fact]
     public void IsTypeCompatibilityTo()
     {
-        var genericTypes = GetType().Assembly.GetTypes().Where(t => t.IsDefined(typeof(GenericAttribute), false));
+        var types = GetType().Assembly.GetTypes().Where(t => t.IsDefined(typeof(ScanningAttribute), false));
 
-        foreach (var genericType in genericTypes)
+        foreach (var type in types)
         {
-            var firstInterface = genericType.GetInterfaces()[0];
-            var lastInterface = genericType.GetInterfaces()[1];
-            Assert.True(genericType.IsTypeCompatibilityTo(firstInterface));
-            Assert.False(genericType.IsTypeCompatibilityTo(lastInterface));
+            var firstInterface = type.GetInterfaces()[0];
+            var secondInterface = type.GetInterfaces()[1];
+            var lastInterface = type.GetInterfaces()[2];
+
+            Assert.True(type.IsTypeCompatibilityTo(firstInterface));
+            Assert.False(type.IsTypeCompatibilityTo(secondInterface));
+            Assert.False(type.IsTypeCompatibilityTo(lastInterface));
         }
     }
 }
