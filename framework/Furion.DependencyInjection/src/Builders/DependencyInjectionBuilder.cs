@@ -114,13 +114,13 @@ public sealed class DependencyInjectionBuilder
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
     {
-        // 检查是否禁用程序集扫描
+        // 是否禁用程序集扫描
         if (SuppressAssemblyScanning)
         {
             return;
         }
 
-        // 扫描程序集创建服务描述器集合
+        // 扫描程序集创建服务描述器模型集合
         var serviceDescriptors = CreateServiceDescriptors();
 
         // 空检查
@@ -129,23 +129,15 @@ public sealed class DependencyInjectionBuilder
             return;
         }
 
-        // 将服务描述器进行排序
-        var sortedOfServiceDescriptors = serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
-                                                                                   .ThenBy(s => s.Order)
-                                                                                   .ToList();
-
-        // 输出调试事件
-        Debugging.Trace("Dependency injection module is under construction.");
-
         // 将服务描述器添加到 IServiceCollection 中
-        foreach (var serviceDescriptorModel in sortedOfServiceDescriptors)
+        foreach (var serviceDescriptorModel in serviceDescriptors)
         {
             AddingToServices(services, serviceDescriptorModel);
         }
     }
 
     /// <summary>
-    /// 扫描程序集创建服务描述器集合
+    /// 扫描程序集创建服务描述器模型集合
     /// </summary>
     /// <returns><see cref="IEnumerable{T}"/></returns>
     internal IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors()
@@ -154,7 +146,8 @@ public sealed class DependencyInjectionBuilder
         var effectiveTypes = _assemblies.SelectMany(assembly =>
         {
             return assembly.GetTypes(SuppressNonPublicType)
-                           .Where(t => t.IsAlienAssignableTo(_dependencyType) && t.IsInstantiable());
+                           .Where(t => t.IsAlienAssignableTo(_dependencyType)
+                                                 && t.IsInstantiable());
         });
 
         // 空检查
@@ -163,15 +156,16 @@ public sealed class DependencyInjectionBuilder
             return Array.Empty<ServiceDescriptorModel>();
         }
 
+        // 创建服务描述器模型集合
         var serviceDescriptors = new List<ServiceDescriptorModel>();
 
-        // 遍历所有实现类型创建服务描述器模型
+        // 遍历符合规则的类型并创建服务描述器模型
         foreach (var type in effectiveTypes)
         {
             // 获取 [ServiceInjection] 特性
             var serviceInjectionAttribute = type.GetDefinedCustomAttributeOrNew<ServiceInjectionAttribute>(true);
 
-            // 判断是否配置了 Ignore
+            // 是否配置了 Ignore 属性
             if (serviceInjectionAttribute is { Ignore: true })
             {
                 continue;
@@ -180,11 +174,11 @@ public sealed class DependencyInjectionBuilder
             // 获取 [ExposeServices] 特性
             var exposeServicesAttribute = type.GetDefinedCustomAttributeOrNew<ExposeServicesAttribute>(true);
 
-            // 获取类型匹配的服务类型集合
-            var serviceTypes = GetMatchServiceTypes(type, out var dependencyType)
-                                                .Where(t => !exposeServicesAttribute.ServiceTypes
-                                                                            .Any(s => s.IsEqualTypeDefinition(t)))
-                                                .ToList();
+            // 获取类型兼容的服务类型
+            var serviceTypes = GetCompatibilityServiceTypes(type, out var dependencyType)
+                                            .Where(t => !exposeServicesAttribute.ServiceTypes
+                                                                  .Any(s => s.IsEqualTypeDefinition(t)))
+                                            .ToList();
 
             // 是否包含基类
             var baseType = type.BaseType;
@@ -203,7 +197,8 @@ public sealed class DependencyInjectionBuilder
                 : type.GetGenericTypeDefinition();
 
             // 是否包含自身
-            if (serviceInjectionAttribute is { IncludeSelf: true } || serviceTypes.Count == 0)
+            if (serviceInjectionAttribute is { IncludeSelf: true }
+                || serviceTypes.Count == 0)
             {
                 serviceTypes.Add(implementationType);
             }
@@ -223,7 +218,7 @@ public sealed class DependencyInjectionBuilder
                     Order = serviceInjectionAttribute.Order
                 };
 
-                // 调用服务描述器模型过滤配置
+                // 调用服务描述器过滤器
                 if (_filterConfigure is null || _filterConfigure.Invoke(serviceDescriptorModel))
                 {
                     serviceDescriptors.Add(serviceDescriptorModel);
@@ -231,29 +226,32 @@ public sealed class DependencyInjectionBuilder
             }
         }
 
-        return serviceDescriptors;
+        // 对服务描述器模型集合进行排序
+        return serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
+                                 .ThenBy(s => s.Order)
+                                 .ToList();
     }
 
     /// <summary>
-    /// 获取类型匹配的服务类型集合
+    /// 获取类型兼容的服务类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="dependencyType"><see cref="Type"/></param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal IEnumerable<Type> GetMatchServiceTypes(Type type, out Type dependencyType)
+    internal IEnumerable<Type> GetCompatibilityServiceTypes(Type type, out Type dependencyType)
     {
-        // 获取实现的接口
+        // 获取类型实现的所有接口
         var allInterfaces = type.GetInterfaces();
 
-        // 获取依赖生存期类型
+        // 获取类型实现的服务生存期类型
         dependencyType = allInterfaces.Last(i => i.IsAlienAssignableTo(_dependencyType));
 
-        // 过滤无效的类型
+        // 过滤不兼容的服务类型
         var serviceTypes = allInterfaces.Where(t => !_dependencyType.IsAssignableFrom(t)
-                                                                       && type.IsTypeCompatibilityTo(t))
-                                                 .Select(t => !type.IsGenericType
-                                                                        ? t :
-                                                                        t.GetGenericTypeDefinition());
+                                                                             && type.IsTypeCompatibilityTo(t))
+                                                       .Select(t => !type.IsGenericType
+                                                                              ? t :
+                                                                              t.GetGenericTypeDefinition());
 
         return serviceTypes;
     }
