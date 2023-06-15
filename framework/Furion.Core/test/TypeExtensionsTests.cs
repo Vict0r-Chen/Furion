@@ -147,13 +147,15 @@ public class TypeExtensionsTests
     [InlineData(typeof(IGenericType<,>), typeof(IGenericType<int, string>), true)]
     [InlineData(typeof(IGenericType<>), typeof(GenericType<>), false)]
     [InlineData(typeof(IGenericType<,>), typeof(GenericType<,>), false)]
+    [InlineData(typeof(InstanceType), typeof(InstanceType), true)]
+    [InlineData(typeof(InstanceType), typeof(SealedType), false)]
     public void IsEqualTypeDefinition(Type type, Type compareType, bool result)
     {
         Assert.Equal(result, type.IsEqualTypeDefinition(compareType));
     }
 
     [Fact]
-    public void IsGenericTypeCompatibility()
+    public void IsTypeCompatibilityTo()
     {
         var genericTypes = GetType().Assembly.GetTypes().Where(t => t.IsDefined(typeof(GenericAttribute), false));
 
@@ -161,8 +163,8 @@ public class TypeExtensionsTests
         {
             var firstInterface = genericType.GetInterfaces()[0];
             var lastInterface = genericType.GetInterfaces()[1];
-            Assert.True(firstInterface.IsGenericTypeCompatibility(genericType));
-            Assert.False(lastInterface.IsGenericTypeCompatibility(genericType));
+            Assert.True(genericType.IsTypeCompatibilityTo(firstInterface));
+            Assert.False(genericType.IsTypeCompatibilityTo(lastInterface));
         }
     }
 }

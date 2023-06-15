@@ -10,9 +10,12 @@
             </summary>
             <remarks>
             <para>作用于程序集扫描，若类型配置了该特性则将指定的类型作为服务。</para>
-            <para>此配置优先级大于基类型和 <seealso cref="P:System.ServiceInjectionAttribute.IncludeSelf"/> 和 <seealso cref="P:System.ServiceInjectionAttribute.IncludeBase"/>。</para>
-            <para>配置的类型集合须包含在基类链类型集合中</para>
             </remarks>
+        </member>
+        <member name="M:System.ExposeServicesAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
         </member>
         <member name="M:System.ExposeServicesAttribute.#ctor(System.Type[])">
             <summary>
@@ -65,23 +68,6 @@
         <member name="P:System.ServiceInjectionAttribute.IncludeBase">
             <summary>
             注册基类
-            </summary>
-        </member>
-        <member name="T:System.SuppressServicesAttribute">
-            <summary>
-            禁用指定类型作为服务注册
-            </summary>
-            <remarks>用于扫描程序集添加服务时配置</remarks>
-        </member>
-        <member name="M:System.SuppressServicesAttribute.#ctor(System.Type[])">
-            <summary>
-            构造函数
-            </summary>
-            <param name="types">需禁用的服务类型</param>
-        </member>
-        <member name="P:System.SuppressServicesAttribute.Types">
-            <summary>
-            需禁用的服务类型
             </summary>
         </member>
         <member name="T:System.ServiceAddition">
@@ -145,127 +131,30 @@
         <member name="P:System.ITransientDependency.Furion#DependencyInjection#IDependency#Lifetime">
             <inheritdoc/>
         </member>
-        <member name="T:System.NamedServiceProviderExtensions">
-            <summary>
-            <see cref="T:System.IServiceProvider"/> 类型拓展
-            </summary>
-            <remarks>支持基于名称解析服务</remarks>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedService(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedService``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedServices(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="T:System.INamedService`1">
-            <summary>
-            命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-        </member>
-        <member name="P:System.INamedService`1.Item(System.String)">
-            <summary>
-            获取服务
-            </summary>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.INamedService`1.Get(System.String)">
-            <summary>
-            获取服务
-            </summary>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.INamedService`1.GetEnumerator(System.String)">
-            <summary>
-            获取服务集合
-            </summary>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="T:System.NamedService`1">
-            <inheritdoc cref="T:System.INamedService`1"/>
-        </member>
-        <member name="F:System.NamedService`1._serviceProvider">
-            <inheritdoc cref="T:System.IServiceProvider"/>
-        </member>
-        <member name="M:System.NamedService`1.#ctor(System.IServiceProvider)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="serviceProvider">服务提供器</param>
-        </member>
-        <member name="P:System.NamedService`1.Item(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:System.NamedService`1.Get(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:System.NamedService`1.GetEnumerator(System.String)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.DependencyInjection.DependencyInjectionBuilder">
             <summary>
             依赖注入模块构建器
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._assemblies">
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._dependencyType">
             <summary>
-            已扫描的程序集
+            程序集扫描类型依赖接口
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._suppressServices">
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._assemblies">
             <summary>
-            禁用指定类型作为服务注册
+            待扫描的程序集集合
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._serviceTypeBlacklist">
+            <summary>
+            服务类型黑名单
+            </summary>
+            <remarks>禁止已配置的服务类型作为服务注册</remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._filterConfigure">
+            <summary>
+            服务描述器过滤器
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
@@ -278,29 +167,22 @@
             禁用程序集扫描
             </summary>
         </member>
-        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressNotPublicType">
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressNonPublicType">
             <summary>
             禁用非公开类型
             </summary>
         </member>
-        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.FilterConfigure">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddFilter(System.Func{Furion.DependencyInjection.ServiceDescriptorModel,System.Boolean})">
             <summary>
-            服务描述器模型过滤配置
+            添加服务描述器过滤器
             </summary>
-            <remarks>可过滤是否将服务描述器添加到 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 中</remarks>
+            <param name="configure"><see cref="T:System.Func`2"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddAssemblies(System.Reflection.Assembly[])">
             <summary>
-            添加程序集扫描
+            添加待扫描的程序集
             </summary>
-            <param name="assemblies">可变数量程序集</param>
-            <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressServices(System.Type[])">
-            <summary>
-            添加程序集扫描需排除的服务类型
-            </summary>
-            <param name="types">可变数量类型</param>
+            <param name="assemblies"><see cref="T:System.Reflection.Assembly"/>[]</param>
             <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
@@ -309,124 +191,34 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.ClearAll">
-            <summary>
-            清空集合
-            </summary>
-        </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.CreateServiceDescriptors">
             <summary>
             扫描程序集创建服务描述器集合
             </summary>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetMatchServiceTypes(System.Type,System.Type@)">
+            <summary>
+            获取类型匹配的服务类型集合
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <param name="dependencyType"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceLifetime(System.Type)">
             <summary>
-            根据 <see cref="T:Furion.DependencyInjection.IDependency"/> 派生类型获取对应的服务生存期
+            根据依赖类型获取对应的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
             </summary>
-            <param name="lifetimeDependencyType"><see cref="T:Furion.DependencyInjection.IDependency"/> 派生类型</param>
-            <returns></returns>
+            <param name="dependencyType"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></returns>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddToServiceCollection(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.ServiceDescriptorModel)">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddingToServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.ServiceDescriptorModel)">
             <summary>
             将服务描述器添加到 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 中
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="serviceDescriptorModel">服务描述器模型</param>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceTypes(System.Type,System.ServiceInjectionAttribute,System.Type@,System.Type@)">
-            <summary>
-            获取类型的服务类型
-            </summary>
-            <param name="type"><see cref="T:System.Type"/></param>
-            <param name="serviceInjectionAttribute"><see cref="T:System.ServiceInjectionAttribute"/></param>
-            <param name="implementationType">实现类型</param>
-            <param name="lifetimeDependencyType">服务生存期类型</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="T:Furion.DependencyInjection.DispatchProxyDecorator">
-            <summary>
-            <see cref="T:System.Reflection.DispatchProxy"/> 装饰器
-            </summary>
-            <remarks>用于生成接口代理</remarks>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.DispatchProxyDecorator.Target">
-            <summary>
-            目标实例对象
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.DispatchProxyDecorator.Properties">
-            <summary>
-            额外数据
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Decorate(System.Type,System.Type,System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            生成代理装饰类
-            </summary>
-            <param name="interfaceType">接口类型</param>
-            <param name="proxyType"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator"/> 类型</param>
-            <param name="target">目标实例对象</param>
-            <param name="properties">额外数据</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Decorate``1(System.Type,``0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            生成代理装饰类
-            </summary>
-            <typeparam name="TService">接口类型</typeparam>
-            <param name="proxyType"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator"/> 类型</param>
-            <param name="target">目标实例对象</param>
-            <param name="properties">额外数据</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Decorate``2(``0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            生成代理装饰类
-            </summary>
-            <typeparam name="TService">接口类型</typeparam>
-            <typeparam name="TProxy"><see cref="T:Furion.DependencyInjection.DispatchProxyDecorator"/> 类型</typeparam>
-            <param name="target">目标实例对象</param>
-            <param name="properties">额外数据</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Invoke(Furion.DependencyInjection.Invocation)">
-            <summary>
-            同步拦截
-            </summary>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.InvokeAsync(Furion.DependencyInjection.Invocation)">
-            <summary>
-            异步无返回值拦截
-            </summary>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.InvokeAsync``1(Furion.DependencyInjection.Invocation)">
-            <summary>
-            异步带返回值拦截
-            </summary>
-            <typeparam name="T">返回值类型</typeparam>
-            <returns><typeparamref name="T"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.DispatchProxyDecorator.Invoke(System.Reflection.MethodInfo,System.Object[])">
-            <summary>
-            重写拦截调用方法
-            </summary>
-            <param name="targetMethod">接口方法</param>
-            <param name="args">方法传递参数</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="F:Furion.DependencyInjection.DispatchProxyDecorator._invokeAsyncOfTMethod">
-            <summary>
-            <see cref="M:Furion.DependencyInjection.DispatchProxyDecorator.InvokeAsync``1(Furion.DependencyInjection.Invocation)"/>
-            </summary>
+            <param name="serviceDescriptorModel"><see cref="T:Furion.DependencyInjection.ServiceDescriptorModel"/></param>
         </member>
         <member name="T:Furion.DependencyInjection.IDependency">
             <summary>
@@ -436,104 +228,6 @@
         </member>
         <member name="P:Furion.DependencyInjection.IDependency.Lifetime">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
-        </member>
-        <member name="T:Furion.DependencyInjection.Invocation">
-            <summary>
-            代理方法调用器
-            </summary>
-            <remarks>负责动态调用方法</remarks>
-        </member>
-        <member name="M:Furion.DependencyInjection.Invocation.#ctor(System.Reflection.MethodInfo,System.Object[],System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            构造函数
-            </summary>
-            <param name="targetMethod">接口方法</param>
-            <param name="args">调用参数</param>
-            <param name="target">目标实例对象</param>
-            <param name="properties">额外数据</param>
-        </member>
-        <member name="P:Furion.DependencyInjection.Invocation.Target">
-            <summary>
-            目标实例对象
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.Invocation.Method">
-            <summary>
-            被代理方法
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.Invocation.TargetMethod">
-            <summary>
-            接口方法
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.Invocation.Args">
-            <summary>
-            调用参数
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.Invocation.Properties">
-            <summary>
-            额外数据
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.Invocation.Proceed">
-            <summary>
-            调用同步方法
-            </summary>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.Invocation.ProceedAsync">
-            <summary>
-            调用异步方法
-            </summary>
-            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.Invocation.ProceedAsync``1">
-            <summary>
-            调用异步方法带返回值
-            </summary>
-            <typeparam name="T">泛型值</typeparam>
-            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
-        </member>
-        <member name="M:Furion.DependencyInjection.Invocation.GetRealMethod(System.Reflection.MethodInfo,System.Object)">
-            <summary>
-            解析真实的方法对象
-            </summary>
-            <param name="targetMethod">接口方法</param>
-            <param name="target">目标实例对象</param>
-            <returns><see cref="T:System.Reflection.MethodInfo"/></returns>
-        </member>
-        <member name="T:Furion.DependencyInjection.NamedType">
-            <summary>
-            支持别名的类型代理
-            </summary>
-        </member>
-        <member name="F:Furion.DependencyInjection.NamedType._typeName">
-            <summary>
-            类型别名
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.#ctor(System.String,System.Type)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="typeName">类型别名</param>
-            <param name="delegatingType">被代理类型</param>
-        </member>
-        <member name="P:Furion.DependencyInjection.NamedType.DelegatingType">
-            <summary>
-            被代理类型
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.GetHashCode">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Type)">
-            <inheritdoc />
         </member>
         <member name="T:Furion.DependencyInjection.ServiceDescriptorModel">
             <summary>
@@ -590,392 +284,6 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="dependencyInjectionBuilder"><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">
-            <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 类型拓展
-            </summary>
-            <remarks>支持基于名称注册服务</remarks>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            添加命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
-            <summary>
-            添加命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
-            <summary>
-            添加命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Func{System.IServiceProvider,System.Object})">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Type)">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类类型</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedTransient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``0})">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``1})">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedScoped``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedScoped``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``1})">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Func{System.IServiceProvider,System.Object})">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Type)">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类类型</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedScoped``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``0})">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``1})">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``0})">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,``0)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationInstance">实现类实例</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Type)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类类型</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Object)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationInstance">实现类实例</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Func{System.IServiceProvider,System.Object})">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Func{System.IServiceProvider,System.Object})">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Type)">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类类型</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedTransient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``0})">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``1})">
-            <summary>
-            添加瞬时命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedScoped``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedScoped``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``1})">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Func{System.IServiceProvider,System.Object})">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Type)">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类类型</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedScoped``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``0})">
-            <summary>
-            添加范围命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``1})">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Func{System.IServiceProvider,``0})">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,``0)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="implementationInstance">实现类实例</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Type)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationType">实现类类型</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Object)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationInstance">实现类实例</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Type,System.Func{System.IServiceProvider,System.Object})">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <param name="implementationFactory">实现类工厂</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.TryAddNamedSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
-            <summary>
-            添加单例命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <typeparam name="TImplementation">实现类类型</typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.CreateDelegator(Microsoft.Extensions.DependencyInjection.ServiceDescriptor,System.String)">
-            <summary>
-            创建服务描述器代理
-            </summary>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
         </member>
     </members>
 </doc>

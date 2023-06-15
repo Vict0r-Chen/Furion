@@ -131,21 +131,29 @@ internal static class TypeExtensions
     internal static bool IsEqualTypeDefinition(this Type type, Type compareType)
     {
         return type == compareType
-                || (type.IsGenericTypeDefinition
+                || (type.IsGenericType
                     && compareType.IsGenericType
+                    && type.IsGenericTypeDefinition
                     && type == compareType.GetGenericTypeDefinition());
     }
 
     /// <summary>
-    /// 泛型类型是否兼容
+    /// 类型是否兼容
     /// </summary>
     /// <remarks>检查泛型定义参数</remarks>
     /// <param name="type"><see cref="Type"/></param>
-    /// <param name="compareType"><see cref="Type"/></param>
+    /// <param name="baseType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsGenericTypeCompatibility(this Type type, Type compareType)
+    internal static bool IsTypeCompatibilityTo(this Type type, Type? baseType)
     {
-        return type.IsGenericType
-                && type.GenericTypeArguments.SequenceEqual(compareType.GetTypeInfo().GenericTypeParameters);
+        return baseType is not null && baseType != typeof(object)
+                && baseType.IsAssignableFrom(type)
+                && (
+                    !type.IsGenericType
+                    || (type.IsGenericType
+                        && baseType.IsGenericType
+                        && type.GetTypeInfo().GenericTypeParameters.SequenceEqual(baseType.GenericTypeArguments)
+                       )
+                   );
     }
 }

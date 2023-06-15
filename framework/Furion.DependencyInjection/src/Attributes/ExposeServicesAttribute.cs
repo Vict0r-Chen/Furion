@@ -19,12 +19,18 @@ namespace System;
 /// </summary>
 /// <remarks>
 /// <para>作用于程序集扫描，若类型配置了该特性则将指定的类型作为服务。</para>
-/// <para>此配置优先级大于基类型和 <seealso cref="ServiceInjectionAttribute.IncludeSelf"/> 和 <seealso cref="ServiceInjectionAttribute.IncludeBase"/>。</para>
-/// <para>配置的类型集合须包含在基类链类型集合中</para>
 /// </remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public sealed class ExposeServicesAttribute : Attribute
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public ExposeServicesAttribute()
+    {
+        ServiceTypes = Type.EmptyTypes;
+    }
+
     /// <summary>
     /// 构造函数
     /// </summary>
