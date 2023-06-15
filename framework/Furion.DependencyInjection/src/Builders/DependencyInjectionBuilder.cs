@@ -174,9 +174,9 @@ public sealed class DependencyInjectionBuilder
             // 获取 [ExposeServices] 特性
             var exposeServicesAttribute = type.GetDefinedCustomAttributeOrNew<ExposeServicesAttribute>(true);
 
-            // 获取类型兼容的服务类型
+            // 获取类型兼容的且已配置导出的服务类型集合
             var serviceTypes = GetCompatibilityServiceTypes(type, out var dependencyType)
-                                            .Where(t => !exposeServicesAttribute.ServiceTypes
+                                            .Where(t => exposeServicesAttribute.ServiceTypes
                                                                   .Any(s => s.IsEqualTypeDefinition(t)))
                                             .ToList();
 
