@@ -31,12 +31,12 @@ internal sealed class ComponentOptions
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    internal Dictionary<Type, List<Delegate>> OptionsActions { get; init; }
+    internal ConcurrentDictionary<Type, List<Delegate>> OptionsActions { get; init; }
 
     /// <summary>
     /// 组件调用登记
     /// </summary>
-    internal List<string> CallRegistration { get; init; }
+    internal ConcurrentBag<string> CallRegistration { get; init; }
 
     /// <summary>
     /// 禁用组件重复调用
