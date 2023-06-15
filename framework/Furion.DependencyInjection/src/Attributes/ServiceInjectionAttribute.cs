@@ -38,7 +38,7 @@ public sealed class ServiceInjectionAttribute : Attribute
     }
 
     /// <inheritdoc cref="ServiceAddition"/>
-    public ServiceAddition Addition { get; init; } = ServiceAddition.Default;
+    public ServiceAddition Addition { get; init; }
 
     /// <summary>
     /// 忽略注册

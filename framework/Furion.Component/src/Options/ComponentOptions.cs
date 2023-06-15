@@ -31,7 +31,7 @@ internal sealed class ComponentOptions
     /// <summary>
     /// 组件参数委托字典
     /// </summary>
-    internal ConcurrentDictionary<Type, List<Delegate>> OptionsActions { get; init; }
+    internal Dictionary<Type, List<Delegate>> OptionsActions { get; init; }
 
     /// <summary>
     /// 组件调用登记
