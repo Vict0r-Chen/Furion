@@ -206,6 +206,11 @@
             <param name="dependencyType"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceLifetime(System.Type)">
             <summary>
             根据依赖类型获取对应的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>

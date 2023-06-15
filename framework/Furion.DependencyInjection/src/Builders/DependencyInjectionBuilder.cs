@@ -117,6 +117,8 @@ public sealed class DependencyInjectionBuilder
         // 是否禁用程序集扫描
         if (SuppressAssemblyScanning)
         {
+            // 释放对象
+            Release();
             return;
         }
 
@@ -134,6 +136,9 @@ public sealed class DependencyInjectionBuilder
         {
             AddingToServices(services, serviceDescriptorModel);
         }
+
+        // 释放对象
+        Release();
     }
 
     /// <summary>
@@ -259,6 +264,15 @@ public sealed class DependencyInjectionBuilder
                                                  .ToList();
 
         return serviceTypes;
+    }
+
+    /// <summary>
+    /// 释放对象
+    /// </summary>
+    internal void Release()
+    {
+        _assemblies.Clear();
+        _serviceTypeBlacklist.Clear();
     }
 
     /// <summary>
