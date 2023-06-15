@@ -202,7 +202,7 @@
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsAlienAssignableFrom(System.Type,System.Type)">
+        <member name="M:System.TypeExtensions.IsAlienAssignableTo(System.Type,System.Type)">
             <summary>
             是否派生自特定类型
             </summary>
@@ -216,6 +216,16 @@
             获取指定特性实例
             </summary>
             <remarks>若特性不存在则返回 null</remarks>
+            <typeparam name="TAttribute">特性类型</typeparam>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <param name="inherit">是否查找基类型特性</param>
+            <returns><typeparamref name="TAttribute"/></returns>
+        </member>
+        <member name="M:System.TypeExtensions.GetDefinedCustomAttributeOrNew``1(System.Type,System.Boolean)">
+            <summary>
+            获取指定特性实例
+            </summary>
+            <remarks>若特性不存在则返回默认实例</remarks>
             <typeparam name="TAttribute">特性类型</typeparam>
             <param name="type"><see cref="T:System.Type"/></param>
             <param name="inherit">是否查找基类型特性</param>

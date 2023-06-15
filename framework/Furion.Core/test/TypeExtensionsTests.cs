@@ -84,9 +84,9 @@ public class TypeExtensionsTests
     [InlineData(typeof(InstanceType), false)]
     [InlineData(typeof(Dependency), true)]
     [InlineData(typeof(IDependency), false)]
-    public void IsAlienAssignableFrom(Type type, bool result)
+    public void IsAlienAssignableTo(Type type, bool result)
     {
-        Assert.Equal(result, type.IsAlienAssignableFrom(typeof(IDependency)));
+        Assert.Equal(result, type.IsAlienAssignableTo(typeof(IDependency)));
     }
 
     [Theory]
@@ -97,6 +97,17 @@ public class TypeExtensionsTests
     public void GetDefinedCustomAttribute(Type type, bool notNull, bool inherit)
     {
         var customAttribute = type.GetDefinedCustomAttribute<CustomAttribute>(inherit);
+        Assert.Equal(notNull, customAttribute is not null);
+    }
+
+    [Theory]
+    [InlineData(typeof(WithAttribute), true, false)]
+    [InlineData(typeof(WithAttribute), true, true)]
+    [InlineData(typeof(InheritWithAttribute), true, false)]
+    [InlineData(typeof(InheritWithAttribute), true, true)]
+    public void GetDefinedCustomAttributeOrNew(Type type, bool notNull, bool inherit)
+    {
+        var customAttribute = type.GetDefinedCustomAttributeOrNew<CustomAttribute>(inherit);
         Assert.Equal(notNull, customAttribute is not null);
     }
 

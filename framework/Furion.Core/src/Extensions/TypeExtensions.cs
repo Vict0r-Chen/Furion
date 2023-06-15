@@ -70,7 +70,7 @@ internal static class TypeExtensions
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="fromType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsAlienAssignableFrom(this Type type, Type fromType)
+    internal static bool IsAlienAssignableTo(this Type type, Type fromType)
     {
         return fromType != type
             && fromType.IsAssignableFrom(type);
@@ -94,6 +94,20 @@ internal static class TypeExtensions
         }
 
         return type.GetCustomAttribute<TAttribute>(inherit);
+    }
+
+    /// <summary>
+    /// 获取指定特性实例
+    /// </summary>
+    /// <remarks>若特性不存在则返回默认实例</remarks>
+    /// <typeparam name="TAttribute">特性类型</typeparam>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="inherit">是否查找基类型特性</param>
+    /// <returns><typeparamref name="TAttribute"/></returns>
+    internal static TAttribute GetDefinedCustomAttributeOrNew<TAttribute>(this Type type, bool inherit = false)
+        where TAttribute : Attribute, new()
+    {
+        return type.GetDefinedCustomAttribute<TAttribute>(inherit) ?? new();
     }
 
     /// <summary>
