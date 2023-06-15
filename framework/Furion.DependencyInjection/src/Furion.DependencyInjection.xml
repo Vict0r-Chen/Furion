@@ -75,6 +75,12 @@
             服务注册方式
             </summary>
         </member>
+        <member name="F:System.ServiceAddition.Default">
+            <summary>
+            缺省值
+            </summary>
+            <remarks><seealso cref="F:System.ServiceAddition.Add"/></remarks>
+        </member>
         <member name="F:System.ServiceAddition.Add">
             <summary>
             添加
@@ -97,12 +103,6 @@
             替换
             </summary>
             <remarks>若服务存在则替换</remarks>
-        </member>
-        <member name="F:System.ServiceAddition.Default">
-            <summary>
-            缺省值
-            </summary>
-            <remarks><seealso cref="F:System.ServiceAddition.Add"/></remarks>
         </member>
         <member name="T:System.IScopedDependency">
             <summary>

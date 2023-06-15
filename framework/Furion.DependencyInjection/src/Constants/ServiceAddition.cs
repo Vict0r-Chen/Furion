@@ -20,9 +20,15 @@ namespace System;
 public enum ServiceAddition : byte
 {
     /// <summary>
+    /// 缺省值
+    /// </summary>
+    /// <remarks><seealso cref="Add"/></remarks>
+    Default = 0,
+
+    /// <summary>
     /// 添加
     /// </summary>
-    Add = 0,
+    Add,
 
     /// <summary>
     /// 尝试添加
@@ -40,11 +46,5 @@ public enum ServiceAddition : byte
     /// 替换
     /// </summary>
     /// <remarks>若服务存在则替换</remarks>
-    Replace,
-
-    /// <summary>
-    /// 缺省值
-    /// </summary>
-    /// <remarks><seealso cref="Add"/></remarks>
-    Default = Add
+    Replace
 }

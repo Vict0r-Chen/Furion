@@ -102,7 +102,7 @@ public sealed class DependencyInjectionBuilder
             }
 
             // 输出事件消息
-            Debugging.Info("{0} program assembly has been added successfully.", assembly);
+            Debugging.Info("'{0}' assembly has been added successfully.", assembly);
         });
 
         return this;
@@ -303,32 +303,32 @@ public sealed class DependencyInjectionBuilder
     /// <param name="serviceDescriptorModel"><see cref="ServiceDescriptorModel"/></param>
     internal static void AddingToServices(IServiceCollection services, ServiceDescriptorModel serviceDescriptorModel)
     {
+        // 获取服务描述器
         var serviceDescriptor = serviceDescriptorModel.Descriptor;
 
-        // Add
-        if (serviceDescriptorModel.Addition is ServiceAddition.Add or ServiceAddition.Default)
+        // 穷举服务注册方式
+        switch (serviceDescriptorModel.Addition)
         {
-            services.Add(serviceDescriptor);
-        }
-        // TryAdd
-        else if (serviceDescriptorModel.Addition is ServiceAddition.TryAdd)
-        {
-            services.TryAdd(serviceDescriptor);
-        }
-        // TryAddEnumerable
-        else if (serviceDescriptorModel.Addition is ServiceAddition.TryAddEnumerable)
-        {
-            services.TryAddEnumerable(serviceDescriptor);
-        }
-        // Replace
-        else if (serviceDescriptorModel.Addition is ServiceAddition.Replace)
-        {
-            services.Replace(serviceDescriptor);
-        }
-        // 无效操作
-        else
-        {
-            throw new InvalidOperationException($"{serviceDescriptorModel.Addition}.");
+            // Add
+            case ServiceAddition.Add:
+            case ServiceAddition.Default:
+                services.Add(serviceDescriptor);
+                break;
+            // TryAdd
+            case ServiceAddition.TryAdd:
+                services.TryAdd(serviceDescriptor);
+                break;
+            // TryAddEnumerable
+            case ServiceAddition.TryAddEnumerable:
+                services.TryAddEnumerable(serviceDescriptor);
+                break;
+            // Replace
+            case ServiceAddition.Replace:
+                services.Replace(serviceDescriptor);
+                break;
+            // 无效操作
+            default:
+                throw new InvalidOperationException($"{serviceDescriptorModel.Addition} not supported.");
         }
     }
 }
