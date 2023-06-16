@@ -20,6 +20,4 @@ namespace Furion.DependencyInjection;
 /// <remarks>作用于程序集扫描</remarks>
 public interface IDependency
 {
-    /// <inheritdoc cref="ServiceLifetime"/>
-    ServiceLifetime Lifetime { get; }
 }

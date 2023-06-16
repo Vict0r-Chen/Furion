@@ -110,26 +110,17 @@
             </summary>
             <remarks>作用于程序集扫描</remarks>
         </member>
-        <member name="P:System.IScopedDependency.Furion#DependencyInjection#IDependency#Lifetime">
-            <inheritdoc/>
-        </member>
         <member name="T:System.ISingletonDependency">
             <summary>
             单例服务依赖接口
             </summary>
             <remarks>作用于程序集扫描</remarks>
         </member>
-        <member name="P:System.ISingletonDependency.Furion#DependencyInjection#IDependency#Lifetime">
-            <inheritdoc/>
-        </member>
         <member name="T:System.ITransientDependency">
             <summary>
             瞬时服务依赖接口
             </summary>
             <remarks>作用于程序集扫描</remarks>
-        </member>
-        <member name="P:System.ITransientDependency.Furion#DependencyInjection#IDependency#Lifetime">
-            <inheritdoc/>
         </member>
         <member name="T:Furion.DependencyInjection.DependencyInjectionBuilder">
             <summary>
@@ -231,9 +222,6 @@
             服务依赖接口
             </summary>
             <remarks>作用于程序集扫描</remarks>
-        </member>
-        <member name="P:Furion.DependencyInjection.IDependency.Lifetime">
-            <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
         </member>
         <member name="T:Furion.DependencyInjection.ServiceDescriptorModel">
             <summary>

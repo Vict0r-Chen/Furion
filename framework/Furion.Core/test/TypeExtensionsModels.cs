@@ -173,6 +173,9 @@ public class MultiGenericImplementationType3<T, U> : BaseServiceType<T, U>, ISer
 public class MultiGenericImplementationType4<T, U> : BaseServiceType<T, string>, IServiceType, ISecondServiceType, IOtherServiceType, IOtherGenericServiceType<string, int>, ISecondGenericServiceType<T>, IGenericServiceType<T, U>, ISecondGenericServiceType<T, int>
 { }
 
+public class MultiGenericImplementationType5<T, U> : IGenericServiceType<U, T>
+{ }
+
 public interface IGenericType<T>
 { }
 

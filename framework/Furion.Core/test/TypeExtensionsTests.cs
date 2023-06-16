@@ -179,6 +179,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(MultiGenericImplementationType2<,>), typeof(IGenericServiceType<,>))]
     [InlineData(typeof(MultiGenericImplementationType3<,>), typeof(BaseServiceType<,>), typeof(IGenericServiceType<,>), typeof(ISecondGenericServiceType<,>))]
     [InlineData(typeof(MultiGenericImplementationType4<,>), typeof(IGenericServiceType<,>))]
+    [InlineData(typeof(MultiGenericImplementationType5<,>))]
     public void IsTypeCompatibilityTo_GenericType_ReturnOK(Type genericType, params Type[] types)
     {
         var type = GetType().Assembly.GetTypes().Single(t => t.IsGenericType && t.GetGenericTypeDefinition() == genericType);

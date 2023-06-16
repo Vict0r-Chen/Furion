@@ -133,6 +133,17 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
+    public void GetServiceLifetime_Null_Throw()
+    {
+        var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            var serviceLifetime = DependencyInjectionBuilder.GetServiceLifetime(null);
+        });
+
+        Assert.Equal($"'{typeof(IDependency)}' type is not a valid service lifetime type. (Parameter 'dependencyType')", exception.Message);
+    }
+
+    [Fact]
     public void Release_ClearAll()
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
@@ -141,5 +152,36 @@ public class DependencyInjectionBuilderTests
         Assert.Empty(dependencyInjectionBuilder._assemblies);
         Assert.Empty(dependencyInjectionBuilder._serviceTypeBlacklist);
         Assert.Null(dependencyInjectionBuilder._filterConfigure);
+    }
+
+    [Theory]
+    [InlineData(typeof(Service), typeof(ITransientDependency), typeof(IService), typeof(IService<string>), typeof(ISecondService<string, int>))]
+    [InlineData(typeof(Service1), typeof(IScopedDependency), typeof(IService), typeof(ISecondService), typeof(IService<string>), typeof(ISecondService<string, int>))]
+    [InlineData(typeof(Service2), typeof(ITransientDependency), typeof(IService))]
+    [InlineData(typeof(Service3), typeof(IScopedDependency), typeof(IService))]
+    [InlineData(typeof(Service4), typeof(IScopedDependency))]
+    [InlineData(typeof(Service5), typeof(IScopedDependency), typeof(IService))]
+    [InlineData(typeof(Service6), typeof(ITransientDependency), typeof(IService))]
+    [InlineData(typeof(NonLifetimeClass), null, typeof(IService))]
+    public void GetEffectiveServiceTypes_ReturnServices_And_DependencyType(Type type, Type dependencyType, params Type[] serviceTypes)
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var types = dependencyInjectionBuilder.GetEffectiveServiceTypes(type, null, out var depType);
+        Assert.Equal(dependencyType, depType);
+        Assert.True(serviceTypes.SequenceEqual(types));
+    }
+
+    [Theory]
+    [InlineData(typeof(GenericService<>), typeof(IScopedDependency), typeof(ISecondService<>))]
+    [InlineData(typeof(GenericService1<>), typeof(IScopedDependency), typeof(IService<>), typeof(ISecondService<>))]
+    [InlineData(typeof(GenericService2<,>), typeof(ISingletonDependency), typeof(IService<,>), typeof(ISecondService<,>))]
+    [InlineData(typeof(GenericService3<,>), typeof(IScopedDependency), typeof(ISecondService<,>))]
+    public void GetEffectiveServiceTypes_ForGenericType_ReturnServices_And_DependencyType(Type genericType, Type dependencyType, params Type[] serviceTypes)
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var type = GetType().Assembly.GetTypes().Single(t => t.IsGenericType && t.GetGenericTypeDefinition() == genericType);
+        var types = dependencyInjectionBuilder.GetEffectiveServiceTypes(type, null, out var depType);
+        Assert.Equal(dependencyType, depType);
+        Assert.True(serviceTypes.SequenceEqual(types));
     }
 }

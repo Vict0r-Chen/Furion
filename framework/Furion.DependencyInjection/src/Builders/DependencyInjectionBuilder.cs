@@ -187,6 +187,9 @@ public sealed class DependencyInjectionBuilder
                 , exposeServicesAttribute.ServiceTypes
                 , out var dependencyType);
 
+            // 获取服务生存期
+            var serviceLifetime = GetServiceLifetime(dependencyType);
+
             // 是否包含基类
             var baseType = type.BaseType;
             if (baseType is not null
@@ -210,9 +213,6 @@ public sealed class DependencyInjectionBuilder
             {
                 serviceTypes.Add(implementationType);
             }
-
-            // 获取服务生存期
-            var serviceLifetime = GetServiceLifetime(dependencyType);
 
             // 遍历服务类型并创建服务描述器模型添加到集合中
             foreach (var serviceType in serviceTypes)
@@ -249,17 +249,19 @@ public sealed class DependencyInjectionBuilder
     /// <param name="limitTypes"><see cref="Type"/>[]</param>
     /// <param name="dependencyType"><see cref="Type"/></param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal List<Type> GetEffectiveServiceTypes(Type type, Type[] limitTypes, out Type dependencyType)
+    internal List<Type> GetEffectiveServiceTypes(Type type
+        , Type[]? limitTypes
+        , out Type? dependencyType)
     {
         // 获取类型实现的所有接口
         var interfaces = type.GetInterfaces();
 
         // 获取类型实现的服务生存期类型
-        dependencyType = interfaces.Last(i => i.IsAlienAssignableTo(_dependencyType));
+        dependencyType = interfaces.LastOrDefault(i => i.IsAlienAssignableTo(_dependencyType));
 
         // 查找不在黑名单且在限制类型集合中的服务类型集合
         var serviceTypes = interfaces.Where(t => (_serviceTypeBlacklist.Count == 0 || !_serviceTypeBlacklist.Any(s => s.IsEqualTypeDefinition(t)))
-                                                                    && (limitTypes.Length == 0 || limitTypes.Any(s => s.IsEqualTypeDefinition(t)))
+                                                                    && (limitTypes is null || limitTypes.Length == 0 || limitTypes.Any(s => s.IsEqualTypeDefinition(t)))
                                                                     && !_dependencyType.IsAssignableFrom(t)
                                                                     && type.IsTypeCompatibilityTo(t))
                                               .Select(t => !type.IsGenericType
@@ -286,7 +288,7 @@ public sealed class DependencyInjectionBuilder
     /// <param name="dependencyType"><see cref="Type"/></param>
     /// <returns><see cref="ServiceLifetime"/></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    internal static ServiceLifetime GetServiceLifetime(Type dependencyType)
+    internal static ServiceLifetime GetServiceLifetime(Type? dependencyType)
     {
         return dependencyType switch
         {
@@ -297,7 +299,7 @@ public sealed class DependencyInjectionBuilder
             // Singleton
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
             // 无效类型
-            _ => throw new ArgumentOutOfRangeException(nameof(dependencyType), $"'{dependencyType}' type is not a valid service lifetime type.")
+            _ => throw new ArgumentOutOfRangeException(nameof(dependencyType), $"'{dependencyType ?? typeof(IDependency)}' type is not a valid service lifetime type.")
         };
     }
 

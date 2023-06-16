@@ -20,6 +20,4 @@ namespace System;
 /// <remarks>作用于程序集扫描</remarks>
 public interface ISingletonDependency : IDependency
 {
-    /// <inheritdoc/>
-    ServiceLifetime IDependency.Lifetime => ServiceLifetime.Singleton;
 }
