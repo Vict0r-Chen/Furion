@@ -126,7 +126,7 @@ public sealed class DependencyInjectionBuilder
         }
 
         // 扫描程序集并创建服务描述器模型集合
-        var serviceDescriptors = CreateServiceDescriptors();
+        var serviceDescriptors = ScanAssemblies();
 
         // 空检查
         if (!serviceDescriptors.Any())
@@ -147,8 +147,8 @@ public sealed class DependencyInjectionBuilder
     /// <summary>
     /// 扫描程序集并创建服务描述器模型集合
     /// </summary>
-    /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors()
+    /// <returns><see cref="List{T}"/></returns>
+    internal IEnumerable<ServiceDescriptorModel> ScanAssemblies()
     {
         // 扫描程序集查找所有符合规则的类型
         var effectiveTypes = _assemblies.SelectMany(assembly =>
@@ -164,82 +164,89 @@ public sealed class DependencyInjectionBuilder
             return Array.Empty<ServiceDescriptorModel>();
         }
 
+        // 返回扫描后的服务描述器集合
+        return effectiveTypes.SelectMany(CreateServiceDescriptors)
+                             .OrderBy(s => s.Descriptor.ServiceType.Name)
+                             .ThenBy(s => s.Order)
+                             .ToList();
+    }
+
+    /// <summary>
+    /// 根据类型创建服务描述器模型集合
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors(Type type)
+    {
+        // 获取 [ServiceInjection] 特性
+        var serviceInjectionAttribute = type.GetDefinedCustomAttributeOrNew<ServiceInjectionAttribute>(true);
+
+        // 是否配置了 Ignore 属性
+        if (serviceInjectionAttribute is { Ignore: true })
+        {
+            return Array.Empty<ServiceDescriptorModel>();
+        }
+
+        // 获取 [ExposeServices] 特性
+        var exposeServicesAttribute = type.GetDefinedCustomAttributeOrNew<ExposeServicesAttribute>(true);
+
+        // 获取有效的服务类型集合
+        var serviceTypes = GetEffectiveServiceTypes(type
+            , exposeServicesAttribute.ServiceTypes
+            , out var dependencyType);
+
+        // 获取服务生存期
+        var serviceLifetime = GetServiceLifetime(dependencyType);
+
+        // 是否包含基类
+        var baseType = type.BaseType;
+        if (baseType is not null
+            && baseType != typeof(object)
+            && serviceInjectionAttribute is { IncludeBase: true }
+            && type.IsTypeCompatibilityTo(baseType))
+        {
+            serviceTypes.Add(!type.IsGenericType
+                ? baseType
+                : baseType.GetGenericTypeDefinition());
+        }
+
+        // 获取实现类型
+        var implementationType = !type.IsGenericType
+            ? type
+            : type.GetGenericTypeDefinition();
+
+        // 是否包含自身
+        if (serviceInjectionAttribute is { IncludeSelf: true }
+            || serviceTypes.Count == 0)
+        {
+            serviceTypes.Add(implementationType);
+        }
+
         // 创建服务描述器模型集合
         var serviceDescriptors = new List<ServiceDescriptorModel>();
 
-        // 遍历集合并创建服务描述器模型
-        foreach (var type in effectiveTypes)
+        // 遍历服务类型并创建服务描述器模型添加到集合中
+        foreach (var serviceType in serviceTypes)
         {
-            // 获取 [ServiceInjection] 特性
-            var serviceInjectionAttribute = type.GetDefinedCustomAttributeOrNew<ServiceInjectionAttribute>(true);
-
-            // 是否配置了 Ignore 属性
-            if (serviceInjectionAttribute is { Ignore: true })
+            // 创建服务描述器模型
+            var serviceDescriptorModel = new ServiceDescriptorModel(serviceType
+                , implementationType
+                , serviceLifetime
+                , serviceInjectionAttribute.Addition)
             {
-                continue;
-            }
+                Order = serviceInjectionAttribute.Order
+            };
 
-            // 获取 [ExposeServices] 特性
-            var exposeServicesAttribute = type.GetDefinedCustomAttributeOrNew<ExposeServicesAttribute>(true);
-
-            // 获取有效的服务类型集合
-            var serviceTypes = GetEffectiveServiceTypes(type
-                , exposeServicesAttribute.ServiceTypes
-                , out var dependencyType);
-
-            // 获取服务生存期
-            var serviceLifetime = GetServiceLifetime(dependencyType);
-
-            // 是否包含基类
-            var baseType = type.BaseType;
-            if (baseType is not null
-                && baseType != typeof(object)
-                && serviceInjectionAttribute is { IncludeBase: true }
-                && type.IsTypeCompatibilityTo(baseType))
+            // 调用服务描述器过滤器
+            if (_filterConfigure is null || _filterConfigure.Invoke(serviceDescriptorModel))
             {
-                serviceTypes.Add(!type.IsGenericType
-                    ? baseType
-                    : baseType.GetGenericTypeDefinition());
+                serviceDescriptors.Add(serviceDescriptorModel);
             }
-
-            // 获取实现类型
-            var implementationType = !type.IsGenericType
-                ? type
-                : type.GetGenericTypeDefinition();
-
-            // 是否包含自身
-            if (serviceInjectionAttribute is { IncludeSelf: true }
-                || serviceTypes.Count == 0)
-            {
-                serviceTypes.Add(implementationType);
-            }
-
-            // 遍历服务类型并创建服务描述器模型添加到集合中
-            foreach (var serviceType in serviceTypes)
-            {
-                // 创建服务描述器模型
-                var serviceDescriptorModel = new ServiceDescriptorModel(serviceType
-                    , implementationType
-                    , serviceLifetime
-                    , serviceInjectionAttribute.Addition)
-                {
-                    Order = serviceInjectionAttribute.Order
-                };
-
-                // 调用服务描述器过滤器
-                if (_filterConfigure is null || _filterConfigure.Invoke(serviceDescriptorModel))
-                {
-                    serviceDescriptors.Add(serviceDescriptorModel);
-                }
-            }
-
-            serviceTypes.Clear();
         }
 
-        // 对服务描述器模型集合进行排序
-        return serviceDescriptors.OrderBy(s => s.Descriptor.ServiceType.Name)
-                                 .ThenBy(s => s.Order)
-                                 .ToList();
+        serviceTypes.Clear();
+
+        return serviceDescriptors;
     }
 
     /// <summary>
@@ -260,8 +267,8 @@ public sealed class DependencyInjectionBuilder
         dependencyType = interfaces.LastOrDefault(i => i.IsAlienAssignableTo(_dependencyType));
 
         // 查找不在黑名单且在限制类型集合中的服务类型集合
-        var serviceTypes = interfaces.Where(t => (_serviceTypeBlacklist.Count == 0 || !_serviceTypeBlacklist.Any(s => s.IsEqualTypeDefinition(t)))
-                                                                    && (limitTypes is null || limitTypes.Length == 0 || limitTypes.Any(s => s.IsEqualTypeDefinition(t)))
+        var serviceTypes = interfaces.Where(t => (_serviceTypeBlacklist.IsNullOrEmpty() || !_serviceTypeBlacklist.Any(s => s.IsEqualTypeDefinition(t)))
+                                                                    && (limitTypes.IsNullOrEmpty() || limitTypes!.Any(s => s.IsEqualTypeDefinition(t)))
                                                                     && !_dependencyType.IsAssignableFrom(t)
                                                                     && type.IsTypeCompatibilityTo(t))
                                               .Select(t => !type.IsGenericType

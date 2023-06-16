@@ -182,11 +182,18 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.CreateServiceDescriptors">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.ScanAssemblies">
             <summary>
             扫描程序集并创建服务描述器模型集合
             </summary>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.CreateServiceDescriptors(System.Type)">
+            <summary>
+            根据类型创建服务描述器模型集合
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetEffectiveServiceTypes(System.Type,System.Type[],System.Type@)">
             <summary>

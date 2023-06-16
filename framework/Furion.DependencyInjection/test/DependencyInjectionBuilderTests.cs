@@ -167,6 +167,7 @@ public class DependencyInjectionBuilderTests
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
         var types = dependencyInjectionBuilder.GetEffectiveServiceTypes(type, null, out var depType);
+
         Assert.Equal(dependencyType, depType);
         Assert.True(serviceTypes.SequenceEqual(types));
     }
@@ -181,6 +182,7 @@ public class DependencyInjectionBuilderTests
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
         var type = GetType().Assembly.GetTypes().Single(t => t.IsGenericType && t.GetGenericTypeDefinition() == genericType);
         var types = dependencyInjectionBuilder.GetEffectiveServiceTypes(type, null, out var depType);
+
         Assert.Equal(dependencyType, depType);
         Assert.True(serviceTypes.SequenceEqual(types));
     }
