@@ -370,4 +370,41 @@ public class DependencyInjectionBuilderTests
 
         Assert.Equal(hasData, descriptors.Any());
     }
+
+    [Fact]
+    public void AddingToServices()
+    {
+        var services = new ServiceCollection();
+
+        var serviceDescriptorModel = new ServiceDescriptorModel(typeof(IService), typeof(Service), ServiceLifetime.Scoped, ServiceAddition.Add);
+        DependencyInjectionBuilder.AddingToServices(services, serviceDescriptorModel);
+        Assert.Single(services);
+
+        var serviceDescriptorModel2 = new ServiceDescriptorModel(typeof(IService), typeof(Service2), ServiceLifetime.Scoped, ServiceAddition.TryAdd);
+        DependencyInjectionBuilder.AddingToServices(services, serviceDescriptorModel2);
+        Assert.Single(services);
+
+        var serviceDescriptorModel3 = new ServiceDescriptorModel(typeof(IService), typeof(Service2), ServiceLifetime.Scoped, ServiceAddition.TryAddEnumerable);
+        DependencyInjectionBuilder.AddingToServices(services, serviceDescriptorModel3);
+        Assert.Equal(2, services.Count);
+
+        var serviceDescriptorModel4 = new ServiceDescriptorModel(typeof(IService), typeof(Service3), ServiceLifetime.Scoped, ServiceAddition.Replace);
+        DependencyInjectionBuilder.AddingToServices(services, serviceDescriptorModel4);
+        Assert.Equal(2, services.Count);
+    }
+
+    [Fact]
+    public void Build()
+    {
+        var services = new ServiceCollection();
+
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder()
+        {
+            ValidateLifetime = false
+        };
+
+        dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
+        dependencyInjectionBuilder.Build(services);
+        Assert.NotEmpty(services);
+    }
 }

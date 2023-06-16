@@ -95,11 +95,11 @@ public abstract class ComponentContext
 
         // 生成级联委托
         var cascadeAction = value.Cast<Action<TOptions>>()
-                                            .Aggregate((previous, current) => (t) =>
-                                            {
-                                                previous(t);
-                                                current(t);
-                                            });
+                                               .Aggregate((previous, current) => (t) =>
+                                               {
+                                                   previous(t);
+                                                   current(t);
+                                               });
         return cascadeAction;
     }
 }
