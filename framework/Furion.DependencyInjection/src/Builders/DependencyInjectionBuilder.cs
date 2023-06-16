@@ -73,6 +73,12 @@ public sealed class DependencyInjectionBuilder
     public bool SuppressNonPublicType { get; set; }
 
     /// <summary>
+    /// 验证服务生存期合法化
+    /// </summary>
+    /// <remarks>设置 false 将跳过合法验证</remarks>
+    public bool ValidateLifetime { get; set; } = true;
+
+    /// <summary>
     /// 添加服务描述器过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
@@ -114,30 +120,15 @@ public sealed class DependencyInjectionBuilder
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
     {
-        // 是否禁用程序集扫描
-        if (SuppressAssemblyScanning)
-        {
-            // 释放对象
-            Release();
-
-            // 输出事件消息
-            Debugging.Warn("Dependency Injection module assembly scanning has been disabled.");
-            return;
-        }
-
         // 扫描程序集并创建服务描述器模型集合
         var serviceDescriptors = ScanAssemblies();
-
-        // 空检查
-        if (!serviceDescriptors.Any())
+        if (serviceDescriptors.Any())
         {
-            return;
-        }
-
-        // 遍历集合将服务描述器添加到 IServiceCollection 中
-        foreach (var serviceDescriptorModel in serviceDescriptors)
-        {
-            AddingToServices(services, serviceDescriptorModel);
+            // 遍历集合将服务描述器添加到 IServiceCollection 中
+            foreach (var serviceDescriptorModel in serviceDescriptors)
+            {
+                AddingToServices(services, serviceDescriptorModel);
+            }
         }
 
         // 释放对象
@@ -150,25 +141,29 @@ public sealed class DependencyInjectionBuilder
     /// <returns><see cref="List{T}"/></returns>
     internal IEnumerable<ServiceDescriptorModel> ScanAssemblies()
     {
-        // 扫描程序集查找所有符合规则的类型
-        var effectiveTypes = _assemblies.SelectMany(assembly =>
+        // 是否禁用程序集扫描
+        if (SuppressAssemblyScanning)
         {
-            return assembly.GetTypes(SuppressNonPublicType)
-                           .Where(t => _dependencyType.IsAssignableFrom(t)
-                                                 && t.IsInstantiable());
-        });
+            // 输出事件消息
+            Debugging.Warn("Dependency Injection module assembly scanning has been disabled.");
+            return Enumerable.Empty<ServiceDescriptorModel>();
+        }
+
+        // 扫描程序集查找所有符合规则的类型
+        var effectiveTypes = _assemblies.SelectMany(assembly => assembly.GetTypes(SuppressNonPublicType))
+                                                       .Where(t => _dependencyType.IsAssignableFrom(t)
+                                                                             && t.IsInstantiable());
 
         // 空检查
         if (!effectiveTypes.Any())
         {
-            return Array.Empty<ServiceDescriptorModel>();
+            return Enumerable.Empty<ServiceDescriptorModel>();
         }
 
         // 返回扫描后的服务描述器集合
         return effectiveTypes.SelectMany(CreateServiceDescriptors)
                              .OrderBy(s => s.Descriptor.ServiceType.Name)
-                             .ThenBy(s => s.Order)
-                             .ToList();
+                             .ThenBy(s => s.Order);
     }
 
     /// <summary>
@@ -184,7 +179,7 @@ public sealed class DependencyInjectionBuilder
         // 是否配置了 Ignore 属性
         if (serviceInjectionAttribute is { Ignore: true })
         {
-            return Array.Empty<ServiceDescriptorModel>();
+            yield break;
         }
 
         // 获取 [ExposeServices] 特性
@@ -196,7 +191,12 @@ public sealed class DependencyInjectionBuilder
             , out var dependencyType);
 
         // 获取服务生存期
-        var serviceLifetime = GetServiceLifetime(dependencyType);
+        var serviceLifetime = GetServiceLifetime(dependencyType, ValidateLifetime);
+        if (serviceLifetime is null)
+        {
+            serviceTypes.Clear();
+            yield break;
+        }
 
         // 是否包含基类
         var baseType = type.BaseType;
@@ -222,16 +222,13 @@ public sealed class DependencyInjectionBuilder
             serviceTypes.Add(implementationType);
         }
 
-        // 创建服务描述器模型集合
-        var serviceDescriptors = new List<ServiceDescriptorModel>();
-
         // 遍历服务类型并创建服务描述器模型添加到集合中
         foreach (var serviceType in serviceTypes)
         {
             // 创建服务描述器模型
             var serviceDescriptorModel = new ServiceDescriptorModel(serviceType
                 , implementationType
-                , serviceLifetime
+                , serviceLifetime.Value
                 , serviceInjectionAttribute.Addition)
             {
                 Order = serviceInjectionAttribute.Order
@@ -240,13 +237,11 @@ public sealed class DependencyInjectionBuilder
             // 调用服务描述器过滤器
             if (_filterConfigure is null || _filterConfigure.Invoke(serviceDescriptorModel))
             {
-                serviceDescriptors.Add(serviceDescriptorModel);
+                yield return serviceDescriptorModel;
             }
         }
 
         serviceTypes.Clear();
-
-        return serviceDescriptors;
     }
 
     /// <summary>
@@ -293,9 +288,10 @@ public sealed class DependencyInjectionBuilder
     /// 根据依赖类型获取对应的 <see cref="ServiceLifetime"/>
     /// </summary>
     /// <param name="dependencyType"><see cref="Type"/></param>
+    /// <param name="validateLifetime"><see cref="ValidateLifetime"/></param>
     /// <returns><see cref="ServiceLifetime"/></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    internal static ServiceLifetime GetServiceLifetime(Type? dependencyType)
+    internal static ServiceLifetime? GetServiceLifetime(Type? dependencyType, bool validateLifetime = true)
     {
         return dependencyType switch
         {
@@ -306,7 +302,9 @@ public sealed class DependencyInjectionBuilder
             // Singleton
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
             // 无效类型
-            _ => throw new ArgumentOutOfRangeException(nameof(dependencyType), $"'{dependencyType ?? typeof(IDependency)}' type is not a valid service lifetime type.")
+            _ => validateLifetime
+                ? throw new ArgumentOutOfRangeException(nameof(dependencyType), $"'{dependencyType ?? typeof(IDependency)}' type is not a valid service lifetime type.")
+                : null
         };
     }
 

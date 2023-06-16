@@ -55,7 +55,10 @@ public class Service2 : IService, ISingletonDependency, ITransientDependency
 
 public class Service3 : IService, IScopedDependency, IDisposable
 {
-    public void Dispose() => throw new NotImplementedException();
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+    }
 }
 
 public class Service4 : IScopedDependency
@@ -66,11 +69,22 @@ public class ServiceBase : IScopedDependency
 {
 }
 
+[ServiceInjection(IncludeSelf = true)]
 public class Service5 : ServiceBase, IService
 {
 }
 
+[ServiceInjection(IncludeBase = true)]
 public class Service6 : ServiceBase, IService, ITransientDependency, IDependency
+{
+}
+
+[ServiceInjection(IncludeSelf = true, IncludeBase = true)]
+public class Service7 : ServiceBase, IService, ITransientDependency
+{
+}
+
+public class Service8 : ServiceBase, IService, IScopedDependency
 {
 }
 
@@ -91,5 +105,25 @@ public class GenericService2<T, U> : IService, IService<string>, IService<T, U>,
 }
 
 public class GenericService3<T, U> : IService, IService<U, T>, ISecondService<T>, ISecondService<T, U>, IService<string>, IScopedDependency
+{
+}
+
+[ServiceInjection(Ignore = true)]
+public class IgnoreService : IService, IScopedDependency
+{
+}
+
+[ServiceInjection(Order = 2)]
+public class Order1Service : IService, IScopedDependency
+{ }
+
+public class Order2Service : IService, IScopedDependency
+{ }
+
+[ServiceInjection(Order = 1)]
+public class Order3Service : IService, IScopedDependency
+{ }
+
+internal class NotPublicService : IScopedDependency
 {
 }

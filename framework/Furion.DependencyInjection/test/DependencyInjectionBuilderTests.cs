@@ -38,6 +38,7 @@ public class DependencyInjectionBuilderTests
         Assert.Null(dependencyInjectionBuilder._filterConfigure);
         Assert.False(dependencyInjectionBuilder.SuppressAssemblyScanning);
         Assert.False(dependencyInjectionBuilder.SuppressNonPublicType);
+        Assert.True(dependencyInjectionBuilder.ValidateLifetime);
     }
 
     [Fact]
@@ -143,6 +144,22 @@ public class DependencyInjectionBuilderTests
         Assert.Equal($"'{typeof(IDependency)}' type is not a valid service lifetime type. (Parameter 'dependencyType')", exception.Message);
     }
 
+    [Theory]
+    [InlineData(typeof(IDependency))]
+    [InlineData(typeof(IDictionary))]
+    public void GetServiceLifetime_NotMatch_NotValidate_ReturnOK(Type dependencyType)
+    {
+        var serviceLifetime = DependencyInjectionBuilder.GetServiceLifetime(dependencyType, false);
+        Assert.Null(serviceLifetime);
+    }
+
+    [Fact]
+    public void GetServiceLifetime_Null_NotValidate_ReturnOK()
+    {
+        var serviceLifetime = DependencyInjectionBuilder.GetServiceLifetime(null, false);
+        Assert.Null(serviceLifetime);
+    }
+
     [Fact]
     public void Release_ClearAll()
     {
@@ -185,5 +202,172 @@ public class DependencyInjectionBuilderTests
 
         Assert.Equal(dependencyType, depType);
         Assert.True(serviceTypes.SequenceEqual(types));
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_NonServiceInjectionAttribute()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service8));
+        var serviceTypes = descriptors.Select(s => s.Descriptor.ServiceType);
+
+        Assert.Single(serviceTypes);
+        Assert.Contains(typeof(IService), serviceTypes);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_WhenSetIgnore_ReturnEmpty()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(IgnoreService));
+        Assert.Empty(descriptors);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_EmptyServices_ReturnSelf()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service4));
+
+        Assert.Single(descriptors);
+        Assert.Equal(typeof(Service4), descriptors.First().Descriptor.ServiceType);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_IncludeSelf()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service5));
+        var serviceTypes = descriptors.Select(s => s.Descriptor.ServiceType);
+
+        Assert.Equal(2, descriptors.Count());
+        Assert.Contains(typeof(Service5), serviceTypes);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_IncludeBase()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service6));
+        var serviceTypes = descriptors.Select(s => s.Descriptor.ServiceType);
+
+        Assert.Equal(2, descriptors.Count());
+        Assert.Contains(typeof(ServiceBase), serviceTypes);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_NonLifetimeDependency_Throw()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(NonLifetimeClass)).ToList();
+        });
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_IncludeSelf_And_IncludeBase()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service7));
+        var serviceTypes = descriptors.Select(s => s.Descriptor.ServiceType);
+
+        Assert.Equal(3, descriptors.Count());
+        Assert.Contains(typeof(Service7), serviceTypes);
+        Assert.Contains(typeof(ServiceBase), serviceTypes);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_AddFilter()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        dependencyInjectionBuilder.AddFilter(s =>
+        {
+            if (s.Descriptor.ServiceType == typeof(IService))
+            {
+                return false;
+            }
+
+            s.Order = 10;
+
+            return true;
+        });
+
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service5));
+        Assert.Single(descriptors);
+        Assert.Equal(typeof(Service5), descriptors.First().Descriptor.ServiceType);
+
+        var descriptors2 = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service4));
+        Assert.Equal(10, descriptors2.First().Order);
+    }
+
+    [Fact]
+    public void ScanAssemblies_Default_ReturnEmpty()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.ScanAssemblies();
+        Assert.Empty(descriptors);
+    }
+
+    [Fact]
+    public void ScanAssemblies_IfAdd_NotEmpty()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder()
+        {
+            ValidateLifetime = false
+        };
+        dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
+
+        var descriptors = dependencyInjectionBuilder.ScanAssemblies();
+        Assert.True(descriptors.Any());
+    }
+
+    [Fact]
+    public void ScanAssemblies_Order()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder()
+        {
+            ValidateLifetime = false
+        };
+        dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
+        var descriptors = dependencyInjectionBuilder.ScanAssemblies().ToList();
+
+        var order1 = descriptors.FindIndex(u => u.Descriptor.ImplementationType == typeof(Order1Service));
+        var order2 = descriptors.FindIndex(u => u.Descriptor.ImplementationType == typeof(Order2Service));
+        var order3 = descriptors.FindIndex(u => u.Descriptor.ImplementationType == typeof(Order3Service));
+        Assert.True(order1 > order3 && order3 > order2);
+    }
+
+    [Theory]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    public void ScanAssemblies_SuppressNonPublicType(bool suppressNonPublicType, bool include)
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder()
+        {
+            ValidateLifetime = false,
+            SuppressNonPublicType = suppressNonPublicType
+        };
+        dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
+        var descriptors = dependencyInjectionBuilder.ScanAssemblies();
+
+        var includeNotPublicService = descriptors.Any(s => s.Descriptor.ServiceType == typeof(NotPublicService));
+        Assert.Equal(include, includeNotPublicService);
+    }
+
+    [Theory]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    public void ScanAssemblies_SuppressAssemblyScanning_ReturnEmpty(bool suppressAssemblyScanning, bool hasData)
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder()
+        {
+            ValidateLifetime = false,
+            SuppressAssemblyScanning = suppressAssemblyScanning
+        };
+        dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
+        var descriptors = dependencyInjectionBuilder.ScanAssemblies();
+
+        Assert.Equal(hasData, descriptors.Any());
     }
 }

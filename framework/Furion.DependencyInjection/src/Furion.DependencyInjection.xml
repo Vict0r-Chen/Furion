@@ -163,6 +163,12 @@
             禁用非公开类型
             </summary>
         </member>
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateLifetime">
+            <summary>
+            验证服务生存期合法化
+            </summary>
+            <remarks>设置 false 将跳过合法验证</remarks>
+        </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddFilter(System.Func{Furion.DependencyInjection.ServiceDescriptorModel,System.Boolean})">
             <summary>
             添加服务描述器过滤器
@@ -209,11 +215,12 @@
             释放对象
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceLifetime(System.Type)">
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceLifetime(System.Type,System.Boolean)">
             <summary>
             根据依赖类型获取对应的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
             </summary>
             <param name="dependencyType"><see cref="T:System.Type"/></param>
+            <param name="validateLifetime"><see cref="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateLifetime"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></returns>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
         </member>

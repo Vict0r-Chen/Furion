@@ -17,5 +17,5 @@ namespace Furion.DependencyInjection.Tests;
 public interface IServiceDescriptorModelClass
 { }
 
-public interface ServiceDescriptorModelClass : IServiceDescriptorModelClass
+public class ServiceDescriptorModelClass : IServiceDescriptorModelClass
 { }
