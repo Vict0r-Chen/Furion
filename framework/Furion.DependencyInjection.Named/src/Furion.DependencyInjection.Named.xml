@@ -6,9 +6,8 @@
     <members>
         <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">
             <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 类型拓展
+            依赖注入命名模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
-            <remarks>支持基于名称注册服务</remarks>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
@@ -384,11 +383,12 @@
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.CreateDelegator(Microsoft.Extensions.DependencyInjection.ServiceDescriptor,System.String)">
             <summary>
-            创建服务描述器代理
+            创建代理服务描述器
             </summary>
             <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <param name="name">服务名称</param>
+            <param name="name">服务命名</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:System.NamedServiceProviderExtensions">
             <summary>

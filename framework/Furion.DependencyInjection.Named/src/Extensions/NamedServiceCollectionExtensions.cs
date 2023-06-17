@@ -15,9 +15,8 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// <see cref="IServiceCollection"/> 类型拓展
+/// 依赖注入命名模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-/// <remarks>支持基于名称注册服务</remarks>
 public static class NamedServiceCollectionExtensions
 {
     /// <summary>
@@ -43,21 +42,8 @@ public static class NamedServiceCollectionExtensions
     /// <exception cref="InvalidOperationException"></exception>
     public static IServiceCollection AddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
-        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
-
-        // 创建服务描述器代理类型
-        var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
-
-        // 输出调试事件
-        Debugging.Trace("Type '{0}' is being registered as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
-
-        services.Add(serviceDescriptorDelegator);
-
-        // 注册泛型命名服务
-        services.AddNamed();
+        services.AddNamed()
+                .Add(CreateDelegator(serviceDescriptor, name));
 
         return services;
     }
@@ -71,21 +57,8 @@ public static class NamedServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
-        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
-
-        // 创建服务描述器代理类型
-        var serviceDescriptorDelegator = CreateDelegator(serviceDescriptor, name);
-        ArgumentNullException.ThrowIfNull(serviceDescriptorDelegator, nameof(serviceDescriptorDelegator));
-
-        // 输出调试事件
-        Debugging.Trace("Type '{0}' is trying to register as the named service '{1}'.", serviceDescriptorDelegator.ServiceType.Name, name);
-
-        services.TryAdd(serviceDescriptorDelegator);
-
-        // 注册泛型命名服务
-        services.AddNamed();
+        services.AddNamed()
+                .TryAdd(CreateDelegator(serviceDescriptor, name));
 
         return services;
     }
@@ -571,37 +544,27 @@ public static class NamedServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 创建服务描述器代理
+    /// 创建代理服务描述器
     /// </summary>
     /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">服务命名</param>
     /// <returns><see cref="ServiceDescriptor"/></returns>
-    internal static ServiceDescriptor? CreateDelegator(ServiceDescriptor serviceDescriptor, string name)
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static ServiceDescriptor CreateDelegator(ServiceDescriptor serviceDescriptor, string name)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
         ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
 
-        var serviceTypeDelegator = new NamedType(name, serviceDescriptor.ServiceType);
+        // 创建命名服务类型
+        var namedServiceType = new NamedType(name, serviceDescriptor.ServiceType);
 
-        // 返回实现类类型服务描述器
-        if (serviceDescriptor.ImplementationType is not null)
+        return serviceDescriptor switch
         {
-            return new(serviceTypeDelegator, serviceDescriptor.ImplementationType, serviceDescriptor.Lifetime);
-        }
-
-        // 返回对象实例服务描述器
-        if (serviceDescriptor.ImplementationInstance is not null)
-        {
-            return new(serviceTypeDelegator, serviceDescriptor.ImplementationInstance);
-        }
-
-        // 返回泛型工厂实例服务描述器
-        if (serviceDescriptor.ImplementationFactory is not null)
-        {
-            return new(serviceTypeDelegator, serviceDescriptor.ImplementationFactory, serviceDescriptor.Lifetime);
-        }
-
-        return null;
+            { ImplementationType: not null } => new(namedServiceType, serviceDescriptor.ImplementationType, serviceDescriptor.Lifetime),
+            { ImplementationInstance: not null } => new(namedServiceType, serviceDescriptor.ImplementationInstance),
+            { ImplementationFactory: not null } => new(namedServiceType, serviceDescriptor.ImplementationFactory, serviceDescriptor.Lifetime),
+            _ => throw new InvalidOperationException("Invalid service descriptor object.")
+        };
     }
 }
