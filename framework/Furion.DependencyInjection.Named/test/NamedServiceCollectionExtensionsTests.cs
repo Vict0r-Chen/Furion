@@ -174,4 +174,509 @@ public class NamedServiceCollectionExtensionsTests
         services.TryAddNamed(name, serviceDescriptor);
         Assert.Equal(2, services.Count);
     }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void AddNamedLifetime_FactoryObject(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        if (lifetime == ServiceLifetime.Transient)
+        {
+            services.AddNamedTransient(name1, serviceType, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+        else if (lifetime == ServiceLifetime.Scoped)
+        {
+            services.AddNamedScoped(name1, serviceType, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+        else if (lifetime == ServiceLifetime.Singleton)
+        {
+            services.AddNamedSingleton(name1, serviceType, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationFactory);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void AddNamedLifetime_Type(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+        var implementationType = typeof(NamedServiceClass);
+
+        if (lifetime == ServiceLifetime.Transient)
+        {
+            services.AddNamedTransient(name1, serviceType, implementationType);
+        }
+        else if (lifetime == ServiceLifetime.Scoped)
+        {
+            services.AddNamedScoped(name1, serviceType, implementationType);
+        }
+        else if (lifetime == ServiceLifetime.Singleton)
+        {
+            services.AddNamedSingleton(name1, serviceType, implementationType);
+        }
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.Equal(implementationType, lastServiceDescriptor.ImplementationType);
+        Assert.NotNull(lastServiceDescriptor.ImplementationType);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void AddNamedLifetime_Factory_ServiceType(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        if (lifetime == ServiceLifetime.Transient)
+        {
+            services.AddNamedTransient<INamedServiceClass>(name1, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+        else if (lifetime == ServiceLifetime.Scoped)
+        {
+            services.AddNamedScoped<INamedServiceClass>(name1, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+        else if (lifetime == ServiceLifetime.Singleton)
+        {
+            services.AddNamedSingleton<INamedServiceClass>(name1, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationFactory);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void AddNamedLifetime_TypeGeneric(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+        var implementationType = typeof(NamedServiceClass);
+
+        if (lifetime == ServiceLifetime.Transient)
+        {
+            services.AddNamedTransient<INamedServiceClass, NamedServiceClass>(name1);
+        }
+        else if (lifetime == ServiceLifetime.Scoped)
+        {
+            services.AddNamedScoped<INamedServiceClass, NamedServiceClass>(name1);
+        }
+        else if (lifetime == ServiceLifetime.Singleton)
+        {
+            services.AddNamedSingleton<INamedServiceClass, NamedServiceClass>(name1);
+        }
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.Equal(implementationType, lastServiceDescriptor.ImplementationType);
+        Assert.NotNull(lastServiceDescriptor.ImplementationType);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void AddNamedLifetime_Factory_ImplementationType(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        if (lifetime == ServiceLifetime.Transient)
+        {
+            services.AddNamedTransient<INamedServiceClass, NamedServiceClass>(name1, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+        else if (lifetime == ServiceLifetime.Scoped)
+        {
+            services.AddNamedScoped<INamedServiceClass, NamedServiceClass>(name1, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+        else if (lifetime == ServiceLifetime.Singleton)
+        {
+            services.AddNamedSingleton<INamedServiceClass, NamedServiceClass>(name1, sp =>
+            {
+                return new NamedServiceClass();
+            });
+        }
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationFactory);
+    }
+
+    [Fact]
+    public void AddNamedSingleton_Instance_Generic()
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        var instance = new NamedServiceClass();
+        services.AddNamedSingleton<INamedServiceClass>(name1, instance);
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(ServiceLifetime.Singleton, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationInstance);
+        Assert.Equal(instance, lastServiceDescriptor.ImplementationInstance);
+    }
+
+    [Fact]
+    public void AddNamedSingleton_Instance_Type()
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        var instance = new NamedServiceClass();
+        services.AddNamedSingleton(name1, serviceType, instance);
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(ServiceLifetime.Singleton, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationInstance);
+        Assert.Equal(instance, lastServiceDescriptor.ImplementationInstance);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void TryAddNamedLifetime_FactoryObject(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        Action action = () =>
+        {
+            if (lifetime == ServiceLifetime.Transient)
+            {
+                services.TryAddNamedTransient(name1, serviceType, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+            else if (lifetime == ServiceLifetime.Scoped)
+            {
+                services.TryAddNamedScoped(name1, serviceType, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+            else if (lifetime == ServiceLifetime.Singleton)
+            {
+                services.TryAddNamedSingleton(name1, serviceType, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationFactory);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void TryAddNamedLifetime_Type(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+        var implementationType = typeof(NamedServiceClass);
+
+        Action action = () =>
+        {
+            if (lifetime == ServiceLifetime.Transient)
+            {
+                services.TryAddNamedTransient(name1, serviceType, implementationType);
+            }
+            else if (lifetime == ServiceLifetime.Scoped)
+            {
+                services.TryAddNamedScoped(name1, serviceType, implementationType);
+            }
+            else if (lifetime == ServiceLifetime.Singleton)
+            {
+                services.TryAddNamedSingleton(name1, serviceType, implementationType);
+            }
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.Equal(implementationType, lastServiceDescriptor.ImplementationType);
+        Assert.NotNull(lastServiceDescriptor.ImplementationType);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void TryAddNamedLifetime_Factory_ServiceType(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        Action action = () =>
+        {
+            if (lifetime == ServiceLifetime.Transient)
+            {
+                services.TryAddNamedTransient<INamedServiceClass>(name1, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+            else if (lifetime == ServiceLifetime.Scoped)
+            {
+                services.TryAddNamedScoped<INamedServiceClass>(name1, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+            else if (lifetime == ServiceLifetime.Singleton)
+            {
+                services.TryAddNamedSingleton<INamedServiceClass>(name1, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationFactory);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void TryAddNamedLifetime_TypeGeneric(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+        var implementationType = typeof(NamedServiceClass);
+
+        Action action = () =>
+        {
+            if (lifetime == ServiceLifetime.Transient)
+            {
+                services.TryAddNamedTransient<INamedServiceClass, NamedServiceClass>(name1);
+            }
+            else if (lifetime == ServiceLifetime.Scoped)
+            {
+                services.TryAddNamedScoped<INamedServiceClass, NamedServiceClass>(name1);
+            }
+            else if (lifetime == ServiceLifetime.Singleton)
+            {
+                services.TryAddNamedSingleton<INamedServiceClass, NamedServiceClass>(name1);
+            }
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.Equal(implementationType, lastServiceDescriptor.ImplementationType);
+        Assert.NotNull(lastServiceDescriptor.ImplementationType);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void TryAddNamedLifetime_Factory_ImplementationType(ServiceLifetime lifetime)
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        Action action = () =>
+        {
+            if (lifetime == ServiceLifetime.Transient)
+            {
+                services.TryAddNamedTransient<INamedServiceClass, NamedServiceClass>(name1, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+            else if (lifetime == ServiceLifetime.Scoped)
+            {
+                services.TryAddNamedScoped<INamedServiceClass, NamedServiceClass>(name1, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+            else if (lifetime == ServiceLifetime.Singleton)
+            {
+                services.TryAddNamedSingleton<INamedServiceClass, NamedServiceClass>(name1, sp =>
+                {
+                    return new NamedServiceClass();
+                });
+            }
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(lifetime, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationFactory);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
+
+    [Fact]
+    public void TryAddNamedSingleton_Instance_Generic()
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        var instance = new NamedServiceClass();
+        Action action = () =>
+        {
+            services.TryAddNamedSingleton<INamedServiceClass>(name1, instance);
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(ServiceLifetime.Singleton, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationInstance);
+        Assert.Equal(instance, lastServiceDescriptor.ImplementationInstance);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
+
+    [Fact]
+    public void TryAddNamedSingleton_Instance_Type()
+    {
+        var services = new ServiceCollection();
+
+        var name1 = "name1";
+        var serviceType = typeof(INamedServiceClass);
+
+        var instance = new NamedServiceClass();
+
+        Action action = () =>
+        {
+            services.TryAddNamedSingleton(name1, serviceType, instance);
+        };
+        action();
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.Equal(new NamedType(name1, serviceType), lastServiceDescriptor.ServiceType);
+        Assert.Equal(ServiceLifetime.Singleton, lastServiceDescriptor.Lifetime);
+        Assert.NotNull(lastServiceDescriptor.ImplementationInstance);
+        Assert.Equal(instance, lastServiceDescriptor.ImplementationInstance);
+
+        action();
+        action();
+        Assert.Equal(2, services.Count);
+    }
 }
