@@ -392,20 +392,10 @@
         </member>
         <member name="T:System.NamedServiceProviderExtensions">
             <summary>
-            <see cref="T:System.IServiceProvider"/> 类型拓展
+            依赖注入命名模块 <see cref="T:System.IServiceProvider"/> 拓展类
             </summary>
-            <remarks>支持基于名称解析服务</remarks>
         </member>
         <member name="M:System.NamedServiceProviderExtensions.GetNamedService(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService(System.IServiceProvider,System.String,System.Type)">
             <summary>
             获取命名服务
             </summary>
@@ -423,6 +413,15 @@
             <param name="name">服务名称</param>
             <returns><typeparamref name="TService"/></returns>
         </member>
+        <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService(System.IServiceProvider,System.String,System.Type)">
+            <summary>
+            获取命名服务
+            </summary>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <param name="serviceType">服务类型</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
         <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService``1(System.IServiceProvider,System.String)">
             <summary>
             获取命名服务
@@ -434,7 +433,7 @@
         </member>
         <member name="M:System.NamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
             <summary>
-            获取命名服务
+            获取命名服务集合
             </summary>
             <typeparam name="TService">服务类型</typeparam>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
@@ -443,7 +442,7 @@
         </member>
         <member name="M:System.NamedServiceProviderExtensions.GetNamedServices(System.IServiceProvider,System.String,System.Type)">
             <summary>
-            获取命名服务
+            获取命名服务集合
             </summary>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
             <param name="name">服务名称</param>

@@ -19,3 +19,6 @@ public interface INamedServiceClass
 
 public class NamedServiceClass : INamedServiceClass
 { }
+
+public class NamedServiceClass2 : INamedServiceClass
+{ }

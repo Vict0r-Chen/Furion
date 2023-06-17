@@ -15,9 +15,8 @@
 namespace System;
 
 /// <summary>
-/// <see cref="IServiceProvider"/> 类型拓展
+/// 依赖注入命名模块 <see cref="IServiceProvider"/> 拓展类
 /// </summary>
-/// <remarks>支持基于名称解析服务</remarks>
 public static class NamedServiceProviderExtensions
 {
     /// <summary>
@@ -34,6 +33,19 @@ public static class NamedServiceProviderExtensions
         ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
         return serviceProvider.GetService(new NamedType(name, serviceType));
+    }
+
+    /// <summary>
+    /// 获取命名服务
+    /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">服务名称</param>
+    /// <returns><typeparamref name="TService"/></returns>
+    public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
+        where TService : class
+    {
+        return serviceProvider.GetNamedService(name, typeof(TService)) as TService;
     }
 
     /// <summary>
@@ -59,19 +71,6 @@ public static class NamedServiceProviderExtensions
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
     /// <param name="name">服务名称</param>
     /// <returns><typeparamref name="TService"/></returns>
-    public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
-        where TService : class
-    {
-        return serviceProvider.GetNamedService(name, typeof(TService)) as TService;
-    }
-
-    /// <summary>
-    /// 获取命名服务
-    /// </summary>
-    /// <typeparam name="TService">服务类型</typeparam>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
-    /// <returns><typeparamref name="TService"/></returns>
     public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
     {
@@ -79,7 +78,7 @@ public static class NamedServiceProviderExtensions
     }
 
     /// <summary>
-    /// 获取命名服务
+    /// 获取命名服务集合
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
@@ -91,11 +90,12 @@ public static class NamedServiceProviderExtensions
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
 
-        return serviceProvider.GetServices(new NamedType(name, typeof(TService))).OfType<TService>();
+        return serviceProvider.GetServices(new NamedType(name, typeof(TService)))
+                              .OfType<TService>();
     }
 
     /// <summary>
-    /// 获取命名服务
+    /// 获取命名服务集合
     /// </summary>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
     /// <param name="name">服务名称</param>
@@ -107,6 +107,7 @@ public static class NamedServiceProviderExtensions
         ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
         ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
-        return serviceProvider.GetServices(new NamedType(name, serviceType)).Where(serviceType.IsInstanceOfType);
+        return serviceProvider.GetServices(new NamedType(name, serviceType))
+                              .Where(serviceType.IsInstanceOfType);
     }
 }
