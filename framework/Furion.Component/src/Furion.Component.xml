@@ -107,7 +107,7 @@
             <typeparam name="TOptions">组件参数类型</typeparam>
             <returns><typeparamref name="TOptions"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentContext.GetOptionsOrDefault``1">
+        <member name="M:Furion.Component.ComponentContext.GetOptionsOrNew``1">
             <summary>
             获取组件参数
             </summary>

@@ -67,7 +67,7 @@ public abstract class ComponentContext
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions GetOptionsOrDefault<TOptions>()
+    public TOptions GetOptionsOrNew<TOptions>()
         where TOptions : class, new()
     {
         return GetOptions<TOptions>() ?? Activator.CreateInstance<TOptions>();
