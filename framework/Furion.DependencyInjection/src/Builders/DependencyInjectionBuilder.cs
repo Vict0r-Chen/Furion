@@ -20,7 +20,7 @@ namespace Furion.DependencyInjection;
 public sealed class DependencyInjectionBuilder
 {
     /// <summary>
-    /// 程序集扫描类型依赖接口
+    /// 服务依赖注入接口类型
     /// </summary>
     internal readonly Type _dependencyType;
 
@@ -100,16 +100,7 @@ public sealed class DependencyInjectionBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(assemblies, nameof(assemblies));
 
-        Array.ForEach(assemblies, assembly =>
-        {
-            if (!_assemblies.Add(assembly))
-            {
-                return;
-            }
-
-            // 输出事件消息
-            Debugging.Info("'{0}' assembly has been added successfully.", assembly);
-        });
+        Array.ForEach(assemblies, assembly => _assemblies.Add(assembly));
 
         return this;
     }
@@ -189,7 +180,7 @@ public sealed class DependencyInjectionBuilder
                 : baseType.GetGenericTypeDefinition());
         }
 
-        // 获取实现类型
+        // 获取实现类类型
         var implementationType = !type.IsGenericType
             ? type
             : type.GetGenericTypeDefinition();
@@ -201,7 +192,7 @@ public sealed class DependencyInjectionBuilder
             serviceTypes.Add(implementationType);
         }
 
-        // 遍历服务类型并创建服务描述器模型添加到集合中
+        // 遍历服务类型并创建服务描述器模型
         foreach (var serviceType in serviceTypes)
         {
             // 创建服务描述器模型
@@ -303,7 +294,7 @@ public sealed class DependencyInjectionBuilder
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
             // 无效类型
             _ => validateLifetime
-                ? throw new ArgumentOutOfRangeException(nameof(dependencyType), $"'{dependencyType ?? typeof(IDependency)}' type is not a valid service lifetime type.")
+                ? throw new ArgumentOutOfRangeException(nameof(dependencyType), $"`{dependencyType ?? typeof(IDependency)}` type is not a valid service lifetime type.")
                 : null
         };
     }
@@ -340,7 +331,7 @@ public sealed class DependencyInjectionBuilder
                 break;
             // 无效操作
             default:
-                throw new InvalidOperationException($"'{serviceDescriptorModel.Addition}' not supported.");
+                throw new InvalidOperationException($"`{serviceDescriptorModel.Addition}` not supported.");
         }
     }
 }

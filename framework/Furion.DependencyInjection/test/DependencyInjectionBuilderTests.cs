@@ -130,7 +130,7 @@ public class DependencyInjectionBuilderTests
             var serviceLifetime = DependencyInjectionBuilder.GetServiceLifetime(dependencyType);
         });
 
-        Assert.Equal($"'{dependencyType}' type is not a valid service lifetime type. (Parameter 'dependencyType')", exception.Message);
+        Assert.Equal($"`{dependencyType}` type is not a valid service lifetime type. (Parameter 'dependencyType')", exception.Message);
     }
 
     [Fact]
@@ -141,7 +141,7 @@ public class DependencyInjectionBuilderTests
             var serviceLifetime = DependencyInjectionBuilder.GetServiceLifetime(null);
         });
 
-        Assert.Equal($"'{typeof(IDependency)}' type is not a valid service lifetime type. (Parameter 'dependencyType')", exception.Message);
+        Assert.Equal($"`{typeof(IDependency)}` type is not a valid service lifetime type. (Parameter 'dependencyType')", exception.Message);
     }
 
     [Theory]

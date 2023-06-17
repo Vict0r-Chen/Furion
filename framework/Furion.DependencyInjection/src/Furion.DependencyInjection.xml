@@ -129,7 +129,7 @@
         </member>
         <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._dependencyType">
             <summary>
-            程序集扫描类型依赖接口
+            服务依赖注入接口类型
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._assemblies">
