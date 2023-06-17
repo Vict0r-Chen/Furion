@@ -19,7 +19,7 @@ internal sealed class NamedService<TService> : INamedService<TService>
     where TService : class
 {
     /// <inheritdoc cref="IServiceProvider"/>
-    internal readonly IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider;
 
     /// <summary>
     /// 构造函数
