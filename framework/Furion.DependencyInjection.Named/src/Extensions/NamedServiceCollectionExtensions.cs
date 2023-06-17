@@ -576,7 +576,7 @@ public static class NamedServiceCollectionExtensions
     /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>
     /// <param name="name">服务名称</param>
     /// <returns><see cref="ServiceDescriptor"/></returns>
-    private static ServiceDescriptor? CreateDelegator(ServiceDescriptor serviceDescriptor, string name)
+    internal static ServiceDescriptor? CreateDelegator(ServiceDescriptor serviceDescriptor, string name)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));

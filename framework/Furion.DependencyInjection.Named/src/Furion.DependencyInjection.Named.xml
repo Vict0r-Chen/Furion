@@ -500,20 +500,21 @@
         </member>
         <member name="T:Furion.DependencyInjection.NamedType">
             <summary>
-            支持别名的类型代理
+            具有命名的 <see cref="T:System.Type"/>
             </summary>
+            <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/api/system.reflection.typedelegator?redirectedfrom=MSDN">TypeDelegator</see></remarks>
         </member>
-        <member name="F:Furion.DependencyInjection.NamedType._typeName">
+        <member name="F:Furion.DependencyInjection.NamedType.name">
             <summary>
-            类型别名
+            类型命名
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.NamedType.#ctor(System.String,System.Type)">
             <summary>
             构造函数
             </summary>
-            <param name="typeName">类型别名</param>
-            <param name="delegatingType">被代理类型</param>
+            <param name="name">类型命名</param>
+            <param name="delegatingType"><see cref="T:System.Type"/></param>
         </member>
         <member name="P:Furion.DependencyInjection.NamedType.DelegatingType">
             <summary>

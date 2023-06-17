@@ -15,24 +15,28 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 支持别名的类型代理
+/// 具有命名的 <see cref="Type"/>
 /// </summary>
+/// <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/api/system.reflection.typedelegator?redirectedfrom=MSDN">TypeDelegator</see></remarks>
 internal sealed class NamedType : TypeDelegator
 {
     /// <summary>
-    /// 类型别名
+    /// 类型命名
     /// </summary>
-    private readonly string _typeName;
+    internal readonly string name;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="typeName">类型别名</param>
-    /// <param name="delegatingType">被代理类型</param>
-    internal NamedType(string typeName, Type delegatingType)
+    /// <param name="name">类型命名</param>
+    /// <param name="delegatingType"><see cref="Type"/></param>
+    internal NamedType(string name, Type delegatingType)
         : base(delegatingType)
     {
-        _typeName = typeName;
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+
+        this.name = name;
     }
 
     /// <summary>
@@ -43,7 +47,7 @@ internal sealed class NamedType : TypeDelegator
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        return _typeName.GetHashCode();
+        return name.GetHashCode() + typeImpl.GetHashCode();
     }
 
     /// <inheritdoc />
@@ -56,7 +60,7 @@ internal sealed class NamedType : TypeDelegator
     public override bool Equals(Type? o)
     {
         return o is NamedType namedType
-                && namedType._typeName == _typeName
+                && namedType.name == name
                 && namedType.DelegatingType == DelegatingType;
     }
 }

@@ -12,36 +12,12 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System;
+namespace Furion.DependencyInjection.Named.Tests;
 
-/// <inheritdoc cref="INamedService{TService}"/>
-internal sealed class NamedService<TService> : INamedService<TService>
-    where TService : class
+public class NamedTypeClass1
 {
-    /// <inheritdoc cref="IServiceProvider"/>
-    internal readonly IServiceProvider _serviceProvider;
+}
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="serviceProvider">服务提供器</param>
-    public NamedService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
-
-    /// <inheritdoc />
-    public TService this[string name] => _serviceProvider.GetRequiredNamedService<TService>(name);
-
-    /// <inheritdoc />
-    public TService? Get(string name)
-    {
-        return _serviceProvider.GetNamedService<TService>(name);
-    }
-
-    /// <inheritdoc />
-    public IEnumerable<TService> GetEnumerator(string name)
-    {
-        return _serviceProvider.GetNamedServices<TService>(name);
-    }
+public class NamedTypeClass2
+{
 }
