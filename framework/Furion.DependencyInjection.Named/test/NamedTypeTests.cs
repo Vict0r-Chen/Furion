@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection.Named.Tests;
 public class NamedTypeTests
 {
     [Fact]
-    public void NewInstance_Parameter_Null_Throw()
+    public void NewInstance_Parameters_Null_Throw()
     {
         var type = typeof(NamedTypeClass1);
 
@@ -49,8 +49,8 @@ public class NamedTypeTests
 
         Assert.NotNull(namedType.DelegatingType);
         Assert.Equal(type, namedType.DelegatingType);
-        Assert.Equal(type.Name, namedType.Name);
-        Assert.Equal(type.FullName, namedType.FullName);
+        Assert.Equal(type.Name + " (Type 'NamedType')", namedType.Name);
+        Assert.Equal(type.FullName + " (Type 'NamedType')", namedType.FullName);
     }
 
     [Fact]

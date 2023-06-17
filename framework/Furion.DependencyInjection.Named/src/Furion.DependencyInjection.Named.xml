@@ -381,12 +381,12 @@
             <param name="name">服务名称</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.CreateDelegator(Microsoft.Extensions.DependencyInjection.ServiceDescriptor,System.String)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.CreateDelegator(System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
             <summary>
             创建代理服务描述器
             </summary>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
             <param name="name">服务命名</param>
+            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
@@ -520,6 +520,15 @@
             <summary>
             被代理类型
             </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.FullName">
+            <inheritdoc />
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.GUID">
+            <inheritdoc />
         </member>
         <member name="M:Furion.DependencyInjection.NamedType.GetHashCode">
             <inheritdoc />

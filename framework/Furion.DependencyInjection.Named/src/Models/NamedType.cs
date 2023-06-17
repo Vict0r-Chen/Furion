@@ -45,6 +45,15 @@ internal sealed class NamedType : TypeDelegator
     internal Type DelegatingType => typeImpl;
 
     /// <inheritdoc />
+    public override string Name => $"{typeImpl.Name} (Type '{nameof(NamedType)}')";
+
+    /// <inheritdoc />
+    public override string? FullName => $"{typeImpl.FullName} (Type '{nameof(NamedType)}')";
+
+    /// <inheritdoc />
+    public override Guid GUID => Guid.NewGuid();
+
+    /// <inheritdoc />
     public override int GetHashCode()
     {
         return name.GetHashCode() + typeImpl.GetHashCode();

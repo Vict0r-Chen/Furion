@@ -14,5 +14,8 @@
 
 namespace Furion.DependencyInjection.Named.Tests;
 
-public interface INamedServiceClass { }
-public class NamedServiceClass : INamedServiceClass { }
+public interface INamedServiceClass
+{ }
+
+public class NamedServiceClass : INamedServiceClass
+{ }

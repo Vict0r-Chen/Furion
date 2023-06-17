@@ -31,4 +31,147 @@ public class NamedServiceCollectionExtensionsTests
         Assert.Equal(typeof(NamedService<>), serviceDescriptor.ImplementationType);
         Assert.Equal(ServiceLifetime.Transient, serviceDescriptor.Lifetime);
     }
+
+    [Fact]
+    public void CreateDelegator_Parameters_Null_Throw()
+    {
+        var serviceDescriptor = ServiceDescriptor.Describe(typeof(INamedServiceClass), typeof(NamedServiceClass), ServiceLifetime.Transient);
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            NamedServiceCollectionExtensions.CreateDelegator(null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            NamedServiceCollectionExtensions.CreateDelegator(string.Empty, serviceDescriptor);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            NamedServiceCollectionExtensions.CreateDelegator(null!, serviceDescriptor);
+        });
+    }
+
+    [Fact]
+    public void CreateDelegator_NewServiceDescriptor()
+    {
+        var name = "name1";
+        var serviceDescriptor = ServiceDescriptor.Describe(typeof(INamedServiceClass), typeof(NamedServiceClass), ServiceLifetime.Transient);
+        var newServiceDescriptor = NamedServiceCollectionExtensions.CreateDelegator(name, serviceDescriptor);
+
+        Assert.NotNull(newServiceDescriptor);
+        Assert.NotNull(newServiceDescriptor.ImplementationType);
+        Assert.True(newServiceDescriptor.ServiceType is NamedType);
+        Assert.Equal(name, ((NamedType)newServiceDescriptor.ServiceType).name);
+        Assert.Equal(new NamedType(name, serviceDescriptor.ServiceType), newServiceDescriptor.ServiceType);
+        Assert.Equal(serviceDescriptor.Lifetime, newServiceDescriptor.Lifetime);
+
+        var name2 = "name2";
+        var instance = new NamedServiceClass();
+        var serviceDescriptor2 = new ServiceDescriptor(typeof(INamedServiceClass), instance);
+        var newServiceDescriptor2 = NamedServiceCollectionExtensions.CreateDelegator(name2, serviceDescriptor2);
+
+        Assert.NotNull(newServiceDescriptor2);
+        Assert.NotNull(newServiceDescriptor2.ImplementationInstance);
+        Assert.Equal(instance, newServiceDescriptor2.ImplementationInstance);
+        Assert.Equal(serviceDescriptor2.ImplementationInstance, newServiceDescriptor2.ImplementationInstance);
+        Assert.True(newServiceDescriptor2.ServiceType is NamedType);
+        Assert.Equal(name2, ((NamedType)newServiceDescriptor2.ServiceType).name);
+        Assert.Equal(new NamedType(name2, serviceDescriptor2.ServiceType), newServiceDescriptor2.ServiceType);
+        Assert.Equal(serviceDescriptor2.Lifetime, newServiceDescriptor2.Lifetime);
+
+        var name3 = "name3";
+        var serviceDescriptor3 = ServiceDescriptor.Describe(typeof(INamedServiceClass), sp =>
+        {
+            return new NamedServiceClass();
+        }, ServiceLifetime.Singleton);
+        var newServiceDescriptor3 = NamedServiceCollectionExtensions.CreateDelegator(name3, serviceDescriptor3);
+
+        Assert.NotNull(newServiceDescriptor3);
+        Assert.NotNull(newServiceDescriptor3.ImplementationFactory);
+        Assert.True(newServiceDescriptor3.ServiceType is NamedType);
+        Assert.Equal(name3, ((NamedType)newServiceDescriptor3.ServiceType).name);
+        Assert.Equal(new NamedType(name3, serviceDescriptor3.ServiceType), newServiceDescriptor3.ServiceType);
+        Assert.Equal(serviceDescriptor3.Lifetime, newServiceDescriptor3.Lifetime);
+    }
+
+    [Fact]
+    public void AddNamed_With_Name_And_ServiceDescriptor_NullCheck_Throw()
+    {
+        var services = new ServiceCollection();
+        var serviceDescriptor = ServiceDescriptor.Describe(typeof(INamedServiceClass), typeof(NamedServiceClass), ServiceLifetime.Transient);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.AddNamed(null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            services.AddNamed(string.Empty, serviceDescriptor);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.AddNamed(null!, serviceDescriptor);
+        });
+    }
+
+    [Fact]
+    public void AddNamed_With_Name_And_ServiceDescriptor()
+    {
+        var name = "name1";
+        var serviceDescriptor = ServiceDescriptor.Describe(typeof(INamedServiceClass), typeof(NamedServiceClass), ServiceLifetime.Transient);
+
+        var services = new ServiceCollection();
+        services.AddNamed(name, serviceDescriptor);
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.True(lastServiceDescriptor.ServiceType is NamedType);
+        Assert.Equal(name, ((NamedType)lastServiceDescriptor.ServiceType).name);
+
+        services.AddNamed(name, serviceDescriptor);
+        Assert.Equal(3, services.Count);
+    }
+
+    [Fact]
+    public void TryAddNamed_With_Name_And_ServiceDescriptor_NullCheck_Throw()
+    {
+        var services = new ServiceCollection();
+        var serviceDescriptor = ServiceDescriptor.Describe(typeof(INamedServiceClass), typeof(NamedServiceClass), ServiceLifetime.Transient);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.TryAddNamed(null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            services.TryAddNamed(string.Empty, serviceDescriptor);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.TryAddNamed(null!, serviceDescriptor);
+        });
+    }
+
+    [Fact]
+    public void TryAddNamed_With_Name_And_ServiceDescriptor()
+    {
+        var name = "name1";
+        var serviceDescriptor = ServiceDescriptor.Describe(typeof(INamedServiceClass), typeof(NamedServiceClass), ServiceLifetime.Transient);
+
+        var services = new ServiceCollection();
+        services.TryAddNamed(name, serviceDescriptor);
+
+        Assert.Equal(2, services.Count);
+        var lastServiceDescriptor = services.Last();
+        Assert.True(lastServiceDescriptor.ServiceType is NamedType);
+        Assert.Equal(name, ((NamedType)lastServiceDescriptor.ServiceType).name);
+
+        services.TryAddNamed(name, serviceDescriptor);
+        Assert.Equal(2, services.Count);
+    }
 }
