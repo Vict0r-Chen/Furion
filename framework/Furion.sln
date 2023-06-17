@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.DependencyInjection.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.DependencyInjection.Named", "Furion.DependencyInjection.Named\src\Furion.DependencyInjection.Named.csproj", "{57307869-CE77-41D8-B65E-388FCDEFA13E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.DependencyInjection.Named.Tests", "Furion.DependencyInjection.Named\test\Furion.DependencyInjection.Named.Tests.csproj", "{916EAA51-5BA2-4E16-A652-49F0B07A4DCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{57307869-CE77-41D8-B65E-388FCDEFA13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57307869-CE77-41D8-B65E-388FCDEFA13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57307869-CE77-41D8-B65E-388FCDEFA13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916EAA51-5BA2-4E16-A652-49F0B07A4DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916EAA51-5BA2-4E16-A652-49F0B07A4DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916EAA51-5BA2-4E16-A652-49F0B07A4DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916EAA51-5BA2-4E16-A652-49F0B07A4DCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{AA6CF850-E46F-4F7F-BB8D-A3928B217363} = {205E6A86-75C8-4A52-9444-2E0F3640217F}
 		{90761246-FD99-40EE-B834-458A075ED4C0} = {5D868F96-9797-40CA-AF53-68BE4E762916}
 		{57307869-CE77-41D8-B65E-388FCDEFA13E} = {5D868F96-9797-40CA-AF53-68BE4E762916}
+		{916EAA51-5BA2-4E16-A652-49F0B07A4DCC} = {5D868F96-9797-40CA-AF53-68BE4E762916}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E66EA3E6-2FE9-44EB-B8F6-7E49CDBD6C3C}
