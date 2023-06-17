@@ -1,0 +1,102 @@
+---
+sidebar_position: 1
+---
+
+# 依赖注入
+
+依赖注入（Dependency Injection，DI）是一种编程模式，其目的是将应用程序中不同对象之间的依赖关系解耦并进行管理。通过将依赖对象的创建和组装从应用程序代码中分离出来，依赖注入可以提高应用程序的可扩展性、可测试性和可维护性。
+
+在依赖注入模式中，对象不再负责管理它们所依赖的对象的创建和生命周期，而是将这些任务交给外部容器实现。容器通常使用配置文件、注解或者代码配置等方式来描述对象之间的依赖关系，在应用程序启动时自动加载并注入对象所依赖的其他对象，从而完成对象之间的组装和协作。
+
+## 控制反转
+
+控制反转（Inversion of Control，IoC）是依赖注入的一种实现方式。传统的程序设计中，应用程序直接依赖于底层依赖组件，应用程序会主动创建和管理组件对象，导致应用程序的可扩展性差，维护成本高等问题。
+
+而控制反转则是将这种依赖关系反转过来，将控制权交给外部环境（通常指容器），由容器主动创建和管理组件对象，同时通过依赖注入的方式将所需要的依赖注入进去。这样，就将应用程序和具体的依赖组件解耦，提高了程序的扩展性和可维护性。
+
+控制反转的实现方式可以有多种，如服务定位器模式、依赖注入模式等。其中，依赖注入是应用最广泛的控制反转实现方式。
+
+## 优缺点
+
+依赖注入/控制反转的优点包括：
+
+1. 提高代码的可维护性：将依赖关系交给容器管理，使得应用程序逻辑更加清晰，易于修改和扩展。
+
+2. 提高代码的复用性：可以通过依赖注入灵活地组合和切换组件，提高代码的复用性。
+
+3. 提高代码的测试性：在测试时，可以将组件依赖的对象替换为模拟对象，从而更容易地进行单元测试。
+
+4. 提高代码的可扩展性：通过依赖注入，应用程序的扩展不会影响到原有代码，更加灵活。
+
+但是依赖注入/控制反转也存在以下缺点：
+
+1. 增加了代码的复杂度，需要理解依赖注入的概念和实现方式。
+
+2. 应用程序的启动时间会变慢，因为需要创建对象和解决依赖关系。
+
+3. 管理大量的组件对象可能会导致内存占用和性能问题，需要进行适当的优化。
+
+4. 程序员必须遵循一定的约定和规则来正确使用依赖注入，否则容易出现错误。
+
+## 快速入门
+
+```cs showLineNumbers {2,16} title="ExposeServicesAttribute.cs"
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+public sealed class ExposeServicesAttribute : Attribute
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public ExposeServicesAttribute()
+    {
+        ServiceTypes = Type.EmptyTypes;
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="serviceTypes"><see cref="ServiceTypes"/></param>
+    public ExposeServicesAttribute(params Type[] serviceTypes)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(serviceTypes, nameof(serviceTypes));
+
+        ServiceTypes = serviceTypes;
+    }
+
+    /// <summary>
+    /// 类型集合
+    /// </summary>
+    public Type[] ServiceTypes { get; init; }
+}
+```
+
+:::note
+
+Some **content** with _Markdown_ `syntax`. Check [this `api`](#).
+
+:::
+
+:::tip
+
+Some **content** with _Markdown_ `syntax`. Check [this `api`](#).
+
+:::
+
+:::info
+
+Some **content** with _Markdown_ `syntax`. Check [this `api`](#).
+
+:::
+
+:::caution
+
+Some **content** with _Markdown_ `syntax`. Check [this `api`](#).
+
+:::
+
+:::danger
+
+Some **content** with _Markdown_ `syntax`. Check [this `api`](#).
+
+:::
