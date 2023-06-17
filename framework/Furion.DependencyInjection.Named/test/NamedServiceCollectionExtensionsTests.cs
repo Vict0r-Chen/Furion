@@ -410,7 +410,7 @@ public class NamedServiceCollectionExtensionsTests
         var name1 = "name1";
         var serviceType = typeof(INamedServiceClass);
 
-        Action action = () =>
+        void action()
         {
             if (lifetime == ServiceLifetime.Transient)
             {
@@ -433,7 +433,7 @@ public class NamedServiceCollectionExtensionsTests
                     return new NamedServiceClass();
                 });
             }
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);
@@ -459,7 +459,7 @@ public class NamedServiceCollectionExtensionsTests
         var serviceType = typeof(INamedServiceClass);
         var implementationType = typeof(NamedServiceClass);
 
-        Action action = () =>
+        void action()
         {
             if (lifetime == ServiceLifetime.Transient)
             {
@@ -473,7 +473,7 @@ public class NamedServiceCollectionExtensionsTests
             {
                 services.TryAddNamedSingleton(name1, serviceType, implementationType);
             }
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);
@@ -499,7 +499,7 @@ public class NamedServiceCollectionExtensionsTests
         var name1 = "name1";
         var serviceType = typeof(INamedServiceClass);
 
-        Action action = () =>
+        void action()
         {
             if (lifetime == ServiceLifetime.Transient)
             {
@@ -522,7 +522,7 @@ public class NamedServiceCollectionExtensionsTests
                     return new NamedServiceClass();
                 });
             }
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);
@@ -548,7 +548,7 @@ public class NamedServiceCollectionExtensionsTests
         var serviceType = typeof(INamedServiceClass);
         var implementationType = typeof(NamedServiceClass);
 
-        Action action = () =>
+        void action()
         {
             if (lifetime == ServiceLifetime.Transient)
             {
@@ -562,7 +562,7 @@ public class NamedServiceCollectionExtensionsTests
             {
                 services.TryAddNamedSingleton<INamedServiceClass, NamedServiceClass>(name1);
             }
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);
@@ -588,7 +588,7 @@ public class NamedServiceCollectionExtensionsTests
         var name1 = "name1";
         var serviceType = typeof(INamedServiceClass);
 
-        Action action = () =>
+        void action()
         {
             if (lifetime == ServiceLifetime.Transient)
             {
@@ -611,7 +611,7 @@ public class NamedServiceCollectionExtensionsTests
                     return new NamedServiceClass();
                 });
             }
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);
@@ -634,10 +634,10 @@ public class NamedServiceCollectionExtensionsTests
         var serviceType = typeof(INamedServiceClass);
 
         var instance = new NamedServiceClass();
-        Action action = () =>
+        void action()
         {
             services.TryAddNamedSingleton<INamedServiceClass>(name1, instance);
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);
@@ -662,10 +662,10 @@ public class NamedServiceCollectionExtensionsTests
 
         var instance = new NamedServiceClass();
 
-        Action action = () =>
+        void action()
         {
             services.TryAddNamedSingleton(name1, serviceType, instance);
-        };
+        }
         action();
 
         Assert.Equal(2, services.Count);

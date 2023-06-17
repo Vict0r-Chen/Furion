@@ -4,6 +4,55 @@
         <name>Furion.DependencyInjection.Named</name>
     </assembly>
     <members>
+        <member name="T:Furion.Component.DependencyInjectionNamedComponent">
+            <summary>
+            依赖注入命名组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.DependencyInjection.NamedType">
+            <summary>
+            具有命名的 <see cref="T:System.Type"/>
+            </summary>
+            <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/api/system.reflection.typedelegator?redirectedfrom=MSDN">TypeDelegator</see></remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.NamedType.name">
+            <summary>
+            类型命名
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedType.#ctor(System.String,System.Type)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="name">类型命名</param>
+            <param name="delegatingType"><see cref="T:System.Type"/></param>
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.DelegatingType">
+            <summary>
+            被代理类型
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.FullName">
+            <inheritdoc />
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedType.GUID">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedType.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Type)">
+            <inheritdoc />
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">
             <summary>
             依赖注入命名模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
@@ -495,47 +544,6 @@
             <inheritdoc />
         </member>
         <member name="M:System.NamedService`1.GetEnumerator(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="T:Furion.DependencyInjection.NamedType">
-            <summary>
-            具有命名的 <see cref="T:System.Type"/>
-            </summary>
-            <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/api/system.reflection.typedelegator?redirectedfrom=MSDN">TypeDelegator</see></remarks>
-        </member>
-        <member name="F:Furion.DependencyInjection.NamedType.name">
-            <summary>
-            类型命名
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.#ctor(System.String,System.Type)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="name">类型命名</param>
-            <param name="delegatingType"><see cref="T:System.Type"/></param>
-        </member>
-        <member name="P:Furion.DependencyInjection.NamedType.DelegatingType">
-            <summary>
-            被代理类型
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.NamedType.Name">
-            <inheritdoc />
-        </member>
-        <member name="P:Furion.DependencyInjection.NamedType.FullName">
-            <inheritdoc />
-        </member>
-        <member name="P:Furion.DependencyInjection.NamedType.GUID">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.GetHashCode">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Type)">
             <inheritdoc />
         </member>
     </members>
