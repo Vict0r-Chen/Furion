@@ -209,6 +209,9 @@ public abstract class ComponentBase
     /// <exception cref="InvalidOperationException"></exception>
     internal static ComponentBase CreateInstance(Type componentType, ComponentOptions componentOptions)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
+
         // 检查组件类型合法性
         Check(componentType);
 
