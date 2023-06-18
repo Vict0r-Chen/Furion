@@ -20,22 +20,23 @@ namespace Furion.Component;
 public class ComponentBuilderBase
 {
     /// <summary>
-    /// 组件参数委托字典
+    /// 组件配置委托集合
     /// </summary>
-    internal readonly Dictionary<Type, List<Delegate>> _optionsActions = new();
+    internal readonly Dictionary<Type, List<Delegate>> _optionsActions;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     internal ComponentBuilderBase()
     {
+        _optionsActions = new();
     }
 
     /// <summary>
-    /// 配置组件参数
+    /// 添加组件配置
     /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <param name="configure">配置委托</param>
+    /// <typeparam name="TOptions">组件配置类型</typeparam>
+    /// <param name="configure">自定义组件配置委托</param>
     public void Configure<TOptions>(Action<TOptions> configure)
         where TOptions : class, new()
     {
@@ -46,16 +47,15 @@ public class ComponentBuilderBase
     }
 
     /// <summary>
-    /// 构建模块
+    /// 构建模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal virtual void Build(IServiceCollection services)
     {
-        // 获取组件模块配置选项
+        // 添加组件配置
         var componentOptions = services.GetComponentOptions();
-
-        // 配置组件选项
         componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
+
         _optionsActions.Clear();
     }
 }

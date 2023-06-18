@@ -338,10 +338,7 @@
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            构建模块
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <inheritdoc />
         </member>
         <member name="T:Furion.Component.ComponentBuilderBase">
             <summary>
@@ -350,7 +347,7 @@
         </member>
         <member name="F:Furion.Component.ComponentBuilderBase._optionsActions">
             <summary>
-            组件参数委托字典
+            组件配置委托集合
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentBuilderBase.#ctor">
@@ -360,14 +357,14 @@
         </member>
         <member name="M:Furion.Component.ComponentBuilderBase.Configure``1(System.Action{``0})">
             <summary>
-            配置组件参数
+            添加组件配置
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <param name="configure">配置委托</param>
+            <typeparam name="TOptions">组件配置类型</typeparam>
+            <param name="configure">自定义组件配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentBuilderBase.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            构建模块
+            构建模块服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
@@ -596,12 +593,12 @@
         </member>
         <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCall">
             <summary>
-            是否禁用组件重复调用
+            禁用组件重复调用
             </summary>
         </member>
         <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCallForWeb">
             <summary>
-            是否禁用 Web 组件重复调用
+            禁用 Web 组件重复调用
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentOptions.GetOptionsAction``1">

@@ -48,12 +48,12 @@ internal sealed class ComponentOptions
     internal ConcurrentBag<string> CallRecords { get; init; }
 
     /// <summary>
-    /// 是否禁用组件重复调用
+    /// 禁用组件重复调用
     /// </summary>
     internal bool SuppressDuplicateCall { get; set; } = true;
 
     /// <summary>
-    /// 是否禁用 Web 组件重复调用
+    /// 禁用 Web 组件重复调用
     /// </summary>
     internal bool SuppressDuplicateCallForWeb { get; set; } = true;
 

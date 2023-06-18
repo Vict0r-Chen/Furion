@@ -32,24 +32,19 @@ public sealed class ComponentBuilder : ComponentBuilderBase
     /// </summary>
     public bool SuppressDuplicateCall { get; set; } = true;
 
-    /// <summary>
-    /// 构建模块
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <inheritdoc />
     internal override void Build(IServiceCollection services)
     {
-        // 将自身注册为组件参数
+        // 配置组件模块自身配置
         Configure<ComponentBuilder>(builder =>
         {
             builder.SuppressDuplicateCall = SuppressDuplicateCall;
         });
 
-        // 获取组件模块配置选项
+        // 添加组件配置
         var componentOptions = services.GetComponentOptions();
-
-        // 配置组件选项
         componentOptions.SuppressDuplicateCall = SuppressDuplicateCall;
-        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
-        _optionsActions.Clear();
+
+        base.Build(services);
     }
 }
