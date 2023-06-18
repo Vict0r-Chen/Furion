@@ -224,7 +224,7 @@ public abstract class ComponentBase
 
     internal static ComponentBase? CreateComponentInstance(Type componentType, ComponentOptions componentOptions)
     {
-        var constructors = componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
+        var constructors = componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
         if (constructors.Length == 0)
         {
             return Activator.CreateInstance(componentType) as ComponentBase;

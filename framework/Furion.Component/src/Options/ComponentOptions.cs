@@ -107,5 +107,5 @@ internal sealed class ComponentOptions
         return (Delegate)@delegate!;
     }
 
-    internal static MethodInfo GetOptionsActionOrNewMethodInfo = typeof(ComponentOptions).GetMethod(nameof(GetOptionsActionOrNew), 1, BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
+    internal static MethodInfo GetOptionsActionOrNewMethodInfo = typeof(ComponentOptions).GetMethod(nameof(GetOptionsActionOrNew), 1, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null)!;
 }
