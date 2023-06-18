@@ -144,17 +144,17 @@ public static class ComponentWebApplicationExtensions
             }
 
             // 组件重复调用检测
-            var checkName = componentType.FullName + " (Type 'WebComponent')";
+            var recordName = componentType.FullName + " (Type 'WebComponent')";
             if (componentOptions.SuppressDuplicateCallForWeb)
             {
-                if (componentOptions.CallRecords.Any(t => t == checkName))
+                if (componentOptions.CallRecords.Any(t => t == recordName))
                 {
                     // 输出调试事件
                     Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
                     continue;
                 }
 
-                componentOptions.CallRecords.Add(checkName);
+                componentOptions.CallRecords.Add(recordName);
             }
 
             // 创建组件实例
