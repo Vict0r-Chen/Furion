@@ -81,7 +81,7 @@ public static class ComponentServiceCollectionExtensions
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
         // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
+        var dependencies = ComponentBase.CreateDependencies(componentType);
 
         return services.AddComponent(dependencies, configuration, configure);
     }
@@ -100,7 +100,7 @@ public static class ComponentServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(nameof(configuration), nameof(configuration));
 
         // 生成组件依赖拓扑排序图
-        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
+        var topologicalSortedMap = ComponentBase.CreateTopological(dependencies);
 
         // 创建组件模块构建器并构建
         var componentBuilder = new ComponentBuilderBase();
@@ -131,10 +131,8 @@ public static class ComponentServiceCollectionExtensions
                 continue;
             }
 
-            // 创建组件实例（这里抽离出来，支持构造函数设置参数）
-            var component = ComponentBase.CreateComponentInstance(componentType, componentOptions);
-            ArgumentNullException.ThrowIfNull(component, nameof(component));
-
+            // 创建组件实例
+            var component = ComponentBase.CreateInstance(componentType, componentOptions);
             component.Options = componentOptions;
             components.Insert(0, component);
 

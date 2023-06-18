@@ -76,8 +76,10 @@ public class ComponentBuilderTests
     [Fact]
     public void Build()
     {
-        var componentBuilder = new ComponentBuilder();
-        componentBuilder.SuppressDuplicateCall = false;
+        var componentBuilder = new ComponentBuilder
+        {
+            SuppressDuplicateCall = false
+        };
         var services = new ServiceCollection();
 
         componentBuilder.Build(services);

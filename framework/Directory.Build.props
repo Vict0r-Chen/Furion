@@ -9,7 +9,7 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageOutputPath>$(SolutionDir)nupkgs</PackageOutputPath>
-		<PackageVersion>5.0.0-preview.1.20230619.10</PackageVersion>
+		<PackageVersion>5.0.0-preview.1.20230619.13</PackageVersion>
 		<Authors>百小僧</Authors>
 		<Description>一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。</Description>
 		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul</PackageTags>

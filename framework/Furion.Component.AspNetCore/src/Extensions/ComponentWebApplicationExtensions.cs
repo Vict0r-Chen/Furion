@@ -76,7 +76,7 @@ public static class ComponentWebApplicationExtensions
     public static WebApplication UseComponent(this WebApplication webApplication, Type componentType, Action<WebComponentBuilderBase>? configure = null)
     {
         // 生成组件依赖字典
-        var dependencies = ComponentBase.GenerateComponentDependencies(componentType);
+        var dependencies = ComponentBase.CreateDependencies(componentType);
 
         return webApplication.UseComponent(dependencies, configure);
     }
@@ -91,7 +91,7 @@ public static class ComponentWebApplicationExtensions
     public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilderBase>? configure = null)
     {
         // 生成组件依赖拓扑排序图
-        var topologicalSortedMap = ComponentBase.GenerateTopologicalSortedMap(dependencies);
+        var topologicalSortedMap = ComponentBase.CreateTopological(dependencies);
 
         // 创建组件模块构建器并构建
         var componentBuilder = new WebComponentBuilderBase();
@@ -128,10 +128,8 @@ public static class ComponentWebApplicationExtensions
                 continue;
             }
 
-            // 创建组件实例（这里抽离出来，支持构造函数设置参数）
-            var component = ComponentBase.CreateComponentInstance(componentType, componentOptions) as WebComponent;
-            ArgumentNullException.ThrowIfNull(component, nameof(component));
-
+            // 创建组件实例
+            var component = (WebComponent)ComponentBase.CreateInstance(componentType, componentOptions);
             component.Options = componentOptions;
             components.Insert(0, component);
 
