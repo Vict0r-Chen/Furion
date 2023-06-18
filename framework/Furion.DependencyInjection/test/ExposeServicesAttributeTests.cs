@@ -33,10 +33,10 @@ public class ExposeServicesAttributeTests
     [Fact]
     public void NewInstance_With_Parameters()
     {
-        var exposeServicesAttribute = new ExposeServicesAttribute(typeof(IServiceProvider));
+        var exposeServicesAttribute = new ExposeServicesAttribute(typeof(ExposeService1));
         Assert.NotNull(exposeServicesAttribute.ServiceTypes);
         Assert.Single(exposeServicesAttribute.ServiceTypes);
-        Assert.Equal(typeof(IServiceProvider), exposeServicesAttribute.ServiceTypes[0]);
+        Assert.Equal(typeof(ExposeService1), exposeServicesAttribute.ServiceTypes[0]);
     }
 
     [Fact]
@@ -47,5 +47,37 @@ public class ExposeServicesAttributeTests
         Assert.Equal(AttributeTargets.Class, attributeUsageAttribute.ValidOn);
         Assert.False(attributeUsageAttribute.AllowMultiple);
         Assert.True(attributeUsageAttribute.Inherited);
+    }
+
+    [Fact]
+    public void GenericType()
+    {
+        var exposeServicesAttribute1 = new ExposeServicesAttribute<ExposeService1>();
+        var exposeServicesAttribute2 = new ExposeServicesAttribute<ExposeService1, ExposeService2>();
+        var exposeServicesAttribute3 = new ExposeServicesAttribute<ExposeService1, ExposeService2, ExposeService3>();
+        var exposeServicesAttribute4 = new ExposeServicesAttribute<ExposeService1, ExposeService2, ExposeService3, ExposeService4>();
+        var exposeServicesAttribute5 = new ExposeServicesAttribute<ExposeService1, ExposeService2, ExposeService3, ExposeService4, ExposeService5>();
+        var exposeServicesAttribute6 = new ExposeServicesAttribute<ExposeService1, ExposeService2, ExposeService3, ExposeService4, ExposeService5, ExposeService6>();
+        var exposeServicesAttribute7 = new ExposeServicesAttribute<ExposeService1, ExposeService2, ExposeService3, ExposeService4, ExposeService5, ExposeService6, ExposeService7>();
+        var exposeServicesAttribute8 = new ExposeServicesAttribute<ExposeService1, ExposeService2, ExposeService3, ExposeService4, ExposeService5, ExposeService6, ExposeService7, ExposeService8>();
+
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute1.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute2.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute3.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute4.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute5.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute6.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute7.GetType()));
+        Assert.True(typeof(ExposeServicesAttribute).IsAssignableFrom(exposeServicesAttribute8.GetType()));
+
+        var serviceTypes = new[] { typeof(ExposeService1), typeof(ExposeService2), typeof(ExposeService3), typeof(ExposeService4), typeof(ExposeService5), typeof(ExposeService6), typeof(ExposeService7), typeof(ExposeService8) };
+        Assert.True(exposeServicesAttribute1.ServiceTypes.SequenceEqual(serviceTypes.Take(1)));
+        Assert.True(exposeServicesAttribute2.ServiceTypes.SequenceEqual(serviceTypes.Take(2)));
+        Assert.True(exposeServicesAttribute3.ServiceTypes.SequenceEqual(serviceTypes.Take(3)));
+        Assert.True(exposeServicesAttribute4.ServiceTypes.SequenceEqual(serviceTypes.Take(4)));
+        Assert.True(exposeServicesAttribute5.ServiceTypes.SequenceEqual(serviceTypes.Take(5)));
+        Assert.True(exposeServicesAttribute6.ServiceTypes.SequenceEqual(serviceTypes.Take(6)));
+        Assert.True(exposeServicesAttribute7.ServiceTypes.SequenceEqual(serviceTypes.Take(7)));
+        Assert.True(exposeServicesAttribute8.ServiceTypes.SequenceEqual(serviceTypes.Take(8)));
     }
 }
