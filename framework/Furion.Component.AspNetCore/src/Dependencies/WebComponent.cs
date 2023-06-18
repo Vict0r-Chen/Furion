@@ -28,14 +28,14 @@ public abstract class WebComponent : ComponentBase
     /// <summary>
     /// 前置配置中间件
     /// </summary>
-    /// <param name="context"><see cref="ApplicationContext"/></param>
-    public virtual void PreConfigure(ApplicationContext context)
+    /// <param name="context"><see cref="ApplicationComponentContext"/></param>
+    public virtual void PreConfigure(ApplicationComponentContext context)
     { }
 
     /// <summary>
     /// 配置中间件
     /// </summary>
-    /// <param name="context"><see cref="ApplicationContext"/></param>
-    public virtual void Configure(ApplicationContext context)
+    /// <param name="context"><see cref="ApplicationComponentContext"/></param>
+    public virtual void Configure(ApplicationComponentContext context)
     { }
 }

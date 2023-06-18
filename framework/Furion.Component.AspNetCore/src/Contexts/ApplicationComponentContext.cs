@@ -15,31 +15,24 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 服务组件上下文
+/// 应用组件上下文
 /// </summary>
-public sealed class ServiceContext : ComponentContext
+public sealed class ApplicationComponentContext : ComponentContext
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
-    internal ServiceContext(IServiceCollection services, IConfiguration configuration)
-        : base(configuration)
+    /// <param name="application"><see cref="WebApplication"/></param>
+    internal ApplicationComponentContext(WebApplication application)
+        : base(application.GetComponentOptions(), application.Configuration)
     {
-        Services = services;
-        Environment = services.GetHostEnvironment();
+        Application = application;
+        Environment = application.Environment;
     }
 
-    /// <inheritdoc cref="IServiceCollection"/>
-    public IServiceCollection Services { get; }
+    /// <inheritdoc cref="WebApplication"/>
+    public WebApplication Application { get; }
 
-    ///// <inheritdoc cref="ILoggingBuilder"/>
-    //public ILoggingBuilder? Logging { get; init; }
-
-    /// <inheritdoc />
-    internal override ComponentOptions GetGetComponentOptions()
-    {
-        return Services.GetComponentOptions();
-    }
+    /// <inheritdoc cref="IWebHostEnvironment"/>
+    public new IWebHostEnvironment Environment { get; }
 }

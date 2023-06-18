@@ -105,7 +105,7 @@ public static class ComponentWebApplicationExtensions
         var components = new List<WebComponent>();
 
         // 创建组件上下文
-        var componentContext = new ApplicationContext(webApplication);
+        var componentContext = new ApplicationComponentContext(webApplication);
 
         // 从尾部依次初始化组件实例
         for (var i = topologicalSortedMap.Count - 1; i >= 0; i--)

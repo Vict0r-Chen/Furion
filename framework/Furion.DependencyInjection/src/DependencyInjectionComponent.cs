@@ -21,7 +21,7 @@ namespace Furion.Component;
 public sealed class DependencyInjectionComponent : ComponentBase
 {
     /// <inheritdoc />
-    public override void ConfigureServices(ServiceContext context)
+    public override void ConfigureServices(ServiceComponentContext context)
     {
         // 获取服务配置
         var configure = context.GetOptionsAction<DependencyInjectionBuilder>();

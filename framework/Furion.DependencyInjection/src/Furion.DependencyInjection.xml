@@ -391,7 +391,7 @@
             依赖注入组件
             </summary>
         </member>
-        <member name="M:Furion.Component.DependencyInjectionComponent.ConfigureServices(Furion.Component.ServiceContext)">
+        <member name="M:Furion.Component.DependencyInjectionComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">

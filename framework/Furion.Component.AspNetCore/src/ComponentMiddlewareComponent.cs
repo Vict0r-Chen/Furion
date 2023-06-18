@@ -21,7 +21,7 @@ namespace Furion.Component;
 public sealed class ComponentMiddlewareComponent : WebComponent
 {
     /// <inheritdoc />
-    public override void Configure(ApplicationContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
         // 获取服务配置
         var configure = context.GetOptionsAction<WebComponentBuilder>();

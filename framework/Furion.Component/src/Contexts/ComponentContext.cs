@@ -15,17 +15,19 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件上下文
+/// 组件上下文基类
 /// </summary>
 public abstract class ComponentContext
 {
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="options"><see cref="ComponentOptions"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
-    public ComponentContext(IConfiguration configuration)
+    internal ComponentContext(ComponentOptions options, IConfiguration configuration)
     {
         Configuration = configuration;
+        Options = options;
     }
 
     /// <inheritdoc cref="IConfiguration"/>
@@ -34,28 +36,26 @@ public abstract class ComponentContext
     /// <inheritdoc cref="IHostEnvironment"/>
     public IHostEnvironment? Environment { get; internal set; }
 
-    /// <summary>
-    /// 获取组件模块配置选项
-    /// </summary>
-    /// <returns></returns>
-    internal abstract ComponentOptions GetGetComponentOptions();
+    /// <inheritdoc cref="ComponentOptions"/>
+    internal ComponentOptions Options { get; }
 
     /// <summary>
-    /// 获取组件参数
+    /// 获取组件配置
     /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <typeparam name="TOptions">组件配置类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
     public TOptions? GetOptions<TOptions>()
         where TOptions : class, new()
     {
-        // 生成级联委托
+        // 获取组件配置委托
         var cascadeAction = GetOptionsAction<TOptions>();
+
         if (cascadeAction is null)
         {
             return null;
         }
 
-        // 调用级联委托返回最新的值
+        // 初始化组件配置实例并调用配置委托
         var options = Activator.CreateInstance<TOptions>();
         cascadeAction(options);
 
@@ -63,9 +63,10 @@ public abstract class ComponentContext
     }
 
     /// <summary>
-    /// 获取组件参数
+    /// 获取组件配置
     /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <remarks>若组件配置不存在返回默认实例</remarks>
+    /// <typeparam name="TOptions">组件配置类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
     public TOptions GetOptionsOrNew<TOptions>()
         where TOptions : class, new()
@@ -74,13 +75,13 @@ public abstract class ComponentContext
     }
 
     /// <summary>
-    /// 获取组件参数委托
+    /// 获取组件配置委托
     /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <typeparam name="TOptions">组件配置类型</typeparam>
     /// <returns><see cref="Action{T}"/></returns>
     public Action<TOptions>? GetOptionsAction<TOptions>()
         where TOptions : class, new()
     {
-        return GetGetComponentOptions().GetOptionsAction<TOptions>();
+        return Options.GetOptionsAction<TOptions>();
     }
 }

@@ -376,18 +376,19 @@
             组件服务组件
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentServiceComponent.ConfigureServices(Furion.Component.ServiceContext)">
+        <member name="M:Furion.Component.ComponentServiceComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Component.ComponentContext">
             <summary>
-            组件上下文
+            组件上下文基类
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentContext.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Component.ComponentContext.#ctor(Furion.Component.ComponentOptions,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             构造函数
             </summary>
+            <param name="options"><see cref="T:Furion.Component.ComponentOptions"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
         </member>
         <member name="P:Furion.Component.ComponentContext.Configuration">
@@ -396,50 +397,45 @@
         <member name="P:Furion.Component.ComponentContext.Environment">
             <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
         </member>
-        <member name="M:Furion.Component.ComponentContext.GetGetComponentOptions">
-            <summary>
-            获取组件模块配置选项
-            </summary>
-            <returns></returns>
+        <member name="P:Furion.Component.ComponentContext.Options">
+            <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
         </member>
         <member name="M:Furion.Component.ComponentContext.GetOptions``1">
             <summary>
-            获取组件参数
+            获取组件配置
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
+            <typeparam name="TOptions">组件配置类型</typeparam>
             <returns><typeparamref name="TOptions"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentContext.GetOptionsOrNew``1">
             <summary>
-            获取组件参数
+            获取组件配置
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
+            <remarks>若组件配置不存在返回默认实例</remarks>
+            <typeparam name="TOptions">组件配置类型</typeparam>
             <returns><typeparamref name="TOptions"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentContext.GetOptionsAction``1">
             <summary>
-            获取组件参数委托
+            获取组件配置委托
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
+            <typeparam name="TOptions">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
-        <member name="T:Furion.Component.ServiceContext">
+        <member name="T:Furion.Component.ServiceComponentContext">
             <summary>
             服务组件上下文
             </summary>
         </member>
-        <member name="M:Furion.Component.ServiceContext.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Component.ServiceComponentContext.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             构造函数
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
         </member>
-        <member name="P:Furion.Component.ServiceContext.Services">
+        <member name="P:Furion.Component.ServiceComponentContext.Services">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
-        </member>
-        <member name="M:Furion.Component.ServiceContext.GetGetComponentOptions">
-            <inheritdoc />
         </member>
         <member name="T:Furion.Component.ComponentBase">
             <summary>
@@ -461,17 +457,17 @@
             <typeparam name="TOptions">组件参数类型</typeparam>
             <param name="configure">配置委托</param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.PreConfigureServices(Furion.Component.ServiceContext)">
+        <member name="M:Furion.Component.ComponentBase.PreConfigureServices(Furion.Component.ServiceComponentContext)">
             <summary>
             前置配置服务
             </summary>
-            <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
+            <param name="context"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.ConfigureServices(Furion.Component.ServiceContext)">
+        <member name="M:Furion.Component.ComponentBase.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <summary>
             配置服务
             </summary>
-            <param name="context"><see cref="T:Furion.Component.ServiceContext"/></param>
+            <param name="context"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
         </member>
         <member name="M:Furion.Component.ComponentBase.GenerateTopologicalSortedMap``1">
             <summary>

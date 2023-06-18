@@ -18,14 +18,14 @@ namespace Furion.Tests;
     , ComponentMiddlewareComponent>]
 public class EntryComponent : WebComponent
 {
-    public override void ConfigureServices(ServiceContext context)
+    public override void ConfigureServices(ServiceComponentContext context)
     {
         context.Services.AddControllers();
         context.Services.AddEndpointsApiExplorer();
         context.Services.AddSwaggerGen();
     }
 
-    public override void Configure(ApplicationContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
         var app = context.Application;
 

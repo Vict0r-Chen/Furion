@@ -46,15 +46,15 @@ public abstract class ComponentBase
     /// <summary>
     /// 前置配置服务
     /// </summary>
-    /// <param name="context"><see cref="ServiceContext"/></param>
-    public virtual void PreConfigureServices(ServiceContext context)
+    /// <param name="context"><see cref="ServiceComponentContext"/></param>
+    public virtual void PreConfigureServices(ServiceComponentContext context)
     { }
 
     /// <summary>
     /// 配置服务
     /// </summary>
-    /// <param name="context"><see cref="ServiceContext"/></param>
-    public virtual void ConfigureServices(ServiceContext context)
+    /// <param name="context"><see cref="ServiceComponentContext"/></param>
+    public virtual void ConfigureServices(ServiceComponentContext context)
     { }
 
     /// <summary>

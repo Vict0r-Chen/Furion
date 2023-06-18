@@ -9,7 +9,7 @@
             依赖注入命名组件
             </summary>
         </member>
-        <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceContext)">
+        <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Furion.DependencyInjection.NamedType">

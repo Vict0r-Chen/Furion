@@ -114,7 +114,7 @@ public static class ComponentServiceCollectionExtensions
         var components = new List<ComponentBase>();
 
         // 创建组件上下文
-        var componentContext = new ServiceContext(services, configuration);
+        var componentContext = new ServiceComponentContext(services, configuration);
 
         // 从尾部依次初始化组件实例
         for (var i = topologicalSortedMap.Count - 1; i >= 0; i--)

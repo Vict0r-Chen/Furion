@@ -23,7 +23,7 @@ namespace Furion.Component;
 public sealed class DependencyInjectionNamedComponent : ComponentBase
 {
     /// <inheritdoc />
-    public override void ConfigureServices(ServiceContext context)
+    public override void ConfigureServices(ServiceComponentContext context)
     {
         context.Services.AddNamed();
     }
