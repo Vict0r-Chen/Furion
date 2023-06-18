@@ -439,11 +439,6 @@
             组件抽象基类
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentBase.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
         <member name="P:Furion.Component.ComponentBase.Options">
             <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
         </member>
@@ -681,7 +676,7 @@
         </member>
         <member name="F:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.IWEBHOSTENVIRONMENT_TYPE_FULLNAME">
             <summary>
-            IWebHostEnvironment 类型全名
+            IWebHostEnvironment 类型限定名
             </summary>
         </member>
     </members>

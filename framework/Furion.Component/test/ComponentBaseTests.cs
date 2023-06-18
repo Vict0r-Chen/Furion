@@ -1,0 +1,217 @@
+﻿// 麻省理工学院许可证
+//
+// 版权所有 (c) 2020-2023 百小僧，百签科技（广东）有限公司
+//
+// 特此免费授予获得本软件及其相关文档文件（以下简称“软件”）副本的任何人以处理本软件的权利，
+// 包括但不限于使用、复制、修改、合并、发布、分发、再许可、销售软件的副本，
+// 以及允许拥有软件副本的个人进行上述行为，但须遵守以下条件：
+//
+// 在所有副本或重要部分的软件中必须包括上述版权声明和本许可声明。
+//
+// 软件按“原样”提供，不提供任何形式的明示或暗示的保证，包括但不限于对适销性、适用性和非侵权的保证。
+// 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
+// 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
+
+namespace Furion.Component.Tests;
+
+public class ComponentBaseTests
+{
+    [Fact]
+    public void NewInstance_Default()
+    {
+        ComponentBase component = new CBaseComponent();
+
+        Assert.NotNull(component);
+        Assert.Null(component.Options);
+
+        var services = new ServiceCollection();
+        var configuration = new ConfigurationManager();
+        component.PreConfigureServices(new ServiceComponentContext(services, configuration));
+        component.ConfigureServices(new ServiceComponentContext(services, configuration));
+        Assert.Equal("Furion.Component.WebComponent", ComponentBase.WEBCOMPONENT_TYPE_FULLNAME);
+    }
+
+    [Fact]
+    public void Configure_Null_Throw()
+    {
+        ComponentBase component = new CBaseComponent();
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            component.Configure<ComponentActionOptions>(null!);
+        });
+    }
+
+    [Fact]
+    public void Configure_Options_Null_Throw()
+    {
+        ComponentBase component = new CBaseComponent();
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            component.Configure<ComponentActionOptions>(options =>
+            {
+            });
+        });
+    }
+
+    [Fact]
+    public void Configure_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        ComponentBase component = new CBaseComponent();
+        component.Options = services.GetComponentOptions();
+
+        Assert.NotNull(component.Options);
+        Assert.Empty(component.Options.OptionsActions);
+
+        component.Configure<ComponentActionOptions>(options =>
+        {
+        });
+
+        Assert.Single(component.Options.OptionsActions);
+    }
+
+    [Fact]
+    public void Check_Null_Throw()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.Check(null!);
+        });
+    }
+
+    [Theory]
+    [InlineData(typeof(SomeClass), "`SomeClass` component type is not assignable from `ComponentBase`.")]
+    [InlineData(typeof(ComponentBase), "Component type cannot be a `ComponentBase` or `WebComponent`.")]
+    [InlineData(typeof(InheritComponent), "`InheritComponent` component type cannot inherit from other component types.")]
+    [InlineData(typeof(AbstractComponent), "`AbstractComponent` component type must be able to be instantiated.")]
+    [InlineData(typeof(CanNotNewComponent), "`CanNotNewComponent` component type must have at least one public constructor.")]
+    public void Check_Throw(Type componentType, string message)
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.Check(componentType);
+        });
+
+        Assert.Equal(message, exception.Message);
+    }
+
+    [Fact]
+    public void CheckDependencies_Null_Throw()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.CheckDependencies(null!);
+        });
+    }
+
+    [Fact]
+    public void CheckDependencies_Check_Throw()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(AComponent),new[]{typeof(BComponent),typeof(CComponent)} },
+            {typeof(CComponent),new[]{typeof(SomeClass),typeof(BComponent)} }
+        };
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.CheckDependencies(dependencies);
+        });
+
+        Assert.Equal("`SomeClass` component type is not assignable from `ComponentBase`.", exception.Message);
+    }
+
+    [Fact]
+    public void CheckDependencies_CircularDependency_Throw()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(AComponent),new[]{typeof(BComponent),typeof(CComponent)} },
+            {typeof(CComponent),new[]{typeof(AComponent),typeof(BComponent)} }
+        };
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.CheckDependencies(dependencies);
+        });
+
+        Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
+    }
+
+    [Fact]
+    public void CreateDependencies()
+    {
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+
+        Assert.Equal(4, dependencies.Count);
+
+        Assert.Equal(typeof(AComponent), dependencies.Keys.ElementAt(0));
+        Assert.Equal(typeof(BComponent), dependencies.Values.ElementAt(0)[0]);
+        Assert.Equal(typeof(CComponent), dependencies.Values.ElementAt(0)[1]);
+
+        Assert.Equal(typeof(BComponent), dependencies.Keys.ElementAt(1));
+        Assert.Equal(typeof(CComponent), dependencies.Values.ElementAt(1)[0]);
+        Assert.Equal(typeof(DComponent), dependencies.Values.ElementAt(1)[1]);
+
+        Assert.Equal(typeof(CComponent), dependencies.Keys.ElementAt(2));
+        Assert.Equal(typeof(DComponent), dependencies.Values.ElementAt(2)[0]);
+
+        Assert.Equal(typeof(DComponent), dependencies.Keys.ElementAt(3));
+        Assert.Empty(dependencies.Values.ElementAt(3));
+    }
+
+    [Fact]
+    public void CreateTopological()
+    {
+        // D C B A
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+        var list = ComponentBase.CreateTopological(dependencies);
+
+        Assert.Equal(4, list.Count);
+        Assert.Equal(typeof(DComponent), list.ElementAt(0));
+        Assert.Equal(typeof(CComponent), list.ElementAt(1));
+        Assert.Equal(typeof(BComponent), list.ElementAt(2));
+        Assert.Equal(typeof(AComponent), list.ElementAt(3));
+    }
+
+    [Fact]
+    public void CreateTopological_ForType()
+    {
+        // D C B A
+        var list = ComponentBase.CreateTopological(typeof(AComponent));
+
+        Assert.Equal(4, list.Count);
+        Assert.Equal(typeof(DComponent), list.ElementAt(0));
+        Assert.Equal(typeof(CComponent), list.ElementAt(1));
+        Assert.Equal(typeof(BComponent), list.ElementAt(2));
+        Assert.Equal(typeof(AComponent), list.ElementAt(3));
+    }
+
+    [Theory]
+    [InlineData(typeof(InvalidArgumentComponnet), "`InvalidOptions` parameter type is an invalid component options.")]
+    [InlineData(typeof(InvalidArgument2Componnet), "`Action`1` parameter type is an invalid component options.")]
+    public void CreateInstance_InvalidArgument_Throw(Type componentType, string message)
+    {
+        var services = new ServiceCollection();
+        var componentOptions = services.GetComponentOptions();
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.CreateInstance(componentType, componentOptions);
+        });
+
+        Assert.Equal(message, exception.Message);
+    }
+
+    [Theory]
+    [InlineData(typeof(OkArgumentComponent))]
+    [InlineData(typeof(OkArgument2Component))]
+    public void CreateInstance_ReturnOK(Type componentType)
+    {
+        var services = new ServiceCollection();
+        var componentOptions = services.GetComponentOptions();
+
+        var component = ComponentBase.CreateInstance(componentType, componentOptions);
+        Assert.NotNull(component);
+    }
+}

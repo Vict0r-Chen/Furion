@@ -192,7 +192,7 @@ public static class ComponentServiceCollectionExtensions
     }
 
     /// <summary>
-    /// IWebHostEnvironment 类型全名
+    /// IWebHostEnvironment 类型限定名
     /// </summary>
     private const string IWEBHOSTENVIRONMENT_TYPE_FULLNAME = "Microsoft.AspNetCore.Hosting.IWebHostEnvironment";
 }

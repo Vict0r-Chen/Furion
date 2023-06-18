@@ -19,13 +19,6 @@ namespace Furion.Component;
 /// </summary>
 public abstract class ComponentBase
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    protected ComponentBase()
-    {
-    }
-
     /// <inheritdoc cref="ComponentOptions"/>
     internal ComponentOptions? Options { get; set; }
 
@@ -171,13 +164,13 @@ public abstract class ComponentBase
         var componentBaseType = typeof(ComponentBase);
         if (!componentBaseType.IsAssignableFrom(componentType))
         {
-            throw new InvalidOperationException($"`{componentType.Name}` component type is not assignable from '{componentBaseType.Name}'.");
+            throw new InvalidOperationException($"`{componentType.Name}` component type is not assignable from `{componentBaseType.Name}`.");
         }
 
         // 类型不能是 ComponentBase 或 WebComponent
         if (componentType == componentBaseType || componentType.FullName == WEBCOMPONENT_TYPE_FULLNAME)
         {
-            throw new InvalidOperationException($"Component type cannot be a ComponentBase or WebComponent.");
+            throw new InvalidOperationException($"Component type cannot be a `{componentBaseType.Name}` or `WebComponent`.");
         }
 
         // 类型基类只能是 ComponentBase 或 WebComponent
@@ -264,5 +257,5 @@ public abstract class ComponentBase
     /// <summary>
     /// WebComponent 类型限定名
     /// </summary>
-    private const string WEBCOMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
+    internal const string WEBCOMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
 }

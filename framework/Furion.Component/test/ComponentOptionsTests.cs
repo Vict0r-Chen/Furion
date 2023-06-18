@@ -54,6 +54,33 @@ public class ComponentOptionsTests
     }
 
     [Fact]
+    public void GetOptionsAction_MultipleActions()
+    {
+        var callRecord = new List<string>();
+        var options = new ComponentOptions();
+
+        void Action(ComponentActionOptions options)
+        {
+            callRecord.Add(nameof(Action));
+        }
+
+        void Action2(ComponentActionOptions options)
+        {
+            callRecord.Add(nameof(Action2));
+        }
+        options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action, Action2 });
+
+        var action = options.GetOptionsAction<ComponentActionOptions>();
+        Assert.NotNull(action);
+
+        action(new ComponentActionOptions());
+
+        Assert.Equal(2, callRecord.Count);
+        Assert.Equal(nameof(Action), callRecord[0]);
+        Assert.Equal(nameof(Action2), callRecord[1]);
+    }
+
+    [Fact]
     public void GetOptionsActionOrNew_NotExists_ReturnAction()
     {
         var options = new ComponentOptions();
