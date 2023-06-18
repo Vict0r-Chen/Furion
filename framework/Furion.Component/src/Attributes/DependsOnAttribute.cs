@@ -76,7 +76,8 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2> : DependsOnAttr
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2))
     {
     }
 }
@@ -96,7 +97,9 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3> : 
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3))
     {
     }
 }
@@ -118,7 +121,10 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4))
     {
     }
 }
@@ -142,7 +148,11 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5))
     {
     }
 }
@@ -168,7 +178,12 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6))
     {
     }
 }
@@ -196,7 +211,13 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7))
     {
     }
 }
@@ -226,7 +247,14 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8))
     {
     }
 }
@@ -258,7 +286,15 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9))
     {
     }
 }
@@ -292,7 +328,16 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10))
     {
     }
 }
@@ -328,7 +373,17 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10), typeof(TComponent11))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10)
+            , typeof(TComponent11))
     {
     }
 }
@@ -366,7 +421,18 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10), typeof(TComponent11), typeof(TComponent12))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10)
+            , typeof(TComponent11)
+            , typeof(TComponent12))
     {
     }
 }
@@ -406,7 +472,19 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10), typeof(TComponent11), typeof(TComponent12), typeof(TComponent13))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10)
+            , typeof(TComponent11)
+            , typeof(TComponent12)
+            , typeof(TComponent13))
     {
     }
 }
@@ -448,7 +526,20 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10), typeof(TComponent11), typeof(TComponent12), typeof(TComponent13), typeof(TComponent14))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10)
+            , typeof(TComponent11)
+            , typeof(TComponent12)
+            , typeof(TComponent13)
+            , typeof(TComponent14))
     {
     }
 }
@@ -492,7 +583,21 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10), typeof(TComponent11), typeof(TComponent12), typeof(TComponent13), typeof(TComponent14), typeof(TComponent15))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10)
+            , typeof(TComponent11)
+            , typeof(TComponent12)
+            , typeof(TComponent13)
+            , typeof(TComponent14)
+            , typeof(TComponent15))
     {
     }
 }
@@ -538,7 +643,22 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
     /// 构造函数
     /// </summary>
     public DependsOnAttribute()
-        : base(typeof(TComponent1), typeof(TComponent2), typeof(TComponent3), typeof(TComponent4), typeof(TComponent5), typeof(TComponent6), typeof(TComponent7), typeof(TComponent8), typeof(TComponent9), typeof(TComponent10), typeof(TComponent11), typeof(TComponent12), typeof(TComponent13), typeof(TComponent14), typeof(TComponent15), typeof(TComponent16))
+        : base(typeof(TComponent1)
+            , typeof(TComponent2)
+            , typeof(TComponent3)
+            , typeof(TComponent4)
+            , typeof(TComponent5)
+            , typeof(TComponent6)
+            , typeof(TComponent7)
+            , typeof(TComponent8)
+            , typeof(TComponent9)
+            , typeof(TComponent10)
+            , typeof(TComponent11)
+            , typeof(TComponent12)
+            , typeof(TComponent13)
+            , typeof(TComponent14)
+            , typeof(TComponent15)
+            , typeof(TComponent16))
     {
     }
 }

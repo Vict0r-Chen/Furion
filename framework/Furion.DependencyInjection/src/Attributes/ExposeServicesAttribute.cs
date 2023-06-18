@@ -78,7 +78,8 @@ public sealed class ExposeServicesAttribute<TService1, TService2> : ExposeServic
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2))
+        : base(typeof(TService1)
+            , typeof(TService2))
     {
     }
 }
@@ -98,7 +99,9 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3> : E
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2), typeof(TService3))
+        : base(typeof(TService1)
+            , typeof(TService2)
+            , typeof(TService3))
     {
     }
 }
@@ -120,7 +123,10 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2), typeof(TService3), typeof(TService4))
+        : base(typeof(TService1)
+            , typeof(TService2)
+            , typeof(TService3)
+            , typeof(TService4))
     {
     }
 }
@@ -144,7 +150,11 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2), typeof(TService3), typeof(TService4), typeof(TService5))
+        : base(typeof(TService1)
+            , typeof(TService2)
+            , typeof(TService3)
+            , typeof(TService4)
+            , typeof(TService5))
     {
     }
 }
@@ -170,7 +180,12 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2), typeof(TService3), typeof(TService4), typeof(TService5), typeof(TService6))
+        : base(typeof(TService1)
+            , typeof(TService2)
+            , typeof(TService3)
+            , typeof(TService4)
+            , typeof(TService5)
+            , typeof(TService6))
     {
     }
 }
@@ -198,7 +213,13 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2), typeof(TService3), typeof(TService4), typeof(TService5), typeof(TService6), typeof(TService7))
+        : base(typeof(TService1)
+            , typeof(TService2)
+            , typeof(TService3)
+            , typeof(TService4)
+            , typeof(TService5)
+            , typeof(TService6)
+            , typeof(TService7))
     {
     }
 }
@@ -228,7 +249,14 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     /// 构造函数
     /// </summary>
     public ExposeServicesAttribute()
-        : base(typeof(TService1), typeof(TService2), typeof(TService3), typeof(TService4), typeof(TService5), typeof(TService6), typeof(TService7), typeof(TService8))
+        : base(typeof(TService1)
+            , typeof(TService2)
+            , typeof(TService3)
+            , typeof(TService4)
+            , typeof(TService5)
+            , typeof(TService6)
+            , typeof(TService7)
+            , typeof(TService8))
     {
     }
 }
