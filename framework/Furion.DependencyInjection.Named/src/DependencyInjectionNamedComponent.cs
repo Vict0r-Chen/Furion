@@ -15,11 +15,9 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 依赖注入命名组件
+/// 依赖注入命名模块服务组件
 /// </summary>
-[DependsOn(typeof(ComponentServiceComponent)
-    , typeof(DependencyInjectionComponent)
-    )]
+[DependsOn<DependencyInjectionComponent>]
 public sealed class DependencyInjectionNamedComponent : ComponentBase
 {
     /// <inheritdoc />

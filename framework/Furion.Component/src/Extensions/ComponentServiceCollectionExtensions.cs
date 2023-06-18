@@ -15,34 +15,34 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 组件化模块拓展
+/// 组件模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
 public static class ComponentServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加组件服务
+    /// 添加组件模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponentService(this IServiceCollection services, Action<ComponentBuilder>? configure = null)
+    public static IServiceCollection AddComponentCore(this IServiceCollection services, Action<ComponentBuilder>? configure = null)
     {
-        // 创建组件模块构建器
+        // 初始化组件模块构建器
         var componentBuilder = new ComponentBuilder();
 
-        // 调用自定义配置
+        // 调用自定义配置委托
         configure?.Invoke(componentBuilder);
 
-        return services.AddComponentService(componentBuilder);
+        return services.AddComponentCore(componentBuilder);
     }
 
     /// <summary>
-    /// 添加组件服务
+    /// 添加组件模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponentService(this IServiceCollection services, ComponentBuilder componentBuilder)
+    public static IServiceCollection AddComponentCore(this IServiceCollection services, ComponentBuilder componentBuilder)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
@@ -50,19 +50,19 @@ public static class ComponentServiceCollectionExtensions
         // 添加核心模块选项服务
         services.AddCoreOptions();
 
-        // 构建组件模块
+        // 构建模块服务
         componentBuilder.Build(services);
 
         return services;
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
         where TComponent : ComponentBase
@@ -71,83 +71,47 @@ public static class ComponentServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
-        // 生成组件依赖字典
+        // 创建组件依赖关系集合
         var dependencies = ComponentBase.CreateDependencies(componentType);
 
         return services.AddComponent(dependencies, configuration, configure);
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(nameof(configuration), nameof(configuration));
 
-        // 生成组件依赖拓扑排序图
-        var topologicalSortedMap = ComponentBase.CreateTopological(dependencies);
+        // 创建组件拓扑排序集合
+        var topologicalSets = ComponentBase.CreateTopological(dependencies);
 
-        // 创建组件模块构建器并构建
+        // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new ComponentBuilderBase();
         configure?.Invoke(componentBuilder);
         componentBuilder.Build(services);
 
-        // 获取组件模块配置选项
-        var componentOptions = services.GetComponentOptions();
-
-        // 组件对象集合
-        var components = new List<ComponentBase>();
-
         // 创建组件上下文
         var componentContext = new ServiceComponentContext(services, configuration);
 
-        // 从尾部依次初始化组件实例
-        for (var i = topologicalSortedMap.Count - 1; i >= 0; i--)
-        {
-            var componentType = topologicalSortedMap[i];
-
-            // 组件多次调用检测
-            var checkName = componentType.FullName!;
-            if (componentOptions.SuppressDuplicateCall && componentOptions.CallRecords.Any(t => t == checkName))
-            {
-                // 输出调试事件
-                Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
-
-                continue;
-            }
-
-            // 创建组件实例
-            var component = ComponentBase.CreateInstance(componentType, componentOptions);
-            component.Options = componentOptions;
-            components.Insert(0, component);
-
-            // 调用前置配置服务
-            component.PreConfigureServices(componentContext);
-
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
-
-            // 组件调用登记
-            if (componentOptions.SuppressDuplicateCall)
-            {
-                componentOptions.CallRecords.Add(checkName);
-            }
-        }
+        // 创建组件依赖关系对象集合
+        var components = CreateComponents(topologicalSets, componentContext);
 
         // 调用配置服务
         components.ForEach(component =>
@@ -164,6 +128,53 @@ public static class ComponentServiceCollectionExtensions
     }
 
     /// <summary>
+    /// 创建组件依赖关系对象集合
+    /// </summary>
+    /// <param name="topologicalSets">组件拓扑排序集合</param>
+    /// <param name="componentContext"><see cref="ServiceComponentContext"/></param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<ComponentBase> CreateComponents(List<Type> topologicalSets, ServiceComponentContext componentContext)
+    {
+        // 组件依赖关系对象集合
+        var components = new List<ComponentBase>();
+
+        // 获取组件模块配置选项
+        var componentOptions = componentContext.Options;
+
+        // 从尾部依次初始化组件实例
+        for (var i = topologicalSets.Count - 1; i >= 0; i--)
+        {
+            var componentType = topologicalSets[i];
+
+            // 组件重复调用检测
+            var checkName = componentType.FullName + " (Type 'ComponentBase')";
+            if (componentOptions.SuppressDuplicateCall)
+            {
+                if (componentOptions.CallRecords.Any(t => t == checkName))
+                {
+                    // 输出调试事件
+                    Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
+                    continue;
+                }
+
+                componentOptions.CallRecords.Add(checkName);
+            }
+
+            // 创建组件实例
+            var component = ComponentBase.CreateInstance(componentType, componentOptions);
+            components.Insert(0, component);
+
+            // 调用前置配置服务
+            component.PreConfigureServices(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
+        }
+
+        return components;
+    }
+
+    /// <summary>
     /// 获取环境对象
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
@@ -172,11 +183,11 @@ public static class ComponentServiceCollectionExtensions
     {
         // 查找 Web 主机环境是否配置
         var webHostEnvironment = services.FirstOrDefault(s => s.ServiceType.FullName == IWEBHOSTENVIRONMENT_TYPE_FULLNAME)
-                                                ?.ImplementationInstance as IHostEnvironment;
+                                                      ?.ImplementationInstance as IHostEnvironment;
 
         // 如果没配置则查找泛型主机环境是否配置
         var hostEnvironment = webHostEnvironment ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))
-                                               ?.ImplementationInstance as IHostEnvironment;
+                                                                         ?.ImplementationInstance as IHostEnvironment;
 
         return hostEnvironment;
     }
@@ -194,5 +205,5 @@ public static class ComponentServiceCollectionExtensions
     /// <summary>
     /// IWebHostEnvironment 类型限定名
     /// </summary>
-    private const string IWEBHOSTENVIRONMENT_TYPE_FULLNAME = "Microsoft.AspNetCore.Hosting.IWebHostEnvironment";
+    internal const string IWEBHOSTENVIRONMENT_TYPE_FULLNAME = "Microsoft.AspNetCore.Hosting.IWebHostEnvironment";
 }

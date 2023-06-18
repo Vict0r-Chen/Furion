@@ -15,15 +15,15 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 依赖注入组件
+/// 依赖注入模块服务组件
 /// </summary>
-[DependsOn(typeof(ComponentServiceComponent))]
+[DependsOn<ComponentCoreComponent>]
 public sealed class DependencyInjectionComponent : ComponentBase
 {
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        // 获取服务配置
+        // 获取组件配置委托
         var configure = context.GetOptionsAction<DependencyInjectionBuilder>();
         context.Services.AddDependencyInjection(configure);
     }

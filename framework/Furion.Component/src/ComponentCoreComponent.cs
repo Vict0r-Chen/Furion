@@ -15,16 +15,15 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件服务组件
+/// 组件模块服务组件
 /// </summary>
-[DependsOn(typeof(ComponentServiceComponent))]
-public sealed class ComponentMiddlewareComponent : WebComponent
+public sealed class ComponentCoreComponent : ComponentBase
 {
     /// <inheritdoc />
-    public override void Configure(ApplicationComponentContext context)
+    public override void ConfigureServices(ServiceComponentContext context)
     {
-        // 获取服务配置
-        var configure = context.GetOptionsAction<WebComponentBuilder>();
-        context.Application.UseComponentMiddleware(configure);
+        // 获取组件配置委托
+        var configure = context.GetOptionsAction<ComponentBuilder>();
+        context.Services.AddComponentCore(configure);
     }
 }

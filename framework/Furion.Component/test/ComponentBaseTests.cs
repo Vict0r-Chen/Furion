@@ -19,7 +19,7 @@ public class ComponentBaseTests
     [Fact]
     public void NewInstance_Default()
     {
-        ComponentBase component = new CBaseComponent();
+        var component = new CBaseComponent();
 
         Assert.NotNull(component);
         Assert.Null(component.Options);
@@ -34,7 +34,7 @@ public class ComponentBaseTests
     [Fact]
     public void Configure_Null_Throw()
     {
-        ComponentBase component = new CBaseComponent();
+        var component = new CBaseComponent();
         Assert.Throws<ArgumentNullException>(() =>
         {
             component.Configure<ComponentActionOptions>(null!);
@@ -44,7 +44,7 @@ public class ComponentBaseTests
     [Fact]
     public void Configure_Options_Null_Throw()
     {
-        ComponentBase component = new CBaseComponent();
+        var component = new CBaseComponent();
         Assert.Throws<ArgumentNullException>(() =>
         {
             component.Configure<ComponentActionOptions>(options =>
@@ -57,8 +57,10 @@ public class ComponentBaseTests
     public void Configure_ReturnOK()
     {
         var services = new ServiceCollection();
-        ComponentBase component = new CBaseComponent();
-        component.Options = services.GetComponentOptions();
+        var component = new CBaseComponent
+        {
+            Options = services.GetComponentOptions()
+        };
 
         Assert.NotNull(component.Options);
         Assert.Empty(component.Options.OptionsActions);
@@ -206,6 +208,7 @@ public class ComponentBaseTests
     [Theory]
     [InlineData(typeof(OkArgumentComponent))]
     [InlineData(typeof(OkArgument2Component))]
+    [InlineData(typeof(OkArgument3Component))]
     public void CreateInstance_ReturnOK(Type componentType)
     {
         var services = new ServiceCollection();
@@ -213,5 +216,6 @@ public class ComponentBaseTests
 
         var component = ComponentBase.CreateInstance(componentType, componentOptions);
         Assert.NotNull(component);
+        Assert.NotNull(component.Options);
     }
 }

@@ -6,7 +6,7 @@
     <members>
         <member name="T:Furion.Component.DependencyInjectionNamedComponent">
             <summary>
-            依赖注入命名组件
+            依赖注入命名模块服务组件
             </summary>
         </member>
         <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">

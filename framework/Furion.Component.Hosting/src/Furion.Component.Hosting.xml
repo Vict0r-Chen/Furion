@@ -17,7 +17,7 @@
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentService(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentCore(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加组件服务
             </summary>
@@ -25,7 +25,7 @@
             <param name="configure">自定义构建器配置</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentService(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentCore(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
             <summary>
             添加组件服务
             </summary>

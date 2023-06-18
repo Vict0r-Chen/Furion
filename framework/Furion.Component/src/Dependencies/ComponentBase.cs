@@ -208,13 +208,16 @@ public abstract class ComponentBase
         // 检查组件类型合法性
         Check(componentType);
 
-        // 查找公开构造函数参数最多的一个
-        var maxParametersConstructor = componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-                                                                 .OrderByDescending(c => c.GetParameters().Length)
-                                                                 .First();
+        // 获取所有公开的实例构造函数
+        var constructors = componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+        // 查找是否贴有 [ActivatorComponentConstructor] 特性的构造函数
+        // 若没找到则选择构造函数参数最多的一个
+        var buildingConstructor = constructors.FirstOrDefault(c => c.IsDefined(typeof(ActivatorComponentConstructorAttribute), false))
+                                                 ?? constructors.OrderByDescending(c => c.GetParameters().Length).First();
 
         // 获取构造函数参数定义
-        var parameters = maxParametersConstructor.GetParameters();
+        var parameters = buildingConstructor.GetParameters();
 
         // 实例化构造函数参数
         var args = new object?[parameters.Length];
@@ -248,8 +251,11 @@ public abstract class ComponentBase
         }
 
         // 调用组件构造函数进行实例化
-        var component = maxParametersConstructor.Invoke(args) as ComponentBase;
+        var component = buildingConstructor.Invoke(args) as ComponentBase;
         ArgumentNullException.ThrowIfNull(component, nameof(component));
+
+        // 组件模块配置选项
+        component.Options = componentOptions;
 
         return component;
     }

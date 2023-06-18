@@ -20,45 +20,45 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ComponentWebApplicationExtensions
 {
     /// <summary>
-    /// 添加组件中间件
+    /// 添加组件模块中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponentMiddleware(this WebApplication webApplication, Action<WebComponentBuilder>? configure = null)
+    public static WebApplication UseComponentCore(this WebApplication webApplication, Action<WebComponentBuilder>? configure = null)
     {
-        // 创建组件模块构建器
+        // 初始化组件模块构建器
         var componentBuilder = new WebComponentBuilder();
 
-        // 调用自定义配置
+        // 调用自定义配置委托
         configure?.Invoke(componentBuilder);
 
-        return webApplication.UseComponentMiddleware(componentBuilder);
+        return webApplication.UseComponentCore(componentBuilder);
     }
 
     /// <summary>
-    /// 添加组件中间件
+    /// 添加组件模块中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponentMiddleware(this WebApplication webApplication, WebComponentBuilder componentBuilder)
+    public static WebApplication UseComponentCore(this WebApplication webApplication, WebComponentBuilder componentBuilder)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
 
-        // 构建组件模块
+        // 构建模块服务
         componentBuilder.Build(webApplication);
 
         return webApplication;
     }
 
     /// <summary>
-    /// 添加组件中间件
+    /// 添加应用组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent<TComponent>(this WebApplication webApplication, Action<WebComponentBuilderBase>? configure = null)
         where TComponent : WebComponent
@@ -67,11 +67,11 @@ public static class ComponentWebApplicationExtensions
     }
 
     /// <summary>
-    /// 添加组件中间件
+    /// 添加应用组件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="componentType"><see cref="WebComponent"/></param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent(this WebApplication webApplication, Type componentType, Action<WebComponentBuilderBase>? configure = null)
     {
@@ -82,69 +82,27 @@ public static class ComponentWebApplicationExtensions
     }
 
     /// <summary>
-    /// 添加组件中间件
+    /// 添加应用组件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="dependencies">组件依赖字典</param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilderBase>? configure = null)
     {
-        // 生成组件依赖拓扑排序图
-        var topologicalSortedMap = ComponentBase.CreateTopological(dependencies);
+        // 创建组件拓扑排序集合
+        var topologicalSets = ComponentBase.CreateTopological(dependencies);
 
-        // 创建组件模块构建器并构建
+        // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new WebComponentBuilderBase();
         configure?.Invoke(componentBuilder);
         componentBuilder.Build(webApplication);
 
-        // 获取组件模块配置选项
-        var componentOptions = webApplication.GetComponentOptions();
-
-        // 组件对象集合
-        var components = new List<WebComponent>();
-
         // 创建组件上下文
         var componentContext = new ApplicationComponentContext(webApplication);
 
-        // 从尾部依次初始化组件实例
-        for (var i = topologicalSortedMap.Count - 1; i >= 0; i--)
-        {
-            var componentType = topologicalSortedMap[i];
-
-            // 如果不是 Web 组件则跳过
-            if (componentType.BaseType != typeof(WebComponent))
-            {
-                continue;
-            }
-
-            // 组件多次调用检测
-            var checkName = componentType.FullName + ".Web";
-            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRecords.Any(t => t == checkName))
-            {
-                // 输出调试事件
-                Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
-
-                continue;
-            }
-
-            // 创建组件实例
-            var component = (WebComponent)ComponentBase.CreateInstance(componentType, componentOptions);
-            component.Options = componentOptions;
-            components.Insert(0, component);
-
-            // 调用前置配置中间件
-            component.PreConfigure(componentContext);
-
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
-
-            // 组件调用登记
-            if (componentOptions.SuppressDuplicateCallForWeb)
-            {
-                componentOptions.CallRecords.Add(checkName);
-            }
-        }
+        // 创建组件依赖关系对象集合
+        var components = CreateComponents(topologicalSets, componentContext);
 
         // 调用配置中间件
         components.ForEach(component =>
@@ -158,6 +116,59 @@ public static class ComponentWebApplicationExtensions
         components.Clear();
 
         return webApplication;
+    }
+
+    /// <summary>
+    /// 创建组件依赖关系对象集合
+    /// </summary>
+    /// <param name="topologicalSets">组件拓扑排序集合</param>
+    /// <param name="componentContext"><see cref="ApplicationComponentContext"/></param>
+    /// <returns><see cref="List{T}"/></returns>
+    private static List<WebComponent> CreateComponents(List<Type> topologicalSets, ApplicationComponentContext componentContext)
+    {
+        // 组件依赖关系对象集合
+        var components = new List<WebComponent>();
+
+        // 获取组件模块配置选项
+        var componentOptions = componentContext.Options;
+
+        // 从尾部依次初始化组件实例
+        for (var i = topologicalSets.Count - 1; i >= 0; i--)
+        {
+            var componentType = topologicalSets[i];
+
+            // 若不是 WebComponent 则跳过
+            if (componentType.BaseType != typeof(WebComponent))
+            {
+                continue;
+            }
+
+            // 组件重复调用检测
+            var checkName = componentType.FullName + " (Type 'WebComponent')";
+            if (componentOptions.SuppressDuplicateCallForWeb)
+            {
+                if (componentOptions.CallRecords.Any(t => t == checkName))
+                {
+                    // 输出调试事件
+                    Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
+                    continue;
+                }
+
+                componentOptions.CallRecords.Add(checkName);
+            }
+
+            // 创建组件实例
+            var component = (WebComponent)ComponentBase.CreateInstance(componentType, componentOptions);
+            components.Insert(0, component);
+
+            // 调用前置配置中间件
+            component.PreConfigure(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
+        }
+
+        return components;
     }
 
     /// <summary>

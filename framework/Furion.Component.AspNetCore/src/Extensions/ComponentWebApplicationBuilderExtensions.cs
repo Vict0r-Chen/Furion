@@ -52,9 +52,9 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponentService(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
+    public static WebApplicationBuilder AddComponentCore(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
     {
-        webApplicationBuilder.Services.AddComponentService(configure);
+        webApplicationBuilder.Services.AddComponentCore(configure);
 
         return webApplicationBuilder;
     }
@@ -65,9 +65,9 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponentService(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
+    public static WebApplicationBuilder AddComponentCore(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
     {
-        webApplicationBuilder.Services.AddComponentService(componentBuilder);
+        webApplicationBuilder.Services.AddComponentCore(componentBuilder);
 
         return webApplicationBuilder;
     }

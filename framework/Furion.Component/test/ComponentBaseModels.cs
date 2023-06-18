@@ -14,6 +14,8 @@
 
 namespace Furion.Component.Tests;
 
+#pragma warning disable
+
 public class SomeClass
 {
 }
@@ -106,5 +108,18 @@ public class OkArgument2Component : ComponentBase
     {
         Assert.NotNull(action);
         Assert.NotNull(okOptions);
+    }
+}
+
+public class OkArgument3Component : ComponentBase
+{
+    [ActivatorComponentConstructor]
+    public OkArgument3Component(OkOptions okOptions)
+    {
+    }
+
+    public OkArgument3Component(Action<OkOptions> action, OkOptions okOptions)
+    {
+        throw new NotImplementedException();
     }
 }

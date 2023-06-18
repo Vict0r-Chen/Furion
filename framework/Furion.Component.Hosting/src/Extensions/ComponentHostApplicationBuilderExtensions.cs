@@ -37,9 +37,9 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
-    public static HostApplicationBuilder AddComponentService(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
+    public static HostApplicationBuilder AddComponentCore(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
     {
-        hostApplicationBuilder.Services.AddComponentService(configure);
+        hostApplicationBuilder.Services.AddComponentCore(configure);
 
         return hostApplicationBuilder;
     }
@@ -50,9 +50,9 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
-    public static HostApplicationBuilder AddComponentService(this HostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
+    public static HostApplicationBuilder AddComponentCore(this HostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
     {
-        hostApplicationBuilder.Services.AddComponentService(componentBuilder);
+        hostApplicationBuilder.Services.AddComponentCore(componentBuilder);
 
         return hostApplicationBuilder;
     }
