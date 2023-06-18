@@ -187,3 +187,49 @@ public class GenericType<T> : IGenericType<T>, IGenericType<T, string>
 
 public class GenericType<T, U> : IGenericType<T, U>, IGenericType<T>
 { }
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public class CheckAttribute : Attribute
+{
+    public CheckAttribute(Type type)
+    {
+        Type = type;
+    }
+
+    public Type Type { get; set; }
+}
+
+public class CheckAttribute<T> : CheckAttribute
+{
+    public CheckAttribute()
+        : base(typeof(T))
+    {
+    }
+}
+
+[Check(typeof(int))]
+public class OneAttributeClass
+{
+}
+
+[Check(typeof(string))]
+public class InheritAttributeClass : OneAttributeClass
+{
+}
+
+[Check(typeof(string))]
+[Check<int>]
+public class MultipleAttributeClass
+{
+}
+
+[Check(typeof(string))]
+[Check<int>]
+public class MultipleAndInheritAttributeClass : OneAttributeClass
+{
+}
+
+[Check<int>]
+public class InheritMultipleAttributeClass : MultipleAttributeClass
+{
+}

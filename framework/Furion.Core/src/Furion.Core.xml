@@ -234,6 +234,15 @@
             <param name="inherit">是否查找基类型特性</param>
             <returns><typeparamref name="TAttribute"/></returns>
         </member>
+        <member name="M:System.TypeExtensions.IsMultipleSameDefined(System.Type,System.Type,System.Boolean)">
+            <summary>
+            是否定义多个相同的特性
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <param name="attributeType"><see cref="T:System.Attribute"/></param>
+            <param name="inherit">是否查找基类型特性</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:System.TypeExtensions.GetDefinedCustomAttributeOrNew``1(System.Type,System.Boolean)">
             <summary>
             获取指定特性实例

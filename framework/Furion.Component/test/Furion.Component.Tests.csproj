@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Furion.Component.AspNetCore\src\Furion.Component.AspNetCore.csproj" />
-		<ProjectReference Include="..\..\Furion.Component.Hosting\src\Furion.Component.Hosting.csproj" />
+		<ProjectReference Include="..\..\Furion.Component\src\Furion.Component.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -39,6 +39,7 @@ public class DependencyInjectionBuilderTests
         Assert.False(dependencyInjectionBuilder.SuppressAssemblyScanning);
         Assert.False(dependencyInjectionBuilder.SuppressNonPublicType);
         Assert.True(dependencyInjectionBuilder.ValidateLifetime);
+        Assert.True(dependencyInjectionBuilder.ValidateExposeService);
     }
 
     [Fact]
@@ -205,6 +206,20 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
+    public void GetEffectiveServiceTypes_LimitTypes()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var types = dependencyInjectionBuilder.GetEffectiveServiceTypes(typeof(ExposeServiceClass), null, out var depType);
+
+        Assert.Equal(typeof(ITransientDependency), depType);
+        Assert.Equal(2, types.Count);
+
+        var limitTypes = dependencyInjectionBuilder.GetEffectiveServiceTypes(typeof(ExposeServiceClass), new[] { typeof(ISecondService) }, out var _);
+        Assert.Single(limitTypes);
+        Assert.Equal(typeof(ISecondService), limitTypes.Single());
+    }
+
+    [Fact]
     public void CreateServiceDescriptors_NonServiceInjectionAttribute()
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
@@ -302,6 +317,26 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
+    public void CreateServiceDescriptors_With_ExposeServicesAttribute()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(ExposeServiceClass));
+
+        Assert.Single(descriptors);
+        Assert.Equal(typeof(ISecondService), descriptors.First().Descriptor.ServiceType);
+    }
+
+    [Fact]
+    public void CreateServiceDescriptors_With_MultipleExposeServicesAttribute_Throw()
+    {
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        Assert.Throws<AmbiguousMatchException>(() =>
+        {
+            var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(ExposeServiceClass2)).ToList();
+        });
+    }
+
+    [Fact]
     public void ScanAssemblies_Default_ReturnEmpty()
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
@@ -314,7 +349,8 @@ public class DependencyInjectionBuilderTests
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder()
         {
-            ValidateLifetime = false
+            ValidateLifetime = false,
+            ValidateExposeService = false
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
 
@@ -327,7 +363,8 @@ public class DependencyInjectionBuilderTests
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder()
         {
-            ValidateLifetime = false
+            ValidateLifetime = false,
+            ValidateExposeService = false
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
         var descriptors = dependencyInjectionBuilder.ScanAssemblies().ToList();
@@ -346,6 +383,7 @@ public class DependencyInjectionBuilderTests
         var dependencyInjectionBuilder = new DependencyInjectionBuilder()
         {
             ValidateLifetime = false,
+            ValidateExposeService = false,
             SuppressNonPublicType = suppressNonPublicType
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
@@ -363,6 +401,7 @@ public class DependencyInjectionBuilderTests
         var dependencyInjectionBuilder = new DependencyInjectionBuilder()
         {
             ValidateLifetime = false,
+            ValidateExposeService = false,
             SuppressAssemblyScanning = suppressAssemblyScanning
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
@@ -400,7 +439,8 @@ public class DependencyInjectionBuilderTests
 
         var dependencyInjectionBuilder = new DependencyInjectionBuilder()
         {
-            ValidateLifetime = false
+            ValidateLifetime = false,
+            ValidateExposeService = false
         };
 
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);

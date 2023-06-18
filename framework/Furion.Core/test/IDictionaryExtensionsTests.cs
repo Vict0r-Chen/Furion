@@ -28,7 +28,7 @@ public class IDictionaryExtensionsTests
     }
 
     [Fact]
-    public void AddOrUpdate_IfNotExists_WillAdd()
+    public void AddOrUpdate_NotExists_WillAdd()
     {
         var key = "first";
         var value = 1;
@@ -41,7 +41,7 @@ public class IDictionaryExtensionsTests
     }
 
     [Fact]
-    public void AddOrUpdate_IfExists_WillUpdate()
+    public void AddOrUpdate_Exists_WillUpdate()
     {
         var key = "first";
         var value = 2;

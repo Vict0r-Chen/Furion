@@ -14,8 +14,8 @@
 
 namespace Furion.Tests;
 
-[DependsOn(typeof(DependencyInjectionNamedComponent)
-    , typeof(ComponentMiddlewareComponent))]
+[DependsOn<DependencyInjectionNamedComponent
+    , ComponentMiddlewareComponent>]
 public class EntryComponent : WebComponent
 {
     public override void ConfigureServices(ServiceContext context)

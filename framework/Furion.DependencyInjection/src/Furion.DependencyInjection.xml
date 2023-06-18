@@ -28,6 +28,122 @@
             类型集合
             </summary>
         </member>
+        <member name="T:System.ExposeServicesAttribute`1">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`1.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`2">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`2.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`3">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`3.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`4">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`4.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`5">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`5.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`6">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+            <typeparam name="TService6">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`6.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`7">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+            <typeparam name="TService6">服务类型</typeparam>
+            <typeparam name="TService7">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`7.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:System.ExposeServicesAttribute`8">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+            <typeparam name="TService6">服务类型</typeparam>
+            <typeparam name="TService7">服务类型</typeparam>
+            <typeparam name="TService8">服务类型</typeparam>
+        </member>
+        <member name="M:System.ExposeServicesAttribute`8.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="T:System.ServiceInjectionAttribute">
             <summary>
             服务注册配置
@@ -166,6 +282,12 @@
         <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateLifetime">
             <summary>
             验证服务生存期合法化
+            </summary>
+            <remarks>设置 false 将跳过合法验证</remarks>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateExposeService">
+            <summary>
+            验证服务导出配置合法化
             </summary>
             <remarks>设置 false 将跳过合法验证</remarks>
         </member>

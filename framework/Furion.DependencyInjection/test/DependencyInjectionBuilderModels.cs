@@ -127,3 +127,14 @@ public class Order3Service : IService, IScopedDependency
 internal class NotPublicService : IScopedDependency
 {
 }
+
+[ExposeServices<ISecondService>]
+public class ExposeServiceClass : IService, ISecondService, ITransientDependency
+{
+}
+
+[ExposeServices(typeof(IService))]
+[ExposeServices<ISecondService>]
+public class ExposeServiceClass2 : IService, ISecondService, ITransientDependency
+{
+}

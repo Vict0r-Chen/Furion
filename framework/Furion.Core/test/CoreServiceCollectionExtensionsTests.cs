@@ -27,7 +27,7 @@ public class CoreServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void GetCoreOptions_IfNotExists_ReturnOk()
+    public void GetCoreOptions_NotExists_ReturnOk()
     {
         var services = new ServiceCollection();
         var coreOptions = services.GetCoreOptions();

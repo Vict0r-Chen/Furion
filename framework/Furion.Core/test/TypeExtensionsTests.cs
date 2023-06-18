@@ -188,4 +188,16 @@ public class TypeExtensionsTests
         var isEqual = types.SequenceEqual(serviceTypes);
         Assert.True(isEqual);
     }
+
+    [Theory]
+    [InlineData(typeof(OneAttributeClass), false)]
+    [InlineData(typeof(InheritAttributeClass), false)]
+    [InlineData(typeof(MultipleAttributeClass), true)]
+    [InlineData(typeof(MultipleAndInheritAttributeClass), true)]
+    [InlineData(typeof(InheritMultipleAttributeClass), false)]
+    public void IsMultipleSameDefined(Type type, bool isMultiple)
+    {
+        var result = type.IsMultipleSameDefined(typeof(CheckAttribute), true);
+        Assert.Equal(isMultiple, result);
+    }
 }

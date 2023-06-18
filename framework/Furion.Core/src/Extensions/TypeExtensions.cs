@@ -97,6 +97,25 @@ internal static class TypeExtensions
     }
 
     /// <summary>
+    /// 是否定义多个相同的特性
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="attributeType"><see cref="Attribute"/></param>
+    /// <param name="inherit">是否查找基类型特性</param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsMultipleSameDefined(this Type type, Type attributeType, bool inherit = false)
+    {
+        // 检查是否定义
+        if (!type.IsDefined(attributeType, inherit))
+        {
+            return false;
+        }
+
+        // 只查找当前类型
+        return type.GetCustomAttributes(attributeType, false).Length > 1;
+    }
+
+    /// <summary>
     /// 获取指定特性实例
     /// </summary>
     /// <remarks>若特性不存在则返回默认实例</remarks>

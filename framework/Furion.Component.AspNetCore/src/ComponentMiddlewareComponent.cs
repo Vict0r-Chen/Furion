@@ -24,8 +24,7 @@ public sealed class ComponentMiddlewareComponent : WebComponent
     public override void Configure(ApplicationContext context)
     {
         // 获取服务配置
-        var componentBuilder = context.GetOptionsOrNew<WebComponentBuilder>();
-
-        context.Application.UseComponentMiddleware(componentBuilder);
+        var configure = context.GetOptionsAction<WebComponentBuilder>();
+        context.Application.UseComponentMiddleware(configure);
     }
 }

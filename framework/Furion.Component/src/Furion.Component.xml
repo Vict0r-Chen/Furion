@@ -6,18 +6,320 @@
     <members>
         <member name="T:Furion.Component.DependsOnAttribute">
             <summary>
-            组件依赖链配置
+            组件依赖配置
+            </summary>
+            <remarks>作用域派生自 <see cref="T:Furion.Component.ComponentBase"/> 的类型</remarks>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Component.DependsOnAttribute.#ctor(System.Type[])">
             <summary>
             构造函数
             </summary>
-            <param name="dependencies">依赖组件列表</param>
+            <param name="dependedTypes">依赖类型集合</param>
         </member>
-        <member name="P:Furion.Component.DependsOnAttribute.Dependencies">
+        <member name="P:Furion.Component.DependsOnAttribute.DependedTypes">
             <summary>
-            依赖组件列表
+            依赖类型集合
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`1">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`1.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`2">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`2.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`3">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`3.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`4">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`4.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`5">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`5.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`6">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`6.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`7">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`7.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`8">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`8.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`9">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`9.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`10">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`10.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`11">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent11"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`11.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`12">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent11"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent12"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`12.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`13">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent11"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent12"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent13"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`13.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`14">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent11"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent12"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent13"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent14"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`14.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`15">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent11"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent12"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent13"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent14"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent15"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`15.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.Component.DependsOnAttribute`16">
+            <summary>
+            组件依赖配置
+            </summary>
+            <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent3"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent4"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent5"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent6"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent7"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent8"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent9"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent10"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent11"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent12"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent13"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent14"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent15"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <typeparam name="TComponent16"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+        </member>
+        <member name="M:Furion.Component.DependsOnAttribute`16.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="T:Furion.Component.ComponentBuilder">

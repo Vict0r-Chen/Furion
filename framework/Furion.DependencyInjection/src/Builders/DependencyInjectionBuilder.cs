@@ -79,6 +79,12 @@ public sealed class DependencyInjectionBuilder
     public bool ValidateLifetime { get; set; } = true;
 
     /// <summary>
+    /// 验证服务导出配置合法化
+    /// </summary>
+    /// <remarks>设置 false 将跳过合法验证</remarks>
+    public bool ValidateExposeService { get; set; } = true;
+
+    /// <summary>
     /// 添加服务描述器过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
@@ -148,6 +154,12 @@ public sealed class DependencyInjectionBuilder
 
         // 是否配置了 Ignore 属性
         if (serviceInjectionAttribute is { Ignore: true })
+        {
+            yield break;
+        }
+
+        // 是否重复定义 [ExposeServices] 特性
+        if (!ValidateExposeService && type.IsMultipleSameDefined(typeof(ExposeServicesAttribute), true))
         {
             yield break;
         }

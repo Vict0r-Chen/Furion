@@ -41,6 +41,7 @@ public class DependencyInjectionServiceCollectionExtensionsTests
         services.AddDependencyInjection(builder =>
         {
             builder.ValidateLifetime = false;
+            builder.ValidateExposeService = false;
             builder.AddAssemblies(GetType().Assembly);
         });
 
@@ -53,7 +54,8 @@ public class DependencyInjectionServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         var dependencyInjectionBuilder = new DependencyInjectionBuilder
         {
-            ValidateLifetime = false
+            ValidateLifetime = false,
+            ValidateExposeService = false
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
         services.AddDependencyInjection(dependencyInjectionBuilder);
@@ -67,7 +69,8 @@ public class DependencyInjectionServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         var dependencyInjectionBuilder = new DependencyInjectionBuilder
         {
-            ValidateLifetime = false
+            ValidateLifetime = false,
+            ValidateExposeService = false
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
         services.AddDependencyInjection(dependencyInjectionBuilder);
@@ -76,7 +79,8 @@ public class DependencyInjectionServiceCollectionExtensionsTests
 
         var dependencyInjectionBuilder2 = new DependencyInjectionBuilder
         {
-            ValidateLifetime = false
+            ValidateLifetime = false,
+            ValidateExposeService = false
         };
         dependencyInjectionBuilder2.AddAssemblies(GetType().Assembly);
         services.AddDependencyInjection(dependencyInjectionBuilder2);

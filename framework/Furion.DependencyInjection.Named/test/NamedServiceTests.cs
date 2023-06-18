@@ -48,7 +48,7 @@ public class NamedServiceTests
     }
 
     [Fact]
-    public void GetIndex_IfNotExists_Throw()
+    public void GetIndex_NotExists_Throw()
     {
         var services = new ServiceCollection();
         services.AddNamed();
@@ -64,7 +64,7 @@ public class NamedServiceTests
     }
 
     [Fact]
-    public void GetIndex_IfExists_ReturnOK()
+    public void GetIndex_Exists_ReturnOK()
     {
         var name = "name1";
         var services = new ServiceCollection();
@@ -81,7 +81,7 @@ public class NamedServiceTests
     }
 
     [Fact]
-    public void Get_IfNotExists_ReturnNull()
+    public void Get_NotExists_ReturnNull()
     {
         var services = new ServiceCollection();
         services.AddNamed();
@@ -95,7 +95,7 @@ public class NamedServiceTests
     }
 
     [Fact]
-    public void Get_IfExists_ReturnNotNull()
+    public void Get_Exists_ReturnNotNull()
     {
         var name = "name1";
         var services = new ServiceCollection();
@@ -112,7 +112,7 @@ public class NamedServiceTests
     }
 
     [Fact]
-    public void GetEnumerator_IfNotExists_ReturnEmpty()
+    public void GetEnumerator_NotExists_ReturnEmpty()
     {
         var services = new ServiceCollection();
         services.AddNamed();
@@ -126,7 +126,7 @@ public class NamedServiceTests
     }
 
     [Fact]
-    public void GetEnumerator_IfExists_ReturnNotEmpty()
+    public void GetEnumerator_Exists_ReturnNotEmpty()
     {
         var name = "name1";
         var services = new ServiceCollection();
