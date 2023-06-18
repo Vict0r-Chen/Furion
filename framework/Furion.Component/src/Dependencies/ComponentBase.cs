@@ -139,11 +139,11 @@ public abstract class ComponentBase
             }
 
             // 查找 [DependsOn] 特性依赖配置
-            var dependsOn = currentType.GetCustomAttribute<DependsOnAttribute>(false)?.DependedTypes ?? Array.Empty<Type>();
-            dependencies.Add(currentType, dependsOn);
+            var dependedTypes = currentType.GetDefinedCustomAttributeOrNew<DependsOnAttribute>(false).DependedTypes;
+            dependencies.Add(currentType, dependedTypes);
 
             // 将当前组件类型的依赖项添加到待访问列表中
-            toVisit.AddRange(dependsOn);
+            toVisit.AddRange(dependedTypes);
         }
 
         // 检查组件依赖字典
