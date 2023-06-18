@@ -61,7 +61,7 @@ public static class ComponentWebApplicationExtensions
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent<TComponent>(this WebApplication webApplication, Action<WebComponentBuilderBase>? configure = null)
-        where TComponent : WebComponent, new()
+        where TComponent : WebComponent
     {
         return webApplication.UseComponent(typeof(TComponent), configure);
     }
@@ -129,7 +129,7 @@ public static class ComponentWebApplicationExtensions
             }
 
             // 创建组件实例（这里抽离出来，支持构造函数设置参数）
-            var component = Activator.CreateInstance(componentType) as WebComponent;
+            var component = ComponentBase.CreateComponentInstance(componentType, componentOptions) as WebComponent;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;

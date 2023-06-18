@@ -26,7 +26,7 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <returns><see cref="IHost"/></returns>
     public static IHost Entry<TComponent>(this HostApplicationBuilder hostApplicationBuilder)
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         return hostApplicationBuilder.AddComponent<TComponent>().Build();
     }
@@ -65,7 +65,7 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilderBase>? configure = null)
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         hostApplicationBuilder.Services.AddComponent<TComponent>(hostApplicationBuilder.Configuration, configure);
 

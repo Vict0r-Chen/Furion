@@ -47,4 +47,65 @@ internal sealed class ComponentOptions
     /// 禁用组件重复调用（Web 组件）
     /// </summary>
     internal bool SuppressDuplicateCallForWeb { get; set; } = true;
+
+    /// <summary>
+    /// 获取组件参数委托
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><see cref="Action{T}"/></returns>
+    internal Action<TOptions>? GetOptionsAction<TOptions>()
+        where TOptions : class, new()
+    {
+        // 组件参数类型
+        var optionsType = typeof(TOptions);
+
+        // 如果未找到组件类型参数则返回空
+        if (!OptionsActions.TryGetValue(optionsType, out var values))
+        {
+            return null;
+        }
+
+        // 生成级联委托
+        var cascadeAction = values.Cast<Action<TOptions>>()
+                                                .Aggregate((previous, current) => (t) =>
+                                                {
+                                                    previous(t);
+                                                    current(t);
+                                                });
+        return cascadeAction;
+    }
+
+    /// <summary>
+    /// 获取组件参数委托
+    /// </summary>
+    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <returns><see cref="Action{T}"/></returns>
+    internal Action<TOptions> GetOptionsActionOrNew<TOptions>()
+        where TOptions : class, new()
+    {
+        var cascadeAction = GetOptionsAction<TOptions>();
+
+        if (cascadeAction is null)
+        {
+            Action<TOptions> action = options => { };
+            OptionsActions.AddOrUpdate(typeof(TOptions), action);
+            return action;
+        }
+
+        return cascadeAction;
+    }
+
+    /// <summary>
+    /// 获取组件参数委托
+    /// </summary>
+    /// <param name="optionsType">组件参数类型</param>
+    /// <returns><see cref="Action{T}"/></returns>
+    internal Delegate GetOptionsActionOrNew(Type optionsType)
+    {
+        var @delegate = GetOptionsActionOrNewMethodInfo.MakeGenericMethod(optionsType)
+                                                             .Invoke(this, null);
+        return (Delegate)@delegate!;
+    }
+
+    internal static MethodInfo GetOptionsActionOrNewMethodInfo = typeof(ComponentOptions).GetMethod(nameof(GetOptionsActionOrNew), 1, BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
 }

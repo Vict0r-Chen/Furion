@@ -26,7 +26,7 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication Entry<TComponent>(this WebApplicationBuilder webApplicationBuilder)
-        where TComponent : WebComponent, new()
+        where TComponent : WebComponent
     {
         return webApplicationBuilder.Entry<TComponent, TComponent>();
     }
@@ -39,8 +39,8 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication Entry<TComponent, TWebComponent>(this WebApplicationBuilder webApplicationBuilder)
-        where TComponent : ComponentBase, new()
-        where TWebComponent : WebComponent, new()
+        where TComponent : ComponentBase
+        where TWebComponent : WebComponent
     {
         return webApplicationBuilder.AddComponent<TComponent>().Build()
                                     .UseComponent<TWebComponent>();
@@ -80,7 +80,7 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilderBase>? configure = null)
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         webApplicationBuilder.Services.AddComponent<TComponent>(webApplicationBuilder.Configuration, configure);
 

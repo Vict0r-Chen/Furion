@@ -421,7 +421,7 @@
             获取组件参数委托
             </summary>
             <typeparam name="TOptions">组件参数类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
+            <returns><see cref="T:System.Action`1"/></returns>
         </member>
         <member name="T:Furion.Component.ServiceContext">
             <summary>
@@ -600,6 +600,27 @@
             <summary>
             禁用组件重复调用（Web 组件）
             </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.GetOptionsAction``1">
+            <summary>
+            获取组件参数委托
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><see cref="T:System.Action`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew``1">
+            <summary>
+            获取组件参数委托
+            </summary>
+            <typeparam name="TOptions">组件参数类型</typeparam>
+            <returns><see cref="T:System.Action`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew(System.Type)">
+            <summary>
+            获取组件参数委托
+            </summary>
+            <param name="optionsType">组件参数类型</param>
+            <returns><see cref="T:System.Action`1"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>

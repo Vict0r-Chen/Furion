@@ -77,29 +77,10 @@ public abstract class ComponentContext
     /// 获取组件参数委托
     /// </summary>
     /// <typeparam name="TOptions">组件参数类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
+    /// <returns><see cref="Action{T}"/></returns>
     public Action<TOptions>? GetOptionsAction<TOptions>()
         where TOptions : class, new()
     {
-        var componentOptions = GetGetComponentOptions();
-        var optionsActions = componentOptions.OptionsActions;
-
-        // 组件参数类型
-        var optionsType = typeof(TOptions);
-
-        // 如果未找到组件类型参数则返回空
-        if (!optionsActions.TryGetValue(optionsType, out var value))
-        {
-            return null;
-        }
-
-        // 生成级联委托
-        var cascadeAction = value.Cast<Action<TOptions>>()
-                                               .Aggregate((previous, current) => (t) =>
-                                               {
-                                                   previous(t);
-                                                   current(t);
-                                               });
-        return cascadeAction;
+        return GetGetComponentOptions().GetOptionsAction<TOptions>();
     }
 }

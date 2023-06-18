@@ -52,7 +52,7 @@ public class DependsOnAttribute : Attribute
 /// </summary>
 /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent> : DependsOnAttribute
-    where TComponent : ComponentBase, new()
+    where TComponent : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -69,8 +69,8 @@ public sealed class DependsOnAttribute<TComponent> : DependsOnAttribute
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -89,9 +89,9 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2> : DependsOnAttr
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent3"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -112,10 +112,10 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3> : 
 /// <typeparam name="TComponent3"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent4"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -138,11 +138,11 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent4"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent5"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -167,12 +167,12 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent5"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent6"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -199,13 +199,13 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent6"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent7"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -234,14 +234,14 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent7"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent8"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -272,15 +272,15 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent8"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent9"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -313,16 +313,16 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent9"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent10"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -357,17 +357,17 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent10"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent11"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
-    where TComponent11 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
+    where TComponent11 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -404,18 +404,18 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent11"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent12"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
-    where TComponent11 : ComponentBase, new()
-    where TComponent12 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
+    where TComponent11 : ComponentBase
+    where TComponent12 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -454,19 +454,19 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent12"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent13"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
-    where TComponent11 : ComponentBase, new()
-    where TComponent12 : ComponentBase, new()
-    where TComponent13 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
+    where TComponent11 : ComponentBase
+    where TComponent12 : ComponentBase
+    where TComponent13 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -507,20 +507,20 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent13"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent14"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
-    where TComponent11 : ComponentBase, new()
-    where TComponent12 : ComponentBase, new()
-    where TComponent13 : ComponentBase, new()
-    where TComponent14 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
+    where TComponent11 : ComponentBase
+    where TComponent12 : ComponentBase
+    where TComponent13 : ComponentBase
+    where TComponent14 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -563,21 +563,21 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent14"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent15"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
-    where TComponent11 : ComponentBase, new()
-    where TComponent12 : ComponentBase, new()
-    where TComponent13 : ComponentBase, new()
-    where TComponent14 : ComponentBase, new()
-    where TComponent15 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
+    where TComponent11 : ComponentBase
+    where TComponent12 : ComponentBase
+    where TComponent13 : ComponentBase
+    where TComponent14 : ComponentBase
+    where TComponent15 : ComponentBase
 {
     /// <summary>
     /// 构造函数
@@ -622,22 +622,22 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent15"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent16"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16> : DependsOnAttribute
-    where TComponent1 : ComponentBase, new()
-    where TComponent2 : ComponentBase, new()
-    where TComponent3 : ComponentBase, new()
-    where TComponent4 : ComponentBase, new()
-    where TComponent5 : ComponentBase, new()
-    where TComponent6 : ComponentBase, new()
-    where TComponent7 : ComponentBase, new()
-    where TComponent8 : ComponentBase, new()
-    where TComponent9 : ComponentBase, new()
-    where TComponent10 : ComponentBase, new()
-    where TComponent11 : ComponentBase, new()
-    where TComponent12 : ComponentBase, new()
-    where TComponent13 : ComponentBase, new()
-    where TComponent14 : ComponentBase, new()
-    where TComponent15 : ComponentBase, new()
-    where TComponent16 : ComponentBase, new()
+    where TComponent1 : ComponentBase
+    where TComponent2 : ComponentBase
+    where TComponent3 : ComponentBase
+    where TComponent4 : ComponentBase
+    where TComponent5 : ComponentBase
+    where TComponent6 : ComponentBase
+    where TComponent7 : ComponentBase
+    where TComponent8 : ComponentBase
+    where TComponent9 : ComponentBase
+    where TComponent10 : ComponentBase
+    where TComponent11 : ComponentBase
+    where TComponent12 : ComponentBase
+    where TComponent13 : ComponentBase
+    where TComponent14 : ComponentBase
+    where TComponent15 : ComponentBase
+    where TComponent16 : ComponentBase
 {
     /// <summary>
     /// 构造函数

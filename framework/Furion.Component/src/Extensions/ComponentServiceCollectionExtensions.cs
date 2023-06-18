@@ -65,7 +65,7 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="configure">自定义构建器配置</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         return services.AddComponent(typeof(TComponent), configuration, configure);
     }
@@ -132,7 +132,7 @@ public static class ComponentServiceCollectionExtensions
             }
 
             // 创建组件实例（这里抽离出来，支持构造函数设置参数）
-            var component = Activator.CreateInstance(componentType) as ComponentBase;
+            var component = ComponentBase.CreateComponentInstance(componentType, componentOptions);
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;

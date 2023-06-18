@@ -63,7 +63,7 @@ public abstract class ComponentBase
     /// <typeparam name="TComponent">组件类型</typeparam>
     /// <returns><see cref="List{T}"/></returns>
     public static List<Type> GenerateTopologicalSortedMap<TComponent>()
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         return GenerateTopologicalSortedMap(typeof(TComponent));
     }
@@ -102,7 +102,7 @@ public abstract class ComponentBase
     /// <typeparam name="TComponent">组件类型</typeparam>
     /// <returns></returns>
     public static Dictionary<Type, Type[]> GenerateComponentDependencies<TComponent>()
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         return GenerateComponentDependencies(typeof(TComponent));
     }
@@ -182,7 +182,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <typeparam name="TComponent">组件类型</typeparam>
     public static void CheckComponent<TComponent>()
-        where TComponent : ComponentBase, new()
+        where TComponent : ComponentBase
     {
         CheckComponent(typeof(TComponent));
     }
@@ -215,11 +215,48 @@ public abstract class ComponentBase
             throw new InvalidOperationException($"`{componentType.Name}` component type cannot inherit from other component types.");
         }
 
-        // 组件至少包含一个公开无参构造函数
-        if (!componentType.HasParameterlessConstructorDefined())
+        //// 组件至少包含一个公开无参构造函数
+        //if (!componentType.HasParameterlessConstructorDefined())
+        //{
+        //    throw new InvalidOperationException($"Component `{componentType.Name}` does not contain a public parameterless constructor.");
+        //}
+    }
+
+    internal static ComponentBase? CreateComponentInstance(Type componentType, ComponentOptions componentOptions)
+    {
+        var constructors = componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
+        if (constructors.Length == 0)
         {
-            throw new InvalidOperationException($"Component `{componentType.Name}` does not contain a public parameterless constructor.");
+            return Activator.CreateInstance(componentType) as ComponentBase;
         }
+
+        // 查找参数最多的构造函数
+        var maxParametersConstructor = constructors.OrderByDescending(c => c.GetParameters().Length)
+                                                                 .First();
+
+        var parameters = maxParametersConstructor.GetParameters();
+        var args = new object?[parameters.Length];
+
+        for (int i = 0; i < parameters.Length; i++)
+        {
+            var parameter = parameters[i];
+            var parameterType = parameter.ParameterType;
+
+            // 这里检查是否是可以new的类型或者是 Action<> 类型
+            var @delegate = componentOptions.GetOptionsActionOrNew(parameterType);
+            if (typeof(Delegate).IsAssignableFrom(parameterType))
+            {
+                args[i] = @delegate;
+            }
+            else
+            {
+                var instance = Activator.CreateInstance(parameterType);
+                @delegate.DynamicInvoke(instance);
+                args[i] = instance;
+            }
+        }
+
+        return maxParametersConstructor.Invoke(args) as ComponentBase;
     }
 
     /// <summary>
