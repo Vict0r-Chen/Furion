@@ -104,9 +104,14 @@ public static class ComponentWebApplicationExtensions
         // 组件对象集合
         var components = new List<WebComponent>();
 
-        // 依次初始化组件实例
-        foreach (var componentType in topologicalSortedMap)
+        // 创建组件上下文
+        var componentContext = new ApplicationContext(webApplication);
+
+        // 从尾部依次初始化组件实例
+        for (var i = topologicalSortedMap.Count - 1; i >= 0; i--)
         {
+            var componentType = topologicalSortedMap[i];
+
             // 如果不是 Web 组件则跳过
             if (componentType.BaseType != typeof(WebComponent))
             {
@@ -118,17 +123,23 @@ public static class ComponentWebApplicationExtensions
             if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Any(t => t == checkName))
             {
                 // 输出调试事件
-                Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
+                Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
 
                 continue;
             }
 
-            // 创建组件实例
+            // 创建组件实例（这里抽离出来，支持构造函数设置参数）
             var component = Activator.CreateInstance(componentType) as WebComponent;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
-            components.Add(component);
+            components.Insert(0, component);
+
+            // 调用前置配置中间件
+            component.PreConfigure(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
 
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCallForWeb)
@@ -137,23 +148,11 @@ public static class ComponentWebApplicationExtensions
             }
         }
 
-        // 创建组件上下文
-        var componentContext = new ApplicationContext(webApplication);
-
-        // 调用前置配置中间件
-        components.ForEach(component =>
-        {
-            // 输出调试事件
-            Debugging.Trace("{0}.{1} method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
-
-            component.PreConfigure(componentContext);
-        });
-
         // 调用配置中间件
         components.ForEach(component =>
         {
             // 输出调试事件
-            Debugging.Trace("{0}.{1} method has been called.", component.GetType(), nameof(WebComponent.Configure));
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.Configure));
 
             component.Configure(componentContext);
         });

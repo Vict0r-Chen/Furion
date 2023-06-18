@@ -530,7 +530,7 @@
         </member>
         <member name="F:Furion.Component.ComponentBase.WEBCOMPONENT_TYPE_FULLNAME">
             <summary>
-            WebComponent 类型全名
+            WebComponent 类型限定名
             </summary>
         </member>
         <member name="T:Furion.Component.Topological">

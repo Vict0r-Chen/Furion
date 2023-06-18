@@ -113,25 +113,36 @@ public static class ComponentServiceCollectionExtensions
         // 组件对象集合
         var components = new List<ComponentBase>();
 
-        // 依次初始化组件实例
-        foreach (var componentType in topologicalSortedMap)
+        // 创建组件上下文
+        var componentContext = new ServiceContext(services, configuration);
+
+        // 从尾部依次初始化组件实例
+        for (var i = topologicalSortedMap.Count - 1; i >= 0; i--)
         {
+            var componentType = topologicalSortedMap[i];
+
             // 组件多次调用检测
             var checkName = componentType.FullName!;
             if (componentOptions.SuppressDuplicateCall && componentOptions.CallRegistration.Any(t => t == checkName))
             {
                 // 输出调试事件
-                Debugging.Warn("{0} component has been prevented from duplicate invocation.", componentType.Name);
+                Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
 
                 continue;
             }
 
-            // 创建组件实例
+            // 创建组件实例（这里抽离出来，支持构造函数设置参数）
             var component = Activator.CreateInstance(componentType) as ComponentBase;
             ArgumentNullException.ThrowIfNull(component, nameof(component));
 
             component.Options = componentOptions;
-            components.Add(component);
+            components.Insert(0, component);
+
+            // 调用前置配置服务
+            component.PreConfigureServices(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
 
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCall)
@@ -140,23 +151,11 @@ public static class ComponentServiceCollectionExtensions
             }
         }
 
-        // 创建组件上下文
-        var componentContext = new ServiceContext(services, configuration);
-
-        // 调用前置配置服务
-        components.ForEach(component =>
-        {
-            // 输出调试事件
-            Debugging.Trace("{0}.{1} method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
-
-            component.PreConfigureServices(componentContext);
-        });
-
         // 调用配置服务
         components.ForEach(component =>
         {
             // 输出调试事件
-            Debugging.Trace("{0}.{1} method has been called.", component.GetType(), nameof(ComponentBase.ConfigureServices));
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.ConfigureServices));
 
             component.ConfigureServices(componentContext);
         });

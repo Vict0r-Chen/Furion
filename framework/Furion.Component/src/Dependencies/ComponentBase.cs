@@ -199,31 +199,31 @@ public abstract class ComponentBase
         // 判断组件类型是否是 ComponentBase 派生类型
         if (!componentBaseType.IsAssignableFrom(componentType))
         {
-            throw new InvalidOperationException($"Type '{componentType.Name}' is not assignable from '{componentBaseType.Name}'.");
+            throw new InvalidOperationException($"Type `{componentType.Name}` is not assignable from '{componentBaseType.Name}'.");
         }
 
         // 组件不能是抽象类型或基组件类型
         if (componentType.IsAbstract || componentType == componentBaseType || componentType.FullName == WEBCOMPONENT_TYPE_FULLNAME)
         {
-            throw new InvalidOperationException($"Type '{componentType.Name}' cannot be an abstract type or a ComponentBase or WebComponent type.");
+            throw new InvalidOperationException($"Type `{componentType.Name}` cannot be an abstract type or a ComponentBase or WebComponent type.");
         }
 
         // 判断组件是否相互继承（禁止继承）
         var baseType = componentType.BaseType;
         if (!(baseType is null || baseType == typeof(object) || baseType == componentBaseType || baseType.FullName == WEBCOMPONENT_TYPE_FULLNAME))
         {
-            throw new InvalidOperationException($"'{componentType.Name}' component type cannot inherit from other component types.");
+            throw new InvalidOperationException($"`{componentType.Name}` component type cannot inherit from other component types.");
         }
 
         // 组件至少包含一个公开无参构造函数
         if (!componentType.HasParameterlessConstructorDefined())
         {
-            throw new InvalidOperationException($"Component '{componentType.Name}' does not contain a public parameterless constructor.");
+            throw new InvalidOperationException($"Component `{componentType.Name}` does not contain a public parameterless constructor.");
         }
     }
 
     /// <summary>
-    /// WebComponent 类型全名
+    /// WebComponent 类型限定名
     /// </summary>
     private const string WEBCOMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
 }
