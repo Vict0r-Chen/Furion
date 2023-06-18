@@ -12,6 +12,65 @@
         <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceContext)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.DependencyInjection.NamedServiceProviderExtensions">
+            <summary>
+            依赖注入命名模块 <see cref="T:System.IServiceProvider"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceProviderExtensions.GetNamedService(System.IServiceProvider,System.String,System.Type)">
+            <summary>
+            获取命名服务
+            </summary>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <param name="serviceType">服务类型</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceProviderExtensions.GetNamedService``1(System.IServiceProvider,System.String)">
+            <summary>
+            获取命名服务
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceProviderExtensions.GetRequiredNamedService(System.IServiceProvider,System.String,System.Type)">
+            <summary>
+            获取命名服务
+            </summary>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <param name="serviceType">服务类型</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceProviderExtensions.GetRequiredNamedService``1(System.IServiceProvider,System.String)">
+            <summary>
+            获取命名服务
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
+            <summary>
+            获取命名服务集合
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceProviderExtensions.GetNamedServices(System.IServiceProvider,System.String,System.Type)">
+            <summary>
+            获取命名服务集合
+            </summary>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">服务名称</param>
+            <param name="serviceType">服务类型</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
         <member name="T:Furion.DependencyInjection.NamedType">
             <summary>
             具有命名的 <see cref="T:System.Type"/>
@@ -51,6 +110,54 @@
             <inheritdoc />
         </member>
         <member name="M:Furion.DependencyInjection.NamedType.Equals(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.DependencyInjection.INamedService`1">
+            <summary>
+            命名服务
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+        </member>
+        <member name="P:Furion.DependencyInjection.INamedService`1.Item(System.String)">
+            <summary>
+            获取服务
+            </summary>
+            <param name="name">服务名称</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.INamedService`1.Get(System.String)">
+            <summary>
+            获取服务
+            </summary>
+            <param name="name">服务名称</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.INamedService`1.GetEnumerator(System.String)">
+            <summary>
+            获取服务集合
+            </summary>
+            <param name="name">服务名称</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="T:Furion.DependencyInjection.NamedService`1">
+            <inheritdoc cref="T:Furion.DependencyInjection.INamedService`1"/>
+        </member>
+        <member name="F:Furion.DependencyInjection.NamedService`1._serviceProvider">
+            <inheritdoc cref="T:System.IServiceProvider"/>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedService`1.#ctor(System.IServiceProvider)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="serviceProvider">服务提供器</param>
+        </member>
+        <member name="P:Furion.DependencyInjection.NamedService`1.Item(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedService`1.Get(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedService`1.GetEnumerator(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions">
@@ -438,113 +545,6 @@
             <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="T:System.NamedServiceProviderExtensions">
-            <summary>
-            依赖注入命名模块 <see cref="T:System.IServiceProvider"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedService(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedService``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetRequiredNamedService``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务集合
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="M:System.NamedServiceProviderExtensions.GetNamedServices(System.IServiceProvider,System.String,System.Type)">
-            <summary>
-            获取命名服务集合
-            </summary>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">服务名称</param>
-            <param name="serviceType">服务类型</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="T:System.INamedService`1">
-            <summary>
-            命名服务
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-        </member>
-        <member name="P:System.INamedService`1.Item(System.String)">
-            <summary>
-            获取服务
-            </summary>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.INamedService`1.Get(System.String)">
-            <summary>
-            获取服务
-            </summary>
-            <param name="name">服务名称</param>
-            <returns><typeparamref name="TService"/></returns>
-        </member>
-        <member name="M:System.INamedService`1.GetEnumerator(System.String)">
-            <summary>
-            获取服务集合
-            </summary>
-            <param name="name">服务名称</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="T:System.NamedService`1">
-            <inheritdoc cref="T:System.INamedService`1"/>
-        </member>
-        <member name="F:System.NamedService`1._serviceProvider">
-            <inheritdoc cref="T:System.IServiceProvider"/>
-        </member>
-        <member name="M:System.NamedService`1.#ctor(System.IServiceProvider)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="serviceProvider">服务提供器</param>
-        </member>
-        <member name="P:System.NamedService`1.Item(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:System.NamedService`1.Get(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:System.NamedService`1.GetEnumerator(System.String)">
-            <inheritdoc />
         </member>
     </members>
 </doc>
