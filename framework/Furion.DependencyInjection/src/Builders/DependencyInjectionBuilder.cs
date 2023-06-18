@@ -159,7 +159,8 @@ public sealed class DependencyInjectionBuilder
         }
 
         // 是否重复定义 [ExposeServices] 特性
-        if (!ValidateExposeService && type.IsMultipleSameDefined(typeof(ExposeServicesAttribute), true))
+        if (!ValidateExposeService
+            && type.IsMultipleSameDefined(typeof(ExposeServicesAttribute), true))
         {
             yield break;
         }

@@ -22,7 +22,7 @@ internal static class Topological
     /// <summary>
     /// 拓扑排序算法
     /// </summary>
-    /// <param name="dependencies">依赖节点集合</param>
+    /// <param name="dependencies">依赖关系集合</param>
     /// <returns><see cref="List{T}"/></returns>
     internal static List<Type> Sort(Dictionary<Type, Type[]> dependencies)
     {
@@ -32,7 +32,7 @@ internal static class Topological
         // 创建一个 Set 来存储已访问过的节点
         var visited = new HashSet<Type>();
 
-        // 对每个未访问的节点进行深度优先搜索，将搜索到的节点插入到排序列表的头部
+        // 对每个未访问的节点进行深度优先搜索，将搜索到的节点插入到排序列表的尾部
         foreach (var node in dependencies.Keys)
         {
             VisitNode(node, dependencies, visited, sortedNodes);
@@ -43,9 +43,9 @@ internal static class Topological
     }
 
     /// <summary>
-    /// 检查依赖关系是否存在循环依赖
+    /// 拓扑循环依赖检查
     /// </summary>
-    /// <param name="dependencies">依赖节点集合</param>
+    /// <param name="dependencies">依赖关系集合</param>
     /// <returns><see cref="bool"/></returns>
     internal static bool HasCycle(Dictionary<Type, Type[]> dependencies)
     {
@@ -64,18 +64,21 @@ internal static class Topological
             }
         }
 
-        // 如果不存在循环依赖，则返回false
+        // 如果不存在循环依赖，则返回 false
         return false;
     }
 
     /// <summary>
-    /// 节点访问
+    /// 节点访问记录
     /// </summary>
     /// <param name="node">当前节点</param>
-    /// <param name="dependencies">依赖节点集合</param>
+    /// <param name="dependencies">依赖关系集合</param>
     /// <param name="visited">已访问过的节点</param>
     /// <param name="sortedNodes">已排序的节点</param>
-    private static void VisitNode(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, List<Type> sortedNodes)
+    private static void VisitNode(Type node
+        , Dictionary<Type, Type[]> dependencies
+        , HashSet<Type> visited
+        , List<Type> sortedNodes)
     {
         // 如果当前节点已经被访问过，则直接返回
         if (visited.Contains(node))
@@ -100,14 +103,17 @@ internal static class Topological
     }
 
     /// <summary>
-    /// 检查依赖关系是否存在循环依赖（内部）
+    /// 检查依赖节点是否存在循环依赖
     /// </summary>
     /// <param name="node">当前节点</param>
-    /// <param name="dependencies">依赖节点集合</param>
+    /// <param name="dependencies">依赖关系集合</param>
     /// <param name="visited">已访问过的节点</param>
-    /// <param name="currentPath">单曲遍历路径上的节点</param>
+    /// <param name="currentPath">当前遍历路径上的节点</param>
     /// <returns><see cref="bool"/></returns>
-    private static bool HasCycleHelper(Type node, Dictionary<Type, Type[]> dependencies, HashSet<Type> visited, HashSet<Type> currentPath)
+    private static bool HasCycleHelper(Type node
+        , Dictionary<Type, Type[]> dependencies
+        , HashSet<Type> visited
+        , HashSet<Type> currentPath)
     {
         // 将当前节点标记为已访问，并将其加入到遍历路径中
         visited.Add(node);
@@ -118,12 +124,12 @@ internal static class Topological
         {
             foreach (var neighbor in neighbors)
             {
-                // 如果遍历路径上已经包含了该邻居节点，则存在循环依赖，直接返回true
+                // 如果遍历路径上已经包含了该邻居节点，则存在循环依赖，直接返回 true
                 if (currentPath.Contains(neighbor)
                     || (!visited.Contains(neighbor) && HasCycleHelper(neighbor, dependencies, visited, currentPath)))
                 {
                     // 打印循环依赖类型
-                    Debugging.Error("The type '{0}' has circular dependencies.", node.Name);
+                    Debugging.Error("The type `{0}` has circular dependencies.", node.Name);
 
                     return true;
                 }
@@ -133,7 +139,7 @@ internal static class Topological
         // 遍历完当前节点的所有邻居节点后，将当前节点从遍历路径中移除
         currentPath.Remove(node);
 
-        // 如果不存在循环依赖，则返回false
+        // 如果不存在循环依赖，则返回 false
         return false;
     }
 }
