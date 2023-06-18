@@ -576,51 +576,59 @@
             组件模块配置选项
             </summary>
         </member>
+        <member name="F:Furion.Component.ComponentOptions._GetOptionsActionOrNewMethod">
+            <summary>
+            获取 <see cref="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew``1"/> 方法类型
+            </summary>
+        </member>
         <member name="M:Furion.Component.ComponentOptions.#ctor">
             <summary>
             构造函数
             </summary>
+            <remarks>此构造函数只会初始化一次</remarks>
         </member>
         <member name="P:Furion.Component.ComponentOptions.OptionsActions">
             <summary>
-            组件参数委托字典
+            组件配置委托集合
             </summary>
         </member>
-        <member name="P:Furion.Component.ComponentOptions.CallRegistration">
+        <member name="P:Furion.Component.ComponentOptions.CallRecords">
             <summary>
-            组件调用登记
+            组件调用记录
             </summary>
+            <remarks>作用于组件重复调用检查</remarks>
         </member>
         <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCall">
             <summary>
-            禁用组件重复调用
+            是否禁用组件重复调用
             </summary>
         </member>
         <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCallForWeb">
             <summary>
-            禁用组件重复调用（Web 组件）
+            是否禁用 Web 组件重复调用
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentOptions.GetOptionsAction``1">
             <summary>
-            获取组件参数委托
+            获取组件配置委托
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
+            <typeparam name="TOptions">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew``1">
             <summary>
-            获取组件参数委托
+            获取组件配置委托
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
+            <remarks>若组件配置委托不存在则返回默认实例</remarks>
+            <typeparam name="TOptions">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew(System.Type)">
             <summary>
-            获取组件参数委托
+            获取组件配置委托
             </summary>
-            <param name="optionsType">组件参数类型</param>
-            <returns><see cref="T:System.Action`1"/></returns>
+            <param name="optionsType">组件配置类型</param>
+            <returns><see cref="T:System.Delegate"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>

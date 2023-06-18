@@ -123,7 +123,7 @@ public static class ComponentServiceCollectionExtensions
 
             // 组件多次调用检测
             var checkName = componentType.FullName!;
-            if (componentOptions.SuppressDuplicateCall && componentOptions.CallRegistration.Any(t => t == checkName))
+            if (componentOptions.SuppressDuplicateCall && componentOptions.CallRecords.Any(t => t == checkName))
             {
                 // 输出调试事件
                 Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
@@ -147,7 +147,7 @@ public static class ComponentServiceCollectionExtensions
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCall)
             {
-                componentOptions.CallRegistration.Add(checkName);
+                componentOptions.CallRecords.Add(checkName);
             }
         }
 

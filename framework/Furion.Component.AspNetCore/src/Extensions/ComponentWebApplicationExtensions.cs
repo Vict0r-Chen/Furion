@@ -120,7 +120,7 @@ public static class ComponentWebApplicationExtensions
 
             // 组件多次调用检测
             var checkName = componentType.FullName + ".Web";
-            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRegistration.Any(t => t == checkName))
+            if (componentOptions.SuppressDuplicateCallForWeb && componentOptions.CallRecords.Any(t => t == checkName))
             {
                 // 输出调试事件
                 Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
@@ -144,7 +144,7 @@ public static class ComponentWebApplicationExtensions
             // 组件调用登记
             if (componentOptions.SuppressDuplicateCallForWeb)
             {
-                componentOptions.CallRegistration.Add(checkName);
+                componentOptions.CallRecords.Add(checkName);
             }
         }
 

@@ -20,52 +20,58 @@ namespace Furion.Component;
 internal sealed class ComponentOptions
 {
     /// <summary>
+    /// 获取 <see cref="GetOptionsActionOrNew{TOptions}()"/> 方法类型
+    /// </summary>
+    internal readonly MethodInfo _GetOptionsActionOrNewMethod;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
+    /// <remarks>此构造函数只会初始化一次</remarks>
     public ComponentOptions()
     {
         OptionsActions ??= new();
-        CallRegistration ??= new();
+        CallRecords ??= new();
+
+        _GetOptionsActionOrNewMethod = GetType().GetMethod(nameof(GetOptionsActionOrNew), 1, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null)!;
     }
 
     /// <summary>
-    /// 组件参数委托字典
+    /// 组件配置委托集合
     /// </summary>
     internal Dictionary<Type, List<Delegate>> OptionsActions { get; init; }
 
     /// <summary>
-    /// 组件调用登记
+    /// 组件调用记录
     /// </summary>
-    internal ConcurrentBag<string> CallRegistration { get; init; }
+    /// <remarks>作用于组件重复调用检查</remarks>
+    internal ConcurrentBag<string> CallRecords { get; init; }
 
     /// <summary>
-    /// 禁用组件重复调用
+    /// 是否禁用组件重复调用
     /// </summary>
     internal bool SuppressDuplicateCall { get; set; } = true;
 
     /// <summary>
-    /// 禁用组件重复调用（Web 组件）
+    /// 是否禁用 Web 组件重复调用
     /// </summary>
     internal bool SuppressDuplicateCallForWeb { get; set; } = true;
 
     /// <summary>
-    /// 获取组件参数委托
+    /// 获取组件配置委托
     /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <typeparam name="TOptions">组件配置类型</typeparam>
     /// <returns><see cref="Action{T}"/></returns>
     internal Action<TOptions>? GetOptionsAction<TOptions>()
         where TOptions : class, new()
     {
-        // 组件参数类型
-        var optionsType = typeof(TOptions);
-
         // 如果未找到组件类型参数则返回空
-        if (!OptionsActions.TryGetValue(optionsType, out var values))
+        if (!OptionsActions.TryGetValue(typeof(TOptions), out var values))
         {
             return null;
         }
 
-        // 生成级联委托
+        // 生成级联调用委托
         var cascadeAction = values.Cast<Action<TOptions>>()
                                                 .Aggregate((previous, current) => (t) =>
                                                 {
@@ -76,19 +82,22 @@ internal sealed class ComponentOptions
     }
 
     /// <summary>
-    /// 获取组件参数委托
+    /// 获取组件配置委托
     /// </summary>
-    /// <typeparam name="TOptions">组件参数类型</typeparam>
+    /// <remarks>若组件配置委托不存在则返回默认实例</remarks>
+    /// <typeparam name="TOptions">组件配置类型</typeparam>
     /// <returns><see cref="Action{T}"/></returns>
     internal Action<TOptions> GetOptionsActionOrNew<TOptions>()
         where TOptions : class, new()
     {
         var cascadeAction = GetOptionsAction<TOptions>();
 
+        // 若组件配置委托不存在将初始化默认委托并添加到集合中
         if (cascadeAction is null)
         {
             Action<TOptions> action = options => { };
             OptionsActions.AddOrUpdate(typeof(TOptions), action);
+
             return action;
         }
 
@@ -96,16 +105,18 @@ internal sealed class ComponentOptions
     }
 
     /// <summary>
-    /// 获取组件参数委托
+    /// 获取组件配置委托
     /// </summary>
-    /// <param name="optionsType">组件参数类型</param>
-    /// <returns><see cref="Action{T}"/></returns>
+    /// <param name="optionsType">组件配置类型</param>
+    /// <returns><see cref="Delegate"/></returns>
     internal Delegate GetOptionsActionOrNew(Type optionsType)
     {
-        var @delegate = GetOptionsActionOrNewMethodInfo.MakeGenericMethod(optionsType)
-                                                             .Invoke(this, null);
-        return (Delegate)@delegate!;
-    }
+        var @delegate = _GetOptionsActionOrNewMethod.MakeGenericMethod(optionsType)
+                                                          .Invoke(this, null);
 
-    internal static MethodInfo GetOptionsActionOrNewMethodInfo = typeof(ComponentOptions).GetMethod(nameof(GetOptionsActionOrNew), 1, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null)!;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(@delegate, nameof(@delegate));
+
+        return (Delegate)@delegate;
+    }
 }
