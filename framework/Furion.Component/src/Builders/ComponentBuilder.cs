@@ -35,7 +35,7 @@ public sealed class ComponentBuilder : ComponentBuilderBase
     /// <inheritdoc />
     internal override void Build(IServiceCollection services)
     {
-        // 配置组件模块自身配置
+        // 添加组件模块自身配置
         Configure<ComponentBuilder>(builder =>
         {
             builder.SuppressDuplicateCall = SuppressDuplicateCall;
