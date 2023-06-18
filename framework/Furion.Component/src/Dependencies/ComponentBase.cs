@@ -241,7 +241,7 @@ public abstract class ComponentBase
             // 检查是否是可 new() 类型
             if (parameterType.HasParameterlessConstructorDefined())
             {
-                // 创建参数实例并调用组件配置委托
+                // 创建参数实例
                 var instance = Activator.CreateInstance(parameterType);
 
                 var cascadeAction = componentOptions.GetOptionsActionOrNew(parameterType);
@@ -254,7 +254,7 @@ public abstract class ComponentBase
             throw new InvalidOperationException($"`{parameterType.Name}` parameter type is an invalid component options.");
         }
 
-        // 调用构造函数并实例化组件
+        // 调用组件构造函数进行实例化
         var component = maxParametersConstructor.Invoke(args) as ComponentBase;
         ArgumentNullException.ThrowIfNull(component, nameof(component));
 
