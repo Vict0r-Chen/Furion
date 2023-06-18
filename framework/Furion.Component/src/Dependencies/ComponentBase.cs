@@ -234,7 +234,7 @@ public abstract class ComponentBase
                 && parameterType.GetGenericTypeDefinition() == typeof(Action<>)
                 && parameterType.GenericTypeArguments[0].HasParameterlessConstructorDefined())
             {
-                args[i] = componentOptions.GetOptionsActionOrNew(parameterType);
+                args[i] = componentOptions.GetOptionsActionOrNew(parameterType.GenericTypeArguments[0]);
                 continue;
             }
 
