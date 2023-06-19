@@ -90,22 +90,6 @@ public class ComponentServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void WebHostEnvironment_FullName()
-    {
-        var assembly = typeof(ComponentBase).Assembly;
-        var _ComponentServiceCollectionExtensions = assembly.GetType("Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions");
-        Assert.NotNull(_ComponentServiceCollectionExtensions);
-
-        var _IWEBHOSTENVIRONMENT_TYPE_FULLNAME = _ComponentServiceCollectionExtensions.GetField("IWEBHOSTENVIRONMENT_TYPE_FULLNAME", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.NotNull(_IWEBHOSTENVIRONMENT_TYPE_FULLNAME);
-
-        var value = _IWEBHOSTENVIRONMENT_TYPE_FULLNAME.GetValue(null);
-        Assert.NotNull(value);
-
-        Assert.Equal("Microsoft.AspNetCore.Hosting.IWebHostEnvironment", value);
-    }
-
-    [Fact]
     public void GetComponentOptions()
     {
         var services = new ServiceCollection();

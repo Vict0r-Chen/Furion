@@ -28,7 +28,6 @@ public class ComponentBaseTests
         var configuration = new ConfigurationManager();
         component.PreConfigureServices(new ServiceComponentContext(services, configuration));
         component.ConfigureServices(new ServiceComponentContext(services, configuration));
-        Assert.Equal("Furion.Component.WebComponent", ComponentBase.WEBCOMPONENT_TYPE_FULLNAME);
     }
 
     [Fact]

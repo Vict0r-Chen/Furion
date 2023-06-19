@@ -190,7 +190,7 @@ public static class ComponentServiceCollectionExtensions
     {
         // 查找 Web 主机环境是否配置
         // 如果没有配置则继续查找泛型通用主机环境是否配置
-        var hostEnvironment = (services.FirstOrDefault(s => s.ServiceType.FullName == IWEBHOSTENVIRONMENT_TYPE_FULLNAME)?.ImplementationInstance
+        var hostEnvironment = (services.FirstOrDefault(s => s.ServiceType.FullName == Constants.IWEBHOSTENVIRONMENT_TYPE_FULLNAME)?.ImplementationInstance
                                                 ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))?.ImplementationInstance) as IHostEnvironment;
         return hostEnvironment;
     }
@@ -204,9 +204,4 @@ public static class ComponentServiceCollectionExtensions
     {
         return services.GetCoreOptions().Get<ComponentOptions>();
     }
-
-    /// <summary>
-    /// IWebHostEnvironment 类型限定名
-    /// </summary>
-    internal const string IWEBHOSTENVIRONMENT_TYPE_FULLNAME = "Microsoft.AspNetCore.Hosting.IWebHostEnvironment";
 }

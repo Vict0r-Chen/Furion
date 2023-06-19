@@ -382,6 +382,21 @@
         <member name="M:Furion.Component.ComponentCoreComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.Component.Constants">
+            <summary>
+            常量
+            </summary>
+        </member>
+        <member name="F:Furion.Component.Constants.IWEBHOSTENVIRONMENT_TYPE_FULLNAME">
+            <summary>
+            IWebHostEnvironment 类型限定名
+            </summary>
+        </member>
+        <member name="F:Furion.Component.Constants.WEBCOMPONENT_TYPE_FULLNAME">
+            <summary>
+            WebComponent 类型限定名
+            </summary>
+        </member>
         <member name="T:Furion.Component.ComponentContext">
             <summary>
             组件上下文基类
@@ -512,11 +527,6 @@
             <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
             <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="F:Furion.Component.ComponentBase.WEBCOMPONENT_TYPE_FULLNAME">
-            <summary>
-            WebComponent 类型限定名
-            </summary>
         </member>
         <member name="T:Furion.Component.Topological">
             <summary>
@@ -687,11 +697,6 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
-        </member>
-        <member name="F:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.IWEBHOSTENVIRONMENT_TYPE_FULLNAME">
-            <summary>
-            IWebHostEnvironment 类型限定名
-            </summary>
         </member>
     </members>
 </doc>
