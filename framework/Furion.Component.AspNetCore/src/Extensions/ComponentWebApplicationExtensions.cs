@@ -90,6 +90,9 @@ public static class ComponentWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilderBase>? configure = null)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+
         // 创建组件拓扑排序集合
         var topologicalSets = ComponentBase.CreateTopological(dependencies);
 

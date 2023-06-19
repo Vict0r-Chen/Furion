@@ -39,20 +39,92 @@ public class CanNotNewComponent : ComponentBase
     }
 }
 
+public class CallOptions
+{
+    public List<string> CallRecords { get; } = new List<string>();
+}
+
 [DependsOn<BComponent, CComponent>]
 public class AComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigureServices)}");
+        });
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(AComponent)}.{nameof(ConfigureServices)}");
+        });
+
+        // 重复调用
+        context.Services.AddComponent<BComponent>(context.Configuration);
+    }
+}
 
 [DependsOn<CComponent, DComponent>]
 public class BComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigureServices)}");
+        });
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(BComponent)}.{nameof(ConfigureServices)}");
+        });
+    }
+}
 
 [DependsOn<DComponent>]
 public class CComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(CComponent)}.{nameof(PreConfigureServices)}");
+        });
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(CComponent)}.{nameof(ConfigureServices)}");
+        });
+    }
+}
 
 public class DComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(DComponent)}.{nameof(PreConfigureServices)}");
+        });
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        Configure<CallOptions>(options =>
+        {
+            options.CallRecords.Add($"{nameof(DComponent)}.{nameof(ConfigureServices)}");
+        });
+    }
+}
 
 public class EComponent : ComponentBase
 { }

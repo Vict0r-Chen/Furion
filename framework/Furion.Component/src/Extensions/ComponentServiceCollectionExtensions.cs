@@ -97,7 +97,14 @@ public static class ComponentServiceCollectionExtensions
     public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(nameof(configuration), nameof(configuration));
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+
+        // 空检查
+        if (dependencies.Count == 0)
+        {
+            return services;
+        }
 
         // 创建组件拓扑排序集合
         var topologicalSets = ComponentBase.CreateTopological(dependencies);
@@ -182,13 +189,8 @@ public static class ComponentServiceCollectionExtensions
     internal static IHostEnvironment? GetHostEnvironment(this IServiceCollection services)
     {
         // 查找 Web 主机环境是否配置
-        var webHostEnvironment = services.FirstOrDefault(s => s.ServiceType.FullName == IWEBHOSTENVIRONMENT_TYPE_FULLNAME)
-                                                      ?.ImplementationInstance as IHostEnvironment;
-
-        // 如果没配置则查找泛型主机环境是否配置
-        var hostEnvironment = webHostEnvironment ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))
-                                                                         ?.ImplementationInstance as IHostEnvironment;
-
+        var hostEnvironment = (services.FirstOrDefault(s => s.ServiceType.FullName == IWEBHOSTENVIRONMENT_TYPE_FULLNAME)?.ImplementationInstance
+                                                ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))?.ImplementationInstance) as IHostEnvironment;
         return hostEnvironment;
     }
 
