@@ -537,6 +537,25 @@
             <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
+        <member name="M:Furion.Component.ComponentBase.CreateComponents``1(System.Collections.Generic.List{System.Type},Furion.Component.ComponentOptions,System.Action{``0})">
+            <summary>
+            创建组件依赖关系对象集合
+            </summary>
+            <typeparam name="TTargetComponent">目标组件类型</typeparam>
+            <param name="topologicalSets">组件拓扑排序集合</param>
+            <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
+            <param name="predicate">自定义配置委托</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.CreateComponents(System.Collections.Generic.List{System.Type},Furion.Component.ComponentOptions,System.Action{Furion.Component.ComponentBase})">
+            <summary>
+            创建组件依赖关系对象集合
+            </summary>
+            <param name="topologicalSets">组件拓扑排序集合</param>
+            <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
+            <param name="predicate">自定义配置委托</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
         <member name="T:Furion.Component.Topological">
             <summary>
             拓扑算法
@@ -692,14 +711,6 @@
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.CreateComponents(System.Collections.Generic.List{System.Type},Furion.Component.ServiceComponentContext)">
-            <summary>
-            创建组件依赖关系对象集合
-            </summary>
-            <param name="topologicalSets">组件拓扑排序集合</param>
-            <param name="componentContext"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.GetHostEnvironment(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>

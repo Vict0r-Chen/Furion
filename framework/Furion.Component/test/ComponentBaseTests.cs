@@ -248,4 +248,35 @@ public class ComponentBaseTests
     {
         Assert.Equal(result, ComponentBase.IsWebComponent(componentType));
     }
+
+    [Fact]
+    public void CreateComponents()
+    {
+        var services = new ServiceCollection();
+        var componentContext = new ServiceComponentContext(services, new ConfigurationManager());
+        var topologicalSets = ComponentBase.CreateTopological(typeof(AComponent));
+
+        // D C B A
+        var list = ComponentBase.CreateComponents(topologicalSets, componentContext.Options);
+        Assert.NotNull(list);
+
+        Assert.Equal(4, list.Count);
+
+        Assert.Equal(typeof(DComponent), list[0].GetType());
+        Assert.Equal(typeof(CComponent), list[1].GetType());
+        Assert.Equal(typeof(BComponent), list[2].GetType());
+        Assert.Equal(typeof(AComponent), list[3].GetType());
+
+        // 避免引发重复调用检查
+        componentContext.Options.CallRecords.Clear();
+        var list2 = ComponentBase.CreateComponents<ComponentBase>(topologicalSets, componentContext.Options);
+        Assert.NotNull(list2);
+
+        Assert.Equal(4, list2.Count);
+
+        Assert.Equal(typeof(DComponent), list2[0].GetType());
+        Assert.Equal(typeof(CComponent), list2[1].GetType());
+        Assert.Equal(typeof(BComponent), list2[2].GetType());
+        Assert.Equal(typeof(AComponent), list2[3].GetType());
+    }
 }

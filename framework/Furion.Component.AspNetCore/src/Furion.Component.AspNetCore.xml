@@ -211,14 +211,6 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.CreateComponents(System.Collections.Generic.List{System.Type},Furion.Component.ApplicationComponentContext)">
-            <summary>
-            创建组件依赖关系对象集合
-            </summary>
-            <param name="topologicalSets">组件拓扑排序集合</param>
-            <param name="componentContext"><see cref="T:Furion.Component.ApplicationComponentContext"/></param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
-        </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.GetComponentOptions(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
             获取组件模块配置选项

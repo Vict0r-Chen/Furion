@@ -129,32 +129,6 @@ public class ComponentServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void CreateComponents()
-    {
-        var services = new ServiceCollection();
-        var componentContext = new ServiceComponentContext(services, new ConfigurationManager());
-        var topologicalSets = ComponentBase.CreateTopological(typeof(AComponent));
-
-        // D C B A
-        var assembly = typeof(ComponentBase).Assembly;
-        var _ComponentServiceCollectionExtensions = assembly.GetType("Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions");
-        Assert.NotNull(_ComponentServiceCollectionExtensions);
-
-        var _CreateComponents = _ComponentServiceCollectionExtensions.GetMethod("CreateComponents", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.NotNull(_CreateComponents);
-
-        var list = _CreateComponents.Invoke(null, new object[] { topologicalSets, componentContext }) as List<ComponentBase>;
-        Assert.NotNull(list);
-
-        Assert.Equal(4, list.Count);
-
-        Assert.Equal(typeof(DComponent), list[0].GetType());
-        Assert.Equal(typeof(CComponent), list[1].GetType());
-        Assert.Equal(typeof(BComponent), list[2].GetType());
-        Assert.Equal(typeof(AComponent), list[3].GetType());
-    }
-
-    [Fact]
     public void AddComponent_Dependencies_Null_Throw()
     {
         var services = new ServiceCollection();

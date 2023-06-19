@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230619.34" />
+		<PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230619.39" />
 	</ItemGroup>
 
 </Project>

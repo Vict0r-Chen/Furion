@@ -118,7 +118,14 @@ public static class ComponentServiceCollectionExtensions
         var componentContext = new ServiceComponentContext(services, configuration);
 
         // 创建组件依赖关系对象集合
-        var components = CreateComponents(topologicalSets, componentContext);
+        var components = ComponentBase.CreateComponents(topologicalSets, componentContext.Options, component =>
+        {
+            // 调用前置配置服务
+            component.PreConfigureServices(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
+        });
 
         // 调用配置服务
         components.ForEach(component =>
@@ -133,53 +140,6 @@ public static class ComponentServiceCollectionExtensions
         components.Clear();
 
         return services;
-    }
-
-    /// <summary>
-    /// 创建组件依赖关系对象集合
-    /// </summary>
-    /// <param name="topologicalSets">组件拓扑排序集合</param>
-    /// <param name="componentContext"><see cref="ServiceComponentContext"/></param>
-    /// <returns><see cref="List{T}"/></returns>
-    internal static List<ComponentBase> CreateComponents(List<Type> topologicalSets, ServiceComponentContext componentContext)
-    {
-        // 组件依赖关系对象集合
-        var components = new List<ComponentBase>();
-
-        // 获取组件模块配置选项
-        var componentOptions = componentContext.Options;
-
-        // 从尾部依次初始化组件实例
-        for (var i = topologicalSets.Count - 1; i >= 0; i--)
-        {
-            var componentType = topologicalSets[i];
-
-            // 组件重复调用检测
-            var recordName = componentType.FullName + " (Type 'ComponentBase')";
-            if (componentOptions.SuppressDuplicateCall)
-            {
-                if (componentOptions.CallRecords.Any(t => t == recordName))
-                {
-                    // 输出调试事件
-                    Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
-                    continue;
-                }
-
-                componentOptions.CallRecords.Add(recordName);
-            }
-
-            // 创建组件实例
-            var component = ComponentBase.CreateInstance(componentType, componentOptions);
-            components.Insert(0, component);
-
-            // 调用前置配置服务
-            component.PreConfigureServices(componentContext);
-
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
-        }
-
-        return components;
     }
 
     /// <summary>

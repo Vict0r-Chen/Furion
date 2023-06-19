@@ -93,6 +93,12 @@ public static class ComponentWebApplicationExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
+        // 空检查
+        if (dependencies.Count == 0)
+        {
+            return webApplication;
+        }
+
         // 创建组件拓扑排序集合
         var topologicalSets = ComponentBase.CreateTopological(dependencies, ComponentBase.IsWebComponent);
 
@@ -105,7 +111,14 @@ public static class ComponentWebApplicationExtensions
         var componentContext = new ApplicationComponentContext(webApplication);
 
         // 创建组件依赖关系对象集合
-        var components = CreateComponents(topologicalSets, componentContext);
+        var components = ComponentBase.CreateComponents<WebComponent>(topologicalSets, componentContext.Options, component =>
+        {
+            // 调用前置配置中间件
+            component.PreConfigure(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
+        });
 
         // 调用配置中间件
         components.ForEach(component =>
@@ -120,53 +133,6 @@ public static class ComponentWebApplicationExtensions
         components.Clear();
 
         return webApplication;
-    }
-
-    /// <summary>
-    /// 创建组件依赖关系对象集合
-    /// </summary>
-    /// <param name="topologicalSets">组件拓扑排序集合</param>
-    /// <param name="componentContext"><see cref="ApplicationComponentContext"/></param>
-    /// <returns><see cref="List{T}"/></returns>
-    private static List<WebComponent> CreateComponents(List<Type> topologicalSets, ApplicationComponentContext componentContext)
-    {
-        // 组件依赖关系对象集合
-        var components = new List<WebComponent>();
-
-        // 获取组件模块配置选项
-        var componentOptions = componentContext.Options;
-
-        // 从尾部依次初始化组件实例
-        for (var i = topologicalSets.Count - 1; i >= 0; i--)
-        {
-            var componentType = topologicalSets[i];
-
-            // 组件重复调用检测
-            var recordName = componentType.FullName + " (Type 'WebComponent')";
-            if (componentOptions.SuppressDuplicateCallForWeb)
-            {
-                if (componentOptions.CallRecords.Any(t => t == recordName))
-                {
-                    // 输出调试事件
-                    Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
-                    continue;
-                }
-
-                componentOptions.CallRecords.Add(recordName);
-            }
-
-            // 创建组件实例
-            var component = (WebComponent)ComponentBase.CreateInstance(componentType, componentOptions);
-            components.Insert(0, component);
-
-            // 调用前置配置中间件
-            component.PreConfigure(componentContext);
-
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
-        }
-
-        return components;
     }
 
     /// <summary>

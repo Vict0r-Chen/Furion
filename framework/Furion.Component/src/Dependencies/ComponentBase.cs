@@ -282,4 +282,65 @@ public abstract class ComponentBase
 
         return component;
     }
+
+    /// <summary>
+    /// 创建组件依赖关系对象集合
+    /// </summary>
+    /// <typeparam name="TTargetComponent">目标组件类型</typeparam>
+    /// <param name="topologicalSets">组件拓扑排序集合</param>
+    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <param name="predicate">自定义配置委托</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<TTargetComponent> CreateComponents<TTargetComponent>(List<Type> topologicalSets, ComponentOptions componentOptions, Action<TTargetComponent>? predicate = null)
+        where TTargetComponent : ComponentBase
+    {
+        // 组件依赖关系对象集合
+        var components = new List<TTargetComponent>();
+
+        // 组件重复调用检查标识
+        var suppressDuplicateCall = typeof(TTargetComponent).FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
+            ? nameof(ComponentOptions.SuppressDuplicateCallForWeb)
+            : nameof(ComponentOptions.SuppressDuplicateCall);
+
+        // 从尾部依次初始化组件实例
+        for (var i = topologicalSets.Count - 1; i >= 0; i--)
+        {
+            var componentType = topologicalSets[i];
+
+            // 组件重复调用检测
+            var recordName = componentType.FullName + $" (Type '{typeof(TTargetComponent).Name}')";
+            if (componentOptions[suppressDuplicateCall])
+            {
+                if (componentOptions.CallRecords.Any(t => t == recordName))
+                {
+                    // 输出调试事件
+                    Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
+                    continue;
+                }
+
+                componentOptions.CallRecords.Add(recordName);
+            }
+
+            // 创建组件实例
+            var component = (TTargetComponent)CreateInstance(componentType, componentOptions);
+            components.Insert(0, component);
+
+            // 调用自定义配置委托
+            predicate?.Invoke(component);
+        }
+
+        return components;
+    }
+
+    /// <summary>
+    /// 创建组件依赖关系对象集合
+    /// </summary>
+    /// <param name="topologicalSets">组件拓扑排序集合</param>
+    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <param name="predicate">自定义配置委托</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<ComponentBase> CreateComponents(List<Type> topologicalSets, ComponentOptions componentOptions, Action<ComponentBase>? predicate = null)
+    {
+        return CreateComponents<ComponentBase>(topologicalSets, componentOptions, predicate);
+    }
 }
