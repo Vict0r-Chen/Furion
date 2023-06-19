@@ -34,7 +34,7 @@ public class AComponent : WebComponent
 {
     public override void PreConfigure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigure)}");
         });
@@ -42,7 +42,7 @@ public class AComponent : WebComponent
 
     public override void Configure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(AComponent)}.{nameof(Configure)}");
         });
@@ -57,7 +57,7 @@ public class BComponent : WebComponent
 {
     public override void PreConfigure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigure)}");
         });
@@ -65,7 +65,7 @@ public class BComponent : WebComponent
 
     public override void Configure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(Configure)}");
         });
@@ -77,7 +77,7 @@ public class CComponent : WebComponent
 {
     public override void PreConfigure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(CComponent)}.{nameof(PreConfigure)}");
         });
@@ -85,7 +85,7 @@ public class CComponent : WebComponent
 
     public override void Configure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(CComponent)}.{nameof(Configure)}");
         });
@@ -96,7 +96,7 @@ public class DComponent : WebComponent
 {
     public override void PreConfigure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(DComponent)}.{nameof(PreConfigure)}");
         });
@@ -104,7 +104,7 @@ public class DComponent : WebComponent
 
     public override void Configure(ApplicationComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(DComponent)}.{nameof(Configure)}");
         });

@@ -33,29 +33,29 @@ public class ComponentBaseTests
     }
 
     [Fact]
-    public void Configure_Null_Throw()
+    public void Props_Null_Throw()
     {
         var component = new CBaseComponent();
         Assert.Throws<ArgumentNullException>(() =>
         {
-            component.Configure<ComponentActionOptions>(null!);
+            component.Props<ComponentActionOptions>(null!);
         });
     }
 
     [Fact]
-    public void Configure_Options_Null_Throw()
+    public void Props_Options_Null_Throw()
     {
         var component = new CBaseComponent();
         Assert.Throws<ArgumentNullException>(() =>
         {
-            component.Configure<ComponentActionOptions>(options =>
+            component.Props<ComponentActionOptions>(options =>
             {
             });
         });
     }
 
     [Fact]
-    public void Configure_ReturnOK()
+    public void Props_ReturnOK()
     {
         var services = new ServiceCollection();
         var component = new CBaseComponent
@@ -64,13 +64,13 @@ public class ComponentBaseTests
         };
 
         Assert.NotNull(component.Options);
-        Assert.Empty(component.Options.OptionsActions);
+        Assert.Empty(component.Options.PropsActions);
 
-        component.Configure<ComponentActionOptions>(options =>
+        component.Props<ComponentActionOptions>(options =>
         {
         });
 
-        Assert.Single(component.Options.OptionsActions);
+        Assert.Single(component.Options.PropsActions);
     }
 
     [Fact]

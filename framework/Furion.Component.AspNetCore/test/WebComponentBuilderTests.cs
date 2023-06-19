@@ -22,55 +22,55 @@ public class WebWebComponentBuilderTests
         var webComponentBuilder = new WebComponentBuilder();
 
         Assert.NotNull(webComponentBuilder);
-        Assert.NotNull(webComponentBuilder._optionsActions);
-        Assert.Empty(webComponentBuilder._optionsActions);
+        Assert.NotNull(webComponentBuilder._propsActions);
+        Assert.Empty(webComponentBuilder._propsActions);
         Assert.True(webComponentBuilder.SuppressDuplicateCall);
 
         var webComponentBuilderBase = new WebComponentBuilderBase();
         Assert.NotNull(webComponentBuilderBase);
-        Assert.NotNull(webComponentBuilderBase._optionsActions);
-        Assert.Empty(webComponentBuilderBase._optionsActions);
+        Assert.NotNull(webComponentBuilderBase._propsActions);
+        Assert.Empty(webComponentBuilderBase._propsActions);
     }
 
     [Fact]
-    public void Configure_Parameter_Null_Throw()
+    public void Props_Parameter_Null_Throw()
     {
         var webComponentBuilder = new WebComponentBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            webComponentBuilder.Configure<ComponentActionOptions>(null!);
+            webComponentBuilder.Props<ComponentActionOptions>(null!);
         });
     }
 
     [Fact]
-    public void Configure_NotExists_Add()
+    public void Props_NotExists_Add()
     {
         var webComponentBuilder = new WebComponentBuilder();
-        webComponentBuilder.Configure<ComponentActionOptions>(options =>
+        webComponentBuilder.Props<ComponentActionOptions>(options =>
         {
         });
-        Assert.Single(webComponentBuilder._optionsActions);
-        Assert.Single(webComponentBuilder._optionsActions.First().Value);
+        Assert.Single(webComponentBuilder._propsActions);
+        Assert.Single(webComponentBuilder._propsActions.First().Value);
     }
 
     [Fact]
-    public void Configure_Exists_Update()
+    public void Props_Exists_Update()
     {
         var webComponentBuilder = new WebComponentBuilder();
-        webComponentBuilder.Configure<ComponentActionOptions>(options =>
+        webComponentBuilder.Props<ComponentActionOptions>(options =>
         {
         });
 
-        Assert.Single(webComponentBuilder._optionsActions);
-        Assert.Single(webComponentBuilder._optionsActions.First().Value);
+        Assert.Single(webComponentBuilder._propsActions);
+        Assert.Single(webComponentBuilder._propsActions.First().Value);
 
-        webComponentBuilder.Configure<ComponentActionOptions>(options =>
+        webComponentBuilder.Props<ComponentActionOptions>(options =>
         {
         });
 
-        Assert.Single(webComponentBuilder._optionsActions);
-        Assert.Equal(2, webComponentBuilder._optionsActions.First().Value.Count);
+        Assert.Single(webComponentBuilder._propsActions);
+        Assert.Equal(2, webComponentBuilder._propsActions.First().Value.Count);
     }
 
     [Fact]
@@ -87,13 +87,13 @@ public class WebWebComponentBuilderTests
         webComponentBuilder.Build(webApplication);
         var componentOptions = webApplication.GetComponentOptions();
 
-        Assert.Empty(webComponentBuilder._optionsActions);
+        Assert.Empty(webComponentBuilder._propsActions);
         Assert.Equal(webComponentBuilder.SuppressDuplicateCall, componentOptions.SuppressDuplicateCallForWeb);
-        Assert.Equal(2, componentOptions.OptionsActions.Count);
-        Assert.Equal(typeof(ComponentBuilder), componentOptions.OptionsActions.Keys.First());
-        Assert.Equal(typeof(WebComponentBuilder), componentOptions.OptionsActions.Keys.Last());
+        Assert.Equal(2, componentOptions.PropsActions.Count);
+        Assert.Equal(typeof(ComponentBuilder), componentOptions.PropsActions.Keys.First());
+        Assert.Equal(typeof(WebComponentBuilder), componentOptions.PropsActions.Keys.Last());
 
-        var action = componentOptions.GetOptionsAction<WebComponentBuilder>();
+        var action = componentOptions.GetPropsAction<WebComponentBuilder>();
         Assert.NotNull(action);
 
         var options = new WebComponentBuilder();

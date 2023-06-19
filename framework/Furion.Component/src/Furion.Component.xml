@@ -10,6 +10,12 @@
             </summary>
             <remarks>作用于组件初始化时选择哪个构造函数</remarks>
         </member>
+        <member name="T:Furion.Component.ComponentPropsAttribute">
+            <summary>
+            标记组件属性定义作为组件配置
+            </summary>
+            <remarks>作用于组件初始化时设置指定属性值</remarks>
+        </member>
         <member name="T:Furion.Component.DependsOnAttribute">
             <summary>
             组件依赖配置
@@ -351,7 +357,7 @@
             组件模块构建器基类
             </summary>
         </member>
-        <member name="F:Furion.Component.ComponentBuilderBase._optionsActions">
+        <member name="F:Furion.Component.ComponentBuilderBase._propsActions">
             <summary>
             组件配置委托集合
             </summary>
@@ -361,11 +367,11 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentBuilderBase.Configure``1(System.Action{``0})">
+        <member name="M:Furion.Component.ComponentBuilderBase.Props``1(System.Action{``0})">
             <summary>
             添加组件配置
             </summary>
-            <typeparam name="TOptions">组件配置类型</typeparam>
+            <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentBuilderBase.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
@@ -418,26 +424,26 @@
         <member name="P:Furion.Component.ComponentContext.Options">
             <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
         </member>
-        <member name="M:Furion.Component.ComponentContext.GetOptions``1">
+        <member name="M:Furion.Component.ComponentContext.GetProps``1">
             <summary>
             获取组件配置
             </summary>
-            <typeparam name="TOptions">组件配置类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
+            <typeparam name="TProps">组件配置类型</typeparam>
+            <returns><typeparamref name="TProps"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentContext.GetOptionsOrNew``1">
+        <member name="M:Furion.Component.ComponentContext.GetPropsOrNew``1">
             <summary>
             获取组件配置
             </summary>
             <remarks>若组件配置不存在返回默认实例</remarks>
-            <typeparam name="TOptions">组件配置类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
+            <typeparam name="TProps">组件配置类型</typeparam>
+            <returns><typeparamref name="TProps"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentContext.GetOptionsAction``1">
+        <member name="M:Furion.Component.ComponentContext.GetPropsAction``1">
             <summary>
             获取组件配置委托
             </summary>
-            <typeparam name="TOptions">组件配置类型</typeparam>
+            <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
         <member name="T:Furion.Component.ServiceComponentContext">
@@ -463,11 +469,11 @@
         <member name="P:Furion.Component.ComponentBase.Options">
             <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
         </member>
-        <member name="M:Furion.Component.ComponentBase.Configure``1(System.Action{``0})">
+        <member name="M:Furion.Component.ComponentBase.Props``1(System.Action{``0})">
             <summary>
             添加组件配置
             </summary>
-            <typeparam name="TOptions">组件配置类型</typeparam>
+            <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentBase.PreConfigureServices(Furion.Component.ServiceComponentContext)">
@@ -599,9 +605,9 @@
             组件模块配置选项
             </summary>
         </member>
-        <member name="F:Furion.Component.ComponentOptions._GetOptionsActionOrNewMethod">
+        <member name="F:Furion.Component.ComponentOptions._GetPropsActionOrNewMethod">
             <summary>
-            获取 <see cref="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew``1"/> 方法类型
+            获取 <see cref="M:Furion.Component.ComponentOptions.GetPropsActionOrNew``1"/> 方法类型
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentOptions.#ctor">
@@ -610,7 +616,7 @@
             </summary>
             <remarks>此构造函数只会初始化一次</remarks>
         </member>
-        <member name="P:Furion.Component.ComponentOptions.OptionsActions">
+        <member name="P:Furion.Component.ComponentOptions.PropsActions">
             <summary>
             组件配置委托集合
             </summary>
@@ -639,26 +645,26 @@
             <returns><see cref="T:System.Boolean"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Component.ComponentOptions.GetOptionsAction``1">
+        <member name="M:Furion.Component.ComponentOptions.GetPropsAction``1">
             <summary>
             获取组件配置委托
             </summary>
-            <typeparam name="TOptions">组件配置类型</typeparam>
+            <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew``1">
+        <member name="M:Furion.Component.ComponentOptions.GetPropsActionOrNew``1">
             <summary>
             获取组件配置委托
             </summary>
             <remarks>若组件配置委托不存在则返回默认实例</remarks>
-            <typeparam name="TOptions">组件配置类型</typeparam>
+            <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentOptions.GetOptionsActionOrNew(System.Type)">
+        <member name="M:Furion.Component.ComponentOptions.GetPropsActionOrNew(System.Type)">
             <summary>
             获取组件配置委托
             </summary>
-            <param name="optionsType">组件配置类型</param>
+            <param name="propsType">组件配置类型</param>
             <returns><see cref="T:System.Delegate"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">

@@ -30,17 +30,17 @@ public class ServiceComponentContextTests
     }
 
     [Fact]
-    public void GetOptionsAction_NotExists_ReturnNull()
+    public void GetPropsAction_NotExists_ReturnNull()
     {
         var services = new ServiceCollection();
         var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
 
-        var action = serviceComponentContext.GetOptionsAction<ComponentActionOptions>();
+        var action = serviceComponentContext.GetPropsAction<ComponentActionOptions>();
         Assert.Null(action);
     }
 
     [Fact]
-    public void GetOptionsAction_Exists_ReturnAction()
+    public void GetPropsAction_Exists_ReturnAction()
     {
         var services = new ServiceCollection();
         var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
@@ -48,24 +48,24 @@ public class ServiceComponentContextTests
         static void Action(ComponentActionOptions options)
         {
         }
-        serviceComponentContext.Options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        serviceComponentContext.Options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = serviceComponentContext.GetOptionsAction<ComponentActionOptions>();
+        var action = serviceComponentContext.GetPropsAction<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptions_NotExists_ReturnNull()
+    public void GetProps_NotExists_ReturnNull()
     {
         var services = new ServiceCollection();
         var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
 
-        var action = serviceComponentContext.GetOptions<ComponentActionOptions>();
+        var action = serviceComponentContext.GetProps<ComponentActionOptions>();
         Assert.Null(action);
     }
 
     [Fact]
-    public void GetOptions_Exists_ReturnAction()
+    public void GetProps_Exists_ReturnAction()
     {
         var services = new ServiceCollection();
         var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
@@ -73,24 +73,24 @@ public class ServiceComponentContextTests
         static void Action(ComponentActionOptions options)
         {
         }
-        serviceComponentContext.Options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        serviceComponentContext.Options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = serviceComponentContext.GetOptions<ComponentActionOptions>();
+        var action = serviceComponentContext.GetProps<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptionsOrNew_NotExists_ReturnNull()
+    public void GetPropsOrNew_NotExists_ReturnNull()
     {
         var services = new ServiceCollection();
         var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
 
-        var action = serviceComponentContext.GetOptionsOrNew<ComponentActionOptions>();
+        var action = serviceComponentContext.GetPropsOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptionsOrNew_Exists_ReturnAction()
+    public void GetPropsOrNew_Exists_ReturnAction()
     {
         var services = new ServiceCollection();
         var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
@@ -98,9 +98,9 @@ public class ServiceComponentContextTests
         static void Action(ComponentActionOptions options)
         {
         }
-        serviceComponentContext.Options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        serviceComponentContext.Options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = serviceComponentContext.GetOptionsOrNew<ComponentActionOptions>();
+        var action = serviceComponentContext.GetPropsOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 }

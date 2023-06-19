@@ -23,7 +23,7 @@ public sealed class ComponentCoreComponent : ComponentBase
     public override void ConfigureServices(ServiceComponentContext context)
     {
         // 获取组件配置委托
-        var configure = context.GetOptionsAction<ComponentBuilder>();
+        var configure = context.GetPropsAction<ComponentBuilder>();
         context.Services.AddComponentCore(configure);
     }
 }

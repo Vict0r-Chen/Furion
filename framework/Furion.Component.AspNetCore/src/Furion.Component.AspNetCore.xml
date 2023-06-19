@@ -27,7 +27,7 @@
             组件模块构建器基类
             </summary>
         </member>
-        <member name="F:Furion.Component.WebComponentBuilderBase._optionsActions">
+        <member name="F:Furion.Component.WebComponentBuilderBase._propsActions">
             <summary>
             组件配置委托集合
             </summary>
@@ -37,11 +37,11 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Component.WebComponentBuilderBase.Configure``1(System.Action{``0})">
+        <member name="M:Furion.Component.WebComponentBuilderBase.Props``1(System.Action{``0})">
             <summary>
             添加组件配置
             </summary>
-            <typeparam name="TOptions">组件配置类型</typeparam>
+            <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
         </member>
         <member name="M:Furion.Component.WebComponentBuilderBase.Build(Microsoft.AspNetCore.Builder.WebApplication)">

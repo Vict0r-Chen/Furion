@@ -36,7 +36,7 @@ public sealed class ComponentBuilder : ComponentBuilderBase
     internal override void Build(IServiceCollection services)
     {
         // 添加组件模块自身配置
-        Configure<ComponentBuilder>(builder =>
+        Props<ComponentBuilder>(builder =>
         {
             builder.SuppressDuplicateCall = SuppressDuplicateCall;
         });

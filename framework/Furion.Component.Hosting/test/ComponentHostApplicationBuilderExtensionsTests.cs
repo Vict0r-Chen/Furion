@@ -20,7 +20,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
     public void Entry_WebComponent_ReturnOK()
     {
         var hostApplicationBuilder = Host.CreateApplicationBuilder().Entry<AComponent>();
-        var action = hostApplicationBuilder.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = hostApplicationBuilder.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -61,10 +61,10 @@ public class ComponentHostApplicationBuilderExtensionsTests
         hostApplicationBuilder.AddComponentCore(componentBuilder);
 
         var componentOptions = hostApplicationBuilder.Services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
         Assert.False(componentOptions.SuppressDuplicateCall);
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
@@ -79,7 +79,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
         hostApplicationBuilder.AddComponentCore();
 
         var componentOptions = hostApplicationBuilder.Services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
     }
 
     [Fact]
@@ -92,10 +92,10 @@ public class ComponentHostApplicationBuilderExtensionsTests
         });
 
         var componentOptions = hostApplicationBuilder.Services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
         Assert.False(componentOptions.SuppressDuplicateCall);
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
@@ -125,7 +125,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
 
         hostApplicationBuilder.AddComponentCore();
         hostApplicationBuilder.AddComponent(dependencies);
-        var action = hostApplicationBuilder.Services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = hostApplicationBuilder.Services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -156,7 +156,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
             builder.SuppressDuplicateCall = false;
         });
         hostApplicationBuilder.AddComponent(dependencies);
-        var action = hostApplicationBuilder.Services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = hostApplicationBuilder.Services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -172,7 +172,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
         var hostApplicationBuilder = Host.CreateApplicationBuilder();
         hostApplicationBuilder.AddComponent<AComponent>();
 
-        var action = hostApplicationBuilder.Services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = hostApplicationBuilder.Services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -188,7 +188,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
         var hostApplicationBuilder = Host.CreateApplicationBuilder();
         hostApplicationBuilder.AddComponent(typeof(AComponent));
 
-        var action = hostApplicationBuilder.Services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = hostApplicationBuilder.Services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();

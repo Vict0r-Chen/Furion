@@ -22,39 +22,39 @@ public class ComponentOptionsTests
         var options = new ComponentOptions();
         Assert.NotNull(options);
 
-        Assert.NotNull(options.OptionsActions);
-        Assert.Empty(options.OptionsActions);
+        Assert.NotNull(options.PropsActions);
+        Assert.Empty(options.PropsActions);
         Assert.NotNull(options.CallRecords);
         Assert.Empty(options.CallRecords);
         Assert.True(options.SuppressDuplicateCall);
         Assert.True(options.SuppressDuplicateCallForWeb);
 
-        Assert.NotNull(options._GetOptionsActionOrNewMethod);
+        Assert.NotNull(options._GetPropsActionOrNewMethod);
     }
 
     [Fact]
-    public void GetOptionsAction_NotExists_ReturnNull()
+    public void GetPropsAction_NotExists_ReturnNull()
     {
         var options = new ComponentOptions();
-        var action = options.GetOptionsAction<ComponentActionOptions>();
+        var action = options.GetPropsAction<ComponentActionOptions>();
         Assert.Null(action);
     }
 
     [Fact]
-    public void GetOptionsAction_Exists_ReturnAction()
+    public void GetPropsAction_Exists_ReturnAction()
     {
         var options = new ComponentOptions();
         static void Action(ComponentActionOptions options)
         {
         }
-        options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = options.GetOptionsAction<ComponentActionOptions>();
+        var action = options.GetPropsAction<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptionsAction_MultipleActions()
+    public void GetPropsAction_MultipleActions()
     {
         var callRecord = new List<string>();
         var options = new ComponentOptions();
@@ -68,9 +68,9 @@ public class ComponentOptionsTests
         {
             callRecord.Add(nameof(Action2));
         }
-        options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action, Action2 });
+        options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action, Action2 });
 
-        var action = options.GetOptionsAction<ComponentActionOptions>();
+        var action = options.GetPropsAction<ComponentActionOptions>();
         Assert.NotNull(action);
 
         action(new ComponentActionOptions());
@@ -81,18 +81,18 @@ public class ComponentOptionsTests
     }
 
     [Fact]
-    public void GetOptionsActionOrNew_NotExists_ReturnAction()
+    public void GetPropsActionOrNew_NotExists_ReturnAction()
     {
         var options = new ComponentOptions();
-        var action = options.GetOptionsActionOrNew<ComponentActionOptions>();
+        var action = options.GetPropsActionOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptionsActionOrNew_ForType()
+    public void GetPropsActionOrNew_ForType()
     {
         var options = new ComponentOptions();
-        var @delegate = options.GetOptionsActionOrNew(typeof(ComponentActionOptions));
+        var @delegate = options.GetPropsActionOrNew(typeof(ComponentActionOptions));
         Assert.NotNull(@delegate);
 
         var action = (Action<ComponentActionOptions>)@delegate;

@@ -42,13 +42,13 @@ public abstract class ComponentContext
     /// <summary>
     /// 获取组件配置
     /// </summary>
-    /// <typeparam name="TOptions">组件配置类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions? GetOptions<TOptions>()
-        where TOptions : class, new()
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <returns><typeparamref name="TProps"/></returns>
+    public TProps? GetProps<TProps>()
+        where TProps : class, new()
     {
         // 获取组件配置委托
-        var cascadeAction = GetOptionsAction<TOptions>();
+        var cascadeAction = GetPropsAction<TProps>();
 
         if (cascadeAction is null)
         {
@@ -56,32 +56,32 @@ public abstract class ComponentContext
         }
 
         // 初始化组件配置实例并调用配置委托
-        var options = Activator.CreateInstance<TOptions>();
-        cascadeAction(options);
+        var props = Activator.CreateInstance<TProps>();
+        cascadeAction(props);
 
-        return options;
+        return props;
     }
 
     /// <summary>
     /// 获取组件配置
     /// </summary>
     /// <remarks>若组件配置不存在返回默认实例</remarks>
-    /// <typeparam name="TOptions">组件配置类型</typeparam>
-    /// <returns><typeparamref name="TOptions"/></returns>
-    public TOptions GetOptionsOrNew<TOptions>()
-        where TOptions : class, new()
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <returns><typeparamref name="TProps"/></returns>
+    public TProps GetPropsOrNew<TProps>()
+        where TProps : class, new()
     {
-        return GetOptions<TOptions>() ?? Activator.CreateInstance<TOptions>();
+        return GetProps<TProps>() ?? Activator.CreateInstance<TProps>();
     }
 
     /// <summary>
     /// 获取组件配置委托
     /// </summary>
-    /// <typeparam name="TOptions">组件配置类型</typeparam>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><see cref="Action{T}"/></returns>
-    public Action<TOptions>? GetOptionsAction<TOptions>()
-        where TOptions : class, new()
+    public Action<TProps>? GetPropsAction<TProps>()
+        where TProps : class, new()
     {
-        return Options.GetOptionsAction<TOptions>();
+        return Options.GetPropsAction<TProps>();
     }
 }

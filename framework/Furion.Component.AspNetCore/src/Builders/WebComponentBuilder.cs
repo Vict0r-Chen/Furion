@@ -36,7 +36,7 @@ public sealed class WebComponentBuilder : WebComponentBuilderBase
     internal override void Build(WebApplication webApplication)
     {
         // 添加组件模块自身配置
-        Configure<WebComponentBuilder>(builder =>
+        Props<WebComponentBuilder>(builder =>
         {
             builder.SuppressDuplicateCall = SuppressDuplicateCall;
         });

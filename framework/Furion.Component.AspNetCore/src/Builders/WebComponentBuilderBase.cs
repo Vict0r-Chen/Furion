@@ -22,28 +22,28 @@ public class WebComponentBuilderBase
     /// <summary>
     /// 组件配置委托集合
     /// </summary>
-    internal readonly Dictionary<Type, List<Delegate>> _optionsActions;
+    internal readonly Dictionary<Type, List<Delegate>> _propsActions;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     internal WebComponentBuilderBase()
     {
-        _optionsActions = new();
+        _propsActions = new();
     }
 
     /// <summary>
     /// 添加组件配置
     /// </summary>
-    /// <typeparam name="TOptions">组件配置类型</typeparam>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <param name="configure">自定义组件配置委托</param>
-    public void Configure<TOptions>(Action<TOptions> configure)
-        where TOptions : class, new()
+    public void Props<TProps>(Action<TProps> configure)
+        where TProps : class, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
 
-        _optionsActions.AddOrUpdate(typeof(TOptions), configure);
+        _propsActions.AddOrUpdate(typeof(TProps), configure);
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ public class WebComponentBuilderBase
     {
         // 添加组件配置
         var componentOptions = webApplication.GetComponentOptions();
-        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
+        componentOptions.PropsActions.AddOrUpdate(_propsActions);
 
-        _optionsActions.Clear();
+        _propsActions.Clear();
     }
 }

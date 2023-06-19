@@ -20,7 +20,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
     public void Entry_WebComponent_ReturnOK()
     {
         var webApplication = WebApplication.CreateBuilder().Entry<AComponent>();
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -43,7 +43,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
     public void Entry_Components_ReturnOK()
     {
         var webApplication = WebApplication.CreateBuilder().Entry<AComponent, AComponent>();
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -84,10 +84,10 @@ public class ComponentWebApplicationBuilderExtensionsTests
         webApplicationBuilder.AddComponentCore(componentBuilder);
 
         var componentOptions = webApplicationBuilder.Services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
         Assert.False(componentOptions.SuppressDuplicateCall);
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
@@ -102,7 +102,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
         webApplicationBuilder.AddComponentCore();
 
         var componentOptions = webApplicationBuilder.Services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
     }
 
     [Fact]
@@ -115,10 +115,10 @@ public class ComponentWebApplicationBuilderExtensionsTests
         });
 
         var componentOptions = webApplicationBuilder.Services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
         Assert.False(componentOptions.SuppressDuplicateCall);
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
@@ -147,7 +147,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         webApplication.UseComponent(dependencies);
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -178,7 +178,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
             builder.SuppressDuplicateCall = false;
         });
         webApplication.UseComponent(dependencies);
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -196,7 +196,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
 
         var webApplication = webApplicationBuilder.Build();
         webApplication.UseComponent<AComponent>();
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -214,7 +214,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
 
         var webApplication = webApplicationBuilder.Build();
         webApplication.UseComponent(typeof(AComponent));
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();

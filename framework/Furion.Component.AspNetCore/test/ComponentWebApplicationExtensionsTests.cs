@@ -38,10 +38,10 @@ public class ComponentWebApplicationExtensionsTests
         webApplication.UseComponentCore(componentBuilder);
 
         var componentOptions = webApplication.GetComponentOptions();
-        Assert.Equal(2, componentOptions.OptionsActions.Count);
+        Assert.Equal(2, componentOptions.PropsActions.Count);
         Assert.False(componentOptions.SuppressDuplicateCallForWeb);
 
-        var action = componentOptions.GetOptionsAction<WebComponentBuilder>();
+        var action = componentOptions.GetPropsAction<WebComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new WebComponentBuilder();
@@ -56,7 +56,7 @@ public class ComponentWebApplicationExtensionsTests
         webApplication.UseComponentCore();
 
         var componentOptions = webApplication.GetComponentOptions();
-        Assert.Equal(2, componentOptions.OptionsActions.Count);
+        Assert.Equal(2, componentOptions.PropsActions.Count);
     }
 
     [Fact]
@@ -69,10 +69,10 @@ public class ComponentWebApplicationExtensionsTests
         });
 
         var componentOptions = webApplication.GetComponentOptions();
-        Assert.Equal(2, componentOptions.OptionsActions.Count);
+        Assert.Equal(2, componentOptions.PropsActions.Count);
         Assert.False(componentOptions.SuppressDuplicateCallForWeb);
 
-        var action = componentOptions.GetOptionsAction<WebComponentBuilder>();
+        var action = componentOptions.GetPropsAction<WebComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new WebComponentBuilder();
@@ -113,7 +113,7 @@ public class ComponentWebApplicationExtensionsTests
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         webApplication.UseComponent(dependencies);
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -144,7 +144,7 @@ public class ComponentWebApplicationExtensionsTests
             builder.SuppressDuplicateCall = false;
         });
         webApplication.UseComponent(dependencies);
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -160,7 +160,7 @@ public class ComponentWebApplicationExtensionsTests
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         webApplication.UseComponent<AComponent>();
 
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -176,7 +176,7 @@ public class ComponentWebApplicationExtensionsTests
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         webApplication.UseComponent(typeof(AComponent));
 
-        var action = webApplication.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();

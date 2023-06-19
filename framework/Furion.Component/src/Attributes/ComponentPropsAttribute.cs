@@ -15,16 +15,10 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块应用组件
+/// 标记组件属性定义作为组件配置
 /// </summary>
-[DependsOn<ComponentCoreComponent>]
-public sealed class WebComponentCoreComponent : WebComponent
+/// <remarks>作用于组件初始化时设置指定属性值</remarks>
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+public sealed class ComponentPropsAttribute : Attribute
 {
-    /// <inheritdoc />
-    public override void Configure(ApplicationComponentContext context)
-    {
-        // 获取组件配置委托
-        var configure = context.GetPropsAction<WebComponentBuilder>();
-        context.Application.UseComponentCore(configure);
-    }
 }

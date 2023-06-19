@@ -26,7 +26,7 @@ public class AComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigureServices)}");
         });
@@ -34,7 +34,7 @@ public class AComponent : ComponentBase
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(AComponent)}.{nameof(ConfigureServices)}");
         });
@@ -49,7 +49,7 @@ public class BComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigureServices)}");
         });
@@ -57,7 +57,7 @@ public class BComponent : ComponentBase
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(ConfigureServices)}");
         });
@@ -69,7 +69,7 @@ public class CComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(CComponent)}.{nameof(PreConfigureServices)}");
         });
@@ -77,7 +77,7 @@ public class CComponent : ComponentBase
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(CComponent)}.{nameof(ConfigureServices)}");
         });
@@ -88,7 +88,7 @@ public class DComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(DComponent)}.{nameof(PreConfigureServices)}");
         });
@@ -96,7 +96,7 @@ public class DComponent : ComponentBase
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        Configure<CallOptions>(options =>
+        Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(DComponent)}.{nameof(ConfigureServices)}");
         });

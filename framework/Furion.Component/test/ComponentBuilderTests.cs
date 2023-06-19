@@ -22,55 +22,55 @@ public class ComponentBuilderTests
         var componentBuilder = new ComponentBuilder();
 
         Assert.NotNull(componentBuilder);
-        Assert.NotNull(componentBuilder._optionsActions);
-        Assert.Empty(componentBuilder._optionsActions);
+        Assert.NotNull(componentBuilder._propsActions);
+        Assert.Empty(componentBuilder._propsActions);
         Assert.True(componentBuilder.SuppressDuplicateCall);
 
         var componentBuilderBase = new ComponentBuilderBase();
         Assert.NotNull(componentBuilderBase);
-        Assert.NotNull(componentBuilderBase._optionsActions);
-        Assert.Empty(componentBuilderBase._optionsActions);
+        Assert.NotNull(componentBuilderBase._propsActions);
+        Assert.Empty(componentBuilderBase._propsActions);
     }
 
     [Fact]
-    public void Configure_Parameter_Null_Throw()
+    public void Props_Parameter_Null_Throw()
     {
         var componentBuilder = new ComponentBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            componentBuilder.Configure<ComponentActionOptions>(null!);
+            componentBuilder.Props<ComponentActionOptions>(null!);
         });
     }
 
     [Fact]
-    public void Configure_NotExists_Add()
+    public void Props_NotExists_Add()
     {
         var componentBuilder = new ComponentBuilder();
-        componentBuilder.Configure<ComponentActionOptions>(options =>
+        componentBuilder.Props<ComponentActionOptions>(options =>
         {
         });
-        Assert.Single(componentBuilder._optionsActions);
-        Assert.Single(componentBuilder._optionsActions.First().Value);
+        Assert.Single(componentBuilder._propsActions);
+        Assert.Single(componentBuilder._propsActions.First().Value);
     }
 
     [Fact]
-    public void Configure_Exists_Update()
+    public void Props_Exists_Update()
     {
         var componentBuilder = new ComponentBuilder();
-        componentBuilder.Configure<ComponentActionOptions>(options =>
+        componentBuilder.Props<ComponentActionOptions>(options =>
         {
         });
 
-        Assert.Single(componentBuilder._optionsActions);
-        Assert.Single(componentBuilder._optionsActions.First().Value);
+        Assert.Single(componentBuilder._propsActions);
+        Assert.Single(componentBuilder._propsActions.First().Value);
 
-        componentBuilder.Configure<ComponentActionOptions>(options =>
+        componentBuilder.Props<ComponentActionOptions>(options =>
         {
         });
 
-        Assert.Single(componentBuilder._optionsActions);
-        Assert.Equal(2, componentBuilder._optionsActions.First().Value.Count);
+        Assert.Single(componentBuilder._propsActions);
+        Assert.Equal(2, componentBuilder._propsActions.First().Value.Count);
     }
 
     [Fact]
@@ -85,12 +85,12 @@ public class ComponentBuilderTests
         componentBuilder.Build(services);
         var componentOptions = services.GetComponentOptions();
 
-        Assert.Empty(componentBuilder._optionsActions);
+        Assert.Empty(componentBuilder._propsActions);
         Assert.Equal(componentBuilder.SuppressDuplicateCall, componentOptions.SuppressDuplicateCall);
-        Assert.Single(componentOptions.OptionsActions);
-        Assert.Equal(typeof(ComponentBuilder), componentOptions.OptionsActions.Keys.First());
+        Assert.Single(componentOptions.PropsActions);
+        Assert.Equal(typeof(ComponentBuilder), componentOptions.PropsActions.Keys.First());
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var options = new ComponentBuilder();

@@ -41,10 +41,10 @@ public class ComponentServiceCollectionExtensionsTests
         Assert.Equal("Furion.CoreOptions", services.First().ServiceType.FullName);
 
         var componentOptions = services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
         Assert.False(componentOptions.SuppressDuplicateCall);
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
@@ -62,7 +62,7 @@ public class ComponentServiceCollectionExtensionsTests
         Assert.Equal("Furion.CoreOptions", services.First().ServiceType.FullName);
 
         var componentOptions = services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
     }
 
     [Fact]
@@ -78,10 +78,10 @@ public class ComponentServiceCollectionExtensionsTests
         Assert.Equal("Furion.CoreOptions", services.First().ServiceType.FullName);
 
         var componentOptions = services.GetComponentOptions();
-        Assert.Single(componentOptions.OptionsActions);
+        Assert.Single(componentOptions.PropsActions);
         Assert.False(componentOptions.SuppressDuplicateCall);
 
-        var action = componentOptions.GetOptionsAction<ComponentBuilder>();
+        var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
@@ -155,7 +155,7 @@ public class ComponentServiceCollectionExtensionsTests
 
         services.AddComponentCore();
         services.AddComponent(dependencies, new ConfigurationManager());
-        var action = services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -186,7 +186,7 @@ public class ComponentServiceCollectionExtensionsTests
             builder.SuppressDuplicateCall = false;
         });
         services.AddComponent(dependencies, new ConfigurationManager());
-        var action = services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -202,7 +202,7 @@ public class ComponentServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         services.AddComponent<AComponent>(new ConfigurationManager());
 
-        var action = services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();
@@ -218,7 +218,7 @@ public class ComponentServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         services.AddComponent(typeof(AComponent), new ConfigurationManager());
 
-        var action = services.GetComponentOptions().GetOptionsAction<CallOptions>();
+        var action = services.GetComponentOptions().GetPropsAction<CallOptions>();
         Assert.NotNull(action);
 
         var callOptions = new CallOptions();

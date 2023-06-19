@@ -25,16 +25,16 @@ public abstract class ComponentBase
     /// <summary>
     /// 添加组件配置
     /// </summary>
-    /// <typeparam name="TOptions">组件配置类型</typeparam>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <param name="configure">自定义组件配置委托</param>
-    public void Configure<TOptions>(Action<TOptions> configure)
-        where TOptions : class, new()
+    public void Props<TProps>(Action<TProps> configure)
+        where TProps : class, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
         ArgumentNullException.ThrowIfNull(Options, nameof(Options));
 
-        Options.OptionsActions.AddOrUpdate(typeof(TOptions), configure);
+        Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
     }
 
     /// <summary>
@@ -248,25 +248,25 @@ public abstract class ComponentBase
         {
             var parameterType = parameters[i].ParameterType;
 
-            // 检查是否是 Action<TOptions> 类型
+            // 检查是否是 Action<TProps> 类型
             if (parameterType.IsGenericType
                 && parameterType.GetGenericTypeDefinition() == typeof(Action<>)
                 && parameterType.GenericTypeArguments[0].HasParameterlessConstructorDefined())
             {
-                args[i] = componentOptions.GetOptionsActionOrNew(parameterType.GenericTypeArguments[0]);
+                args[i] = componentOptions.GetPropsActionOrNew(parameterType.GenericTypeArguments[0]);
                 continue;
             }
 
             // 检查是否是可 new() 类型
             if (parameterType.HasParameterlessConstructorDefined())
             {
-                // 创建参数实例
-                var instance = Activator.CreateInstance(parameterType);
+                // 创建组件配置实例
+                var props = Activator.CreateInstance(parameterType);
 
-                var cascadeAction = componentOptions.GetOptionsActionOrNew(parameterType);
-                cascadeAction.DynamicInvoke(instance);
+                var cascadeAction = componentOptions.GetPropsActionOrNew(parameterType);
+                cascadeAction.DynamicInvoke(props);
 
-                args[i] = instance;
+                args[i] = props;
                 continue;
             }
 

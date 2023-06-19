@@ -30,17 +30,17 @@ public class ApplicationComponentContextTests
     }
 
     [Fact]
-    public void GetOptionsAction_NotExists_ReturnNull()
+    public void GetPropsAction_NotExists_ReturnNull()
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
-        var action = applicationComponentContext.GetOptionsAction<ComponentActionOptions>();
+        var action = applicationComponentContext.GetPropsAction<ComponentActionOptions>();
         Assert.Null(action);
     }
 
     [Fact]
-    public void GetOptionsAction_Exists_ReturnAction()
+    public void GetPropsAction_Exists_ReturnAction()
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
@@ -48,24 +48,24 @@ public class ApplicationComponentContextTests
         static void Action(ComponentActionOptions options)
         {
         }
-        applicationComponentContext.Options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        applicationComponentContext.Options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = applicationComponentContext.GetOptionsAction<ComponentActionOptions>();
+        var action = applicationComponentContext.GetPropsAction<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptions_NotExists_ReturnNull()
+    public void GetProps_NotExists_ReturnNull()
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
-        var action = applicationComponentContext.GetOptions<ComponentActionOptions>();
+        var action = applicationComponentContext.GetProps<ComponentActionOptions>();
         Assert.Null(action);
     }
 
     [Fact]
-    public void GetOptions_Exists_ReturnAction()
+    public void GetProps_Exists_ReturnAction()
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
@@ -73,24 +73,24 @@ public class ApplicationComponentContextTests
         static void Action(ComponentActionOptions options)
         {
         }
-        applicationComponentContext.Options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        applicationComponentContext.Options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = applicationComponentContext.GetOptions<ComponentActionOptions>();
+        var action = applicationComponentContext.GetProps<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptionsOrNew_NotExists_ReturnNull()
+    public void GetPropsOrNew_NotExists_ReturnNull()
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
-        var action = applicationComponentContext.GetOptionsOrNew<ComponentActionOptions>();
+        var action = applicationComponentContext.GetPropsOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 
     [Fact]
-    public void GetOptionsOrNew_Exists_ReturnAction()
+    public void GetPropsOrNew_Exists_ReturnAction()
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
@@ -98,9 +98,9 @@ public class ApplicationComponentContextTests
         static void Action(ComponentActionOptions options)
         {
         }
-        applicationComponentContext.Options.OptionsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        applicationComponentContext.Options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
 
-        var action = applicationComponentContext.GetOptionsOrNew<ComponentActionOptions>();
+        var action = applicationComponentContext.GetPropsOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
 }
