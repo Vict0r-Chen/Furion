@@ -12,27 +12,19 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component.Tests;
+namespace Furion.Component.AspNetCore.Tests;
 
 #pragma warning disable
 
-public class SomeClass
+public class CBaseComponent : WebComponent
 {
 }
 
-public class CBaseComponent : ComponentBase
+public class NotWebComponent : ComponentBase
 {
 }
 
-public class InheritComponent : CBaseComponent
-{
-}
-
-public abstract class AbstractComponent : ComponentBase
-{
-}
-
-public class CanNotNewComponent : ComponentBase
+public class CanNotNewComponent : WebComponent
 {
     private CanNotNewComponent()
     {
@@ -45,83 +37,83 @@ public class CallOptions
 }
 
 [DependsOn<BComponent, CComponent>]
-public class AComponent : ComponentBase
+public class AComponent : WebComponent
 {
-    public override void PreConfigureServices(ServiceComponentContext context)
+    public override void PreConfigure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigureServices)}");
+            options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigure)}");
         });
     }
 
-    public override void ConfigureServices(ServiceComponentContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(AComponent)}.{nameof(ConfigureServices)}");
+            options.CallRecords.Add($"{nameof(AComponent)}.{nameof(Configure)}");
         });
 
         // 重复调用
-        context.Services.AddComponent<BComponent>(context.Configuration);
+        context.Application.UseComponent<BComponent>();
     }
 }
 
 [DependsOn<CComponent, DComponent>]
-public class BComponent : ComponentBase
+public class BComponent : WebComponent
 {
-    public override void PreConfigureServices(ServiceComponentContext context)
+    public override void PreConfigure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigureServices)}");
+            options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigure)}");
         });
     }
 
-    public override void ConfigureServices(ServiceComponentContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(BComponent)}.{nameof(ConfigureServices)}");
+            options.CallRecords.Add($"{nameof(BComponent)}.{nameof(Configure)}");
         });
     }
 }
 
 [DependsOn<DComponent>]
-public class CComponent : ComponentBase
+public class CComponent : WebComponent
 {
-    public override void PreConfigureServices(ServiceComponentContext context)
+    public override void PreConfigure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(CComponent)}.{nameof(PreConfigureServices)}");
+            options.CallRecords.Add($"{nameof(CComponent)}.{nameof(PreConfigure)}");
         });
     }
 
-    public override void ConfigureServices(ServiceComponentContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(CComponent)}.{nameof(ConfigureServices)}");
+            options.CallRecords.Add($"{nameof(CComponent)}.{nameof(Configure)}");
         });
     }
 }
 
-public class DComponent : ComponentBase
+public class DComponent : WebComponent
 {
-    public override void PreConfigureServices(ServiceComponentContext context)
+    public override void PreConfigure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(DComponent)}.{nameof(PreConfigureServices)}");
+            options.CallRecords.Add($"{nameof(DComponent)}.{nameof(PreConfigure)}");
         });
     }
 
-    public override void ConfigureServices(ServiceComponentContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
         Configure<CallOptions>(options =>
         {
-            options.CallRecords.Add($"{nameof(DComponent)}.{nameof(ConfigureServices)}");
+            options.CallRecords.Add($"{nameof(DComponent)}.{nameof(Configure)}");
         });
     }
 }
@@ -137,21 +129,21 @@ public class OkOptions
 {
 }
 
-public class InvalidArgumentComponnet : ComponentBase
+public class InvalidArgumentComponnet : WebComponent
 {
     public InvalidArgumentComponnet(InvalidOptions options)
     {
     }
 }
 
-public class InvalidArgument2Componnet : ComponentBase
+public class InvalidArgument2Componnet : WebComponent
 {
     public InvalidArgument2Componnet(Action<InvalidOptions> options)
     {
     }
 }
 
-public class OkArgumentComponent : ComponentBase
+public class OkArgumentComponent : WebComponent
 {
     public OkArgumentComponent(Action<OkOptions> action, OkOptions okOptions)
     {
@@ -160,7 +152,7 @@ public class OkArgumentComponent : ComponentBase
     }
 }
 
-public class OkArgument2Component : ComponentBase
+public class OkArgument2Component : WebComponent
 {
     public OkArgument2Component(OkOptions okOptions)
     {
@@ -174,7 +166,7 @@ public class OkArgument2Component : ComponentBase
     }
 }
 
-public class OkArgument3Component : ComponentBase
+public class OkArgument3Component : WebComponent
 {
     [ActivatorComponentConstructor]
     public OkArgument3Component(OkOptions okOptions)

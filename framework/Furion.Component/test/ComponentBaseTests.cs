@@ -26,8 +26,10 @@ public class ComponentBaseTests
 
         var services = new ServiceCollection();
         var configuration = new ConfigurationManager();
-        component.PreConfigureServices(new ServiceComponentContext(services, configuration));
-        component.ConfigureServices(new ServiceComponentContext(services, configuration));
+        var componentContext = new ServiceComponentContext(services, configuration);
+
+        component.PreConfigureServices(componentContext);
+        component.ConfigureServices(componentContext);
     }
 
     [Fact]

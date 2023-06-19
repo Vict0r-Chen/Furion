@@ -17,3 +17,4 @@
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.Tests")]
+[assembly: InternalsVisibleTo("Furion.DependencyInjection.Named.Tests")]
