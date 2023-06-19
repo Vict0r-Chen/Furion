@@ -484,18 +484,20 @@
             <remarks>根据组件依赖关系顺序调用，被依赖的组件优先调用</remarks>
             <param name="context"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateTopological(System.Type)">
+        <member name="M:Furion.Component.ComponentBase.CreateTopological(System.Type,System.Func{System.Type,System.Boolean})">
             <summary>
             创建组件拓扑排序集合
             </summary>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="predicate">自定义过滤委托</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateTopological(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="M:Furion.Component.ComponentBase.CreateTopological(System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Func{System.Type,System.Boolean})">
             <summary>
             创建拓扑排序集合
             </summary>
             <param name="dependencies">组件依赖关系集合</param>
+            <param name="predicate">自定义过滤委托</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBase.CreateDependencies(System.Type)">
@@ -511,6 +513,13 @@
             </summary>
             <param name="dependencies">组件依赖关系集合</param>
             <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.IsWebComponent(System.Type)">
+            <summary>
+            是否是 WebComponent
+            </summary>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBase.Check(System.Type)">
             <summary>

@@ -176,6 +176,17 @@ public class ComponentBaseTests
     }
 
     [Fact]
+    public void CreateTopological_Predicate()
+    {
+        // D C B A
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+        var list = ComponentBase.CreateTopological(dependencies, t => t == typeof(AComponent));
+
+        Assert.Single(list);
+        Assert.Equal(typeof(AComponent), list.ElementAt(0));
+    }
+
+    [Fact]
     public void CreateTopological_ForType()
     {
         // D C B A
@@ -186,6 +197,16 @@ public class ComponentBaseTests
         Assert.Equal(typeof(CComponent), list.ElementAt(1));
         Assert.Equal(typeof(BComponent), list.ElementAt(2));
         Assert.Equal(typeof(AComponent), list.ElementAt(3));
+    }
+
+    [Fact]
+    public void CreateTopological_ForType_Predicate()
+    {
+        // D C B A
+        var list = ComponentBase.CreateTopological(typeof(AComponent), t => t == typeof(AComponent));
+
+        Assert.Single(list);
+        Assert.Equal(typeof(AComponent), list.ElementAt(0));
     }
 
     [Theory]
@@ -216,5 +237,15 @@ public class ComponentBaseTests
         var component = ComponentBase.CreateInstance(componentType, componentOptions);
         Assert.NotNull(component);
         Assert.NotNull(component.Options);
+    }
+
+    [Theory]
+    [InlineData(typeof(AComponent), false)]
+    [InlineData(typeof(ComponentBase), false)]
+    [InlineData(typeof(InvalidArgumentComponnet), false)]
+    [InlineData(typeof(OkArgumentComponent), false)]
+    public void IsWebComponent(Type componentType, bool result)
+    {
+        Assert.Equal(result, ComponentBase.IsWebComponent(componentType));
     }
 }

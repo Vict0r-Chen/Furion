@@ -94,7 +94,7 @@ public static class ComponentWebApplicationExtensions
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
         // 创建组件拓扑排序集合
-        var topologicalSets = ComponentBase.CreateTopological(dependencies);
+        var topologicalSets = ComponentBase.CreateTopological(dependencies, ComponentBase.IsWebComponent);
 
         // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new WebComponentBuilderBase();
@@ -116,6 +116,7 @@ public static class ComponentWebApplicationExtensions
             component.Configure(componentContext);
         });
 
+        topologicalSets.Clear();
         components.Clear();
 
         return webApplication;
@@ -139,12 +140,6 @@ public static class ComponentWebApplicationExtensions
         for (var i = topologicalSets.Count - 1; i >= 0; i--)
         {
             var componentType = topologicalSets[i];
-
-            // 若不是 WebComponent 则跳过
-            if (componentType.BaseType != typeof(WebComponent))
-            {
-                continue;
-            }
 
             // 组件重复调用检测
             var recordName = componentType.FullName + " (Type 'WebComponent')";

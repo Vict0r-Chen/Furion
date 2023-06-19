@@ -129,6 +129,7 @@ public static class ComponentServiceCollectionExtensions
             component.ConfigureServices(componentContext);
         });
 
+        topologicalSets.Clear();
         components.Clear();
 
         return services;

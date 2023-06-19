@@ -59,24 +59,31 @@ public abstract class ComponentBase
     /// 创建组件拓扑排序集合
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <param name="predicate">自定义过滤委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> CreateTopological(Type componentType)
+    public static List<Type> CreateTopological(Type componentType, Func<Type, bool>? predicate = null)
     {
-        return CreateTopological(CreateDependencies(componentType));
+        return CreateTopological(CreateDependencies(componentType), predicate);
     }
 
     /// <summary>
     /// 创建拓扑排序集合
     /// </summary>
     /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="predicate">自定义过滤委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> CreateTopological(Dictionary<Type, Type[]> dependencies)
+    public static List<Type> CreateTopological(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
     {
         // 检查组件依赖关系集合有效性
         CheckDependencies(dependencies);
 
         // 获取拓扑排序集合
-        return Topological.Sort(dependencies);
+        var topologicalSets = Topological.Sort(dependencies);
+
+        // 筛选集合
+        return predicate is null
+            ? topologicalSets
+            : topologicalSets.Where(predicate).ToList();
     }
 
     /// <summary>
@@ -148,6 +155,22 @@ public abstract class ComponentBase
         {
             throw new InvalidOperationException("The dependency relationship has a circular dependency.");
         }
+    }
+
+    /// <summary>
+    /// 是否是 WebComponent
+    /// </summary>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <returns><see cref="bool"/></returns>
+    public static bool IsWebComponent(Type componentType)
+    {
+        var baseType = componentType.BaseType;
+
+        return typeof(ComponentBase).IsAssignableFrom(componentType)
+            && baseType is not null
+            && baseType.FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
+            && componentType.IsInstantiable()
+            && componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Length > 0;
     }
 
     /// <summary>
