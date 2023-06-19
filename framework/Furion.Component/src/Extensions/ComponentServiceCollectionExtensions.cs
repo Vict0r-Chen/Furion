@@ -189,6 +189,7 @@ public static class ComponentServiceCollectionExtensions
     internal static IHostEnvironment? GetHostEnvironment(this IServiceCollection services)
     {
         // 查找 Web 主机环境是否配置
+        // 如果没有配置则继续查找泛型通用主机环境是否配置
         var hostEnvironment = (services.FirstOrDefault(s => s.ServiceType.FullName == IWEBHOSTENVIRONMENT_TYPE_FULLNAME)?.ImplementationInstance
                                                 ?? services.FirstOrDefault(s => s.ServiceType == typeof(IHostEnvironment))?.ImplementationInstance) as IHostEnvironment;
         return hostEnvironment;
