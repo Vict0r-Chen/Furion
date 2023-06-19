@@ -19,11 +19,14 @@ namespace Furion.Component;
 /// </summary>
 public sealed class ComponentCoreComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    public Action<ComponentBuilder>? Props { get; set; }
+
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        // 获取组件配置委托
-        var configure = context.GetPropsAction<ComponentBuilder>();
-        context.Services.AddComponentCore(configure);
+        context.Services.AddComponentCore(Props);
     }
 }

@@ -246,31 +246,7 @@ public abstract class ComponentBase
         var args = new object?[parameters.Length];
         for (var i = 0; i < parameters.Length; i++)
         {
-            var parameterType = parameters[i].ParameterType;
-
-            // 检查是否是 Action<TProps> 类型
-            if (parameterType.IsGenericType
-                && parameterType.GetGenericTypeDefinition() == typeof(Action<>)
-                && parameterType.GenericTypeArguments[0].HasParameterlessConstructorDefined())
-            {
-                args[i] = componentOptions.GetPropsActionOrNew(parameterType.GenericTypeArguments[0]);
-                continue;
-            }
-
-            // 检查是否是可 new() 类型
-            if (parameterType.HasParameterlessConstructorDefined())
-            {
-                // 创建组件配置实例
-                var props = Activator.CreateInstance(parameterType);
-
-                var cascadeAction = componentOptions.GetPropsActionOrNew(parameterType);
-                cascadeAction.DynamicInvoke(props);
-
-                args[i] = props;
-                continue;
-            }
-
-            throw new InvalidOperationException($"`{parameterType.Name}` parameter type is an invalid component options.");
+            args[i] = GetProps(parameters[i].ParameterType, componentOptions);
         }
 
         // 调用组件构造函数进行实例化
@@ -280,7 +256,55 @@ public abstract class ComponentBase
         // 组件模块配置选项
         component.Options = componentOptions;
 
+        // 查找贴有 [ComponentProps] 特性的组件配置属性
+        var properties = componentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                                                            .Where(p => p.IsDefined(typeof(ComponentPropsAttribute), false));
+
+        // 存在组件配置属性
+        if (properties.Any())
+        {
+            foreach (var property in properties)
+            {
+                property.SetValue(component, GetProps(property.PropertyType, componentOptions));
+            }
+        }
+
         return component;
+    }
+
+    /// <summary>
+    /// 获取组件配置
+    /// </summary>
+    /// <param name="propsType">组件配置类型</param>
+    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <returns><see cref="object"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static object? GetProps(Type propsType, ComponentOptions componentOptions)
+    {
+        // 检查是否是 Action<TProps> 类型
+        if (propsType.IsGenericType
+            && propsType.GetGenericTypeDefinition() == typeof(Action<>)
+            && propsType.GenericTypeArguments[0].HasParameterlessConstructorDefined())
+        {
+            return componentOptions.GetPropsAction(propsType.GenericTypeArguments[0]);
+        }
+
+        // 检查是否是可 new() 类型
+        if (propsType.HasParameterlessConstructorDefined())
+        {
+            var cascadeAction = componentOptions.GetPropsAction(propsType);
+            if (cascadeAction is null)
+            {
+                return null;
+            }
+
+            // 创建组件配置实例
+            var props = Activator.CreateInstance(propsType);
+            cascadeAction.DynamicInvoke(props);
+            return props;
+        }
+
+        throw new InvalidOperationException($"`{propsType.Name}` parameter type is an invalid component options.");
     }
 
     /// <summary>

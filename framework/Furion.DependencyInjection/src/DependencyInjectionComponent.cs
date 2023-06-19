@@ -20,11 +20,14 @@ namespace Furion.Component;
 [DependsOn<ComponentCoreComponent>]
 public sealed class DependencyInjectionComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    public Action<DependencyInjectionBuilder>? Props { get; set; }
+
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        // 获取组件配置委托
-        var configure = context.GetPropsAction<DependencyInjectionBuilder>();
-        context.Services.AddDependencyInjection(configure);
+        context.Services.AddDependencyInjection(Props);
     }
 }

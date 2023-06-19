@@ -20,9 +20,9 @@ namespace Furion.Component;
 internal sealed class ComponentOptions
 {
     /// <summary>
-    /// 获取 <see cref="GetPropsActionOrNew{TProps}()"/> 方法类型
+    /// 获取 <see cref="GetPropsAction{TProps}()"/> 方法类型
     /// </summary>
-    internal readonly MethodInfo _GetPropsActionOrNewMethod;
+    internal readonly MethodInfo _GetPropsActionMethod;
 
     /// <summary>
     /// 构造函数
@@ -33,7 +33,12 @@ internal sealed class ComponentOptions
         PropsActions ??= new();
         CallRecords ??= new();
 
-        _GetPropsActionOrNewMethod = GetType().GetMethod(nameof(GetPropsActionOrNew), 1, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null)!;
+        _GetPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
+            , 1
+            , BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly
+            , null
+            , Type.EmptyTypes
+            , null)!;
     }
 
     /// <summary>
@@ -86,34 +91,11 @@ internal sealed class ComponentOptions
 
         // 生成级联调用委托
         var cascadeAction = values.Cast<Action<TProps>>()
-                                                .Aggregate((previous, current) => (t) =>
-                                                {
-                                                    previous(t);
-                                                    current(t);
-                                                });
-        return cascadeAction;
-    }
-
-    /// <summary>
-    /// 获取组件配置委托
-    /// </summary>
-    /// <remarks>若组件配置委托不存在则返回默认实例</remarks>
-    /// <typeparam name="TProps">组件配置类型</typeparam>
-    /// <returns><see cref="Action{T}"/></returns>
-    internal Action<TProps> GetPropsActionOrNew<TProps>()
-        where TProps : class, new()
-    {
-        var cascadeAction = GetPropsAction<TProps>();
-
-        // 若组件配置委托不存在将初始化默认委托并添加到集合中
-        if (cascadeAction is null)
-        {
-            Action<TProps> action = options => { };
-            PropsActions.AddOrUpdate(typeof(TProps), action);
-
-            return action;
-        }
-
+                                               .Aggregate((previous, current) => (t) =>
+                                               {
+                                                   previous(t);
+                                                   current(t);
+                                               });
         return cascadeAction;
     }
 
@@ -122,14 +104,9 @@ internal sealed class ComponentOptions
     /// </summary>
     /// <param name="propsType">组件配置类型</param>
     /// <returns><see cref="Delegate"/></returns>
-    internal Delegate GetPropsActionOrNew(Type propsType)
+    internal Delegate? GetPropsAction(Type propsType)
     {
-        var @delegate = _GetPropsActionOrNewMethod.MakeGenericMethod(propsType)
-                                                          .Invoke(this, null);
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(@delegate, nameof(@delegate));
-
-        return (Delegate)@delegate;
+        return _GetPropsActionMethod.MakeGenericMethod(propsType)
+                                    .Invoke(this, null) as Delegate;
     }
 }

@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 标记组件属性定义作为组件配置
+/// 标记组件属性作为组件配置
 /// </summary>
 /// <remarks>作用于组件初始化时设置指定属性值</remarks>
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]

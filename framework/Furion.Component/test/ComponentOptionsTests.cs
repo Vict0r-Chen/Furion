@@ -29,7 +29,7 @@ public class ComponentOptionsTests
         Assert.True(options.SuppressDuplicateCall);
         Assert.True(options.SuppressDuplicateCallForWeb);
 
-        Assert.NotNull(options._GetPropsActionOrNewMethod);
+        Assert.NotNull(options._GetPropsActionMethod);
     }
 
     [Fact]
@@ -81,22 +81,19 @@ public class ComponentOptionsTests
     }
 
     [Fact]
-    public void GetPropsActionOrNew_NotExists_ReturnAction()
+    public void GetPropsAction_ForType()
     {
         var options = new ComponentOptions();
-        var action = options.GetPropsActionOrNew<ComponentActionOptions>();
-        Assert.NotNull(action);
-    }
+        var @delegate = options.GetPropsAction(typeof(ComponentActionOptions));
+        Assert.Null(@delegate);
 
-    [Fact]
-    public void GetPropsActionOrNew_ForType()
-    {
-        var options = new ComponentOptions();
-        var @delegate = options.GetPropsActionOrNew(typeof(ComponentActionOptions));
-        Assert.NotNull(@delegate);
+        static void Action(ComponentActionOptions options)
+        {
+        }
 
-        var action = (Action<ComponentActionOptions>)@delegate;
-        Assert.NotNull(action);
+        options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+        var delegate2 = options.GetPropsAction(typeof(ComponentActionOptions));
+        Assert.NotNull(delegate2);
     }
 
     [Fact]

@@ -155,8 +155,6 @@ public class OkArgumentComponent : ComponentBase
 {
     public OkArgumentComponent(Action<OkOptions> action, OkOptions okOptions)
     {
-        Assert.NotNull(action);
-        Assert.NotNull(okOptions);
     }
 }
 
@@ -169,8 +167,6 @@ public class OkArgument2Component : ComponentBase
 
     public OkArgument2Component(Action<OkOptions> action, OkOptions okOptions)
     {
-        Assert.NotNull(action);
-        Assert.NotNull(okOptions);
     }
 }
 
@@ -184,5 +180,44 @@ public class OkArgument3Component : ComponentBase
     public OkArgument3Component(Action<OkOptions> action, OkOptions okOptions)
     {
         throw new NotImplementedException();
+    }
+}
+
+public class PropertyComponent : ComponentBase
+{
+    [ComponentProps]
+    private OkOptions Options { get; set; }
+
+    [ComponentProps]
+    internal Action<OkOptions> Action { get; set; }
+
+    [ComponentProps]
+    private OkOptions? Options2 { get; set; }
+
+    [ComponentProps]
+    public Action<OkOptions> Action2 { get; set; }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+    }
+}
+
+public class PropertyInvalidComponent : ComponentBase
+{
+    [ComponentProps]
+    public InvalidOptions Options { get; set; }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+    }
+}
+
+public class PropertyReadonlyComponent : ComponentBase
+{
+    [ComponentProps]
+    public InvalidOptions Options { get; }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
     }
 }

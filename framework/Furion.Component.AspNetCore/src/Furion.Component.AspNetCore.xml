@@ -87,6 +87,11 @@
             组件模块应用组件
             </summary>
         </member>
+        <member name="P:Furion.Component.WebComponentCoreComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
         <member name="M:Furion.Component.WebComponentCoreComponent.Configure(Furion.Component.ApplicationComponentContext)">
             <inheritdoc />
         </member>

@@ -20,11 +20,14 @@ namespace Furion.Component;
 [DependsOn<ComponentCoreComponent>]
 public sealed class WebComponentCoreComponent : WebComponent
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    public Action<WebComponentBuilder>? Props { get; set; }
+
     /// <inheritdoc />
     public override void Configure(ApplicationComponentContext context)
     {
-        // 获取组件配置委托
-        var configure = context.GetPropsAction<WebComponentBuilder>();
-        context.Application.UseComponentCore(configure);
+        context.Application.UseComponentCore(Props);
     }
 }

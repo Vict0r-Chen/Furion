@@ -391,6 +391,11 @@
             依赖注入模块服务组件
             </summary>
         </member>
+        <member name="P:Furion.Component.DependencyInjectionComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
         <member name="M:Furion.Component.DependencyInjectionComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>

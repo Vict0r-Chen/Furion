@@ -241,6 +241,31 @@ public class ComponentBaseTests
         Assert.NotNull(component.Options);
     }
 
+    [Fact]
+    public void CreateInstance_PropertyProps()
+    {
+        var services = new ServiceCollection();
+        var componentOptions = services.GetComponentOptions();
+
+        var component = ComponentBase.CreateInstance(typeof(PropertyComponent), componentOptions);
+        Assert.NotNull(component);
+        Assert.NotNull(component.Options);
+    }
+
+    [Theory]
+    [InlineData(typeof(PropertyInvalidComponent))]
+    [InlineData(typeof(PropertyReadonlyComponent))]
+    public void CreateInstance_PropertyProps_Throw(Type componentType)
+    {
+        var services = new ServiceCollection();
+        var componentOptions = services.GetComponentOptions();
+
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.CreateInstance(componentType, componentOptions);
+        });
+    }
+
     [Theory]
     [InlineData(typeof(AComponent), false)]
     [InlineData(typeof(ComponentBase), false)]
@@ -280,5 +305,30 @@ public class ComponentBaseTests
         Assert.Equal(typeof(CComponent), list2[1].GetType());
         Assert.Equal(typeof(BComponent), list2[2].GetType());
         Assert.Equal(typeof(AComponent), list2[3].GetType());
+    }
+
+    [Fact]
+    public void GetProps_Valid()
+    {
+        var componentOptions = new ComponentOptions();
+
+        ComponentBase.GetProps(typeof(OkOptions), componentOptions);
+        ComponentBase.GetProps(typeof(Action<OkOptions>), componentOptions);
+    }
+
+    [Fact]
+    public void GetProps_invalid_Throw()
+    {
+        var componentOptions = new ComponentOptions();
+
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.GetProps(typeof(InvalidOptions), componentOptions);
+        });
+
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.GetProps(typeof(Action<InvalidOptions>), componentOptions);
+        });
     }
 }
