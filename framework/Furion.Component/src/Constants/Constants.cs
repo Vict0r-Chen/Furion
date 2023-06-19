@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 常量
+/// 常量配置
 /// </summary>
 internal static class Constants
 {
