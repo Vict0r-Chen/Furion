@@ -140,6 +140,12 @@ public abstract class ComponentBase
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
+        // 空项检查
+        if (dependencies.Count == 0)
+        {
+            throw new ArgumentException("The dependency relationship cannot be empty.", nameof(dependencies));
+        }
+
         // 查找集合中所有类型
         var componentTypes = dependencies.Keys.Concat(dependencies.Values.SelectMany(t => t))
                                                              .Distinct();

@@ -138,12 +138,17 @@ public class ComponentServiceCollectionExtensionsTests
             services.AddComponent((Dictionary<Type, Type[]>)null!, null!);
         });
 
-        Assert.Throws<ArgumentNullException>(() =>
+        Assert.Throws<ArgumentException>(() =>
         {
             services.AddComponent(new Dictionary<Type, Type[]>(), null!);
         });
 
-        services.AddComponent(new Dictionary<Type, Type[]>(), new ConfigurationManager());
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.AddComponent(new Dictionary<Type, Type[]>() { { typeof(AComponent), new[] { typeof(BComponent) } } }, null!);
+        });
+
+        services.AddComponent(new Dictionary<Type, Type[]>() { { typeof(AComponent), new[] { typeof(BComponent) } } }, new ConfigurationManager());
     }
 
     [Fact]

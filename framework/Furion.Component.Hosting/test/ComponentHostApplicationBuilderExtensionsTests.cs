@@ -113,7 +113,7 @@ public class ComponentHostApplicationBuilderExtensionsTests
             hostApplicationBuilder.AddComponent((Dictionary<Type, Type[]>)null!);
         });
 
-        hostApplicationBuilder.AddComponent(new Dictionary<Type, Type[]>());
+        hostApplicationBuilder.AddComponent(new Dictionary<Type, Type[]>() { { typeof(AComponent), new[] { typeof(BComponent) } } });
     }
 
     [Fact]

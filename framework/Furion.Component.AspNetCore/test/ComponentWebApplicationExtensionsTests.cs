@@ -102,7 +102,7 @@ public class ComponentWebApplicationExtensionsTests
             webApplication.UseComponent((Dictionary<Type, Type[]>)null!);
         });
 
-        webApplication.UseComponent(new Dictionary<Type, Type[]>());
+        webApplication.UseComponent(new Dictionary<Type, Type[]>() { { typeof(AComponent), new[] { typeof(BComponent) } } });
     }
 
     [Fact]

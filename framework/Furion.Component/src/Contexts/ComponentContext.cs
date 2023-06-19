@@ -26,6 +26,9 @@ public abstract class ComponentContext
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     internal ComponentContext(ComponentOptions options, IConfiguration configuration)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+
         Configuration = configuration;
         Options = options;
     }

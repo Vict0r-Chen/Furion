@@ -136,7 +136,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
             webApplicationBuilder.AddComponent((Dictionary<Type, Type[]>)null!);
         });
 
-        webApplicationBuilder.AddComponent(new Dictionary<Type, Type[]>());
+        webApplicationBuilder.AddComponent(new Dictionary<Type, Type[]>() { { typeof(AComponent), new[] { typeof(BComponent) } } });
     }
 
     [Fact]

@@ -96,16 +96,6 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
-
-        // 空检查
-        if (dependencies.Count == 0)
-        {
-            return services;
-        }
-
         // 创建组件拓扑排序集合
         var topologicalSets = ComponentBase.CreateTopological(dependencies);
 
