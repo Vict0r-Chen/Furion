@@ -15,7 +15,7 @@
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
-/// 组件化模块拓展
+/// 组件模块 <see cref="WebApplication"/> 拓展类
 /// </summary>
 public static class ComponentWebApplicationExtensions
 {

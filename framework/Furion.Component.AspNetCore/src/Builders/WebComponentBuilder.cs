@@ -32,24 +32,19 @@ public sealed class WebComponentBuilder : WebComponentBuilderBase
     /// </summary>
     public bool SuppressDuplicateCall { get; set; } = true;
 
-    /// <summary>
-    /// 构建模块
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <inheritdoc />
     internal override void Build(WebApplication webApplication)
     {
-        // 将自身注册为组件参数
+        // 添加组件模块自身配置
         Configure<WebComponentBuilder>(builder =>
         {
             builder.SuppressDuplicateCall = SuppressDuplicateCall;
         });
 
-        // 获取组件模块配置选项
+        // 添加组件配置
         var componentOptions = webApplication.GetComponentOptions();
-
-        // 配置组件选项
         componentOptions.SuppressDuplicateCallForWeb = SuppressDuplicateCall;
-        componentOptions.OptionsActions.AddOrUpdate(_optionsActions);
-        _optionsActions.Clear();
+
+        base.Build(webApplication);
     }
 }

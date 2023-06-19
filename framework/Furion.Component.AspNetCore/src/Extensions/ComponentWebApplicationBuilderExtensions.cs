@@ -15,12 +15,12 @@
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
-/// 组件化模块拓展
+/// 组件模块 <see cref="WebApplicationBuilder"/> 拓展类
 /// </summary>
 public static class ComponentWebApplicationBuilderExtensions
 {
     /// <summary>
-    /// 配置入口组件
+    /// 添加组件模块入口服务
     /// </summary>
     /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
@@ -32,7 +32,7 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 配置入口组件
+    /// 添加组件模块入口服务
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <typeparam name="TWebComponent"><see cref="WebComponent"/></typeparam>
@@ -47,10 +47,10 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件服务
+    /// 添加组件模块服务
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponentCore(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
     {
@@ -60,7 +60,7 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件服务
+    /// 添加组件模块服务
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
@@ -73,11 +73,11 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilderBase>? configure = null)
         where TComponent : ComponentBase
@@ -88,11 +88,11 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType, Action<ComponentBuilderBase>? configure = null)
     {
@@ -102,11 +102,11 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <param name="dependencies">组件依赖字典</param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilderBase>? configure = null)
     {

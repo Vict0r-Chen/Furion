@@ -20,10 +20,7 @@
             </summary>
         </member>
         <member name="M:Furion.Component.WebComponentBuilder.Build(Microsoft.AspNetCore.Builder.WebApplication)">
-            <summary>
-            构建模块
-            </summary>
-            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <inheritdoc />
         </member>
         <member name="T:Furion.Component.WebComponentBuilderBase">
             <summary>
@@ -32,7 +29,7 @@
         </member>
         <member name="F:Furion.Component.WebComponentBuilderBase._optionsActions">
             <summary>
-            组件参数委托字典
+            组件配置委托集合
             </summary>
         </member>
         <member name="M:Furion.Component.WebComponentBuilderBase.#ctor">
@@ -42,14 +39,14 @@
         </member>
         <member name="M:Furion.Component.WebComponentBuilderBase.Configure``1(System.Action{``0})">
             <summary>
-            配置组件参数
+            添加组件配置
             </summary>
-            <typeparam name="TOptions">组件参数类型</typeparam>
-            <param name="configure">配置委托</param>
+            <typeparam name="TOptions">组件配置类型</typeparam>
+            <param name="configure">自定义组件配置委托</param>
         </member>
         <member name="M:Furion.Component.WebComponentBuilderBase.Build(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
-            构建模块
+            构建模块服务
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
         </member>
@@ -73,11 +70,6 @@
         <member name="T:Furion.Component.WebComponent">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Component.WebComponent.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
         <member name="M:Furion.Component.WebComponent.PreConfigure(Furion.Component.ApplicationComponentContext)">
             <summary>
             前置配置中间件
@@ -100,12 +92,12 @@
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions">
             <summary>
-            组件化模块拓展
+            组件模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/> 拓展类
             </summary>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.Entry``1(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>
-            配置入口组件
+            添加组件模块入口服务
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.WebComponent"/></typeparam>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
@@ -113,7 +105,7 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.Entry``2(Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>
-            配置入口组件
+            添加组件模块入口服务
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TWebComponent"><see cref="T:Furion.Component.WebComponent"/></typeparam>
@@ -122,15 +114,15 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponentCore(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
-            添加组件服务
+            添加组件模块服务
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
-            <param name="configure">自定义构建器配置</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponentCore(Microsoft.AspNetCore.Builder.WebApplicationBuilder,Furion.Component.ComponentBuilder)">
             <summary>
-            添加组件服务
+            添加组件模块服务
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
@@ -138,34 +130,34 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent``1(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
             <summary>
-            添加组件
+            添加服务组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
-            <param name="configure">自定义构建器配置</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Type,System.Action{Furion.Component.ComponentBuilderBase})">
             <summary>
-            添加组件
+            添加服务组件
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="configure">自定义构建器配置</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions.AddComponent(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.ComponentBuilderBase})">
             <summary>
-            添加组件
+            添加服务组件
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
             <param name="dependencies">组件依赖字典</param>
-            <param name="configure">自定义构建器配置</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions">
             <summary>
-            组件化模块拓展
+            组件模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
             </summary>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.UseComponentCore(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Component.WebComponentBuilder})">

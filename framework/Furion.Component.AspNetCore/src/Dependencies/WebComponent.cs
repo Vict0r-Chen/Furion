@@ -18,14 +18,6 @@ namespace Furion.Component;
 public abstract class WebComponent : ComponentBase
 {
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    protected WebComponent()
-        : base()
-    {
-    }
-
-    /// <summary>
     /// 前置配置中间件
     /// </summary>
     /// <param name="context"><see cref="ApplicationComponentContext"/></param>
