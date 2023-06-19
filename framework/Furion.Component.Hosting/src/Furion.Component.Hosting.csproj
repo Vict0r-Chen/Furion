@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230620.4" />
+		<PackageReference Include="Furion.Component" Version="5.0.0-preview.1.20230620.7" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.5.23280.8" />
 	</ItemGroup>
 

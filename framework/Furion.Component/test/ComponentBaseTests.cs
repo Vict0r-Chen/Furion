@@ -87,7 +87,6 @@ public class ComponentBaseTests
     [InlineData(typeof(ComponentBase), "Component type cannot be a `ComponentBase` or `WebComponent`.")]
     [InlineData(typeof(InheritComponent), "`InheritComponent` component type cannot inherit from other component types.")]
     [InlineData(typeof(AbstractComponent), "`AbstractComponent` component type must be able to be instantiated.")]
-    [InlineData(typeof(CanNotNewComponent), "`CanNotNewComponent` component type must have at least one public constructor.")]
     public void Check_Throw(Type componentType, string message)
     {
         var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -231,6 +230,7 @@ public class ComponentBaseTests
     [InlineData(typeof(OkArgumentComponent))]
     [InlineData(typeof(OkArgument2Component))]
     [InlineData(typeof(OkArgument3Component))]
+    [InlineData(typeof(PrivateNewComponent))]
     public void CreateInstance_ReturnOK(Type componentType)
     {
         var services = new ServiceCollection();

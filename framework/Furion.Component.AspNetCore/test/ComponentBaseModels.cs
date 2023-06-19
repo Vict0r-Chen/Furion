@@ -140,8 +140,6 @@ public class OkArgumentComponent : WebComponent
 {
     public OkArgumentComponent(Action<OkOptions> action, OkOptions okOptions)
     {
-        Assert.NotNull(action);
-        Assert.NotNull(okOptions);
     }
 }
 
@@ -154,8 +152,6 @@ public class OkArgument2Component : WebComponent
 
     public OkArgument2Component(Action<OkOptions> action, OkOptions okOptions)
     {
-        Assert.NotNull(action);
-        Assert.NotNull(okOptions);
     }
 }
 

@@ -169,8 +169,7 @@ public abstract class ComponentBase
         return typeof(ComponentBase).IsAssignableFrom(componentType)
             && baseType is not null
             && baseType.FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
-            && componentType.IsInstantiable()
-            && componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Length > 0;
+            && componentType.IsInstantiable();
     }
 
     /// <summary>
@@ -208,12 +207,6 @@ public abstract class ComponentBase
         {
             throw new InvalidOperationException($"`{componentType.Name}` component type must be able to be instantiated.");
         }
-
-        // 类型至少包含一个公开的构造函数
-        if (componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly).Length == 0)
-        {
-            throw new InvalidOperationException($"`{componentType.Name}` component type must have at least one public constructor.");
-        }
     }
 
     /// <summary>
@@ -231,8 +224,11 @@ public abstract class ComponentBase
         // 检查组件类型合法性
         Check(componentType);
 
+        // 搜索绑定标记
+        var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
         // 获取所有公开的实例构造函数
-        var constructors = componentType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+        var constructors = componentType.GetConstructors(bindingFlags);
 
         // 查找是否贴有 [ActivatorComponentConstructor] 特性的构造函数
         // 若没找到则选择构造函数参数最多的一个
@@ -257,7 +253,7 @@ public abstract class ComponentBase
         component.Options = componentOptions;
 
         // 查找贴有 [ComponentProps] 特性的组件配置属性
-        var properties = componentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+        var properties = componentType.GetProperties(bindingFlags)
                                                             .Where(p => p.IsDefined(typeof(ComponentPropsAttribute), false));
 
         // 存在组件配置属性

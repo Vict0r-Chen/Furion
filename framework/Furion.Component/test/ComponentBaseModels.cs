@@ -32,9 +32,9 @@ public abstract class AbstractComponent : ComponentBase
 {
 }
 
-public class CanNotNewComponent : ComponentBase
+public class PrivateNewComponent : ComponentBase
 {
-    private CanNotNewComponent()
+    private PrivateNewComponent()
     {
     }
 }
