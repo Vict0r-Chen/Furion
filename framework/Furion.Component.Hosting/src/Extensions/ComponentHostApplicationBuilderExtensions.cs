@@ -15,12 +15,12 @@
 namespace Microsoft.Extensions.Hosting;
 
 /// <summary>
-/// 组件化模块拓展
+/// 组件模块 <see cref="HostApplicationBuilder"/> 拓展类
 /// </summary>
 public static class ComponentHostApplicationBuilderExtensions
 {
     /// <summary>
-    /// 配置入口组件
+    /// 添加组件模块入口服务
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
@@ -32,10 +32,10 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件服务
+    /// 添加组件模块服务
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponentCore(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
     {
@@ -45,7 +45,7 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件服务
+    /// 添加组件模块服务
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
@@ -58,11 +58,11 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent<TComponent>(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilderBase>? configure = null)
         where TComponent : ComponentBase
@@ -73,11 +73,11 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Type componentType, Action<ComponentBuilderBase>? configure = null)
     {
@@ -87,11 +87,11 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件
+    /// 添加服务组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
-    /// <param name="dependencies">组件依赖字典</param>
-    /// <param name="configure">自定义构建器配置</param>
+    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="HostApplicationBuilder"/></returns>
     public static HostApplicationBuilder AddComponent(this HostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilderBase>? configure = null)
     {

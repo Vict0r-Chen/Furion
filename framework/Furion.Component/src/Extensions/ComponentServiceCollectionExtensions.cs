@@ -117,6 +117,9 @@ public static class ComponentServiceCollectionExtensions
         // 创建组件上下文
         var componentContext = new ServiceComponentContext(services, configuration);
 
+        // 可访问性特性
+        var accessibilityBinding = BindingFlags.Public;
+
         // 创建组件依赖关系对象集合
         var components = ComponentBase.CreateComponents(topologicalSets, componentContext.Options, component =>
         {
@@ -124,16 +127,23 @@ public static class ComponentServiceCollectionExtensions
             component.PreConfigureServices(componentContext);
 
             // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
+            if (component.GetType().IsDeclareOnlyMethod(nameof(ComponentBase.PreConfigureServices), accessibilityBinding))
+            {
+                Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
+            }
         });
 
         // 调用配置服务
         components.ForEach(component =>
         {
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.ConfigureServices));
-
+            // 调用配置服务
             component.ConfigureServices(componentContext);
+
+            // 输出调试事件
+            if (component.GetType().IsDeclareOnlyMethod(nameof(ComponentBase.ConfigureServices), accessibilityBinding))
+            {
+                Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.ConfigureServices));
+            }
         });
 
         topologicalSets.Clear();

@@ -151,7 +151,7 @@
             添加服务组件
             </summary>
             <param name="webApplicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></param>
-            <param name="dependencies">组件依赖字典</param>
+            <param name="dependencies">组件依赖关系集合</param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplicationBuilder"/></returns>
         </member>

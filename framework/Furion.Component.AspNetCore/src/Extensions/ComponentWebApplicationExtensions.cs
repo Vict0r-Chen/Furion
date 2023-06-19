@@ -110,6 +110,9 @@ public static class ComponentWebApplicationExtensions
         // 创建组件上下文
         var componentContext = new ApplicationComponentContext(webApplication);
 
+        // 可访问性特性
+        var accessibilityBinding = BindingFlags.Public;
+
         // 创建组件依赖关系对象集合
         var components = ComponentBase.CreateComponents<WebComponent>(topologicalSets, componentContext.Options, component =>
         {
@@ -117,16 +120,23 @@ public static class ComponentWebApplicationExtensions
             component.PreConfigure(componentContext);
 
             // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
+            if (component.GetType().IsDeclareOnlyMethod(nameof(WebComponent.PreConfigure), accessibilityBinding))
+            {
+                Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
+            }
         });
 
         // 调用配置中间件
         components.ForEach(component =>
         {
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.Configure));
-
+            // 调用配置中间件
             component.Configure(componentContext);
+
+            // 输出调试事件
+            if (component.GetType().IsDeclareOnlyMethod(nameof(WebComponent.Configure), accessibilityBinding))
+            {
+                Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.Configure));
+            }
         });
 
         topologicalSets.Clear();

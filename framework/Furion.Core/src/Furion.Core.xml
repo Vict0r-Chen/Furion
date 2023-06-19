@@ -278,6 +278,15 @@
             <param name="baseType"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="M:System.TypeExtensions.IsDeclareOnlyMethod(System.Type,System.String,System.Reflection.BindingFlags)">
+            <summary>
+            是否定义了指定方法
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <param name="name">方法名称</param>
+            <param name="accessibilityBinding">可访问性绑定特性</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions">
             <summary>
             核心模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类

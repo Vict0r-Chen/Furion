@@ -233,3 +233,19 @@ public class MultipleAndInheritAttributeClass : OneAttributeClass
 public class InheritMultipleAttributeClass : MultipleAttributeClass
 {
 }
+
+public class DelaryMethodClass
+{
+    public virtual void Test()
+    {
+    }
+}
+
+public class NotDelaryMethodClass : DelaryMethodClass
+{
+}
+
+public class OverrideDelaryMethodClass : DelaryMethodClass
+{
+    public override void Test() => base.Test();
+}

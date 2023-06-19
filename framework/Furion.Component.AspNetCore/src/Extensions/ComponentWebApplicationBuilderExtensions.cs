@@ -105,7 +105,7 @@ public static class ComponentWebApplicationBuilderExtensions
     /// 添加服务组件
     /// </summary>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="dependencies">组件依赖字典</param>
+    /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplicationBuilder"/></returns>
     public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilderBase>? configure = null)

@@ -200,4 +200,14 @@ public class TypeExtensionsTests
         var result = type.IsMultipleSameDefined(typeof(CheckAttribute), true);
         Assert.Equal(isMultiple, result);
     }
+
+    [Theory]
+    [InlineData(typeof(DelaryMethodClass), true)]
+    [InlineData(typeof(NotDelaryMethodClass), false)]
+    [InlineData(typeof(OverrideDelaryMethodClass), true)]
+    public void IsDeclareOnlyMethod(Type type, bool isMultiple)
+    {
+        var result = type.IsDeclareOnlyMethod("Test", BindingFlags.Public);
+        Assert.Equal(isMultiple, result);
+    }
 }
