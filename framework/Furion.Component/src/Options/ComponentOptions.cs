@@ -58,6 +58,19 @@ internal sealed class ComponentOptions
     internal bool SuppressDuplicateCallForWeb { get; set; } = true;
 
     /// <summary>
+    /// SuppressDuplicateCall[ForWeb] 属性索引
+    /// </summary>
+    /// <param name="propName">属性名</param>
+    /// <returns><see cref="bool"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal bool this[string propName] => propName switch
+    {
+        nameof(SuppressDuplicateCall) => SuppressDuplicateCall,
+        nameof(SuppressDuplicateCallForWeb) => SuppressDuplicateCallForWeb,
+        _ => throw new InvalidOperationException("Unsupported property name index.")
+    };
+
+    /// <summary>
     /// 获取组件配置委托
     /// </summary>
     /// <typeparam name="TOptions">组件配置类型</typeparam>

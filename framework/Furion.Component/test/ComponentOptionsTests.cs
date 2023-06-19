@@ -98,4 +98,25 @@ public class ComponentOptionsTests
         var action = (Action<ComponentActionOptions>)@delegate;
         Assert.NotNull(action);
     }
+
+    [Fact]
+    public void CheckIndex()
+    {
+        var options = new ComponentOptions()
+        {
+            SuppressDuplicateCall = false,
+            SuppressDuplicateCallForWeb = false
+        };
+
+        var suppressDuplicateCall = options["SuppressDuplicateCall"];
+        var suppressDuplicateCallForWeb = options["SuppressDuplicateCallForWeb"];
+        Assert.False(suppressDuplicateCall);
+        Assert.False(suppressDuplicateCallForWeb);
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var undefined = options["Undefined"];
+        });
+        Assert.Equal("Unsupported property name index.", exception.Message);
+    }
 }

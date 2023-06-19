@@ -612,6 +612,14 @@
             禁用 Web 组件重复调用
             </summary>
         </member>
+        <member name="P:Furion.Component.ComponentOptions.Item(System.String)">
+            <summary>
+            SuppressDuplicateCall[ForWeb] 属性索引
+            </summary>
+            <param name="propName">属性名</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
         <member name="M:Furion.Component.ComponentOptions.GetOptionsAction``1">
             <summary>
             获取组件配置委托
