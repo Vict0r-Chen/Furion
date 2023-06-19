@@ -181,10 +181,10 @@ internal static class TypeExtensions
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="name">方法名称</param>
-    /// <param name="accessibilityBinding">可访问性绑定特性</param>
+    /// <param name="accessibilityBindingFlags">可访问性成员绑定标记</param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsDeclareOnlyMethod(this Type type, string name, BindingFlags accessibilityBinding)
+    internal static bool IsDeclareOnlyMethod(this Type type, string name, BindingFlags accessibilityBindingFlags)
     {
-        return type.GetMethod(name, accessibilityBinding | BindingFlags.Instance | BindingFlags.DeclaredOnly) is not null;
+        return type.GetMethod(name, accessibilityBindingFlags | BindingFlags.Instance | BindingFlags.DeclaredOnly) is not null;
     }
 }

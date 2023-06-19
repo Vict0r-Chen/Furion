@@ -224,7 +224,7 @@ public abstract class ComponentBase
         // 检查组件类型合法性
         Check(componentType);
 
-        // 搜索绑定标记
+        // 反射查找成员绑定标记
         var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
 
         // 获取所有公开的实例构造函数
