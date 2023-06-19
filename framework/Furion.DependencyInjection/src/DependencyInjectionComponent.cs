@@ -23,6 +23,7 @@ public sealed class DependencyInjectionComponent : ComponentBase
     /// <summary>
     /// 组件配置
     /// </summary>
+    [ComponentProps]
     public Action<DependencyInjectionBuilder>? Props { get; set; }
 
     /// <inheritdoc />

@@ -22,6 +22,7 @@ public sealed class ComponentCoreComponent : ComponentBase
     /// <summary>
     /// 组件配置
     /// </summary>
+    [ComponentProps]
     public Action<ComponentBuilder>? Props { get; set; }
 
     /// <inheritdoc />

@@ -23,6 +23,7 @@ public sealed class WebComponentCoreComponent : WebComponent
     /// <summary>
     /// 组件配置
     /// </summary>
+    [ComponentProps]
     public Action<WebComponentBuilder>? Props { get; set; }
 
     /// <inheritdoc />
