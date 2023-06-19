@@ -24,13 +24,6 @@ public class NotWebComponent : ComponentBase
 {
 }
 
-public class CanNotNewComponent : WebComponent
-{
-    private CanNotNewComponent()
-    {
-    }
-}
-
 public class CallOptions
 {
     public List<string> CallRecords { get; } = new List<string>();
