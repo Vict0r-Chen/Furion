@@ -149,11 +149,11 @@ public sealed class DependencyInjectionBuilder
     /// <returns><see cref="List{T}"/></returns>
     public IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors(Type type)
     {
-        // 获取 [ServiceInjection] 特性
-        var serviceInjectionAttribute = type.GetDefinedCustomAttributeOrNew<ServiceInjectionAttribute>(true);
+        // 获取 [dependency] 特性
+        var dependencyAttribute = type.GetDefinedCustomAttributeOrNew<DependencyAttribute>(true);
 
         // 是否配置了 Ignore 属性
-        if (serviceInjectionAttribute is { Ignore: true })
+        if (dependencyAttribute is { Ignore: true })
         {
             yield break;
         }
@@ -185,7 +185,7 @@ public sealed class DependencyInjectionBuilder
         var baseType = type.BaseType;
         if (baseType is not null
             && baseType != typeof(object)
-            && serviceInjectionAttribute is { IncludeBase: true }
+            && dependencyAttribute is { IncludeBase: true }
             && type.IsTypeCompatibilityTo(baseType))
         {
             serviceTypes.Add(!type.IsGenericType
@@ -199,7 +199,7 @@ public sealed class DependencyInjectionBuilder
             : type.GetGenericTypeDefinition();
 
         // 是否包含自身
-        if (serviceInjectionAttribute is { IncludeSelf: true }
+        if (dependencyAttribute is { IncludeSelf: true }
             || serviceTypes.Count == 0)
         {
             serviceTypes.Add(implementationType);
@@ -212,9 +212,9 @@ public sealed class DependencyInjectionBuilder
             var serviceDescriptorModel = new ServiceDescriptorModel(serviceType
                 , implementationType
                 , serviceLifetime.Value
-                , serviceInjectionAttribute.Addition)
+                , dependencyAttribute.Addition)
             {
-                Order = serviceInjectionAttribute.Order
+                Order = dependencyAttribute.Order
             };
 
             // 调用服务描述器过滤器

@@ -4,6 +4,48 @@
         <name>Furion.DependencyInjection</name>
     </assembly>
     <members>
+        <member name="T:Furion.DependencyInjection.DependencyAttribute">
+            <summary>
+            服务注册配置
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.ServiceAddition)">
+            <summary>
+            注册方式
+            </summary>
+            <param name="addition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Addition">
+            <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Ignore">
+            <summary>
+            忽略注册
+            </summary>
+            <remarks>若设置为 true 则跳过配置类型扫描</remarks>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Order">
+            <summary>
+            排序
+            </summary>
+            <remarks>值越大则越后注册</remarks>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.IncludeSelf">
+            <summary>
+            注册自身
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.IncludeBase">
+            <summary>
+            注册基类
+            </summary>
+        </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute">
             <summary>
             服务导出配置
@@ -142,48 +184,6 @@
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`8.#ctor">
             <summary>
             构造函数
-            </summary>
-        </member>
-        <member name="T:Furion.DependencyInjection.ServiceInjectionAttribute">
-            <summary>
-            服务注册配置
-            </summary>
-            <remarks>作用于程序集扫描</remarks>
-        </member>
-        <member name="M:Furion.DependencyInjection.ServiceInjectionAttribute.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.ServiceInjectionAttribute.#ctor(Furion.DependencyInjection.ServiceAddition)">
-            <summary>
-            注册方式
-            </summary>
-            <param name="addition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
-        </member>
-        <member name="P:Furion.DependencyInjection.ServiceInjectionAttribute.Addition">
-            <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
-        </member>
-        <member name="P:Furion.DependencyInjection.ServiceInjectionAttribute.Ignore">
-            <summary>
-            忽略注册
-            </summary>
-            <remarks>若设置为 true 则跳过配置类型扫描</remarks>
-        </member>
-        <member name="P:Furion.DependencyInjection.ServiceInjectionAttribute.Order">
-            <summary>
-            排序
-            </summary>
-            <remarks>值越大则越后注册</remarks>
-        </member>
-        <member name="P:Furion.DependencyInjection.ServiceInjectionAttribute.IncludeSelf">
-            <summary>
-            注册自身
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.ServiceInjectionAttribute.IncludeBase">
-            <summary>
-            注册基类
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.DependencyInjectionBuilder">
@@ -381,7 +381,7 @@
             <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
         </member>
         <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Order">
-            <inheritdoc cref="P:Furion.DependencyInjection.ServiceInjectionAttribute.Order"/>
+            <inheritdoc cref="P:Furion.DependencyInjection.DependencyAttribute.Order"/>
         </member>
         <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.ToString">
             <inheritdoc />

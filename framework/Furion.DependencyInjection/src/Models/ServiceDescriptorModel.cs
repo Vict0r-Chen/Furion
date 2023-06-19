@@ -46,7 +46,7 @@ public sealed class ServiceDescriptorModel
     /// <inheritdoc cref="ServiceAddition"/>
     public ServiceAddition Addition { get; set; }
 
-    /// <inheritdoc cref="ServiceInjectionAttribute.Order"/>
+    /// <inheritdoc cref="DependencyAttribute.Order"/>
     public int Order { get; set; }
 
     /// <inheritdoc />

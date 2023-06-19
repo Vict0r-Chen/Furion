@@ -19,12 +19,12 @@ namespace Furion.DependencyInjection;
 /// </summary>
 /// <remarks>作用于程序集扫描</remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-public sealed class ServiceInjectionAttribute : Attribute
+public sealed class DependencyAttribute : Attribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ServiceInjectionAttribute()
+    public DependencyAttribute()
     {
     }
 
@@ -32,7 +32,7 @@ public sealed class ServiceInjectionAttribute : Attribute
     /// 注册方式
     /// </summary>
     /// <param name="addition"><see cref="ServiceAddition"/></param>
-    public ServiceInjectionAttribute(ServiceAddition addition)
+    public DependencyAttribute(ServiceAddition addition)
     {
         Addition = addition;
     }

@@ -69,17 +69,17 @@ public class ServiceBase : IScopedDependency
 {
 }
 
-[ServiceInjection(IncludeSelf = true)]
+[Dependency(IncludeSelf = true)]
 public class Service5 : ServiceBase, IService
 {
 }
 
-[ServiceInjection(IncludeBase = true)]
+[Dependency(IncludeBase = true)]
 public class Service6 : ServiceBase, IService, ITransientDependency, IDependency
 {
 }
 
-[ServiceInjection(IncludeSelf = true, IncludeBase = true)]
+[Dependency(IncludeSelf = true, IncludeBase = true)]
 public class Service7 : ServiceBase, IService, ITransientDependency
 {
 }
@@ -108,19 +108,19 @@ public class GenericService3<T, U> : IService, IService<U, T>, ISecondService<T>
 {
 }
 
-[ServiceInjection(Ignore = true)]
+[Dependency(Ignore = true)]
 public class IgnoreService : IService, IScopedDependency
 {
 }
 
-[ServiceInjection(Order = 2)]
+[Dependency(Order = 2)]
 public class Order1Service : IService, IScopedDependency
 { }
 
 public class Order2Service : IService, IScopedDependency
 { }
 
-[ServiceInjection(Order = 1)]
+[Dependency(Order = 1)]
 public class Order3Service : IService, IScopedDependency
 { }
 

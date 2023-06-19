@@ -220,7 +220,7 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
-    public void CreateServiceDescriptors_NonServiceInjectionAttribute()
+    public void CreateServiceDescriptors_NonDependencyAttribute()
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
         var descriptors = dependencyInjectionBuilder.CreateServiceDescriptors(typeof(Service8));
