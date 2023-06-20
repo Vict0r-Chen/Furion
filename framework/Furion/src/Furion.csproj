@@ -10,9 +10,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Furion.Component.AspNetCore" Version="5.0.0-preview.1.20230621.8" />
-		<PackageReference Include="Furion.Component.Hosting" Version="5.0.0-preview.1.20230621.8" />
-		<PackageReference Include="Furion.DependencyInjection.Named" Version="5.0.0-preview.1.20230621.8" />
+		<ProjectReference Include="..\..\Furion.Component.AspNetCore\src\Furion.Component.AspNetCore.csproj" />
+		<ProjectReference Include="..\..\Furion.Component.Hosting\src\Furion.Component.Hosting.csproj" />
+		<ProjectReference Include="..\..\Furion.DependencyInjection.Named\src\Furion.DependencyInjection.Named.csproj" />
 	</ItemGroup>
 
 </Project>
