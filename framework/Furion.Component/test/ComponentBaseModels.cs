@@ -42,6 +42,7 @@ public class PrivateNewComponent : ComponentBase
 public class CallOptions
 {
     public List<string> CallRecords { get; } = new List<string>();
+    public string CallName { get; set; }
 }
 
 [DependsOn<BComponent, CComponent>]
@@ -52,6 +53,7 @@ public class AComponent : ComponentBase
         Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigureServices)}");
+            options.CallName = nameof(AComponent);
         });
     }
 
@@ -75,6 +77,7 @@ public class BComponent : ComponentBase
         Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigureServices)}");
+            options.CallName = nameof(BComponent);
         });
     }
 
@@ -95,6 +98,7 @@ public class CComponent : ComponentBase
         Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(CComponent)}.{nameof(PreConfigureServices)}");
+            options.CallName = nameof(CComponent);
         });
     }
 
@@ -114,6 +118,7 @@ public class DComponent : ComponentBase
         Props<CallOptions>(options =>
         {
             options.CallRecords.Add($"{nameof(DComponent)}.{nameof(PreConfigureServices)}");
+            options.CallName = nameof(DComponent);
         });
     }
 

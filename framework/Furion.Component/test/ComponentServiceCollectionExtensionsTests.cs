@@ -177,6 +177,8 @@ public class ComponentServiceCollectionExtensionsTests
         Assert.Equal($"{nameof(CComponent)}.{nameof(BComponent.ConfigureServices)}", callOptions.CallRecords[5]);
         Assert.Equal($"{nameof(BComponent)}.{nameof(CComponent.ConfigureServices)}", callOptions.CallRecords[6]);
         Assert.Equal($"{nameof(AComponent)}.{nameof(CComponent.ConfigureServices)}", callOptions.CallRecords[7]);
+
+        Assert.Equal(nameof(DComponent), callOptions.CallName);
     }
 
     [Fact]
