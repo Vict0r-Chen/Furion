@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<ItemGroup>
+		<ProjectReference Include="..\src\Furion.Authentication.JwtBearer.csproj" />
+	</ItemGroup>
+
+</Project>
