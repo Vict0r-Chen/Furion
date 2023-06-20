@@ -384,8 +384,7 @@ public abstract class ComponentBase
             {
                 // 存储未激活的且只有自身依赖的组件依赖类型
                 inactiveComponents.AddRange(dependencies[componentType].Except(
-                    dependencies.Where(d => d.Key != componentType
-                                                                                       && !dependencies[componentType].Contains(d.Key))
+                    dependencies.Where(d => d.Key != componentType && !dependencies[componentType].Contains(d.Key))
                                        .SelectMany(u => u.Value.Concat(new[] { u.Key }))));
                 continue;
             }
