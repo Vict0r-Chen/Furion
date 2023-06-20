@@ -90,9 +90,6 @@ public static class ComponentWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilderBase>? configure = null)
     {
-        // 创建组件拓扑排序集合
-        var topologicalSets = ComponentBase.CreateTopological(dependencies, ComponentBase.IsWebComponent);
-
         // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new WebComponentBuilderBase();
         configure?.Invoke(componentBuilder);
@@ -105,7 +102,7 @@ public static class ComponentWebApplicationExtensions
         var accessibilityBinding = BindingFlags.Public;
 
         // 创建组件依赖关系对象集合
-        var components = ComponentBase.CreateComponents<WebComponent>(topologicalSets, componentContext.Options, component =>
+        var components = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, component =>
         {
             // 调用前置配置中间件
             component.PreConfigure(componentContext);
@@ -115,7 +112,7 @@ public static class ComponentWebApplicationExtensions
             {
                 Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
             }
-        });
+        }, ComponentBase.IsWebComponent);
 
         // 调用配置中间件
         components.ForEach(component =>
@@ -130,7 +127,6 @@ public static class ComponentWebApplicationExtensions
             }
         });
 
-        topologicalSets.Clear();
         components.Clear();
 
         return webApplication;

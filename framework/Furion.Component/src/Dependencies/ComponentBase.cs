@@ -38,6 +38,16 @@ public abstract class ComponentBase
     }
 
     /// <summary>
+    /// 是否激活组件
+    /// </summary>
+    /// <param name="context"><see cref="ComponentContext"/></param>
+    /// <returns><see cref="bool"/></returns>
+    public virtual bool CanActivate(ComponentContext context)
+    {
+        return true;
+    }
+
+    /// <summary>
     /// 前置配置服务
     /// </summary>
     /// <remarks>将在组件初始化完成后立即调用</remarks>
@@ -313,25 +323,44 @@ public abstract class ComponentBase
     /// 创建组件依赖关系对象集合
     /// </summary>
     /// <typeparam name="TTargetComponent">目标组件类型</typeparam>
-    /// <param name="topologicalSets">组件拓扑排序集合</param>
-    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="componentContext"><see cref="ComponentContext"/></param>
     /// <param name="predicate">自定义配置委托</param>
+    /// <param name="topologicalPredicate">拓扑排序过滤</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<TTargetComponent> CreateComponents<TTargetComponent>(List<Type> topologicalSets, ComponentOptions componentOptions, Action<TTargetComponent>? predicate = null)
+    internal static List<TTargetComponent> CreateComponents<TTargetComponent>(Dictionary<Type, Type[]> dependencies
+        , ComponentContext componentContext
+        , Action<TTargetComponent>? predicate = null
+        , Func<Type, bool>? topologicalPredicate = null)
         where TTargetComponent : ComponentBase
     {
+        // 创建组件拓扑排序集合
+        var topologicalSets = CreateTopological(dependencies, topologicalPredicate);
+
         // 组件依赖关系对象集合
         var components = new List<TTargetComponent>();
+
+        // 获取组件模块配置选项
+        var componentOptions = componentContext.Options;
 
         // 组件重复调用检查标识
         var suppressDuplicateCall = typeof(TTargetComponent).FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
             ? nameof(ComponentOptions.SuppressDuplicateCallForWeb)
             : nameof(ComponentOptions.SuppressDuplicateCall);
 
+        // 存储未激活的且只有自身依赖的组件类型
+        var inactiveComponents = new List<Type>();
+
         // 从尾部依次初始化组件实例
         for (var i = topologicalSets.Count - 1; i >= 0; i--)
         {
             var componentType = topologicalSets[i];
+
+            // 检查当前组件类型的下游是否未激活
+            if (inactiveComponents.Contains(componentType))
+            {
+                continue;
+            }
 
             // 组件重复调用检测
             var recordName = componentType.FullName + $" (Type '{typeof(TTargetComponent).Name}')";
@@ -349,11 +378,27 @@ public abstract class ComponentBase
 
             // 创建组件实例
             var component = (TTargetComponent)CreateInstance(componentType, componentOptions);
+
+            // 检查组件是否激活
+            if (!component.CanActivate(componentContext))
+            {
+                // 存储未激活的且只有自身依赖的组件依赖类型
+                inactiveComponents.AddRange(dependencies[componentType].Except(
+                    dependencies.Where(d => d.Key != componentType
+                                                                                       && !dependencies[componentType].Contains(d.Key))
+                                       .SelectMany(u => u.Value.Concat(new[] { u.Key }))));
+                continue;
+            }
+
+            // 添加到组件集合头部
             components.Insert(0, component);
 
             // 调用自定义配置委托
             predicate?.Invoke(component);
         }
+
+        inactiveComponents.Clear();
+        topologicalSets.Clear();
 
         return components;
     }
@@ -361,12 +406,12 @@ public abstract class ComponentBase
     /// <summary>
     /// 创建组件依赖关系对象集合
     /// </summary>
-    /// <param name="topologicalSets">组件拓扑排序集合</param>
-    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="componentContext"><see cref="ComponentContext"/></param>
     /// <param name="predicate">自定义配置委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<ComponentBase> CreateComponents(List<Type> topologicalSets, ComponentOptions componentOptions, Action<ComponentBase>? predicate = null)
+    internal static List<ComponentBase> CreateComponents(Dictionary<Type, Type[]> dependencies, ComponentContext componentContext, Action<ComponentBase>? predicate = null)
     {
-        return CreateComponents<ComponentBase>(topologicalSets, componentOptions, predicate);
+        return CreateComponents<ComponentBase>(dependencies, componentContext, predicate);
     }
 }

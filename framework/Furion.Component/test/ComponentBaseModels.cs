@@ -131,6 +131,24 @@ public class DComponent : ComponentBase
     }
 }
 
+[DependsOn<NotActivateComponent, FComponent>]
+public class EComponent : ComponentBase
+{
+}
+
+[DependsOn<FComponent, DComponent>]
+public class NotActivateComponent : ComponentBase
+{
+    public override bool CanActivate(ComponentContext context)
+    {
+        return false;
+    }
+}
+
+public class FComponent : ComponentBase
+{
+}
+
 public class InvalidOptions
 {
     protected InvalidOptions()

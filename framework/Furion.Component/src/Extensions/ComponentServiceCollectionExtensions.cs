@@ -96,9 +96,6 @@ public static class ComponentServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
     {
-        // 创建组件拓扑排序集合
-        var topologicalSets = ComponentBase.CreateTopological(dependencies);
-
         // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new ComponentBuilderBase();
         configure?.Invoke(componentBuilder);
@@ -111,7 +108,7 @@ public static class ComponentServiceCollectionExtensions
         var accessibilityBinding = BindingFlags.Public;
 
         // 创建组件依赖关系对象集合
-        var components = ComponentBase.CreateComponents(topologicalSets, componentContext.Options, component =>
+        var components = ComponentBase.CreateComponents(dependencies, componentContext, component =>
         {
             // 调用前置配置服务
             component.PreConfigureServices(componentContext);
@@ -136,7 +133,6 @@ public static class ComponentServiceCollectionExtensions
             }
         });
 
-        topologicalSets.Clear();
         components.Clear();
 
         return services;

@@ -30,6 +30,7 @@ public class ComponentBaseTests
 
         component.PreConfigureServices(componentContext);
         component.ConfigureServices(componentContext);
+        Assert.True(component.CanActivate(componentContext));
     }
 
     [Fact]
@@ -281,10 +282,10 @@ public class ComponentBaseTests
     {
         var services = new ServiceCollection();
         var componentContext = new ServiceComponentContext(services, new ConfigurationManager());
-        var topologicalSets = ComponentBase.CreateTopological(typeof(AComponent));
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         // D C B A
-        var list = ComponentBase.CreateComponents(topologicalSets, componentContext.Options);
+        var list = ComponentBase.CreateComponents(dependencies, componentContext);
         Assert.NotNull(list);
 
         Assert.Equal(4, list.Count);
@@ -296,7 +297,7 @@ public class ComponentBaseTests
 
         // 避免引发重复调用检查
         componentContext.Options.CallRecords.Clear();
-        var list2 = ComponentBase.CreateComponents<ComponentBase>(topologicalSets, componentContext.Options);
+        var list2 = ComponentBase.CreateComponents<ComponentBase>(dependencies, componentContext);
         Assert.NotNull(list2);
 
         Assert.Equal(4, list2.Count);
@@ -305,6 +306,20 @@ public class ComponentBaseTests
         Assert.Equal(typeof(CComponent), list2[1].GetType());
         Assert.Equal(typeof(BComponent), list2[2].GetType());
         Assert.Equal(typeof(AComponent), list2[3].GetType());
+    }
+
+    [Fact]
+    public void CreateComponents_CanActivate()
+    {
+        var services = new ServiceCollection();
+        var componentContext = new ServiceComponentContext(services, new ConfigurationManager());
+        var dependencies = ComponentBase.CreateDependencies(typeof(EComponent));
+
+        var list = ComponentBase.CreateComponents(dependencies, componentContext);
+        Assert.NotNull(list);
+
+        Assert.Equal(2, list.Count);
+        Assert.DoesNotContain(list, c => c.GetType() == typeof(DComponent));
     }
 
     [Fact]

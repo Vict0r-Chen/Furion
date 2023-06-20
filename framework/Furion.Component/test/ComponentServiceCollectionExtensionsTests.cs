@@ -138,7 +138,7 @@ public class ComponentServiceCollectionExtensionsTests
             services.AddComponent((Dictionary<Type, Type[]>)null!, null!);
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ArgumentNullException>(() =>
         {
             services.AddComponent(new Dictionary<Type, Type[]>(), null!);
         });

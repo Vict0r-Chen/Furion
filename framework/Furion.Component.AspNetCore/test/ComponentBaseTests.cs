@@ -85,10 +85,10 @@ public class ComponentBaseTests
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var componentContext = new ApplicationComponentContext(webApplication);
-        var topologicalSets = ComponentBase.CreateTopological(typeof(AComponent), ComponentBase.IsWebComponent);
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         // D C B A
-        var list = ComponentBase.CreateComponents<WebComponent>(topologicalSets, componentContext.Options);
+        var list = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalPredicate: ComponentBase.IsWebComponent);
         Assert.NotNull(list);
 
         Assert.Equal(4, list.Count);
@@ -100,7 +100,7 @@ public class ComponentBaseTests
 
         // 避免引发重复调用检查
         componentContext.Options.CallRecords.Clear();
-        var list2 = ComponentBase.CreateComponents<WebComponent>(topologicalSets, componentContext.Options);
+        var list2 = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalPredicate: ComponentBase.IsWebComponent);
         Assert.NotNull(list2);
 
         Assert.Equal(4, list2.Count);
