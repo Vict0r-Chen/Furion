@@ -15,6 +15,7 @@
 // 配置框架友元程序集
 [assembly: InternalsVisibleTo("Furion.Authentication")]
 [assembly: InternalsVisibleTo("Furion.Authentication.JwtBearer")]
+[assembly: InternalsVisibleTo("Furion.Caching")]
 [assembly: InternalsVisibleTo("Furion.Component")]
 [assembly: InternalsVisibleTo("Furion.Component.AspNetCore")]
 [assembly: InternalsVisibleTo("Furion.Component.Hosting")]
