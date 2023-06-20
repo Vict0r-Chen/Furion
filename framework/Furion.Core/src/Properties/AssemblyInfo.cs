@@ -44,11 +44,12 @@
 [assembly: InternalsVisibleTo("Furion.Serialization.Json")]
 [assembly: InternalsVisibleTo("Furion.Serialization.Xml")]
 [assembly: InternalsVisibleTo("Furion.Sockets")]
+[assembly: InternalsVisibleTo("Furion.WebSockets")]
 [assembly: InternalsVisibleTo("Furion.UnitOfWork")]
 [assembly: InternalsVisibleTo("Furion.UnitOfWork.EntityFrameworkCore")]
 [assembly: InternalsVisibleTo("Furion.Validation")]
 [assembly: InternalsVisibleTo("Furion.Validation.AspNetCore")]
-[assembly: InternalsVisibleTo("Furion.WebSockets")]
+[assembly: InternalsVisibleTo("Furion.Workflow")]
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.Core.Tests")]
