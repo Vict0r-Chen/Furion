@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Configuration;
 /// <summary>
 /// 配置模块 <see cref="IConfigurationBuilder"/> 拓展类
 /// </summary>
-public static class FileScannerConfigurationExtensions
+public static class FileScannerConfigurationBuilderExtensions
 {
     /// <summary>
     /// 添加配置模块文件扫描器服务

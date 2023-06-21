@@ -142,12 +142,12 @@
         <member name="M:Furion.Component.ConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
-        <member name="T:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions">
+        <member name="T:Microsoft.Extensions.Configuration.FileScannerConfigurationBuilderExtensions">
             <summary>
             配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions.AddFileScanner(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.FileScannerConfigurationBuilder})">
+        <member name="M:Microsoft.Extensions.Configuration.FileScannerConfigurationBuilderExtensions.AddFileScanner(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.FileScannerConfigurationBuilder})">
             <summary>
             添加配置模块文件扫描器服务
             </summary>
@@ -155,7 +155,7 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions.AddFileScanner(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScannerConfigurationBuilder)">
+        <member name="M:Microsoft.Extensions.Configuration.FileScannerConfigurationBuilderExtensions.AddFileScanner(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScannerConfigurationBuilder)">
             <summary>
             添加配置模块文件扫描器服务
             </summary>

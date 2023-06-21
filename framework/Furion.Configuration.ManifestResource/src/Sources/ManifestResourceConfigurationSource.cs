@@ -12,8 +12,16 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-// 配置框架友元程序集
-[assembly: InternalsVisibleTo("Furion.Configuration.ManifestResource")]
+namespace Furion.Configuration;
 
-// 配置测试友元程序集
-[assembly: InternalsVisibleTo("Furion.Configuration.Tests")]
+/// <summary>
+/// 嵌入资源配置程序源
+/// </summary>
+internal sealed class ManifestResourceConfigurationSource : IConfigurationSource
+{
+    /// <inheritdoc/>
+    public IConfigurationProvider Build(IConfigurationBuilder builder)
+    {
+        return new ManifestResourceConfigurationProvider();
+    }
+}

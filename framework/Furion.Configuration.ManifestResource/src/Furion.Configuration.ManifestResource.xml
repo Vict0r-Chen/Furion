@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Furion.Configuration.ManifestResource</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Configuration.ManifestResourceConfigurationBuilderExtensions">
+            <summary>
+            配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ManifestResourceConfigurationBuilderExtensions.AddManifestResource(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            添加嵌入资源配置提供程序
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
+        </member>
+        <member name="T:Furion.Component.ManifestResourceConfigurationComponent">
+            <summary>
+            嵌入资源配置模块服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ManifestResourceConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Configuration.ManifestResourceConfigurationProvider">
+            <summary>
+            嵌入资源配置提供程序
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.Load">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Configuration.ManifestResourceConfigurationSource">
+            <summary>
+            嵌入资源配置程序源
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

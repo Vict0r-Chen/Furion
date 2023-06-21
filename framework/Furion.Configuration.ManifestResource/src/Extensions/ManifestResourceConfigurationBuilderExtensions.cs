@@ -12,8 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-// 配置框架友元程序集
-[assembly: InternalsVisibleTo("Furion.Configuration.ManifestResource")]
+namespace Microsoft.Extensions.Configuration;
 
-// 配置测试友元程序集
-[assembly: InternalsVisibleTo("Furion.Configuration.Tests")]
+/// <summary>
+/// 配置模块 <see cref="IConfigurationBuilder"/> 拓展类
+/// </summary>
+public static class ManifestResourceConfigurationBuilderExtensions
+{
+    /// <summary>
+    /// 添加嵌入资源配置提供程序
+    /// </summary>
+    /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
+    /// <returns><see cref="IConfigurationBuilder"/></returns>
+    public static IConfigurationBuilder AddManifestResource(this IConfigurationBuilder builder)
+    {
+        return builder.Add(new ManifestResourceConfigurationSource());
+    }
+}
