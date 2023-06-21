@@ -62,4 +62,10 @@ public sealed class FileScannerModel
     /// 环境变量名
     /// </summary>
     public string? Environment { get; set; }
+
+    /// <summary>
+    /// 排序
+    /// </summary>
+    /// <remarks>值越大则越后添加</remarks>
+    public int Order { get; set; }
 }

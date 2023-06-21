@@ -48,9 +48,8 @@ public sealed class FileScannerConfigurationBuilder
     {
         _directories = new()
         {
-            Directory.GetCurrentDirectory()
+            AppContext.BaseDirectory
         };
-        AddDirectories(AppContext.BaseDirectory);
 
         _fileGlobbing = new()
         {

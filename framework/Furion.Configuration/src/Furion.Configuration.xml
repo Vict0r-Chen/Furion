@@ -123,6 +123,12 @@
             环境变量名
             </summary>
         </member>
+        <member name="P:Furion.Configuration.FileScannerModel.Order">
+            <summary>
+            排序
+            </summary>
+            <remarks>值越大则越后添加</remarks>
+        </member>
         <member name="T:Furion.Component.ConfigurationComponent">
             <summary>
             配置模块服务组件
