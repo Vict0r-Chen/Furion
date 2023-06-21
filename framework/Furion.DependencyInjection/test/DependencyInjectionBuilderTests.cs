@@ -90,6 +90,16 @@ public class DependencyInjectionBuilderTests
     }
 
     [Fact]
+    public void AddAssemblies_IEnumerable_ReturnOK()
+    {
+        var currentAssembly = GetType().Assembly;
+        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        dependencyInjectionBuilder.AddAssemblies(new List<Assembly> { Assembly.GetEntryAssembly()!, currentAssembly });
+        Assert.Equal(2, dependencyInjectionBuilder._assemblies.Count);
+        Assert.Equal(currentAssembly, dependencyInjectionBuilder._assemblies.Last());
+    }
+
+    [Fact]
     public void AddFilter_Null_Throw()
     {
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();

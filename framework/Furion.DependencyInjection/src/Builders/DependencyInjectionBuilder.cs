@@ -112,6 +112,16 @@ public sealed class DependencyInjectionBuilder
     }
 
     /// <summary>
+    /// 添加待扫描的程序集
+    /// </summary>
+    /// <param name="assemblies"><see cref="IEnumerable{T}"/></param>
+    /// <returns><see cref="DependencyInjectionBuilder"/></returns>
+    public DependencyInjectionBuilder AddAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        return AddAssemblies(assemblies.ToArray());
+    }
+
+    /// <summary>
     /// 扫描程序集并创建服务描述器模型集合
     /// </summary>
     /// <returns><see cref="List{T}"/></returns>
