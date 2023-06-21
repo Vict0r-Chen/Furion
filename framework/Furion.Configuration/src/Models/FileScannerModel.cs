@@ -23,20 +23,20 @@ public sealed class FileScannerModel
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="path">文件绝对路径</param>
-    public FileScannerModel(string path)
+    /// <param name="root">文件绝对路径</param>
+    public FileScannerModel(string root)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
+        ArgumentException.ThrowIfNullOrEmpty(root, nameof(root));
 
-        Path = path;
-        Extension = System.IO.Path.GetExtension(path);
+        Root = root;
+        Extension = Path.GetExtension(root);
     }
 
     /// <summary>
     /// 文件绝对路径
     /// </summary>
-    public string Path { get; init; }
+    public string Root { get; init; }
 
     /// <summary>
     /// 文件后缀
@@ -52,6 +52,11 @@ public sealed class FileScannerModel
     /// 文件变更时刷新
     /// </summary>
     public bool ReloadOnChang { get; set; }
+
+    /// <summary>
+    /// 文件变更时刷新前等待毫秒数
+    /// </summary>
+    public int ReloadDelay { get; set; } = 250;
 
     /// <summary>
     /// 环境变量名

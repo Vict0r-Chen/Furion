@@ -91,9 +91,9 @@
             <summary>
             构造函数
             </summary>
-            <param name="path">文件绝对路径</param>
+            <param name="root">文件绝对路径</param>
         </member>
-        <member name="P:Furion.Configuration.FileScannerModel.Path">
+        <member name="P:Furion.Configuration.FileScannerModel.Root">
             <summary>
             文件绝对路径
             </summary>
@@ -113,10 +113,28 @@
             文件变更时刷新
             </summary>
         </member>
+        <member name="P:Furion.Configuration.FileScannerModel.ReloadDelay">
+            <summary>
+            文件变更时刷新前等待毫秒数
+            </summary>
+        </member>
         <member name="P:Furion.Configuration.FileScannerModel.Environment">
             <summary>
             环境变量名
             </summary>
+        </member>
+        <member name="T:Furion.Component.ConfigurationComponent">
+            <summary>
+            配置模块服务组件
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ConfigurationComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions">
             <summary>
