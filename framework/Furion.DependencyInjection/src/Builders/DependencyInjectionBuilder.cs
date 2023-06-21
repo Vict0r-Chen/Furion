@@ -32,7 +32,7 @@ public sealed class DependencyInjectionBuilder
     /// <summary>
     /// 服务类型黑名单
     /// </summary>
-    /// <remarks>禁止已配置的服务类型作为服务注册</remarks>
+    /// <remarks>禁止已扫描的服务类型作为服务注册</remarks>
     internal readonly HashSet<Type> _serviceTypeBlacklist;
 
     /// <summary>

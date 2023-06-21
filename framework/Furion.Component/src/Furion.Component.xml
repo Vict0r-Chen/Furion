@@ -413,15 +413,11 @@
             组件上下文基类
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentContext.#ctor(Furion.Component.ComponentOptions,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Component.ComponentContext.#ctor(Furion.Component.ComponentOptions)">
             <summary>
             构造函数
             </summary>
             <param name="options"><see cref="T:Furion.Component.ComponentOptions"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
-        </member>
-        <member name="P:Furion.Component.ComponentContext.Configuration">
-            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
         </member>
         <member name="P:Furion.Component.ComponentContext.Environment">
             <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
@@ -456,15 +452,18 @@
             服务组件上下文
             </summary>
         </member>
-        <member name="M:Furion.Component.ServiceComponentContext.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Component.ServiceComponentContext.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <summary>
             构造函数
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
         </member>
         <member name="P:Furion.Component.ServiceComponentContext.Services">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
+        </member>
+        <member name="P:Furion.Component.ServiceComponentContext.Configuration">
+            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>
         </member>
         <member name="T:Furion.Component.ComponentBase">
             <summary>
@@ -702,33 +701,33 @@
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilderBase})">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
             <summary>
             添加服务组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilderBase})">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
             <summary>
             添加服务组件
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfiguration,System.Action{Furion.Component.ComponentBuilderBase})">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
             <summary>
             添加服务组件
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="dependencies">组件依赖关系集合</param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>

@@ -61,10 +61,10 @@ public static class ComponentServiceCollectionExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
+    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfigurationBuilder configuration, Action<ComponentBuilderBase>? configure = null)
         where TComponent : ComponentBase
     {
         return services.AddComponent(typeof(TComponent), configuration, configure);
@@ -75,10 +75,10 @@ public static class ComponentServiceCollectionExtensions
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfigurationBuilder configuration, Action<ComponentBuilderBase>? configure = null)
     {
         // 创建组件依赖关系集合
         var dependencies = ComponentBase.CreateDependencies(componentType);
@@ -91,10 +91,10 @@ public static class ComponentServiceCollectionExtensions
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="dependencies">组件依赖关系集合</param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfiguration configuration, Action<ComponentBuilderBase>? configure = null)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfigurationBuilder configuration, Action<ComponentBuilderBase>? configure = null)
     {
         // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new ComponentBuilderBase();

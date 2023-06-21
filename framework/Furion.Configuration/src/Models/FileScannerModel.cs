@@ -12,32 +12,49 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+namespace Furion.Configuration;
 
 /// <summary>
-/// 服务组件上下文
+/// 文件扫描配置模型
 /// </summary>
-public sealed class ServiceComponentContext : ComponentContext
+/// <remarks>作用于目录文件扫描</remarks>
+public sealed class FileScannerModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
-    internal ServiceComponentContext(IServiceCollection services, IConfigurationBuilder configuration)
-        : base(services.GetComponentOptions())
+    /// <param name="path">文件绝对路径</param>
+    public FileScannerModel(string path)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+        ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
 
-        Services = services;
-        Configuration = configuration;
-        Environment = services.GetHostEnvironment();
+        Path = path;
+        Extension = System.IO.Path.GetExtension(path);
     }
 
-    /// <inheritdoc cref="IServiceCollection"/>
-    public IServiceCollection Services { get; }
+    /// <summary>
+    /// 文件绝对路径
+    /// </summary>
+    public string Path { get; init; }
 
-    /// <inheritdoc cref="IConfigurationBuilder"/>
-    public IConfigurationBuilder Configuration { get; }
+    /// <summary>
+    /// 文件后缀
+    /// </summary>
+    public string Extension { get; init; }
+
+    /// <summary>
+    /// 可选配置
+    /// </summary>
+    public bool Optional { get; set; }
+
+    /// <summary>
+    /// 文件变更时刷新
+    /// </summary>
+    public bool ReloadOnChang { get; set; }
+
+    /// <summary>
+    /// 环境变量名
+    /// </summary>
+    public string? Environment { get; set; }
 }

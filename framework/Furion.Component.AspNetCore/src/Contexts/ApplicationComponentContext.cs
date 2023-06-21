@@ -24,14 +24,18 @@ public sealed class ApplicationComponentContext : ComponentContext
     /// </summary>
     /// <param name="application"><see cref="WebApplication"/></param>
     internal ApplicationComponentContext(WebApplication application)
-        : base(application.GetComponentOptions(), application.Configuration)
+        : base(application.GetComponentOptions())
     {
         Application = application;
+        Configuration = application.Configuration;
         Environment = application.Environment;
     }
 
     /// <inheritdoc cref="WebApplication"/>
     public WebApplication Application { get; }
+
+    /// <inheritdoc cref="IConfiguration"/>
+    public IConfiguration Configuration { get; }
 
     /// <inheritdoc cref="IWebHostEnvironment"/>
     public new IWebHostEnvironment Environment { get; }

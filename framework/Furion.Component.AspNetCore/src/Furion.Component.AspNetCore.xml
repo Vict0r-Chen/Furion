@@ -64,6 +64,9 @@
         <member name="P:Furion.Component.ApplicationComponentContext.Application">
             <inheritdoc cref="T:Microsoft.AspNetCore.Builder.WebApplication"/>
         </member>
+        <member name="P:Furion.Component.ApplicationComponentContext.Configuration">
+            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
+        </member>
         <member name="P:Furion.Component.ApplicationComponentContext.Environment">
             <inheritdoc cref="T:Microsoft.AspNetCore.Hosting.IWebHostEnvironment"/>
         </member>

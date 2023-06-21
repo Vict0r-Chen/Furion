@@ -23,18 +23,10 @@ public abstract class ComponentContext
     /// 构造函数
     /// </summary>
     /// <param name="options"><see cref="ComponentOptions"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
-    internal ComponentContext(ComponentOptions options, IConfiguration configuration)
+    internal ComponentContext(ComponentOptions options)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
-
-        Configuration = configuration;
         Options = options;
     }
-
-    /// <inheritdoc cref="IConfiguration"/>
-    public IConfiguration Configuration { get; }
 
     /// <inheritdoc cref="IHostEnvironment"/>
     public IHostEnvironment? Environment { get; internal set; }

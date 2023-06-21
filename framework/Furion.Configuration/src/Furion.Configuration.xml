@@ -4,5 +4,140 @@
         <name>Furion.Configuration</name>
     </assembly>
     <members>
+        <member name="T:Furion.Configuration.FileScannerConfigurationBuilder">
+            <summary>
+            配置模块文件扫描器构建器
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._directories">
+            <summary>
+            待扫描的目录集合
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._fileGlobbing">
+            <summary>
+            文件扫描通配符
+            </summary>
+            <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/core/extensions/file-globbing">文件通配符</see></remarks>
+        </member>
+        <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._fileNameBlacklist">
+            <summary>
+            文件名黑名单
+            </summary>
+            <remarks>禁止已扫描的文件名作为配置文件</remarks>
+        </member>
+        <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._filterConfigure">
+            <summary>
+            文件扫描过滤器
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerConfigurationBuilder.RecursiveScanLevel">
+            <summary>
+            扫描目录的递归深度
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.FileScannerModel,System.Boolean})">
+            <summary>
+            添文件扫描过滤器
+            </summary>
+            <param name="configure"><see cref="T:System.Func`2"/></param>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddDirectories(System.String[])">
+            <summary>
+            添加待扫描的目录
+            </summary>
+            <param name="directories"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddDirectories(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加待扫描的目录
+            </summary>
+            <param name="directories"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.String[])">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            构建模块服务
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+        </member>
+        <member name="T:Furion.Configuration.FileScannerModel">
+            <summary>
+            文件扫描配置模型
+            </summary>
+            <remarks>作用于目录文件扫描</remarks>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerModel.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="path">文件绝对路径</param>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerModel.Path">
+            <summary>
+            文件绝对路径
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerModel.Extension">
+            <summary>
+            文件后缀
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerModel.Optional">
+            <summary>
+            可选配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerModel.ReloadOnChang">
+            <summary>
+            文件变更时刷新
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerModel.Environment">
+            <summary>
+            环境变量名
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions">
+            <summary>
+            配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions.AddFileScanner(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.FileScannerConfigurationBuilder})">
+            <summary>
+            添加配置模块文件扫描器服务
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.FileScannerConfigurationExtensions.AddFileScanner(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScannerConfigurationBuilder)">
+            <summary>
+            添加配置模块文件扫描器服务
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="fileScannerConfigurationBuilder"><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
+        </member>
     </members>
 </doc>
