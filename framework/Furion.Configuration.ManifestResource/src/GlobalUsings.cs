@@ -14,4 +14,8 @@
 
 global using Furion.Configuration;
 global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.Configuration.Ini;
+global using Microsoft.Extensions.Configuration.Json;
+global using Microsoft.Extensions.Configuration.Xml;
+global using System.Reflection;
 global using System.Runtime.CompilerServices;
