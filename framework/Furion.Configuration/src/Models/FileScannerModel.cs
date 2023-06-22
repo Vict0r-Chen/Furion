@@ -68,4 +68,9 @@ public sealed class FileScannerModel
     /// </summary>
     /// <remarks>值越大则越后添加</remarks>
     public int Order { get; set; }
+
+    /// <summary>
+    /// 忽略添加
+    /// </summary>
+    public bool Ignore { get; set; }
 }

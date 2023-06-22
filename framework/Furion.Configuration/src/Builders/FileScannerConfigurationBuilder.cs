@@ -34,7 +34,7 @@ public sealed class FileScannerConfigurationBuilder
     /// 文件名黑名单
     /// </summary>
     /// <remarks>禁止已扫描的文件名作为配置文件</remarks>
-    internal readonly HashSet<string> _fileNameBlacklist;
+    internal readonly HashSet<string> _fileBlacklistGlobbing;
 
     /// <summary>
     /// 文件扫描过滤器
@@ -57,17 +57,24 @@ public sealed class FileScannerConfigurationBuilder
             "*.xml",
             "*.ini",
         };
-        _fileNameBlacklist = new()
+        _fileBlacklistGlobbing = new()
         {
-            "runtimeconfig.json",
-            "*.runtimeconfig.*.json"
+            "*.runtimeconfig.json",
+            "*.runtimeconfig.*.json",
+            "*.deps.json",
+            "*.staticwebassets.*.json",
+            "*.nuget.dgspec.json",
+            "launchSettings.json",
+            "tsconfig.json",
+            "project.assets.json",
+            "manifest.json"
         };
     }
 
     /// <summary>
-    /// 扫描目录的递归深度
+    /// 扫描文件最大深度
     /// </summary>
-    public int RecursiveScanLevel { get; set; } = 3;
+    public int MaxDepthScanner { get; set; } = 2;
 
     /// <summary>
     /// 添文件扫描过滤器
@@ -137,5 +144,12 @@ public sealed class FileScannerConfigurationBuilder
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     internal void Build(IConfigurationBuilder builder)
     {
+        // 获取配置根结构
+        var configurationRoot = builder is ConfigurationManager configurationManager
+            ? configurationManager
+            : builder.Build();
+
+        // 获取运行环境
+        var environment = configurationRoot["ENVIRONMENT"];
     }
 }
