@@ -53,9 +53,7 @@ public sealed class FileScannerConfigurationBuilder
 
         _fileGlobbing = new()
         {
-            "*.json",
-            "*.xml",
-            "*.ini",
+            "*.json"
         };
         _fileBlacklistGlobbing = new()
         {
