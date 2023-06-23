@@ -21,25 +21,12 @@ namespace Furion.Configuration;
 internal sealed class FolderScanner
 {
     /// <summary>
-    /// 文件名匹配对象
-    /// </summary>
-    internal readonly Matcher _matcher;
-
-    /// <summary>
-    /// 文件黑名单匹配对象
-    /// </summary>
-    internal readonly Matcher _blacklistMatcher;
-
-    /// <summary>
     /// 构造函数，用于初始化文件目录扫描器
     /// </summary>
     /// <param name="folderPath">要扫描的目录路径</param>
     /// <param name="maxDepth">文件扫描的最大深度</param>
     internal FolderScanner(string folderPath, int maxDepth)
     {
-        _matcher = new();
-        _blacklistMatcher = new();
-
         FolderPath = folderPath;
         MaxDepth = maxDepth;
     }
@@ -55,64 +42,50 @@ internal sealed class FolderScanner
     internal int MaxDepth { get; }
 
     /// <summary>
-    /// 文件通配符
+    /// 执行目录扫描，返回符合匹配条件的文件路径列表
     /// </summary>
-    internal string[] FileGlobbing { get; set; } = new[] { "*.*" };
-
-    /// <summary>
-    /// 文件黑名单通配符
-    /// </summary>
-    internal string[] FileBlacklistGlobbing { get; set; } = Array.Empty<string>();
-
-    /// <summary>
-    /// 执行目录扫描
-    /// </summary>
-    /// <remarks>扫描符合匹配条件的文件路径列表</remarks>
+    /// <param name="matcher">可选的文件通配符匹配对象</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal List<string> ScanFolder()
+    internal List<string> ScanFolder(Matcher? matcher = null)
     {
-        // 添加文件名通配符和黑名单匹配规则
-        _matcher.AddIncludePatterns(FileGlobbing);
-        _blacklistMatcher.AddIncludePatterns(FileBlacklistGlobbing);
-
-        // 开始执行目录扫描
+        // 创建一个空的文件列表和一个元组类型的栈，压入初始目录和深度值
         var files = new List<string>();
-        ScanFolderHelper(files, FolderPath, 0);
+        var stack = new Stack<(string folderPath, int depth)>();
+        stack.Push((FolderPath, 0));
 
+        // 循环取出栈内元素，直到栈为空
+        while (stack.Count > 0)
+        {
+            // 取出栈顶元素表示当前要扫描的目录路径和深度值
+            var (folderPath, currentDepth) = stack.Pop();
+
+            // 查找当前目录下所有匹配的文件
+            var matchFiles = from file in Directory.EnumerateFiles(folderPath)
+                             let fileName = Path.GetFileName(file)
+                             let isXml = fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
+                             let dllFileExists = isXml && (File.Exists(Path.ChangeExtension(file, ".dll"))
+                                                            || File.Exists(Path.ChangeExtension(file, ".pdb")))
+                             where (matcher is null || matcher.Match(fileName).HasMatches)
+                                    && (!isXml || !dllFileExists)
+                             select file;
+
+            // 将匹配的文件添加到列表中
+            files.AddRange(matchFiles);
+
+            // 如果已经达到最大深度则跳过当前目录的子目录
+            if (currentDepth >= MaxDepth)
+            {
+                continue;
+            }
+
+            // 将当前目录下的子目录入栈，设置深度值加 1
+            foreach (string subFolderPath in Directory.GetDirectories(folderPath))
+            {
+                stack.Push((subFolderPath, currentDepth + 1));
+            }
+        }
+
+        // 返回符合匹配条件的文件列表
         return files;
-    }
-
-    /// <summary>
-    /// 扫描目录辅助方法，用于递归查找符合匹配条件的文件
-    /// </summary>
-    /// <param name="files">符合匹配条件的文件路径列表</param>
-    /// <param name="folderPath">要扫描的目录路径</param>
-    /// <param name="currentDepth">当前扫描深度</param>
-    private void ScanFolderHelper(List<string> files, string folderPath, int currentDepth)
-    {
-        // 查找所有匹配的文件
-        var matchFiles = from file in Directory.EnumerateFiles(folderPath)
-                         let fileName = Path.GetFileName(file)
-                         let isXml = fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
-                         let dllFileExists = isXml && (File.Exists(Path.ChangeExtension(file, ".dll"))
-                                                        || File.Exists(Path.ChangeExtension(file, ".pdb")))
-                         where _matcher.Match(fileName).HasMatches
-                                && !_blacklistMatcher.Match(fileName).HasMatches
-                                && (!isXml || !dllFileExists)
-                         select file;
-
-        files.AddRange(matchFiles);
-
-        // 如果深度大于或等于当前深度则停止扫描
-        if (currentDepth >= MaxDepth)
-        {
-            return;
-        }
-
-        // 递归查找子目录
-        foreach (string subFolderPath in Directory.GetDirectories(folderPath))
-        {
-            ScanFolderHelper(files, subFolderPath, currentDepth + 1);
-        }
     }
 }

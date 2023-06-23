@@ -40,12 +40,12 @@ public sealed class FileConfigurationModel
     /// <summary>
     /// 文件可选配置
     /// </summary>
-    public bool Optional { get; set; }
+    public bool Optional { get; set; } = true;
 
     /// <summary>
     /// 文件变更时刷新
     /// </summary>
-    public bool ReloadOnChang { get; set; }
+    public bool ReloadOnChang { get; set; } = true;
 
     /// <summary>
     /// 文件变更时刷新前等待毫秒数

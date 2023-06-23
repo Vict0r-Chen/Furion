@@ -65,6 +65,7 @@ public sealed class FileScannerConfigurationBuilder
             "*.nuget.dgspec.json",
             "launchSettings.json",
             "tsconfig.json",
+            "package.json",
             "project.assets.json",
             "manifest.json"
         };
@@ -73,7 +74,7 @@ public sealed class FileScannerConfigurationBuilder
     /// <summary>
     /// 文件扫描最大深度
     /// </summary>
-    public int MaxDepthScanner { get; set; } = 0;
+    public int MaxDepthScanner { get; set; }
 
     /// <summary>
     /// 添加文件扫描过滤器
@@ -157,8 +158,8 @@ public sealed class FileScannerConfigurationBuilder
             ? configurationManager
             : builder.Build();
 
-        // 获取运行环境
-        var environment = configurationRoot["ENVIRONMENT"];
+        // 获取环境的名称
+        var environmentName = configurationRoot["ENVIRONMENT"];
 
         // 添加内容目录扫描
         var contentRoot = configurationRoot["CONTENTROOT"];

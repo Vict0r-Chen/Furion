@@ -125,16 +125,6 @@
             </summary>
             <remarks>作用于扫描指定目录下符合匹配条件的文件</remarks>
         </member>
-        <member name="F:Furion.Configuration.FolderScanner._matcher">
-            <summary>
-            文件名匹配对象
-            </summary>
-        </member>
-        <member name="F:Furion.Configuration.FolderScanner._blacklistMatcher">
-            <summary>
-            文件黑名单匹配对象
-            </summary>
-        </member>
         <member name="M:Furion.Configuration.FolderScanner.#ctor(System.String,System.Int32)">
             <summary>
             构造函数，用于初始化文件目录扫描器
@@ -152,30 +142,12 @@
             文件扫描最大深度
             </summary>
         </member>
-        <member name="P:Furion.Configuration.FolderScanner.FileGlobbing">
+        <member name="M:Furion.Configuration.FolderScanner.ScanFolder(Microsoft.Extensions.FileSystemGlobbing.Matcher)">
             <summary>
-            文件通配符
+            执行目录扫描，返回符合匹配条件的文件路径列表
             </summary>
-        </member>
-        <member name="P:Furion.Configuration.FolderScanner.FileBlacklistGlobbing">
-            <summary>
-            文件黑名单通配符
-            </summary>
-        </member>
-        <member name="M:Furion.Configuration.FolderScanner.ScanFolder">
-            <summary>
-            执行目录扫描
-            </summary>
-            <remarks>扫描符合匹配条件的文件路径列表</remarks>
+            <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.FolderScanner.ScanFolderHelper(System.Collections.Generic.List{System.String},System.String,System.Int32)">
-            <summary>
-            扫描目录辅助方法，用于递归查找符合匹配条件的文件
-            </summary>
-            <param name="files">符合匹配条件的文件路径列表</param>
-            <param name="folderPath">要扫描的目录路径</param>
-            <param name="currentDepth">当前扫描深度</param>
         </member>
         <member name="T:Furion.Component.ConfigurationComponent">
             <summary>
