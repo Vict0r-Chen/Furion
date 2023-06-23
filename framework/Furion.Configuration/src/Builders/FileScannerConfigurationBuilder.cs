@@ -25,13 +25,13 @@ public sealed class FileScannerConfigurationBuilder
     internal readonly HashSet<string> _directories;
 
     /// <summary>
-    /// 文件扫描通配符
+    /// 文件通配符
     /// </summary>
     /// <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/core/extensions/file-globbing">文件通配符</see></remarks>
     internal readonly HashSet<string> _fileGlobbing;
 
     /// <summary>
-    /// 文件名黑名单
+    /// 文件黑名单通配符
     /// </summary>
     /// <remarks>禁止已扫描的文件名作为配置文件</remarks>
     internal readonly HashSet<string> _fileBlacklistGlobbing;
@@ -39,7 +39,7 @@ public sealed class FileScannerConfigurationBuilder
     /// <summary>
     /// 文件扫描过滤器
     /// </summary>
-    internal Func<FileScannerModel, bool>? _filterConfigure;
+    internal Func<FileConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
     /// 构造函数
@@ -55,6 +55,7 @@ public sealed class FileScannerConfigurationBuilder
         {
             "*.json"
         };
+
         _fileBlacklistGlobbing = new()
         {
             "*.runtimeconfig.json",
@@ -70,15 +71,15 @@ public sealed class FileScannerConfigurationBuilder
     }
 
     /// <summary>
-    /// 扫描文件最大深度
+    /// 文件扫描最大深度
     /// </summary>
-    public int MaxDepthScanner { get; set; } = 2;
+    public int MaxDepthScanner { get; set; } = 0;
 
     /// <summary>
-    /// 添文件扫描过滤器
+    /// 添加文件扫描过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
-    public void AddFilter(Func<FileScannerModel, bool> configure)
+    public void AddFilter(Func<FileConfigurationModel, bool> configure)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
@@ -87,22 +88,30 @@ public sealed class FileScannerConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加待扫描的目录
+    /// 添加文件扫描的目录
     /// </summary>
     /// <param name="directories"><see cref="string"/>[]</param>
     /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddDirectories(params string[] directories)
+    public FileScannerConfigurationBuilder AddDirectories(params string?[] directories)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(directories, nameof(directories));
 
-        Array.ForEach(directories, directory => _directories.Add(directory));
+        Array.ForEach(directories, directory =>
+        {
+            if (string.IsNullOrWhiteSpace(directory))
+            {
+                return;
+            }
+
+            _directories.Add(directory);
+        });
 
         return this;
     }
 
     /// <summary>
-    /// 添加待扫描的目录
+    /// 添加文件扫描的目录
     /// </summary>
     /// <param name="directories"><see cref="IEnumerable{T}"/></param>
     /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
@@ -149,5 +158,11 @@ public sealed class FileScannerConfigurationBuilder
 
         // 获取运行环境
         var environment = configurationRoot["ENVIRONMENT"];
+
+        // 获取内容目录
+        var contentRoot = configurationRoot["CONTENTROOT"];
+
+        // 添加内容目录扫描
+        AddDirectories(contentRoot);
     }
 }

@@ -15,36 +15,30 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 文件扫描配置模型
+/// 文件配置模型
 /// </summary>
-/// <remarks>作用于目录文件扫描</remarks>
-public sealed class FileScannerModel
+/// <remarks>作用于文件目录扫描</remarks>
+public sealed class FileConfigurationModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="root">文件绝对路径</param>
-    public FileScannerModel(string root)
+    /// <param name="path">文件绝对路径</param>
+    public FileConfigurationModel(string path)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(root, nameof(root));
+        ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
 
-        Root = root;
-        Extension = Path.GetExtension(root);
+        Path = path;
     }
 
     /// <summary>
     /// 文件绝对路径
     /// </summary>
-    public string Root { get; init; }
+    public string Path { get; init; }
 
     /// <summary>
-    /// 文件后缀
-    /// </summary>
-    public string Extension { get; init; }
-
-    /// <summary>
-    /// 可选配置
+    /// 文件可选配置
     /// </summary>
     public bool Optional { get; set; }
 
@@ -59,18 +53,8 @@ public sealed class FileScannerModel
     public int ReloadDelay { get; set; } = 250;
 
     /// <summary>
-    /// 环境变量名
-    /// </summary>
-    public string? Environment { get; set; }
-
-    /// <summary>
     /// 排序
     /// </summary>
     /// <remarks>值越大则越后添加</remarks>
     public int Order { get; set; }
-
-    /// <summary>
-    /// 忽略添加
-    /// </summary>
-    public bool Ignore { get; set; }
 }
