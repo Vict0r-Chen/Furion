@@ -99,6 +99,7 @@ public sealed class FileScannerConfigurationBuilder
 
         Array.ForEach(directories, directory =>
         {
+            // 空检查
             if (string.IsNullOrWhiteSpace(directory))
             {
                 return;
@@ -159,10 +160,8 @@ public sealed class FileScannerConfigurationBuilder
         // 获取运行环境
         var environment = configurationRoot["ENVIRONMENT"];
 
-        // 获取内容目录
-        var contentRoot = configurationRoot["CONTENTROOT"];
-
         // 添加内容目录扫描
+        var contentRoot = configurationRoot["CONTENTROOT"];
         AddDirectories(contentRoot);
     }
 }
