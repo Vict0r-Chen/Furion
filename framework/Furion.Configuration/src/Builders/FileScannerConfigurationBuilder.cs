@@ -37,7 +37,7 @@ public sealed class FileScannerConfigurationBuilder
     internal readonly HashSet<string> _fileBlacklistGlobbing;
 
     /// <summary>
-    /// 文件扫描过滤器
+    /// 文件配置模型过滤器
     /// </summary>
     internal Func<FileConfigurationModel, bool>? _filterConfigure;
 
@@ -163,7 +163,7 @@ public sealed class FileScannerConfigurationBuilder
         AddDirectories(contentRoot);
 
         // 扫描所有配置文件目录
-        var files = ScanDirectories();
+        var files = ScanDirectories(builder);
 
         // 获取环境的名称
         var environmentName = configurationRoot["ENVIRONMENT"];
@@ -177,22 +177,37 @@ public sealed class FileScannerConfigurationBuilder
     /// 扫描所有配置文件目录
     /// </summary>
     /// <returns><see cref="HashSet{T}"/></returns>
-    internal HashSet<string> ScanDirectories()
+    internal IEnumerable<FileConfigurationModel> ScanDirectories(IConfigurationBuilder builder)
     {
+        // 查找所有配置的文件配置提供程序
+        var filesExists = builder.Sources.OfType<FileConfigurationSource>()
+                                                       .Select(s => (s.Path, s.FileProvider as PhysicalFileProvider))
+                                                       .OfType<(string Path, PhysicalFileProvider Provider)>()
+                                                       .Select(t => Path.Combine(t.Provider.Root, t.Path))
+                                                       .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
         // 初始化文件通配符匹配对象
         var matcher = new Matcher();
         matcher.AddIncludePatterns(_fileGlobbing);
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
         // 扫描目录配置文件
-        var files = new HashSet<string>();
-        foreach (var directory in _directories)
-        {
-            var matchFiles = ScanDirectory(directory, MaxDepth, matcher);
-            matchFiles.ForEach(file => files.Add(file));
-        }
+        var files = _directories.SelectMany(dir => ScanDirectory(dir, MaxDepth, matcher))
+                                                .Distinct(StringComparer.OrdinalIgnoreCase)
+                                                .Except(filesExists, StringComparer.OrdinalIgnoreCase);
 
-        return files;
+        // 遍历所有配置文件
+        foreach (var file in files)
+        {
+            // 文件配置模型
+            var fileConfigurationModel = new FileConfigurationModel(file);
+
+            // 调用文件配置模型过滤器
+            if (_filterConfigure is null || _filterConfigure.Invoke(fileConfigurationModel))
+            {
+                yield return fileConfigurationModel;
+            }
+        }
     }
 
     /// <summary>

@@ -14,5 +14,6 @@
 
 global using Furion.Configuration;
 global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.FileProviders;
 global using Microsoft.Extensions.FileSystemGlobbing;
 global using System.Runtime.CompilerServices;

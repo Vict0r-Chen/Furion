@@ -28,7 +28,7 @@
         </member>
         <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._filterConfigure">
             <summary>
-            文件扫描过滤器
+            文件配置模型过滤器
             </summary>
         </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.#ctor">
@@ -81,7 +81,7 @@
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
         </member>
-        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectories">
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectories(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <summary>
             扫描所有配置文件目录
             </summary>
