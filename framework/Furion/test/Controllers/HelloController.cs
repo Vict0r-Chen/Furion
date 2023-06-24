@@ -19,8 +19,8 @@ namespace Furion.Tests.Controllers;
 public class HelloController
 {
     [HttpGet]
-    public string Get()
+    public string Get([FromServices] IConfiguration configuration)
     {
-        return nameof(Furion);
+        return nameof(Furion) + configuration["Nameddd"];
     }
 }

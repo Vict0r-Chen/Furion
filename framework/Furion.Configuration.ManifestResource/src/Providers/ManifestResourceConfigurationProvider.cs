@@ -22,6 +22,8 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <inheritdoc />
     public override void Load()
     {
-        base.Load();
+        Data = new Dictionary<string, string?>()
+        {
+        };
     }
 }

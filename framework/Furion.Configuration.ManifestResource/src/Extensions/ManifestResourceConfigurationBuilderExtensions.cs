@@ -26,7 +26,7 @@ public static class ManifestResourceConfigurationBuilderExtensions
     /// <returns><see cref="IConfigurationBuilder"/></returns>
     public static IConfigurationBuilder AddManifestResource(this IConfigurationBuilder builder)
     {
-        builder.Sources.Insert(0, new ManifestResourceConfigurationSource());
+        builder.Add(new ManifestResourceConfigurationSource());
         return builder;
     }
 }

@@ -12,6 +12,10 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Microsoft.Extensions.Configuration.Ini;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.Configuration.Xml;
+
 namespace Furion.Configuration;
 
 /// <summary>
@@ -46,10 +50,7 @@ public sealed class FileScannerConfigurationBuilder
     /// </summary>
     public FileScannerConfigurationBuilder()
     {
-        _directories = new()
-        {
-            AppContext.BaseDirectory
-        };
+        _directories = new();
 
         _fileGlobbing = new()
         {
@@ -160,7 +161,7 @@ public sealed class FileScannerConfigurationBuilder
 
         // 添加内容目录扫描
         var contentRoot = configurationRoot["CONTENTROOT"];
-        AddDirectories(contentRoot);
+        AddDirectories(contentRoot ?? AppContext.BaseDirectory);
 
         // 获取环境的名称
         var environmentName = configurationRoot["ENVIRONMENT"];
@@ -191,6 +192,10 @@ public sealed class FileScannerConfigurationBuilder
 
             var baseFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(baseFile));
             var environmentFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(environmentFile));
+
+            // 添加配置到构建器中
+            AddFileConfigurationSource(builder, baseFileModel);
+            AddFileConfigurationSource(builder, environmentFileModel);
         }
 
         _directories.Clear();
@@ -283,6 +288,44 @@ public sealed class FileScannerConfigurationBuilder
 
         // 返回符合匹配条件的文件列表
         return files;
+    }
+
+    /// <summary>
+    /// 添加文件配置提供程序
+    /// </summary>
+    /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
+    /// <param name="model"><see cref="FileConfigurationModel"/></param>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel? model)
+    {
+        // 空检查
+        if (model is null)
+        {
+            return;
+        }
+
+        // 获取拓展名
+        var extension = Path.GetExtension(model.Path);
+
+        // 创建文件配置源
+        FileConfigurationSource fileConfigurationSource = extension switch
+        {
+            ".json" => new JsonConfigurationSource(),
+            ".ini" => new IniConfigurationSource(),
+            ".xml" => new XmlConfigurationSource(),
+            _ => throw new InvalidOperationException($"Configuration provider for {extension} extension not found.")
+        };
+
+        // 初始化
+        fileConfigurationSource.FileProvider = null;
+        fileConfigurationSource.Path = model.Path;
+        fileConfigurationSource.Optional = model.Optional;
+        fileConfigurationSource.ReloadOnChange = model.ReloadOnChang;
+        fileConfigurationSource.ReloadDelay = model.ReloadDelay;
+        fileConfigurationSource.ResolveFileProvider();
+
+        // 添加到配置构建器中
+        builder.Add(fileConfigurationSource);
     }
 
     /// <summary>

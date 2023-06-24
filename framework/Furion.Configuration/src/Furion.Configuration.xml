@@ -96,6 +96,14 @@
             <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddFileConfigurationSource(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileConfigurationModel)">
+            <summary>
+            添加文件配置提供程序
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="model"><see cref="T:Furion.Configuration.FileConfigurationModel"/></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.FileNameGroupPredicate(System.String)">
             <summary>
             根据文件名进行分组
