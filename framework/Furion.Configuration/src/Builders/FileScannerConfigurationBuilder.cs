@@ -37,6 +37,11 @@ public sealed class FileScannerConfigurationBuilder
     internal readonly HashSet<string> _fileBlacklistGlobbing;
 
     /// <summary>
+    /// 文件配置程序
+    /// </summary>
+    internal readonly Dictionary<string, Type> _fileConfigurationSources;
+
+    /// <summary>
     /// 文件配置模型过滤器
     /// </summary>
     internal Func<FileConfigurationModel, bool>? _filterConfigure;
@@ -65,6 +70,13 @@ public sealed class FileScannerConfigurationBuilder
             "package.json",
             "project.assets.json",
             "manifest.json"
+        };
+
+        _fileConfigurationSources = new()
+        {
+            {".json", typeof(JsonConfigurationSource) },
+            {".xml", typeof(XmlConfigurationSource) },
+            {".ini", typeof(IniConfigurationSource) }
         };
     }
 
@@ -283,7 +295,7 @@ public sealed class FileScannerConfigurationBuilder
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="model"><see cref="FileConfigurationModel"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel? model)
+    internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel? model)
     {
         // 空检查
         if (model is null)
@@ -291,14 +303,17 @@ public sealed class FileScannerConfigurationBuilder
             return;
         }
 
-        // 创建文件配置源
-        FileConfigurationSource fileConfigurationSource = model.Extension switch
+        // 拓展配置提供程序检查
+        if (!_fileConfigurationSources.TryGetValue(model.Extension, out var fileConfigurationSourceType))
         {
-            ".json" => new JsonConfigurationSource(),
-            ".ini" => new IniConfigurationSource(),
-            ".xml" => new XmlConfigurationSource(),
-            _ => throw new InvalidOperationException($"Configuration provider for {model.Extension} extension not found.")
-        };
+            throw new InvalidOperationException($"Configuration provider for {model.Extension} extension not found.");
+        }
+
+        // 创建文件配置源
+        var fileConfigurationSource = Activator.CreateInstance(fileConfigurationSourceType) as FileConfigurationSource;
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fileConfigurationSource, nameof(fileConfigurationSourceType));
 
         // 初始化
         fileConfigurationSource.FileProvider = null;

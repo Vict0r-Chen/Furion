@@ -26,6 +26,11 @@
             </summary>
             <remarks>禁止已扫描的文件名作为配置文件</remarks>
         </member>
+        <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._fileConfigurationSources">
+            <summary>
+            文件配置程序
+            </summary>
+        </member>
         <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._filterConfigure">
             <summary>
             文件配置模型过滤器
