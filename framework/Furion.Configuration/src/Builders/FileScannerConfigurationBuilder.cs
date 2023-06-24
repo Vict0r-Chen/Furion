@@ -166,12 +166,13 @@ public sealed class FileScannerConfigurationBuilder
         var files = ScanDirectories(builder);
 
         // 根据拓展名、文件目录、文件名排序
-        var groupedFiles = files.GroupBy(model => new
-        {
-            Extension = Path.GetExtension(model.Path),
-            Directory = Path.GetDirectoryName(model.Path),
-            Group = FileNameGroupPredicate(model.Path)
-        });
+        var groupedFiles = files.OrderBy(model => model.Order)
+                                                                                                                    .GroupBy(model => new
+                                                                                                                    {
+                                                                                                                        Extension = Path.GetExtension(model.Path),
+                                                                                                                        Directory = Path.GetDirectoryName(model.Path),
+                                                                                                                        Group = FileNameGroupPredicate(model.Path)
+                                                                                                                    });
 
         // 遍历分组并添加配置文件
         foreach (var fileGroup in groupedFiles)
