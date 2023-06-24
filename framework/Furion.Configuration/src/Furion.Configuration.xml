@@ -36,7 +36,7 @@
             构造函数
             </summary>
         </member>
-        <member name="P:Furion.Configuration.FileScannerConfigurationBuilder.MaxDepthScanner">
+        <member name="P:Furion.Configuration.FileScannerConfigurationBuilder.MaxDepth">
             <summary>
             文件扫描最大深度
             </summary>
@@ -81,6 +81,21 @@
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectories">
+            <summary>
+            扫描所有配置文件目录
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.HashSet`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectory(System.String,System.Int32,Microsoft.Extensions.FileSystemGlobbing.Matcher)">
+            <summary>
+            执行目录扫描，返回符合匹配条件的文件路径列表
+            </summary>
+            <param name="folderPath">要扫描的目录路径</param>
+            <param name="maxDepth">文件扫描的最大深度</param>
+            <param name="matcher">可选的文件通配符匹配对象</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
         <member name="T:Furion.Configuration.FileConfigurationModel">
             <summary>
             文件配置模型
@@ -118,36 +133,6 @@
             排序
             </summary>
             <remarks>值越大则越后添加</remarks>
-        </member>
-        <member name="T:Furion.Configuration.FolderScanner">
-            <summary>
-            文件目录扫描器类
-            </summary>
-            <remarks>作用于扫描指定目录下符合匹配条件的文件</remarks>
-        </member>
-        <member name="M:Furion.Configuration.FolderScanner.#ctor(System.String,System.Int32)">
-            <summary>
-            构造函数，用于初始化文件目录扫描器
-            </summary>
-            <param name="folderPath">要扫描的目录路径</param>
-            <param name="maxDepth">文件扫描的最大深度</param>
-        </member>
-        <member name="P:Furion.Configuration.FolderScanner.FolderPath">
-            <summary>
-            文件目录路径
-            </summary>
-        </member>
-        <member name="P:Furion.Configuration.FolderScanner.MaxDepth">
-            <summary>
-            文件扫描最大深度
-            </summary>
-        </member>
-        <member name="M:Furion.Configuration.FolderScanner.ScanFolder(Microsoft.Extensions.FileSystemGlobbing.Matcher)">
-            <summary>
-            执行目录扫描，返回符合匹配条件的文件路径列表
-            </summary>
-            <param name="matcher">可选的文件通配符匹配对象</param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="T:Furion.Component.ConfigurationComponent">
             <summary>
