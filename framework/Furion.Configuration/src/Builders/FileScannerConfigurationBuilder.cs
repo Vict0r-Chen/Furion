@@ -176,22 +176,30 @@ public sealed class FileScannerConfigurationBuilder
         // 遍历分组并添加配置文件
         foreach (var fileGroup in groupedFiles)
         {
+            // 处理分组结果只有一条的情况
+            if (fileGroup.Count() == 1)
+            {
+                AddFileConfigurationSource(builder, fileGroup.FirstOrDefault());
+                continue;
+            }
+
             // 获取当前分组信息
             var directory = fileGroup.Key.Directory!;
             var extension = fileGroup.Key.Extension;
             var group = fileGroup.Key.Group;
 
-            // 获取分组配置文件和环境配置文件
-            // TODO: 处理 environmentName 空问题
+            // 添加基础配置文件
             var baseFile = Path.Combine(directory, group + extension);
-            var environmentFile = Path.Combine(directory, group + "." + environmentName + extension);
-
             var baseFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(baseFile));
-            var environmentFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(environmentFile));
-
-            // 添加配置到构建器中
             AddFileConfigurationSource(builder, baseFileModel);
-            AddFileConfigurationSource(builder, environmentFileModel);
+
+            // 添加基于环境配置文件
+            if (!string.IsNullOrWhiteSpace(environmentName))
+            {
+                var environmentFile = Path.Combine(directory, group + "." + environmentName + extension);
+                var environmentFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(environmentFile));
+                AddFileConfigurationSource(builder, environmentFileModel);
+            }
         }
 
         _directories.Clear();
