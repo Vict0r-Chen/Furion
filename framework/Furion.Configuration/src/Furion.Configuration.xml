@@ -96,6 +96,13 @@
             <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.FileNameGroupPredicate(System.String)">
+            <summary>
+            根据文件名进行分组
+            </summary>
+            <param name="filePath">文件路径</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="T:Furion.Configuration.FileConfigurationModel">
             <summary>
             文件配置模型

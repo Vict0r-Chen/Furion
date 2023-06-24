@@ -162,11 +162,36 @@ public sealed class FileScannerConfigurationBuilder
         var contentRoot = configurationRoot["CONTENTROOT"];
         AddDirectories(contentRoot);
 
+        // 获取环境的名称
+        var environmentName = configurationRoot["ENVIRONMENT"];
+
         // 扫描所有配置文件目录
         var files = ScanDirectories(builder);
 
-        // 获取环境的名称
-        var environmentName = configurationRoot["ENVIRONMENT"];
+        // 根据拓展名、文件目录、文件名排序
+        var groupedFiles = files.GroupBy(model => new
+        {
+            Extension = Path.GetExtension(model.Path),
+            Directory = Path.GetDirectoryName(model.Path),
+            Group = FileNameGroupPredicate(model.Path)
+        });
+
+        // 遍历分组并添加配置文件
+        foreach (var fileGroup in groupedFiles)
+        {
+            // 获取当前分组信息
+            var directory = fileGroup.Key.Directory!;
+            var extension = fileGroup.Key.Extension;
+            var group = fileGroup.Key.Group;
+
+            // 获取分组配置文件和环境配置文件
+            // TODO: 处理 environmentName 空问题
+            var baseFile = Path.Combine(directory, group + extension);
+            var environmentFile = Path.Combine(directory, group + "." + environmentName + extension);
+
+            var baseFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(baseFile));
+            var environmentFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(environmentFile));
+        }
 
         _directories.Clear();
         _fileGlobbing.Clear();
@@ -193,8 +218,8 @@ public sealed class FileScannerConfigurationBuilder
 
         // 扫描目录配置文件
         var files = _directories.SelectMany(dir => ScanDirectory(dir, MaxDepth, matcher))
-                                                .Distinct(StringComparer.OrdinalIgnoreCase)
-                                                .Except(filesExists, StringComparer.OrdinalIgnoreCase);
+                                                 .Distinct(StringComparer.OrdinalIgnoreCase)
+                                                 .Except(filesExists, StringComparer.OrdinalIgnoreCase);
 
         // 遍历所有配置文件
         foreach (var file in files)
@@ -258,5 +283,19 @@ public sealed class FileScannerConfigurationBuilder
 
         // 返回符合匹配条件的文件列表
         return files;
+    }
+
+    /// <summary>
+    /// 根据文件名进行分组
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <returns><see cref="string"/></returns>
+    internal static string FileNameGroupPredicate(string filePath)
+    {
+        var fileName = Path.GetFileName(filePath);
+
+        return fileName.StartsWith('(') && fileName.Contains(')')
+            ? fileName[fileName.IndexOf("(")..(fileName.IndexOf(")") + 1)]
+            : fileName[..fileName.IndexOf(".")];
     }
 }
