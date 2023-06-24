@@ -24,7 +24,7 @@ public sealed class FileConfigurationModel
     /// 构造函数
     /// </summary>
     /// <param name="path">文件绝对路径</param>
-    public FileConfigurationModel(string path)
+    internal FileConfigurationModel(string path)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
@@ -33,9 +33,7 @@ public sealed class FileConfigurationModel
         Extension = System.IO.Path.GetExtension(path);
         FileName = System.IO.Path.GetFileName(path);
         Directory = System.IO.Path.GetDirectoryName(path)!;
-        Group = FileName.StartsWith('(') && FileName.Contains(')')
-                ? FileName[FileName.IndexOf("(")..(FileName.IndexOf(")") + 1)]
-                : FileName[..FileName.IndexOf(".")];
+        Group = ResolveGroup();
     }
 
     /// <summary>
@@ -83,4 +81,21 @@ public sealed class FileConfigurationModel
     /// </summary>
     /// <remarks>值越大则越后添加</remarks>
     public int Order { get; set; }
+
+    /// <summary>
+    /// 解析分组
+    /// </summary>
+    /// <returns></returns>
+    internal string ResolveGroup()
+    {
+        return FileName.StartsWith('(') && FileName.Contains(')')
+                ? FileName[FileName.IndexOf("(")..(FileName.IndexOf(")") + 1)]
+                : FileName[..FileName.IndexOf(".")];
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return $"[{Group}] FileName: {FileName} Path: {Path}";
+    }
 }

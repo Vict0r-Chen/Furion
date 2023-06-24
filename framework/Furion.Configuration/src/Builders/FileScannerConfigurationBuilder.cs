@@ -27,7 +27,6 @@ public sealed class FileScannerConfigurationBuilder
     /// <summary>
     /// 文件通配符
     /// </summary>
-    /// <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/core/extensions/file-globbing">文件通配符</see></remarks>
     internal readonly HashSet<string> _fileGlobbing;
 
     /// <summary>
@@ -240,56 +239,6 @@ public sealed class FileScannerConfigurationBuilder
     }
 
     /// <summary>
-    /// 执行目录扫描，返回符合匹配条件的文件路径列表
-    /// </summary>
-    /// <param name="folderPath">要扫描的目录路径</param>
-    /// <param name="maxDepth">文件扫描的最大深度</param>
-    /// <param name="matcher">可选的文件通配符匹配对象</param>
-    /// <returns><see cref="List{T}"/></returns>
-    internal static List<string> ScanDirectory(string folderPath, int maxDepth, Matcher? matcher = null)
-    {
-        // 创建一个空的文件列表和一个元组类型的栈，压入初始目录和深度值
-        var files = new List<string>();
-        var stack = new Stack<(string folderPath, int depth)>();
-        stack.Push((folderPath, 0));
-
-        // 循环取出栈内元素，直到栈为空
-        while (stack.Count > 0)
-        {
-            // 取出栈顶元素表示当前要扫描的目录路径和深度值
-            var (currentFolderPath, currentDepth) = stack.Pop();
-
-            // 查找当前目录下所有匹配的文件
-            var matchFiles = from file in Directory.EnumerateFiles(currentFolderPath)
-                             let fileName = Path.GetFileName(file)
-                             let isXml = fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
-                             let dllFileExists = isXml && (File.Exists(Path.ChangeExtension(file, ".dll"))
-                                                            || File.Exists(Path.ChangeExtension(file, ".pdb")))
-                             where (matcher is null || matcher.Match(fileName).HasMatches)
-                                    && (!isXml || !dllFileExists)
-                             select file;
-
-            // 将匹配的文件添加到列表中
-            files.AddRange(matchFiles);
-
-            // 如果已经达到最大深度则跳过当前目录的子目录
-            if (currentDepth >= maxDepth)
-            {
-                continue;
-            }
-
-            // 将当前目录下的子目录入栈，设置深度值加 1
-            foreach (var subFolderPath in Directory.GetDirectories(currentFolderPath))
-            {
-                stack.Push((subFolderPath, currentDepth + 1));
-            }
-        }
-
-        // 返回符合匹配条件的文件列表
-        return files;
-    }
-
-    /// <summary>
     /// 添加文件配置提供程序
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
@@ -325,5 +274,54 @@ public sealed class FileScannerConfigurationBuilder
 
         // 添加到配置构建器中
         builder.Add(fileConfigurationSource);
+    }
+
+    /// <summary>
+    /// 执行目录扫描，返回符合匹配条件的文件路径列表
+    /// </summary>
+    /// <param name="folderPath">要扫描的目录路径</param>
+    /// <param name="maxDepth">文件扫描的最大深度</param>
+    /// <param name="matcher">可选的文件通配符匹配对象</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal static List<string> ScanDirectory(string folderPath, int maxDepth, Matcher? matcher = null)
+    {
+        // 创建一个空的文件列表和一个元组类型的栈，压入初始目录和深度值
+        var files = new List<string>();
+        var stack = new Stack<(string folderPath, int depth)>();
+        stack.Push((folderPath, 0));
+
+        // 循环取出栈内元素，直到栈为空
+        while (stack.Count > 0)
+        {
+            // 取出栈顶元素表示当前要扫描的目录路径和深度值
+            var (currentFolderPath, currentDepth) = stack.Pop();
+
+            // 查找当前目录下所有匹配的文件
+            var matchFiles = from file in Directory.EnumerateFiles(currentFolderPath)
+                             let fileName = Path.GetFileName(file)
+                             let isXmlFile = fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
+                             let dllFileExists = isXmlFile && File.Exists(Path.ChangeExtension(file, ".dll"))
+                             where (matcher is null || matcher.Match(fileName).HasMatches)
+                                    && (!isXmlFile || !dllFileExists)
+                             select file;
+
+            // 将匹配的文件添加到列表中
+            files.AddRange(matchFiles);
+
+            // 如果已经达到最大深度则跳过当前目录的子目录
+            if (currentDepth >= maxDepth)
+            {
+                continue;
+            }
+
+            // 将当前目录下的子目录入栈，设置深度值加 1
+            foreach (var subFolderPath in Directory.GetDirectories(currentFolderPath))
+            {
+                stack.Push((subFolderPath, currentDepth + 1));
+            }
+        }
+
+        // 返回符合匹配条件的文件列表
+        return files;
     }
 }
