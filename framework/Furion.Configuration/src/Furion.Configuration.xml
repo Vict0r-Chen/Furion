@@ -104,13 +104,6 @@
             <param name="model"><see cref="T:Furion.Configuration.FileConfigurationModel"/></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.FileNameGroupPredicate(System.String)">
-            <summary>
-            根据文件名进行分组
-            </summary>
-            <param name="filePath">文件路径</param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
         <member name="T:Furion.Configuration.FileConfigurationModel">
             <summary>
             文件配置模型
@@ -126,6 +119,26 @@
         <member name="P:Furion.Configuration.FileConfigurationModel.Path">
             <summary>
             文件绝对路径
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileConfigurationModel.Extension">
+            <summary>
+            拓展名
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileConfigurationModel.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileConfigurationModel.Directory">
+            <summary>
+            文件目录
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileConfigurationModel.Group">
+            <summary>
+            分组名
             </summary>
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.Optional">

@@ -162,44 +162,26 @@ public sealed class FileScannerConfigurationBuilder
         // 获取环境的名称
         var environmentName = configurationRoot["ENVIRONMENT"];
 
-        // 扫描所有配置文件目录
-        var files = ScanDirectories(builder);
-
-        // 根据拓展名、文件目录、文件名排序
-        var groupedFiles = files.OrderBy(model => model.Order)
-                                                                                                                    .GroupBy(model => new
-                                                                                                                    {
-                                                                                                                        Extension = Path.GetExtension(model.Path),
-                                                                                                                        Directory = Path.GetDirectoryName(model.Path),
-                                                                                                                        Group = FileNameGroupPredicate(model.Path)
-                                                                                                                    });
+        // 扫描所有配置文件目录，根据拓展名、文件目录、文件名排序
+        var files = ScanDirectories(builder)
+                                                                                                        .OrderBy(f => f.Order)
+                                                                                                        .GroupBy(f => new { f.Extension, f.Directory, f.Group });
 
         // 遍历分组并添加配置文件
-        foreach (var fileGroup in groupedFiles)
+        foreach (var fileGroup in files)
         {
-            // 处理分组结果只有一条的情况
-            if (fileGroup.Count() == 1)
-            {
-                AddFileConfigurationSource(builder, fileGroup.FirstOrDefault());
-                continue;
-            }
-
-            // 获取当前分组信息
-            var directory = fileGroup.Key.Directory!;
-            var extension = fileGroup.Key.Extension;
-            var group = fileGroup.Key.Group;
+            var filesInGroup = fileGroup.ToList();
+            var groupPath = Path.Combine(fileGroup.Key.Directory!, fileGroup.Key.Group);
 
             // 添加基础配置文件
-            var baseFile = Path.Combine(directory, group + extension);
-            var baseFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(baseFile));
+            var baseFileModel = filesInGroup.Find(f => f.Path.Equals(groupPath + fileGroup.Key.Extension));
             AddFileConfigurationSource(builder, baseFileModel);
 
             // 添加基于环境配置文件
             if (!string.IsNullOrWhiteSpace(environmentName))
             {
-                var environmentFile = Path.Combine(directory, group + "." + environmentName + extension);
-                var environmentFileModel = fileGroup.FirstOrDefault(f => f.Path.Equals(environmentFile));
-                AddFileConfigurationSource(builder, environmentFileModel);
+                var envFileModel = filesInGroup.Find(f => f.Path.Equals(groupPath + "." + environmentName + fileGroup.Key.Extension));
+                AddFileConfigurationSource(builder, envFileModel);
             }
         }
 
@@ -309,16 +291,13 @@ public sealed class FileScannerConfigurationBuilder
             return;
         }
 
-        // 获取拓展名
-        var extension = Path.GetExtension(model.Path);
-
         // 创建文件配置源
-        FileConfigurationSource fileConfigurationSource = extension switch
+        FileConfigurationSource fileConfigurationSource = model.Extension switch
         {
             ".json" => new JsonConfigurationSource(),
             ".ini" => new IniConfigurationSource(),
             ".xml" => new XmlConfigurationSource(),
-            _ => throw new InvalidOperationException($"Configuration provider for {extension} extension not found.")
+            _ => throw new InvalidOperationException($"Configuration provider for {model.Extension} extension not found.")
         };
 
         // 初始化
@@ -331,19 +310,5 @@ public sealed class FileScannerConfigurationBuilder
 
         // 添加到配置构建器中
         builder.Add(fileConfigurationSource);
-    }
-
-    /// <summary>
-    /// 根据文件名进行分组
-    /// </summary>
-    /// <param name="filePath">文件路径</param>
-    /// <returns><see cref="string"/></returns>
-    internal static string FileNameGroupPredicate(string filePath)
-    {
-        var fileName = Path.GetFileName(filePath);
-
-        return fileName.StartsWith('(') && fileName.Contains(')')
-            ? fileName[fileName.IndexOf("(")..(fileName.IndexOf(")") + 1)]
-            : fileName[..fileName.IndexOf(".")];
     }
 }

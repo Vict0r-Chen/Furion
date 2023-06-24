@@ -30,12 +30,38 @@ public sealed class FileConfigurationModel
         ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
 
         Path = path;
+        Extension = System.IO.Path.GetExtension(path);
+        FileName = System.IO.Path.GetFileName(path);
+        Directory = System.IO.Path.GetDirectoryName(path)!;
+        Group = FileName.StartsWith('(') && FileName.Contains(')')
+                ? FileName[FileName.IndexOf("(")..(FileName.IndexOf(")") + 1)]
+                : FileName[..FileName.IndexOf(".")];
     }
 
     /// <summary>
     /// 文件绝对路径
     /// </summary>
     public string Path { get; init; }
+
+    /// <summary>
+    /// 拓展名
+    /// </summary>
+    public string Extension { get; init; }
+
+    /// <summary>
+    /// 文件名
+    /// </summary>
+    public string FileName { get; init; }
+
+    /// <summary>
+    /// 文件目录
+    /// </summary>
+    public string Directory { get; init; }
+
+    /// <summary>
+    /// 分组名
+    /// </summary>
+    public string Group { get; init; }
 
     /// <summary>
     /// 文件可选配置
