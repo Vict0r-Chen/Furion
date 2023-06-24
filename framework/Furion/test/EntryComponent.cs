@@ -14,7 +14,7 @@
 
 namespace Furion.Tests;
 
-[DependsOn<ManifestResourceConfigurationComponent
+[DependsOn<ConfigurationComponent
     , DependencyInjectionNamedComponent
     , WebComponentCoreComponent>]
 public class EntryComponent : WebComponent

@@ -1,5 +1,0 @@
-<Project>
-
-	<Import Project="$(SolutionDir)Xunit.props" />
-
-</Project>
