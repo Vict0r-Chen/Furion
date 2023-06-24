@@ -79,7 +79,7 @@ internal sealed class FolderScanner
             }
 
             // 将当前目录下的子目录入栈，设置深度值加 1
-            foreach (string subFolderPath in Directory.GetDirectories(folderPath))
+            foreach (var subFolderPath in Directory.GetDirectories(folderPath))
             {
                 stack.Push((subFolderPath, currentDepth + 1));
             }
