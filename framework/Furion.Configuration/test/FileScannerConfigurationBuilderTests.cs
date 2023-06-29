@@ -560,6 +560,9 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal(2, configurationBuilder.Sources.Count);
         Assert.Equal("appsettings.json", (configurationBuilder.Sources.ElementAt(0) as JsonConfigurationSource)!.Path);
         Assert.Equal("test.json", (configurationBuilder.Sources.ElementAt(1) as JsonConfigurationSource)!.Path);
+
+        var configuration = configurationBuilder.Build();
+        Assert.Equal("Furion - Test", configuration["Name"]);
     }
 
     [Fact]
@@ -585,6 +588,9 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
         Assert.Equal("test.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
         Assert.Equal("test.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
+
+        var webApplication = webApplicationBuilder.Build();
+        Assert.Equal("Furion - Test - Development", webApplication.Configuration["Name"]);
     }
 
     [Fact]
@@ -610,6 +616,9 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
         Assert.Equal("test.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
         Assert.Equal("test.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
+
+        var host = hostApplicationBuilder.Build();
+        Assert.Equal("Furion - Test - Development", host.Services.GetRequiredService<IConfiguration>()["Name"]);
     }
 
     [Fact]
@@ -645,5 +654,8 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal("test.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
         Assert.Equal("appsettings.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
         Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
+
+        var webApplication = webApplicationBuilder.Build();
+        Assert.Equal("Furion - Development", webApplication.Configuration["Name"]);
     }
 }
