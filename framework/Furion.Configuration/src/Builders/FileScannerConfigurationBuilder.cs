@@ -176,22 +176,22 @@ public sealed class FileScannerConfigurationBuilder
         // 扫描所有配置文件目录，根据拓展名、文件目录、文件名排序
         var files = ScanDirectories(builder)
                                                                                                         .OrderBy(f => f.Order)
-                                                                                                        .GroupBy(f => new { f.Extension, f.Directory, f.Group });
+                                                                                                        .GroupBy(f => new { f.Extension, f.DirectoryName, f.Group });
 
         // 遍历分组并添加配置文件
         foreach (var fileGroup in files)
         {
             var filesInGroup = fileGroup.ToList();
-            var groupPath = Path.Combine(fileGroup.Key.Directory!, fileGroup.Key.Group);
+            var groupPath = Path.Combine(fileGroup.Key.DirectoryName!, fileGroup.Key.Group);
 
             // 添加基础配置文件
-            var baseFileModel = filesInGroup.Find(f => f.Path.Equals(groupPath + fileGroup.Key.Extension));
+            var baseFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + fileGroup.Key.Extension));
             AddFileConfigurationSource(builder, baseFileModel);
 
             // 添加基于环境配置文件
             if (!string.IsNullOrWhiteSpace(environmentName))
             {
-                var envFileModel = filesInGroup.Find(f => f.Path.Equals(groupPath + "." + environmentName + fileGroup.Key.Extension));
+                var envFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + "." + environmentName + fileGroup.Key.Extension));
                 AddFileConfigurationSource(builder, envFileModel);
             }
         }
@@ -266,7 +266,7 @@ public sealed class FileScannerConfigurationBuilder
 
         // 初始化
         fileConfigurationSource.FileProvider = null;
-        fileConfigurationSource.Path = model.Path;
+        fileConfigurationSource.Path = model.FilePath;
         fileConfigurationSource.Optional = model.Optional;
         fileConfigurationSource.ReloadOnChange = model.ReloadOnChang;
         fileConfigurationSource.ReloadDelay = model.ReloadDelay;

@@ -112,15 +112,15 @@
             <summary>
             文件配置模型
             </summary>
-            <remarks>作用于文件目录扫描</remarks>
+            <remarks>作用于配置文件扫描</remarks>
         </member>
         <member name="M:Furion.Configuration.FileConfigurationModel.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="path">文件绝对路径</param>
+            <param name="filePath">文件绝对路径</param>
         </member>
-        <member name="P:Furion.Configuration.FileConfigurationModel.Path">
+        <member name="P:Furion.Configuration.FileConfigurationModel.FilePath">
             <summary>
             文件绝对路径
             </summary>
@@ -135,9 +135,9 @@
             文件名
             </summary>
         </member>
-        <member name="P:Furion.Configuration.FileConfigurationModel.Directory">
+        <member name="P:Furion.Configuration.FileConfigurationModel.DirectoryName">
             <summary>
-            文件目录
+            文件目录名
             </summary>
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.Group">
@@ -157,7 +157,7 @@
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.ReloadDelay">
             <summary>
-            文件变更时刷新前等待毫秒数
+            文件变更延迟刷新毫秒数
             </summary>
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.Order">
@@ -168,9 +168,10 @@
         </member>
         <member name="M:Furion.Configuration.FileConfigurationModel.ResolveGroup">
             <summary>
-            解析分组
+            解析文件分组
             </summary>
-            <returns></returns>
+            <remarks>若文件名包含 () 则使用其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileConfigurationModel.ToString">
             <inheritdoc />

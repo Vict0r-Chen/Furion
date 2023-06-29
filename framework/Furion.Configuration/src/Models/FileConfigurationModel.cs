@@ -17,29 +17,36 @@ namespace Furion.Configuration;
 /// <summary>
 /// 文件配置模型
 /// </summary>
-/// <remarks>作用于文件目录扫描</remarks>
+/// <remarks>作用于配置文件扫描</remarks>
 public sealed class FileConfigurationModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="path">文件绝对路径</param>
-    internal FileConfigurationModel(string path)
+    /// <param name="filePath">文件绝对路径</param>
+    internal FileConfigurationModel(string filePath)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(path, nameof(path));
+        ArgumentException.ThrowIfNullOrEmpty(filePath, nameof(filePath));
 
-        Path = path;
-        Extension = System.IO.Path.GetExtension(path);
-        FileName = System.IO.Path.GetFileName(path);
-        Directory = System.IO.Path.GetDirectoryName(path)!;
+        // 检查绝对路径
+        if (!Path.IsPathRooted(filePath))
+        {
+            throw new ArgumentException($"The path {filePath} is not an absolute path.", nameof(filePath));
+        }
+
+        FilePath = filePath;
+        Extension = Path.GetExtension(filePath);
+        FileName = Path.GetFileName(filePath);
+        DirectoryName = Path.GetDirectoryName(filePath)!;
+
         Group = ResolveGroup();
     }
 
     /// <summary>
     /// 文件绝对路径
     /// </summary>
-    public string Path { get; init; }
+    public string FilePath { get; init; }
 
     /// <summary>
     /// 拓展名
@@ -52,9 +59,9 @@ public sealed class FileConfigurationModel
     public string FileName { get; init; }
 
     /// <summary>
-    /// 文件目录
+    /// 文件目录名
     /// </summary>
-    public string Directory { get; init; }
+    public string DirectoryName { get; init; }
 
     /// <summary>
     /// 分组名
@@ -72,7 +79,7 @@ public sealed class FileConfigurationModel
     public bool ReloadOnChang { get; set; } = true;
 
     /// <summary>
-    /// 文件变更时刷新前等待毫秒数
+    /// 文件变更延迟刷新毫秒数
     /// </summary>
     public int ReloadDelay { get; set; } = 250;
 
@@ -83,9 +90,10 @@ public sealed class FileConfigurationModel
     public int Order { get; set; }
 
     /// <summary>
-    /// 解析分组
+    /// 解析文件分组
     /// </summary>
-    /// <returns></returns>
+    /// <remarks>若文件名包含 () 则使用其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
+    /// <returns><see cref="string"/></returns>
     internal string ResolveGroup()
     {
         return FileName.StartsWith('(') && FileName.Contains(')')
@@ -96,6 +104,6 @@ public sealed class FileConfigurationModel
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"[{Group}] FileName: {FileName} Path: {Path}";
+        return $"[{Group}] FileName: {FileName} Path: {FilePath}";
     }
 }
