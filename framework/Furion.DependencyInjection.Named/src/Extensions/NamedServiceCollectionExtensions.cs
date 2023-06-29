@@ -553,7 +553,7 @@ public static class NamedServiceCollectionExtensions
     internal static ServiceDescriptor CreateDelegator(string name, ServiceDescriptor serviceDescriptor)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
         ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
 
         // 创建命名服务类型

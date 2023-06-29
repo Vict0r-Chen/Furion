@@ -82,7 +82,7 @@ public sealed class FileScannerConfigurationBuilder
     /// <summary>
     /// 文件扫描最大深度
     /// </summary>
-    public int MaxDepth { get; set; }
+    public uint MaxDepth { get; set; }
 
     /// <summary>
     /// 添加文件扫描过滤器
@@ -196,9 +196,19 @@ public sealed class FileScannerConfigurationBuilder
             }
         }
 
+        // 释放对象
+        Release();
+    }
+
+    /// <summary>
+    /// 释放对象
+    /// </summary>
+    internal void Release()
+    {
         _directories.Clear();
         _fileGlobbing.Clear();
         _fileBlacklistGlobbing.Clear();
+        _filterConfigure = null;
     }
 
     /// <summary>
@@ -255,7 +265,7 @@ public sealed class FileScannerConfigurationBuilder
         // 拓展配置提供程序检查
         if (!_fileConfigurationSources.TryGetValue(model.Extension, out var fileConfigurationSourceType))
         {
-            throw new InvalidOperationException($"Configuration provider for {model.Extension} extension not found.");
+            throw new InvalidOperationException($"Configuration provider for `{model.Extension}` extension not found.");
         }
 
         // 创建文件配置源
@@ -280,11 +290,14 @@ public sealed class FileScannerConfigurationBuilder
     /// 执行目录扫描，返回符合匹配条件的文件路径列表
     /// </summary>
     /// <param name="folderPath">要扫描的目录路径</param>
-    /// <param name="maxDepth">文件扫描的最大深度</param>
+    /// <param name="maxDepth">文件扫描的最大深度，默认 0</param>
     /// <param name="matcher">可选的文件通配符匹配对象</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<string> ScanDirectory(string folderPath, int maxDepth, Matcher? matcher = null)
+    internal static List<string> ScanDirectory(string folderPath, uint maxDepth = 0, Matcher? matcher = null)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(folderPath, nameof(folderPath));
+
         // 创建一个空的文件列表和一个元组类型的栈，压入初始目录和深度值
         var files = new List<string>();
         var stack = new Stack<(string folderPath, int depth)>();
@@ -297,13 +310,13 @@ public sealed class FileScannerConfigurationBuilder
             var (currentFolderPath, currentDepth) = stack.Pop();
 
             // 查找当前目录下所有匹配的文件
-            var matchFiles = from file in Directory.EnumerateFiles(currentFolderPath)
-                             let fileName = Path.GetFileName(file)
+            var matchFiles = from filePath in Directory.EnumerateFiles(currentFolderPath)
+                             let fileName = Path.GetFileName(filePath)
                              let isXmlFile = fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
-                             let dllFileExists = isXmlFile && File.Exists(Path.ChangeExtension(file, ".dll"))
+                             let dllFileExists = isXmlFile && File.Exists(Path.ChangeExtension(filePath, ".dll"))
                              where (matcher is null || matcher.Match(fileName).HasMatches)
                                     && (!isXmlFile || !dllFileExists)
-                             select file;
+                             select filePath;
 
             // 将匹配的文件添加到列表中
             files.AddRange(matchFiles);

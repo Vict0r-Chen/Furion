@@ -34,7 +34,7 @@ internal sealed class NamedType : TypeDelegator
         : base(delegatingType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
         this.name = name;
     }

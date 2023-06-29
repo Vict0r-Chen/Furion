@@ -27,7 +27,7 @@ public sealed class FileConfigurationModel
     internal FileConfigurationModel(string filePath)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(filePath, nameof(filePath));
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
 
         // 检查绝对路径
         if (!Path.IsPathRooted(filePath))

@@ -85,6 +85,11 @@
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectories(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <summary>
             扫描所有配置文件目录
@@ -99,12 +104,12 @@
             <param name="model"><see cref="T:Furion.Configuration.FileConfigurationModel"/></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectory(System.String,System.Int32,Microsoft.Extensions.FileSystemGlobbing.Matcher)">
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectory(System.String,System.UInt32,Microsoft.Extensions.FileSystemGlobbing.Matcher)">
             <summary>
             执行目录扫描，返回符合匹配条件的文件路径列表
             </summary>
             <param name="folderPath">要扫描的目录路径</param>
-            <param name="maxDepth">文件扫描的最大深度</param>
+            <param name="maxDepth">文件扫描的最大深度，默认 0</param>
             <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
