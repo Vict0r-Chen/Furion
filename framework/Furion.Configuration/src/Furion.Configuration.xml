@@ -150,7 +150,7 @@
             文件可选配置
             </summary>
         </member>
-        <member name="P:Furion.Configuration.FileConfigurationModel.ReloadOnChang">
+        <member name="P:Furion.Configuration.FileConfigurationModel.ReloadOnChange">
             <summary>
             文件变更时刷新
             </summary>
@@ -166,11 +166,12 @@
             </summary>
             <remarks>值越大则越后添加</remarks>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationModel.ResolveGroup">
+        <member name="M:Furion.Configuration.FileConfigurationModel.ResolveGroup(System.String)">
             <summary>
             解析文件分组
             </summary>
             <remarks>若文件名包含 () 则使用其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
+            <param name="fileName">文件名</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileConfigurationModel.ToString">

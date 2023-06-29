@@ -32,7 +32,7 @@ public sealed class FileConfigurationModel
         // 检查绝对路径
         if (!Path.IsPathRooted(filePath))
         {
-            throw new ArgumentException($"The path {filePath} is not an absolute path.", nameof(filePath));
+            throw new ArgumentException($"The path `{filePath}` is not an absolute path.", nameof(filePath));
         }
 
         FilePath = filePath;
@@ -40,7 +40,7 @@ public sealed class FileConfigurationModel
         FileName = Path.GetFileName(filePath);
         DirectoryName = Path.GetDirectoryName(filePath)!;
 
-        Group = ResolveGroup();
+        Group = ResolveGroup(FileName);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public sealed class FileConfigurationModel
     /// <summary>
     /// 文件变更时刷新
     /// </summary>
-    public bool ReloadOnChang { get; set; } = true;
+    public bool ReloadOnChange { get; set; } = true;
 
     /// <summary>
     /// 文件变更延迟刷新毫秒数
@@ -93,12 +93,13 @@ public sealed class FileConfigurationModel
     /// 解析文件分组
     /// </summary>
     /// <remarks>若文件名包含 () 则使用其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
+    /// <param name="fileName">文件名</param>
     /// <returns><see cref="string"/></returns>
-    internal string ResolveGroup()
+    internal static string ResolveGroup(string fileName)
     {
-        return FileName.StartsWith('(') && FileName.Contains(')')
-                ? FileName[FileName.IndexOf("(")..(FileName.IndexOf(")") + 1)]
-                : FileName[..FileName.IndexOf(".")];
+        return fileName.StartsWith('(') && fileName.Contains(')')
+                ? fileName[fileName.IndexOf("(")..(fileName.IndexOf(")") + 1)]
+                : fileName[..fileName.IndexOf(".")];
     }
 
     /// <inheritdoc />

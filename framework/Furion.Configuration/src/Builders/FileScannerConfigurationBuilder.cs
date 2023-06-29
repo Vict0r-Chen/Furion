@@ -268,7 +268,7 @@ public sealed class FileScannerConfigurationBuilder
         fileConfigurationSource.FileProvider = null;
         fileConfigurationSource.Path = model.FilePath;
         fileConfigurationSource.Optional = model.Optional;
-        fileConfigurationSource.ReloadOnChange = model.ReloadOnChang;
+        fileConfigurationSource.ReloadOnChange = model.ReloadOnChange;
         fileConfigurationSource.ReloadDelay = model.ReloadDelay;
         fileConfigurationSource.ResolveFileProvider();
 
