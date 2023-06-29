@@ -688,6 +688,10 @@ public class FileScannerConfigurationBuilderTests
         {
             fileScannerConfigurationBuilder.Build(configurationBuilder);
         });
+
+        fileScannerConfigurationBuilder.DefaultOptional = true;
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
     }
 
     [Fact]
