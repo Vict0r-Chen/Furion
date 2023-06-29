@@ -56,6 +56,10 @@ public class FileScannerConfigurationBuilderTests
 
         Assert.Null(fileScannerConfigurationBuilder._filterConfigure);
         Assert.Equal((uint)0, fileScannerConfigurationBuilder.MaxDepth);
+
+        Assert.True(fileScannerConfigurationBuilder.DefaultOptional);
+        Assert.True(fileScannerConfigurationBuilder.DefaultReloadOnChange);
+        Assert.Equal(250, fileScannerConfigurationBuilder.DefaultReloadDelay);
     }
 
     [Fact]
@@ -474,13 +478,15 @@ public class FileScannerConfigurationBuilderTests
     }
 
     [Fact]
-    public void AddFileConfigurationSource_Null_ReturnOk()
+    public void AddFileConfigurationSource_Null_Throw()
     {
         var configurationBuilder = new ConfigurationBuilder();
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
-        fileScannerConfigurationBuilder.AddFileConfigurationSource(configurationBuilder, null);
-        Assert.Empty(configurationBuilder.Sources);
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddFileConfigurationSource(configurationBuilder, null!);
+        });
     }
 
     [Fact]
@@ -659,5 +665,64 @@ public class FileScannerConfigurationBuilderTests
 
         var webApplication = webApplicationBuilder.Build();
         Assert.Equal("Furion - Development", webApplication.Configuration["Name"]);
+    }
+
+    [Fact]
+    public void Build_With_DefaultOptional()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "optional");
+
+        var webApplicationBuilder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            EnvironmentName = "Development"
+        });
+        var configurationBuilder = webApplicationBuilder.Configuration;
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            DefaultOptional = false
+        };
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+
+        Assert.Throws<FileNotFoundException>(() =>
+        {
+            fileScannerConfigurationBuilder.Build(configurationBuilder);
+        });
+    }
+
+    [Fact]
+    public void CreateDefaultFileConfigurationModel_NullOrEmpty_Throw()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            DefaultOptional = false,
+            DefaultReloadDelay = 100,
+            DefaultReloadOnChange = false
+        };
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var fileConfigurationModel = fileScannerConfigurationBuilder.CreateDefaultFileConfigurationModel(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            var fileConfigurationModel = fileScannerConfigurationBuilder.CreateDefaultFileConfigurationModel(string.Empty);
+        });
+    }
+
+    [Fact]
+    public void CreateDefaultFileConfigurationModel()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            DefaultOptional = false,
+            DefaultReloadDelay = 100,
+            DefaultReloadOnChange = false
+        };
+        var fileConfigurationModel = fileScannerConfigurationBuilder.CreateDefaultFileConfigurationModel("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files\\appsettings.json");
+        Assert.Equal(fileScannerConfigurationBuilder.DefaultOptional, fileConfigurationModel.Optional);
+        Assert.Equal(fileScannerConfigurationBuilder.DefaultReloadOnChange, fileConfigurationModel.ReloadOnChange);
+        Assert.Equal(fileScannerConfigurationBuilder.DefaultReloadDelay, fileConfigurationModel.ReloadDelay);
     }
 }

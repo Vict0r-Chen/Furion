@@ -74,12 +74,12 @@ public sealed class FileConfigurationModel
     public bool Optional { get; set; } = true;
 
     /// <summary>
-    /// 文件变更时刷新
+    /// 文件变更时刷新配置
     /// </summary>
     public bool ReloadOnChange { get; set; } = true;
 
     /// <summary>
-    /// 文件变更延迟刷新毫秒数
+    /// 文件变更延迟刷新毫秒数配置
     /// </summary>
     public int ReloadDelay { get; set; } = 250;
 

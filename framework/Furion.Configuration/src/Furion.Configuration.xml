@@ -45,6 +45,21 @@
             文件扫描最大深度
             </summary>
         </member>
+        <member name="P:Furion.Configuration.FileScannerConfigurationBuilder.DefaultOptional">
+            <summary>
+            默认文件可选配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerConfigurationBuilder.DefaultReloadOnChange">
+            <summary>
+            默认文件变更时刷新配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScannerConfigurationBuilder.DefaultReloadDelay">
+            <summary>
+            默认文件变更延迟刷新毫秒数配置
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.FileConfigurationModel,System.Boolean})">
             <summary>
             添加文件扫描过滤器
@@ -122,6 +137,13 @@
             释放对象
             </summary>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.CreateDefaultFileConfigurationModel(System.String)">
+            <summary>
+            创建默认的 <see cref="T:Furion.Configuration.FileConfigurationModel"/>
+            </summary>
+            <param name="filePath">文件路径</param>
+            <returns><see cref="T:Furion.Configuration.FileConfigurationModel"/></returns>
+        </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectory(System.String,System.UInt32,Microsoft.Extensions.FileSystemGlobbing.Matcher)">
             <summary>
             执行目录扫描，返回符合匹配条件的文件路径列表
@@ -194,12 +216,12 @@
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.ReloadOnChange">
             <summary>
-            文件变更时刷新
+            文件变更时刷新配置
             </summary>
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.ReloadDelay">
             <summary>
-            文件变更延迟刷新毫秒数
+            文件变更延迟刷新毫秒数配置
             </summary>
         </member>
         <member name="P:Furion.Configuration.FileConfigurationModel.Order">

@@ -86,6 +86,21 @@ public sealed partial class FileScannerConfigurationBuilder
     public uint MaxDepth { get; set; }
 
     /// <summary>
+    /// 默认文件可选配置
+    /// </summary>
+    public bool DefaultOptional { get; set; } = true;
+
+    /// <summary>
+    /// 默认文件变更时刷新配置
+    /// </summary>
+    public bool DefaultReloadOnChange { get; set; } = true;
+
+    /// <summary>
+    /// 默认文件变更延迟刷新毫秒数配置
+    /// </summary>
+    public int DefaultReloadDelay { get; set; } = 250;
+
+    /// <summary>
     /// 添加文件扫描过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
@@ -226,25 +241,28 @@ public sealed partial class FileScannerConfigurationBuilder
         var environmentName = configurationRoot["ENVIRONMENT"];
 
         // 扫描所有配置文件目录，根据拓展名、文件目录、文件名排序
-        var files = ScanDirectories(builder, contentRoot)
-                                                                                                           .OrderBy(f => f.Order)
-                                                                                                           .GroupBy(f => new { f.Extension, f.DirectoryName, f.Group });
+        var groupedFiles = ScanDirectories(builder, contentRoot)
+                                                                                                                   .OrderBy(f => f.Order)
+                                                                                                                   .GroupBy(f => new { f.Extension, f.DirectoryName, f.Group });
 
         // 遍历分组并添加配置文件
-        foreach (var fileGroup in files)
+        foreach (var fileGroup in groupedFiles)
         {
+            // 当前分组路径
             var filesInGroup = fileGroup.ToList();
             var groupPath = Path.Combine(fileGroup.Key.DirectoryName, fileGroup.Key.Group);
 
             // 添加不带环境名称的配置文件
-            var baseFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + fileGroup.Key.Extension));
-            AddFileConfigurationSource(builder, baseFileModel);
+            var baseFilePath = groupPath + fileGroup.Key.Extension;
+            AddFileConfigurationSource(builder, filesInGroup.Find(f => f.FilePath.Equals(baseFilePath, StringComparison.OrdinalIgnoreCase))
+                ?? CreateDefaultFileConfigurationModel(baseFilePath));
 
             // 添加带环境名称的配置文件
             if (!string.IsNullOrWhiteSpace(environmentName))
             {
-                var envFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + "." + environmentName + fileGroup.Key.Extension));
-                AddFileConfigurationSource(builder, envFileModel);
+                var envFilePath = groupPath + "." + environmentName + fileGroup.Key.Extension;
+                AddFileConfigurationSource(builder, filesInGroup.Find(f => f.FilePath.Equals(envFilePath, StringComparison.OrdinalIgnoreCase))
+                    ?? CreateDefaultFileConfigurationModel(envFilePath));
             }
         }
 
@@ -291,7 +309,7 @@ public sealed partial class FileScannerConfigurationBuilder
             }
 
             // 创建文件配置模型
-            var fileConfigurationModel = new FileConfigurationModel(file);
+            var fileConfigurationModel = CreateDefaultFileConfigurationModel(file);
 
             // 调用文件配置模型过滤器
             if (_filterConfigure is null || _filterConfigure.Invoke(fileConfigurationModel))
@@ -309,13 +327,10 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="model"><see cref="FileConfigurationModel"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel? model)
+    internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel model)
     {
         // 空检查
-        if (model is null)
-        {
-            return;
-        }
+        ArgumentNullException.ThrowIfNull(model, nameof(model));
 
         // 拓展配置提供程序检查
         if (!_fileConfigurationSources.TryGetValue(model.Extension, out var fileConfigurationSourceType))
@@ -341,7 +356,7 @@ public sealed partial class FileScannerConfigurationBuilder
         builder.Add(fileConfigurationSource);
 
         // 输出调试事件
-        Debugging.File("The file `{0}` has been successfully added to the configuration.", model.FilePath);
+        Debugging.File("The path `{0}` has been successfully added to the configuration.", model.FilePath);
     }
 
     /// <summary>
@@ -354,6 +369,24 @@ public sealed partial class FileScannerConfigurationBuilder
         _fileBlacklistGlobbing.Clear();
         _fileConfigurationSources.Clear();
         _filterConfigure = null;
+    }
+
+    /// <summary>
+    /// 创建默认的 <see cref="FileConfigurationModel"/>
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <returns><see cref="FileConfigurationModel"/></returns>
+    internal FileConfigurationModel CreateDefaultFileConfigurationModel(string filePath)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
+
+        return new(filePath)
+        {
+            Optional = DefaultOptional,
+            ReloadOnChange = DefaultReloadOnChange,
+            ReloadDelay = DefaultReloadDelay,
+        };
     }
 
     /// <summary>
