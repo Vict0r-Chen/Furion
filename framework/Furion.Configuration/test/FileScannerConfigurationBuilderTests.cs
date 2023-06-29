@@ -534,4 +534,14 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal(fileConfigurationSource1.ReloadDelay, fileConfigurationModel1.ReloadDelay);
         Assert.NotNull(fileConfigurationSource1.FileProvider);
     }
+
+    [Theory]
+    [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
+    [InlineData("C:/Workspace/furion.net/Furion/framework/Furion.Configuration/test/assets/appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
+    [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\bin\\Debug\\net8.0\\appsettings.json")]
+    public void GetFilePublishPaths(string filePath, string filePublishPath)
+    {
+        var filePublishPaths = FileScannerConfigurationBuilder.GetFilePublishPaths(filePath, "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test");
+        Assert.Equal(filePublishPath, filePublishPaths[^1]);
+    }
 }

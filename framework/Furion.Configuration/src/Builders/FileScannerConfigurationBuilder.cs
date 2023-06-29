@@ -219,13 +219,13 @@ public sealed partial class FileScannerConfigurationBuilder
 
         // 添加内容目录扫描
         var contentRoot = configurationRoot["CONTENTROOT"];
-        AddDirectories(contentRoot ?? AppContext.BaseDirectory);
+        AddDirectories(contentRoot ?? AppContext.BaseDirectory, AppContext.BaseDirectory);
 
         // 获取环境名称
         var environmentName = configurationRoot["ENVIRONMENT"];
 
         // 扫描所有配置文件目录，根据拓展名、文件目录、文件名排序
-        var files = ScanDirectories(builder)
+        var files = ScanDirectories(builder, contentRoot)
                                                                                                            .OrderBy(f => f.Order)
                                                                                                            .GroupBy(f => new { f.Extension, f.DirectoryName, f.Group });
 
@@ -255,14 +255,15 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 扫描所有配置文件目录
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
+    /// <param name="conentRoot">应用程序内容目录</param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal IEnumerable<FileConfigurationModel> ScanDirectories(IConfigurationBuilder builder)
+    internal IEnumerable<FileConfigurationModel> ScanDirectories(IConfigurationBuilder builder, string? conentRoot = null)
     {
         // 查找所有配置的文件配置提供程序
         var filesExists = builder.Sources.OfType<FileConfigurationSource>()
                                                        .Select(s => (s.Path, s.FileProvider as PhysicalFileProvider))
                                                        .OfType<(string Path, PhysicalFileProvider Provider)>()
-                                                       .Select(t => Path.Combine(t.Provider.Root, t.Path))
+                                                       .SelectMany(t => GetFilePublishPaths(Path.Combine(t.Provider.Root, t.Path), conentRoot))
                                                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         // 初始化文件通配符匹配对象
@@ -271,14 +272,24 @@ public sealed partial class FileScannerConfigurationBuilder
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
         // 扫描目录配置文件
-        var files = _directories.SelectMany(dir => ScanDirectory(dir, MaxDepth, matcher))
+        var files = _directories.SelectMany(directory => ScanDirectory(directory, MaxDepth, matcher))
                                                  .Distinct(StringComparer.OrdinalIgnoreCase)
                                                  .Except(filesExists, StringComparer.OrdinalIgnoreCase);
+
+        // 用于存储发布后的文件路径
+        var filePublishPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // 遍历所有配置文件
         foreach (var file in files)
         {
-            // 文件配置模型
+            // 检查文件路径是否已添加进集合中
+            var filePublishFile = GetFilePublishPaths(file, conentRoot)[^1];
+            if (!filePublishPaths.Add(filePublishFile))
+            {
+                continue;
+            }
+
+            // 创建文件配置模型
             var fileConfigurationModel = new FileConfigurationModel(file);
 
             // 调用文件配置模型过滤器
@@ -287,6 +298,8 @@ public sealed partial class FileScannerConfigurationBuilder
                 yield return fileConfigurationModel;
             }
         }
+
+        filePublishPaths.Clear();
     }
 
     /// <summary>
@@ -392,6 +405,37 @@ public sealed partial class FileScannerConfigurationBuilder
 
         // 返回符合匹配条件的文件列表
         return files;
+    }
+
+    /// <summary>
+    /// 获取文件发布后的路径
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <param name="contentRoot">应用程序内容目录</param>
+    /// <returns><see cref="string"/>[]</returns>
+    internal static string[] GetFilePublishPaths(string filePath, string? contentRoot = null)
+    {
+        // 获取应用程序执行目录
+        var baseDirectory = AppContext.BaseDirectory;
+
+        // 处理不同操作系统目录分隔符
+        var osFilePath = filePath.Replace('/', Path.DirectorySeparatorChar);
+
+        // 若文件路径以 baseDirectory 开头，则直接返回
+        if (osFilePath.StartsWith(baseDirectory, StringComparison.OrdinalIgnoreCase))
+        {
+            return new[] { osFilePath };
+        }
+
+        // 若内容目录不为空
+        if (!string.IsNullOrWhiteSpace(contentRoot) && osFilePath.StartsWith(contentRoot, StringComparison.OrdinalIgnoreCase))
+        {
+            // 生成文件发布后路径
+            var filePublishPath = Path.Combine(baseDirectory, osFilePath[contentRoot.Length..].TrimStart(Path.DirectorySeparatorChar));
+            return new[] { osFilePath, filePublishPath };
+        }
+
+        return new[] { osFilePath };
     }
 
     /// <summary>

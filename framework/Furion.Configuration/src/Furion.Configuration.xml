@@ -101,11 +101,12 @@
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
         </member>
-        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectories(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.ScanDirectories(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)">
             <summary>
             扫描所有配置文件目录
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="conentRoot">应用程序内容目录</param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddFileConfigurationSource(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileConfigurationModel)">
@@ -129,6 +130,14 @@
             <param name="maxDepth">文件扫描的最大深度，默认 0</param>
             <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.GetFilePublishPaths(System.String,System.String)">
+            <summary>
+            获取文件发布后的路径
+            </summary>
+            <param name="filePath">文件路径</param>
+            <param name="contentRoot">应用程序内容目录</param>
+            <returns><see cref="T:System.String"/>[]</returns>
         </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.FileExtensionRegex">
             <remarks>
