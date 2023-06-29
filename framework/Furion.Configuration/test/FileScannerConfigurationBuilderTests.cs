@@ -215,6 +215,57 @@ public class FileScannerConfigurationBuilderTests
     }
 
     [Fact]
+    public void AddConfigurationSources_Throw()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddConfigurationSources(null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddConfigurationSources(".jpg", null!);
+        });
+
+        var exception = Assert.Throws<ArgumentException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddConfigurationSources("json", typeof(JsonConfigurationSource));
+        });
+        Assert.Equal("`json` is not a valid file extension. (Parameter 'extension')", exception.Message);
+
+        var exception2 = Assert.Throws<ArgumentException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddConfigurationSources(".unknown", typeof(UnknownConfigurationSource));
+        });
+        Assert.Equal("`UnknownConfigurationSource` type is not assignable from `FileConfigurationSource`. (Parameter 'configurationSourceType')", exception2.Message);
+    }
+
+    [Fact]
+    public void AddConfigurationSources_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddConfigurationSources(".json", typeof(JsonConfigurationSource));
+        fileScannerConfigurationBuilder.AddConfigurationSources(".yaml", typeof(YamlConfigurationSource));
+
+        Assert.Equal(4, fileScannerConfigurationBuilder._fileConfigurationSources.Count);
+        Assert.Equal(".yaml", fileScannerConfigurationBuilder._fileConfigurationSources.Keys.ElementAt(3));
+        Assert.Equal(typeof(YamlConfigurationSource), fileScannerConfigurationBuilder._fileConfigurationSources.Values.ElementAt(3));
+    }
+
+    [Fact]
+    public void AddConfigurationSourcesOfT_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddConfigurationSources<YamlConfigurationSource>(".yaml");
+
+        Assert.Equal(4, fileScannerConfigurationBuilder._fileConfigurationSources.Count);
+        Assert.Equal(".yaml", fileScannerConfigurationBuilder._fileConfigurationSources.Keys.ElementAt(3));
+        Assert.Equal(typeof(YamlConfigurationSource), fileScannerConfigurationBuilder._fileConfigurationSources.Values.ElementAt(3));
+    }
+
+    [Fact]
     public void ScanDirectory_Invalid_Arguments_Throw()
     {
         Assert.Throws<ArgumentNullException>(() =>

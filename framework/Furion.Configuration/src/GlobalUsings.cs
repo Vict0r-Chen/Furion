@@ -20,3 +20,4 @@ global using Microsoft.Extensions.Configuration.Xml;
 global using Microsoft.Extensions.FileProviders;
 global using Microsoft.Extensions.FileSystemGlobbing;
 global using System.Runtime.CompilerServices;
+global using System.Text.RegularExpressions;

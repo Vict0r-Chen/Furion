@@ -17,7 +17,7 @@ namespace Furion.Configuration;
 /// <summary>
 /// 配置模块文件扫描器构建器
 /// </summary>
-public sealed class FileScannerConfigurationBuilder
+public sealed partial class FileScannerConfigurationBuilder
 {
     /// <summary>
     /// 待扫描的目录集合
@@ -36,7 +36,7 @@ public sealed class FileScannerConfigurationBuilder
     internal readonly HashSet<string> _fileBlacklistGlobbing;
 
     /// <summary>
-    /// 文件配置程序
+    /// 文件配置程序集合
     /// </summary>
     internal readonly Dictionary<string, Type> _fileConfigurationSources;
 
@@ -150,6 +150,48 @@ public sealed class FileScannerConfigurationBuilder
 
             _fileGlobbing.Add(globbing);
         });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加配置文件处理程序
+    /// </summary>
+    /// <typeparam name="TConfigurationSource"><see cref="FileConfigurationSource"/></typeparam>
+    /// <param name="extension">文件拓展名</param>
+    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
+    public FileScannerConfigurationBuilder AddConfigurationSources<TConfigurationSource>(string extension)
+        where TConfigurationSource : FileConfigurationSource
+    {
+        return AddConfigurationSources(extension, typeof(TConfigurationSource));
+    }
+
+    /// <summary>
+    /// 添加配置文件处理程序
+    /// </summary>
+    /// <param name="extension">文件拓展名</param>
+    /// <param name="configurationSourceType"><see cref="FileConfigurationSource"/></param>
+    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
+    public FileScannerConfigurationBuilder AddConfigurationSources(string extension, Type configurationSourceType)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(extension, nameof(extension));
+        ArgumentNullException.ThrowIfNull(configurationSourceType, nameof(configurationSourceType));
+
+        // 检查拓展名有效性
+        if (!FileExtensionRegex().IsMatch(extension))
+        {
+            throw new ArgumentException($"`{extension}` is not a valid file extension.", nameof(extension));
+        }
+
+        // 检查配置文件处理程序类型有效性
+        if (!typeof(FileConfigurationSource).IsAssignableFrom(configurationSourceType))
+        {
+            throw new ArgumentException($"`{configurationSourceType.Name}` type is not assignable from `{typeof(FileConfigurationSource).Name}`.", nameof(configurationSourceType));
+        }
+
+        // 添加或更新配置文件处理程序
+        _fileConfigurationSources[extension] = configurationSourceType;
 
         return this;
     }
@@ -351,4 +393,11 @@ public sealed class FileScannerConfigurationBuilder
         // 返回符合匹配条件的文件列表
         return files;
     }
+
+    /// <summary>
+    /// 文件拓展名正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex("^\\.[a-zA-Z0-9]+$")]
+    private static partial Regex FileExtensionRegex();
 }

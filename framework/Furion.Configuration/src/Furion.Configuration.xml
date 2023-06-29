@@ -27,7 +27,7 @@
         </member>
         <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._fileConfigurationSources">
             <summary>
-            文件配置程序
+            文件配置程序集合
             </summary>
         </member>
         <member name="F:Furion.Configuration.FileScannerConfigurationBuilder._filterConfigure">
@@ -72,6 +72,22 @@
             <param name="globbings"><see cref="T:System.String"/>[]</param>
             <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources``1(System.String)">
+            <summary>
+            添加配置文件处理程序
+            </summary>
+            <typeparam name="TConfigurationSource"><see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/></typeparam>
+            <param name="extension">文件拓展名</param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources(System.String,System.Type)">
+            <summary>
+            添加配置文件处理程序
+            </summary>
+            <param name="extension">文件拓展名</param>
+            <param name="configurationSourceType"><see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             添加文件通配符
@@ -113,6 +129,17 @@
             <param name="maxDepth">文件扫描的最大深度，默认 0</param>
             <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.FileExtensionRegex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match if at the beginning of the string.<br/>
+            ○ Match '.'.<br/>
+            ○ Match a character in the set [0-9A-Za-z] atomically at least once.<br/>
+            ○ Match if at the end of the string or if before an ending newline.<br/>
+            </code>
+            </remarks>
         </member>
         <member name="T:Furion.Configuration.FileConfigurationModel">
             <summary>
@@ -267,6 +294,50 @@
             <param name="type">节点类型</param>
             <param name="configureOptions">配置值绑定到指定类型额外配置</param>
             <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the FileExtensionRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiLettersAndDigits">
+            <summary>Supports searching for characters in or not in "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".</summary>
         </member>
     </members>
 </doc>
