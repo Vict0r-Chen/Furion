@@ -68,7 +68,8 @@ public sealed partial class FileScannerConfigurationBuilder
             "tsconfig.json",
             "package.json",
             "project.assets.json",
-            "manifest.json"
+            "manifest.json",
+            "MvcTestingAppManifest.json"
         };
 
         _fileConfigurationSources = new(StringComparer.OrdinalIgnoreCase)
@@ -235,11 +236,11 @@ public sealed partial class FileScannerConfigurationBuilder
             var filesInGroup = fileGroup.ToList();
             var groupPath = Path.Combine(fileGroup.Key.DirectoryName, fileGroup.Key.Group);
 
-            // 添加基础配置文件
+            // 添加不带环境名称的配置文件
             var baseFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + fileGroup.Key.Extension));
             AddFileConfigurationSource(builder, baseFileModel);
 
-            // 添加基于环境配置文件
+            // 添加带环境名称的配置文件
             if (!string.IsNullOrWhiteSpace(environmentName))
             {
                 var envFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + "." + environmentName + fileGroup.Key.Extension));
@@ -276,7 +277,7 @@ public sealed partial class FileScannerConfigurationBuilder
                                                  .Distinct(StringComparer.OrdinalIgnoreCase)
                                                  .Except(filesExists, StringComparer.OrdinalIgnoreCase);
 
-        // 用于存储发布后的文件路径
+        // 用于存储发布后的文件路径，解决重复添加文件问题
         var filePublishPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // 遍历所有配置文件

@@ -40,7 +40,8 @@ public class FileScannerConfigurationBuilderTests
             "tsconfig.json",
             "package.json",
             "project.assets.json",
-            "manifest.json"
+            "manifest.json",
+            "MvcTestingAppManifest.json"
         };
         Assert.Equal(fileBlacklistGlobbing, fileScannerConfigurationBuilder._fileBlacklistGlobbing.ToArray());
 
@@ -543,5 +544,106 @@ public class FileScannerConfigurationBuilderTests
     {
         var filePublishPaths = FileScannerConfigurationBuilder.GetFilePublishPaths(filePath, "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test");
         Assert.Equal(filePublishPath, filePublishPaths[^1]);
+    }
+
+    [Fact]
+    public void Build_Not_Environment()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "files");
+
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
+
+        Assert.Equal(2, configurationBuilder.Sources.Count);
+        Assert.Equal("appsettings.json", (configurationBuilder.Sources.ElementAt(0) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.json", (configurationBuilder.Sources.ElementAt(1) as JsonConfigurationSource)!.Path);
+    }
+
+    [Fact]
+    public void Build_With_Web_Environment()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "files");
+
+        var webApplicationBuilder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            EnvironmentName = "Development"
+        });
+        var configurationBuilder = webApplicationBuilder.Configuration;
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
+
+        var sources = configurationBuilder.Sources;
+        Assert.True(sources.Count > 4);
+
+        var lastFourSources = sources.Skip(sources.Count - 4);
+        Assert.Equal("appsettings.json", (lastFourSources.ElementAt(0) as JsonConfigurationSource)!.Path);
+        Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
+    }
+
+    [Fact]
+    public void Build_With_Hosting_Environment()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "files");
+
+        var hostApplicationBuilder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+        {
+            EnvironmentName = "Development"
+        });
+        var configurationBuilder = hostApplicationBuilder.Configuration;
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
+
+        var sources = configurationBuilder.Sources;
+        Assert.True(sources.Count > 4);
+
+        var lastFourSources = sources.Skip(sources.Count - 4);
+        Assert.Equal("appsettings.json", (lastFourSources.ElementAt(0) as JsonConfigurationSource)!.Path);
+        Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
+    }
+
+    [Fact]
+    public void Build_With_Order()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "files");
+
+        var webApplicationBuilder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            EnvironmentName = "Development"
+        });
+        var configurationBuilder = webApplicationBuilder.Configuration;
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.AddFilter(model =>
+        {
+            if (model.FileName.StartsWith("appsettings"))
+            {
+                model.Order = 10;
+            }
+
+            return true;
+        });
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
+
+        var sources = configurationBuilder.Sources;
+        Assert.True(sources.Count > 4);
+
+        var lastFourSources = sources.Skip(sources.Count - 4);
+
+        Assert.Equal("test.json", (lastFourSources.ElementAt(0) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
+        Assert.Equal("appsettings.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
+        Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
     }
 }
