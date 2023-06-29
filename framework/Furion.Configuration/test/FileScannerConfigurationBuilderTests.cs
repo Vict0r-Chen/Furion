@@ -572,12 +572,13 @@ public class FileScannerConfigurationBuilderTests
 
         var webApplicationBuilder = WebApplication.CreateBuilder(new WebApplicationOptions
         {
-            EnvironmentName = "Development"
+            EnvironmentName = "Development",
+            ContentRootPath = "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test"
         });
         var configurationBuilder = webApplicationBuilder.Configuration;
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
-        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.AddDirectories("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files", filesDirectory);
         fileScannerConfigurationBuilder.Build(configurationBuilder);
 
         var sources = configurationBuilder.Sources;
@@ -600,12 +601,13 @@ public class FileScannerConfigurationBuilderTests
 
         var hostApplicationBuilder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
         {
-            EnvironmentName = "Development"
+            EnvironmentName = "Development",
+            ContentRootPath = "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test"
         });
         var configurationBuilder = hostApplicationBuilder.Configuration;
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
-        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.AddDirectories("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files", filesDirectory);
         fileScannerConfigurationBuilder.Build(configurationBuilder);
 
         var sources = configurationBuilder.Sources;
