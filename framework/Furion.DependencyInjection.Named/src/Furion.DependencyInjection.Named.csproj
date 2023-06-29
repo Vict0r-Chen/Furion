@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Furion.DependencyInjection\src\Furion.DependencyInjection.csproj" />
+		<ProjectReference Include="..\..\Furion.Component\src\Furion.Component.csproj" />
 	</ItemGroup>
 
 </Project>
