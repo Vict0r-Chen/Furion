@@ -37,6 +37,9 @@ internal static class Debugging
     /// <item>
     /// <description>错误</description>
     /// </item>
+    /// <item>
+    /// <description>文件</description>
+    /// </item>
     /// </list>
     /// </param>
     /// <param name="message">事件消息</param>
@@ -64,6 +67,9 @@ internal static class Debugging
     /// </item>
     /// <item>
     /// <description>错误</description>
+    /// </item>
+    /// <item>
+    /// <description>文件</description>
     /// </item>
     /// </list>
     /// </param>
@@ -151,6 +157,25 @@ internal static class Debugging
     }
 
     /// <summary>
+    /// 输出文件级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    internal static void File(string message)
+    {
+        WriteLine(5, message);
+    }
+
+    /// <summary>
+    /// 输出文件级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void File(string message, params object?[] args)
+    {
+        WriteLine(5, message, args);
+    }
+
+    /// <summary>
     /// 获取消息级别对应的 emoji
     /// </summary>
     /// <param name="level">
@@ -168,6 +193,9 @@ internal static class Debugging
     /// <item>
     /// <description>错误</description>
     /// </item>
+    /// <item>
+    /// <description>文件</description>
+    /// </item>
     /// </list>
     /// </param>
     /// <returns><see cref="string"/></returns>
@@ -179,6 +207,7 @@ internal static class Debugging
             2 => "ℹ️",
             3 => "⚠️",
             4 => "❌",
+            5 => "📄",
             _ => string.Empty
         };
     }

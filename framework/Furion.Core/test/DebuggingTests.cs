@@ -31,7 +31,8 @@ public class DebuggingTests : IDisposable
     [InlineData(2, "ℹ️", "消息事件消息")]
     [InlineData(3, "⚠️", "警告事件消息")]
     [InlineData(4, "❌", "错误事件消息")]
-    [InlineData(5, "", "其他事件消息")]
+    [InlineData(5, "📄", "文件事件消息")]
+    [InlineData(6, "", "其他事件消息")]
     public void WriteLine_OuputString(int level, string emoji, string message)
     {
         Debugging.WriteLine(level, message);
@@ -46,7 +47,8 @@ public class DebuggingTests : IDisposable
     [InlineData(2, "ℹ️", "消息事件消息 {0}-{1}", "one", "two")]
     [InlineData(3, "⚠️", "警告事件消息 {0}-{1}", "one", "two")]
     [InlineData(4, "❌", "错误事件消息 {0}-{1}", "one", "two")]
-    [InlineData(5, "", "其他事件消息 {0}-{1}", "one", "two")]
+    [InlineData(5, "📄", "文件事件消息 {0}-{1}", "one", "two")]
+    [InlineData(6, "", "其他事件消息 {0}-{1}", "one", "two")]
     public void WriteLine_OuputFormatString(int level, string emoji, string message, params string[] args)
     {
         Debugging.WriteLine(level, message, args);
@@ -148,12 +150,36 @@ public class DebuggingTests : IDisposable
         Assert.Equal(expected, output);
     }
 
+    [Fact]
+    public void File_OutputString()
+    {
+        var message = "文件事件消息";
+        Debugging.File(message);
+
+        var output = _stringWriter.ToString();
+        var expected = $"📄: {message}\r\n";
+        Assert.Equal(expected, output);
+    }
+
+    [Fact]
+    public void File_OutputFormatString()
+    {
+        string[] args = { "one", "two" };
+        var message = "文件事件消息 {0}-{1}";
+        Debugging.File(message, args);
+
+        var output = _stringWriter.ToString();
+        var expected = string.Format($"📄: {message}\r\n", args);
+        Assert.Equal(expected, output);
+    }
+
     [Theory]
     [InlineData(1, "🛠️")]
     [InlineData(2, "ℹ️")]
     [InlineData(3, "⚠️")]
     [InlineData(4, "❌")]
-    [InlineData(5, "")]
+    [InlineData(5, "📄")]
+    [InlineData(6, "")]
     public void GetLevelEmoji_InputIntLevel_ReturnEmojiString(int level, string result)
     {
         var emoji = Debugging.GetLevelEmoji(level);

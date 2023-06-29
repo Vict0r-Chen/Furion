@@ -283,6 +283,9 @@ public sealed class FileScannerConfigurationBuilder
 
         // 添加到配置构建器中
         builder.Add(fileConfigurationSource);
+
+        // 输出调试事件
+        Debugging.File("The file `{0}` has been successfully added to the configuration.", model.FilePath);
     }
 
     /// <summary>
