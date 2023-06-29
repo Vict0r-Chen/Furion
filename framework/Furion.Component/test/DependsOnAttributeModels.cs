@@ -77,3 +77,35 @@ public class DependsOnComponent15 : ComponentBase
 public class DependsOnComponent16 : ComponentBase
 {
 }
+
+public class DependsOnComponent17 : ComponentBase
+{
+}
+
+public class DependsOnComponent18 : ComponentBase
+{
+}
+
+public class DependsOnComponent19 : ComponentBase
+{
+}
+
+public class DependsOnComponent20 : ComponentBase
+{
+}
+
+public class DependsOnComponent21 : ComponentBase
+{
+}
+
+public class DependsOnComponent22 : ComponentBase
+{
+}
+
+public class DependsOnComponent23 : ComponentBase
+{
+}
+
+public class DependsOnComponent24 : ComponentBase
+{
+}

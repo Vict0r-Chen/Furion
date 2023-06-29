@@ -68,6 +68,14 @@ public class DependsOnAttributeTests
         var dependsOnAttribute14 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14>();
         var dependsOnAttribute15 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15>();
         var dependsOnAttribute16 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16>();
+        var dependsOnAttribute17 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17>();
+        var dependsOnAttribute18 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18>();
+        var dependsOnAttribute19 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18, DependsOnComponent19>();
+        var dependsOnAttribute20 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18, DependsOnComponent19, DependsOnComponent20>();
+        var dependsOnAttribute21 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18, DependsOnComponent19, DependsOnComponent20, DependsOnComponent21>();
+        var dependsOnAttribute22 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18, DependsOnComponent19, DependsOnComponent20, DependsOnComponent21, DependsOnComponent22>();
+        var dependsOnAttribute23 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18, DependsOnComponent19, DependsOnComponent20, DependsOnComponent21, DependsOnComponent22, DependsOnComponent23>();
+        var dependsOnAttribute24 = new DependsOnAttribute<DependsOnComponent1, DependsOnComponent2, DependsOnComponent3, DependsOnComponent4, DependsOnComponent5, DependsOnComponent6, DependsOnComponent7, DependsOnComponent8, DependsOnComponent9, DependsOnComponent10, DependsOnComponent11, DependsOnComponent12, DependsOnComponent13, DependsOnComponent14, DependsOnComponent15, DependsOnComponent16, DependsOnComponent17, DependsOnComponent18, DependsOnComponent19, DependsOnComponent20, DependsOnComponent21, DependsOnComponent22, DependsOnComponent23, DependsOnComponent24>();
 
         Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute1.GetType()));
         Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute2.GetType()));
@@ -85,8 +93,16 @@ public class DependsOnAttributeTests
         Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute14.GetType()));
         Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute15.GetType()));
         Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute16.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute17.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute18.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute19.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute20.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute21.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute22.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute23.GetType()));
+        Assert.True(typeof(DependsOnAttribute).IsAssignableFrom(dependsOnAttribute24.GetType()));
 
-        var serviceTypes = new[] { typeof(DependsOnComponent1), typeof(DependsOnComponent2), typeof(DependsOnComponent3), typeof(DependsOnComponent4), typeof(DependsOnComponent5), typeof(DependsOnComponent6), typeof(DependsOnComponent7), typeof(DependsOnComponent8), typeof(DependsOnComponent9), typeof(DependsOnComponent10), typeof(DependsOnComponent11), typeof(DependsOnComponent12), typeof(DependsOnComponent13), typeof(DependsOnComponent14), typeof(DependsOnComponent15), typeof(DependsOnComponent16) };
+        var serviceTypes = new[] { typeof(DependsOnComponent1), typeof(DependsOnComponent2), typeof(DependsOnComponent3), typeof(DependsOnComponent4), typeof(DependsOnComponent5), typeof(DependsOnComponent6), typeof(DependsOnComponent7), typeof(DependsOnComponent8), typeof(DependsOnComponent9), typeof(DependsOnComponent10), typeof(DependsOnComponent11), typeof(DependsOnComponent12), typeof(DependsOnComponent13), typeof(DependsOnComponent14), typeof(DependsOnComponent15), typeof(DependsOnComponent16), typeof(DependsOnComponent17), typeof(DependsOnComponent18), typeof(DependsOnComponent19), typeof(DependsOnComponent20), typeof(DependsOnComponent21), typeof(DependsOnComponent22), typeof(DependsOnComponent23), typeof(DependsOnComponent24) };
         Assert.True(dependsOnAttribute1.DependedTypes.SequenceEqual(serviceTypes.Take(1)));
         Assert.True(dependsOnAttribute2.DependedTypes.SequenceEqual(serviceTypes.Take(2)));
         Assert.True(dependsOnAttribute3.DependedTypes.SequenceEqual(serviceTypes.Take(3)));
@@ -103,5 +119,13 @@ public class DependsOnAttributeTests
         Assert.True(dependsOnAttribute14.DependedTypes.SequenceEqual(serviceTypes.Take(14)));
         Assert.True(dependsOnAttribute15.DependedTypes.SequenceEqual(serviceTypes.Take(15)));
         Assert.True(dependsOnAttribute16.DependedTypes.SequenceEqual(serviceTypes.Take(16)));
+        Assert.True(dependsOnAttribute17.DependedTypes.SequenceEqual(serviceTypes.Take(17)));
+        Assert.True(dependsOnAttribute18.DependedTypes.SequenceEqual(serviceTypes.Take(18)));
+        Assert.True(dependsOnAttribute19.DependedTypes.SequenceEqual(serviceTypes.Take(19)));
+        Assert.True(dependsOnAttribute20.DependedTypes.SequenceEqual(serviceTypes.Take(20)));
+        Assert.True(dependsOnAttribute21.DependedTypes.SequenceEqual(serviceTypes.Take(21)));
+        Assert.True(dependsOnAttribute22.DependedTypes.SequenceEqual(serviceTypes.Take(22)));
+        Assert.True(dependsOnAttribute23.DependedTypes.SequenceEqual(serviceTypes.Take(23)));
+        Assert.True(dependsOnAttribute24.DependedTypes.SequenceEqual(serviceTypes.Take(24)));
     }
 }
