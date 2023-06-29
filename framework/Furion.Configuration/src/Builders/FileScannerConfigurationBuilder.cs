@@ -226,8 +226,8 @@ public sealed partial class FileScannerConfigurationBuilder
 
         // 扫描所有配置文件目录，根据拓展名、文件目录、文件名排序
         var files = ScanDirectories(builder)
-                                                                                                        .OrderBy(f => f.Order)
-                                                                                                        .GroupBy(f => new { f.Extension, f.DirectoryName, f.Group });
+                                                                                                           .OrderBy(f => f.Order)
+                                                                                                           .GroupBy(f => new { f.Extension, f.DirectoryName, f.Group });
 
         // 遍历分组并添加配置文件
         foreach (var fileGroup in files)

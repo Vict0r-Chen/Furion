@@ -471,4 +471,67 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal("folder1.json", fileConfigurationModels.ElementAt(0).FileName);
         Assert.Equal("folder2.json", fileConfigurationModels.ElementAt(1).FileName);
     }
+
+    [Fact]
+    public void AddFileConfigurationSource_Null_ReturnOk()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddFileConfigurationSource(configurationBuilder, null);
+        Assert.Empty(configurationBuilder.Sources);
+    }
+
+    [Fact]
+    public void AddFileConfigurationSource_IfExtensionNotExists_Throw()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddFileConfigurationSource(configurationBuilder, new("D:/appsettings.yml"));
+        });
+        Assert.Equal("Configuration provider for `.yml` extension not found.", exception.Message);
+    }
+
+    [Fact]
+    public void ScanDirectories_AddFileConfigurationSource()
+    {
+        var configsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "configs");
+        var folder1FilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+        Assert.True(Directory.Exists(configsFilePath));
+        Assert.True(Directory.Exists(folder1FilePath));
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            MaxDepth = 1
+        };
+        fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
+
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileConfigurationModels = fileScannerConfigurationBuilder.ScanDirectories(configurationBuilder).ToList();
+
+        foreach (var fileConfigurationModel in fileConfigurationModels)
+        {
+            fileScannerConfigurationBuilder.AddFileConfigurationSource(configurationBuilder, fileConfigurationModel);
+        }
+
+        Assert.Equal(3, configurationBuilder.Sources.Count);
+        Assert.Equal(3, configurationBuilder.Sources.OfType<FileConfigurationSource>().Count());
+
+        var fileConfigurationModel1 = fileConfigurationModels.ElementAt(0);
+        var fileConfigurationSource1 = configurationBuilder.Sources.ElementAt(0) as JsonConfigurationSource;
+        Assert.NotNull(fileConfigurationSource1);
+
+        Assert.Equal(fileConfigurationSource1.Path, fileConfigurationModel1.FileName);
+        Assert.Equal((fileConfigurationSource1.FileProvider as PhysicalFileProvider)!.Root, fileConfigurationModel1.DirectoryName + "\\");
+        Assert.Equal(fileConfigurationSource1.Optional, fileConfigurationModel1.Optional);
+        Assert.Equal(fileConfigurationSource1.ReloadOnChange, fileConfigurationModel1.ReloadOnChange);
+        Assert.Equal(fileConfigurationSource1.ReloadDelay, fileConfigurationModel1.ReloadDelay);
+        Assert.NotNull(fileConfigurationSource1.FileProvider);
+    }
 }
