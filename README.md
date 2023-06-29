@@ -36,13 +36,22 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 
 ## 模块状态
 
-| 模块名称                                                                                                                        | 状态 | 单元测试 |
-| ------------------------------------------------------------------------------------------------------------------------------- | ---- | -------- |
-| [Furion.Core](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Core)                                           | ✅   | ✅       |
-| [Furion.DependencyInjection](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.DependencyInjection)             | ✅   | ✅       |
-| [Furion.DependencyInjection.Named](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.DependencyInjection.Named) | ✅   | ✅       |
-| [Furion.Component.AspNetCore](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.AspNetCore)           | ✅   | ✅       |
-| [Furion.Component](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component)                                 | ✅   | ✅       |
-| [Furion.Component.AspNetCore](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.AspNetCore)           | ✅   | ✅       |
-| [Furion.Component.Hosting](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.Hosting)                 | ✅   | ✅       |
-| [Furion.Configuration](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration)                         | ✅   | ✅       |
+| 模块名称                                                                                                                        | 状态 | 单元测试 | 文档 |
+| ------------------------------------------------------------------------------------------------------------------------------- | ---- | -------- | ---- |
+| [Furion.Core](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Core)                                           | ✅   | ✅       | ⚠️   |
+| [Furion.DependencyInjection](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.DependencyInjection)             | ✅   | ✅       | ⚠️   |
+| [Furion.DependencyInjection.Named](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.DependencyInjection.Named) | ✅   | ✅       | ⚠️   |
+| [Furion.Component.AspNetCore](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.AspNetCore)           | ✅   | ✅       | ⚠️   |
+| [Furion.Component](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component)                                 | ✅   | ✅       | ⚠️   |
+| [Furion.Component.AspNetCore](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.AspNetCore)           | ✅   | ✅       | ⚠️   |
+| [Furion.Component.Hosting](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.Hosting)                 | ✅   | ✅       | ⚠️   |
+| [Furion.Configuration](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration)                         | ✅   | ✅       | ⚠️   |
+
+> 状态说明
+>
+> | 图标 | 描述     |
+> | ---- | -------- |
+> | ⚠️   | 待定     |
+> | ⏳   | 进行中   |
+> | ✅   | 完成     |
+> | 💔   | 随时抛弃 |
