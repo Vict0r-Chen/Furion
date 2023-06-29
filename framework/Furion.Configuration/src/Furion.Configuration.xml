@@ -89,6 +89,7 @@
             <summary>
             扫描所有配置文件目录
             </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddFileConfigurationSource(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileConfigurationModel)">

@@ -302,4 +302,122 @@ public class FileScannerConfigurationBuilderTests
         Assert.Empty(fileScannerConfigurationBuilder._fileConfigurationSources);
         Assert.Null(fileScannerConfigurationBuilder._filterConfigure);
     }
+
+    [Fact]
+    public void ScanDirectories()
+    {
+        var configsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "configs");
+        var folder1FilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+        Assert.True(Directory.Exists(configsFilePath));
+        Assert.True(Directory.Exists(folder1FilePath));
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            MaxDepth = 1
+        };
+        fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
+
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileConfigurationModels = fileScannerConfigurationBuilder.ScanDirectories(configurationBuilder).ToList();
+
+        Assert.NotNull(fileConfigurationModels);
+        Assert.Equal(3, fileConfigurationModels.Count);
+
+        Assert.Equal("appsettings.json", fileConfigurationModels.ElementAt(0).FileName);
+        Assert.Equal("folder1.json", fileConfigurationModels.ElementAt(1).FileName);
+        Assert.Equal("folder2.json", fileConfigurationModels.ElementAt(2).FileName);
+    }
+
+    [Fact]
+    public void ScanDirectories_With_Filter()
+    {
+        var configsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "configs");
+        var folder1FilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+        Assert.True(Directory.Exists(configsFilePath));
+        Assert.True(Directory.Exists(folder1FilePath));
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            MaxDepth = 1
+        };
+        fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
+        fileScannerConfigurationBuilder.AddFilter(model =>
+        {
+            if (model.FileName == "appsettings.json")
+            {
+                return false;
+            }
+
+            return true;
+        });
+
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileConfigurationModels = fileScannerConfigurationBuilder.ScanDirectories(configurationBuilder).ToList();
+
+        Assert.NotNull(fileConfigurationModels);
+        Assert.Equal(2, fileConfigurationModels.Count);
+
+        Assert.Equal("folder1.json", fileConfigurationModels.ElementAt(0).FileName);
+        Assert.Equal("folder2.json", fileConfigurationModels.ElementAt(1).FileName);
+    }
+
+    [Fact]
+    public void ScanDirectories_With_FileGlobbing()
+    {
+        var configsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "configs");
+        var folder1FilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+        Assert.True(Directory.Exists(configsFilePath));
+        Assert.True(Directory.Exists(folder1FilePath));
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            MaxDepth = 1
+        };
+        fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
+        fileScannerConfigurationBuilder.AddGlobbings("*.xml");
+
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileConfigurationModels = fileScannerConfigurationBuilder.ScanDirectories(configurationBuilder).ToList();
+
+        Assert.NotNull(fileConfigurationModels);
+        Assert.Equal(4, fileConfigurationModels.Count);
+
+        Assert.Equal("appsettings.json", fileConfigurationModels.ElementAt(0).FileName);
+        Assert.Equal("appsettings.xml", fileConfigurationModels.ElementAt(1).FileName);
+        Assert.Equal("folder1.json", fileConfigurationModels.ElementAt(2).FileName);
+        Assert.Equal("folder2.json", fileConfigurationModels.ElementAt(3).FileName);
+    }
+
+    [Fact]
+    public void ScanDirectories_IfExists()
+    {
+        var configsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "configs");
+        var folder1FilePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+        Assert.True(Directory.Exists(configsFilePath));
+        Assert.True(Directory.Exists(folder1FilePath));
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        {
+            MaxDepth = 1
+        };
+        fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
+
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddJsonFile(Path.Combine(configsFilePath, "appsettings.json"));
+        var fileConfigurationModels = fileScannerConfigurationBuilder.ScanDirectories(configurationBuilder).ToList();
+
+        Assert.NotNull(fileConfigurationModels);
+        Assert.Equal(2, fileConfigurationModels.Count);
+
+        Assert.Equal("folder1.json", fileConfigurationModels.ElementAt(0).FileName);
+        Assert.Equal("folder2.json", fileConfigurationModels.ElementAt(1).FileName);
+    }
 }

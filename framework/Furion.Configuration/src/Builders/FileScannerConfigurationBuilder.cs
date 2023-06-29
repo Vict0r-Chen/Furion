@@ -212,6 +212,7 @@ public sealed class FileScannerConfigurationBuilder
     /// <summary>
     /// 扫描所有配置文件目录
     /// </summary>
+    /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
     internal IEnumerable<FileConfigurationModel> ScanDirectories(IConfigurationBuilder builder)
     {
