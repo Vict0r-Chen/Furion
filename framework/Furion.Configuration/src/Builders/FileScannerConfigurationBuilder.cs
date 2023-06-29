@@ -50,14 +50,14 @@ public sealed class FileScannerConfigurationBuilder
     /// </summary>
     public FileScannerConfigurationBuilder()
     {
-        _directories = new();
+        _directories = new(StringComparer.OrdinalIgnoreCase);
 
-        _fileGlobbing = new()
+        _fileGlobbing = new(StringComparer.OrdinalIgnoreCase)
         {
             "*.json"
         };
 
-        _fileBlacklistGlobbing = new()
+        _fileBlacklistGlobbing = new(StringComparer.OrdinalIgnoreCase)
         {
             "*.runtimeconfig.json",
             "*.runtimeconfig.*.json",
@@ -71,7 +71,7 @@ public sealed class FileScannerConfigurationBuilder
             "manifest.json"
         };
 
-        _fileConfigurationSources = new()
+        _fileConfigurationSources = new(StringComparer.OrdinalIgnoreCase)
         {
             {".json", typeof(JsonConfigurationSource) },
             {".xml", typeof(XmlConfigurationSource) },
@@ -109,9 +109,12 @@ public sealed class FileScannerConfigurationBuilder
         Array.ForEach(directories, directory =>
         {
             // 空检查
-            if (string.IsNullOrWhiteSpace(directory))
+            ArgumentException.ThrowIfNullOrWhiteSpace(directory, nameof(directory));
+
+            // 检查绝对路径
+            if (!Path.IsPathRooted(directory))
             {
-                return;
+                throw new ArgumentException($"The path `{directory}` is not an absolute path.", nameof(directory));
             }
 
             _directories.Add(directory);
@@ -140,7 +143,13 @@ public sealed class FileScannerConfigurationBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
 
-        Array.ForEach(globbings, globbing => _fileGlobbing.Add(globbing));
+        Array.ForEach(globbings, globbing =>
+        {
+            // 空检查
+            ArgumentException.ThrowIfNullOrWhiteSpace(globbing, nameof(globbing));
+
+            _fileGlobbing.Add(globbing);
+        });
 
         return this;
     }
@@ -170,7 +179,7 @@ public sealed class FileScannerConfigurationBuilder
         var contentRoot = configurationRoot["CONTENTROOT"];
         AddDirectories(contentRoot ?? AppContext.BaseDirectory);
 
-        // 获取环境的名称
+        // 获取环境名称
         var environmentName = configurationRoot["ENVIRONMENT"];
 
         // 扫描所有配置文件目录，根据拓展名、文件目录、文件名排序
@@ -182,7 +191,7 @@ public sealed class FileScannerConfigurationBuilder
         foreach (var fileGroup in files)
         {
             var filesInGroup = fileGroup.ToList();
-            var groupPath = Path.Combine(fileGroup.Key.DirectoryName!, fileGroup.Key.Group);
+            var groupPath = Path.Combine(fileGroup.Key.DirectoryName, fileGroup.Key.Group);
 
             // 添加基础配置文件
             var baseFileModel = filesInGroup.Find(f => f.FilePath.Equals(groupPath + fileGroup.Key.Extension));
@@ -201,20 +210,9 @@ public sealed class FileScannerConfigurationBuilder
     }
 
     /// <summary>
-    /// 释放对象
-    /// </summary>
-    internal void Release()
-    {
-        _directories.Clear();
-        _fileGlobbing.Clear();
-        _fileBlacklistGlobbing.Clear();
-        _filterConfigure = null;
-    }
-
-    /// <summary>
     /// 扫描所有配置文件目录
     /// </summary>
-    /// <returns><see cref="HashSet{T}"/></returns>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
     internal IEnumerable<FileConfigurationModel> ScanDirectories(IConfigurationBuilder builder)
     {
         // 查找所有配置的文件配置提供程序
@@ -284,6 +282,18 @@ public sealed class FileScannerConfigurationBuilder
 
         // 添加到配置构建器中
         builder.Add(fileConfigurationSource);
+    }
+
+    /// <summary>
+    /// 释放对象
+    /// </summary>
+    internal void Release()
+    {
+        _directories.Clear();
+        _fileGlobbing.Clear();
+        _fileBlacklistGlobbing.Clear();
+        _fileConfigurationSources.Clear();
+        _filterConfigure = null;
     }
 
     /// <summary>

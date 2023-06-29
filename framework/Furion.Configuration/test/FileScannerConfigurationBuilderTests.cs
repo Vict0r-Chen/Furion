@@ -17,6 +17,204 @@ namespace Furion.Configuration.Tests;
 public class FileScannerConfigurationBuilderTests
 {
     [Fact]
+    public void NewInstance_Default()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        Assert.NotNull(fileScannerConfigurationBuilder);
+
+        Assert.NotNull(fileScannerConfigurationBuilder._directories);
+        Assert.Empty(fileScannerConfigurationBuilder._directories);
+
+        Assert.NotNull(fileScannerConfigurationBuilder._fileGlobbing);
+        Assert.Single(fileScannerConfigurationBuilder._fileGlobbing);
+        Assert.Equal("*.json", fileScannerConfigurationBuilder._fileGlobbing.ElementAt(0));
+
+        Assert.NotNull(fileScannerConfigurationBuilder._fileBlacklistGlobbing);
+        var fileBlacklistGlobbing = new[] {
+            "*.runtimeconfig.json",
+            "*.runtimeconfig.*.json",
+            "*.deps.json",
+            "*.staticwebassets.*.json",
+            "*.nuget.dgspec.json",
+            "launchSettings.json",
+            "tsconfig.json",
+            "package.json",
+            "project.assets.json",
+            "manifest.json"
+        };
+        Assert.Equal(fileBlacklistGlobbing, fileScannerConfigurationBuilder._fileBlacklistGlobbing.ToArray());
+
+        Assert.NotNull(fileScannerConfigurationBuilder._fileConfigurationSources);
+        Assert.Equal(3, fileScannerConfigurationBuilder._fileConfigurationSources.Count);
+        Assert.Equal(".json", fileScannerConfigurationBuilder._fileConfigurationSources.Keys.ElementAt(0));
+        Assert.Equal(typeof(JsonConfigurationSource), fileScannerConfigurationBuilder._fileConfigurationSources.Values.ElementAt(0));
+        Assert.Equal(".xml", fileScannerConfigurationBuilder._fileConfigurationSources.Keys.ElementAt(1));
+        Assert.Equal(typeof(XmlConfigurationSource), fileScannerConfigurationBuilder._fileConfigurationSources.Values.ElementAt(1));
+        Assert.Equal(".ini", fileScannerConfigurationBuilder._fileConfigurationSources.Keys.ElementAt(2));
+        Assert.Equal(typeof(IniConfigurationSource), fileScannerConfigurationBuilder._fileConfigurationSources.Values.ElementAt(2));
+
+        Assert.Null(fileScannerConfigurationBuilder._filterConfigure);
+        Assert.Equal((uint)0, fileScannerConfigurationBuilder.MaxDepth);
+    }
+
+    [Fact]
+    public void AddFilter_Null_Throw()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddFilter(null!);
+        });
+    }
+
+    [Fact]
+    public void AddFilter_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddFilter(s =>
+        {
+            return true;
+        });
+        Assert.NotNull(fileScannerConfigurationBuilder._filterConfigure);
+    }
+
+    [Fact]
+    public void AddDirectories_Throw()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddDirectories(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddDirectories(string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddDirectories("assets/folder1");
+        });
+    }
+
+    [Fact]
+    public void AddDirectories_NotExists_AddedSuccessfully()
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(currentDirectory);
+
+        Assert.Single(fileScannerConfigurationBuilder._directories);
+        Assert.Equal(currentDirectory, fileScannerConfigurationBuilder._directories.Last());
+    }
+
+    [Fact]
+    public void AddDirectories_Exists_Skip()
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(currentDirectory);
+
+        Assert.Single(fileScannerConfigurationBuilder._directories);
+
+        fileScannerConfigurationBuilder.AddDirectories(currentDirectory);
+        fileScannerConfigurationBuilder.AddDirectories(currentDirectory);
+        Assert.Single(fileScannerConfigurationBuilder._directories);
+        Assert.Equal(currentDirectory, fileScannerConfigurationBuilder._directories.Last());
+    }
+
+    [Fact]
+    public void AddDirectories_Multiple_Arguments_ReturnOK()
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+        var folder1Directory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(currentDirectory, folder1Directory);
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        Assert.Equal(currentDirectory, fileScannerConfigurationBuilder._directories.First());
+        Assert.Equal(folder1Directory, fileScannerConfigurationBuilder._directories.Last());
+    }
+
+    [Fact]
+    public void AddDirectories_IEnumerable_ReturnOK()
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+        var folder1Directory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories(new List<string> { currentDirectory, folder1Directory });
+        Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
+
+        Assert.Equal(currentDirectory, fileScannerConfigurationBuilder._directories.First());
+        Assert.Equal(folder1Directory, fileScannerConfigurationBuilder._directories.Last());
+    }
+
+    [Fact]
+    public void AddGlobbings_Throw()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddGlobbings(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddGlobbings(string.Empty);
+        });
+    }
+
+    [Fact]
+    public void AddGlobbings_NotExists_AddedSuccessfully()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddGlobbings("*.xml");
+
+        Assert.Equal(2, fileScannerConfigurationBuilder._fileGlobbing.Count);
+        Assert.Equal("*.xml", fileScannerConfigurationBuilder._fileGlobbing.Last());
+    }
+
+    [Fact]
+    public void AddGlobbings_Exists_Skip()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddGlobbings("*.json");
+
+        Assert.Single(fileScannerConfigurationBuilder._fileGlobbing);
+        fileScannerConfigurationBuilder.AddGlobbings("*.json");
+        fileScannerConfigurationBuilder.AddGlobbings("*.json");
+        Assert.Single(fileScannerConfigurationBuilder._fileGlobbing);
+
+        Assert.Equal("*.json", fileScannerConfigurationBuilder._fileGlobbing.Last());
+    }
+
+    [Fact]
+    public void AddGlobbings_Multiple_Arguments_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddGlobbings("*.xml", "*.ini");
+
+        Assert.Equal(3, fileScannerConfigurationBuilder._fileGlobbing.Count);
+        Assert.Equal("*.ini", fileScannerConfigurationBuilder._fileGlobbing.Last());
+    }
+
+    [Fact]
+    public void AddGlobbings_IEnumerable_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddGlobbings(new List<string> { "*.xml", "*.ini" });
+
+        Assert.Equal(3, fileScannerConfigurationBuilder._fileGlobbing.Count);
+        Assert.Equal("*.ini", fileScannerConfigurationBuilder._fileGlobbing.Last());
+    }
+
+    [Fact]
     public void ScanDirectory_Invalid_Arguments_Throw()
     {
         Assert.Throws<ArgumentNullException>(() =>
@@ -90,5 +288,18 @@ public class FileScannerConfigurationBuilderTests
 
         var files2 = FileScannerConfigurationBuilder.ScanDirectory(filePath, 0, matcher);
         Assert.NotEmpty(files2);
+    }
+
+    [Fact]
+    public void Release_ClearAll()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.Release();
+
+        Assert.Empty(fileScannerConfigurationBuilder._directories);
+        Assert.Empty(fileScannerConfigurationBuilder._fileGlobbing);
+        Assert.Empty(fileScannerConfigurationBuilder._fileBlacklistGlobbing);
+        Assert.Empty(fileScannerConfigurationBuilder._fileConfigurationSources);
+        Assert.Null(fileScannerConfigurationBuilder._filterConfigure);
     }
 }

@@ -106,7 +106,13 @@ public sealed class DependencyInjectionBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(assemblies, nameof(assemblies));
 
-        Array.ForEach(assemblies, assembly => _assemblies.Add(assembly));
+        Array.ForEach(assemblies, assembly =>
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
+
+            _assemblies.Add(assembly);
+        });
 
         return this;
     }
