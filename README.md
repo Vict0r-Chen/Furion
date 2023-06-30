@@ -82,6 +82,6 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 
 最诚挚的问候，
 
-[百小僧]
+[百小僧](https://gitee.com/monksoul)
 <br />
-[Furion 开发团队]
+[F]urion 开发团队](https://furion.net/)
