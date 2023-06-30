@@ -198,9 +198,9 @@ public sealed class ManifestResourceConfigurationBuilder
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
         // 查找程序集中匹配的嵌入资源配置文件并创建嵌入资源配置文件模型
-        var manifestResourceConfigurationModels = _assemblies.SelectMany(ass => ass.GetManifestResourceNames()
-                .Where(res => matcher.Match(res).HasMatches)
-                .Select(res => new ManifestResourceConfigurationModel(ass, res))
+        var manifestResourceConfigurationModels = _assemblies.SelectMany(assembly => assembly.GetManifestResourceNames()
+                .Where(resource => matcher.Match(resource).HasMatches)
+                .Select(resource => new ManifestResourceConfigurationModel(assembly, resource))
                 .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model)))
             .ToList();
 

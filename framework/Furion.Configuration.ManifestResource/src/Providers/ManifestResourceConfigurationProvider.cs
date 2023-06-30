@@ -38,7 +38,7 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
         var fileConfigurationParser = new FileConfigurationParser();
 
         // 解析嵌入资源配置文件并生成字典集合
-        Data = ManifestResources.SelectMany(manifestResource => ParseResource(fileConfigurationParser, manifestResource))
+        Data = ManifestResources.SelectMany(resource => ParseResource(fileConfigurationParser, resource))
                                 .ToDictionary(u => u.Key, u => u.Value);
 
         ManifestResources.Clear();
