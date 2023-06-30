@@ -49,7 +49,7 @@ public sealed class FileConfigurationModel
     public string FilePath { get; init; }
 
     /// <summary>
-    /// 拓展名
+    /// 文件拓展名
     /// </summary>
     public string Extension { get; init; }
 

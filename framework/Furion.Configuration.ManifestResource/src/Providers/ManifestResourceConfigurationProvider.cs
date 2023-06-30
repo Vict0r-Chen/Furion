@@ -22,14 +22,14 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="resources"><see cref="ManifestResourceModel"/></param>
-    public ManifestResourceConfigurationProvider(List<ManifestResourceModel> resources)
+    /// <param name="resources"><see cref="ManifestResourceConfigurationModel"/></param>
+    public ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> resources)
     {
         Resources = resources;
     }
 
-    /// <inheritdoc cref="ManifestResourceModel" />
-    private List<ManifestResourceModel> Resources { get; }
+    /// <inheritdoc cref="ManifestResourceConfigurationModel" />
+    private List<ManifestResourceConfigurationModel> Resources { get; }
 
     /// <inheritdoc />
     public override void Load()

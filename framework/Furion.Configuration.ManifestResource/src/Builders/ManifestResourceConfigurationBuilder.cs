@@ -27,7 +27,7 @@ public sealed class ManifestResourceConfigurationBuilder
     /// <summary>
     /// 嵌入文件配置过滤器
     /// </summary>
-    internal Func<ManifestResourceModel, bool>? _filterConfigure;
+    internal Func<ManifestResourceConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
     /// 构造函数
@@ -41,7 +41,7 @@ public sealed class ManifestResourceConfigurationBuilder
     /// 添加文件扫描过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T1, T2, TResult}"/></param>
-    public void AddFilter(Func<ManifestResourceModel, bool> configure)
+    public void AddFilter(Func<ManifestResourceConfigurationModel, bool> configure)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
@@ -84,15 +84,15 @@ public sealed class ManifestResourceConfigurationBuilder
     /// 构建模块服务
     /// </summary>
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
-    internal List<ManifestResourceModel> Build()
+    internal List<ManifestResourceConfigurationModel> Build()
     {
-        var resources = new List<ManifestResourceModel>();
+        var resources = new List<ManifestResourceConfigurationModel>();
         foreach (var assembly in _assemblies)
         {
             var resourceNames = assembly.GetManifestResourceNames();
             Array.ForEach(resourceNames, resourceName =>
             {
-                var manifestResourceModel = new ManifestResourceModel(assembly, resourceName);
+                var manifestResourceModel = new ManifestResourceConfigurationModel(assembly, resourceName);
 
                 // 调用文件配置模型过滤器
                 if (_filterConfigure is null || _filterConfigure.Invoke(manifestResourceModel))

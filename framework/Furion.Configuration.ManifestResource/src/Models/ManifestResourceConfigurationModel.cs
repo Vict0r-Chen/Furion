@@ -15,16 +15,16 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 嵌入资源模型
+/// 嵌入资源配置文件模型
 /// </summary>
-public sealed class ManifestResourceModel
+public sealed class ManifestResourceConfigurationModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="assembly">程序集</param>
-    /// <param name="resourceName">资源名称</param>
-    internal ManifestResourceModel(Assembly assembly, string resourceName)
+    /// <param name="resourceName">嵌入资源名称</param>
+    internal ManifestResourceConfigurationModel(Assembly assembly, string resourceName)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
@@ -41,12 +41,12 @@ public sealed class ManifestResourceModel
     public Assembly Assembly { get; init; }
 
     /// <summary>
-    /// 资源名称
+    /// 嵌入资源名称
     /// </summary>
     public string ResourceName { get; init; }
 
     /// <summary>
-    /// 拓展名
+    /// 文件拓展名
     /// </summary>
     public string Extension { get; init; }
 }
