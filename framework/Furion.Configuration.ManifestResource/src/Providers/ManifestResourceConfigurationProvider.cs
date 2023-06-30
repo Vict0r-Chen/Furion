@@ -25,6 +25,9 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
     internal ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> manifestResources)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(manifestResources, nameof(manifestResources));
+
         ManifestResources = manifestResources;
     }
 
@@ -34,6 +37,12 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <inheritdoc />
     public override void Load()
     {
+        // 空检查
+        if (ManifestResources.Count == 0)
+        {
+            return;
+        }
+
         // 创建配置文件内容解析器
         var fileConfigurationParser = new FileConfigurationParser();
 

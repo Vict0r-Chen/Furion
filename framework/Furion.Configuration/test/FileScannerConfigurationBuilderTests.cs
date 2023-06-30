@@ -755,6 +755,23 @@ public class FileScannerConfigurationBuilderTests
     }
 
     [Fact]
+    public void Build_With_AddFilter()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "optional");
+
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddFilter(s =>
+        {
+            return false;
+        });
+        fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
+        Assert.Empty(configurationBuilder.Sources);
+    }
+
+    [Fact]
     public void CreateDefaultFileConfigurationModel_NullOrEmpty_Throw()
     {
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
@@ -788,5 +805,40 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal(fileScannerConfigurationBuilder.DefaultOptional, fileConfigurationModel.Optional);
         Assert.Equal(fileScannerConfigurationBuilder.DefaultReloadOnChange, fileConfigurationModel.ReloadOnChange);
         Assert.Equal(fileScannerConfigurationBuilder.DefaultReloadDelay, fileConfigurationModel.ReloadDelay);
+    }
+
+    [Fact]
+    public void Build_Release()
+    {
+        var filesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "files");
+
+        var webApplicationBuilder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            EnvironmentName = "Development",
+            ContentRootPath = "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test"
+        });
+        var configurationBuilder = webApplicationBuilder.Configuration;
+
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddDirectories("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files", filesDirectory);
+        fileScannerConfigurationBuilder.Build(configurationBuilder);
+
+        var sources = configurationBuilder.Sources;
+        Assert.True(sources.Count > 4);
+
+        var lastFourSources = sources.Skip(sources.Count - 4);
+        Assert.Equal("appsettings.json", (lastFourSources.ElementAt(0) as JsonConfigurationSource)!.Path);
+        Assert.Equal("appsettings.Development.json", (lastFourSources.ElementAt(1) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.json", (lastFourSources.ElementAt(2) as JsonConfigurationSource)!.Path);
+        Assert.Equal("test.Development.json", (lastFourSources.ElementAt(3) as JsonConfigurationSource)!.Path);
+
+        var webApplication = webApplicationBuilder.Build();
+        Assert.Equal("Furion - Test - Development", webApplication.Configuration["Name"]);
+
+        Assert.Empty(fileScannerConfigurationBuilder._directories);
+        Assert.Empty(fileScannerConfigurationBuilder._fileGlobbing);
+        Assert.Empty(fileScannerConfigurationBuilder._fileBlacklistGlobbing);
+        Assert.Empty(fileScannerConfigurationBuilder._fileConfigurationSources);
+        Assert.Null(fileScannerConfigurationBuilder._filterConfigure);
     }
 }

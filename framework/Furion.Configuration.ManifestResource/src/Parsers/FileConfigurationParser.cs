@@ -59,7 +59,7 @@ internal sealed partial class FileConfigurationParser
         // 检查该拓展名解析器是否存在
         if (!_parsers.TryGetValue(extension, out var parser))
         {
-            throw new InvalidOperationException($"Parser for configuration files with `{extension}` extension not found.");
+            throw new ArgumentException($"Parser for configuration files with `{extension}` extension not found.", nameof(extension));
         }
 
         // 调用解析器并返回

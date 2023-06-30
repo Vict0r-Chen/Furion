@@ -1,4 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<ItemGroup>
+		<Content Remove="Resources\embed.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\embed.json" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\src\Furion.Configuration.ManifestResource.csproj" />
