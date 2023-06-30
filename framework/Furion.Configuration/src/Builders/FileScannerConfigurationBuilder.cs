@@ -101,7 +101,7 @@ public sealed partial class FileScannerConfigurationBuilder
     public int DefaultReloadDelay { get; set; } = 250;
 
     /// <summary>
-    /// 添加文件扫描过滤器
+    /// 添加文件配置模型过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
     public void AddFilter(Func<FileConfigurationModel, bool> configure)

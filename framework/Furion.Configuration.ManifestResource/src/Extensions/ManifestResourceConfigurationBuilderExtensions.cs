@@ -48,8 +48,8 @@ public static class ManifestResourceConfigurationBuilderExtensions
         ArgumentNullException.ThrowIfNull(manifestResourceConfigurationBuilder, nameof(manifestResourceConfigurationBuilder));
 
         // 构建模块服务
-        var resources = manifestResourceConfigurationBuilder.Build();
+        var manifestResources = manifestResourceConfigurationBuilder.Build();
 
-        return builder.Add(new ManifestResourceConfigurationSource(resources));
+        return builder.Add(new ManifestResourceConfigurationSource(manifestResources));
     }
 }

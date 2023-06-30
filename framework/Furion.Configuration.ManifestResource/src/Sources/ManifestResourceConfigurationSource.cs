@@ -15,24 +15,27 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 嵌入资源配置程序源
+/// 嵌入资源配置源
 /// </summary>
 internal sealed class ManifestResourceConfigurationSource : IConfigurationSource
 {
-    private readonly List<ManifestResourceConfigurationModel> _resources;
+    /// <summary>
+    /// <see cref="ManifestResourceConfigurationModel"/> 集合
+    /// </summary>
+    internal readonly List<ManifestResourceConfigurationModel> _manifestResources;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="resources"></param>
-    public ManifestResourceConfigurationSource(List<ManifestResourceConfigurationModel> resources)
+    /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
+    internal ManifestResourceConfigurationSource(List<ManifestResourceConfigurationModel> manifestResources)
     {
-        _resources = resources;
+        _manifestResources = manifestResources;
     }
 
     /// <inheritdoc/>
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return new ManifestResourceConfigurationProvider(_resources);
+        return new ManifestResourceConfigurationProvider(_manifestResources);
     }
 }

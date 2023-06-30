@@ -47,7 +47,7 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 | [Furion.Component.AspNetCore](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.AspNetCore)                     | ✅   | ✅       | [![nuget](https://img.shields.io/nuget/v/Furion.Component.AspNetCore.svg?cacheSeconds=10800)](https://www.nuget.org/packages/Furion.Component.AspNetCore)           | ⚠️   |
 | [Furion.Component.Hosting](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.Hosting)                           | ✅   | ✅       | [![nuget](https://img.shields.io/nuget/v/Furion.Component.Hosting.svg?cacheSeconds=10800)](https://www.nuget.org/packages/Furion.Component.Hosting)                 | ⚠️   |
 | [Furion.Configuration](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration)                                   | ✅   | ✅       | [![nuget](https://img.shields.io/nuget/v/Furion.Configuration.svg?cacheSeconds=10800)](https://www.nuget.org/packages/Furion.Configuration)                         | ⚠️   |
-| [Furion.Configuration.ManifestResource](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration.ManifestResource) | ⏳   | ⏳       |                                                                                                                                                                     | ⚠️   |
+| [Furion.Configuration.ManifestResource](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration.ManifestResource) | ✅   | ⏳       |                                                                                                                                                                     | ⚠️   |
 
 > 状态说明
 >

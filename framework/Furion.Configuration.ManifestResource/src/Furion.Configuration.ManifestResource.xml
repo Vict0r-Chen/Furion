@@ -14,9 +14,20 @@
             待扫描的程序集集合
             </summary>
         </member>
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._fileGlobbing">
+            <summary>
+            文件通配符
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._fileBlacklistGlobbing">
+            <summary>
+            文件黑名单通配符
+            </summary>
+            <remarks>禁止已扫描的文件名作为配置文件</remarks>
+        </member>
         <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._filterConfigure">
             <summary>
-            嵌入文件配置过滤器
+            嵌入资源配置过滤器
             </summary>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.#ctor">
@@ -26,7 +37,7 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.ManifestResourceConfigurationModel,System.Boolean})">
             <summary>
-            添加文件扫描过滤器
+            添加嵌入资源配置过滤器
             </summary>
             <param name="configure"><see cref="T:System.Func`3"/></param>
         </member>
@@ -44,11 +55,50 @@
             <param name="assemblies"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
         </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddGlobbings(System.String[])">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddBlacklistGlobbings(System.String[])">
+            <summary>
+            添加文件黑名单通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddBlacklistGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件黑名单通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
+        </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Build">
             <summary>
             构建模块服务
             </summary>
             <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.ScanAssemblies">
+            <summary>
+            扫描程序集并创建嵌入资源配置文件模型
+            </summary>
+            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</returns>
         </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationModel">
             <summary>
@@ -127,9 +177,9 @@
             <summary>
             构造函数
             </summary>
-            <param name="resources"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
+            <param name="manifestResources"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
         </member>
-        <member name="P:Furion.Configuration.ManifestResourceConfigurationProvider.Resources">
+        <member name="P:Furion.Configuration.ManifestResourceConfigurationProvider.ManifestResources">
             <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationModel" />
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.Load">
@@ -145,14 +195,19 @@
         </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationSource">
             <summary>
-            嵌入资源配置程序源
+            嵌入资源配置源
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationSource._manifestResources">
+            <summary>
+            <see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合
             </summary>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel})">
             <summary>
             构造函数
             </summary>
-            <param name="resources"></param>
+            <param name="manifestResources"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <inheritdoc/>

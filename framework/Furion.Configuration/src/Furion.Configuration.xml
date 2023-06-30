@@ -62,7 +62,7 @@
         </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.FileConfigurationModel,System.Boolean})">
             <summary>
-            添加文件扫描过滤器
+            添加文件配置模型过滤器
             </summary>
             <param name="configure"><see cref="T:System.Func`2"/></param>
         </member>

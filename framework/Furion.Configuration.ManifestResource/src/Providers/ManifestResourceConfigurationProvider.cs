@@ -22,14 +22,14 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="resources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
-    public ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> resources)
+    /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
+    internal ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> manifestResources)
     {
-        Resources = resources;
+        ManifestResources = manifestResources;
     }
 
     /// <inheritdoc cref="ManifestResourceConfigurationModel" />
-    private List<ManifestResourceConfigurationModel> Resources { get; }
+    internal List<ManifestResourceConfigurationModel> ManifestResources { get; }
 
     /// <inheritdoc />
     public override void Load()
@@ -38,10 +38,10 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
         var fileConfigurationParser = new FileConfigurationParser();
 
         // 解析嵌入资源配置文件并生成字典集合
-        Data = Resources.SelectMany(manifestResource => ParseResource(fileConfigurationParser, manifestResource))
+        Data = ManifestResources.SelectMany(manifestResource => ParseResource(fileConfigurationParser, manifestResource))
                         .ToDictionary(u => u.Key, u => u.Value);
 
-        Resources.Clear();
+        ManifestResources.Clear();
     }
 
     /// <summary>
