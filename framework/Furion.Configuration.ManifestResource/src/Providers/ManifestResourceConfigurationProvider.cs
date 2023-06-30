@@ -19,9 +19,49 @@ namespace Furion.Configuration;
 /// </summary>
 internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvider
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="resources"></param>
+    public ManifestResourceConfigurationProvider(List<ManifestResourceModel> resources)
+    {
+        Resources = resources;
+    }
+
+    private List<ManifestResourceModel> Resources { get; }
+
     /// <inheritdoc />
     public override void Load()
     {
-        Data = new Dictionary<string, string?>();
+        var configurationFileParser = new ConfigurationFileParser();
+        var data = new Dictionary<string, string?>();
+
+        foreach (var manifestResource in Resources)
+        {
+            using var stream = manifestResource.Assembly.GetManifestResourceStream(manifestResource.ResourceName);
+            if (stream is null)
+            {
+                continue;
+            }
+
+            var dictionary = configurationFileParser.Parse(manifestResource.Extension, stream);
+            if (dictionary is null || dictionary.Count == 0)
+            {
+                continue;
+            }
+
+            var assemblyName = manifestResource.Assembly.GetName().Name;
+            foreach (var (key, value) in dictionary)
+            {
+                data[$"{assemblyName}:{key}"] = value;
+            }
+
+            // 输出调试事件
+            Debugging.File("The embed resource `{0}` has been successfully added to the configuration.", manifestResource.ResourceName);
+        }
+
+        Data = data;
+
+        Resources.Clear();
     }
 }

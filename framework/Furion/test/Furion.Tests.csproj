@@ -9,4 +9,12 @@
 		<ProjectReference Include="..\src\Furion.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Remove="embed.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="embed.json" />
+	</ItemGroup>
+
 </Project>

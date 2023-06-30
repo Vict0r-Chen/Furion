@@ -14,10 +14,21 @@
             待扫描的程序集集合
             </summary>
         </member>
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._filterConfigure">
+            <summary>
+            嵌入文件配置过滤器
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.#ctor">
             <summary>
             构造函数
             </summary>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.ManifestResourceModel,System.Boolean})">
+            <summary>
+            添加文件扫描过滤器
+            </summary>
+            <param name="configure"><see cref="T:System.Func`3"/></param>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddAssemblies(System.Reflection.Assembly[])">
             <summary>
@@ -33,11 +44,38 @@
             <param name="assemblies"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
         </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Build">
             <summary>
             构建模块服务
             </summary>
-            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
+        </member>
+        <member name="T:Furion.Configuration.ManifestResourceModel">
+            <summary>
+            嵌入资源模型
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceModel.#ctor(System.Reflection.Assembly,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="assembly">程序集</param>
+            <param name="resourceName">资源名称</param>
+        </member>
+        <member name="P:Furion.Configuration.ManifestResourceModel.Assembly">
+            <summary>
+            程序集
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.ManifestResourceModel.ResourceName">
+            <summary>
+            资源名称
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.ManifestResourceModel.Extension">
+            <summary>
+            拓展名
+            </summary>
         </member>
         <member name="T:Furion.Configuration.ConfigurationFileParser">
             <summary>
@@ -58,7 +96,7 @@
             <summary>
             解析配置文件流
             </summary>
-            <param name="resourceName">资源名称</param>
+            <param name="extension">拓展名</param>
             <param name="input"><see cref="T:System.IO.Stream"/></param>
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
         </member>
@@ -73,6 +111,12 @@
             嵌入资源配置提供程序
             </summary>
         </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceModel})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="resources"></param>
+        </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.Load">
             <inheritdoc />
         </member>
@@ -81,12 +125,23 @@
             嵌入资源配置程序源
             </summary>
         </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceModel})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="resources"></param>
+        </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <inheritdoc/>
         </member>
         <member name="T:Furion.Component.ManifestResourceConfigurationComponent">
             <summary>
             嵌入资源配置模块服务组件
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ManifestResourceConfigurationComponent.Props">
+            <summary>
+            组件配置
             </summary>
         </member>
         <member name="M:Furion.Component.ManifestResourceConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">

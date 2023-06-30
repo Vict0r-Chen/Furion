@@ -40,12 +40,11 @@ internal sealed class ConfigurationFileParser
     /// <summary>
     /// 解析配置文件流
     /// </summary>
-    /// <param name="resourceName">资源名称</param>
+    /// <param name="extension">拓展名</param>
     /// <param name="input"><see cref="Stream"/></param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
-    internal IDictionary<string, string?>? Parse(string resourceName, Stream input)
+    internal IDictionary<string, string?>? Parse(string extension, Stream input)
     {
-        var extension = Path.GetExtension(resourceName);
         if (_fileParsers.TryGetValue(extension, out var parser))
         {
             return parser(input);

@@ -12,22 +12,41 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+namespace Furion.Configuration;
 
 /// <summary>
-/// 嵌入资源配置模块服务组件
+/// 嵌入资源模型
 /// </summary>
-public sealed class ManifestResourceConfigurationComponent : ComponentBase
+public sealed class ManifestResourceModel
 {
     /// <summary>
-    /// 组件配置
+    /// 构造函数
     /// </summary>
-    [ComponentProps]
-    public Action<ManifestResourceConfigurationBuilder>? Props { get; set; }
-
-    /// <inheritdoc />
-    public override void ConfigureServices(ServiceComponentContext context)
+    /// <param name="assembly">程序集</param>
+    /// <param name="resourceName">资源名称</param>
+    internal ManifestResourceModel(Assembly assembly, string resourceName)
     {
-        context.Configuration.AddManifestResource(Props);
+        // 空检查
+        ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
+        ArgumentException.ThrowIfNullOrWhiteSpace(resourceName, nameof(resourceName));
+
+        Assembly = assembly;
+        ResourceName = resourceName;
+        Extension = Path.GetExtension(resourceName);
     }
+
+    /// <summary>
+    /// 程序集
+    /// </summary>
+    public Assembly Assembly { get; init; }
+
+    /// <summary>
+    /// 资源名称
+    /// </summary>
+    public string ResourceName { get; init; }
+
+    /// <summary>
+    /// 拓展名
+    /// </summary>
+    public string Extension { get; init; }
 }

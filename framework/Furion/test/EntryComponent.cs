@@ -18,9 +18,31 @@ namespace Furion.Tests;
     , DependencyInjectionComponent
     , DependencyInjectionNamedComponent
     , WebComponentCoreComponent
-    , HostingComponentCoreComponent>]
+    , HostingComponentCoreComponent
+    , ManifestResourceConfigurationComponent>]
 public class EntryComponent : WebComponent
 {
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        Props<ManifestResourceConfigurationBuilder>(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+
+        Props<FileScannerConfigurationBuilder>(builder =>
+        {
+            builder.AddFilter(model =>
+            {
+                if (model.FileName == "embed.json")
+                {
+                    return false;
+                }
+
+                return true;
+            });
+        });
+    }
+
     public override void ConfigureServices(ServiceComponentContext context)
     {
         context.Services.AddControllers();

@@ -21,6 +21,6 @@ public class HelloController
     [HttpGet]
     public string? Get([FromServices] IConfiguration configuration)
     {
-        return configuration["Name"];
+        return configuration["Name"] + "Embed: " + configuration["Furion.Tests:Name"];
     }
 }

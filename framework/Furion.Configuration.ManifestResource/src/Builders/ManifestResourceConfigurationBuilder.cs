@@ -25,11 +25,28 @@ public sealed class ManifestResourceConfigurationBuilder
     internal readonly HashSet<Assembly> _assemblies;
 
     /// <summary>
+    /// 嵌入文件配置过滤器
+    /// </summary>
+    internal Func<ManifestResourceModel, bool>? _filterConfigure;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     public ManifestResourceConfigurationBuilder()
     {
         _assemblies = new();
+    }
+
+    /// <summary>
+    /// 添加文件扫描过滤器
+    /// </summary>
+    /// <param name="configure"><see cref="Func{T1, T2, TResult}"/></param>
+    public void AddFilter(Func<ManifestResourceModel, bool> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+
+        _filterConfigure = configure;
     }
 
     /// <summary>
@@ -66,8 +83,22 @@ public sealed class ManifestResourceConfigurationBuilder
     /// <summary>
     /// 构建模块服务
     /// </summary>
-    /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
-    internal void Build(IConfigurationBuilder builder)
+    /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
+    internal List<ManifestResourceModel> Build()
     {
+        var resources = new List<ManifestResourceModel>();
+        foreach (var assembly in _assemblies)
+        {
+            var resourceNames = assembly.GetManifestResourceNames();
+            Array.ForEach(resourceNames, resourceName =>
+            {
+                resources.Add(new ManifestResourceModel(assembly, resourceName));
+            });
+        }
+
+        _assemblies.Clear();
+        _filterConfigure = null;
+
+        return resources;
     }
 }
