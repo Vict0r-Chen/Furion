@@ -171,6 +171,47 @@ public sealed partial class FileScannerConfigurationBuilder
     }
 
     /// <summary>
+    /// 添加文件通配符
+    /// </summary>
+    /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
+    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
+    public FileScannerConfigurationBuilder AddGlobbings(IEnumerable<string> globbings)
+    {
+        return AddGlobbings(globbings.ToArray());
+    }
+
+    /// <summary>
+    /// 添加文件黑名单通配符
+    /// </summary>
+    /// <param name="globbings"><see cref="string"/>[]</param>
+    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
+    public FileScannerConfigurationBuilder AddBlacklistGlobbings(params string[] globbings)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
+
+        Array.ForEach(globbings, globbing =>
+        {
+            // 空检查
+            ArgumentException.ThrowIfNullOrWhiteSpace(globbing, nameof(globbing));
+
+            _fileBlacklistGlobbing.Add(globbing);
+        });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加文件黑名单通配符
+    /// </summary>
+    /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
+    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
+    public FileScannerConfigurationBuilder AddBlacklistGlobbings(IEnumerable<string> globbings)
+    {
+        return AddBlacklistGlobbings(globbings.ToArray());
+    }
+
+    /// <summary>
     /// 添加配置文件处理程序
     /// </summary>
     /// <typeparam name="TConfigurationSource"><see cref="FileConfigurationSource"/></typeparam>
@@ -210,16 +251,6 @@ public sealed partial class FileScannerConfigurationBuilder
         _fileConfigurationSources[extension] = configurationSourceType;
 
         return this;
-    }
-
-    /// <summary>
-    /// 添加文件通配符
-    /// </summary>
-    /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddGlobbings(IEnumerable<string> globbings)
-    {
-        return AddGlobbings(globbings.ToArray());
     }
 
     /// <summary>

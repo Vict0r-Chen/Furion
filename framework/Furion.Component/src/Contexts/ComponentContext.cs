@@ -35,6 +35,21 @@ public abstract class ComponentContext
     internal ComponentOptions Options { get; }
 
     /// <summary>
+    /// 添加组件配置
+    /// </summary>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configure">自定义组件配置委托</param>
+    public void Props<TProps>(Action<TProps> configure)
+        where TProps : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+        ArgumentNullException.ThrowIfNull(Options, nameof(Options));
+
+        Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
+    }
+
+    /// <summary>
     /// 获取组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>

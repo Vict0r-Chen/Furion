@@ -87,6 +87,27 @@
             <param name="globbings"><see cref="T:System.String"/>[]</param>
             <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
         </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddBlacklistGlobbings(System.String[])">
+            <summary>
+            添加文件黑名单通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddBlacklistGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件黑名单通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
+        </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources``1(System.String)">
             <summary>
             添加配置文件处理程序
@@ -101,13 +122,6 @@
             </summary>
             <param name="extension">文件拓展名</param>
             <param name="configurationSourceType"><see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/></param>
-            <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            添加文件通配符
-            </summary>
-            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
             <returns><see cref="T:Furion.Configuration.FileScannerConfigurationBuilder"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileScannerConfigurationBuilder.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">

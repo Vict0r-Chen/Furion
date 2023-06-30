@@ -103,4 +103,31 @@ public class ServiceComponentContextTests
         var action = serviceComponentContext.GetPropsOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
+
+    [Fact]
+    public void Props_Null_Throw()
+    {
+        var services = new ServiceCollection();
+        var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            serviceComponentContext.Props<ComponentActionOptions>(null!);
+        });
+    }
+
+    [Fact]
+    public void Props_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        var serviceComponentContext = new ServiceComponentContext(services, new ConfigurationManager());
+
+        Assert.NotNull(serviceComponentContext.Options);
+        Assert.Empty(serviceComponentContext.Options.PropsActions);
+
+        serviceComponentContext.Props<ComponentActionOptions>(options =>
+        {
+        });
+
+        Assert.Single(serviceComponentContext.Options.PropsActions);
+    }
 }

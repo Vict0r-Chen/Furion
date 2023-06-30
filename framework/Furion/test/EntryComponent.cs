@@ -31,15 +31,7 @@ public class EntryComponent : WebComponent
 
         Props<FileScannerConfigurationBuilder>(builder =>
         {
-            builder.AddFilter(model =>
-            {
-                if (model.FileName == "embed.json")
-                {
-                    return false;
-                }
-
-                return true;
-            });
+            builder.AddBlacklistGlobbings("embed.json");
         });
     }
 

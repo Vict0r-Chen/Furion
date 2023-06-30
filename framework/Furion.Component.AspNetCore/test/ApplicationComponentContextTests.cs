@@ -103,4 +103,31 @@ public class ApplicationComponentContextTests
         var action = applicationComponentContext.GetPropsOrNew<ComponentActionOptions>();
         Assert.NotNull(action);
     }
+
+    [Fact]
+    public void Props_Null_Throw()
+    {
+        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var applicationComponentContext = new ApplicationComponentContext(webApplication);
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            applicationComponentContext.Props<ComponentActionOptions>(null!);
+        });
+    }
+
+    [Fact]
+    public void Props_ReturnOK()
+    {
+        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var applicationComponentContext = new ApplicationComponentContext(webApplication);
+
+        Assert.NotNull(applicationComponentContext.Options);
+        Assert.Single(applicationComponentContext.Options.PropsActions);
+
+        applicationComponentContext.Props<ComponentActionOptions>(options =>
+        {
+        });
+
+        Assert.Equal(2, applicationComponentContext.Options.PropsActions.Count);
+    }
 }

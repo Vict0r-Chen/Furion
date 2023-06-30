@@ -220,6 +220,66 @@ public class FileScannerConfigurationBuilderTests
     }
 
     [Fact]
+    public void AddBlacklistGlobbings_Throw()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddBlacklistGlobbings(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScannerConfigurationBuilder.AddBlacklistGlobbings(string.Empty);
+        });
+    }
+
+    [Fact]
+    public void AddBlacklistGlobbings_NotExists_AddedSuccessfully()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddBlacklistGlobbings("embed.json");
+
+        Assert.Equal(12, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
+        Assert.Equal("embed.json", fileScannerConfigurationBuilder._fileBlacklistGlobbing.Last());
+    }
+
+    [Fact]
+    public void AddBlacklistGlobbings_Exists_Skip()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddBlacklistGlobbings("*.runtimeconfig.json");
+
+        Assert.Equal(11, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
+        fileScannerConfigurationBuilder.AddBlacklistGlobbings("*.runtimeconfig.json");
+        fileScannerConfigurationBuilder.AddBlacklistGlobbings("*.runtimeconfig.json");
+        Assert.Equal(11, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
+
+        Assert.NotEqual("*.runtimeconfig.json", fileScannerConfigurationBuilder._fileBlacklistGlobbing.Last());
+    }
+
+    [Fact]
+    public void AddBlacklistGlobbings_Multiple_Arguments_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddBlacklistGlobbings("embed.xml", "embed.ini");
+
+        Assert.Equal(13, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
+        Assert.Equal("embed.ini", fileScannerConfigurationBuilder._fileBlacklistGlobbing.Last());
+    }
+
+    [Fact]
+    public void AddBlacklistGlobbings_IEnumerable_ReturnOK()
+    {
+        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        fileScannerConfigurationBuilder.AddBlacklistGlobbings(new List<string> { "embed.xml", "embed.ini" });
+
+        Assert.Equal(13, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
+        Assert.Equal("embed.ini", fileScannerConfigurationBuilder._fileBlacklistGlobbing.Last());
+    }
+
+    [Fact]
     public void AddConfigurationSources_Throw()
     {
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
