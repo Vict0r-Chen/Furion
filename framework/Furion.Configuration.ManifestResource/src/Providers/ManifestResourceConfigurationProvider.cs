@@ -22,18 +22,19 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="resources"></param>
+    /// <param name="resources"><see cref="ManifestResourceModel"/></param>
     public ManifestResourceConfigurationProvider(List<ManifestResourceModel> resources)
     {
         Resources = resources;
     }
 
+    /// <inheritdoc cref="ManifestResourceModel" />
     private List<ManifestResourceModel> Resources { get; }
 
     /// <inheritdoc />
     public override void Load()
     {
-        var configurationFileParser = new ConfigurationFileParser();
+        var fileConfigurationParser = new FileConfigurationParser();
         var data = new Dictionary<string, string?>();
 
         foreach (var manifestResource in Resources)
@@ -44,7 +45,7 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
                 continue;
             }
 
-            var dictionary = configurationFileParser.Parse(manifestResource.Extension, stream);
+            var dictionary = fileConfigurationParser.Parse(manifestResource.Extension, stream);
             if (dictionary is null || dictionary.Count == 0)
             {
                 continue;

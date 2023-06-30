@@ -77,32 +77,33 @@
             拓展名
             </summary>
         </member>
-        <member name="T:Furion.Configuration.ConfigurationFileParser">
+        <member name="T:Furion.Configuration.FileConfigurationParser">
             <summary>
-            配置文件解析器
+            配置文件内容解析器
             </summary>
         </member>
-        <member name="F:Furion.Configuration.ConfigurationFileParser._fileParsers">
+        <member name="F:Furion.Configuration.FileConfigurationParser._parsers">
             <summary>
-            文件解析器集合
+            配置文件解析器集合
             </summary>
         </member>
-        <member name="M:Furion.Configuration.ConfigurationFileParser.#ctor">
+        <member name="M:Furion.Configuration.FileConfigurationParser.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Configuration.ConfigurationFileParser.Parse(System.String,System.IO.Stream)">
+        <member name="M:Furion.Configuration.FileConfigurationParser.Parse(System.String,System.IO.Stream)">
             <summary>
-            解析配置文件流
+            根据拓展名解析流数据并生成字典集合
             </summary>
-            <param name="extension">拓展名</param>
-            <param name="input"><see cref="T:System.IO.Stream"/></param>
+            <param name="extension">文件拓展名</param>
+            <param name="stream"><see cref="T:System.IO.Stream"/></param>
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Configuration.ConfigurationFileParser.CreateJsonFileParser">
+        <member name="M:Furion.Configuration.FileConfigurationParser.CreateJsonParser">
             <summary>
-            创建 JSON 文件解析器
+            创建 JSON 配置文件内容解析器
             </summary>
             <returns><see cref="T:System.Func`2"/></returns>
         </member>
@@ -115,7 +116,10 @@
             <summary>
             构造函数
             </summary>
-            <param name="resources"></param>
+            <param name="resources"><see cref="T:Furion.Configuration.ManifestResourceModel"/></param>
+        </member>
+        <member name="P:Furion.Configuration.ManifestResourceConfigurationProvider.Resources">
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceModel" />
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.Load">
             <inheritdoc />
