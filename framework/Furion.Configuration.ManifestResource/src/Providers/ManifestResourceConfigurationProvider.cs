@@ -15,14 +15,14 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 嵌入资源配置提供程序
+/// 嵌入资源配置提供器
 /// </summary>
 internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvider
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="resources"><see cref="ManifestResourceConfigurationModel"/></param>
+    /// <param name="resources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
     public ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> resources)
     {
         Resources = resources;
@@ -34,35 +34,54 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <inheritdoc />
     public override void Load()
     {
+        // 创建配置文件内容解析器
         var fileConfigurationParser = new FileConfigurationParser();
-        var data = new Dictionary<string, string?>();
 
-        foreach (var manifestResource in Resources)
-        {
-            using var stream = manifestResource.Assembly.GetManifestResourceStream(manifestResource.ResourceName);
-            if (stream is null)
-            {
-                continue;
-            }
-
-            var dictionary = fileConfigurationParser.Parse(manifestResource.Extension, stream);
-            if (dictionary is null || dictionary.Count == 0)
-            {
-                continue;
-            }
-
-            var assemblyName = manifestResource.Assembly.GetName().Name;
-            foreach (var (key, value) in dictionary)
-            {
-                data[$"{assemblyName}:{key}"] = value;
-            }
-
-            // 输出调试事件
-            Debugging.File("The embed resource `{0}` has been successfully added to the configuration.", manifestResource.ResourceName);
-        }
-
-        Data = data;
+        // 解析嵌入资源配置文件并生成字典集合
+        Data = Resources.SelectMany(manifestResource => ParseResource(fileConfigurationParser, manifestResource))
+                        .ToDictionary(u => u.Key, u => u.Value);
 
         Resources.Clear();
+    }
+
+    /// <summary>
+    /// 解析嵌入资源配置文件并生成字典集合
+    /// </summary>
+    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
+    /// <param name="manifestResource"><see cref="ManifestResourceConfigurationModel"/></param>
+    /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
+    internal static Dictionary<string, string?> ParseResource(FileConfigurationParser fileConfigurationParser, ManifestResourceConfigurationModel manifestResource)
+    {
+        // 读取嵌入资源内容流
+        using var stream = manifestResource.Assembly.GetManifestResourceStream(manifestResource.ResourceName);
+        if (stream is null)
+        {
+            return new();
+        }
+
+        // 解析嵌入资源配置文件并生成集合
+        var keyValues = fileConfigurationParser.Parse(manifestResource.Extension, stream);
+        if (keyValues is null || keyValues.Count == 0)
+        {
+            return new();
+        }
+
+        // 获取程序集名称
+        var assemblyName = manifestResource.Assembly.GetName().Name;
+        var data = new Dictionary<string, string?>();
+
+        // 将 程序集名称:键 添加到集合中
+        foreach (var (key, value) in keyValues)
+        {
+            data[$"{assemblyName}:{key}"] = value;
+        }
+
+        // 清空集合
+        keyValues.Clear();
+
+        // 输出调试事件
+        Debugging.File("The embed resource `{0}` has been successfully added to the configuration.", manifestResource.ResourceName);
+
+        return data;
     }
 }

@@ -235,7 +235,7 @@ public sealed partial class FileScannerConfigurationBuilder
         ArgumentException.ThrowIfNullOrWhiteSpace(extension, nameof(extension));
         ArgumentNullException.ThrowIfNull(configurationSourceType, nameof(configurationSourceType));
 
-        // 检查拓展名有效性
+        // 检查文件拓展名有效性
         if (!FileExtensionRegex().IsMatch(extension))
         {
             throw new ArgumentException($"`{extension}` is not a valid file extension.", nameof(extension));

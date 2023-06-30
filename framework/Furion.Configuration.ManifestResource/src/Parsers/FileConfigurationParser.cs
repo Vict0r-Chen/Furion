@@ -12,12 +12,14 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using System.Text.RegularExpressions;
+
 namespace Furion.Configuration;
 
 /// <summary>
 /// 配置文件内容解析器
 /// </summary>
-internal sealed class FileConfigurationParser
+internal sealed partial class FileConfigurationParser
 {
     /// <summary>
     /// 配置文件解析器集合
@@ -38,7 +40,7 @@ internal sealed class FileConfigurationParser
     }
 
     /// <summary>
-    /// 根据拓展名解析流数据并生成字典集合
+    /// 解析嵌入资源配置文件并生成集合
     /// </summary>
     /// <param name="extension">文件拓展名</param>
     /// <param name="stream"><see cref="Stream"/></param>
@@ -46,6 +48,16 @@ internal sealed class FileConfigurationParser
     /// <exception cref="InvalidOperationException"></exception>
     internal IDictionary<string, string?>? Parse(string extension, Stream stream)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
+        ArgumentNullException.ThrowIfNull(stream);
+
+        // 检查文件拓展名有效性
+        if (!FileExtensionRegex().IsMatch(extension))
+        {
+            throw new ArgumentException($"`{extension}` is not a valid file extension.", nameof(extension));
+        }
+
         // 检查该拓展名解析器是否存在
         if (!_parsers.TryGetValue(extension, out var parser))
         {
@@ -74,4 +86,11 @@ internal sealed class FileConfigurationParser
         // 创建 JSON 配置文件内容解析器
         return parseStaticMethod.CreateDelegate<Func<Stream, IDictionary<string, string?>>>();
     }
+
+    /// <summary>
+    /// 文件拓展名正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex("^\\.[a-zA-Z0-9]+$")]
+    private static partial Regex FileExtensionRegex();
 }
