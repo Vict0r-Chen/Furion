@@ -19,9 +19,13 @@
 - 框架示例混乱，用户只能自行摸索最佳实践
 - 虽有单元测试，但是非常混乱
 
-## 框架技术
+## 技术选择
 
 Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
+
+## 开发团队
+
+[百小僧](https://gitee.com/monksoul)、百签科技（广东）有限公司
 
 ## 开发指导
 
@@ -59,3 +63,7 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 > | ⏳   | 进行中   |
 > | ✅   | 完成     |
 > | 💔   | 随时抛弃 |
+
+## 赞助 Furion
+
+<img src="https://gitee.com/dotnetchina/Furion/raw/v4/handbook/static/img/support.png" width="300" />
