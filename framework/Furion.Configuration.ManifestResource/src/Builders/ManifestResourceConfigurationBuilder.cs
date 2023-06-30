@@ -92,7 +92,13 @@ public sealed class ManifestResourceConfigurationBuilder
             var resourceNames = assembly.GetManifestResourceNames();
             Array.ForEach(resourceNames, resourceName =>
             {
-                resources.Add(new ManifestResourceModel(assembly, resourceName));
+                var manifestResourceModel = new ManifestResourceModel(assembly, resourceName);
+
+                // 调用文件配置模型过滤器
+                if (_filterConfigure is null || _filterConfigure.Invoke(manifestResourceModel))
+                {
+                    resources.Add(manifestResourceModel);
+                }
             });
         }
 
