@@ -13,8 +13,11 @@
       "disableDefaultFilter": false,
       "noRestore": false,
       "namespaceLayout": "flattened",
-      "memberLayout": "samePage",
-      "allowCompilationErrors": false
+      "memberLayout": "separatePages",
+      "allowCompilationErrors": false,
+      "properties": {
+        "TargetFramework": "net8.0"
+      }
     }
   ],
   "build": {
@@ -36,7 +39,7 @@
     "fileMetadataFiles": [],
     "template": ["default", "modern"],
     "postProcessors": [],
-    "keepFileLink": false,
+    "keepFileLink": true,
     "disableGitFeatures": false
   }
 }
