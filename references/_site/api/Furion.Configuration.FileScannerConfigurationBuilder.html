@@ -1,0 +1,683 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class FileScannerConfigurationBuilder
+ </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class FileScannerConfigurationBuilder
+ ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Furion.Configuration.FileScannerConfigurationBuilder">
+
+
+
+  <h1 id="Furion_Configuration_FileScannerConfigurationBuilder" data-uid="Furion.Configuration.FileScannerConfigurationBuilder" class="text-break">
+    Class FileScannerConfigurationBuilder
+  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Furion.html">Furion</a>.<a class="xref" href="Furion.Configuration.html">Configuration</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Furion.Configuration.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>配置模块文件扫描器构建器</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class FileScannerConfigurationBuilder</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">FileScannerConfigurationBuilder</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder__ctor_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.#ctor*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder__ctor" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.#ctor">
+  FileScannerConfigurationBuilder()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>构造函数</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_DefaultOptional_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.DefaultOptional*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_DefaultOptional" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.DefaultOptional">
+  DefaultOptional
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>默认文件可选配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DefaultOptional { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_DefaultReloadDelay_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.DefaultReloadDelay*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_DefaultReloadDelay" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.DefaultReloadDelay">
+  DefaultReloadDelay
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>默认文件变更延迟刷新毫秒数配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int DefaultReloadDelay { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_DefaultReloadOnChange_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.DefaultReloadOnChange*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_DefaultReloadOnChange" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.DefaultReloadOnChange">
+  DefaultReloadOnChange
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>默认文件变更时刷新配置</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DefaultReloadOnChange { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_MaxDepth_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.MaxDepth*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_MaxDepth" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.MaxDepth">
+  MaxDepth
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>文件扫描最大深度</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint MaxDepth { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddBlacklistGlobbings_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddBlacklistGlobbings*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddBlacklistGlobbings_System_Collections_Generic_IEnumerable_System_String__" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddBlacklistGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+  AddBlacklistGlobbings(IEnumerable&lt;string&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件黑名单通配符</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddBlacklistGlobbings(IEnumerable&lt;string&gt; globbings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>globbings</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddBlacklistGlobbings_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddBlacklistGlobbings*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddBlacklistGlobbings_System_String___" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddBlacklistGlobbings(System.String[])">
+  AddBlacklistGlobbings(params string[])
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件黑名单通配符</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddBlacklistGlobbings(params string[] globbings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>globbings</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddConfigurationSources_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddConfigurationSources_System_String_System_Type_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources(System.String,System.Type)">
+  AddConfigurationSources(string, Type)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加配置文件处理程序</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddConfigurationSources(string extension, Type configurationSourceType)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>extension</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>文件拓展名</p>
+</dd>
+    <dt><code>configurationSourceType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.fileconfigurationsource">FileConfigurationSource</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddConfigurationSources_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddConfigurationSources__1_System_String_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddConfigurationSources``1(System.String)">
+  AddConfigurationSources&lt;TConfigurationSource&gt;(string)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加配置文件处理程序</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddConfigurationSources&lt;TConfigurationSource&gt;(string extension) where TConfigurationSource : FileConfigurationSource</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>extension</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>文件拓展名</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TConfigurationSource</code></dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.fileconfigurationsource">FileConfigurationSource</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddDirectories_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddDirectories*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddDirectories_System_Collections_Generic_IEnumerable_System_String__" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddDirectories(System.Collections.Generic.IEnumerable{System.String})">
+  AddDirectories(IEnumerable&lt;string&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件扫描的目录</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddDirectories(IEnumerable&lt;string&gt; directories)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>directories</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddDirectories_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddDirectories*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddDirectories_System_String___" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddDirectories(System.String[])">
+  AddDirectories(params string?[])
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件扫描的目录</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddDirectories(params string?[] directories)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>directories</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddFilter_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddFilter*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddFilter_System_Func_Furion_Configuration_FileConfigurationModel_System_Boolean__" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.FileConfigurationModel,System.Boolean})">
+  AddFilter(Func&lt;FileConfigurationModel, bool&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件配置模型过滤器</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddFilter(Func&lt;FileConfigurationModel, bool&gt; configure)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>configure</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Furion.Configuration.FileConfigurationModel.html">FileConfigurationModel</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func&lt;T, TResult&gt;</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddGlobbings_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddGlobbings_System_Collections_Generic_IEnumerable_System_String__" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+  AddGlobbings(IEnumerable&lt;string&gt;)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件通配符</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddGlobbings(IEnumerable&lt;string&gt; globbings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>globbings</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Furion_Configuration_FileScannerConfigurationBuilder_AddGlobbings_" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings*"></a>
+
+  <h3 id="Furion_Configuration_FileScannerConfigurationBuilder_AddGlobbings_System_String___" data-uid="Furion.Configuration.FileScannerConfigurationBuilder.AddGlobbings(System.String[])">
+  AddGlobbings(params string[])
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>添加文件通配符</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileScannerConfigurationBuilder AddGlobbings(params string[] globbings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>globbings</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd><p><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></dt>
+    <dd><p><a class="xref" href="Furion.Configuration.FileScannerConfigurationBuilder.html">FileScannerConfigurationBuilder</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

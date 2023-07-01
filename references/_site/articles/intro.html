@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>先知 </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="先知 ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h2 id="先知">先知</h2>
+
+<p>一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。</p>
+<hr>
+<h2 id="开发背景">开发背景</h2>
+<p>当前的 <strong><a href="https://gitee.com/dotnetchina/Furion/tree/v4/">Furion v4</a></strong> 版本已经变得成熟且稳定，但仍存在以下问题：</p>
+<ul>
+<li>早期开发进展迅速，很多代码存在仓促上线的情况，缺乏充分思考和考虑</li>
+<li>所有模块都包含在一个项目中，无法按需加载和安装</li>
+<li>过度使用静态类和静态内存存储，不利于进行单元测试和数据隔离</li>
+<li>对于 .NET Core 的掌握程度有限，导致历史代码臃肿且高度耦合</li>
+<li>代码架构和设计模式缺乏统一性，可以说是一个大杂烩</li>
+<li>在早期对用户需求掌握不足，导致后期不断打补丁来进行改进，稍有改动就可能引发破坏性的修改</li>
+<li>模块、类型、属性、方法、属性等命名混乱，很难从字面上理解其功能含义</li>
+<li>模块功能封装过度，配置参数繁杂</li>
+<li>框架示例混乱，用户只能自行摸索最佳实践</li>
+<li>虽有单元测试，但是非常混乱</li>
+</ul>
+<h2 id="技术选择">技术选择</h2>
+<p>Furion v5 版本采用 C# 12 和 .NET 8 进行开发。</p>
+<h2 id="开发团队">开发团队</h2>
+<p><a href="https://gitee.com/monksoul">百小僧</a>、百签科技（广东）有限公司</p>
+<h2 id="开发指导">开发指导</h2>
+<ul>
+<li>实现完全无第三方依赖（除微软官方提供外）</li>
+<li>实现彻底模块化，每个模块都是独立的项目</li>
+<li>每个模块的单元测试覆盖率要达到 92%以上</li>
+<li>确保每个类型、属性、字段、方法都有详细的注释</li>
+<li>尽可能避免使用静态内存存储</li>
+<li>所有模块都采用上下文和构建器模式进行设计</li>
+<li>所有模块都采用依赖注入/控制反转的设计模式</li>
+<li>所有模块都采用约定大于配置设计原则</li>
+<li>尽可能为每个模块提供看板功能</li>
+<li>提供所有模块最佳实践示例</li>
+</ul>
+<h2 id="模块状态">模块状态</h2>
+<table>
+<thead>
+<tr>
+<th>模块名称</th>
+<th>状态</th>
+<th>单元测试</th>
+<th>版本</th>
+<th>文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Core">Furion.Core</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.Core"><img src="https://img.shields.io/nuget/v/Furion.Core.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.DependencyInjection">Furion.DependencyInjection</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.DependencyInjection"><img src="https://img.shields.io/nuget/v/Furion.DependencyInjection.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.DependencyInjection.Named">Furion.DependencyInjection.Named</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.DependencyInjection.Named"><img src="https://img.shields.io/nuget/v/Furion.DependencyInjection.Named.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component">Furion.Component</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.Component"><img src="https://img.shields.io/nuget/v/Furion.Component.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.AspNetCore">Furion.Component.AspNetCore</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.Component.AspNetCore"><img src="https://img.shields.io/nuget/v/Furion.Component.AspNetCore.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Component.Hosting">Furion.Component.Hosting</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.Component.Hosting"><img src="https://img.shields.io/nuget/v/Furion.Component.Hosting.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration">Furion.Configuration</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.Configuration"><img src="https://img.shields.io/nuget/v/Furion.Configuration.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Configuration.ManifestResource">Furion.Configuration.ManifestResource</a></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.nuget.org/packages/Furion.Configuration.ManifestResource"><img src="https://img.shields.io/nuget/v/Furion.Configuration.ManifestResource.svg?cacheSeconds=10800" alt="nuget"></a></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Validation">Furion.Validation</a></td>
+<td>⏳</td>
+<td>⏳</td>
+<td></td>
+<td>⚠️</td>
+</tr>
+<tr>
+<td><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Validation.AspNetCore">Furion.Validation.AspNetCore</a></td>
+<td>⏳</td>
+<td>⏳</td>
+<td></td>
+<td>⚠️</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>状态说明</p>
+<table>
+<thead>
+<tr>
+<th>图标</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚠️</td>
+<td>待定</td>
+</tr>
+<tr>
+<td>⏳</td>
+<td>进行中</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>💔</td>
+<td>随时抛弃</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h2 id="赞助-furion">赞助 Furion</h2>
+<p>亲爱的用户，</p>
+<p>感谢您一直以来对我们开源项目的支持和关注！您的持续捐赠将极大地帮助我们推动项目的发展与改进。</p>
+<p>作为开源项目的作者，我们始终致力于提供优质的软件和服务，以满足用户的需求。然而，项目的开发和维护是一项耗费时间和资源的工作，您的捐赠能够为我们提供资金支持，帮助我们改进项目、扩大团队，并使我们能够持续地为您提供更好的体验和功能。</p>
+<p>您的每一份捐赠都将被用于项目的运营和发展，确保我们能够持续提供高质量、稳定可靠的软件服务。无论您选择捐赠多少，您的支持都将对我们意义重大，使我们能够更好地满足您的需求，同时也激励着我们不断前进。</p>
+<p>感谢您的慷慨捐助！如果您愿意给予您的支持，请点击以下链接进行捐赠：</p>
+<p><a href="http://furion.baiqian.ltd/docs/donate">捐赠链接</a></p>
+<p>再次向您表达我们最衷心的感激之情，期待继续为您提供更好的软件和服务！</p>
+<p>最诚挚的问候，</p>
+<p><a href="https://gitee.com/monksoul">百小僧</a>
+<br>
+<a href="https://furion.net/">Furion 开发团队</a></p>
+<h2 id="协议">协议</h2>
+<p><a href="https://gitee.com/dotnetchina/Furion/tree/v5-dev/">Furion</a> 采用 <a href="https://gitee.com/dotnetchina/Furion/blob/v5-dev/%E8%AE%B8%E5%8F%AF%E8%AF%81">MIT</a> 开源协议。</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
