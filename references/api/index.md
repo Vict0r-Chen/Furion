@@ -1,5 +1,5 @@
 # Furion
 
 ```bash
-docfx references/docfx.json --serve
+docfx docfx.json --serve
 ```
