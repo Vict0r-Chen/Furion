@@ -46,4 +46,15 @@ internal sealed class CoreOptions
 
         return (TOptions)_optionsInstances[optionsType];
     }
+
+    /// <summary>
+    /// 移除子选项实例
+    /// </summary>
+    /// <typeparam name="TOptions">选项类型</typeparam>
+    internal void Remove<TOptions>()
+        where TOptions : class, new()
+    {
+        var optionsType = typeof(TOptions);
+        _ = _optionsInstances.TryRemove(optionsType, out _);
+    }
 }

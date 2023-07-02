@@ -351,5 +351,11 @@
             <typeparam name="TOptions">选项类型</typeparam>
             <returns><typeparamref name="TOptions"/></returns>
         </member>
+        <member name="M:Furion.CoreOptions.Remove``1">
+            <summary>
+            移除子选项实例
+            </summary>
+            <typeparam name="TOptions">选项类型</typeparam>
+        </member>
     </members>
 </doc>

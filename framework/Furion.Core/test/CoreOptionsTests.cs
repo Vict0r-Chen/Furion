@@ -55,4 +55,25 @@ public class CoreOptionsTests
         var coreOptions = new CoreOptions();
         Assert.NotNull(coreOptions._optionsInstances);
     }
+
+    [Fact]
+    public void Remove_NotExists_ReturnOK()
+    {
+        var coreOptions = new CoreOptions();
+        coreOptions.Remove<ChildOptions>();
+        Assert.Empty(coreOptions._optionsInstances);
+    }
+
+    [Fact]
+    public void Remove_Exists_WithNotAdd()
+    {
+        var coreOptions = new CoreOptions();
+        var childOptions = coreOptions.Get<ChildOptions>();
+
+        Assert.NotNull(childOptions);
+        Assert.Single(coreOptions._optionsInstances);
+
+        coreOptions.Remove<ChildOptions>();
+        Assert.Empty(coreOptions._optionsInstances);
+    }
 }
