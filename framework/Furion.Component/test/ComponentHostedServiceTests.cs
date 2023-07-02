@@ -22,16 +22,16 @@ public class ComponentHostedServiceTests
         var services = new ServiceCollection();
         services.AddComponentCore();
 
-        Assert.NotNull(services.FirstOrDefault(s => s.ImplementationType == typeof(ComponentHostedService)));
+        Assert.NotNull(services.FirstOrDefault(s => s.ImplementationType == typeof(ComponentReleaserHostedService)));
 
         var coreOptions = services.GetCoreOptions();
         var componentOptions = coreOptions.Get<ComponentOptions>();
         Assert.Single(coreOptions._optionsInstances);
 
-        var componentHostedService = new ComponentHostedService(coreOptions);
+        var componentReleaserHostedService = new ComponentReleaserHostedService(coreOptions);
 
         using var cancellationTokenSource = new CancellationTokenSource();
-        await componentHostedService.StartAsync(cancellationTokenSource.Token);
+        await componentReleaserHostedService.StartAsync(cancellationTokenSource.Token);
 
         Assert.Empty(coreOptions._optionsInstances);
     }
@@ -42,15 +42,15 @@ public class ComponentHostedServiceTests
         var services = new ServiceCollection();
         services.AddComponentCore();
 
-        Assert.NotNull(services.FirstOrDefault(s => s.ImplementationType == typeof(ComponentHostedService)));
+        Assert.NotNull(services.FirstOrDefault(s => s.ImplementationType == typeof(ComponentReleaserHostedService)));
 
         var coreOptions = services.GetCoreOptions();
         var componentOptions = coreOptions.Get<ComponentOptions>();
         Assert.Single(coreOptions._optionsInstances);
 
-        var componentHostedService = new ComponentHostedService(coreOptions);
+        var componentReleaserHostedService = new ComponentReleaserHostedService(coreOptions);
 
         using var cancellationTokenSource = new CancellationTokenSource();
-        await componentHostedService.StopAsync(cancellationTokenSource.Token);
+        await componentReleaserHostedService.StopAsync(cancellationTokenSource.Token);
     }
 }

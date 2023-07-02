@@ -15,10 +15,10 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块主机服务
+/// 组件模块对象释放器主机服务
 /// </summary>
 /// <remarks>作用于主机启动后移除组件模块的内存占用</remarks>
-internal sealed class ComponentHostedService : IHostedService
+internal sealed class ComponentReleaserHostedService : IHostedService
 {
     /// <inheritdoc cref="CoreOptions"/>
     private readonly CoreOptions _coreOptions;
@@ -26,8 +26,8 @@ internal sealed class ComponentHostedService : IHostedService
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="coreOptions">核心模块选项</param>
-    public ComponentHostedService(CoreOptions coreOptions)
+    /// <param name="coreOptions"><see cref="CoreOptions"/></param>
+    public ComponentReleaserHostedService(CoreOptions coreOptions)
     {
         _coreOptions = coreOptions;
     }

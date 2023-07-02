@@ -834,25 +834,25 @@
             <param name="predicate">自定义配置委托</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="T:Furion.Component.ComponentHostedService">
+        <member name="T:Furion.Component.ComponentReleaserHostedService">
             <summary>
-            组件模块主机服务
+            组件模块对象释放器主机服务
             </summary>
             <remarks>作用于主机启动后移除组件模块的内存占用</remarks>
         </member>
-        <member name="F:Furion.Component.ComponentHostedService._coreOptions">
+        <member name="F:Furion.Component.ComponentReleaserHostedService._coreOptions">
             <inheritdoc cref="T:Furion.CoreOptions"/>
         </member>
-        <member name="M:Furion.Component.ComponentHostedService.#ctor(Furion.CoreOptions)">
+        <member name="M:Furion.Component.ComponentReleaserHostedService.#ctor(Furion.CoreOptions)">
             <summary>
             构造函数
             </summary>
-            <param name="coreOptions">核心模块选项</param>
+            <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentHostedService.StartAsync(System.Threading.CancellationToken)">
+        <member name="M:Furion.Component.ComponentReleaserHostedService.StartAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Component.ComponentHostedService.StopAsync(System.Threading.CancellationToken)">
+        <member name="M:Furion.Component.ComponentReleaserHostedService.StopAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Component.Topological">
