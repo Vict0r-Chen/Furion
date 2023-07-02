@@ -4,5 +4,155 @@
         <name>Furion.Reflection</name>
     </assembly>
     <members>
+        <member name="T:Furion.Reflection.DispatchProxyDecorator">
+            <summary>
+            <see cref="T:System.Reflection.DispatchProxy"/> 装饰器
+            </summary>
+            <remarks>用于生成接口代理</remarks>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.Reflection.DispatchProxyDecorator.Target">
+            <summary>
+            目标实例对象
+            </summary>
+        </member>
+        <member name="P:Furion.Reflection.DispatchProxyDecorator.Properties">
+            <summary>
+            额外数据
+            </summary>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.Decorate(System.Type,System.Type,System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <param name="interfaceType">接口类型</param>
+            <param name="proxyType"><see cref="T:Furion.Reflection.DispatchProxyDecorator"/> 类型</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.Decorate``1(System.Type,``0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <typeparam name="TService">接口类型</typeparam>
+            <param name="proxyType"><see cref="T:Furion.Reflection.DispatchProxyDecorator"/> 类型</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.Decorate``2(``0,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            生成代理装饰类
+            </summary>
+            <typeparam name="TService">接口类型</typeparam>
+            <typeparam name="TProxy"><see cref="T:Furion.Reflection.DispatchProxyDecorator"/> 类型</typeparam>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+            <returns><typeparamref name="TService"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.Invoke(Furion.Reflection.Invocation)">
+            <summary>
+            同步拦截
+            </summary>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.InvokeAsync(Furion.Reflection.Invocation)">
+            <summary>
+            异步无返回值拦截
+            </summary>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.InvokeAsync``1(Furion.Reflection.Invocation)">
+            <summary>
+            异步带返回值拦截
+            </summary>
+            <typeparam name="T">返回值类型</typeparam>
+            <returns><typeparamref name="T"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.DispatchProxyDecorator.Invoke(System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            重写拦截调用方法
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">方法传递参数</param>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="F:Furion.Reflection.DispatchProxyDecorator._invokeAsyncOfTMethod">
+            <summary>
+            <see cref="M:Furion.Reflection.DispatchProxyDecorator.InvokeAsync``1(Furion.Reflection.Invocation)"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Reflection.Invocation">
+            <summary>
+            代理方法调用器
+            </summary>
+            <remarks>负责动态调用方法</remarks>
+        </member>
+        <member name="M:Furion.Reflection.Invocation.#ctor(System.Reflection.MethodInfo,System.Object[],System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">调用参数</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
+        </member>
+        <member name="P:Furion.Reflection.Invocation.Target">
+            <summary>
+            目标实例对象
+            </summary>
+        </member>
+        <member name="P:Furion.Reflection.Invocation.Method">
+            <summary>
+            被代理方法
+            </summary>
+        </member>
+        <member name="P:Furion.Reflection.Invocation.TargetMethod">
+            <summary>
+            接口方法
+            </summary>
+        </member>
+        <member name="P:Furion.Reflection.Invocation.Args">
+            <summary>
+            调用参数
+            </summary>
+        </member>
+        <member name="P:Furion.Reflection.Invocation.Properties">
+            <summary>
+            额外数据
+            </summary>
+        </member>
+        <member name="M:Furion.Reflection.Invocation.Proceed">
+            <summary>
+            调用同步方法
+            </summary>
+            <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.Invocation.ProceedAsync">
+            <summary>
+            调用异步方法
+            </summary>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.Invocation.ProceedAsync``1">
+            <summary>
+            调用异步方法带返回值
+            </summary>
+            <typeparam name="T">泛型值</typeparam>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="M:Furion.Reflection.Invocation.GetRealMethod(System.Reflection.MethodInfo,System.Object)">
+            <summary>
+            解析真实的方法对象
+            </summary>
+            <param name="targetMethod">接口方法</param>
+            <param name="target">目标实例对象</param>
+            <returns><see cref="T:System.Reflection.MethodInfo"/></returns>
+        </member>
     </members>
 </doc>
