@@ -87,7 +87,7 @@
             <summary>
             构建模块服务
             </summary>
-            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
+            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</returns>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Release">
             <summary>

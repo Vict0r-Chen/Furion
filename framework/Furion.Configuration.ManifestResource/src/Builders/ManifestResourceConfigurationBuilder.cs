@@ -163,7 +163,7 @@ public sealed class ManifestResourceConfigurationBuilder
     /// <summary>
     /// 构建模块服务
     /// </summary>
-    /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
+    /// <returns><see cref="ManifestResourceConfigurationModel"/> 集合</returns>
     internal List<ManifestResourceConfigurationModel> Build()
     {
         // 扫描程序集并创建嵌入资源配置文件模型
@@ -198,7 +198,8 @@ public sealed class ManifestResourceConfigurationBuilder
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
         // 查找程序集中匹配的嵌入资源配置文件并创建嵌入资源配置文件模型
-        var manifestResourceConfigurationModels = _assemblies.SelectMany(assembly => assembly.GetManifestResourceNames()
+        var manifestResourceConfigurationModels = _assemblies
+            .SelectMany(assembly => assembly.GetManifestResourceNames()
                 .Where(resource => matcher.Match(resource).HasMatches)
                 .Select(resource => new ManifestResourceConfigurationModel(assembly, resource))
                 .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model)))
