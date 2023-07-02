@@ -37,7 +37,7 @@ public class ComponentServiceCollectionExtensionsTests
 
         services.AddComponentCore(componentBuilder);
 
-        Assert.Single(services);
+        Assert.Equal(2, services.Count);
         Assert.Equal("Furion.CoreOptions", services.First().ServiceType.FullName);
 
         var componentOptions = services.GetComponentOptions();
@@ -58,7 +58,7 @@ public class ComponentServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         services.AddComponentCore();
 
-        Assert.Single(services);
+        Assert.Equal(2, services.Count);
         Assert.Equal("Furion.CoreOptions", services.First().ServiceType.FullName);
 
         var componentOptions = services.GetComponentOptions();
@@ -74,7 +74,7 @@ public class ComponentServiceCollectionExtensionsTests
             builder.SuppressDuplicateCall = false;
         });
 
-        Assert.Single(services);
+        Assert.Equal(2, services.Count);
         Assert.Equal("Furion.CoreOptions", services.First().ServiceType.FullName);
 
         var componentOptions = services.GetComponentOptions();

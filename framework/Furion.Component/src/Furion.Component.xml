@@ -834,6 +834,45 @@
             <param name="predicate">自定义配置委托</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
+        <member name="T:Furion.Component.HostApplicationLifetimeEventsHostedService">
+            <summary>
+            主机生存期事件服务实现
+            </summary>
+        </member>
+        <member name="F:Furion.Component.HostApplicationLifetimeEventsHostedService._hostApplicationLifetime">
+            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostApplicationLifetime"/>
+        </member>
+        <member name="F:Furion.Component.HostApplicationLifetimeEventsHostedService._coreOptions">
+            <inheritdoc cref="T:Furion.CoreOptions"/>
+        </member>
+        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.#ctor(Microsoft.Extensions.Hosting.IHostApplicationLifetime,Furion.CoreOptions)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="hostApplicationLifetime"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationLifetime"/></param>
+            <param name="coreOptions">核心模块选项</param>
+        </member>
+        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.StopAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.OnStarted">
+            <summary>
+            主机正常启动时触发
+            </summary>
+        </member>
+        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.OnStopping">
+            <summary>
+            主机正常准备停止时触发
+            </summary>
+        </member>
+        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.OnStopped">
+            <summary>
+            主机正常停止时触发
+            </summary>
+        </member>
         <member name="T:Furion.Component.Topological">
             <summary>
             拓扑算法
