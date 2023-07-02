@@ -83,7 +83,7 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <summary>
     /// 文件扫描最大深度
     /// </summary>
-    public uint MaxDepth { get; set; }
+    public uint MaxScanDepth { get; set; }
 
     /// <summary>
     /// 默认文件可选配置
@@ -322,7 +322,7 @@ public sealed partial class FileScannerConfigurationBuilder
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
         // 扫描目录配置文件
-        var files = _directories.SelectMany(directory => ScanDirectory(directory, MaxDepth, matcher))
+        var files = _directories.SelectMany(directory => ScanDirectory(directory, MaxScanDepth, matcher))
                                                  .Distinct(StringComparer.OrdinalIgnoreCase)
                                                  .Except(filesExists, StringComparer.OrdinalIgnoreCase);
 
@@ -424,10 +424,10 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 执行目录扫描，返回符合匹配条件的文件路径列表
     /// </summary>
     /// <param name="folderPath">要扫描的目录路径</param>
-    /// <param name="maxDepth">文件扫描的最大深度，默认 0</param>
+    /// <param name="maxScanDepth">文件扫描的最大深度，默认 0</param>
     /// <param name="matcher">可选的文件通配符匹配对象</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<string> ScanDirectory(string folderPath, uint maxDepth = 0, Matcher? matcher = null)
+    internal static List<string> ScanDirectory(string folderPath, uint maxScanDepth = 0, Matcher? matcher = null)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(folderPath, nameof(folderPath));
@@ -456,7 +456,7 @@ public sealed partial class FileScannerConfigurationBuilder
             files.AddRange(matchFiles);
 
             // 如果已经达到最大深度则跳过当前目录的子目录
-            if (currentDepth >= maxDepth)
+            if (currentDepth >= maxScanDepth)
             {
                 continue;
             }

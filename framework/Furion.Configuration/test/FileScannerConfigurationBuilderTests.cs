@@ -55,7 +55,7 @@ public class FileScannerConfigurationBuilderTests
         Assert.Equal(typeof(IniConfigurationSource), fileScannerConfigurationBuilder._fileConfigurationSources.Values.ElementAt(2));
 
         Assert.Null(fileScannerConfigurationBuilder._filterConfigure);
-        Assert.Equal((uint)0, fileScannerConfigurationBuilder.MaxDepth);
+        Assert.Equal((uint)0, fileScannerConfigurationBuilder.MaxScanDepth);
 
         Assert.True(fileScannerConfigurationBuilder.DefaultOptional);
         Assert.True(fileScannerConfigurationBuilder.DefaultReloadOnChange);
@@ -363,12 +363,12 @@ public class FileScannerConfigurationBuilderTests
     [InlineData(3, 4)]
     [InlineData(4, 4)]
     [InlineData(1000, 4)]
-    public void ScanDirectory_With_MaxDepth(uint maxDepth, int count)
+    public void ScanDirectory_With_MaxScanDepth(uint maxScanDepth, int count)
     {
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
         Assert.True(Directory.Exists(filePath));
 
-        var files = FileScannerConfigurationBuilder.ScanDirectory(filePath, maxDepth);
+        var files = FileScannerConfigurationBuilder.ScanDirectory(filePath, maxScanDepth);
         Assert.NotEmpty(files);
         Assert.Equal(count, files.Count);
     }
@@ -429,7 +429,7 @@ public class FileScannerConfigurationBuilderTests
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
         {
-            MaxDepth = 1
+            MaxScanDepth = 1
         };
         fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
 
@@ -456,7 +456,7 @@ public class FileScannerConfigurationBuilderTests
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
         {
-            MaxDepth = 1
+            MaxScanDepth = 1
         };
         fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
         fileScannerConfigurationBuilder.AddFilter(model =>
@@ -491,7 +491,7 @@ public class FileScannerConfigurationBuilderTests
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
         {
-            MaxDepth = 1
+            MaxScanDepth = 1
         };
         fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
         fileScannerConfigurationBuilder.AddGlobbings("*.xml");
@@ -520,7 +520,7 @@ public class FileScannerConfigurationBuilderTests
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
         {
-            MaxDepth = 1
+            MaxScanDepth = 1
         };
         fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
 
@@ -573,7 +573,7 @@ public class FileScannerConfigurationBuilderTests
 
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
         {
-            MaxDepth = 1
+            MaxScanDepth = 1
         };
         fileScannerConfigurationBuilder.AddDirectories(configsFilePath, folder1FilePath);
 

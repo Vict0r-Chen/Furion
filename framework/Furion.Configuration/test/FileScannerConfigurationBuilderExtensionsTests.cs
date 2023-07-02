@@ -40,7 +40,7 @@ public class FileScannerConfigurationBuilderExtensionsTests
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.AddFileScanner(builder =>
         {
-            builder.MaxDepth = 10;
+            builder.MaxScanDepth = 10;
         });
 
         Assert.True(configurationBuilder.Sources.Count > 0);
@@ -52,7 +52,7 @@ public class FileScannerConfigurationBuilderExtensionsTests
         var configurationBuilder = new ConfigurationBuilder();
         var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
         {
-            MaxDepth = 10
+            MaxScanDepth = 10
         };
         configurationBuilder.AddFileScanner(fileScannerConfigurationBuilder);
 
