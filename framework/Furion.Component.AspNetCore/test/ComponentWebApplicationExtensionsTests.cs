@@ -32,21 +32,21 @@ public class ComponentWebApplicationExtensionsTests
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var componentBuilder = new WebComponentBuilder()
         {
-            SuppressDuplicateCall = false
+            SuppressDuplicateInvoke = false
         };
 
         webApplication.UseComponentCore(componentBuilder);
 
         var componentOptions = webApplication.GetComponentOptions();
         Assert.Equal(2, componentOptions.PropsActions.Count);
-        Assert.False(componentOptions.SuppressDuplicateCallForWeb);
+        Assert.False(componentOptions.SuppressDuplicateInvokeForWeb);
 
         var action = componentOptions.GetPropsAction<WebComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new WebComponentBuilder();
         action(builder);
-        Assert.False(builder.SuppressDuplicateCall);
+        Assert.False(builder.SuppressDuplicateInvoke);
     }
 
     [Fact]
@@ -65,19 +65,19 @@ public class ComponentWebApplicationExtensionsTests
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         webApplication.UseComponentCore(builder =>
         {
-            builder.SuppressDuplicateCall = false;
+            builder.SuppressDuplicateInvoke = false;
         });
 
         var componentOptions = webApplication.GetComponentOptions();
         Assert.Equal(2, componentOptions.PropsActions.Count);
-        Assert.False(componentOptions.SuppressDuplicateCallForWeb);
+        Assert.False(componentOptions.SuppressDuplicateInvokeForWeb);
 
         var action = componentOptions.GetPropsAction<WebComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new WebComponentBuilder();
         action(builder);
-        Assert.False(builder.SuppressDuplicateCall);
+        Assert.False(builder.SuppressDuplicateInvoke);
     }
 
     [Fact]
@@ -141,7 +141,7 @@ public class ComponentWebApplicationExtensionsTests
 
         webApplication.UseComponentCore(builder =>
         {
-            builder.SuppressDuplicateCall = false;
+            builder.SuppressDuplicateInvoke = false;
         });
         webApplication.UseComponent(dependencies);
         var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();

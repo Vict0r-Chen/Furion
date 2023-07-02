@@ -31,7 +31,7 @@ internal sealed class ComponentOptions
     public ComponentOptions()
     {
         PropsActions ??= new();
-        CallRecords ??= new();
+        InvokeRecords ??= new();
 
         _GetPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
             , 1
@@ -50,28 +50,28 @@ internal sealed class ComponentOptions
     /// 组件调用记录
     /// </summary>
     /// <remarks>作用于组件重复调用检查</remarks>
-    internal ConcurrentBag<string> CallRecords { get; init; }
+    internal ConcurrentBag<string> InvokeRecords { get; init; }
 
     /// <summary>
     /// 禁用组件重复调用
     /// </summary>
-    internal bool SuppressDuplicateCall { get; set; } = true;
+    internal bool SuppressDuplicateInvoke { get; set; } = true;
 
     /// <summary>
     /// 禁用 Web 组件重复调用
     /// </summary>
-    internal bool SuppressDuplicateCallForWeb { get; set; } = true;
+    internal bool SuppressDuplicateInvokeForWeb { get; set; } = true;
 
     /// <summary>
-    /// SuppressDuplicateCall[ForWeb] 属性索引
+    /// SuppressDuplicateInvoke[ForWeb] 属性索引
     /// </summary>
     /// <param name="propName">属性名</param>
     /// <returns><see cref="bool"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
     internal bool this[string propName] => propName switch
     {
-        nameof(SuppressDuplicateCall) => SuppressDuplicateCall,
-        nameof(SuppressDuplicateCallForWeb) => SuppressDuplicateCallForWeb,
+        nameof(SuppressDuplicateInvoke) => SuppressDuplicateInvoke,
+        nameof(SuppressDuplicateInvokeForWeb) => SuppressDuplicateInvokeForWeb,
         _ => throw new InvalidOperationException("Unsupported property name index.")
     };
 
@@ -108,5 +108,14 @@ internal sealed class ComponentOptions
     {
         return _GetPropsActionMethod.MakeGenericMethod(propsType)
                                     .Invoke(this, null) as Delegate;
+    }
+
+    /// <summary>
+    /// 释放对象
+    /// </summary>
+    internal void Release()
+    {
+        PropsActions.Clear();
+        InvokeRecords.Clear();
     }
 }

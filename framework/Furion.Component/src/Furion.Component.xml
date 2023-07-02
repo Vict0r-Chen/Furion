@@ -588,7 +588,7 @@
             构造函数
             </summary>
         </member>
-        <member name="P:Furion.Component.ComponentBuilder.SuppressDuplicateCall">
+        <member name="P:Furion.Component.ComponentBuilder.SuppressDuplicateInvoke">
             <summary>
             禁用组件重复调用
             </summary>
@@ -834,44 +834,25 @@
             <param name="predicate">自定义配置委托</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="T:Furion.Component.HostApplicationLifetimeEventsHostedService">
+        <member name="T:Furion.Component.ComponentHostedService">
             <summary>
-            主机生存期事件服务实现
+            组件主机服务
             </summary>
         </member>
-        <member name="F:Furion.Component.HostApplicationLifetimeEventsHostedService._hostApplicationLifetime">
-            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostApplicationLifetime"/>
-        </member>
-        <member name="F:Furion.Component.HostApplicationLifetimeEventsHostedService._coreOptions">
+        <member name="F:Furion.Component.ComponentHostedService._coreOptions">
             <inheritdoc cref="T:Furion.CoreOptions"/>
         </member>
-        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.#ctor(Microsoft.Extensions.Hosting.IHostApplicationLifetime,Furion.CoreOptions)">
+        <member name="M:Furion.Component.ComponentHostedService.#ctor(Furion.CoreOptions)">
             <summary>
             构造函数
             </summary>
-            <param name="hostApplicationLifetime"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationLifetime"/></param>
             <param name="coreOptions">核心模块选项</param>
         </member>
-        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.StartAsync(System.Threading.CancellationToken)">
+        <member name="M:Furion.Component.ComponentHostedService.StartAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.StopAsync(System.Threading.CancellationToken)">
+        <member name="M:Furion.Component.ComponentHostedService.StopAsync(System.Threading.CancellationToken)">
             <inheritdoc />
-        </member>
-        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.OnStarted">
-            <summary>
-            主机正常启动时触发
-            </summary>
-        </member>
-        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.OnStopping">
-            <summary>
-            主机正常准备停止时触发
-            </summary>
-        </member>
-        <member name="M:Furion.Component.HostApplicationLifetimeEventsHostedService.OnStopped">
-            <summary>
-            主机正常停止时触发
-            </summary>
         </member>
         <member name="T:Furion.Component.Topological">
             <summary>
@@ -932,25 +913,25 @@
             组件配置委托集合
             </summary>
         </member>
-        <member name="P:Furion.Component.ComponentOptions.CallRecords">
+        <member name="P:Furion.Component.ComponentOptions.InvokeRecords">
             <summary>
             组件调用记录
             </summary>
             <remarks>作用于组件重复调用检查</remarks>
         </member>
-        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCall">
+        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateInvoke">
             <summary>
             禁用组件重复调用
             </summary>
         </member>
-        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateCallForWeb">
+        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateInvokeForWeb">
             <summary>
             禁用 Web 组件重复调用
             </summary>
         </member>
         <member name="P:Furion.Component.ComponentOptions.Item(System.String)">
             <summary>
-            SuppressDuplicateCall[ForWeb] 属性索引
+            SuppressDuplicateInvoke[ForWeb] 属性索引
             </summary>
             <param name="propName">属性名</param>
             <returns><see cref="T:System.Boolean"/></returns>
@@ -969,6 +950,11 @@
             </summary>
             <param name="propsType">组件配置类型</param>
             <returns><see cref="T:System.Delegate"/></returns>
+        </member>
+        <member name="M:Furion.Component.ComponentOptions.Release">
+            <summary>
+            释放对象
+            </summary>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>

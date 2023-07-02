@@ -99,7 +99,7 @@ public class ComponentBaseTests
         Assert.Equal(typeof(AComponent), list[3].GetType());
 
         // 避免引发重复调用检查
-        componentContext.Options.CallRecords.Clear();
+        componentContext.Options.InvokeRecords.Clear();
         var list2 = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalPredicate: ComponentBase.IsWebComponent);
         Assert.NotNull(list2);
 

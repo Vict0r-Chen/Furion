@@ -30,7 +30,7 @@ public sealed class ComponentBuilder : ComponentBuilderBase
     /// <summary>
     /// 禁用组件重复调用
     /// </summary>
-    public bool SuppressDuplicateCall { get; set; } = true;
+    public bool SuppressDuplicateInvoke { get; set; } = true;
 
     /// <inheritdoc />
     internal override void Build(IServiceCollection services)
@@ -38,12 +38,12 @@ public sealed class ComponentBuilder : ComponentBuilderBase
         // 添加组件模块自身配置
         Props<ComponentBuilder>(builder =>
         {
-            builder.SuppressDuplicateCall = SuppressDuplicateCall;
+            builder.SuppressDuplicateInvoke = SuppressDuplicateInvoke;
         });
 
         // 添加组件配置
         var componentOptions = services.GetComponentOptions();
-        componentOptions.SuppressDuplicateCall = SuppressDuplicateCall;
+        componentOptions.SuppressDuplicateInvoke = SuppressDuplicateInvoke;
 
         base.Build(services);
     }

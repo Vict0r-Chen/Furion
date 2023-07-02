@@ -24,7 +24,7 @@ public class ComponentBuilderTests
         Assert.NotNull(componentBuilder);
         Assert.NotNull(componentBuilder._propsActions);
         Assert.Empty(componentBuilder._propsActions);
-        Assert.True(componentBuilder.SuppressDuplicateCall);
+        Assert.True(componentBuilder.SuppressDuplicateInvoke);
 
         var componentBuilderBase = new ComponentBuilderBase();
         Assert.NotNull(componentBuilderBase);
@@ -78,7 +78,7 @@ public class ComponentBuilderTests
     {
         var componentBuilder = new ComponentBuilder
         {
-            SuppressDuplicateCall = false
+            SuppressDuplicateInvoke = false
         };
         var services = new ServiceCollection();
 
@@ -86,7 +86,7 @@ public class ComponentBuilderTests
         var componentOptions = services.GetComponentOptions();
 
         Assert.Empty(componentBuilder._propsActions);
-        Assert.Equal(componentBuilder.SuppressDuplicateCall, componentOptions.SuppressDuplicateCall);
+        Assert.Equal(componentBuilder.SuppressDuplicateInvoke, componentOptions.SuppressDuplicateInvoke);
         Assert.Single(componentOptions.PropsActions);
         Assert.Equal(typeof(ComponentBuilder), componentOptions.PropsActions.Keys.First());
 
@@ -95,6 +95,6 @@ public class ComponentBuilderTests
 
         var options = new ComponentBuilder();
         action(options);
-        Assert.Equal(componentBuilder.SuppressDuplicateCall, options.SuppressDuplicateCall);
+        Assert.Equal(componentBuilder.SuppressDuplicateInvoke, options.SuppressDuplicateInvoke);
     }
 }

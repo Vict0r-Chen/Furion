@@ -15,34 +15,28 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 主机生存期事件服务实现
+/// 组件主机服务
 /// </summary>
-internal sealed class HostApplicationLifetimeEventsHostedService : IHostedService
+internal sealed class ComponentHostedService : IHostedService
 {
-    /// <inheritdoc cref="IHostApplicationLifetime"/>
-    private readonly IHostApplicationLifetime _hostApplicationLifetime;
-
     /// <inheritdoc cref="CoreOptions"/>
     private readonly CoreOptions _coreOptions;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="hostApplicationLifetime"><see cref="IHostApplicationLifetime"/></param>
     /// <param name="coreOptions">核心模块选项</param>
-    public HostApplicationLifetimeEventsHostedService(IHostApplicationLifetime hostApplicationLifetime
-        , CoreOptions coreOptions)
+    public ComponentHostedService(CoreOptions coreOptions)
     {
-        _hostApplicationLifetime = hostApplicationLifetime;
         _coreOptions = coreOptions;
     }
 
     /// <inheritdoc />
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _hostApplicationLifetime.ApplicationStarted.Register(OnStarted);
-        _hostApplicationLifetime.ApplicationStopping.Register(OnStopping);
-        _hostApplicationLifetime.ApplicationStopped.Register(OnStopped);
+        // 释放组件配置选项内存占用
+        _coreOptions.Get<ComponentOptions>().Release();
+        _coreOptions.Remove<ComponentOptions>();
 
         return Task.CompletedTask;
     }
@@ -51,27 +45,5 @@ internal sealed class HostApplicationLifetimeEventsHostedService : IHostedServic
     public Task StopAsync(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
-    }
-
-    /// <summary>
-    /// 主机正常启动时触发
-    /// </summary>
-    private void OnStarted()
-    {
-        _coreOptions.Remove<ComponentOptions>();
-    }
-
-    /// <summary>
-    /// 主机正常准备停止时触发
-    /// </summary>
-    private void OnStopping()
-    {
-    }
-
-    /// <summary>
-    /// 主机正常停止时触发
-    /// </summary>
-    private void OnStopped()
-    {
     }
 }

@@ -71,7 +71,7 @@ public abstract class ComponentBase
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="predicate">自定义过滤委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> CreateTopological(Type componentType, Func<Type, bool>? predicate = null)
+    internal static List<Type> CreateTopological(Type componentType, Func<Type, bool>? predicate = null)
     {
         return CreateTopological(CreateDependencies(componentType), predicate);
     }
@@ -82,7 +82,7 @@ public abstract class ComponentBase
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="predicate">自定义过滤委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    public static List<Type> CreateTopological(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
+    internal static List<Type> CreateTopological(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
     {
         // 检查组件依赖关系集合有效性
         CheckDependencies(dependencies);
@@ -101,7 +101,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
-    public static Dictionary<Type, Type[]> CreateDependencies(Type componentType)
+    internal static Dictionary<Type, Type[]> CreateDependencies(Type componentType)
     {
         // 检查组件类型合法性
         Check(componentType);
@@ -145,7 +145,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <exception cref="InvalidOperationException"></exception>
-    public static void CheckDependencies(Dictionary<Type, Type[]> dependencies)
+    internal static void CheckDependencies(Dictionary<Type, Type[]> dependencies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
@@ -178,7 +178,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <returns><see cref="bool"/></returns>
-    public static bool IsWebComponent(Type componentType)
+    internal static bool IsWebComponent(Type componentType)
     {
         var baseType = componentType.BaseType;
 
@@ -193,7 +193,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public static void Check(Type componentType)
+    internal static void Check(Type componentType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(componentType, nameof(componentType));
@@ -344,9 +344,9 @@ public abstract class ComponentBase
         var componentOptions = componentContext.Options;
 
         // 组件重复调用检查标识
-        var suppressDuplicateCall = typeof(TTargetComponent).FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
-            ? nameof(ComponentOptions.SuppressDuplicateCallForWeb)
-            : nameof(ComponentOptions.SuppressDuplicateCall);
+        var suppressDuplicateInvoke = typeof(TTargetComponent).FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
+            ? nameof(ComponentOptions.SuppressDuplicateInvokeForWeb)
+            : nameof(ComponentOptions.SuppressDuplicateInvoke);
 
         // 存储未激活的且只有自身依赖的组件类型
         var inactiveComponents = new List<Type>();
@@ -364,16 +364,16 @@ public abstract class ComponentBase
 
             // 组件重复调用检测
             var recordName = componentType.FullName + $" (Type '{typeof(TTargetComponent).Name}')";
-            if (componentOptions[suppressDuplicateCall])
+            if (componentOptions[suppressDuplicateInvoke])
             {
-                if (componentOptions.CallRecords.Any(t => t == recordName))
+                if (componentOptions.InvokeRecords.Any(t => t == recordName))
                 {
                     // 输出调试事件
                     Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
                     continue;
                 }
 
-                componentOptions.CallRecords.Add(recordName);
+                componentOptions.InvokeRecords.Add(recordName);
             }
 
             // 创建组件实例

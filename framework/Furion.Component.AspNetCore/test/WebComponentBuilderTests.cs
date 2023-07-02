@@ -24,7 +24,7 @@ public class WebWebComponentBuilderTests
         Assert.NotNull(webComponentBuilder);
         Assert.NotNull(webComponentBuilder._propsActions);
         Assert.Empty(webComponentBuilder._propsActions);
-        Assert.True(webComponentBuilder.SuppressDuplicateCall);
+        Assert.True(webComponentBuilder.SuppressDuplicateInvoke);
 
         var webComponentBuilderBase = new WebComponentBuilderBase();
         Assert.NotNull(webComponentBuilderBase);
@@ -78,7 +78,7 @@ public class WebWebComponentBuilderTests
     {
         var webComponentBuilder = new WebComponentBuilder
         {
-            SuppressDuplicateCall = false
+            SuppressDuplicateInvoke = false
         };
         var services = new ServiceCollection();
         var webApplicationBuilder = WebApplication.CreateBuilder().AddComponentCore();
@@ -88,7 +88,7 @@ public class WebWebComponentBuilderTests
         var componentOptions = webApplication.GetComponentOptions();
 
         Assert.Empty(webComponentBuilder._propsActions);
-        Assert.Equal(webComponentBuilder.SuppressDuplicateCall, componentOptions.SuppressDuplicateCallForWeb);
+        Assert.Equal(webComponentBuilder.SuppressDuplicateInvoke, componentOptions.SuppressDuplicateInvokeForWeb);
         Assert.Equal(2, componentOptions.PropsActions.Count);
         Assert.Equal(typeof(ComponentBuilder), componentOptions.PropsActions.Keys.First());
         Assert.Equal(typeof(WebComponentBuilder), componentOptions.PropsActions.Keys.Last());
@@ -98,6 +98,6 @@ public class WebWebComponentBuilderTests
 
         var options = new WebComponentBuilder();
         action(options);
-        Assert.Equal(webComponentBuilder.SuppressDuplicateCall, options.SuppressDuplicateCall);
+        Assert.Equal(webComponentBuilder.SuppressDuplicateInvoke, options.SuppressDuplicateInvoke);
     }
 }

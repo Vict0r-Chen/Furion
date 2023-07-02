@@ -32,7 +32,7 @@ public class ComponentServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         var componentBuilder = new ComponentBuilder()
         {
-            SuppressDuplicateCall = false
+            SuppressDuplicateInvoke = false
         };
 
         services.AddComponentCore(componentBuilder);
@@ -42,14 +42,14 @@ public class ComponentServiceCollectionExtensionsTests
 
         var componentOptions = services.GetComponentOptions();
         Assert.Single(componentOptions.PropsActions);
-        Assert.False(componentOptions.SuppressDuplicateCall);
+        Assert.False(componentOptions.SuppressDuplicateInvoke);
 
         var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
         action(builder);
-        Assert.False(builder.SuppressDuplicateCall);
+        Assert.False(builder.SuppressDuplicateInvoke);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class ComponentServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         services.AddComponentCore(builder =>
         {
-            builder.SuppressDuplicateCall = false;
+            builder.SuppressDuplicateInvoke = false;
         });
 
         Assert.Equal(2, services.Count);
@@ -79,14 +79,14 @@ public class ComponentServiceCollectionExtensionsTests
 
         var componentOptions = services.GetComponentOptions();
         Assert.Single(componentOptions.PropsActions);
-        Assert.False(componentOptions.SuppressDuplicateCall);
+        Assert.False(componentOptions.SuppressDuplicateInvoke);
 
         var action = componentOptions.GetPropsAction<ComponentBuilder>();
         Assert.NotNull(action);
 
         var builder = new ComponentBuilder();
         action(builder);
-        Assert.False(builder.SuppressDuplicateCall);
+        Assert.False(builder.SuppressDuplicateInvoke);
     }
 
     [Fact]
@@ -190,7 +190,7 @@ public class ComponentServiceCollectionExtensionsTests
 
         services.AddComponentCore(builder =>
         {
-            builder.SuppressDuplicateCall = false;
+            builder.SuppressDuplicateInvoke = false;
         });
         services.AddComponent(dependencies, new ConfigurationManager());
         var action = services.GetComponentOptions().GetPropsAction<CallOptions>();

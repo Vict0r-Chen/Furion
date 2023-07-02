@@ -54,3 +54,4 @@
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.Core.Tests")]
+[assembly: InternalsVisibleTo("Furion.Component.Tests")]

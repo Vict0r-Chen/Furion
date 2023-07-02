@@ -30,7 +30,7 @@ public sealed class WebComponentBuilder : WebComponentBuilderBase
     /// <summary>
     /// 禁用组件重复调用
     /// </summary>
-    public bool SuppressDuplicateCall { get; set; } = true;
+    public bool SuppressDuplicateInvoke { get; set; } = true;
 
     /// <inheritdoc />
     internal override void Build(WebApplication webApplication)
@@ -38,12 +38,12 @@ public sealed class WebComponentBuilder : WebComponentBuilderBase
         // 添加组件模块自身配置
         Props<WebComponentBuilder>(builder =>
         {
-            builder.SuppressDuplicateCall = SuppressDuplicateCall;
+            builder.SuppressDuplicateInvoke = SuppressDuplicateInvoke;
         });
 
         // 添加组件配置
         var componentOptions = webApplication.GetComponentOptions();
-        componentOptions.SuppressDuplicateCallForWeb = SuppressDuplicateCall;
+        componentOptions.SuppressDuplicateInvokeForWeb = SuppressDuplicateInvoke;
 
         base.Build(webApplication);
     }

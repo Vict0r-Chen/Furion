@@ -24,10 +24,10 @@ public class ComponentOptionsTests
 
         Assert.NotNull(options.PropsActions);
         Assert.Empty(options.PropsActions);
-        Assert.NotNull(options.CallRecords);
-        Assert.Empty(options.CallRecords);
-        Assert.True(options.SuppressDuplicateCall);
-        Assert.True(options.SuppressDuplicateCallForWeb);
+        Assert.NotNull(options.InvokeRecords);
+        Assert.Empty(options.InvokeRecords);
+        Assert.True(options.SuppressDuplicateInvoke);
+        Assert.True(options.SuppressDuplicateInvokeForWeb);
 
         Assert.NotNull(options._GetPropsActionMethod);
     }
@@ -101,19 +101,35 @@ public class ComponentOptionsTests
     {
         var options = new ComponentOptions()
         {
-            SuppressDuplicateCall = false,
-            SuppressDuplicateCallForWeb = false
+            SuppressDuplicateInvoke = false,
+            SuppressDuplicateInvokeForWeb = false
         };
 
-        var suppressDuplicateCall = options["SuppressDuplicateCall"];
-        var suppressDuplicateCallForWeb = options["SuppressDuplicateCallForWeb"];
-        Assert.False(suppressDuplicateCall);
-        Assert.False(suppressDuplicateCallForWeb);
+        var suppressDuplicateInvoke = options["SuppressDuplicateInvoke"];
+        var suppressDuplicateInvokeForWeb = options["SuppressDuplicateInvokeForWeb"];
+        Assert.False(suppressDuplicateInvoke);
+        Assert.False(suppressDuplicateInvokeForWeb);
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
             var undefined = options["Undefined"];
         });
         Assert.Equal("Unsupported property name index.", exception.Message);
+    }
+
+    [Fact]
+    public void Release()
+    {
+        var options = new ComponentOptions();
+        static void Action(ComponentActionOptions options)
+        {
+        }
+        options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action });
+
+        Assert.Single(options.PropsActions);
+
+        options.Release();
+        Assert.Empty(options.PropsActions);
+        Assert.Empty(options.InvokeRecords);
     }
 }

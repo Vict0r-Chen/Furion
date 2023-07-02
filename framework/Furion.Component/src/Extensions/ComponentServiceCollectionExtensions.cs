@@ -50,8 +50,8 @@ public static class ComponentServiceCollectionExtensions
         // 添加核心模块选项服务
         services.AddCoreOptions();
 
-        // 添加主机生存期事件服务
-        services.AddHostedService<HostApplicationLifetimeEventsHostedService>();
+        // 添加组件主机服务
+        services.AddHostedService<ComponentHostedService>();
 
         // 构建模块服务
         componentBuilder.Build(services);
