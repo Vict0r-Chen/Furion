@@ -15,8 +15,9 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件主机服务
+/// 组件模块主机服务
 /// </summary>
+/// <remarks>作用于主机启动后移除组件模块的内存占用</remarks>
 internal sealed class ComponentHostedService : IHostedService
 {
     /// <inheritdoc cref="CoreOptions"/>

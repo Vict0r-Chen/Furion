@@ -50,7 +50,7 @@ public static class ComponentServiceCollectionExtensions
         // 添加核心模块选项服务
         services.AddCoreOptions();
 
-        // 添加组件主机服务
+        // 添加组件模块主机服务
         services.AddHostedService<ComponentHostedService>();
 
         // 构建模块服务

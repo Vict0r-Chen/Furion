@@ -836,8 +836,9 @@
         </member>
         <member name="T:Furion.Component.ComponentHostedService">
             <summary>
-            组件主机服务
+            组件模块主机服务
             </summary>
+            <remarks>作用于主机启动后移除组件模块的内存占用</remarks>
         </member>
         <member name="F:Furion.Component.ComponentHostedService._coreOptions">
             <inheritdoc cref="T:Furion.CoreOptions"/>
