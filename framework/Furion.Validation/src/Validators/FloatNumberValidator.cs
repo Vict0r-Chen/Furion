@@ -15,14 +15,14 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 统一社会信用代码验证器
+/// 浮点数验证器
 /// </summary>
-public partial class USCIValidator : ValidatorBase
+public partial class FloatNumberValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public USCIValidator()
+    public FloatNumberValidator()
         : base()
     {
     }
@@ -43,24 +43,24 @@ public partial class USCIValidator : ValidatorBase
         if (value is string text)
         {
             return (Strict
-                ? USCIStrictRegex()
-                : USCIRegex()).IsMatch(text);
+                ? FloatNumberStrictRegex()
+                : FloatNumberRegex()).IsMatch(text);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 统一社会信用代码正则表达式（严格模式）
+    /// 浮点数正则表达式（严格模式）
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$")]
-    internal static partial Regex USCIStrictRegex();
+    [GeneratedRegex(@"^(-?[1-9]\d*\.\d+|-?0\.\d*[1-9])$")]
+    internal static partial Regex FloatNumberStrictRegex();
 
     /// <summary>
-    /// 统一社会信用代码正则表达式（宽松模式）
+    /// 浮点数正则表达式（宽松模式）
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$")]
-    internal static partial Regex USCIRegex();
+    [GeneratedRegex(@"^(-?[1-9]\d*\.\d+|-?0\.\d*[1-9]\d*|0\.0+)$")]
+    internal static partial Regex FloatNumberRegex();
 }

@@ -15,22 +15,17 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 统一社会信用代码验证器
+/// 负整数验证器
 /// </summary>
-public partial class USCIValidator : ValidatorBase
+public partial class NegativeIntegerValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public USCIValidator()
+    public NegativeIntegerValidator()
         : base()
     {
     }
-
-    /// <summary>
-    /// 严格模式
-    /// </summary>
-    public bool Strict { get; set; } = true;
 
     /// <inheritdoc />
     protected override bool Validate(object? value)
@@ -42,25 +37,16 @@ public partial class USCIValidator : ValidatorBase
 
         if (value is string text)
         {
-            return (Strict
-                ? USCIStrictRegex()
-                : USCIRegex()).IsMatch(text);
+            return NegativeIntegerRegex().IsMatch(text);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 统一社会信用代码正则表达式（严格模式）
+    /// 负整数正则表达式
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$")]
-    internal static partial Regex USCIStrictRegex();
-
-    /// <summary>
-    /// 统一社会信用代码正则表达式（宽松模式）
-    /// </summary>
-    /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$")]
-    internal static partial Regex USCIRegex();
+    [GeneratedRegex(@"^-[1-9]\d*$")]
+    internal static partial Regex NegativeIntegerRegex();
 }
