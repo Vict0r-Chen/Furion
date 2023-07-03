@@ -12,25 +12,33 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// 邮政编码验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public partial class PostalCodeValidator : ValidatorBase
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TrainNumberAttribute()
-        : base()
+    /// <inheritdoc />
+    protected override bool Validate(object? value)
     {
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return PostalCodeRegex().IsMatch(text);
+        }
+
+        return false;
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new TrainNumberValidator().IsValid(value);
-    }
+    /// <summary>
+    /// 邮政编码正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^(0[1-7]|1[0-356]|2[0-7]|3[0-6]|4[0-7]|5[1-7]|6[1-7]|7[0-5]|8[013-6])\d{4}$")]
+    internal static partial Regex PostalCodeRegex();
 }

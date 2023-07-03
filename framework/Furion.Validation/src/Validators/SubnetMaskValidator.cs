@@ -12,25 +12,33 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// 子网掩码验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public partial class SubnetMaskValidator : ValidatorBase
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TrainNumberAttribute()
-        : base()
+    /// <inheritdoc />
+    protected override bool Validate(object? value)
     {
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return SubnetMaskRegex().IsMatch(text);
+        }
+
+        return false;
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new TrainNumberValidator().IsValid(value);
-    }
+    /// <summary>
+    /// 子网掩码正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^(254|252|248|240|224|192|128)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(255|254|252|248|240|224|192|128|0)$")]
+    internal static partial Regex SubnetMaskRegex();
 }

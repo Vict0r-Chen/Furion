@@ -12,25 +12,33 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// 颜色验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public partial class ColorValidator : ValidatorBase
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TrainNumberAttribute()
-        : base()
+    /// <inheritdoc />
+    protected override bool Validate(object? value)
     {
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return ColorRegex().IsMatch(text);
+        }
+
+        return false;
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new TrainNumberValidator().IsValid(value);
-    }
+    /// <summary>
+    /// 颜色值正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
+    internal static partial Regex ColorRegex();
 }

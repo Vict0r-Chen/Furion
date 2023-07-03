@@ -12,25 +12,47 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// 网址验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public partial class UrlValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// 带端口号
     /// </summary>
-    public TrainNumberAttribute()
-        : base()
-    {
-    }
+    public bool WithPort { get; set; }
 
     /// <inheritdoc />
-    public override bool IsValid(object? value)
+    protected override bool Validate(object? value)
     {
-        return new TrainNumberValidator().IsValid(value);
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return (!WithPort
+                ? UrlRegex()
+                : UrlWithPortRegex()).IsMatch(text);
+        }
+
+        return false;
     }
+
+    /// <summary>
+    /// 网址正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?")]
+    internal static partial Regex UrlRegex();
+
+    /// <summary>
+    /// 带端口的网址正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^((ht|f)tps?:\/\/)?[\w-]+(\.[\w-]+)+:\d{1,5}\/?$")]
+    internal static partial Regex UrlWithPortRegex();
 }

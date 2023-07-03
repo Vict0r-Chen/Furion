@@ -12,25 +12,33 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// IPv4 验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public partial class IPv4Validator : ValidatorBase
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TrainNumberAttribute()
-        : base()
+    /// <inheritdoc />
+    protected override bool Validate(object? value)
     {
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return IPv4Regex().IsMatch(text);
+        }
+
+        return false;
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new TrainNumberValidator().IsValid(value);
-    }
+    /// <summary>
+    /// IPv4 正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$")]
+    internal static partial Regex IPv4Regex();
 }

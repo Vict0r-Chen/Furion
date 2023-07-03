@@ -12,25 +12,33 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// 中文/汉字验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public partial class ChineseValidator : ValidatorBase
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TrainNumberAttribute()
-        : base()
+    /// <inheritdoc />
+    protected override bool Validate(object? value)
     {
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return ChineseRegex().IsMatch(text);
+        }
+
+        return false;
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new TrainNumberValidator().IsValid(value);
-    }
+    /// <summary>
+    /// 中文/汉字正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^(?:[\u3400-\u4DB5\u4E00-\u9FEA\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0])+$")]
+    internal static partial Regex ChineseRegex();
 }

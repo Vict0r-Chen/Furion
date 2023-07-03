@@ -12,25 +12,28 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 火车车次验证特性
+/// 值验证器抽象基类
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class TrainNumberAttribute : ValidationAttribute
+public abstract class ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// 验证值有效性
     /// </summary>
-    public TrainNumberAttribute()
-        : base()
+    /// <param name="value">待验证的值</param>
+    /// <returns><see cref="bool"/></returns>
+    public bool IsValid(object? value)
     {
+        // 执行验证逻辑
+        return Validate(value);
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new TrainNumberValidator().IsValid(value);
-    }
+    /// <summary>
+    /// 验证逻辑
+    /// </summary>
+    /// <param name="value">待验证的值</param>
+    /// <returns><see cref="bool"/></returns>
+    protected abstract bool Validate(object? value);
 }
