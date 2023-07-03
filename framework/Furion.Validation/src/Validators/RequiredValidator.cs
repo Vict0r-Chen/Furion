@@ -20,6 +20,14 @@ namespace Furion.Validation;
 public partial class RequiredValidator : ValidatorBase
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public RequiredValidator()
+        : base()
+    {
+    }
+
+    /// <summary>
     /// 是否允许空字符串
     /// </summary>
     public bool AllowEmptyStrings { get; set; }

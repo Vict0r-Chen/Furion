@@ -1045,6 +1045,11 @@
             12 小时制时间（hh:mm:ss）验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.AmPmTimeValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.AmPmTimeValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -1073,6 +1078,11 @@
         <member name="T:Furion.Validation.Base64Validator">
             <summary>
             Base64 验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.Base64Validator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.Base64Validator.Validate(System.Object)">
@@ -1118,6 +1128,11 @@
             中文姓名验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.ChineseNameValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.ChineseNameValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -1134,6 +1149,11 @@
         <member name="T:Furion.Validation.ChineseValidator">
             <summary>
             中文/汉字验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ChineseValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.ChineseValidator.Validate(System.Object)">
@@ -1172,6 +1192,11 @@
         <member name="T:Furion.Validation.ColorValidator">
             <summary>
             颜色验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ColorValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.ColorValidator.Validate(System.Object)">
@@ -1340,6 +1365,11 @@
             域名验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.DomainValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.DomainValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -1363,6 +1393,11 @@
             ed2k 链接验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.Ed2kValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.Ed2kValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -1381,6 +1416,11 @@
         <member name="T:Furion.Validation.EmailValidator">
             <summary>
             电子邮箱验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.EmailValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="P:Furion.Validation.EmailValidator.AllowChinese">
@@ -1452,6 +1492,11 @@
             英文姓名验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.EnglishNameValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.EnglishNameValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -1471,6 +1516,11 @@
         <member name="T:Furion.Validation.GuidUuidValidator">
             <summary>
             GUID/UUID 验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.GuidUuidValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.GuidUuidValidator.Validate(System.Object)">
@@ -1495,6 +1545,11 @@
             手机机身码验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.IMEIValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.IMEIValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -1511,6 +1566,11 @@
         <member name="T:Furion.Validation.IPv4Validator">
             <summary>
             IPv4 验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.IPv4Validator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.IPv4Validator.Validate(System.Object)">
@@ -1588,6 +1648,11 @@
         <member name="T:Furion.Validation.IPv6Validator">
             <summary>
             IPv6 验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.IPv6Validator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.IPv6Validator.Validate(System.Object)">
@@ -2051,6 +2116,11 @@
             MAC 地址验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.MacAddressValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.MacAddressValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2081,6 +2151,11 @@
             磁力链接验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.MagnetValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.MagnetValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2101,6 +2176,11 @@
             MD5 验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.MD5Validator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.MD5Validator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2117,6 +2197,11 @@
         <member name="T:Furion.Validation.MilitaryTimeValidator">
             <summary>
             24 小时制时间（HH:mm:ss）验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.MilitaryTimeValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.MilitaryTimeValidator.Validate(System.Object)">
@@ -2149,12 +2234,22 @@
             非空验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.NotEmptyValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.NotEmptyValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PhoneNumberValidator">
             <summary>
             手机号验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.PhoneNumberValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="P:Furion.Validation.PhoneNumberValidator.Strict">
@@ -2225,6 +2320,11 @@
             邮政编码验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.PostalCodeValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.PostalCodeValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2272,6 +2372,11 @@
             必填验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.RequiredValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="P:Furion.Validation.RequiredValidator.AllowEmptyStrings">
             <summary>
             是否允许空字符串
@@ -2283,6 +2388,11 @@
         <member name="T:Furion.Validation.StronglyPasswordValidator">
             <summary>
             强类型密码验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.StronglyPasswordValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.StronglyPasswordValidator.Validate(System.Object)">
@@ -2316,6 +2426,11 @@
         <member name="T:Furion.Validation.SubnetMaskValidator">
             <summary>
             子网掩码验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.SubnetMaskValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.SubnetMaskValidator.Validate(System.Object)">
@@ -2417,6 +2532,11 @@
             迅雷链接验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.ThunderValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.ThunderValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2436,6 +2556,11 @@
             火车车次验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.TrainNumberValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.TrainNumberValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2453,6 +2578,11 @@
         <member name="T:Furion.Validation.UrlValidator">
             <summary>
             网址验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.UrlValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="P:Furion.Validation.UrlValidator.WithPort">
@@ -2521,6 +2651,11 @@
             统一社会信用代码验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.USCIValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="P:Furion.Validation.USCIValidator.Strict">
             <summary>
             严格模式
@@ -2568,6 +2703,11 @@
             用户名验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.UsernameValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="M:Furion.Validation.UsernameValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
@@ -2583,7 +2723,12 @@
         </member>
         <member name="T:Furion.Validation.ValidatorBase">
             <summary>
-            值验证器抽象基类
+            验证器抽象基类
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
@@ -2603,6 +2748,11 @@
         <member name="T:Furion.Validation.VersionValidator">
             <summary>
             版本号验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.VersionValidator.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.Validation.VersionValidator.Validate(System.Object)">

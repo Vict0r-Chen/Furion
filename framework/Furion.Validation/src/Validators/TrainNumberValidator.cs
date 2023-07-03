@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class TrainNumberValidator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public TrainNumberValidator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {

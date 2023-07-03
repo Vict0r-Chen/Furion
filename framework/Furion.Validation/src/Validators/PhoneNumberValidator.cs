@@ -20,6 +20,14 @@ namespace Furion.Validation;
 public partial class PhoneNumberValidator : ValidatorBase
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public PhoneNumberValidator()
+        : base()
+    {
+    }
+
+    /// <summary>
     /// 严格模式
     /// </summary>
     public bool Strict { get; set; } = true;

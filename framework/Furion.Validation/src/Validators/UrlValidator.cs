@@ -20,6 +20,14 @@ namespace Furion.Validation;
 public partial class UrlValidator : ValidatorBase
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public UrlValidator()
+        : base()
+    {
+    }
+
+    /// <summary>
     /// 带端口号
     /// </summary>
     public bool WithPort { get; set; }

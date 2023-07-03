@@ -20,6 +20,14 @@ namespace Furion.Validation;
 public partial class EmailValidator : ValidatorBase
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public EmailValidator()
+        : base()
+    {
+    }
+
+    /// <summary>
     /// 允许中文
     /// </summary>
     public bool AllowChinese { get; set; }

@@ -20,6 +20,14 @@ namespace Furion.Validation;
 public partial class USCIValidator : ValidatorBase
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    public USCIValidator()
+        : base()
+    {
+    }
+
+    /// <summary>
     /// 严格模式
     /// </summary>
     public bool Strict { get; set; } = true;

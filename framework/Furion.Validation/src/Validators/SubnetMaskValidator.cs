@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class SubnetMaskValidator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public SubnetMaskValidator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {

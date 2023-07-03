@@ -25,6 +25,7 @@ public partial class CompositeValidator : ValidatorBase
     /// <param name="validators">验证器集合</param>
     /// <param name="relationship"><see cref="ValidatorRelationship"/></param>
     public CompositeValidator(List<ValidatorBase> validators, ValidatorRelationship relationship = ValidatorRelationship.Default)
+        : base()
     {
         // 空验证
         if (validators.IsNullOrEmpty())

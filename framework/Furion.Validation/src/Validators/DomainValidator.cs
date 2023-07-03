@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class DomainValidator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public DomainValidator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {

@@ -15,10 +15,17 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 值验证器抽象基类
+/// 验证器抽象基类
 /// </summary>
 public abstract class ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    protected ValidatorBase()
+    {
+    }
+
     /// <summary>
     /// 验证值有效性
     /// </summary>

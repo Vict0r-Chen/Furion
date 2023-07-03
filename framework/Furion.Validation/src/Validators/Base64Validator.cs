@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class Base64Validator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public Base64Validator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {

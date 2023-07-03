@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class IPv4Validator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public IPv4Validator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {

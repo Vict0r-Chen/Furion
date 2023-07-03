@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class ColorValidator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public ColorValidator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {

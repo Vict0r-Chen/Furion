@@ -19,6 +19,14 @@ namespace Furion.Validation;
 /// </summary>
 public partial class Ed2kValidator : ValidatorBase
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public Ed2kValidator()
+        : base()
+    {
+    }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {
