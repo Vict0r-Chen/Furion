@@ -17,17 +17,17 @@
         <member name="M:System.ComponentModel.DataAnnotations.ColorAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="T:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute">
+        <member name="T:System.ComponentModel.DataAnnotations.IMEIAttribute">
             <summary>
             手机机身码验证特性
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute.#ctor">
+        <member name="M:System.ComponentModel.DataAnnotations.IMEIAttribute.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute.IsValid(System.Object)">
+        <member name="M:System.ComponentModel.DataAnnotations.IMEIAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.TrainNumberAttribute">

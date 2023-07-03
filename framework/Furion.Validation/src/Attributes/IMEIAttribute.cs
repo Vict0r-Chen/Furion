@@ -18,12 +18,12 @@ namespace System.ComponentModel.DataAnnotations;
 /// 手机机身码验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class IMEIAttributeAttribute : ValidationAttribute
+public class IMEIAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public IMEIAttributeAttribute()
+    public IMEIAttribute()
         : base()
     {
     }
