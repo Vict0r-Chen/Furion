@@ -15,9 +15,9 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 颜色值验证器
+/// 迅雷链接值验证器
 /// </summary>
-public partial class ColorValueValidation : ValueValidationBase
+public partial class ThunderLinkValueValidation : ValueValidationBase
 {
     /// <inheritdoc />
     protected override bool Validate(object? value)
@@ -29,16 +29,16 @@ public partial class ColorValueValidation : ValueValidationBase
 
         if (value is string text)
         {
-            return ColorRegex().IsMatch(text);
+            return ThunderLinkRegex().IsMatch(text);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 颜色值正则表达式
+    /// 迅雷链接正则表达式
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
-    internal static partial Regex ColorRegex();
+    [GeneratedRegex(@"^[GCDZTSPKXLY1-9]\d{1,4}$")]
+    internal static partial Regex ThunderLinkRegex();
 }

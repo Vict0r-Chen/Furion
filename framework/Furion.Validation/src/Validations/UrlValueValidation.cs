@@ -15,10 +15,15 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 颜色值验证器
+/// 网址值验证器
 /// </summary>
-public partial class ColorValueValidation : ValueValidationBase
+public partial class UrlValueValidation : ValueValidationBase
 {
+    /// <summary>
+    /// 带端口号
+    /// </summary>
+    public bool WithPort { get; set; }
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {
@@ -29,16 +34,25 @@ public partial class ColorValueValidation : ValueValidationBase
 
         if (value is string text)
         {
-            return ColorRegex().IsMatch(text);
+            return (!WithPort
+                ? UrlRegex()
+                : UrlWithPortRegex()).IsMatch(text);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 颜色值正则表达式
+    /// 网址正则表达式
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
-    internal static partial Regex ColorRegex();
+    [GeneratedRegex(@"^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?")]
+    internal static partial Regex UrlRegex();
+
+    /// <summary>
+    /// 带端口的网址正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^((ht|f)tps?:\/\/)?[\w-]+(\.[\w-]+)+:\d{1,5}\/?$")]
+    internal static partial Regex UrlWithPortRegex();
 }

@@ -15,10 +15,15 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 颜色值验证器
+/// 统一社会信用代码值验证器
 /// </summary>
-public partial class ColorValueValidation : ValueValidationBase
+public partial class USCIValueValidation : ValueValidationBase
 {
+    /// <summary>
+    /// 严格模式
+    /// </summary>
+    public bool Strict { get; set; } = true;
+
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {
@@ -29,16 +34,25 @@ public partial class ColorValueValidation : ValueValidationBase
 
         if (value is string text)
         {
-            return ColorRegex().IsMatch(text);
+            return (Strict
+                ? USCIStrictRegex()
+                : USCIRegex()).IsMatch(text);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 颜色值正则表达式
+    /// 统一社会信用代码正则表达式（宽松模式）
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
-    internal static partial Regex ColorRegex();
+    [GeneratedRegex(@"^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$")]
+    internal static partial Regex USCIStrictRegex();
+
+    /// <summary>
+    /// 统一社会信用代码正则表达式（严格模式）
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$")]
+    internal static partial Regex USCIRegex();
 }

@@ -15,30 +15,23 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 颜色值验证器
+/// 非空值验证器
 /// </summary>
-public partial class ColorValueValidation : ValueValidationBase
+public partial class NotEmptyValueValidation : ValueValidationBase
 {
     /// <inheritdoc />
     protected override bool Validate(object? value)
     {
         if (value == null)
         {
-            return true;
+            return false;
         }
 
         if (value is string text)
         {
-            return ColorRegex().IsMatch(text);
+            return !string.IsNullOrEmpty(text);
         }
 
         return false;
     }
-
-    /// <summary>
-    /// 颜色值正则表达式
-    /// </summary>
-    /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
-    internal static partial Regex ColorRegex();
 }
