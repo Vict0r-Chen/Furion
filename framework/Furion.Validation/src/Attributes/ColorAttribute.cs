@@ -18,12 +18,12 @@ namespace System.ComponentModel.DataAnnotations;
 /// 颜色值验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class ColorValueAttribute : ValidationAttribute
+public class ColorAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ColorValueAttribute()
+    public ColorAttribute()
         : base()
     {
     }

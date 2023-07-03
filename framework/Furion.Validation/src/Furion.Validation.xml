@@ -4,17 +4,17 @@
         <name>Furion.Validation</name>
     </assembly>
     <members>
-        <member name="T:System.ComponentModel.DataAnnotations.ColorValueAttribute">
+        <member name="T:System.ComponentModel.DataAnnotations.ColorAttribute">
             <summary>
             颜色值验证特性
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.#ctor">
+        <member name="M:System.ComponentModel.DataAnnotations.ColorAttribute.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.IsValid(System.Object)">
+        <member name="M:System.ComponentModel.DataAnnotations.ColorAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute">
