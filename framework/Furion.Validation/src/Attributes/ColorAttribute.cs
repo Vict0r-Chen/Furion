@@ -31,6 +31,6 @@ public class ColorAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new ColorValueValidation().IsValid(value);
+        return new ColorValidator().IsValid(value);
     }
 }

@@ -31,6 +31,6 @@ public class IMEIAttributeAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new IMEIValueValidation().IsValid(value);
+        return new IMEIValidator().IsValid(value);
     }
 }

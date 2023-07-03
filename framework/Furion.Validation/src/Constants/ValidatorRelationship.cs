@@ -15,30 +15,23 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 中文姓名值验证器
+/// 验证器关系
 /// </summary>
-public partial class ChineseNameValueValidation : ValueValidationBase
+public enum ValidatorRelationship : byte
 {
-    /// <inheritdoc />
-    protected override bool Validate(object? value)
-    {
-        if (value == null)
-        {
-            return true;
-        }
-
-        if (value is string text)
-        {
-            return ChineseNameRegex().IsMatch(text);
-        }
-
-        return false;
-    }
+    /// <summary>
+    /// 缺省值
+    /// </summary>
+    /// <remarks><seealso cref="And"/></remarks>
+    Default = 0,
 
     /// <summary>
-    /// 中文姓名正则表达式
+    /// 并且
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"^(?:[\u4e00-\u9fa5·]{2,16})$")]
-    internal static partial Regex ChineseNameRegex();
+    And,
+
+    /// <summary>
+    /// 或者
+    /// </summary>
+    Or
 }

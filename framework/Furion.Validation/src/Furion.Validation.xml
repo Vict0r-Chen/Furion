@@ -43,34 +43,34 @@
         <member name="M:System.ComponentModel.DataAnnotations.TrainNumberAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the AM_PMTimeRegex method.</summary>
+        <member name="T:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the AmPmTimeRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.AM_PMTimeRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.AmPmTimeRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
@@ -235,34 +235,34 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the ED2KLinkRegex method.</summary>
+        <member name="T:System.Text.RegularExpressions.Generated.Ed2kRegex_6">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Ed2kRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.Ed2kRegex_6.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.Ed2kRegex_6.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.Ed2kRegex_6.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.Ed2kRegex_6.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.Ed2kRegex_6.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.Ed2kRegex_6.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.Ed2kRegex_6.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.ED2KLinkRegex_6.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.Ed2kRegex_6.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
@@ -363,34 +363,34 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the GUID_UUIDRegex method.</summary>
+        <member name="T:System.Text.RegularExpressions.Generated.GuidUuidRegex_10">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the GuidUuidRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.GUID_UUIDRegex_10.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.GuidUuidRegex_10.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
@@ -523,34 +523,34 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the MagnetLinkRegex method.</summary>
+        <member name="T:System.Text.RegularExpressions.Generated.MagnetRegex_15">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the MagnetRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.MagnetRegex_15.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.MagnetRegex_15.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.MagnetRegex_15.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.MagnetRegex_15.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.MagnetRegex_15.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.MagnetRegex_15.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.MagnetRegex_15.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.MagnetLinkRegex_15.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.MagnetRegex_15.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
@@ -1019,15 +1019,36 @@
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_ascii_7B0400800100004000000000">
             <summary>Supports searching for characters in or not in " !#$%&amp;*?@^".</summary>
         </member>
-        <member name="T:Furion.Validation.AM_PMTimeValueValidation">
+        <member name="T:Furion.Validation.ValidatorRelationship">
             <summary>
-            12小时制时间（hh:mm:ss）值验证器
+            验证器关系
             </summary>
         </member>
-        <member name="M:Furion.Validation.AM_PMTimeValueValidation.Validate(System.Object)">
+        <member name="F:Furion.Validation.ValidatorRelationship.Default">
+            <summary>
+            缺省值
+            </summary>
+            <remarks><seealso cref="F:Furion.Validation.ValidatorRelationship.And"/></remarks>
+        </member>
+        <member name="F:Furion.Validation.ValidatorRelationship.And">
+            <summary>
+            并且
+            </summary>
+        </member>
+        <member name="F:Furion.Validation.ValidatorRelationship.Or">
+            <summary>
+            或者
+            </summary>
+        </member>
+        <member name="T:Furion.Validation.AmPmTimeValidator">
+            <summary>
+            12 小时制时间（hh:mm:ss）验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.AmPmTimeValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.AM_PMTimeValueValidation.AM_PMTimeRegex">
+        <member name="M:Furion.Validation.AmPmTimeValidator.AmPmTimeRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1049,15 +1070,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.Base64ValueValidation">
+        <member name="T:Furion.Validation.Base64Validator">
             <summary>
-            Base64 值验证器
+            Base64 验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.Base64ValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.Base64Validator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.Base64ValueValidation.Base64Regex">
+        <member name="M:Furion.Validation.Base64Validator.Base64Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1092,15 +1113,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ChineseNameValueValidation">
+        <member name="T:Furion.Validation.ChineseNameValidator">
             <summary>
-            中文姓名值验证器
+            中文姓名验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChineseNameValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.ChineseNameValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ChineseNameValueValidation.ChineseNameRegex">
+        <member name="M:Furion.Validation.ChineseNameValidator.ChineseNameRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1110,15 +1131,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ChineseValueValidation">
+        <member name="T:Furion.Validation.ChineseValidator">
             <summary>
-            中文/汉字值验证器
+            中文/汉字验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChineseValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.ChineseValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ChineseValueValidation.ChineseRegex">
+        <member name="M:Furion.Validation.ChineseValidator.ChineseRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1148,15 +1169,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ColorValueValidation">
+        <member name="T:Furion.Validation.ColorValidator">
             <summary>
-            颜色值验证器
+            颜色验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ColorValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.ColorValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ColorValueValidation.ColorRegex">
+        <member name="M:Furion.Validation.ColorValidator.ColorRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1291,15 +1312,38 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.DomainValueValidation">
+        <member name="T:Furion.Validation.CompositeValidator">
             <summary>
-            域名值验证器
+            组合验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.DomainValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.List{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorRelationship)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="validators">验证器集合</param>
+            <param name="relationship"><see cref="T:Furion.Validation.ValidatorRelationship"/></param>
+        </member>
+        <member name="P:Furion.Validation.CompositeValidator.ValidatorCollection">
+            <summary>
+            验证器集合
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.CompositeValidator.Relationship">
+            <inheritdoc cref="T:Furion.Validation.ValidatorRelationship" />
+        </member>
+        <member name="M:Furion.Validation.CompositeValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.DomainValueValidation.DomainRegex">
+        <member name="T:Furion.Validation.DomainValidator">
+            <summary>
+            域名验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.DomainValidator.Validate(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.DomainValidator.DomainRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1314,15 +1358,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ED2KLinkValueValidation">
+        <member name="T:Furion.Validation.Ed2kValidator">
             <summary>
-            ed2k 链接值验证器
+            ed2k 链接验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ED2KLinkValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.Ed2kValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ED2KLinkValueValidation.ED2KLinkRegex">
+        <member name="M:Furion.Validation.Ed2kValidator.Ed2kRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1334,20 +1378,20 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.EmailValueValidation">
+        <member name="T:Furion.Validation.EmailValidator">
             <summary>
-            电子邮箱值验证器
+            电子邮箱验证器
             </summary>
         </member>
-        <member name="P:Furion.Validation.EmailValueValidation.AllowChinese">
+        <member name="P:Furion.Validation.EmailValidator.AllowChinese">
             <summary>
             允许中文
             </summary>
         </member>
-        <member name="M:Furion.Validation.EmailValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.EmailValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.EmailValueValidation.EmailAllowChineseRegex">
+        <member name="M:Furion.Validation.EmailValidator.EmailAllowChineseRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1363,7 +1407,7 @@
             </code>
             </remarks>
         </member>
-        <member name="M:Furion.Validation.EmailValueValidation.EmailRegex">
+        <member name="M:Furion.Validation.EmailValidator.EmailRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1403,15 +1447,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.EnglishNameValueValidation">
+        <member name="T:Furion.Validation.EnglishNameValidator">
             <summary>
-            英文姓名值验证器
+            英文姓名验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.EnglishNameValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.EnglishNameValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.EnglishNameValueValidation.EnglishNameRegex">
+        <member name="M:Furion.Validation.EnglishNameValidator.EnglishNameRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1424,15 +1468,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.GUID_UUIDValueValidation">
+        <member name="T:Furion.Validation.GuidUuidValidator">
             <summary>
-            GUID/UUID 值验证器
+            GUID/UUID 验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.GUID_UUIDValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.GuidUuidValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.GUID_UUIDValueValidation.GUID_UUIDRegex">
+        <member name="M:Furion.Validation.GuidUuidValidator.GuidUuidRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1446,15 +1490,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.IMEIValueValidation">
+        <member name="T:Furion.Validation.IMEIValidator">
             <summary>
-            手机机身码值验证器
+            手机机身码验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.IMEIValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.IMEIValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.IMEIValueValidation.IMEIRegex">
+        <member name="M:Furion.Validation.IMEIValidator.IMEIRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1464,15 +1508,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.IPv4ValueValidation">
+        <member name="T:Furion.Validation.IPv4Validator">
             <summary>
-            IPv4 值验证器
+            IPv4 验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.IPv4ValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.IPv4Validator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.IPv4ValueValidation.IPv4Regex">
+        <member name="M:Furion.Validation.IPv4Validator.IPv4Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -1541,15 +1585,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.IPv6ValueValidation">
+        <member name="T:Furion.Validation.IPv6Validator">
             <summary>
-            IPv6 值验证器
+            IPv6 验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.IPv6ValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.IPv6Validator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.IPv6ValueValidation.IPv6Regex">
+        <member name="M:Furion.Validation.IPv6Validator.IPv6Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2002,15 +2046,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.MacAddressValueValidation">
+        <member name="T:Furion.Validation.MacAddressValidator">
             <summary>
-            MAC 地址值验证器
+            MAC 地址验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.MacAddressValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.MacAddressValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.MacAddressValueValidation.MacAddressRegex">
+        <member name="M:Furion.Validation.MacAddressValidator.MacAddressRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2032,15 +2076,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.MagnetLinkValueValidation">
+        <member name="T:Furion.Validation.MagnetValidator">
             <summary>
-            磁力链接值验证器
+            磁力链接验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.MagnetLinkValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.MagnetValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.MagnetLinkValueValidation.MagnetLinkRegex">
+        <member name="M:Furion.Validation.MagnetValidator.MagnetRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2052,15 +2096,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.MD5ValueValidation">
+        <member name="T:Furion.Validation.MD5Validator">
             <summary>
-            MD5 值验证器
+            MD5 验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.MD5ValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.MD5Validator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.MD5ValueValidation.MD5Regex">
+        <member name="M:Furion.Validation.MD5Validator.MD5Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2070,15 +2114,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.MilitaryTimeValueValidation">
+        <member name="T:Furion.Validation.MilitaryTimeValidator">
             <summary>
-            24小时制时间（HH:mm:ss）值验证器
+            24 小时制时间（HH:mm:ss）验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.MilitaryTimeValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.MilitaryTimeValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.MilitaryTimeValueValidation.MilitaryTimeRegex">
+        <member name="M:Furion.Validation.MilitaryTimeValidator.MilitaryTimeRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2100,28 +2144,28 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.NotEmptyValueValidation">
+        <member name="T:Furion.Validation.NotEmptyValidator">
             <summary>
-            非空值验证器
+            非空验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.NotEmptyValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.NotEmptyValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Validation.PhoneNumberValueValidation">
+        <member name="T:Furion.Validation.PhoneNumberValidator">
             <summary>
-            手机号值验证器
+            手机号验证器
             </summary>
         </member>
-        <member name="P:Furion.Validation.PhoneNumberValueValidation.Strict">
+        <member name="P:Furion.Validation.PhoneNumberValidator.Strict">
             <summary>
             严格模式
             </summary>
         </member>
-        <member name="M:Furion.Validation.PhoneNumberValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.PhoneNumberValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PhoneNumberValueValidation.PhoneNumberRegex">
+        <member name="M:Furion.Validation.PhoneNumberValidator.PhoneNumberRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2138,7 +2182,7 @@
             </code>
             </remarks>
         </member>
-        <member name="M:Furion.Validation.PhoneNumberValueValidation.PhoneNumberStrictRegex">
+        <member name="M:Furion.Validation.PhoneNumberValidator.PhoneNumberStrictRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2176,15 +2220,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.PostalCodeValueValidation">
+        <member name="T:Furion.Validation.PostalCodeValidator">
             <summary>
-            邮政编码值验证器
+            邮政编码验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.PostalCodeValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.PostalCodeValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PostalCodeValueValidation.PostalCodeRegex">
+        <member name="M:Furion.Validation.PostalCodeValidator.PostalCodeRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2223,28 +2267,28 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.RequiredValueValidation">
+        <member name="T:Furion.Validation.RequiredValidator">
             <summary>
-            必填值验证器
+            必填验证器
             </summary>
         </member>
-        <member name="P:Furion.Validation.RequiredValueValidation.AllowEmptyStrings">
+        <member name="P:Furion.Validation.RequiredValidator.AllowEmptyStrings">
             <summary>
             是否允许空字符串
             </summary>
         </member>
-        <member name="M:Furion.Validation.RequiredValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.RequiredValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Validation.StronglyPasswordValueValidation">
+        <member name="T:Furion.Validation.StronglyPasswordValidator">
             <summary>
-            强类型密码值验证器
+            强类型密码验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.StronglyPasswordValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.StronglyPasswordValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.StronglyPasswordValueValidation.StronglyPasswordRegex">
+        <member name="M:Furion.Validation.StronglyPasswordValidator.StronglyPasswordRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2269,15 +2313,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.SubnetMaskValueValidation">
+        <member name="T:Furion.Validation.SubnetMaskValidator">
             <summary>
-            子网掩码值验证器
+            子网掩码验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.SubnetMaskValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.SubnetMaskValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.SubnetMaskValueValidation.SubnetMaskRegex">
+        <member name="M:Furion.Validation.SubnetMaskValidator.SubnetMaskRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2368,15 +2412,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ThunderLinkValueValidation">
+        <member name="T:Furion.Validation.ThunderValidator">
             <summary>
-            迅雷链接值验证器
+            迅雷链接验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ThunderLinkValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.ThunderValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ThunderLinkValueValidation.ThunderLinkRegex">
+        <member name="M:Furion.Validation.ThunderValidator.ThunderLinkRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2387,15 +2431,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.TrainNumberValueValidation">
+        <member name="T:Furion.Validation.TrainNumberValidator">
             <summary>
-            火车车次值验证器
+            火车车次验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.TrainNumberValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.TrainNumberValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.TrainNumberValueValidation.TrainNumberRegex">
+        <member name="M:Furion.Validation.TrainNumberValidator.TrainNumberRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2406,20 +2450,20 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.UrlValueValidation">
+        <member name="T:Furion.Validation.UrlValidator">
             <summary>
-            网址值验证器
+            网址验证器
             </summary>
         </member>
-        <member name="P:Furion.Validation.UrlValueValidation.WithPort">
+        <member name="P:Furion.Validation.UrlValidator.WithPort">
             <summary>
             带端口号
             </summary>
         </member>
-        <member name="M:Furion.Validation.UrlValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.UrlValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.UrlValueValidation.UrlRegex">
+        <member name="M:Furion.Validation.UrlValidator.UrlRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2446,7 +2490,7 @@
             </code>
             </remarks>
         </member>
-        <member name="M:Furion.Validation.UrlValueValidation.UrlWithPortRegex">
+        <member name="M:Furion.Validation.UrlValidator.UrlWithPortRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2472,20 +2516,20 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.USCIValueValidation">
+        <member name="T:Furion.Validation.USCIValidator">
             <summary>
-            统一社会信用代码值验证器
+            统一社会信用代码验证器
             </summary>
         </member>
-        <member name="P:Furion.Validation.USCIValueValidation.Strict">
+        <member name="P:Furion.Validation.USCIValidator.Strict">
             <summary>
             严格模式
             </summary>
         </member>
-        <member name="M:Furion.Validation.USCIValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.USCIValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.USCIValueValidation.USCIStrictRegex">
+        <member name="M:Furion.Validation.USCIValidator.USCIStrictRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2502,7 +2546,7 @@
             </code>
             </remarks>
         </member>
-        <member name="M:Furion.Validation.USCIValueValidation.USCIRegex">
+        <member name="M:Furion.Validation.USCIValidator.USCIRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2519,15 +2563,15 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.UsernameValueValidation">
+        <member name="T:Furion.Validation.UsernameValidator">
             <summary>
-            用户名值验证器
+            用户名验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.UsernameValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.UsernameValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.UsernameValueValidation.UsernameRegex">
+        <member name="M:Furion.Validation.UsernameValidator.UsernameRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2537,34 +2581,34 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ValueValidationBase">
+        <member name="T:Furion.Validation.ValidatorBase">
             <summary>
             值验证器抽象基类
             </summary>
         </member>
-        <member name="M:Furion.Validation.ValueValidationBase.IsValid(System.Object)">
+        <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
             <summary>
             验证值有效性
             </summary>
             <param name="value">待验证的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValueValidationBase.Validate(System.Object)">
+        <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object)">
             <summary>
             验证逻辑
             </summary>
             <param name="value">待验证的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="T:Furion.Validation.VersionValueValidation">
+        <member name="T:Furion.Validation.VersionValidator">
             <summary>
-            版本号值验证器
+            版本号验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.VersionValueValidation.Validate(System.Object)">
+        <member name="M:Furion.Validation.VersionValidator.Validate(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.VersionValueValidation.VersionRegex">
+        <member name="M:Furion.Validation.VersionValidator.VersionRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
