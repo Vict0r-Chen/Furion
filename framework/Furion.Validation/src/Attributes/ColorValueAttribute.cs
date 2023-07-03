@@ -18,7 +18,7 @@ namespace System.ComponentModel.DataAnnotations;
 /// 颜色值验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public partial class ColorValueAttribute : ValidationAttribute
+public class ColorValueAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
@@ -31,25 +31,6 @@ public partial class ColorValueAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        // 若值为 null 则跳过
-        if (value == null)
-        {
-            return true;
-        }
-
-        // 只有字符串类型才进入验证
-        if (value is string text)
-        {
-            return ColorValueRegex().IsMatch(text);
-        }
-
-        return false;
+        return new ColorValueValidation().IsValid(value);
     }
-
-    /// <summary>
-    /// 颜色值正则表达式
-    /// </summary>
-    /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
-    internal static partial Regex ColorValueRegex();
 }

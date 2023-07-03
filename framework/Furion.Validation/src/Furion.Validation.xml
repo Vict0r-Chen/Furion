@@ -17,141 +17,6 @@
         <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.ColorValueRegex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match with 3 alternative expressions, atomically.<br/>
-                ○ 1st capture group.<br/>
-                    ○ Match if at the beginning of the string.<br/>
-                    ○ Match '#'.<br/>
-                    ○ 2nd capture group.<br/>
-                        ○ Match with 2 alternative expressions.<br/>
-                            ○ Match a character in the set [0-9A-Fa-f] exactly 6 times.<br/>
-                            ○ Match a character in the set [0-9A-Fa-f] exactly 3 times.<br/>
-                    ○ Match if at the end of the string or if before an ending newline.<br/>
-                ○ 3rd capture group.<br/>
-                    ○ Match if at the beginning of the string.<br/>
-                    ○ Match a character in the set [Rr].<br/>
-                    ○ Match a character in the set [Gg].<br/>
-                    ○ Match a character in the set [Bb].<br/>
-                    ○ Match '('.<br/>
-                    ○ 4th capture group.<br/>
-                        ○ Match with 5 alternative expressions.<br/>
-                            ○ Match '0' through '9'.<br/>
-                            ○ Match '0' through '9' exactly 2 times.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match the string "25".<br/>
-                                ○ Match a character in the set [0-5].<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '2'.<br/>
-                                ○ Match a character in the set [0-4].<br/>
-                                ○ Match '0' through '9'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match a character in the set [01].<br/>
-                                ○ Match '0' through '9' exactly 2 times.<br/>
-                    ○ Match ','.<br/>
-                    ○ 5th capture group.<br/>
-                        ○ Match with 5 alternative expressions.<br/>
-                            ○ Match '0' through '9'.<br/>
-                            ○ Match '0' through '9' exactly 2 times.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match the string "25".<br/>
-                                ○ Match a character in the set [0-5].<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '2'.<br/>
-                                ○ Match a character in the set [0-4].<br/>
-                                ○ Match '0' through '9'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match a character in the set [01].<br/>
-                                ○ Match '0' through '9' exactly 2 times.<br/>
-                    ○ Match ','.<br/>
-                    ○ 6th capture group.<br/>
-                        ○ Match with 5 alternative expressions.<br/>
-                            ○ Match '0' through '9'.<br/>
-                            ○ Match '0' through '9' exactly 2 times.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match the string "25".<br/>
-                                ○ Match a character in the set [0-5].<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '2'.<br/>
-                                ○ Match a character in the set [0-4].<br/>
-                                ○ Match '0' through '9'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match a character in the set [01].<br/>
-                                ○ Match '0' through '9' exactly 2 times.<br/>
-                    ○ Match ')'.<br/>
-                    ○ Match if at the end of the string or if before an ending newline.<br/>
-                ○ 7th capture group.<br/>
-                    ○ Match if at the beginning of the string.<br/>
-                    ○ Match a character in the set [Rr].<br/>
-                    ○ Match a character in the set [Gg].<br/>
-                    ○ Match a character in the set [Bb].<br/>
-                    ○ Match a character in the set [Aa].<br/>
-                    ○ Match '('.<br/>
-                    ○ 8th capture group.<br/>
-                        ○ Match with 5 alternative expressions.<br/>
-                            ○ Match '0' through '9'.<br/>
-                            ○ Match '0' through '9' exactly 2 times.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match the string "25".<br/>
-                                ○ Match a character in the set [0-5].<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '2'.<br/>
-                                ○ Match a character in the set [0-4].<br/>
-                                ○ Match '0' through '9'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match a character in the set [01].<br/>
-                                ○ Match '0' through '9' exactly 2 times.<br/>
-                    ○ Match ','.<br/>
-                    ○ 9th capture group.<br/>
-                        ○ Match with 5 alternative expressions.<br/>
-                            ○ Match '0' through '9'.<br/>
-                            ○ Match '0' through '9' exactly 2 times.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match the string "25".<br/>
-                                ○ Match a character in the set [0-5].<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '2'.<br/>
-                                ○ Match a character in the set [0-4].<br/>
-                                ○ Match '0' through '9'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match a character in the set [01].<br/>
-                                ○ Match '0' through '9' exactly 2 times.<br/>
-                    ○ Match ','.<br/>
-                    ○ 10th capture group.<br/>
-                        ○ Match with 5 alternative expressions.<br/>
-                            ○ Match '0' through '9'.<br/>
-                            ○ Match '0' through '9' exactly 2 times.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match the string "25".<br/>
-                                ○ Match a character in the set [0-5].<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '2'.<br/>
-                                ○ Match a character in the set [0-4].<br/>
-                                ○ Match '0' through '9'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match a character in the set [01].<br/>
-                                ○ Match '0' through '9' exactly 2 times.<br/>
-                    ○ Match ','.<br/>
-                    ○ 11th capture group.<br/>
-                        ○ Match with 2 alternative expressions.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '1'.<br/>
-                                ○ Match with 2 alternative expressions.<br/>
-                                    ○ Match an empty string.<br/>
-                                    ○ Match a sequence of expressions.<br/>
-                                        ○ Match any character other than '\n'.<br/>
-                                        ○ Match '0'.<br/>
-                            ○ Match a sequence of expressions.<br/>
-                                ○ Match '0'.<br/>
-                                ○ Match any character other than '\n'.<br/>
-                                ○ Match '0' through '9'.<br/>
-                    ○ Match ')'.<br/>
-                    ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
-        </member>
         <member name="T:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute">
             <summary>
             手机机身码验证特性
@@ -164,16 +29,6 @@
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute.IsValid(System.Object)">
             <inheritdoc />
-        </member>
-        <member name="M:System.ComponentModel.DataAnnotations.IMEIAttributeAttribute.IMEIRegex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ Match a Unicode digit atomically at least 15 and at most 17 times.<br/>
-            ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.TrainNumberAttribute">
             <summary>
@@ -188,19 +43,8 @@
         <member name="M:System.ComponentModel.DataAnnotations.TrainNumberAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.TrainNumberAttribute.TrainNumberRegex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ Match a character in the set [1-9CDGKLPSTX-Z].<br/>
-            ○ Match a Unicode digit atomically at least 1 and at most 4 times.<br/>
-            ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
-        </member>
         <member name="T:System.Text.RegularExpressions.Generated.ColorValueRegex_0">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the ColorValueRegex method.</summary>
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex" />-derived type for the ColorValueRegex method.</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.ColorValueRegex_0.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
@@ -209,30 +53,30 @@
             <summary>Initializes the instance.</summary>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.ColorValueRegex_0.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner" /> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex" />.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.ColorValueRegex_0.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner" /> used by methods on <see cref="T:System.Text.RegularExpressions.Regex" />.</summary>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.ColorValueRegex_0.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.ColorValueRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <summary>Scan the <paramref name="inputSpan" /> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.ColorValueRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <summary>Search <paramref name="inputSpan" /> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.ColorValueRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <summary>Determine whether <paramref name="inputSpan" /> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.IMEIRegex_1">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the IMEIRegex method.</summary>
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex" />-derived type for the IMEIRegex method.</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.IMEIRegex_1.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
@@ -241,30 +85,30 @@
             <summary>Initializes the instance.</summary>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.IMEIRegex_1.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner" /> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex" />.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.IMEIRegex_1.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner" /> used by methods on <see cref="T:System.Text.RegularExpressions.Regex" />.</summary>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.IMEIRegex_1.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.IMEIRegex_1.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <summary>Scan the <paramref name="inputSpan" /> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.IMEIRegex_1.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <summary>Search <paramref name="inputSpan" /> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.IMEIRegex_1.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <summary>Determine whether <paramref name="inputSpan" /> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.TrainNumberRegex_2">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the TrainNumberRegex method.</summary>
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex" />-derived type for the TrainNumberRegex method.</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
@@ -273,40 +117,65 @@
             <summary>Initializes the instance.</summary>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner" /> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex" />.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner" /> used by methods on <see cref="T:System.Text.RegularExpressions.Regex" />.</summary>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <summary>Scan the <paramref name="inputSpan" /> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <summary>Search <paramref name="inputSpan" /> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.TrainNumberRegex_2.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <summary>Determine whether <paramref name="inputSpan" /> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.Utilities">
-            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex" />-derived implementations.</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
-            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+            <summary>Default timeout value set in <see cref="T:System.AppContext" />, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout" /> if none was set.</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
-            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout" /> is non-infinite.</summary>
+        </member>
+        <member name="T:Furion.Validation.ValueValidationBase">
+            <summary>
+            值验证器抽象基类
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.ValueValidationBase.Scene">
+            <summary>
+            场景值
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValueValidationBase.IsValid(System.Object,System.String)">
+            <summary>
+            验证值有效性
+            </summary>
+            <param name="value">待验证的值</param>
+            <param name="scene">场景值</param>
+            <returns><see cref="T:System.Boolean" /></returns>
+        </member>
+        <member name="M:Furion.Validation.ValueValidationBase.Validate(System.Object)">
+            <summary>
+            验证逻辑
+            </summary>
+            <param name="value">待验证的值</param>
+            <returns><see cref="T:System.Boolean" /></returns>
         </member>
         <member name="T:Furion.Validation.ValidatorScene">
             <summary>
-            支持场景值的 <see cref="T:System.ComponentModel.DataAnnotations.Validator"/>
+            支持场景值的 <see cref="T:System.ComponentModel.DataAnnotations.Validator" />
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorScene.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.String)">
@@ -335,16 +204,209 @@
         </member>
         <member name="M:Furion.Validation.ValidatorScene.ValidationContextWithScene(System.ComponentModel.DataAnnotations.ValidationContext,System.String)">
             <summary>
-            支持场景值的 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext"/>
+            支持场景值的 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />
             </summary>
-            <param name="validationContext"><see cref="T:System.ComponentModel.DataAnnotations.ValidationContext"/></param>
+            <param name="validationContext"><see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /></param>
             <param name="scene">场景值</param>
-            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationContext"/></returns>
+            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /></returns>
         </member>
         <member name="F:Furion.Validation.ValidatorScene.SCENE_KEY">
             <summary>
             场景值 KEY
             </summary>
+        </member>
+        <member name="T:Furion.Validation.ColorValueValidation">
+            <summary>
+            颜色值验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ColorValueValidation.Validate(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ColorValueValidation.ColorValueRegex">
+            <remarks>
+            Pattern explanation:<br />
+            <code>
+            ○ Match with 3 alternative expressions, atomically.<br />
+                ○ 1st capture group.<br />
+                    ○ Match if at the beginning of the string.<br />
+                    ○ Match '#'.<br />
+                    ○ 2nd capture group.<br />
+                        ○ Match with 2 alternative expressions.<br />
+                            ○ Match a character in the set [0-9A-Fa-f] exactly 6 times.<br />
+                            ○ Match a character in the set [0-9A-Fa-f] exactly 3 times.<br />
+                    ○ Match if at the end of the string or if before an ending newline.<br />
+                ○ 3rd capture group.<br />
+                    ○ Match if at the beginning of the string.<br />
+                    ○ Match a character in the set [Rr].<br />
+                    ○ Match a character in the set [Gg].<br />
+                    ○ Match a character in the set [Bb].<br />
+                    ○ Match '('.<br />
+                    ○ 4th capture group.<br />
+                        ○ Match with 5 alternative expressions.<br />
+                            ○ Match '0' through '9'.<br />
+                            ○ Match '0' through '9' exactly 2 times.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match the string "25".<br />
+                                ○ Match a character in the set [0-5].<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '2'.<br />
+                                ○ Match a character in the set [0-4].<br />
+                                ○ Match '0' through '9'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match a character in the set [01].<br />
+                                ○ Match '0' through '9' exactly 2 times.<br />
+                    ○ Match ','.<br />
+                    ○ 5th capture group.<br />
+                        ○ Match with 5 alternative expressions.<br />
+                            ○ Match '0' through '9'.<br />
+                            ○ Match '0' through '9' exactly 2 times.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match the string "25".<br />
+                                ○ Match a character in the set [0-5].<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '2'.<br />
+                                ○ Match a character in the set [0-4].<br />
+                                ○ Match '0' through '9'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match a character in the set [01].<br />
+                                ○ Match '0' through '9' exactly 2 times.<br />
+                    ○ Match ','.<br />
+                    ○ 6th capture group.<br />
+                        ○ Match with 5 alternative expressions.<br />
+                            ○ Match '0' through '9'.<br />
+                            ○ Match '0' through '9' exactly 2 times.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match the string "25".<br />
+                                ○ Match a character in the set [0-5].<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '2'.<br />
+                                ○ Match a character in the set [0-4].<br />
+                                ○ Match '0' through '9'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match a character in the set [01].<br />
+                                ○ Match '0' through '9' exactly 2 times.<br />
+                    ○ Match ')'.<br />
+                    ○ Match if at the end of the string or if before an ending newline.<br />
+                ○ 7th capture group.<br />
+                    ○ Match if at the beginning of the string.<br />
+                    ○ Match a character in the set [Rr].<br />
+                    ○ Match a character in the set [Gg].<br />
+                    ○ Match a character in the set [Bb].<br />
+                    ○ Match a character in the set [Aa].<br />
+                    ○ Match '('.<br />
+                    ○ 8th capture group.<br />
+                        ○ Match with 5 alternative expressions.<br />
+                            ○ Match '0' through '9'.<br />
+                            ○ Match '0' through '9' exactly 2 times.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match the string "25".<br />
+                                ○ Match a character in the set [0-5].<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '2'.<br />
+                                ○ Match a character in the set [0-4].<br />
+                                ○ Match '0' through '9'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match a character in the set [01].<br />
+                                ○ Match '0' through '9' exactly 2 times.<br />
+                    ○ Match ','.<br />
+                    ○ 9th capture group.<br />
+                        ○ Match with 5 alternative expressions.<br />
+                            ○ Match '0' through '9'.<br />
+                            ○ Match '0' through '9' exactly 2 times.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match the string "25".<br />
+                                ○ Match a character in the set [0-5].<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '2'.<br />
+                                ○ Match a character in the set [0-4].<br />
+                                ○ Match '0' through '9'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match a character in the set [01].<br />
+                                ○ Match '0' through '9' exactly 2 times.<br />
+                    ○ Match ','.<br />
+                    ○ 10th capture group.<br />
+                        ○ Match with 5 alternative expressions.<br />
+                            ○ Match '0' through '9'.<br />
+                            ○ Match '0' through '9' exactly 2 times.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match the string "25".<br />
+                                ○ Match a character in the set [0-5].<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '2'.<br />
+                                ○ Match a character in the set [0-4].<br />
+                                ○ Match '0' through '9'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match a character in the set [01].<br />
+                                ○ Match '0' through '9' exactly 2 times.<br />
+                    ○ Match ','.<br />
+                    ○ 11th capture group.<br />
+                        ○ Match with 2 alternative expressions.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '1'.<br />
+                                ○ Match with 2 alternative expressions.<br />
+                                    ○ Match an empty string.<br />
+                                    ○ Match a sequence of expressions.<br />
+                                        ○ Match any character other than '\n'.<br />
+                                        ○ Match '0'.<br />
+                            ○ Match a sequence of expressions.<br />
+                                ○ Match '0'.<br />
+                                ○ Match any character other than '\n'.<br />
+                                ○ Match '0' through '9'.<br />
+                    ○ Match ')'.<br />
+                    ○ Match if at the end of the string or if before an ending newline.<br />
+            </code>
+            </remarks>
+        </member>
+        <member name="T:Furion.Validation.IMEIValueValidation">
+            <summary>
+            手机机身码值验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.IMEIValueValidation.Validate(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.IMEIValueValidation.IMEIRegex">
+            <remarks>
+            Pattern explanation:<br />
+            <code>
+            ○ Match if at the beginning of the string.<br />
+            ○ Match a Unicode digit atomically at least 15 and at most 17 times.<br />
+            ○ Match if at the end of the string or if before an ending newline.<br />
+            </code>
+            </remarks>
+        </member>
+        <member name="T:Furion.Validation.RequiredValueValidation">
+            <summary>
+            必填值验证器
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.RequiredValueValidation.AllowEmptyStrings">
+            <summary>
+            是否允许空字符串
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.RequiredValueValidation.Validate(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Validation.TrainNumberValueValidation">
+            <summary>
+            火车车次值验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.TrainNumberValueValidation.Validate(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.TrainNumberValueValidation.TrainNumberRegex">
+            <remarks>
+            Pattern explanation:<br />
+            <code>
+            ○ Match if at the beginning of the string.<br />
+            ○ Match a character in the set [1-9CDGKLPSTX-Z].<br />
+            ○ Match a Unicode digit atomically at least 1 and at most 4 times.<br />
+            ○ Match if at the end of the string or if before an ending newline.<br />
+            </code>
+            </remarks>
         </member>
     </members>
 </doc>

@@ -18,7 +18,7 @@ namespace System.ComponentModel.DataAnnotations;
 /// 火车车次验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public partial class TrainNumberAttribute : ValidationAttribute
+public class TrainNumberAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
@@ -31,25 +31,6 @@ public partial class TrainNumberAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        // 若值为 null 则跳过
-        if (value == null)
-        {
-            return true;
-        }
-
-        // 只有字符串类型才进入验证
-        if (value is string text)
-        {
-            return TrainNumberRegex().IsMatch(text);
-        }
-
-        return false;
+        return new TrainNumberValueValidation().IsValid(value);
     }
-
-    /// <summary>
-    /// 火车车次正则表达式
-    /// </summary>
-    /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex(@"^[GCDZTSPKXLY1-9]\d{1,4}$")]
-    internal static partial Regex TrainNumberRegex();
 }
