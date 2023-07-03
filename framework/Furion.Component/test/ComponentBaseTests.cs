@@ -103,8 +103,10 @@ public class ComponentBaseTests
         });
         var configuration = configurationBuilder.Build();
 
-        var component = new CBaseComponent();
-        component.Options = componentOptions;
+        var component = new CBaseComponent
+        {
+            Options = componentOptions
+        };
         component.Props<ComponentActionOptions>(configuration.GetSection("ComponentAction"));
 
         var action = component.Options.GetPropsAction<ComponentActionOptions>();

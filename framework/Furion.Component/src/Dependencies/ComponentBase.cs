@@ -55,13 +55,13 @@ public abstract class ComponentBase
         ArgumentNullException.ThrowIfNull(props, nameof(props));
 
         // 创建组件配置委托
-        void configure(TProps destination)
+        var configure = new Action<TProps>(destination =>
         {
             ObjectMapper.Map(props, destination);
-        }
+        });
 
         // 添加组件配置
-        Props((Action<TProps>)configure);
+        Props(configure);
     }
 
     /// <summary>
