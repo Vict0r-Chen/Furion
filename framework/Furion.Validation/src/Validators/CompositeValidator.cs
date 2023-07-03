@@ -23,17 +23,26 @@ public partial class CompositeValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <param name="relationship"><see cref="ValidatorRelationship"/></param>
-    public CompositeValidator(List<ValidatorBase> validators, ValidatorRelationship relationship = ValidatorRelationship.Default)
+    public CompositeValidator(List<ValidatorBase> validators)
         : base()
     {
-        // 空验证
+        // 空检查
         if (validators.IsNullOrEmpty())
         {
             ArgumentNullException.ThrowIfNull(validators, nameof(validators));
         }
 
         ValidatorCollection = validators;
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="validators">验证器集合</param>
+    /// <param name="relationship"><see cref="ValidatorRelationship"/></param>
+    public CompositeValidator(List<ValidatorBase> validators, ValidatorRelationship relationship)
+        : this(validators)
+    {
         Relationship = relationship;
     }
 

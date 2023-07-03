@@ -1342,6 +1342,12 @@
             组合验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.List{Furion.Validation.ValidatorBase})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="validators">验证器集合</param>
+        </member>
         <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.List{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorRelationship)">
             <summary>
             构造函数
