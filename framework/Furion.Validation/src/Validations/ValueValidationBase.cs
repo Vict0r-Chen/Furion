@@ -20,24 +20,12 @@ namespace Furion.Validation;
 public abstract class ValueValidationBase
 {
     /// <summary>
-    /// 场景值
-    /// </summary>
-    public string? Scene { get; set; }
-
-    /// <summary>
     /// 验证值有效性
     /// </summary>
     /// <param name="value">待验证的值</param>
-    /// <param name="scene">场景值</param>
     /// <returns><see cref="bool"/></returns>
-    public bool IsValid(object? value, string? scene = default)
+    public bool IsValid(object? value)
     {
-        // 验证场景
-        if (Scene != scene)
-        {
-            return true;
-        }
-
         // 执行验证逻辑
         return Validate(value);
     }
