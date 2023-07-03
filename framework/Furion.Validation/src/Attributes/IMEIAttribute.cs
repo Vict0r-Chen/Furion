@@ -51,5 +51,5 @@ public partial class IMEIAttributeAttribute : ValidationAttribute
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
     [GeneratedRegex(@"^\d{15,17}$")]
-    private static partial Regex IMEIRegex();
+    internal static partial Regex IMEIRegex();
 }

@@ -508,5 +508,5 @@ public sealed partial class FileScannerConfigurationBuilder
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
     [GeneratedRegex("^\\.[a-zA-Z0-9]+$")]
-    private static partial Regex FileExtensionRegex();
+    internal static partial Regex FileExtensionRegex();
 }

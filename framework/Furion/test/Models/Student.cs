@@ -12,23 +12,10 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.Tests.Models;
+namespace Furion.Tests.Models;
 
-namespace Furion.Tests.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class HelloController
+public class Student
 {
-    [HttpGet]
-    public string? Get([FromServices] IConfiguration configuration)
-    {
-        return configuration["Name"] + "Embed: " + configuration["Furion.Tests:Name"];
-    }
-
-    [HttpPost]
-    public Student Post(Student stu)
-    {
-        return stu;
-    }
+    [Required]
+    public string? Name { get; set; }
 }

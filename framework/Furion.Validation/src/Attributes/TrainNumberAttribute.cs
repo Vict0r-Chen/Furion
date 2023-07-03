@@ -51,5 +51,5 @@ public partial class TrainNumberAttribute : ValidationAttribute
     /// </summary>
     /// <returns><see cref="Regex"/></returns>
     [GeneratedRegex(@"^[GCDZTSPKXLY1-9]\d{1,4}$")]
-    private static partial Regex TrainNumberRegex();
+    internal static partial Regex TrainNumberRegex();
 }
