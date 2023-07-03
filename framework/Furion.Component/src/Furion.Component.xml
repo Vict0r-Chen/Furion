@@ -876,7 +876,7 @@
         </member>
         <member name="M:Furion.Component.ObjectMapper.Map``2(``0,``1)">
             <summary>
-            对象映射
+            映射对象
             </summary>
             <typeparam name="TSource">源对象类型</typeparam>
             <typeparam name="TDestination">目标对象类型</typeparam>

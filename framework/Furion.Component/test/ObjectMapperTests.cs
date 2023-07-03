@@ -17,6 +17,25 @@ namespace Furion.Component.Tests;
 public class ObjectMapperTests
 {
     [Fact]
+    public void Map_Null_Throw()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ObjectMapper.Map((OptionsModel1)null!, (OptionsModel2)null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ObjectMapper.Map(new OptionsModel1(), (OptionsModel2)null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ObjectMapper.Map((OptionsModel1)null!, new OptionsModel2());
+        });
+    }
+
+    [Fact]
     public void Map()
     {
         var optionsModel1 = new OptionsModel1
@@ -46,5 +65,13 @@ public class ObjectMapperTests
         Assert.Equal(optionsModel1.Name, optionsModel4.Name);
         Assert.Equal(optionsModel1.Age, optionsModel4.Age);
         Assert.Null(optionsModel4.Address);
+
+        var optionsModel5 = new OptionsModel5();
+        ObjectMapper.Map(optionsModel1, optionsModel5);
+
+        Assert.Equal(optionsModel1.Id, optionsModel5.Id);
+        Assert.NotEqual(optionsModel1.Name, optionsModel5.Name);
+        Assert.Null(optionsModel5.Name);
+        Assert.Equal(optionsModel1.Age, optionsModel5.Age);
     }
 }

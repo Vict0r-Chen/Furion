@@ -41,3 +41,10 @@ public class OptionsModel4
     public int Age { get; set; }
     public string? Address { get; set; }
 }
+
+public class OptionsModel5
+{
+    public int Id { get; set; }
+    public string? Name { get; }
+    public int Age { get; set; }
+}

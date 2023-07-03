@@ -20,7 +20,7 @@ namespace Furion.Component;
 internal static class ObjectMapper
 {
     /// <summary>
-    /// 对象映射
+    /// 映射对象
     /// </summary>
     /// <typeparam name="TSource">源对象类型</typeparam>
     /// <typeparam name="TDestination">目标对象类型</typeparam>
@@ -49,10 +49,17 @@ internal static class ObjectMapper
         foreach (var sourceProperty in sourceProperties)
         {
             // 在目标对象的属性集合中查找与源对象属性匹配的属性
-            var destinationProperty = destinationProperties.FirstOrDefault(p => p.Name == sourceProperty.Name && p.PropertyType == sourceProperty.PropertyType);
+            var destinationProperty = destinationProperties.FirstOrDefault(p => p.Name == sourceProperty.Name
+                                                                                                           && p.PropertyType == sourceProperty.PropertyType);
 
             // 空检查
             if (destinationProperty == null)
+            {
+                continue;
+            }
+
+            // 跳过只读属性
+            if (!destinationProperty.CanWrite)
             {
                 continue;
             }
