@@ -15,6 +15,6 @@
 global using Furion;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using System.Collections.Concurrent;
-global using System.Diagnostics;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
+global using Output = System.Diagnostics.Debug;

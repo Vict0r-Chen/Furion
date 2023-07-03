@@ -40,6 +40,15 @@ internal static class Debugging
     /// <item>
     /// <description>文件</description>
     /// </item>
+    /// <item>
+    /// <description>提示</description>
+    /// </item>
+    /// <item>
+    /// <description>搜索</description>
+    /// </item>
+    /// <item>
+    /// <description>时钟</description>
+    /// </item>
     /// </list>
     /// </param>
     /// <param name="message">事件消息</param>
@@ -47,7 +56,7 @@ internal static class Debugging
     {
         // 获取消息级别对应的 emoji
         var category = GetLevelEmoji(level);
-        Debug.WriteLine(message, category);
+        Output.WriteLine(message, category);
     }
 
     /// <summary>
@@ -70,6 +79,15 @@ internal static class Debugging
     /// </item>
     /// <item>
     /// <description>文件</description>
+    /// </item>
+    /// <item>
+    /// <description>提示</description>
+    /// </item>
+    /// <item>
+    /// <description>搜索</description>
+    /// </item>
+    /// <item>
+    /// <description>时钟</description>
     /// </item>
     /// </list>
     /// </param>
@@ -176,6 +194,63 @@ internal static class Debugging
     }
 
     /// <summary>
+    /// 输出提示级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    internal static void Tip(string message)
+    {
+        WriteLine(6, message);
+    }
+
+    /// <summary>
+    /// 输出提示级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Tip(string message, params object?[] args)
+    {
+        WriteLine(6, message, args);
+    }
+
+    /// <summary>
+    /// 输出搜索级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    internal static void Search(string message)
+    {
+        WriteLine(7, message);
+    }
+
+    /// <summary>
+    /// 输出搜索级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Search(string message, params object?[] args)
+    {
+        WriteLine(7, message, args);
+    }
+
+    /// <summary>
+    /// 输出时钟级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    internal static void Clock(string message)
+    {
+        WriteLine(8, message);
+    }
+
+    /// <summary>
+    /// 输出时钟级别事件消息
+    /// </summary>
+    /// <param name="message">事件消息</param>
+    /// <param name="args">格式化参数</param>
+    internal static void Clock(string message, params object?[] args)
+    {
+        WriteLine(8, message, args);
+    }
+
+    /// <summary>
     /// 获取消息级别对应的 emoji
     /// </summary>
     /// <param name="level">
@@ -196,6 +271,15 @@ internal static class Debugging
     /// <item>
     /// <description>文件</description>
     /// </item>
+    /// <item>
+    /// <description>提示</description>
+    /// </item>
+    /// <item>
+    /// <description>搜索</description>
+    /// </item>
+    /// <item>
+    /// <description>时钟</description>
+    /// </item>
     /// </list>
     /// </param>
     /// <returns><see cref="string"/></returns>
@@ -208,6 +292,9 @@ internal static class Debugging
             3 => "⚠️",
             4 => "❌",
             5 => "📄",
+            6 => "💡",
+            7 => "🔍",
+            8 => "⏱️",
             _ => string.Empty
         };
     }

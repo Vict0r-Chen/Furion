@@ -93,7 +93,7 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
         keyValues.Clear();
 
         // 输出调试事件
-        Debugging.File("The embed resource `{0}` has been successfully added to the configuration.", manifestResource.ResourceName);
+        Debugging.File("The embed resource `{0}` with prefix `{1}` has been successfully added to the configuration.", manifestResource.ResourceName, manifestResource.Prefix);
 
         return data;
     }
