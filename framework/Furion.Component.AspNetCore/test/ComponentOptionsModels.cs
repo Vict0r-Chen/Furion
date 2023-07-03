@@ -15,4 +15,7 @@
 namespace Furion.Component.AspNetCore.Tests;
 
 public class ComponentActionOptions
-{ }
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+}

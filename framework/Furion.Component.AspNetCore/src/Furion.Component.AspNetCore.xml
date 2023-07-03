@@ -44,6 +44,13 @@
             <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
         </member>
+        <member name="M:Furion.Component.WebComponentBuilderBase.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加组件配置
+            </summary>
+            <typeparam name="TProps">组件配置类型</typeparam>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+        </member>
         <member name="M:Furion.Component.WebComponentBuilderBase.Build(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
             构建模块服务

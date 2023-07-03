@@ -618,6 +618,13 @@
             <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
         </member>
+        <member name="M:Furion.Component.ComponentBuilderBase.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加组件配置
+            </summary>
+            <typeparam name="TProps">组件配置类型</typeparam>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+        </member>
         <member name="M:Furion.Component.ComponentBuilderBase.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             构建模块服务
@@ -730,6 +737,13 @@
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加组件配置
+            </summary>
+            <typeparam name="TProps">组件配置类型</typeparam>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
         </member>
         <member name="M:Furion.Component.ComponentBase.CanActivate(Furion.Component.ComponentContext)">
             <summary>
@@ -854,6 +868,20 @@
         </member>
         <member name="M:Furion.Component.ComponentReleaserHostedService.StopAsync(System.Threading.CancellationToken)">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.Component.ObjectMapper">
+            <summary>
+            简单对象映射
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ObjectMapper.Map``2(``0,``1)">
+            <summary>
+            对象映射
+            </summary>
+            <typeparam name="TSource">源对象类型</typeparam>
+            <typeparam name="TDestination">目标对象类型</typeparam>
+            <param name="source"><typeparamref name="TSource"/></param>
+            <param name="destination"><typeparamref name="TSource"/></param>
         </member>
         <member name="T:Furion.Component.Topological">
             <summary>

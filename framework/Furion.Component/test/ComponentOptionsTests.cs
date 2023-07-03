@@ -56,17 +56,17 @@ public class ComponentOptionsTests
     [Fact]
     public void GetPropsAction_MultipleActions()
     {
-        var callRecord = new List<string>();
+        var invokeRecord = new List<string>();
         var options = new ComponentOptions();
 
         void Action(ComponentActionOptions options)
         {
-            callRecord.Add(nameof(Action));
+            invokeRecord.Add(nameof(Action));
         }
 
         void Action2(ComponentActionOptions options)
         {
-            callRecord.Add(nameof(Action2));
+            invokeRecord.Add(nameof(Action2));
         }
         options.PropsActions.Add(typeof(ComponentActionOptions), new List<Delegate> { Action, Action2 });
 
@@ -75,9 +75,9 @@ public class ComponentOptionsTests
 
         action(new ComponentActionOptions());
 
-        Assert.Equal(2, callRecord.Count);
-        Assert.Equal(nameof(Action), callRecord[0]);
-        Assert.Equal(nameof(Action2), callRecord[1]);
+        Assert.Equal(2, invokeRecord.Count);
+        Assert.Equal(nameof(Action), invokeRecord[0]);
+        Assert.Equal(nameof(Action2), invokeRecord[1]);
     }
 
     [Fact]

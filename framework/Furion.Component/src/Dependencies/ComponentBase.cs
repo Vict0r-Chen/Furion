@@ -38,6 +38,33 @@ public abstract class ComponentBase
     }
 
     /// <summary>
+    /// 添加组件配置
+    /// </summary>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    public void Props<TProps>(IConfiguration configuration)
+        where TProps : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+
+        // 获取配置实例
+        var props = configuration.Get<TProps>();
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(props, nameof(props));
+
+        // 创建组件配置委托
+        void configure(TProps destination)
+        {
+            ObjectMapper.Map(props, destination);
+        }
+
+        // 添加组件配置
+        Props((Action<TProps>)configure);
+    }
+
+    /// <summary>
     /// 是否激活组件
     /// </summary>
     /// <param name="context"><see cref="ComponentContext"/></param>

@@ -39,7 +39,7 @@ public class WebWebComponentBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            webComponentBuilder.Props<ComponentActionOptions>(null!);
+            webComponentBuilder.Props((Action<ComponentActionOptions>)null!);
         });
     }
 
@@ -71,6 +71,47 @@ public class WebWebComponentBuilderTests
 
         Assert.Single(webComponentBuilder._propsActions);
         Assert.Equal(2, webComponentBuilder._propsActions.First().Value.Count);
+    }
+
+    [Fact]
+    public void Props_Configuration_Null_Throw()
+    {
+        var webComponentBuilder = new WebComponentBuilder();
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            webComponentBuilder.Props<ComponentActionOptions>((IConfiguration)null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            webComponentBuilder.Props<ComponentActionOptions>(new ConfigurationManager());
+        });
+    }
+
+    [Fact]
+    public void Props_Configuration_ReturnOK()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            {"ComponentAction:Id", "1" },
+            {"ComponentAction:Name", "Furion" }
+        });
+        var configuration = configurationBuilder.Build();
+
+        var webComponentBuilder = new WebComponentBuilder();
+        webComponentBuilder.Props<ComponentActionOptions>(configuration.GetSection("ComponentAction"));
+
+        var list = webComponentBuilder._propsActions[typeof(ComponentActionOptions)];
+        Assert.NotNull(list);
+        Assert.Single(list);
+
+        var action = (Action<ComponentActionOptions>)list.First();
+
+        var options = new ComponentActionOptions();
+        action(options);
+        Assert.Equal(1, options.Id);
+        Assert.Equal("Furion", options.Name);
     }
 
     [Fact]

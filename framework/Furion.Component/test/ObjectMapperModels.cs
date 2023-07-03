@@ -14,8 +14,30 @@
 
 namespace Furion.Component.Tests;
 
-public class ComponentActionOptions
+public class OptionsModel1
 {
     public int Id { get; set; }
     public string? Name { get; set; }
+    public int Age { get; set; }
+}
+
+public class OptionsModel2
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    public int Age { get; set; }
+}
+
+public class OptionsModel3
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+}
+
+public class OptionsModel4
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    public int Age { get; set; }
+    public string? Address { get; set; }
 }
