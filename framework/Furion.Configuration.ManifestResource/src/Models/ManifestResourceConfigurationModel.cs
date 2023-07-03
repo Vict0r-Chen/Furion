@@ -33,6 +33,7 @@ public sealed class ManifestResourceConfigurationModel
         Assembly = assembly;
         ResourceName = resourceName;
         Extension = Path.GetExtension(resourceName);
+        Prefix = assembly.GetName().Name;
     }
 
     /// <summary>
@@ -49,4 +50,9 @@ public sealed class ManifestResourceConfigurationModel
     /// 文件拓展名
     /// </summary>
     public string Extension { get; init; }
+
+    /// <summary>
+    /// 配置前缀
+    /// </summary>
+    public string? Prefix { get; set; }
 }

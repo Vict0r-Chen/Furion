@@ -61,6 +61,12 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
     internal static Dictionary<string, string?> ParseResource(FileConfigurationParser fileConfigurationParser, ManifestResourceConfigurationModel manifestResource)
     {
+        // 配置前缀检查
+        if (string.IsNullOrWhiteSpace(manifestResource.Prefix))
+        {
+            throw new InvalidOperationException($"The configuration prefix of assembly `{manifestResource.Assembly.GetName().Name}` cannot be null or an empty string.");
+        }
+
         // 读取嵌入资源内容流
         using var stream = manifestResource.Assembly.GetManifestResourceStream(manifestResource.ResourceName);
         if (stream is null)
@@ -75,14 +81,12 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
             return new();
         }
 
-        // 获取程序集名称
-        var assemblyName = manifestResource.Assembly.GetName().Name;
         var data = new Dictionary<string, string?>();
 
         // 将 程序集名称:键 添加到集合中
         foreach (var (key, value) in keyValues)
         {
-            data[$"{assemblyName}:{key}"] = value;
+            data[$"{manifestResource.Prefix}:{key}"] = value;
         }
 
         // 清空集合

@@ -35,6 +35,25 @@ public class ManifestResourceConfigurationProviderTests
     }
 
     [Fact]
+    public void ParseResource_NullOrEmpty_Prefix_Throw()
+    {
+        var fileConfigurationParser = new FileConfigurationParser();
+        var assembly = GetType().Assembly;
+        var resourceName = "Furion.Configuration.ManifestResource.Tests.Resources.embed.json";
+
+        var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(assembly, resourceName);
+        Assert.NotNull(manifestResourceConfigurationModel);
+
+        manifestResourceConfigurationModel.Prefix = string.Empty;
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var data = ManifestResourceConfigurationProvider.ParseResource(fileConfigurationParser, manifestResourceConfigurationModel);
+        });
+
+        Assert.Equal($"The configuration prefix of assembly `{assembly.GetName().Name}` cannot be null or an empty string.", exception.Message);
+    }
+
+    [Fact]
     public void ParseResource()
     {
         var fileConfigurationParser = new FileConfigurationParser();
@@ -49,6 +68,24 @@ public class ManifestResourceConfigurationProviderTests
         Assert.Single(data);
         Assert.Equal("Furion.Configuration.ManifestResource.Tests:Name", data.Keys.ElementAt(0));
         Assert.Equal("Furion - Embed", data["Furion.Configuration.ManifestResource.Tests:Name"]);
+    }
+
+    [Fact]
+    public void ParseResource_Prefix()
+    {
+        var fileConfigurationParser = new FileConfigurationParser();
+        var assembly = GetType().Assembly;
+        var resourceName = "Furion.Configuration.ManifestResource.Tests.Resources.embed.json";
+
+        var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(assembly, resourceName);
+        Assert.NotNull(manifestResourceConfigurationModel);
+
+        manifestResourceConfigurationModel.Prefix = "Custom";
+        var data = ManifestResourceConfigurationProvider.ParseResource(fileConfigurationParser, manifestResourceConfigurationModel);
+        Assert.NotNull(data);
+        Assert.Single(data);
+        Assert.Equal("Custom:Name", data.Keys.ElementAt(0));
+        Assert.Equal("Furion - Embed", data["Custom:Name"]);
     }
 
     [Fact]

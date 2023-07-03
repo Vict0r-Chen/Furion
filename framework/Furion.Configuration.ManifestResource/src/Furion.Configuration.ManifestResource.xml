@@ -127,6 +127,11 @@
             文件拓展名
             </summary>
         </member>
+        <member name="P:Furion.Configuration.ManifestResourceConfigurationModel.Prefix">
+            <summary>
+            配置前缀
+            </summary>
+        </member>
         <member name="T:Furion.Configuration.FileConfigurationParser">
             <summary>
             配置文件内容解析器

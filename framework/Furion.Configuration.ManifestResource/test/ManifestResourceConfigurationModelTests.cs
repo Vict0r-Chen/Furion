@@ -49,5 +49,6 @@ public class ManifestResourceConfigurationModelTests
         Assert.Equal(assembly, manifestResourceConfigurationModel.Assembly);
         Assert.Equal(resourceName, manifestResourceConfigurationModel.ResourceName);
         Assert.Equal(".json", manifestResourceConfigurationModel.Extension);
+        Assert.Equal(assembly.GetName().Name, manifestResourceConfigurationModel.Prefix);
     }
 }
