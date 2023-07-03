@@ -187,4 +187,27 @@ internal static class TypeExtensions
     {
         return type.GetMethod(name, accessibilityBindingFlags | BindingFlags.Instance | BindingFlags.DeclaredOnly) is not null;
     }
+
+    /// <summary>
+    /// 是否为数值类型
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsNumeric(this Type type)
+    {
+        // 获取类型代码
+        var typeCode = Type.GetTypeCode(type);
+
+        return typeCode == TypeCode.Byte
+            || typeCode == TypeCode.SByte
+            || typeCode == TypeCode.Int16
+            || typeCode == TypeCode.Int32
+            || typeCode == TypeCode.Int64
+            || typeCode == TypeCode.UInt16
+            || typeCode == TypeCode.UInt32
+            || typeCode == TypeCode.UInt64
+            || typeCode == TypeCode.Single
+            || typeCode == TypeCode.Double
+            || typeCode == TypeCode.Decimal;
+    }
 }

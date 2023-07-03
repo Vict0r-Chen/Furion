@@ -309,6 +309,13 @@
             <param name="accessibilityBindingFlags">可访问性成员绑定标记</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="M:System.TypeExtensions.IsNumeric(System.Type)">
+            <summary>
+            是否为数值类型
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions">
             <summary>
             核心模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类

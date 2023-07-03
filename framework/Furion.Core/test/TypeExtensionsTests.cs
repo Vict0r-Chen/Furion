@@ -210,4 +210,20 @@ public class TypeExtensionsTests
         var result = type.IsDeclareOnlyMethod("Test", BindingFlags.Public);
         Assert.Equal(isMultiple, result);
     }
+
+    [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, false)]
+    [InlineData(1, true)]
+    [InlineData((long)1, true)]
+    [InlineData(1.0D, true)]
+    [InlineData(1.0F, true)]
+    [InlineData((byte)1, true)]
+    [InlineData(-1, true)]
+    [InlineData(0, true)]
+    public void IsNumeric(object value, bool isNumeric)
+    {
+        var result = value.GetType().IsNumeric();
+        Assert.Equal(isNumeric, result);
+    }
 }
