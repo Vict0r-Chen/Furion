@@ -53,18 +53,38 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 获取验证结果
+    /// 获取验证结果集合
     /// </summary>
     /// <param name="value">待验证的值</param>
-    /// <returns><see cref="ValidationResult"/></returns>
-    public ValidationResult? GetValidationResult(object? value)
+    /// <returns><see cref="ValidationResult"/> 集合</returns>
+    public virtual ICollection<ValidationResult>? GetValidationResults(object? value)
     {
         if (IsValid(value))
         {
-            return ValidationResult.Success;
+            return null;
         }
 
-        return new ValidationResult(FormatErrorMessage());
+        return new[] { new ValidationResult(FormatErrorMessage()) };
+    }
+
+    /// <summary>
+    /// 获取单个验证结果
+    /// </summary>
+    /// <param name="value">待验证的值</param>
+    /// <returns><see cref="ValidationResult"/> 集合</returns>
+    public virtual ValidationResult? GetValidationResult(object? value)
+    {
+        return GetValidationResults(value)?.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// 格式化错误消息
+    /// </summary>
+    /// <returns><see cref="string"/></returns>
+    protected virtual string FormatErrorMessage()
+    {
+        var errorMessage = Regex().Replace(ErrorMessageString, string.Empty);
+        return string.Format(CultureInfo.CurrentCulture, errorMessage);
     }
 
     /// <summary>
@@ -79,7 +99,7 @@ public abstract partial class ValidatorBase
             return;
         }
 
-        throw new ValidationException(FormatErrorMessage());
+        throw new ValidationException(GetValidationResult(value)?.ErrorMessage ?? ErrorMessageString);
     }
 
     /// <summary>
@@ -88,16 +108,6 @@ public abstract partial class ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <returns><see cref="bool"/></returns>
     public abstract bool IsValid(object? value);
-
-    /// <summary>
-    /// 格式化错误消息
-    /// </summary>
-    /// <returns><see cref="string"/></returns>
-    protected virtual string FormatErrorMessage()
-    {
-        var errorMessage = Regex().Replace(ErrorMessageString, string.Empty);
-        return string.Format(CultureInfo.CurrentCulture, errorMessage);
-    }
 
     /// <summary>
     /// 移除占位符正则表达式
