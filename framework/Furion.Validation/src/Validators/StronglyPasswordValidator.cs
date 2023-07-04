@@ -37,7 +37,7 @@ public partial class StronglyPasswordValidator : ValidatorBase
 
         if (value is string text)
         {
-            return StronglyPasswordRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class StronglyPasswordValidator : ValidatorBase
     /// <summary>
     /// 强类型密码正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$")]
-    internal static partial Regex StronglyPasswordRegex();
+    internal static partial Regex Regex();
 }

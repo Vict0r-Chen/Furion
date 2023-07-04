@@ -37,7 +37,7 @@ public partial class PassportValidator : ValidatorBase
 
         if (value is string text)
         {
-            return PassportRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class PassportValidator : ValidatorBase
     /// <summary>
     /// 护照正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"(^[EeKkGgDdSsPpHh]\d{8}$)|(^(([Ee][a-fA-F])|([DdSsPp][Ee])|([Kk][Jj])|([Mm][Aa])|(1[45]))\d{7}$)")]
-    internal static partial Regex PassportRegex();
+    internal static partial Regex Regex();
 }

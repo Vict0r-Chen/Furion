@@ -37,7 +37,7 @@ public partial class MagnetValidator : ValidatorBase
 
         if (value is string text)
         {
-            return MagnetRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class MagnetValidator : ValidatorBase
     /// <summary>
     /// 磁力链接正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^magnet:\?xt=urn:btih:[0-9a-fA-F]{40,}.*$")]
-    internal static partial Regex MagnetRegex();
+    internal static partial Regex Regex();
 }

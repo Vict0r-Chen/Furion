@@ -37,7 +37,7 @@ public partial class Ed2kValidator : ValidatorBase
 
         if (value is string text)
         {
-            return Ed2kRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class Ed2kValidator : ValidatorBase
     /// <summary>
     /// ed2k 链接正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^ed2k:\/\/\|file\|.+\|\/$")]
-    internal static partial Regex Ed2kRegex();
+    internal static partial Regex Regex();
 }

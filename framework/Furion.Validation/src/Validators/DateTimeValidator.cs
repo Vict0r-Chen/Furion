@@ -37,7 +37,7 @@ public partial class DateTimeValidator : ValidatorBase
 
         if (value is string text)
         {
-            return DateTimeRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class DateTimeValidator : ValidatorBase
     /// <summary>
     /// 日期时间正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\d{4}([/:-])(1[0-2]|0?[1-9])\1(0?[1-9]|[1-2]\d|30|31) (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$")]
-    internal static partial Regex DateTimeRegex();
+    internal static partial Regex Regex();
 }

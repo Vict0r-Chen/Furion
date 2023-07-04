@@ -37,7 +37,7 @@ public partial class MacAddressValidator : ValidatorBase
 
         if (value is string text)
         {
-            return MacAddressRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class MacAddressValidator : ValidatorBase
     /// <summary>
     /// MAC 地址正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^((([a-f0-9]{2}:){5})|(([a-f0-9]{2}-){5}))[a-f0-9]{2}$", RegexOptions.IgnoreCase)]
-    internal static partial Regex MacAddressRegex();
+    internal static partial Regex Regex();
 }

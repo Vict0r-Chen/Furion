@@ -43,8 +43,8 @@ public partial class CurrencyValidator : ValidatorBase
         if (value is string text)
         {
             return (AllowNegative
-                ? CurrencyRegex()
-                : PositiveCurrencyRegex()).IsMatch(text);
+                ? Regex()
+                : PositiveRegex()).IsMatch(text);
         }
 
         return false;
@@ -53,14 +53,14 @@ public partial class CurrencyValidator : ValidatorBase
     /// <summary>
     /// 数字/货币金额正则表达式（只支持正数）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"(?:^[1-9]([0-9]+)?(?:\.[0-9]{1,2})?$)|(?:^(?:0)$)|(?:^[0-9]\.[0-9](?:[0-9])?$)")]
-    internal static partial Regex PositiveCurrencyRegex();
+    internal static partial Regex PositiveRegex();
 
     /// <summary>
     /// 数字/货币金额正则表达式（支持正负数）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^-?\d+(,\d{3})*(\.\d{1,2})?$")]
-    internal static partial Regex CurrencyRegex();
+    internal static partial Regex Regex();
 }

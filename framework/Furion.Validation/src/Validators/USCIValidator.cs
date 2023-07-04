@@ -43,8 +43,8 @@ public partial class USCIValidator : ValidatorBase
         if (value is string text)
         {
             return (Strict
-                ? USCIStrictRegex()
-                : USCIRegex()).IsMatch(text);
+                ? StrictRegex()
+                : Regex()).IsMatch(text);
         }
 
         return false;
@@ -53,14 +53,14 @@ public partial class USCIValidator : ValidatorBase
     /// <summary>
     /// 统一社会信用代码正则表达式（严格模式）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$")]
-    internal static partial Regex USCIStrictRegex();
+    internal static partial Regex StrictRegex();
 
     /// <summary>
     /// 统一社会信用代码正则表达式（宽松模式）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(([0-9A-Za-z]{15})|([0-9A-Za-z]{18})|([0-9A-Za-z]{20}))$")]
-    internal static partial Regex USCIRegex();
+    internal static partial Regex Regex();
 }

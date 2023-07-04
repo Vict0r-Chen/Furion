@@ -43,8 +43,8 @@ public partial class DateValidator : ValidatorBase
         if (value is string text)
         {
             return (Strict
-                ? DateStrictRegex()
-                : DateRegex()).IsMatch(text);
+                ? StrictRegex()
+                : Regex()).IsMatch(text);
         }
 
         return false;
@@ -53,14 +53,14 @@ public partial class DateValidator : ValidatorBase
     /// <summary>
     /// 日期正则表达式（严格模式）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29)$")]
-    internal static partial Regex DateStrictRegex();
+    internal static partial Regex StrictRegex();
 
     /// <summary>
     /// 日期正则表达式（宽松模式）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\d{1,4}(-)(1[0-2]|0?[1-9])\1(0?[1-9]|[1-2]\d|30|31)$")]
-    internal static partial Regex DateRegex();
+    internal static partial Regex Regex();
 }

@@ -37,7 +37,7 @@ public partial class Base64Validator : ValidatorBase
 
         if (value is string text)
         {
-            return Base64Regex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class Base64Validator : ValidatorBase
     /// <summary>
     /// Base64 正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\s*data:(?:[a-z]+\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*?)\s*$", RegexOptions.IgnoreCase)]
-    internal static partial Regex Base64Regex();
+    internal static partial Regex Regex();
 }

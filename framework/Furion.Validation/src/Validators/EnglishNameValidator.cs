@@ -37,7 +37,7 @@ public partial class EnglishNameValidator : ValidatorBase
 
         if (value is string text)
         {
-            return EnglishNameRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class EnglishNameValidator : ValidatorBase
     /// <summary>
     /// 英文姓名正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)")]
-    internal static partial Regex EnglishNameRegex();
+    internal static partial Regex Regex();
 }

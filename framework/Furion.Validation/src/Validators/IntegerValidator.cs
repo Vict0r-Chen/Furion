@@ -37,7 +37,7 @@ public partial class IntegerValidator : ValidatorBase
 
         if (value is string text)
         {
-            return IntegerRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class IntegerValidator : ValidatorBase
     /// <summary>
     /// 整数正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:0|(?:-?[1-9]\d*))$")]
-    internal static partial Regex IntegerRegex();
+    internal static partial Regex Regex();
 }

@@ -37,7 +37,7 @@ public partial class AgeValidator : ValidatorBase
 
         if (value is string text)
         {
-            return AgeRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class AgeValidator : ValidatorBase
     /// <summary>
     /// 年龄（0-120）正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:[0-9]|[1-9][0-9]?|1[01][0-9]|120)$")]
-    internal static partial Regex AgeRegex();
+    internal static partial Regex Regex();
 }

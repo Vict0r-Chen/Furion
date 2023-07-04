@@ -37,7 +37,7 @@ public partial class MD5Validator : ValidatorBase
 
         if (value is string text)
         {
-            return MD5Regex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class MD5Validator : ValidatorBase
     /// <summary>
     /// MD5 正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[a-fA-F0-9]{32}$")]
-    internal static partial Regex MD5Regex();
+    internal static partial Regex Regex();
 }

@@ -37,7 +37,7 @@ public partial class BankCardNumberValidator : ValidatorBase
 
         if (value is string text)
         {
-            return BankCardNumberRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class BankCardNumberValidator : ValidatorBase
     /// <summary>
     /// 银行卡号正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[1-9]\d{9,29}$")]
-    internal static partial Regex BankCardNumberRegex();
+    internal static partial Regex Regex();
 }

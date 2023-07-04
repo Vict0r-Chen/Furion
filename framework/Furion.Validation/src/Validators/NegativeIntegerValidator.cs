@@ -37,7 +37,7 @@ public partial class NegativeIntegerValidator : ValidatorBase
 
         if (value is string text)
         {
-            return NegativeIntegerRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class NegativeIntegerValidator : ValidatorBase
     /// <summary>
     /// 负整数正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^-[1-9]\d*$")]
-    internal static partial Regex NegativeIntegerRegex();
+    internal static partial Regex Regex();
 }

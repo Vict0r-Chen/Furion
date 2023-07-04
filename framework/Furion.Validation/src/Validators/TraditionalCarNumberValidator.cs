@@ -37,7 +37,7 @@ public partial class TraditionalCarNumberValidator : ValidatorBase
 
         if (value is string text)
         {
-            return TraditionalCarNumberRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class TraditionalCarNumberValidator : ValidatorBase
     /// <summary>
     /// 传统车牌号正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]$")]
-    internal static partial Regex TraditionalCarNumberRegex();
+    internal static partial Regex Regex();
 }

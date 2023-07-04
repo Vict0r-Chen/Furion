@@ -37,7 +37,7 @@ public partial class MilitaryTimeValidator : ValidatorBase
 
         if (value is string text)
         {
-            return MilitaryTimeRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class MilitaryTimeValidator : ValidatorBase
     /// <summary>
     /// 24 小时制时间（HH:mm:ss）正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$")]
-    internal static partial Regex MilitaryTimeRegex();
+    internal static partial Regex Regex();
 }

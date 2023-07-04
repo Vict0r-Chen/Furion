@@ -43,8 +43,8 @@ public partial class UrlValidator : ValidatorBase
         if (value is string text)
         {
             return (!WithPort
-                ? UrlRegex()
-                : UrlWithPortRegex()).IsMatch(text);
+                ? Regex()
+                : WithPortRegex()).IsMatch(text);
         }
 
         return false;
@@ -53,14 +53,14 @@ public partial class UrlValidator : ValidatorBase
     /// <summary>
     /// 网址正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?")]
-    internal static partial Regex UrlRegex();
+    internal static partial Regex Regex();
 
     /// <summary>
     /// 带端口的网址正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^((ht|f)tps?:\/\/)?[\w-]+(\.[\w-]+)+:\d{1,5}\/?$")]
-    internal static partial Regex UrlWithPortRegex();
+    internal static partial Regex WithPortRegex();
 }

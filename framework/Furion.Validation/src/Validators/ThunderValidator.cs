@@ -37,7 +37,7 @@ public partial class ThunderValidator : ValidatorBase
 
         if (value is string text)
         {
-            return ThunderLinkRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class ThunderValidator : ValidatorBase
     /// <summary>
     /// 迅雷链接正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[GCDZTSPKXLY1-9]\d{1,4}$")]
-    internal static partial Regex ThunderLinkRegex();
+    internal static partial Regex Regex();
 }

@@ -37,7 +37,7 @@ public partial class DomainValidator : ValidatorBase
 
         if (value is string text)
         {
-            return DomainRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class DomainValidator : ValidatorBase
     /// <summary>
     /// 域名正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^([0-9a-zA-Z-]{1,}\.)+([a-zA-Z]{2,})$")]
-    internal static partial Regex DomainRegex();
+    internal static partial Regex Regex();
 }

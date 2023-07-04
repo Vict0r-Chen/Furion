@@ -37,7 +37,7 @@ public partial class ChineseNameValidator : ValidatorBase
 
         if (value is string text)
         {
-            return ChineseNameRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class ChineseNameValidator : ValidatorBase
     /// <summary>
     /// 中文姓名正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:[\u4e00-\u9fa5·]{2,16})$")]
-    internal static partial Regex ChineseNameRegex();
+    internal static partial Regex Regex();
 }

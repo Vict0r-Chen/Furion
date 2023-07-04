@@ -37,7 +37,7 @@ public partial class IMEIValidator : ValidatorBase
 
         if (value is string text)
         {
-            return IMEIRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class IMEIValidator : ValidatorBase
     /// <summary>
     /// 手机机身码正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\d{15,17}$")]
-    internal static partial Regex IMEIRegex();
+    internal static partial Regex Regex();
 }

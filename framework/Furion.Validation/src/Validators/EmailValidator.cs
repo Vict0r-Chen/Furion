@@ -43,8 +43,8 @@ public partial class EmailValidator : ValidatorBase
         if (value is string text)
         {
             return (AllowChinese
-                ? EmailAllowChineseRegex()
-                : EmailRegex()).IsMatch(text);
+                ? Regex()
+                : AllowChineseRegex()).IsMatch(text);
         }
 
         return false;
@@ -53,14 +53,14 @@ public partial class EmailValidator : ValidatorBase
     /// <summary>
     /// 电子邮箱正则表达式（允许中文）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$")]
-    internal static partial Regex EmailAllowChineseRegex();
+    internal static partial Regex Regex();
 
     /// <summary>
     /// 电子邮箱正则表达式（不允许中文）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(([^<>()[\]\\.,;:\s@""]+(\.[^<>()[\]\\.,;:\s@""]+)*)|("".+""))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$")]
-    internal static partial Regex EmailRegex();
+    internal static partial Regex AllowChineseRegex();
 }

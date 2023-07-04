@@ -37,7 +37,7 @@ public partial class VersionValidator : ValidatorBase
 
         if (value is string text)
         {
-            return VersionRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class VersionValidator : ValidatorBase
     /// <summary>
     /// 版本号正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\d+(?:\.\d+){2}$")]
-    internal static partial Regex VersionRegex();
+    internal static partial Regex Regex();
 }

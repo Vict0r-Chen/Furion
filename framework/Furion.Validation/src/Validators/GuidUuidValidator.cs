@@ -37,7 +37,7 @@ public partial class GuidUuidValidator : ValidatorBase
 
         if (value is string text)
         {
-            return GuidUuidRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class GuidUuidValidator : ValidatorBase
     /// <summary>
     /// GUID/UUID 正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[a-f\d]{4}(?:[a-f\d]{4}-){4}[a-f\d]{12}$", RegexOptions.IgnoreCase)]
-    internal static partial Regex GuidUuidRegex();
+    internal static partial Regex Regex();
 }

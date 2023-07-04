@@ -37,7 +37,7 @@ public partial class StockCodeValidator : ValidatorBase
 
         if (value is string text)
         {
-            return StockCodeRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class StockCodeValidator : ValidatorBase
     /// <summary>
     /// 股票代码（A股）正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(s[hz]|S[HZ])(000[\d]{3}|002[\d]{3}|300[\d]{3}|600[\d]{3}|60[\d]{4})$")]
-    internal static partial Regex StockCodeRegex();
+    internal static partial Regex Regex();
 }

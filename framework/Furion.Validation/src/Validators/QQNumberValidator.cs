@@ -37,7 +37,7 @@ public partial class QQNumberValidator : ValidatorBase
 
         if (value is string text)
         {
-            return QQNumberRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class QQNumberValidator : ValidatorBase
     /// <summary>
     /// QQ 号正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[1-9][0-9]{4,10}$")]
-    internal static partial Regex QQNumberRegex();
+    internal static partial Regex Regex();
 }

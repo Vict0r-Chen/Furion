@@ -37,7 +37,7 @@ public partial class PostalCodeValidator : ValidatorBase
 
         if (value is string text)
         {
-            return PostalCodeRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class PostalCodeValidator : ValidatorBase
     /// <summary>
     /// 邮政编码正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(0[1-7]|1[0-356]|2[0-7]|3[0-6]|4[0-7]|5[1-7]|6[1-7]|7[0-5]|8[013-6])\d{4}$")]
-    internal static partial Regex PostalCodeRegex();
+    internal static partial Regex Regex();
 }

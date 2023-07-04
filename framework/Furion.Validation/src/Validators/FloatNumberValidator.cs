@@ -43,8 +43,8 @@ public partial class FloatNumberValidator : ValidatorBase
         if (value is string text)
         {
             return (Strict
-                ? FloatNumberStrictRegex()
-                : FloatNumberRegex()).IsMatch(text);
+                ? StrictRegex()
+                : Regex()).IsMatch(text);
         }
 
         return false;
@@ -53,14 +53,14 @@ public partial class FloatNumberValidator : ValidatorBase
     /// <summary>
     /// 浮点数正则表达式（严格模式）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(-?[1-9]\d*\.\d+|-?0\.\d*[1-9])$")]
-    internal static partial Regex FloatNumberStrictRegex();
+    internal static partial Regex StrictRegex();
 
     /// <summary>
     /// 浮点数正则表达式（宽松模式）
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(-?[1-9]\d*\.\d+|-?0\.\d*[1-9]\d*|0\.0+)$")]
-    internal static partial Regex FloatNumberRegex();
+    internal static partial Regex Regex();
 }

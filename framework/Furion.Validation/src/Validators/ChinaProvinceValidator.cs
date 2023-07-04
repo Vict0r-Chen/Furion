@@ -37,7 +37,7 @@ public partial class ChinaProvinceValidator : ValidatorBase
 
         if (value is string text)
         {
-            return ChinaProvinceRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class ChinaProvinceValidator : ValidatorBase
     /// <summary>
     /// 中国省份正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^浙江|上海|北京|天津|重庆|黑龙江|吉林|辽宁|内蒙古|河北|新疆|甘肃|青海|陕西|宁夏|河南|山东|山西|安徽|湖北|湖南|江苏|四川|贵州|云南|广西|西藏|江西|广东|福建|台湾|海南|香港|澳门$")]
-    internal static partial Regex ChinaProvinceRegex();
+    internal static partial Regex Regex();
 }

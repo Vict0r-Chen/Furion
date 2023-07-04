@@ -37,7 +37,7 @@ public partial class TrainNumberValidator : ValidatorBase
 
         if (value is string text)
         {
-            return TrainNumberRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class TrainNumberValidator : ValidatorBase
     /// <summary>
     /// 火车车次正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[GCDZTSPKXLY1-9]\d{1,4}$")]
-    internal static partial Regex TrainNumberRegex();
+    internal static partial Regex Regex();
 }

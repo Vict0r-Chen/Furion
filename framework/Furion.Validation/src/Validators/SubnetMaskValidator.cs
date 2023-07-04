@@ -37,7 +37,7 @@ public partial class SubnetMaskValidator : ValidatorBase
 
         if (value is string text)
         {
-            return SubnetMaskRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class SubnetMaskValidator : ValidatorBase
     /// <summary>
     /// 子网掩码正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(254|252|248|240|224|192|128)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(255|254|252|248|240|224|192|128|0)$")]
-    internal static partial Regex SubnetMaskRegex();
+    internal static partial Regex Regex();
 }

@@ -37,7 +37,7 @@ public partial class AmPmTimeValidator : ValidatorBase
 
         if (value is string text)
         {
-            return AmPmTimeRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class AmPmTimeValidator : ValidatorBase
     /// <summary>
     /// 12 小时制时间（hh:mm:ss）正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:1[0-2]|0?[1-9]):[0-5]\d:[0-5]\d$")]
-    internal static partial Regex AmPmTimeRegex();
+    internal static partial Regex Regex();
 }

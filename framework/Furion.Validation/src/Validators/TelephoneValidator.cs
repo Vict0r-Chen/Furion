@@ -37,7 +37,7 @@ public partial class TelephoneValidator : ValidatorBase
 
         if (value is string text)
         {
-            return TelephoneRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class TelephoneValidator : ValidatorBase
     /// <summary>
     /// 座机（电话）正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:(?:\d{3}-)?\d{8}|^(?:\d{4}-)?\d{7,8})(?:-\d+)?$")]
-    internal static partial Regex TelephoneRegex();
+    internal static partial Regex Regex();
 }

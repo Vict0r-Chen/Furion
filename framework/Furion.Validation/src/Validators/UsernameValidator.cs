@@ -37,7 +37,7 @@ public partial class UsernameValidator : ValidatorBase
 
         if (value is string text)
         {
-            return UsernameRegex().IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -46,7 +46,7 @@ public partial class UsernameValidator : ValidatorBase
     /// <summary>
     /// 用户名正则表达式
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[a-zA-Z0-9_-]{4,16}$")]
-    internal static partial Regex UsernameRegex();
+    internal static partial Regex Regex();
 }
