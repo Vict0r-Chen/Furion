@@ -17,13 +17,69 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器抽象基类
 /// </summary>
-public abstract class ValidatorBase
+public abstract partial class ValidatorBase
 {
+    /// <summary>
+    /// 错误消息资源访问器
+    /// </summary>
+    internal readonly Func<string> _errorMessageResourceAccessor;
+
     /// <summary>
     /// 构造函数
     /// </summary>
     protected ValidatorBase()
+        : this(() => Strings.ValidatorBase_Invalid)
     {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="errorMessageAccessor">错误消息资源访问器</param>
+    protected ValidatorBase(Func<string> errorMessageAccessor)
+    {
+        _errorMessageResourceAccessor = errorMessageAccessor;
+    }
+
+    /// <summary>
+    /// 错误消息
+    /// </summary>
+    protected string ErrorMessageString
+    {
+        get
+        {
+            return _errorMessageResourceAccessor();
+        }
+    }
+
+    /// <summary>
+    /// 获取验证结果
+    /// </summary>
+    /// <param name="value">待验证的值</param>
+    /// <returns><see cref="ValidationResult"/></returns>
+    public ValidationResult? GetValidationResult(object? value)
+    {
+        if (IsValid(value))
+        {
+            return ValidationResult.Success;
+        }
+
+        return new ValidationResult(FormatErrorMessage());
+    }
+
+    /// <summary>
+    /// 验证值有效性
+    /// </summary>
+    /// <param name="value">待验证的值</param>
+    /// <exception cref="ValidationException"></exception>
+    public void Validate(object? value)
+    {
+        if (IsValid(value))
+        {
+            return;
+        }
+
+        throw new ValidationException(FormatErrorMessage());
     }
 
     /// <summary>
@@ -31,16 +87,22 @@ public abstract class ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <returns><see cref="bool"/></returns>
-    public bool IsValid(object? value)
+    public abstract bool IsValid(object? value);
+
+    /// <summary>
+    /// 格式化错误消息
+    /// </summary>
+    /// <returns><see cref="string"/></returns>
+    protected virtual string FormatErrorMessage()
     {
-        // 执行验证逻辑
-        return Validate(value);
+        var errorMessage = Regex().Replace(ErrorMessageString, string.Empty);
+        return string.Format(CultureInfo.CurrentCulture, errorMessage);
     }
 
     /// <summary>
-    /// 验证逻辑
+    /// 移除占位符正则表达式
     /// </summary>
-    /// <param name="value">待验证的值</param>
-    /// <returns><see cref="bool"/></returns>
-    protected abstract bool Validate(object? value);
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
+    [GeneratedRegex(@"\{\d+\}\s*")]
+    private static partial Regex Regex();
 }

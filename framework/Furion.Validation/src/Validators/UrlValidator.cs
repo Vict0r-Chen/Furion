@@ -33,7 +33,7 @@ public partial class UrlValidator : ValidatorBase
     public bool WithPort { get; set; }
 
     /// <inheritdoc />
-    protected override bool Validate(object? value)
+    public override bool IsValid(object? value)
     {
         if (value == null)
         {

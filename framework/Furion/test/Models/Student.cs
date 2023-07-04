@@ -18,4 +18,7 @@ public class Student
 {
     [Required]
     public string? Name { get; set; }
+
+    [Age]
+    public int Age { get; set; }
 }

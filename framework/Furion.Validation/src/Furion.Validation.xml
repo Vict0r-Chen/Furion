@@ -4,6 +4,19 @@
         <name>Furion.Validation</name>
     </assembly>
     <members>
+        <member name="T:System.ComponentModel.DataAnnotations.AgeAttribute">
+            <summary>
+            年龄验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.AgeAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.AgeAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.ColorAttribute">
             <summary>
             颜色值验证特性
@@ -1675,6 +1688,38 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Regex_51">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Regex_51.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_51.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Regex_51.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_51.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Regex_51.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_51.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_51.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_51.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
         <member name="T:System.Text.RegularExpressions.Generated.Utilities">
             <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
         </member>
@@ -1747,6 +1792,32 @@
             或者
             </summary>
         </member>
+        <member name="T:Furion.Validation.Resources.Strings">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.Culture">
+            <summary>
+              重写当前线程的 CurrentUICulture 属性，对
+              使用此强类型资源类的所有资源查找执行重写。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.AgeValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid age format. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.ValidatorBase_Invalid">
+            <summary>
+              查找类似 The field is invalid. 的本地化字符串。
+            </summary>
+        </member>
         <member name="T:Furion.Validation.AgeValidator">
             <summary>
             年龄（0-120）验证器
@@ -1757,7 +1828,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.AgeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.AgeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.AgeValidator.Regex">
@@ -1789,7 +1860,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.AmPmTimeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.AmPmTimeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.AmPmTimeValidator.Regex">
@@ -1824,7 +1895,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.BankCardNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.BankCardNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.BankCardNumberValidator.Regex">
@@ -1848,7 +1919,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.Base64Validator.Validate(System.Object)">
+        <member name="M:Furion.Validation.Base64Validator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.Base64Validator.Regex">
@@ -1896,7 +1967,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.CarNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.CarNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.CarNumberValidator.Regex">
@@ -1922,7 +1993,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChinaProvinceValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.ChinaProvinceValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ChinaProvinceValidator.Regex">
@@ -1981,7 +2052,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChineseNameValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.ChineseNameValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ChineseNameValidator.Regex">
@@ -2004,7 +2075,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChineseValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.ChineseValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ChineseValidator.Regex">
@@ -2047,7 +2118,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ColorValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.ColorValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ColorValidator.Regex">
@@ -2211,7 +2282,7 @@
         <member name="P:Furion.Validation.CompositeValidator.Relationship">
             <inheritdoc cref="T:Furion.Validation.ValidatorRelationship" />
         </member>
-        <member name="M:Furion.Validation.CompositeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.CompositeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.CurrencyValidator">
@@ -2229,7 +2300,7 @@
             允许负数
             </summary>
         </member>
-        <member name="M:Furion.Validation.CurrencyValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.CurrencyValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.CurrencyValidator.PositiveRegex">
@@ -2289,7 +2360,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.DateTimeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.DateTimeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.DateTimeValidator.Regex">
@@ -2352,7 +2423,7 @@
             严格模式
             </summary>
         </member>
-        <member name="M:Furion.Validation.DateValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.DateValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.DateValidator.StrictRegex">
@@ -2510,7 +2581,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.DomainValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.DomainValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.DomainValidator.Regex">
@@ -2538,7 +2609,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.Ed2kValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.Ed2kValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.Ed2kValidator.Regex">
@@ -2568,7 +2639,7 @@
             允许中文
             </summary>
         </member>
-        <member name="M:Furion.Validation.EmailValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.EmailValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.EmailValidator.Regex">
@@ -2637,7 +2708,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.EnglishNameValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.EnglishNameValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.EnglishNameValidator.Regex">
@@ -2668,7 +2739,7 @@
             严格模式
             </summary>
         </member>
-        <member name="M:Furion.Validation.FloatNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.FloatNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.FloatNumberValidator.StrictRegex">
@@ -2729,7 +2800,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.GuidUuidValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.GuidUuidValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.GuidUuidValidator.Regex">
@@ -2756,7 +2827,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.IDNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.IDNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.IDNumberValidator.Regex">
@@ -2932,7 +3003,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.IMEIValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.IMEIValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.IMEIValidator.Regex">
@@ -2955,7 +3026,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.IntegerValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.IntegerValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.IntegerValidator.Regex">
@@ -2983,7 +3054,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.IPv4Validator.Validate(System.Object)">
+        <member name="M:Furion.Validation.IPv4Validator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.IPv4Validator.Regex">
@@ -3065,7 +3136,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.IPv6Validator.Validate(System.Object)">
+        <member name="M:Furion.Validation.IPv6Validator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.IPv6Validator.Regex">
@@ -3531,7 +3602,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.MacAddressValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.MacAddressValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.MacAddressValidator.Regex">
@@ -3566,7 +3637,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.MagnetValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.MagnetValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.MagnetValidator.Regex">
@@ -3591,7 +3662,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.MD5Validator.Validate(System.Object)">
+        <member name="M:Furion.Validation.MD5Validator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.MD5Validator.Regex">
@@ -3614,7 +3685,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.MilitaryTimeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.MilitaryTimeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.MilitaryTimeValidator.Regex">
@@ -3649,7 +3720,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.NegativeIntegerValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.NegativeIntegerValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.NegativeIntegerValidator.Regex">
@@ -3674,7 +3745,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.NewEnergyCarNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.NewEnergyCarNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.NewEnergyCarNumberValidator.Regex">
@@ -3711,7 +3782,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.NotEmptyValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.NotEmptyValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PassportValidator">
@@ -3724,7 +3795,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.PassportValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.PassportValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PassportValidator.Regex">
@@ -3776,7 +3847,7 @@
             严格模式
             </summary>
         </member>
-        <member name="M:Furion.Validation.PhoneNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.PhoneNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PhoneNumberValidator.StrictRegex">
@@ -3844,7 +3915,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.PositiveIntegerValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.PositiveIntegerValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PositiveIntegerValidator.Regex">
@@ -3869,7 +3940,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.PostalCodeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.PostalCodeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PostalCodeValidator.Regex">
@@ -3921,7 +3992,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.QQNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.QQNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.QQNumberValidator.Regex">
@@ -3950,7 +4021,7 @@
             是否允许空字符串
             </summary>
         </member>
-        <member name="M:Furion.Validation.RequiredValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.RequiredValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StockCodeValidator">
@@ -3963,7 +4034,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.StockCodeValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.StockCodeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.StockCodeValidator.Regex">
@@ -4014,7 +4085,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.StronglyPasswordValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.StronglyPasswordValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.StronglyPasswordValidator.Regex">
@@ -4052,7 +4123,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.SubnetMaskValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.SubnetMaskValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.SubnetMaskValidator.Regex">
@@ -4156,7 +4227,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.TelephoneValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.TelephoneValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.TelephoneValidator.Regex">
@@ -4193,7 +4264,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ThunderValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.ThunderValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ThunderValidator.Regex">
@@ -4217,7 +4288,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.TraditionalCarNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.TraditionalCarNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.TraditionalCarNumberValidator.Regex">
@@ -4243,7 +4314,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.TrainNumberValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.TrainNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.TrainNumberValidator.Regex">
@@ -4272,7 +4343,7 @@
             带端口号
             </summary>
         </member>
-        <member name="M:Furion.Validation.UrlValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.UrlValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.UrlValidator.Regex">
@@ -4343,7 +4414,7 @@
             严格模式
             </summary>
         </member>
-        <member name="M:Furion.Validation.USCIValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.USCIValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.USCIValidator.StrictRegex">
@@ -4385,7 +4456,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.UsernameValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.UsernameValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.UsernameValidator.Regex">
@@ -4403,10 +4474,40 @@
             验证器抽象基类
             </summary>
         </member>
+        <member name="F:Furion.Validation.ValidatorBase._errorMessageResourceAccessor">
+            <summary>
+            错误消息资源访问器
+            </summary>
+        </member>
         <member name="M:Furion.Validation.ValidatorBase.#ctor">
             <summary>
             构造函数
             </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase.#ctor(System.Func{System.String})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="errorMessageAccessor">错误消息资源访问器</param>
+        </member>
+        <member name="P:Furion.Validation.ValidatorBase.ErrorMessageString">
+            <summary>
+            错误消息
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResult(System.Object)">
+            <summary>
+            获取验证结果
+            </summary>
+            <param name="value">待验证的值</param>
+            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object)">
+            <summary>
+            验证值有效性
+            </summary>
+            <param name="value">待验证的值</param>
+            <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
             <summary>
@@ -4415,12 +4516,22 @@
             <param name="value">待验证的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object)">
+        <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage">
             <summary>
-            验证逻辑
+            格式化错误消息
             </summary>
-            <param name="value">待验证的值</param>
-            <returns><see cref="T:System.Boolean"/></returns>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase.Regex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match '{'.<br/>
+            ○ Match a Unicode digit atomically at least once.<br/>
+            ○ Match '}'.<br/>
+            ○ Match a whitespace character atomically any number of times.<br/>
+            </code>
+            </remarks>
         </member>
         <member name="T:Furion.Validation.VersionValidator">
             <summary>
@@ -4432,7 +4543,7 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.VersionValidator.Validate(System.Object)">
+        <member name="M:Furion.Validation.VersionValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.VersionValidator.Regex">

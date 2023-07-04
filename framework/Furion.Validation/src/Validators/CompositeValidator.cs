@@ -55,7 +55,7 @@ public partial class CompositeValidator : ValidatorBase
     public ValidatorRelationship Relationship { get; init; }
 
     /// <inheritdoc />
-    protected override bool Validate(object? value)
+    public override bool IsValid(object? value)
     {
         return Relationship switch
         {

@@ -12,41 +12,25 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// IPv4 验证器
+/// 年龄验证特性
 /// </summary>
-public partial class IPv4Validator : ValidatorBase
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+public class AgeAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public IPv4Validator()
-        : base()
+    public AgeAttribute()
+        : base(() => Strings.AgeValidator_Invalid)
     {
     }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value == null)
-        {
-            return true;
-        }
-
-        if (value is string text)
-        {
-            return Regex().IsMatch(text);
-        }
-
-        return false;
+        return new AgeValidator().IsValid(value);
     }
-
-    /// <summary>
-    /// IPv4 正则表达式
-    /// </summary>
-    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$")]
-    internal static partial Regex Regex();
 }

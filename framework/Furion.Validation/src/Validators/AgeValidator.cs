@@ -23,12 +23,12 @@ public partial class AgeValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public AgeValidator()
-        : base()
+        : base(() => Strings.AgeValidator_Invalid)
     {
     }
 
     /// <inheritdoc />
-    protected override bool Validate(object? value)
+    public override bool IsValid(object? value)
     {
         if (value == null)
         {
@@ -38,6 +38,11 @@ public partial class AgeValidator : ValidatorBase
         if (value is string text)
         {
             return Regex().IsMatch(text);
+        }
+
+        if (value is int age)
+        {
+            return age >= 0 && age <= 120;
         }
 
         return false;

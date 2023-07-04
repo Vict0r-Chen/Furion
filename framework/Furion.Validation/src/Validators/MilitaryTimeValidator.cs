@@ -28,7 +28,7 @@ public partial class MilitaryTimeValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    protected override bool Validate(object? value)
+    public override bool IsValid(object? value)
     {
         if (value == null)
         {

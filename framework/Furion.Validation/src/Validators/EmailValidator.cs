@@ -33,7 +33,7 @@ public partial class EmailValidator : ValidatorBase
     public bool AllowChinese { get; set; }
 
     /// <inheritdoc />
-    protected override bool Validate(object? value)
+    public override bool IsValid(object? value)
     {
         if (value == null)
         {
