@@ -1,0 +1,66 @@
+﻿// 麻省理工学院许可证
+//
+// 版权所有 (c) 2020-2023 百小僧，百签科技（广东）有限公司
+//
+// 特此免费授予获得本软件及其相关文档文件（以下简称“软件”）副本的任何人以处理本软件的权利，
+// 包括但不限于使用、复制、修改、合并、发布、分发、再许可、销售软件的副本，
+// 以及允许拥有软件副本的个人进行上述行为，但须遵守以下条件：
+//
+// 在所有副本或重要部分的软件中必须包括上述版权声明和本许可声明。
+//
+// 软件按“原样”提供，不提供任何形式的明示或暗示的保证，包括但不限于对适销性、适用性和非侵权的保证。
+// 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
+// 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
+
+namespace Furion.Validation;
+
+/// <summary>
+/// 日期验证器
+/// </summary>
+public partial class DateValidator : ValidatorBase
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public DateValidator()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// 严格模式
+    /// </summary>
+    public bool Strict { get; set; } = true;
+
+    /// <inheritdoc />
+    protected override bool Validate(object? value)
+    {
+        if (value == null)
+        {
+            return true;
+        }
+
+        if (value is string text)
+        {
+            return (Strict
+                ? DateStrictRegex()
+                : DateRegex()).IsMatch(text);
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 日期正则表达式（严格模式）
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29)$")]
+    internal static partial Regex DateStrictRegex();
+
+    /// <summary>
+    /// 日期正则表达式（宽松模式）
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex(@"^\d{1,4}(-)(1[0-2]|0?[1-9])\1(0?[1-9]|[1-2]\d|30|31)$")]
+    internal static partial Regex DateRegex();
+}
