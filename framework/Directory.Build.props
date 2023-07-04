@@ -24,6 +24,7 @@
 		<RepositoryType>Gitee</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+		<GenerateResxSourceIncludeDefaultValues>true</GenerateResxSourceIncludeDefaultValues>
 	</PropertyGroup>
 
 	<ItemGroup>
