@@ -38,8 +38,16 @@ public abstract partial class ValidatorBase
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
     protected ValidatorBase(Func<string> errorMessageAccessor)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(errorMessageAccessor, nameof(errorMessageAccessor));
+
         _errorMessageResourceAccessor = errorMessageAccessor;
     }
+
+    /// <summary>
+    /// 错误消息
+    /// </summary>
+    public string? ErrorMessage { get; set; }
 
     /// <summary>
     /// 错误消息
@@ -57,14 +65,16 @@ public abstract partial class ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual ICollection<ValidationResult>? GetValidationResults(object? value)
+    public virtual List<ValidationResult>? GetValidationResults(object? value)
     {
         if (IsValid(value))
         {
             return null;
         }
 
-        return new[] { new ValidationResult(FormatErrorMessage()) };
+        return new List<ValidationResult> {
+            new ValidationResult(FormatErrorMessage())
+        };
     }
 
     /// <summary>
@@ -83,7 +93,7 @@ public abstract partial class ValidatorBase
     /// <returns><see cref="string"/></returns>
     protected virtual string FormatErrorMessage()
     {
-        var errorMessage = Regex().Replace(ErrorMessageString, string.Empty);
+        var errorMessage = PlaceholderRegex().Replace(ErrorMessage ?? ErrorMessageString, string.Empty);
         return string.Format(CultureInfo.CurrentCulture, errorMessage);
     }
 
@@ -99,7 +109,7 @@ public abstract partial class ValidatorBase
             return;
         }
 
-        throw new ValidationException(GetValidationResult(value)?.ErrorMessage ?? ErrorMessageString);
+        throw new ValidationException(GetValidationResult(value)?.ErrorMessage ?? ErrorMessage ?? ErrorMessageString);
     }
 
     /// <summary>
@@ -114,5 +124,5 @@ public abstract partial class ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"\{\d+\}\s*")]
-    private static partial Regex Regex();
+    internal static partial Regex PlaceholderRegex();
 }

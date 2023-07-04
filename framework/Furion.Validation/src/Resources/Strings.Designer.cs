@@ -70,6 +70,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The {0} field is required. 的本地化字符串。
+        /// </summary>
+        internal static string RequiredValidator_Invalid {
+            get {
+                return ResourceManager.GetString("RequiredValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field is invalid. 的本地化字符串。
         /// </summary>
         internal static string ValidatorBase_Invalid {

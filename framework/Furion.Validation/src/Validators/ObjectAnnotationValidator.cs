@@ -39,7 +39,7 @@ public partial class ObjectAnnotationValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override ICollection<ValidationResult>? GetValidationResults(object? value)
+    public override List<ValidationResult>? GetValidationResults(object? value)
     {
         if (value == null)
         {
@@ -60,7 +60,7 @@ public partial class ObjectAnnotationValidator : ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool TryValidate(object value, out ICollection<ValidationResult> validationResults)
+    internal static bool TryValidate(object value, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(value, nameof(value));
@@ -68,6 +68,6 @@ public partial class ObjectAnnotationValidator : ValidatorBase
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(value);
         validationResults = new List<ValidationResult>();
-        return Validator.TryValidateObject(value, validationContext, validationResults);
+        return Validator.TryValidateObject(value, validationContext, validationResults, true);
     }
 }

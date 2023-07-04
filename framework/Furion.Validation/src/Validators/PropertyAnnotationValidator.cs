@@ -25,13 +25,32 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="instance">对象实例</param>
-    public PropertyAnnotationValidator(T instance)
+    /// <param name="propertyExpression">属性表达式</param>
+    public PropertyAnnotationValidator(T instance, Expression<Func<T, object?>> propertyExpression)
         : base()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
 
         Instance = instance;
+        PropertyName = GetPropertyName(propertyExpression);
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <param name="propertyName">属性名称</param>
+    public PropertyAnnotationValidator(T instance, string propertyName)
+        : base()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
+
+        Instance = instance;
+        PropertyName = propertyName;
     }
 
     /// <summary>
@@ -39,25 +58,20 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// </summary>
     internal T Instance { get; init; }
 
+    /// <summary>
+    /// 属性名称
+    /// </summary>
+    internal string? PropertyName { get; set; }
+
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value == null)
-        {
-            return true;
-        }
-
         return TryValidate(value, out _);
     }
 
     /// <inheritdoc />
-    public override ICollection<ValidationResult>? GetValidationResults(object? value)
+    public override List<ValidationResult>? GetValidationResults(object? value)
     {
-        if (value == null)
-        {
-            return null;
-        }
-
         if (!TryValidate(value, out var validationResults))
         {
             return validationResults;
@@ -72,14 +86,40 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object value, out ICollection<ValidationResult> validationResults)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
-
         // 调用 Validator 静态类验证
-        var validationContext = new ValidationContext(Instance);
+        var validationContext = new ValidationContext(Instance)
+        {
+            MemberName = PropertyName
+        };
         validationResults = new List<ValidationResult>();
         return Validator.TryValidateProperty(value, validationContext, validationResults);
+    }
+
+    /// <summary>
+    /// 解析表达式属性名称
+    /// </summary>
+    /// <param name="propertyExpression">属性表达式</param>
+    /// <returns><see cref="string"/></returns>
+    /// <exception cref="ArgumentException"></exception>
+    internal static string GetPropertyName(Expression<Func<T, object?>> propertyExpression)
+    {
+        // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
+        if (propertyExpression.Body is MemberExpression memberExpression)
+        {
+            // 获取 MemberExpression 的 Member 属性，返回属性的名称
+            return memberExpression.Member.Name;
+        }
+        // 如果主体是 UnaryExpression 类型，则继续解析
+        else if (propertyExpression.Body is UnaryExpression unaryExpression
+            && unaryExpression.Operand is MemberExpression nestedMemberExpression)
+        {
+            // 获取嵌套的 MemberExpression 的 Member 属性，返回属性的名称
+            return nestedMemberExpression.Member.Name;
+        }
+
+        // 如果无法解析属性名称，抛出 ArgumentException 异常
+        throw new ArgumentException($"The property name for type {typeof(T).Name} cannot be resolved.");
     }
 }

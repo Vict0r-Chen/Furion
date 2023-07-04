@@ -22,8 +22,8 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="validationAttributes">验证属性集合</param>
-    public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
+    /// <param name="validationAttributes">验证特性集合</param>
+    public ValueAnnotationValidator(IEnumerable<ValidationAttribute> validationAttributes)
         : base()
     {
         // 空检查
@@ -33,38 +33,19 @@ public partial class ValueAnnotationValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="validationAttributes">验证属性集合</param>
-    public ValueAnnotationValidator(IEnumerable<ValidationAttribute> validationAttributes)
-        : this(validationAttributes.ToArray())
-    {
-    }
-
-    /// <summary>
-    /// 验证属性集合
+    /// 验证特性集合
     /// </summary>
     internal IEnumerable<ValidationAttribute> ValidationAttributes { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value == null)
-        {
-            return true;
-        }
-
         return TryValidate(value, out _);
     }
 
     /// <inheritdoc />
-    public override ICollection<ValidationResult>? GetValidationResults(object? value)
+    public override List<ValidationResult>? GetValidationResults(object? value)
     {
-        if (value == null)
-        {
-            return null;
-        }
-
         if (!TryValidate(value, out var validationResults))
         {
             return validationResults;
@@ -79,13 +60,28 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object value, out ICollection<ValidationResult> validationResults)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults)
     {
+        // 必填特性验证
+        var requiredAttribute = ValidationAttributes.OfType<RequiredAttribute>().FirstOrDefault();
+        if (requiredAttribute is not null && value is null)
+        {
+            validationResults = new List<ValidationResult>()
+            {
+                new ValidationResult(requiredAttribute.FormatErrorMessage("null"))
+            };
+
+            return false;
+        }
+
         // 空检查
         ArgumentNullException.ThrowIfNull(value, nameof(value));
 
         // 调用 Validator 静态类验证
-        var validationContext = new ValidationContext(value);
+        var validationContext = new ValidationContext(value)
+        {
+            MemberName = value.ToString()
+        };
         validationResults = new List<ValidationResult>();
         return Validator.TryValidateValue(value, validationContext, validationResults, ValidationAttributes);
     }
