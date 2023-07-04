@@ -49,6 +49,12 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
         ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
 
+        // 属性定义检查
+        if (!typeof(T).GetProperties().Any(p => p.Name == propertyName))
+        {
+            throw new ArgumentException($"The definition of the `{propertyName}` attribute cannot be found in Type {typeof(T).Name}.", nameof(propertyName));
+        }
+
         Instance = instance;
         PropertyName = propertyName;
     }
