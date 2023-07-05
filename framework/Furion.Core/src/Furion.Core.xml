@@ -240,6 +240,19 @@
             <param name="exported">类型导出设置</param>
             <returns><see cref="T:System.Type"/>[]</returns>
         </member>
+        <member name="T:System.Collections.Generic.ICollectionExtensions">
+            <summary>
+            <see cref="T:System.Collections.Generic.ICollection`1"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.Collections.Generic.ICollectionExtensions.IsNullOrEmpty``1(System.Collections.Generic.ICollection{``0})">
+            <summary>
+            判断集合是否为空
+            </summary>
+            <typeparam name="T">集合类型</typeparam>
+            <param name="collection"><see cref="T:System.Collections.Generic.ICollection`1"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="T:System.Collections.Generic.IDictionaryExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.IDictionary`2"/> 拓展类
@@ -263,19 +276,6 @@
             <typeparam name="TValue">字典值类型</typeparam>
             <param name="dictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
             <param name="concatDictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
-        </member>
-        <member name="T:System.Collections.Generic.IEnumerableExtensions">
-            <summary>
-            <see cref="T:System.Collections.Generic.IEnumerable`1"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:System.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            判断集合是否为空
-            </summary>
-            <typeparam name="T">集合类型</typeparam>
-            <param name="collection"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:System.TypeExtensions">
             <summary>

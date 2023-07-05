@@ -12,26 +12,45 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Core.Tests;
+namespace Furion.Validation;
 
-public class IEnumerableExtensionsTests
+/// <summary>
+/// 布尔值验证器
+/// </summary>
+public partial class BoolValidator : ValidatorBase
 {
-    [Fact]
-    public void IsNullOrEmpty()
+    /// <summary>
+    /// bool 类型字符串集合
+    /// </summary>
+    internal static readonly string[] boolStrings = new[] { "true", "false" };
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public BoolValidator()
+        : base()
     {
-        IEnumerable<int>? collection = null;
-        Assert.True(collection.IsNullOrEmpty());
+    }
 
-        var list = new List<int>();
-        Assert.True(list.IsNullOrEmpty());
+    /// <inheritdoc />
+    public override bool IsValid(object? value)
+    {
+        if (value == null)
+        {
+            return false;
+        }
 
-        list.Add(1);
-        Assert.False(list.IsNullOrEmpty());
+        if (value is bool)
+        {
+            return true;
+        }
 
-        var array = Array.Empty<int>();
-        Assert.True(array.IsNullOrEmpty());
+        if (value is string text
+            && boolStrings.Contains(text, StringComparer.OrdinalIgnoreCase))
+        {
+            return true;
+        }
 
-        var array1 = new[] { 1 };
-        Assert.False(array1.IsNullOrEmpty());
+        return false;
     }
 }

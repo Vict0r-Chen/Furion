@@ -12,40 +12,21 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace System.Collections.Generic;
 
 /// <summary>
-/// 非空验证器
+/// <see cref="ICollection{T}"/> 拓展类
 /// </summary>
-public partial class NotEmptyValidator : ValidatorBase
+internal static class ICollectionExtensions
 {
     /// <summary>
-    /// 构造函数
+    /// 判断集合是否为空
     /// </summary>
-    public NotEmptyValidator()
-        : base()
+    /// <typeparam name="T">集合类型</typeparam>
+    /// <param name="collection"><see cref="ICollection{T}"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsNullOrEmpty<T>(this ICollection<T>? collection)
     {
-    }
-
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        if (value == null)
-        {
-            return false;
-        }
-
-        if (value is string text)
-        {
-            return !string.IsNullOrEmpty(text);
-        }
-
-        if (value is IEnumerable collection)
-        {
-            var enumerator = collection.GetEnumerator();
-            return enumerator.MoveNext();
-        }
-
-        return false;
+        return collection is null || collection.Count == 0;
     }
 }

@@ -14,6 +14,7 @@
 
 global using Furion.Validation;
 global using Furion.Validation.Resources;
+global using System.Collections;
 global using System.ComponentModel.DataAnnotations;
 global using System.Globalization;
 global using System.Linq.Expressions;

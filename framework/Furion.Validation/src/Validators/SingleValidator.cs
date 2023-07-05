@@ -15,14 +15,14 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 非空验证器
+/// 单个值验证器
 /// </summary>
-public partial class NotEmptyValidator : ValidatorBase
+public partial class SingleValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public NotEmptyValidator()
+    public SingleValidator()
         : base()
     {
     }
@@ -35,15 +35,11 @@ public partial class NotEmptyValidator : ValidatorBase
             return false;
         }
 
-        if (value is string text)
-        {
-            return !string.IsNullOrEmpty(text);
-        }
-
         if (value is IEnumerable collection)
         {
             var enumerator = collection.GetEnumerator();
-            return enumerator.MoveNext();
+            return enumerator.MoveNext()
+                && !enumerator.MoveNext();
         }
 
         return false;

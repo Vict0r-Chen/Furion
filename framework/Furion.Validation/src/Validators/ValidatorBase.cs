@@ -17,7 +17,31 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器抽象基类
 /// </summary>
-public abstract partial class ValidatorBase
+public abstract partial class ValidatorBase : ValidatorBase<object>
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    protected ValidatorBase()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="errorMessageAccessor">错误消息资源访问器</param>
+    protected ValidatorBase(Func<string> errorMessageAccessor)
+        : base(errorMessageAccessor)
+    {
+    }
+}
+
+/// <summary>
+/// 验证器抽象基类
+/// </summary>
+/// <typeparam name="T">泛型类型</typeparam>
+public abstract partial class ValidatorBase<T>
 {
     /// <summary>
     /// 错误消息资源访问器
@@ -66,7 +90,7 @@ public abstract partial class ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <param name="memberName">成员名称</param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
+    public virtual List<ValidationResult>? GetValidationResults(T? value, string? memberName = null)
     {
         if (IsValid(value))
         {
@@ -84,7 +108,7 @@ public abstract partial class ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <param name="memberName">成员名称</param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual ValidationResult? GetValidationResult(object? value, string? memberName = null)
+    public virtual ValidationResult? GetValidationResult(T? value, string? memberName = null)
     {
         return GetValidationResults(value, memberName)?.FirstOrDefault();
     }
@@ -111,7 +135,7 @@ public abstract partial class ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <exception cref="ValidationException"></exception>
-    public void Validate(object? value)
+    public void Validate(T? value)
     {
         if (IsValid(value))
         {
@@ -126,7 +150,7 @@ public abstract partial class ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <returns><see cref="bool"/></returns>
-    public abstract bool IsValid(object? value);
+    public abstract bool IsValid(T? value);
 
     /// <summary>
     /// 移除占位符正则表达式

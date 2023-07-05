@@ -17,7 +17,22 @@ namespace Furion.Validation;
 /// <summary>
 /// 对象注解（特性）验证器
 /// </summary>
-public partial class ObjectAnnotationValidator : ValidatorBase
+public partial class ObjectAnnotationValidator : ObjectAnnotationValidator<object>
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public ObjectAnnotationValidator()
+        : base()
+    {
+    }
+}
+
+/// <summary>
+/// 对象注解（特性）验证器
+/// </summary>
+/// <typeparam name="T">泛型类型</typeparam>
+public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
 {
     /// <summary>
     /// 构造函数
@@ -28,7 +43,7 @@ public partial class ObjectAnnotationValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override bool IsValid(object? value)
+    public override bool IsValid(T? value)
     {
         if (value == null)
         {
@@ -39,7 +54,7 @@ public partial class ObjectAnnotationValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
+    public override List<ValidationResult>? GetValidationResults(T? value, string? memberName = null)
     {
         if (value == null)
         {
@@ -60,7 +75,7 @@ public partial class ObjectAnnotationValidator : ValidatorBase
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool TryValidate(object value, out List<ValidationResult> validationResults)
+    internal static bool TryValidate(T value, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(value, nameof(value));

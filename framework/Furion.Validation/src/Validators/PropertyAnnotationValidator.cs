@@ -17,16 +17,16 @@ namespace Furion.Validation;
 /// <summary>
 /// 属性注解（特性）验证器
 /// </summary>
-/// <typeparam name="T">对象类型</typeparam>
-public partial class PropertyAnnotationValidator<T> : ValidatorBase
-    where T : class
+/// <typeparam name="TInstance">对象类型</typeparam>
+public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
+    where TInstance : class
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="instance">对象实例</param>
     /// <param name="propertyExpression">属性表达式</param>
-    public PropertyAnnotationValidator(T instance, Expression<Func<T, object?>> propertyExpression)
+    public PropertyAnnotationValidator(TInstance instance, Expression<Func<TInstance, object?>> propertyExpression)
         : base()
     {
         // 空检查
@@ -42,7 +42,7 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// </summary>
     /// <param name="instance">对象实例</param>
     /// <param name="propertyName">属性名称</param>
-    public PropertyAnnotationValidator(T instance, string propertyName)
+    public PropertyAnnotationValidator(TInstance instance, string propertyName)
         : base()
     {
         // 空检查
@@ -50,9 +50,9 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
         ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
 
         // 属性定义检查
-        if (!typeof(T).GetProperties().Any(p => p.Name == propertyName))
+        if (!typeof(TInstance).GetProperties().Any(p => p.Name == propertyName))
         {
-            throw new ArgumentException($"The definition of the `{propertyName}` attribute cannot be found in Type {typeof(T).Name}.", nameof(propertyName));
+            throw new ArgumentException($"The definition of the `{propertyName}` attribute cannot be found in Type {typeof(TInstance).Name}.", nameof(propertyName));
         }
 
         Instance = instance;
@@ -62,7 +62,7 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// <summary>
     /// 对象实例
     /// </summary>
-    internal T Instance { get; init; }
+    internal TInstance Instance { get; init; }
 
     /// <summary>
     /// 属性名称
@@ -91,13 +91,14 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
+    /// <param name="memberName">成员名称</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, string? memberName = null)
     {
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(Instance)
         {
-            MemberName = PropertyName
+            MemberName = memberName ?? PropertyName
         };
         validationResults = new List<ValidationResult>();
         return Validator.TryValidateProperty(value, validationContext, validationResults);
@@ -109,7 +110,7 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// <param name="propertyExpression">属性表达式</param>
     /// <returns><see cref="string"/></returns>
     /// <exception cref="ArgumentException"></exception>
-    internal static string GetPropertyName(Expression<Func<T, object?>> propertyExpression)
+    internal static string GetPropertyName(Expression<Func<TInstance, object?>> propertyExpression)
     {
         // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
         if (propertyExpression.Body is MemberExpression memberExpression)
@@ -126,6 +127,6 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
         }
 
         // 如果无法解析属性名称，抛出 ArgumentException 异常
-        throw new ArgumentException($"The property name for type {typeof(T).Name} cannot be resolved.");
+        throw new ArgumentException($"The property name for type {typeof(TInstance).Name} cannot be resolved.");
     }
 }

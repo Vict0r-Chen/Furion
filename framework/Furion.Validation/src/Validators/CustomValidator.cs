@@ -15,37 +15,34 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 非空验证器
+/// 自定义验证器
 /// </summary>
-public partial class NotEmptyValidator : ValidatorBase
+/// <typeparam name="T">泛型类型</typeparam>
+public partial class CustomValidator<T> : ValidatorBase<T>
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public NotEmptyValidator()
-        : base()
+    /// <param name="validatorAccessor">验证访问器</param>
+    public CustomValidator(Func<T, bool> validatorAccessor)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validatorAccessor, nameof(validatorAccessor));
+
+        ValidatorAccessor = validatorAccessor;
     }
 
+    /// <summary>
+    /// 验证访问器
+    /// </summary>
+    internal Func<T, bool> ValidatorAccessor { get; init; }
+
     /// <inheritdoc />
-    public override bool IsValid(object? value)
+    public override bool IsValid(T? value)
     {
-        if (value == null)
-        {
-            return false;
-        }
+        // 空检查
+        ArgumentNullException.ThrowIfNull(value, nameof(value));
 
-        if (value is string text)
-        {
-            return !string.IsNullOrEmpty(text);
-        }
-
-        if (value is IEnumerable collection)
-        {
-            var enumerator = collection.GetEnumerator();
-            return enumerator.MoveNext();
-        }
-
-        return false;
+        return ValidatorAccessor(value);
     }
 }

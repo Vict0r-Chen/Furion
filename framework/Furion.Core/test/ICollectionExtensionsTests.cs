@@ -12,21 +12,26 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.Collections.Generic;
+namespace Furion.Core.Tests;
 
-/// <summary>
-/// <see cref="IEnumerable{T}"/> 拓展类
-/// </summary>
-internal static class IEnumerableExtensions
+public class ICollectionExtensionsTests
 {
-    /// <summary>
-    /// 判断集合是否为空
-    /// </summary>
-    /// <typeparam name="T">集合类型</typeparam>
-    /// <param name="collection"><see cref="IEnumerable{T}"/></param>
-    /// <returns><see cref="bool"/></returns>
-    internal static bool IsNullOrEmpty<T>(this IEnumerable<T>? collection)
+    [Fact]
+    public void IsNullOrEmpty()
     {
-        return collection is null || !collection.Any();
+        ICollection<int>? collection = null;
+        Assert.True(collection.IsNullOrEmpty());
+
+        var list = new List<int>();
+        Assert.True(list.IsNullOrEmpty());
+
+        list.Add(1);
+        Assert.False(list.IsNullOrEmpty());
+
+        var array = Array.Empty<int>();
+        Assert.True(array.IsNullOrEmpty());
+
+        var array1 = new[] { 1 };
+        Assert.False(array1.IsNullOrEmpty());
     }
 }
