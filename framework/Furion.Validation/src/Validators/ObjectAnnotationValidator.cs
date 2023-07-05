@@ -61,7 +61,7 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(T? value, string? memberName = null)
+    public override List<ValidationResult>? GetValidationResults(T? value, IEnumerable<string>? memberNames = null)
     {
         if (value == null)
         {
@@ -96,6 +96,7 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(value);
         validationResults = new List<ValidationResult>();
+
         return Validator.TryValidateObject(value, validationContext, validationResults, true);
     }
 }

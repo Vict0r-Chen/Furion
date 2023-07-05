@@ -44,9 +44,9 @@ public partial class ValueAnnotationValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
+    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
-        if (!TryValidate(value, out var validationResults))
+        if (!TryValidate(value, out var validationResults, memberNames))
         {
             return validationResults;
         }
@@ -59,8 +59,9 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
+    /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, IEnumerable<string>? memberNames = null)
     {
         // 必填特性验证
         var requiredAttribute = ValidationAttributes.OfType<RequiredAttribute>().FirstOrDefault();
@@ -68,7 +69,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
         {
             validationResults = new List<ValidationResult>()
             {
-                new ValidationResult(requiredAttribute.FormatErrorMessage("null"))
+                new ValidationResult(requiredAttribute.FormatErrorMessage( memberNames?.FirstOrDefault() ?? "null"), memberNames)
             };
 
             return false;
@@ -80,9 +81,10 @@ public partial class ValueAnnotationValidator : ValidatorBase
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(value)
         {
-            MemberName = value.ToString()
+            MemberName = memberNames?.FirstOrDefault() ?? value.ToString()
         };
         validationResults = new List<ValidationResult>();
+
         return Validator.TryValidateValue(value, validationContext, validationResults, ValidationAttributes);
     }
 }

@@ -76,9 +76,9 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
+    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
-        if (!TryValidate(value, out var validationResults))
+        if (!TryValidate(value, out var validationResults, memberNames))
         {
             return validationResults;
         }
@@ -91,16 +91,17 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
-    /// <param name="memberName">成员名称</param>
+    /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, string? memberName = null)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, IEnumerable<string>? memberNames = null)
     {
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(Instance)
         {
-            MemberName = memberName ?? PropertyName
+            MemberName = memberNames?.FirstOrDefault() ?? PropertyName
         };
         validationResults = new List<ValidationResult>();
+
         return Validator.TryValidateProperty(value, validationContext, validationResults);
     }
 

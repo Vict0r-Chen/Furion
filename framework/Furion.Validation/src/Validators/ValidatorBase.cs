@@ -46,7 +46,7 @@ public abstract partial class ValidatorBase : ValidatorBase<object>
 /// <summary>
 /// 验证器抽象基类
 /// </summary>
-/// <typeparam name="T">泛型类型</typeparam>
+/// <typeparam name="T">验证值的类型</typeparam>
 public abstract partial class ValidatorBase<T>
 {
     /// <summary>
@@ -80,7 +80,7 @@ public abstract partial class ValidatorBase<T>
     public string? ErrorMessage { get; set; }
 
     /// <summary>
-    /// 错误消息
+    /// 默认错误消息
     /// </summary>
     protected string ErrorMessageString
     {
@@ -91,12 +91,12 @@ public abstract partial class ValidatorBase<T>
     }
 
     /// <summary>
-    /// 获取验证结果集合
+    /// 获取验证结果
     /// </summary>
-    /// <param name="value">待验证的值</param>
-    /// <param name="memberName">成员名称</param>
-    /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual List<ValidationResult>? GetValidationResults(T? value, string? memberName = null)
+    /// <param name="value">验证的值</param>
+    /// <param name="memberNames">成员名称集合</param>
+    /// <returns><see cref="List{T}"/></returns>
+    public virtual List<ValidationResult>? GetValidationResults(T? value, IEnumerable<string>? memberNames = null)
     {
         if (IsValid(value))
         {
@@ -104,19 +104,19 @@ public abstract partial class ValidatorBase<T>
         }
 
         return new List<ValidationResult> {
-            new ValidationResult(FormatErrorMessage(memberName))
+            new ValidationResult(FormatErrorMessage(memberNames), memberNames)
         };
     }
 
     /// <summary>
-    /// 获取单个验证结果
+    /// 获取验证结果
     /// </summary>
-    /// <param name="value">待验证的值</param>
-    /// <param name="memberName">成员名称</param>
-    /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual ValidationResult? GetValidationResult(T? value, string? memberName = null)
+    /// <param name="value">验证的值</param>
+    /// <param name="memberNames">成员名称集合</param>
+    /// <returns><see cref="ValidationResult"/></returns>
+    public virtual ValidationResult? GetValidationResult(T? value, IEnumerable<string>? memberNames = null)
     {
-        return GetValidationResults(value, memberName)?.FirstOrDefault();
+        return GetValidationResults(value, memberNames)?.FirstOrDefault();
     }
 
     /// <summary>
@@ -133,46 +133,50 @@ public abstract partial class ValidatorBase<T>
     /// <summary>
     /// 格式化错误消息
     /// </summary>
-    /// <param name="memberName">成员名称</param>
+    /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="string"/></returns>
-    protected virtual string FormatErrorMessage(string? memberName = null)
+    protected virtual string FormatErrorMessage(IEnumerable<string>? memberNames = null)
     {
+        // 获取错误消息
         var errorMessage = ErrorMessage ?? ErrorMessageString;
 
-        if (memberName is null)
+        // 检查是否设置成员名称，用于替换错误消息中的占位符
+        if (memberNames is null)
         {
             return string.Format(CultureInfo.CurrentCulture, PlaceholderRegex().Replace(errorMessage, string.Empty));
         }
 
-        return string.Format(CultureInfo.CurrentCulture, errorMessage, memberName);
+        return string.Format(CultureInfo.CurrentCulture, errorMessage, memberNames.ToArray());
     }
 
     /// <summary>
-    /// 验证值有效性
+    /// 执行验证
     /// </summary>
-    /// <param name="value">待验证的值</param>
+    /// <param name="value">验证的值</param>
+    /// <param name="memberNames">成员名称集合</param>
     /// <exception cref="ValidationException"></exception>
-    public void Validate(T? value)
+    public virtual void Validate(T? value, IEnumerable<string>? memberNames = null)
     {
-        if (IsValid(value))
+        var validationResult = GetValidationResult(value, memberNames);
+        if (validationResult is null)
         {
             return;
         }
 
-        throw new ValidationException(GetValidationResult(value)?.ErrorMessage ?? ErrorMessage ?? ErrorMessageString);
+        throw new ValidationException(validationResult, null, value);
     }
 
     /// <summary>
-    /// 验证值有效性
+    /// 检查值有效性
     /// </summary>
-    /// <param name="value">待验证的值</param>
+    /// <param name="value">验证的值</param>
     /// <returns><see cref="bool"/></returns>
     public abstract bool IsValid(T? value);
 
     /// <summary>
-    /// 移除占位符正则表达式
+    /// 占位符正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"\{\d+\}\s*")]
+    [GeneratedRegex(@"\s*\{\d+\}\s*")]
     internal static partial Regex PlaceholderRegex();
 }
