@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// Base64 验证器
+/// Base64 字符串验证器
 /// </summary>
 public partial class Base64Validator : ValidatorBase
 {
@@ -23,7 +23,7 @@ public partial class Base64Validator : ValidatorBase
     /// 构造函数
     /// </summary>
     public Base64Validator()
-        : base()
+        : base(() => Strings.Base64Validator_Invalid)
     {
     }
 
@@ -44,7 +44,7 @@ public partial class Base64Validator : ValidatorBase
     }
 
     /// <summary>
-    /// Base64 正则表达式
+    /// Base64 字符串正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\s*data:(?:[a-z]+\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*?)\s*$", RegexOptions.IgnoreCase)]

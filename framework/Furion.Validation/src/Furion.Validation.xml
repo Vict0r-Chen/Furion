@@ -1826,6 +1826,11 @@
               查找类似 The field {0} is not a valid bank card number. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.Base64Validator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid base64 format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.FullDayClockTimeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
@@ -1907,7 +1912,7 @@
         </member>
         <member name="T:Furion.Validation.Base64Validator">
             <summary>
-            Base64 验证器
+            Base64 字符串验证器
             </summary>
         </member>
         <member name="M:Furion.Validation.Base64Validator.#ctor">
