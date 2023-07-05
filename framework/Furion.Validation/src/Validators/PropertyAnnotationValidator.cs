@@ -67,7 +67,7 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     /// <summary>
     /// 属性名称
     /// </summary>
-    internal string? PropertyName { get; set; }
+    internal string PropertyName { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -76,7 +76,7 @@ public partial class PropertyAnnotationValidator<T> : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value)
+    public override List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
     {
         if (!TryValidate(value, out var validationResults))
         {

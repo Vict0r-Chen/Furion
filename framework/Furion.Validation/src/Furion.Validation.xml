@@ -3803,7 +3803,7 @@
         <member name="M:Furion.Validation.ObjectAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator.GetValidationResults(System.Object)">
+        <member name="M:Furion.Validation.ObjectAnnotationValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ObjectAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
@@ -4044,7 +4044,7 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetValidationResults(System.Object)">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
@@ -4581,24 +4581,27 @@
             错误消息
             </summary>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object)">
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object,System.String)">
             <summary>
             获取验证结果集合
             </summary>
             <param name="value">待验证的值</param>
+            <param name="memberName">成员名称</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.GetValidationResult(System.Object)">
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResult(System.Object,System.String)">
             <summary>
             获取单个验证结果
             </summary>
             <param name="value">待验证的值</param>
+            <param name="memberName">成员名称</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage">
+        <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.String)">
             <summary>
             格式化错误消息
             </summary>
+            <param name="memberName">成员名称</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object)">
@@ -4645,7 +4648,7 @@
         <member name="M:Furion.Validation.ValueAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ValueAnnotationValidator.GetValidationResults(System.Object)">
+        <member name="M:Furion.Validation.ValueAnnotationValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ValueAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">

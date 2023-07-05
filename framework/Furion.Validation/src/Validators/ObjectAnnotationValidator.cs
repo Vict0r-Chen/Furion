@@ -39,7 +39,7 @@ public partial class ObjectAnnotationValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value)
+    public override List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
     {
         if (value == null)
         {

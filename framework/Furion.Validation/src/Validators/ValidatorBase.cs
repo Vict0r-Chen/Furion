@@ -64,8 +64,9 @@ public abstract partial class ValidatorBase
     /// 获取验证结果集合
     /// </summary>
     /// <param name="value">待验证的值</param>
+    /// <param name="memberName">成员名称</param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual List<ValidationResult>? GetValidationResults(object? value)
+    public virtual List<ValidationResult>? GetValidationResults(object? value, string? memberName = null)
     {
         if (IsValid(value))
         {
@@ -73,7 +74,7 @@ public abstract partial class ValidatorBase
         }
 
         return new List<ValidationResult> {
-            new ValidationResult(FormatErrorMessage())
+            new ValidationResult(FormatErrorMessage(memberName))
         };
     }
 
@@ -81,20 +82,28 @@ public abstract partial class ValidatorBase
     /// 获取单个验证结果
     /// </summary>
     /// <param name="value">待验证的值</param>
+    /// <param name="memberName">成员名称</param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
-    public virtual ValidationResult? GetValidationResult(object? value)
+    public virtual ValidationResult? GetValidationResult(object? value, string? memberName = null)
     {
-        return GetValidationResults(value)?.FirstOrDefault();
+        return GetValidationResults(value, memberName)?.FirstOrDefault();
     }
 
     /// <summary>
     /// 格式化错误消息
     /// </summary>
+    /// <param name="memberName">成员名称</param>
     /// <returns><see cref="string"/></returns>
-    protected virtual string FormatErrorMessage()
+    protected virtual string FormatErrorMessage(string? memberName = null)
     {
-        var errorMessage = PlaceholderRegex().Replace(ErrorMessage ?? ErrorMessageString, string.Empty);
-        return string.Format(CultureInfo.CurrentCulture, errorMessage);
+        var errorMessage = ErrorMessage ?? ErrorMessageString;
+
+        if (memberName is null)
+        {
+            return string.Format(CultureInfo.CurrentCulture, PlaceholderRegex().Replace(errorMessage, string.Empty));
+        }
+
+        return string.Format(CultureInfo.CurrentCulture, errorMessage, memberName);
     }
 
     /// <summary>
