@@ -76,6 +76,12 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
         return null;
     }
 
+    /// <inheritdoc />
+    public virtual new ObjectAnnotationValidator<T> WithErrorMessage(string errorMessage)
+    {
+        return (ObjectAnnotationValidator<T>)base.WithErrorMessage(errorMessage);
+    }
+
     /// <summary>
     /// 验证逻辑
     /// </summary>
@@ -91,11 +97,5 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
         var validationContext = new ValidationContext(value);
         validationResults = new List<ValidationResult>();
         return Validator.TryValidateObject(value, validationContext, validationResults, true);
-    }
-
-    /// <inheritdoc />
-    public virtual new ObjectAnnotationValidator<T> WithErrorMessage(string errorMessage)
-    {
-        return (ObjectAnnotationValidator<T>)base.WithErrorMessage(errorMessage);
     }
 }

@@ -36,11 +36,7 @@ public abstract partial class ValidatorBase : ValidatorBase<object>
     {
     }
 
-    /// <summary>
-    /// 设置错误消息
-    /// </summary>
-    /// <param name="errorMessage">错误消息</param>
-    /// <returns><see cref="ValidatorBase{T}"/></returns>
+    /// <inheritdoc />
     internal override ValidatorBase WithErrorMessage(string errorMessage)
     {
         return (ValidatorBase)base.WithErrorMessage(errorMessage);

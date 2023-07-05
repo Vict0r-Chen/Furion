@@ -19,13 +19,7 @@ namespace Furion.Validation;
 /// </summary>
 public static class ValidatorBaseExtensions
 {
-    /// <summary>
-    /// 设置错误消息
-    /// </summary>
-    /// <typeparam name="TValidator"><see cref="ValidatorBase"/></typeparam>
-    /// <param name="validator"><see cref="ValidatorBase"/></param>
-    /// <param name="errorMessage">错误消息</param>
-    /// <returns><typeparamref name="TValidator"/></returns>
+    /// <inheritdoc cref="ValidatorBase.WithErrorMessage(string)" />
     public static TValidator WithErrorMessage<TValidator>(this TValidator validator, string errorMessage)
         where TValidator : ValidatorBase
     {

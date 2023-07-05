@@ -1798,13 +1798,7 @@
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBaseExtensions.WithErrorMessage``1(``0,System.String)">
-            <summary>
-            设置错误消息
-            </summary>
-            <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
-            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
-            <param name="errorMessage">错误消息</param>
-            <returns><typeparamref name="TValidator"/></returns>
+            <inheritdoc cref="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)" />
         </member>
         <member name="T:Furion.Validation.Resources.Strings">
             <summary>
@@ -3875,6 +3869,9 @@
         <member name="M:Furion.Validation.ObjectAnnotationValidator`1.GetValidationResults(`0,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.WithErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Furion.Validation.ObjectAnnotationValidator`1.TryValidate(`0,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             验证逻辑
@@ -3882,9 +3879,6 @@
             <param name="value">待验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
-        </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.WithErrorMessage(System.String)">
-            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PassportValidator">
             <summary>
@@ -4653,11 +4647,7 @@
             <param name="errorMessageAccessor">错误消息资源访问器</param>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)">
-            <summary>
-            设置错误消息
-            </summary>
-            <param name="errorMessage">错误消息</param>
-            <returns><see cref="T:Furion.Validation.ValidatorBase`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.ValidatorBase`1">
             <summary>
