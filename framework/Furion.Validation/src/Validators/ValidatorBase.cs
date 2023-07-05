@@ -35,6 +35,16 @@ public abstract partial class ValidatorBase : ValidatorBase<object>
         : base(errorMessageAccessor)
     {
     }
+
+    /// <summary>
+    /// 设置错误消息
+    /// </summary>
+    /// <param name="errorMessage">错误消息</param>
+    /// <returns><see cref="ValidatorBase{T}"/></returns>
+    internal override ValidatorBase WithErrorMessage(string errorMessage)
+    {
+        return (ValidatorBase)base.WithErrorMessage(errorMessage);
+    }
 }
 
 /// <summary>
@@ -111,6 +121,17 @@ public abstract partial class ValidatorBase<T>
     public virtual ValidationResult? GetValidationResult(T? value, string? memberName = null)
     {
         return GetValidationResults(value, memberName)?.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// 设置错误消息
+    /// </summary>
+    /// <param name="errorMessage">错误消息</param>
+    /// <returns><see cref="ValidatorBase{T}"/></returns>
+    internal virtual ValidatorBase<T> WithErrorMessage(string errorMessage)
+    {
+        ErrorMessage = errorMessage;
+        return this;
     }
 
     /// <summary>

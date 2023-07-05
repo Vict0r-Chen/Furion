@@ -15,40 +15,20 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 自定义验证器
+/// <see cref="ValidatorBase"/> 拓展类
 /// </summary>
-/// <typeparam name="T">泛型类型</typeparam>
-public partial class CustomValidator<T> : ValidatorBase<T>
+public static class ValidatorBaseExtensions
 {
     /// <summary>
-    /// 构造函数
+    /// 设置错误消息
     /// </summary>
-    /// <param name="validatorAccessor">验证访问器</param>
-    public CustomValidator(Func<T, bool> validatorAccessor)
+    /// <typeparam name="TValidator"><see cref="ValidatorBase"/></typeparam>
+    /// <param name="validator"><see cref="ValidatorBase"/></param>
+    /// <param name="errorMessage">错误消息</param>
+    /// <returns><typeparamref name="TValidator"/></returns>
+    public static TValidator WithErrorMessage<TValidator>(this TValidator validator, string errorMessage)
+        where TValidator : ValidatorBase
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(validatorAccessor, nameof(validatorAccessor));
-
-        ValidatorAccessor = validatorAccessor;
-    }
-
-    /// <summary>
-    /// 验证访问器
-    /// </summary>
-    internal Func<T, bool> ValidatorAccessor { get; init; }
-
-    /// <inheritdoc />
-    public override bool IsValid(T? value)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
-
-        return ValidatorAccessor(value);
-    }
-
-    /// <inheritdoc />
-    public new CustomValidator<T> WithErrorMessage(string errorMessage)
-    {
-        return (CustomValidator<T>)base.WithErrorMessage(errorMessage);
+        return (TValidator)validator.WithErrorMessage(errorMessage);
     }
 }

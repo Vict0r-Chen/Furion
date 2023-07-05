@@ -1792,6 +1792,20 @@
             或者
             </summary>
         </member>
+        <member name="T:Furion.Validation.ValidatorBaseExtensions">
+            <summary>
+            <see cref="T:Furion.Validation.ValidatorBase"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBaseExtensions.WithErrorMessage``1(``0,System.String)">
+            <summary>
+            设置错误消息
+            </summary>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
+            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
+            <param name="errorMessage">错误消息</param>
+            <returns><typeparamref name="TValidator"/></returns>
+        </member>
         <member name="T:Furion.Validation.Resources.Strings">
             <summary>
               一个强类型的资源类，用于查找本地化的字符串等。
@@ -2391,6 +2405,9 @@
             </summary>
         </member>
         <member name="M:Furion.Validation.CustomValidator`1.IsValid(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.CustomValidator`1.WithErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.DateTimeValidator">
@@ -3838,6 +3855,9 @@
             构造函数
             </summary>
         </member>
+        <member name="M:Furion.Validation.ObjectAnnotationValidator.WithErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Validation.ObjectAnnotationValidator`1">
             <summary>
             对象注解（特性）验证器
@@ -3862,6 +3882,9 @@
             <param name="value">待验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.WithErrorMessage(System.String)">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PassportValidator">
             <summary>
@@ -4629,6 +4652,13 @@
             </summary>
             <param name="errorMessageAccessor">错误消息资源访问器</param>
         </member>
+        <member name="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)">
+            <summary>
+            设置错误消息
+            </summary>
+            <param name="errorMessage">错误消息</param>
+            <returns><see cref="T:Furion.Validation.ValidatorBase`1"/></returns>
+        </member>
         <member name="T:Furion.Validation.ValidatorBase`1">
             <summary>
             验证器抽象基类
@@ -4676,6 +4706,13 @@
             <param name="value">待验证的值</param>
             <param name="memberName">成员名称</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.WithErrorMessage(System.String)">
+            <summary>
+            设置错误消息
+            </summary>
+            <param name="errorMessage">错误消息</param>
+            <returns><see cref="T:Furion.Validation.ValidatorBase`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ValidatorBase`1.FormatErrorMessage(System.String)">
             <summary>

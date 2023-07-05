@@ -26,6 +26,12 @@ public partial class ObjectAnnotationValidator : ObjectAnnotationValidator<objec
         : base()
     {
     }
+
+    /// <inheritdoc />
+    public virtual new ObjectAnnotationValidator WithErrorMessage(string errorMessage)
+    {
+        return (ObjectAnnotationValidator)base.WithErrorMessage(errorMessage);
+    }
 }
 
 /// <summary>
@@ -33,6 +39,7 @@ public partial class ObjectAnnotationValidator : ObjectAnnotationValidator<objec
 /// </summary>
 /// <typeparam name="T">泛型类型</typeparam>
 public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
+    where T : class
 {
     /// <summary>
     /// 构造函数
@@ -84,5 +91,11 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
         var validationContext = new ValidationContext(value);
         validationResults = new List<ValidationResult>();
         return Validator.TryValidateObject(value, validationContext, validationResults, true);
+    }
+
+    /// <inheritdoc />
+    public virtual new ObjectAnnotationValidator<T> WithErrorMessage(string errorMessage)
+    {
+        return (ObjectAnnotationValidator<T>)base.WithErrorMessage(errorMessage);
     }
 }
