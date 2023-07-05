@@ -115,6 +115,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid number plate format. 的本地化字符串。
+        /// </summary>
+        internal static string NumberPlateValidator_Invalid {
+            get {
+                return ResourceManager.GetString("NumberPlateValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The {0} field is required. 的本地化字符串。
         /// </summary>
         internal static string RequiredValidator_Invalid {

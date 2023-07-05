@@ -17,13 +17,13 @@ namespace Furion.Validation;
 /// <summary>
 /// 车牌号验证器
 /// </summary>
-public partial class CarNumberValidator : ValidatorBase
+public partial class NumberPlateValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CarNumberValidator()
-        : base()
+    public NumberPlateValidator()
+        : base(() => Strings.NumberPlateValidator_Invalid)
     {
     }
 

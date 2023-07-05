@@ -135,6 +135,9 @@
   <data name="HalfDayClockTimeValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid half day clock time format.</value>
   </data>
+  <data name="NumberPlateValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid number plate format.</value>
+  </data>
   <data name="RequiredValidator_Invalid" xml:space="preserve">
     <value>The {0} field is required.</value>
   </data>
