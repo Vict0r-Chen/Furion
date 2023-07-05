@@ -15,15 +15,15 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 24 小时制时间（HH:mm:ss）验证器
+/// 12 小时制时间（hh:mm:ss）验证器
 /// </summary>
-public partial class MilitaryTimeValidator : ValidatorBase
+public partial class HalfDayClockTimeValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public MilitaryTimeValidator()
-        : base()
+    public HalfDayClockTimeValidator()
+        : base(() => Strings.HalfDayClockTimeValidator_Invalid)
     {
     }
 
@@ -44,9 +44,9 @@ public partial class MilitaryTimeValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 24 小时制时间（HH:mm:ss）正则表达式
+    /// 12 小时制时间（hh:mm:ss）正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$")]
+    [GeneratedRegex(@"^(?:1[0-2]|0?[1-9]):[0-5]\d:[0-5]\d$")]
     internal static partial Regex Regex();
 }

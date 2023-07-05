@@ -70,6 +70,24 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
+        /// </summary>
+        internal static string FullDayClockTimeValidator_Invalid {
+            get {
+                return ResourceManager.GetString("FullDayClockTimeValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} is not a valid half day clock time format. 的本地化字符串。
+        /// </summary>
+        internal static string HalfDayClockTimeValidator_Invalid {
+            get {
+                return ResourceManager.GetString("HalfDayClockTimeValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The {0} field is required. 的本地化字符串。
         /// </summary>
         internal static string RequiredValidator_Invalid {
