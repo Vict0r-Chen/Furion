@@ -45,6 +45,14 @@ public partial class BoolValidator : ValidatorBase
             return true;
         }
 
+        // Convert.ToBoolean
+        if (value is int num
+            && (num == 0 || num == 1))
+        {
+            return true;
+        }
+
+        // bool.Parse
         if (value is string text
             && boolStrings.Contains(text, StringComparer.OrdinalIgnoreCase))
         {
