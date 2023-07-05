@@ -15,17 +15,24 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 颜色验证器
+/// 颜色值验证器
 /// </summary>
-public partial class ColorValidator : ValidatorBase
+public partial class ColorValueValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ColorValidator()
-        : base()
+    /// <param name="fullMode">全面模式</param>
+    public ColorValueValidator(bool fullMode = true)
+        : base(() => Strings.ColorValueValidator_Invalid)
     {
+        FullMode = fullMode;
     }
+
+    /// <summary>
+    /// 全面模式
+    /// </summary>
+    public bool FullMode { get; set; } = true;
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -37,16 +44,26 @@ public partial class ColorValidator : ValidatorBase
 
         if (value is string text)
         {
-            return Regex().IsMatch(text);
+            return (FullMode
+                ? Regex()
+                : StandardRegex()).IsMatch(text);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 颜色值正则表达式
+    /// 颜色值正则表达式（全面模式）
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"(^#([0-9a-f]{6}|[0-9a-f]{3})$)|(^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$)|(^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$)", RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"^(?:#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*(?:,\s*[0-9.]+\s*)?)?\)|hsla?\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*(?:,\s*[0-9.]+\s*)?)?\)|hwb\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|lch\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|oklch\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|lab\((?:\s*[-+]?\d+\%?\s*,){2}\s*[-+]?\d+\%?\s*\)|oklab\((?:\s*[-+]?\d+\%?\s*,){2}\s*[-+]?\d+\%?\s*\))$", RegexOptions.IgnoreCase)]
     internal static partial Regex Regex();
+
+    /// <summary>
+    /// 颜色值正则表达式（标准模式）
+    /// </summary>
+    /// <remarks>只支持十六进制、RGB、RGBA</remarks>
+    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
+    [GeneratedRegex(@"^(?:#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((?:\s*(?:\d+%?)\s*,){2}\s*(?:\d+%?)\s*(?:,\s*(?:\d+(?:\.\d+)?|\.\d+))?\))$", RegexOptions.IgnoreCase)]
+    internal static partial Regex StandardRegex();
 }

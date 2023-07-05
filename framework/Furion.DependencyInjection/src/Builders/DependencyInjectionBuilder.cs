@@ -128,10 +128,31 @@ public sealed class DependencyInjectionBuilder
     }
 
     /// <summary>
+    /// 构建模块服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    internal void Build(IServiceCollection services)
+    {
+        // 扫描程序集并创建服务描述器模型集合
+        var serviceDescriptors = ScanAssemblies();
+        if (serviceDescriptors.Any())
+        {
+            // 遍历集合将服务描述器添加到 IServiceCollection 中
+            foreach (var serviceDescriptorModel in serviceDescriptors)
+            {
+                AddingToServices(services, serviceDescriptorModel);
+            }
+        }
+
+        // 释放对象
+        Release();
+    }
+
+    /// <summary>
     /// 扫描程序集并创建服务描述器模型集合
     /// </summary>
     /// <returns><see cref="List{T}"/></returns>
-    public IEnumerable<ServiceDescriptorModel> ScanAssemblies()
+    internal IEnumerable<ServiceDescriptorModel> ScanAssemblies()
     {
         // 是否禁用程序集扫描
         if (SuppressAssemblyScanning)
@@ -163,7 +184,7 @@ public sealed class DependencyInjectionBuilder
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="List{T}"/></returns>
-    public IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors(Type type)
+    internal IEnumerable<ServiceDescriptorModel> CreateServiceDescriptors(Type type)
     {
         // 获取 [dependency] 特性
         var dependencyAttribute = type.GetDefinedCustomAttributeOrNew<DependencyAttribute>(true);
@@ -241,27 +262,6 @@ public sealed class DependencyInjectionBuilder
         }
 
         serviceTypes.Clear();
-    }
-
-    /// <summary>
-    /// 构建模块服务
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    internal void Build(IServiceCollection services)
-    {
-        // 扫描程序集并创建服务描述器模型集合
-        var serviceDescriptors = ScanAssemblies();
-        if (serviceDescriptors.Any())
-        {
-            // 遍历集合将服务描述器添加到 IServiceCollection 中
-            foreach (var serviceDescriptorModel in serviceDescriptors)
-            {
-                AddingToServices(services, serviceDescriptorModel);
-            }
-        }
-
-        // 释放对象
-        Release();
     }
 
     /// <summary>
