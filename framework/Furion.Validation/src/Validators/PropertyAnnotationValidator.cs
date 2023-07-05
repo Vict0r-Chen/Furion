@@ -67,7 +67,7 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// <summary>
     /// 属性名称
     /// </summary>
-    internal string PropertyName { get; set; }
+    internal string PropertyName { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)

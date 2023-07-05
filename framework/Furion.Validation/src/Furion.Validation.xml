@@ -2727,6 +2727,29 @@
             </code>
             </remarks>
         </member>
+        <member name="T:Furion.Validation.EndsWithValidator">
+            <summary>
+            字符串结尾验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.String,System.StringComparison)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+        </member>
+        <member name="P:Furion.Validation.EndsWithValidator.Value">
+            <summary>
+            检索的值
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.EndsWithValidator.Comparison">
+            <inheritdoc cref="T:System.StringComparison"/>
+        </member>
+        <member name="M:Furion.Validation.EndsWithValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Validation.EnglishNameValidator">
             <summary>
             英文姓名验证器
@@ -4195,6 +4218,29 @@
         <member name="M:Furion.Validation.SingleValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.Validation.StartsWithValidator">
+            <summary>
+            字符串开头验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.String,System.StringComparison)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+        </member>
+        <member name="P:Furion.Validation.StartsWithValidator.Value">
+            <summary>
+            检索的值
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.StartsWithValidator.Comparison">
+            <inheritdoc cref="T:System.StringComparison"/>
+        </member>
+        <member name="M:Furion.Validation.StartsWithValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Validation.StockCodeValidator">
             <summary>
             股票代码（A股）验证器
@@ -4245,6 +4291,29 @@
             ○ Match if at the end of the string or if before an ending newline.<br/>
             </code>
             </remarks>
+        </member>
+        <member name="T:Furion.Validation.StringContainsValidator">
+            <summary>
+            字符串包含验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.String,System.StringComparison)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+        </member>
+        <member name="P:Furion.Validation.StringContainsValidator.Value">
+            <summary>
+            检索的值
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.StringContainsValidator.Comparison">
+            <inheritdoc cref="T:System.StringComparison"/>
+        </member>
+        <member name="M:Furion.Validation.StringContainsValidator.IsValid(System.Object)">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StronglyPasswordValidator">
             <summary>
