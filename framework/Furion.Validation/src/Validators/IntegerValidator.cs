@@ -40,7 +40,17 @@ public partial class IntegerValidator : ValidatorBase
             return Regex().IsMatch(text);
         }
 
-        return false;
+        // 使用 TypeCode 进行判断
+        var valueType = value.GetType();
+        var typeCode = Type.GetTypeCode(valueType);
+
+        // 排除浮点数
+        if (typeCode == TypeCode.Double || typeCode == TypeCode.Decimal)
+        {
+            return false;
+        }
+
+        return valueType.IsNumeric();
     }
 
     /// <summary>
