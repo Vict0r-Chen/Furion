@@ -17,13 +17,16 @@ namespace Furion.Validation;
 /// <summary>
 /// 银行卡号验证器
 /// </summary>
+/// <remarks>
+/// <see href="https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1">银行卡号对照表</see>
+/// </remarks>
 public partial class BankCardNumberValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     public BankCardNumberValidator()
-        : base()
+        : base(() => Strings.BankCardNumberValidator_Invalid)
     {
     }
 
@@ -38,6 +41,16 @@ public partial class BankCardNumberValidator : ValidatorBase
         if (value is string text)
         {
             return Regex().IsMatch(text);
+        }
+
+        if (value is int intValue)
+        {
+            return Regex().IsMatch(intValue.ToString());
+        }
+
+        if (value is long longValue)
+        {
+            return Regex().IsMatch(longValue.ToString());
         }
 
         return false;

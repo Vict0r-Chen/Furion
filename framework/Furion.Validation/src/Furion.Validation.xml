@@ -1821,6 +1821,11 @@
               查找类似 The field {0} is not a valid age format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.BankCardNumberValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid bank card number. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.FullDayClockTimeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
@@ -1877,6 +1882,9 @@
             <summary>
             银行卡号验证器
             </summary>
+            <remarks>
+            <see href="https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1">银行卡号对照表</see>
+            </remarks>
         </member>
         <member name="M:Furion.Validation.BankCardNumberValidator.#ctor">
             <summary>
