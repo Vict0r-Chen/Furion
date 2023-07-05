@@ -1836,6 +1836,11 @@
               查找类似 The field {0} is not a valid value that can be converted to a boolean type. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.ChineseProvinceValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid chinese province. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.FullDayClockTimeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
@@ -1996,20 +2001,43 @@
         <member name="M:Furion.Validation.BooleanValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Validation.ChinaProvinceValidator">
+        <member name="T:Furion.Validation.ChineseNameValidator">
             <summary>
-            中国省份验证器
+            中文姓名验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChinaProvinceValidator.#ctor">
+        <member name="M:Furion.Validation.ChineseNameValidator.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ChinaProvinceValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.ChineseNameValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ChinaProvinceValidator.Regex">
+        <member name="M:Furion.Validation.ChineseNameValidator.Regex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match if at the beginning of the string.<br/>
+            ○ Match a character in the set [\u00B7\u4E00-\u9FA5] atomically at least 2 and at most 16 times.<br/>
+            ○ Match if at the end of the string or if before an ending newline.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:Furion.Validation.ChineseProvinceValidator">
+            <summary>
+            中国省份验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ChineseProvinceValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ChineseProvinceValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ChineseProvinceValidator.Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2052,29 +2080,6 @@
                 ○ Match a sequence of expressions.<br/>
                     ○ Match the string "澳门".<br/>
                     ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
-        </member>
-        <member name="T:Furion.Validation.ChineseNameValidator">
-            <summary>
-            中文姓名验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.ChineseNameValidator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.ChineseNameValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.ChineseNameValidator.Regex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ Match a character in the set [\u00B7\u4E00-\u9FA5] atomically at least 2 and at most 16 times.<br/>
-            ○ Match if at the end of the string or if before an ending newline.<br/>
             </code>
             </remarks>
         </member>

@@ -129,6 +129,9 @@
   <data name="BooleanValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid value that can be converted to a boolean type.</value>
   </data>
+  <data name="ChineseProvinceValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid chinese province.</value>
+  </data>
   <data name="FullDayClockTimeValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid full day clock time format.</value>
   </data>

@@ -97,6 +97,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid chinese province. 的本地化字符串。
+        /// </summary>
+        internal static string ChineseProvinceValidator_Invalid {
+            get {
+                return ResourceManager.GetString("ChineseProvinceValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
         /// </summary>
         internal static string FullDayClockTimeValidator_Invalid {

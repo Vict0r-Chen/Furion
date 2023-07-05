@@ -17,13 +17,13 @@ namespace Furion.Validation;
 /// <summary>
 /// 中国省份验证器
 /// </summary>
-public partial class ChinaProvinceValidator : ValidatorBase
+public partial class ChineseProvinceValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public ChinaProvinceValidator()
-        : base()
+    public ChineseProvinceValidator()
+        : base(() => Strings.ChineseProvinceValidator_Invalid)
     {
     }
 
