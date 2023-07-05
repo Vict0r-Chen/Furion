@@ -126,6 +126,9 @@
   <data name="Base64Validator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid base64 format.</value>
   </data>
+  <data name="BooleanValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid value that can be converted to a boolean type.</value>
+  </data>
   <data name="FullDayClockTimeValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid full day clock time format.</value>
   </data>

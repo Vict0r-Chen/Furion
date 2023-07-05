@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 布尔值验证器
 /// </summary>
-public partial class BoolValidator : ValidatorBase
+public partial class BooleanValidator : ValidatorBase
 {
     /// <summary>
     /// bool 类型字符串集合
@@ -27,8 +27,8 @@ public partial class BoolValidator : ValidatorBase
     /// <summary>
     /// 构造函数
     /// </summary>
-    public BoolValidator()
-        : base()
+    public BooleanValidator()
+        : base(() => Strings.BooleanValidator_Invalid)
     {
     }
 
@@ -37,7 +37,7 @@ public partial class BoolValidator : ValidatorBase
     {
         if (value == null)
         {
-            return false;
+            return true;
         }
 
         if (value is bool)

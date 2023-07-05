@@ -1831,6 +1831,11 @@
               查找类似 The field {0} is not a valid base64 format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.BooleanValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid value that can be converted to a boolean type. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.FullDayClockTimeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
@@ -1958,22 +1963,22 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.BoolValidator">
+        <member name="T:Furion.Validation.BooleanValidator">
             <summary>
             布尔值验证器
             </summary>
         </member>
-        <member name="F:Furion.Validation.BoolValidator.boolStrings">
+        <member name="F:Furion.Validation.BooleanValidator.boolStrings">
             <summary>
             bool 类型字符串集合
             </summary>
         </member>
-        <member name="M:Furion.Validation.BoolValidator.#ctor">
+        <member name="M:Furion.Validation.BooleanValidator.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.BoolValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.BooleanValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.CarNumberValidator">

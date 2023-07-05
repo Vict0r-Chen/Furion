@@ -88,6 +88,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid value that can be converted to a boolean type. 的本地化字符串。
+        /// </summary>
+        internal static string BooleanValidator_Invalid {
+            get {
+                return ResourceManager.GetString("BooleanValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
         /// </summary>
         internal static string FullDayClockTimeValidator_Invalid {
