@@ -45,6 +45,11 @@ public partial class AgeValidator : ValidatorBase
             return age >= 0 && age <= 120;
         }
 
+        if (value is uint uAge)
+        {
+            return uAge >= 0 && uAge <= 120;
+        }
+
         return false;
     }
 

@@ -4730,7 +4730,6 @@
             <remarks>
             Pattern explanation:<br/>
             <code>
-            ○ Match a whitespace character atomically any number of times.<br/>
             ○ Match '{'.<br/>
             ○ Match a Unicode digit atomically at least once.<br/>
             ○ Match '}'.<br/>

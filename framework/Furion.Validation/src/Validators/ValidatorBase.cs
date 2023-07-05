@@ -177,6 +177,6 @@ public abstract partial class ValidatorBase<T>
     /// 占位符正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"\s*\{\d+\}\s*")]
+    [GeneratedRegex(@"\{\d+\}\s*")]
     internal static partial Regex PlaceholderRegex();
 }

@@ -104,7 +104,7 @@ public class ValidatorBaseTests
     {
         var validator = new TestValidator
         {
-            ErrorMessage = "这里的 {0} 有一个错误"
+            ErrorMessage = "这里的{0}有一个错误"
         };
 
         var failureResults = validator.GetValidationResults("some");
@@ -116,7 +116,7 @@ public class ValidatorBaseTests
         var failureResults2 = validator.GetValidationResults("some", memberNames);
         Assert.NotNull(failureResults2);
         Assert.Single(failureResults2);
-        Assert.Equal("这里的 Name 有一个错误", failureResults2.First().ErrorMessage);
+        Assert.Equal("这里的Name有一个错误", failureResults2.First().ErrorMessage);
     }
 
     [Fact]
@@ -148,7 +148,7 @@ public class ValidatorBaseTests
     {
         var validator = new TestValidator
         {
-            ErrorMessage = "这里的 {0} 有一个错误"
+            ErrorMessage = "这里的{0}有一个错误"
         };
 
         var failureResult = validator.GetValidationResult("some");
@@ -158,7 +158,7 @@ public class ValidatorBaseTests
         var memberNames = new[] { "Name" };
         var failureResult2 = validator.GetValidationResult("some", memberNames);
         Assert.NotNull(failureResult2);
-        Assert.Equal("这里的 Name 有一个错误", failureResult2.ErrorMessage);
+        Assert.Equal("这里的Name有一个错误", failureResult2.ErrorMessage);
     }
 
     [Fact]
@@ -192,12 +192,12 @@ public class ValidatorBaseTests
         });
         Assert.Equal("The field is invalid.", exception.Message);
 
-        validator.ErrorMessage = "这里的 {0} 有一个错误";
+        validator.ErrorMessage = "这里的{0}有一个错误";
         var exception2 = Assert.Throws<ValidationException>(() =>
         {
             validator.Validate("some", new List<string> { "Name" });
         });
-        Assert.Equal("这里的 Name 有一个错误", exception2.Message);
+        Assert.Equal("这里的Name有一个错误", exception2.Message);
     }
 
     [Theory]
