@@ -42,9 +42,9 @@ public class ChineseValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid Chinese.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("贼6", new List<string> { "Word" });
+        var failure2 = validator.GetValidationResult("贼6", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Word is not a valid Chinese.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid Chinese.", failure2.ErrorMessage);
     }
 
     [Fact]

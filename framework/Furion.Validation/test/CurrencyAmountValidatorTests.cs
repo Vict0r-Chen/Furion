@@ -101,9 +101,9 @@ public class CurrencyAmountValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid currency amount format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult(123.456m, new List<string> { "Amount" });
+        var failure2 = validator.GetValidationResult(123.456m, new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Amount is not a valid currency amount format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid currency amount format.", failure2.ErrorMessage);
     }
 
     [Fact]

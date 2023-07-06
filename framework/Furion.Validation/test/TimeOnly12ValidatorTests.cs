@@ -48,9 +48,9 @@ public class TimeOnly12ValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid half day clock time format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("23:00:00", new List<string> { "Time" });
+        var failure2 = validator.GetValidationResult("23:00:00", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Time is not a valid half day clock time format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid half day clock time format.", failure2.ErrorMessage);
     }
 
     [Fact]

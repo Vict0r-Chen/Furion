@@ -81,9 +81,9 @@ public class ColorValueValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid color value.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("#fffffff", new List<string> { "Color" });
+        var failure2 = validator.GetValidationResult("#fffffff", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Color is not a valid color value.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid color value.", failure2.ErrorMessage);
     }
 
     [Fact]

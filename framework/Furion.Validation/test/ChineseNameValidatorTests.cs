@@ -45,9 +45,9 @@ public class ChineseNameValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid Chinese name.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("蒙奇·D·路飞", new List<string> { "Name" });
+        var failure2 = validator.GetValidationResult("蒙奇·D·路飞", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Name is not a valid Chinese name.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid Chinese name.", failure2.ErrorMessage);
     }
 
     [Fact]

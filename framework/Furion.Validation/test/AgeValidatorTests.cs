@@ -48,9 +48,9 @@ public class AgeValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid age format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult(130, new List<string> { "Age" });
+        var failure2 = validator.GetValidationResult(130, new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Age is not a valid age format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid age format.", failure2.ErrorMessage);
     }
 
     [Fact]

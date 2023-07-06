@@ -14,51 +14,52 @@
 
 namespace Furion.Validation.Tests;
 
-public class GreenPlateNumberValidatorTests
+public class EmailValidatorTests
 {
     [Theory]
     [InlineData(null, true)]
-    [InlineData("京A00599", true)]
-    [InlineData("黑D23908", true)]
-    [InlineData("京AD92035", true)]
-    [InlineData("甘G23459F", true)]
-    [InlineData("京AA92035", true)]
-    [InlineData("京A12345D", true)]
-    [InlineData("粤T88888", true)]
-    [InlineData("粤B好几个8", false)]
-    [InlineData("宁AD1234555555", false)]
-    [InlineData("浙苏H6F681", false)]
+    [InlineData("support@furion.net", true)]
+    [InlineData("8020222@qq.net", true)]
+    [InlineData("monksoul@outlook.com", true)]
+    [InlineData("monksoul@163.com", true)]
+    [InlineData("dotnetchina@126.com", true)]
+    [InlineData("dotnetchina@hotmail.com", true)]
+    [InlineData("汉字@hotmail.com", true)]
+    [InlineData("qq@hotmail", false)]
+    [InlineData("support@@furion.net", false)]
+    [InlineData("support@中文.com", false)]
+    [InlineData("support", false)]
     public void IsValid(object? value, bool result)
     {
-        var validator = new GreenPlateNumberValidator();
+        var validator = new EmailValidator();
         Assert.Equal(result, validator.IsValid(value));
     }
 
     [Fact]
     public void Default_ErrorMessage()
     {
-        var validator = new GreenPlateNumberValidator();
+        var validator = new EmailValidator();
 
-        var failure = validator.GetValidationResult("粤B好几个8");
+        var failure = validator.GetValidationResult("support@@furion.net");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid green plate number format.", failure.ErrorMessage);
+        Assert.Equal("The field is not a valid email format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("粤B好几个8", new List<string> { "Value" });
+        var failure2 = validator.GetValidationResult("support@@furion.net", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid green plate number format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid email format.", failure2.ErrorMessage);
     }
 
     [Fact]
     public void Custom_ErrorMessage()
     {
-        var validator = new GreenPlateNumberValidator
+        var validator = new EmailValidator
         {
-            ErrorMessage = "不是一个有效的新能源车牌号格式"
+            ErrorMessage = "不是一个有效的电子邮箱格式"
         };
 
-        var failure = validator.GetValidationResult("粤B好几个8");
+        var failure = validator.GetValidationResult("support@@furion.net");
         Assert.NotNull(failure);
 
-        Assert.Equal("不是一个有效的新能源车牌号格式", failure.ErrorMessage);
+        Assert.Equal("不是一个有效的电子邮箱格式", failure.ErrorMessage);
     }
 }

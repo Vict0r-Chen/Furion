@@ -40,9 +40,9 @@ public class Base64ValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid base64 format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("datax:image/gif;base64,xxxx==", new List<string> { "Base64" });
+        var failure2 = validator.GetValidationResult("datax:image/gif;base64,xxxx==", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Base64 is not a valid base64 format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid base64 format.", failure2.ErrorMessage);
     }
 
     [Fact]

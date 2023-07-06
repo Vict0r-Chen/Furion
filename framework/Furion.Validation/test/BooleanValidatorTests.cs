@@ -47,9 +47,9 @@ public class BooleanValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid value that can be converted to a boolean type.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("on", new List<string> { "Bool" });
+        var failure2 = validator.GetValidationResult("on", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Bool is not a valid value that can be converted to a boolean type.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid value that can be converted to a boolean type.", failure2.ErrorMessage);
     }
 
     [Fact]

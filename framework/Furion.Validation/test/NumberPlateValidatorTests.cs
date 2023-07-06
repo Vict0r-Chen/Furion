@@ -43,9 +43,9 @@ public class NumberPlateValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid number plate format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("粤B好几个8", new List<string> { "CarNumber" });
+        var failure2 = validator.GetValidationResult("粤B好几个8", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field CarNumber is not a valid number plate format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid number plate format.", failure2.ErrorMessage);
     }
 
     [Fact]

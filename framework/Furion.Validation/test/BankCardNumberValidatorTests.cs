@@ -45,9 +45,9 @@ public class BankCardNumberValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid bank card number.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult(123456789, new List<string> { "Card" });
+        var failure2 = validator.GetValidationResult(123456789, new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Card is not a valid bank card number.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid bank card number.", failure2.ErrorMessage);
     }
 
     [Fact]

@@ -43,9 +43,9 @@ public class StandardPlateNumberValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid standard plate number format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult("京AD92035", new List<string> { "CarNumber" });
+        var failure2 = validator.GetValidationResult("京AD92035", new List<string> { "Value" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field CarNumber is not a valid standard plate number format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid standard plate number format.", failure2.ErrorMessage);
     }
 
     [Fact]
