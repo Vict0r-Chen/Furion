@@ -14,31 +14,36 @@
 
 namespace Furion.DependencyInjection.AspNetCore.Tests;
 
+#pragma warning disable
+
 public class ControllerB : Controller
 {
     [AutowiredServices]
-    internal IServiceA? serviceA;
+    internal IServiceA? _serviceA;
 
     [AutowiredServices]
-    internal IServiceB? serviceB { get; set; }
+    internal IServiceB? ServiceB { get; set; }
 }
 
 public class ControllerC : Controller
 {
     [AutowiredServices]
-    internal readonly IServiceA? serviceA;
+    internal readonly IServiceA? _serviceA;
 }
 
 public class ControllerD : Controller
 {
     [AutowiredServices]
-    internal IServiceB? serviceB { get; }
+    internal IServiceB? ServiceB { get; }
 }
 
 public class ControllerE : Controller
 {
     [AutowiredServices]
-    internal IServiceC? serviceC { get; }
+    internal IServiceC? _serviceC;
+
+    [AutowiredServices]
+    internal IServiceC? ServiceC { get; set; }
 }
 
 internal class ServiceA : IServiceA

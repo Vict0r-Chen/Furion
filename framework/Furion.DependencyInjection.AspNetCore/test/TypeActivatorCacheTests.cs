@@ -20,6 +20,8 @@ public class TypeActivatorCacheTests
     public void NewInstance_Default()
     {
         var typeActivatorCache = new TypeActivatorCache();
+
+        Assert.IsAssignableFrom<ITypeActivatorCache>(typeActivatorCache);
         Assert.NotNull(typeActivatorCache);
         Assert.NotNull(typeActivatorCache._createFactory);
         Assert.NotNull(typeActivatorCache._typeActivatorCache);
