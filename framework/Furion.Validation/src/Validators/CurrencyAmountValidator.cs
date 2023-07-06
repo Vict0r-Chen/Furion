@@ -17,13 +17,13 @@ namespace Furion.Validation;
 /// <summary>
 /// 数字/货币金额验证器
 /// </summary>
-public partial class CurrencyValidator : ValidatorBase
+public partial class CurrencyAmountValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public CurrencyValidator()
-        : base()
+    public CurrencyAmountValidator()
+        : base(() => Strings.CurrencyAmountValidator_Invalid)
     {
     }
 
@@ -47,7 +47,20 @@ public partial class CurrencyValidator : ValidatorBase
                 : PositiveRegex()).IsMatch(text);
         }
 
-        return false;
+        if (value is decimal decimalValue)
+        {
+            if (!AllowNegative && decimalValue < 0)
+            {
+                return false;
+            }
+
+            // 检查小数点后面位数是否小于等于 2
+            return decimal.GetBits(decimalValue)[3] >> 16 == 0;
+        }
+
+        return (AllowNegative
+                ? Regex()
+                : PositiveRegex()).IsMatch(value.ToString()!);
     }
 
     /// <summary>
@@ -63,4 +76,23 @@ public partial class CurrencyValidator : ValidatorBase
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^-?\d+(,\d{3})*(\.\d{1,2})?$")]
     internal static partial Regex Regex();
+
+    internal static int GetDecimalPlaces<T>(T number)
+        where T : struct
+    {
+        if (number is decimal decimalNumber)
+        {
+            return BitConverter.GetBytes(decimal.GetBits(decimalNumber)[3])[2];
+        }
+
+        var stringNumber = number.ToString()!;
+        var decimalIndex = stringNumber.IndexOf('.');
+
+        if (decimalIndex >= 0)
+        {
+            return stringNumber.Length - decimalIndex - 1;
+        }
+
+        return 0;
+    }
 }

@@ -1891,6 +1891,11 @@
               查找类似 The field {0} is not a valid color value. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.CurrencyAmountValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid currency amount format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.FullDayClockTimeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
@@ -2419,25 +2424,25 @@
         <member name="M:Furion.Validation.CompositeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Validation.CurrencyValidator">
+        <member name="T:Furion.Validation.CurrencyAmountValidator">
             <summary>
             数字/货币金额验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.CurrencyValidator.#ctor">
+        <member name="M:Furion.Validation.CurrencyAmountValidator.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="P:Furion.Validation.CurrencyValidator.AllowNegative">
+        <member name="P:Furion.Validation.CurrencyAmountValidator.AllowNegative">
             <summary>
             允许负数
             </summary>
         </member>
-        <member name="M:Furion.Validation.CurrencyValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.CurrencyAmountValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.CurrencyValidator.PositiveRegex">
+        <member name="M:Furion.Validation.CurrencyAmountValidator.PositiveRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
@@ -2465,7 +2470,7 @@
             </code>
             </remarks>
         </member>
-        <member name="M:Furion.Validation.CurrencyValidator.Regex">
+        <member name="M:Furion.Validation.CurrencyAmountValidator.Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
