@@ -1901,6 +1901,11 @@
               查找类似 The field {0} is not a valid currency amount format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.CustomValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is invalid. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.FullDayClockTimeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
@@ -2496,9 +2501,20 @@
             </code>
             </remarks>
         </member>
+        <member name="T:Furion.Validation.CustomValidator">
+            <summary>
+            自定义验证委托验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.CustomValidator.#ctor(System.Func{System.Object,System.Boolean})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="predicate">验证逻辑委托</param>
+        </member>
         <member name="T:Furion.Validation.CustomValidator`1">
             <summary>
-            自定义验证器
+            自定义验证委托验证器
             </summary>
             <typeparam name="T">泛型类型</typeparam>
         </member>
@@ -2506,11 +2522,11 @@
             <summary>
             构造函数
             </summary>
-            <param name="validatorAccessor">验证访问器</param>
+            <param name="predicate">验证委托</param>
         </member>
-        <member name="P:Furion.Validation.CustomValidator`1.ValidatorAccessor">
+        <member name="P:Furion.Validation.CustomValidator`1.Predicate">
             <summary>
-            验证访问器
+            验证委托
             </summary>
         </member>
         <member name="M:Furion.Validation.CustomValidator`1.IsValid(System.Object)">

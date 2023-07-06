@@ -147,6 +147,9 @@
   <data name="CurrencyAmountValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid currency amount format.</value>
   </data>
+  <data name="CustomValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is invalid.</value>
+  </data>
   <data name="FullDayClockTimeValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid full day clock time format.</value>
   </data>
