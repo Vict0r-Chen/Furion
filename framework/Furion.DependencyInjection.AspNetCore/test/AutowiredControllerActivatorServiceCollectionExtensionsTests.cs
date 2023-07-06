@@ -46,4 +46,18 @@ public class AutowiredControllerActivatorServiceCollectionExtensionsTests
         Assert.Contains(services, d => d.ServiceType == typeof(ITypeActivatorCache) && d.ImplementationType == typeof(TypeActivatorCache));
         Assert.Contains(services, d => d.ServiceType == typeof(IControllerActivator) && d.ImplementationType == typeof(AutowiredControllerActivator));
     }
+
+    [Fact]
+    public void AddAutowiredControllerActivator_Duplicate()
+    {
+        var services = new ServiceCollection();
+
+        services.AddControllers();
+        services.AddAutowiredControllerActivator();
+        services.AddAutowiredControllerActivator();
+        services.AddAutowiredControllerActivator();
+
+        Assert.Single(services.Where(d => d.ImplementationType == typeof(AutowiredControllerActivator)));
+        Assert.Single(services.Where(d => d.ImplementationType == typeof(TypeActivatorCache)));
+    }
 }
