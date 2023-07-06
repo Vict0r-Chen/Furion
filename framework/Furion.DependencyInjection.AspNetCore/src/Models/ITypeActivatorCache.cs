@@ -12,29 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Furion.DependencyInjection.AspNetCore;
 
 /// <summary>
-/// 依赖注入模块 <see cref="IServiceCollection"/> 拓展类
+/// 类型初始化器缓存接口
 /// </summary>
-public static class AutowiredControllerActivatorServiceCollectionExtensions
+/// <remarks>作用于缓存控制器实例工厂</remarks>
+internal interface ITypeActivatorCache
 {
     /// <summary>
-    /// 添加控制器属性或字段自动注入模块服务
+    /// 创建实例
     /// </summary>
-    /// <param name="services"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddAutowiredControllerActivator(this IServiceCollection services)
-    {
-        // 控制器服务检查
-        if (!services.Any(descriptor => descriptor.ServiceType == typeof(IControllerActivator)))
-        {
-            throw new InvalidOperationException("Please make sure that this service is registered after `services.AddControllers()`.");
-        }
-
-        services.TryAddSingleton<ITypeActivatorCache, TypeActivatorCache>();
-        services.Replace(ServiceDescriptor.Transient<IControllerActivator, AutowiredControllerActivator>());
-
-        return services;
-    }
+    /// <typeparam name="TInstance">实例类型</typeparam>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="implementationType">实现类型</param>
+    /// <returns><typeparamref name="TInstance"/></returns>
+    TInstance CreateInstance<TInstance>(IServiceProvider serviceProvider, Type implementationType);
 }

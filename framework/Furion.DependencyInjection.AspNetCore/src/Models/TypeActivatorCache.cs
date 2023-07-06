@@ -18,14 +18,23 @@ namespace Furion.DependencyInjection.AspNetCore;
 internal sealed class TypeActivatorCache : ITypeActivatorCache
 {
     /// <summary>
-    /// 对象创建工厂
+    /// 实例工厂
     /// </summary>
-    private readonly Func<Type, ObjectFactory> _createFactory = (type) => ActivatorUtilities.CreateFactory(type, Type.EmptyTypes);
+    internal readonly Func<Type, ObjectFactory> _createFactory;
 
     /// <summary>
-    /// 类型缓存集合
+    /// 实例工厂集合
     /// </summary>
-    private readonly ConcurrentDictionary<Type, ObjectFactory> _typeActivatorCache = new();
+    internal readonly ConcurrentDictionary<Type, ObjectFactory> _typeActivatorCache;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public TypeActivatorCache()
+    {
+        _createFactory = (type) => ActivatorUtilities.CreateFactory(type, Type.EmptyTypes);
+        _typeActivatorCache = new();
+    }
 
     /// <inheritdoc/>
     public TInstance CreateInstance<TInstance>(IServiceProvider serviceProvider, Type implementationType)
@@ -34,8 +43,8 @@ internal sealed class TypeActivatorCache : ITypeActivatorCache
         ArgumentNullException.ThrowIfNull(serviceProvider);
         ArgumentNullException.ThrowIfNull(implementationType);
 
-        // 获取或创建对象实例
+        // 创建实例
         var createFactory = _typeActivatorCache.GetOrAdd(implementationType, _createFactory);
-        return (TInstance)createFactory(serviceProvider, arguments: null);
+        return (TInstance)createFactory(serviceProvider, null);
     }
 }

@@ -12,19 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.DependencyInjection.AspNetCore;
+namespace Furion.DependencyInjection.AspNetCore.Tests;
 
-/// <summary>
-/// 类型激活器缓存接口
-/// </summary>
-internal interface ITypeActivatorCache
+public class ControllerA : Controller
 {
-    /// <summary>
-    /// 创建类型实例
-    /// </summary>
-    /// <typeparam name="TInstance">返回值类型</typeparam>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="implementationType">实际类型</param>
-    /// <returns><typeparamref name="TInstance"/></returns>
-    TInstance CreateInstance<TInstance>(IServiceProvider serviceProvider, Type implementationType);
 }

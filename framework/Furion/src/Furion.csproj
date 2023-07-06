@@ -14,8 +14,8 @@
 		<ProjectReference Include="..\..\Furion.Component.Hosting\src\Furion.Component.Hosting.csproj" />
 		<ProjectReference Include="..\..\Furion.Configuration.ManifestResource\src\Furion.Configuration.ManifestResource.csproj" />
 		<ProjectReference Include="..\..\Furion.Configuration\src\Furion.Configuration.csproj" />
+		<ProjectReference Include="..\..\Furion.DependencyInjection.AspNetCore\src\Furion.DependencyInjection.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\Furion.DependencyInjection.Named\src\Furion.DependencyInjection.Named.csproj" />
-		<ProjectReference Include="..\..\Furion.DependencyInjection\src\Furion.DependencyInjection.csproj" />
 		<ProjectReference Include="..\..\Furion.Validation\src\Furion.Validation.csproj" />
 	</ItemGroup>
 

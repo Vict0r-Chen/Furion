@@ -56,16 +56,17 @@
         </member>
         <member name="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache">
             <summary>
-            类型激活器缓存接口
+            类型初始化器缓存接口
             </summary>
+            <remarks>作用于缓存控制器实例工厂</remarks>
         </member>
         <member name="M:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
             <summary>
-            创建类型实例
+            创建实例
             </summary>
-            <typeparam name="TInstance">返回值类型</typeparam>
+            <typeparam name="TInstance">实例类型</typeparam>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="implementationType">实际类型</param>
+            <param name="implementationType">实现类型</param>
             <returns><typeparamref name="TInstance"/></returns>
         </member>
         <member name="T:Furion.DependencyInjection.AspNetCore.TypeActivatorCache">
@@ -73,12 +74,17 @@
         </member>
         <member name="F:Furion.DependencyInjection.AspNetCore.TypeActivatorCache._createFactory">
             <summary>
-            对象创建工厂
+            实例工厂
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.AspNetCore.TypeActivatorCache._typeActivatorCache">
             <summary>
-            类型缓存集合
+            实例工厂集合
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.TypeActivatorCache.#ctor">
+            <summary>
+            构造函数
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.AspNetCore.TypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
