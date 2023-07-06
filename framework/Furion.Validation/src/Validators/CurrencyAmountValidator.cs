@@ -76,23 +76,4 @@ public partial class CurrencyAmountValidator : ValidatorBase
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^-?\d+(,\d{3})*(\.\d{1,2})?$")]
     internal static partial Regex Regex();
-
-    internal static int GetDecimalPlaces<T>(T number)
-        where T : struct
-    {
-        if (number is decimal decimalNumber)
-        {
-            return BitConverter.GetBytes(decimal.GetBits(decimalNumber)[3])[2];
-        }
-
-        var stringNumber = number.ToString()!;
-        var decimalIndex = stringNumber.IndexOf('.');
-
-        if (decimalIndex >= 0)
-        {
-            return stringNumber.Length - decimalIndex - 1;
-        }
-
-        return 0;
-    }
 }
