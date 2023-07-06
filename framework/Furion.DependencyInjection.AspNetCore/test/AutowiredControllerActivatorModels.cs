@@ -65,3 +65,7 @@ internal interface IServiceB
 internal interface IServiceC
 {
 }
+
+public class ControllerF : ControllerB
+{
+}

@@ -205,4 +205,21 @@ public class AutowiredControllerActivatorTests
         Assert.NotNull(controller._serviceA);
         Assert.NotNull(controller.ServiceB);
     }
+
+    [Fact]
+    public void Autowried_BaseType_Null()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IServiceA, ServiceA>();
+        services.AddTransient<IServiceB, ServiceB>();
+        var serviceProvider = services.BuildServiceProvider();
+
+        var controller = new ControllerF();
+        var typeinfo = typeof(ControllerF).GetTypeInfo();
+
+        AutowiredControllerActivator.Autowried(controller, typeinfo, serviceProvider);
+
+        Assert.Null(controller._serviceA);
+        Assert.Null(controller.ServiceB);
+    }
 }
