@@ -1472,6 +1472,11 @@
               查找类似 The field {0} is not a valid email format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.EndsWithValidator_Invalid">
+            <summary>
+              查找类似 The field {1} is not end with the string {0}. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.GreenPlateNumberValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid green plate number format. 的本地化字符串。
@@ -1490,6 +1495,16 @@
         <member name="P:Furion.Validation.Resources.Strings.StandardPlateNumberValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid standard plate number format. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.StartsWithValidator_Invalid">
+            <summary>
+              查找类似 The field {1} is not start with the string {0}. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.StringContainsValidator_Invalid">
+            <summary>
+              查找类似 The field {1} is not contain the string {0}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.TimeOnly12Validator_Invalid">
@@ -2230,25 +2245,27 @@
         </member>
         <member name="T:Furion.Validation.EndsWithValidator">
             <summary>
-            字符串结尾验证器
+            以特定字符串结尾的验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.String,System.StringComparison)">
+        <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <param name="value">检索值</param>
         </member>
         <member name="P:Furion.Validation.EndsWithValidator.Value">
             <summary>
-            检索的值
+            检索值
             </summary>
         </member>
         <member name="P:Furion.Validation.EndsWithValidator.Comparison">
             <inheritdoc cref="T:System.StringComparison"/>
         </member>
         <member name="M:Furion.Validation.EndsWithValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.EndsWithValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.EnglishNameValidator">
@@ -3009,19 +3026,18 @@
         </member>
         <member name="T:Furion.Validation.StartsWithValidator">
             <summary>
-            字符串开头验证器
+            以特定字符串开头的验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.String,System.StringComparison)">
+        <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <param name="value">检索值</param>
         </member>
         <member name="P:Furion.Validation.StartsWithValidator.Value">
             <summary>
-            检索的值
+            检索值
             </summary>
         </member>
         <member name="P:Furion.Validation.StartsWithValidator.Comparison">
@@ -3030,27 +3046,32 @@
         <member name="M:Furion.Validation.StartsWithValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.StartsWithValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Validation.StringContainsValidator">
             <summary>
-            字符串包含验证器
+            包含特定字符串的验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.String,System.StringComparison)">
+        <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <param name="value">检索值</param>
         </member>
         <member name="P:Furion.Validation.StringContainsValidator.Value">
             <summary>
-            检索的值
+            检索值
             </summary>
         </member>
         <member name="P:Furion.Validation.StringContainsValidator.Comparison">
             <inheritdoc cref="T:System.StringComparison"/>
         </member>
         <member name="M:Furion.Validation.StringContainsValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.StringContainsValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StronglyPasswordValidator">

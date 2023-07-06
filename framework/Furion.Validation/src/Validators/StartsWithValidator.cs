@@ -15,36 +15,37 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 字符串开头验证器
+/// 以特定字符串开头的验证器
 /// </summary>
 public partial class StartsWithValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索的值</param>
-    /// <param name="comparison"><see cref="StringComparison"/></param>
-    public StartsWithValidator(string value, StringComparison comparison = StringComparison.Ordinal)
-        : base()
+    /// <param name="value">检索值</param>
+    public StartsWithValidator(string value)
+        : base(() => Strings.StartsWithValidator_Invalid)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(value, nameof(value));
 
         Value = value;
-        Comparison = comparison;
     }
 
     /// <summary>
-    /// 检索的值
+    /// 检索值
     /// </summary>
-    internal string Value { get; init; }
+    public string Value { get; set; }
 
     /// <inheritdoc cref="StringComparison"/>
-    internal StringComparison Comparison { get; init; }
+    public StringComparison Comparison { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(Value, nameof(Value));
+
         if (value == null)
         {
             return false;
@@ -56,5 +57,20 @@ public partial class StartsWithValidator : ValidatorBase
         }
 
         return false;
+    }
+
+    /// <inheritdoc />
+    protected override string FormatErrorMessage(IEnumerable<string>? memberNames = null)
+    {
+        var newMemberNames = memberNames?.ToList() ?? new();
+
+        // 处理默认消息占位符情况
+        newMemberNames.Insert(0, Value);
+        if (newMemberNames.Count == 1)
+        {
+            newMemberNames.Add(string.Empty);
+        }
+
+        return base.FormatErrorMessage(newMemberNames);
     }
 }

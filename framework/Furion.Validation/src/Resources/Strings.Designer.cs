@@ -196,6 +196,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {1} is not end with the string {0}. 的本地化字符串。
+        /// </summary>
+        internal static string EndsWithValidator_Invalid {
+            get {
+                return ResourceManager.GetString("EndsWithValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid green plate number format. 的本地化字符串。
         /// </summary>
         internal static string GreenPlateNumberValidator_Invalid {
@@ -228,6 +237,24 @@ namespace Furion.Validation.Resources {
         internal static string StandardPlateNumberValidator_Invalid {
             get {
                 return ResourceManager.GetString("StandardPlateNumberValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {1} is not start with the string {0}. 的本地化字符串。
+        /// </summary>
+        internal static string StartsWithValidator_Invalid {
+            get {
+                return ResourceManager.GetString("StartsWithValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {1} is not contain the string {0}. 的本地化字符串。
+        /// </summary>
+        internal static string StringContainsValidator_Invalid {
+            get {
+                return ResourceManager.GetString("StringContainsValidator_Invalid", resourceCulture);
             }
         }
         

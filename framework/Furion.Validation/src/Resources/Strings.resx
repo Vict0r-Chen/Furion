@@ -162,6 +162,9 @@
   <data name="EmailValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid email format.</value>
   </data>
+  <data name="EndsWithValidator_Invalid" xml:space="preserve">
+    <value>The field {1} is not end with the string {0}.</value>
+  </data>
   <data name="GreenPlateNumberValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid green plate number format.</value>
   </data>
@@ -173,6 +176,12 @@
   </data>
   <data name="StandardPlateNumberValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid standard plate number format.</value>
+  </data>
+  <data name="StartsWithValidator_Invalid" xml:space="preserve">
+    <value>The field {1} is not start with the string {0}.</value>
+  </data>
+  <data name="StringContainsValidator_Invalid" xml:space="preserve">
+    <value>The field {1} is not contain the string {0}.</value>
   </data>
   <data name="TimeOnly12Validator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid half day clock time format.</value>

@@ -41,6 +41,7 @@ public class CompositeValidatorTests
     {
         var validator = new CompositeValidator();
         Assert.NotNull(validator);
+        Assert.Equal(ValidatorRelationship.Default, validator.Relationship);
 
         var validator2 = new CompositeValidator(new CompositeValidator());
         Assert.NotNull(validator2);
