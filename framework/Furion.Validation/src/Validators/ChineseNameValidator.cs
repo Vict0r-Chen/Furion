@@ -23,7 +23,7 @@ public partial class ChineseNameValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public ChineseNameValidator()
-        : base()
+        : base(() => Strings.ChineseNameValidator_Invalid)
     {
     }
 

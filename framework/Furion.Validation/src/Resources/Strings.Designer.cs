@@ -97,11 +97,29 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid chinese province. 的本地化字符串。
+        ///   查找类似 The field {0} is not a valid Chinese name. 的本地化字符串。
+        /// </summary>
+        internal static string ChineseNameValidator_Invalid {
+            get {
+                return ResourceManager.GetString("ChineseNameValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} is not a valid Chinese province. 的本地化字符串。
         /// </summary>
         internal static string ChineseProvinceValidator_Invalid {
             get {
                 return ResourceManager.GetString("ChineseProvinceValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} is not a valid Chinese. 的本地化字符串。
+        /// </summary>
+        internal static string ChineseValidator_Invalid {
+            get {
+                return ResourceManager.GetString("ChineseValidator_Invalid", resourceCulture);
             }
         }
         

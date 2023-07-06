@@ -1871,9 +1871,19 @@
               查找类似 The field {0} is not a valid value that can be converted to a boolean type. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.ChineseNameValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid Chinese name. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.ChineseProvinceValidator_Invalid">
             <summary>
-              查找类似 The field {0} is not a valid chinese province. 的本地化字符串。
+              查找类似 The field {0} is not a valid Chinese province. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.ChineseValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid Chinese. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.ColorValueValidator_Invalid">

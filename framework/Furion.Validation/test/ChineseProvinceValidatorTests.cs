@@ -68,11 +68,11 @@ public class ChineseProvinceValidatorTests
 
         var failure = validator.GetValidationResult("武汉");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid chinese province.", failure.ErrorMessage);
+        Assert.Equal("The field is not a valid Chinese province.", failure.ErrorMessage);
 
         var failure2 = validator.GetValidationResult("武汉", new List<string> { "Province" });
         Assert.NotNull(failure2);
-        Assert.Equal("The field Province is not a valid chinese province.", failure2.ErrorMessage);
+        Assert.Equal("The field Province is not a valid Chinese province.", failure2.ErrorMessage);
     }
 
     [Fact]
