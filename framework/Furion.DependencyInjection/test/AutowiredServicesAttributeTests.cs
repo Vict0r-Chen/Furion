@@ -12,8 +12,17 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-// 配置框架友元程序集
-[assembly: InternalsVisibleTo("Furion.DependencyInjection.AspNetCore")]
+namespace Furion.DependencyInjection.Tests;
 
-// 配置测试友元程序集
-[assembly: InternalsVisibleTo("Furion.DependencyInjection.Tests")]
+public class AutowiredServicesAttributeTests
+{
+    [Fact]
+    public void AttributeUsage_Attribute_Check()
+    {
+        var attributeUsageAttribute = typeof(AutowiredServicesAttribute).GetCustomAttribute<AttributeUsageAttribute>();
+        Assert.NotNull(attributeUsageAttribute);
+        Assert.Equal(AttributeTargets.Property | AttributeTargets.Field, attributeUsageAttribute.ValidOn);
+        Assert.False(attributeUsageAttribute.AllowMultiple);
+        Assert.False(attributeUsageAttribute.Inherited);
+    }
+}

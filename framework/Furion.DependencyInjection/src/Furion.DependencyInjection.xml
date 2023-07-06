@@ -4,6 +4,12 @@
         <name>Furion.DependencyInjection</name>
     </assembly>
     <members>
+        <member name="T:Furion.DependencyInjection.AutowiredServicesAttribute">
+            <summary>
+            成员注入服务特性
+            </summary>
+            <remarks>作用于属性/字段注入服务</remarks>
+        </member>
         <member name="T:Furion.DependencyInjection.DependencyAttribute">
             <summary>
             服务注册配置

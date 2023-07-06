@@ -17,8 +17,8 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 成员注入服务特性
 /// </summary>
-/// <remarks>支持属性或字段注入服务</remarks>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-public sealed class AutowiredAttribute : Attribute
+/// <remarks>作用于属性/字段注入服务</remarks>
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+public sealed class AutowiredServicesAttribute : Attribute
 {
 }

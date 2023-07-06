@@ -122,7 +122,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
         // 查找所有可注入的属性集合
         var properties = controllerTypeInfo.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
             .Where(property => property.CanWrite
-                && property.IsDefined(typeof(AutowiredAttribute), false)
+                && property.IsDefined(typeof(AutowiredServicesAttribute), false)
                 && serviceProviderIsService.IsService(property.PropertyType))
             .ToList();
 
@@ -156,7 +156,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
         // 查找所有可注入的字段集合
         var fields = controllerTypeInfo.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
             .Where(field => !field.IsInitOnly
-                && field.IsDefined(typeof(AutowiredAttribute), false)
+                && field.IsDefined(typeof(AutowiredServicesAttribute), false)
                 && serviceProviderIsService.IsService(field.FieldType))
             .ToList();
 

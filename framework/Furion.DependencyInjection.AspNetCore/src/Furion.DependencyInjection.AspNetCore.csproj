@@ -10,7 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Furion.Component\src\Furion.Component.csproj" />
+		<ProjectReference Include="..\..\Furion.DependencyInjection\src\Furion.DependencyInjection.csproj" />
 	</ItemGroup>
 
 </Project>

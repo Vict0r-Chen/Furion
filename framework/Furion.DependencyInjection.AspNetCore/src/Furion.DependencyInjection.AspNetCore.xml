@@ -84,12 +84,6 @@
         <member name="M:Furion.DependencyInjection.AspNetCore.TypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
             <inheritdoc/>
         </member>
-        <member name="T:Furion.DependencyInjection.AutowiredAttribute">
-            <summary>
-            成员注入服务特性
-            </summary>
-            <remarks>支持属性或字段注入服务</remarks>
-        </member>
         <member name="T:Furion.Component.AutowiredControllerActivatorComponent">
             <summary>
             依赖注入模块服务组件
