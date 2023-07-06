@@ -133,6 +133,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is invalid. 的本地化字符串。
+        /// </summary>
+        internal static string CompositeValidator_Invalid {
+            get {
+                return ResourceManager.GetString("CompositeValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid currency amount format. 的本地化字符串。
         /// </summary>
         internal static string CurrencyAmountValidator_Invalid {
@@ -196,7 +205,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field is invalid. 的本地化字符串。
+        ///   查找类似 The field {0} is invalid. 的本地化字符串。
         /// </summary>
         internal static string ValidatorBase_Invalid {
             get {

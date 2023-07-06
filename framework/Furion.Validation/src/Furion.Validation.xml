@@ -1891,6 +1891,11 @@
               查找类似 The field {0} is not a valid color value. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.CompositeValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is invalid. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.CurrencyAmountValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid currency amount format. 的本地化字符串。
@@ -1928,7 +1933,7 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.ValidatorBase_Invalid">
             <summary>
-              查找类似 The field is invalid. 的本地化字符串。
+              查找类似 The field {0} is invalid. 的本地化字符串。
             </summary>
         </member>
         <member name="T:Furion.Validation.AgeValidator">
@@ -2400,18 +2405,17 @@
             组合验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.List{Furion.Validation.ValidatorBase})">
+        <member name="M:Furion.Validation.CompositeValidator.#ctor(Furion.Validation.ValidatorBase[])">
             <summary>
             构造函数
             </summary>
             <param name="validators">验证器集合</param>
         </member>
-        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.List{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorRelationship)">
+        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
             <summary>
             构造函数
             </summary>
             <param name="validators">验证器集合</param>
-            <param name="relationship"><see cref="T:Furion.Validation.ValidatorRelationship"/></param>
         </member>
         <member name="P:Furion.Validation.CompositeValidator.ValidatorCollection">
             <summary>
@@ -2422,6 +2426,9 @@
             <inheritdoc cref="T:Furion.Validation.ValidatorRelationship" />
         </member>
         <member name="M:Furion.Validation.CompositeValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.CompositeValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.CurrencyAmountValidator">

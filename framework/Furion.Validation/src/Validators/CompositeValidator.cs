@@ -23,47 +23,59 @@ public partial class CompositeValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    public CompositeValidator(List<ValidatorBase> validators)
-        : base()
+    public CompositeValidator(params ValidatorBase[] validators)
+        : this(validators.ToList())
     {
-        // 空检查
-        if (validators.IsNullOrEmpty())
-        {
-            ArgumentNullException.ThrowIfNull(validators, nameof(validators));
-        }
-
-        ValidatorCollection = validators;
     }
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <param name="relationship"><see cref="ValidatorRelationship"/></param>
-    public CompositeValidator(List<ValidatorBase> validators, ValidatorRelationship relationship)
-        : this(validators)
+    public CompositeValidator(IList<ValidatorBase> validators)
+        : base(() => Strings.CompositeValidator_Invalid)
     {
-        Relationship = relationship;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validators, nameof(validators));
+
+        ValidatorCollection = validators;
     }
 
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public List<ValidatorBase> ValidatorCollection { get; init; }
+    public IList<ValidatorBase> ValidatorCollection { get; set; }
 
     /// <inheritdoc cref="ValidatorRelationship" />
-    public ValidatorRelationship Relationship { get; init; }
+    public ValidatorRelationship Relationship { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
         return Relationship switch
         {
-            // 处理默认/并且关系验证器
-            ValidatorRelationship.Default or ValidatorRelationship.And => ValidatorCollection.All(v => v.IsValid(value)),
-            // 处理或者关系验证器
-            ValidatorRelationship.Or => ValidatorCollection.Any(v => v.IsValid(value)),
+            ValidatorRelationship.Default or ValidatorRelationship.And => ValidatorCollection.All(validator => validator.IsValid(value)),
+            ValidatorRelationship.Or => ValidatorCollection.Any(validator => validator.IsValid(value)),
             _ => false,
         };
+    }
+
+    /// <inheritdoc />
+    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
+    {
+        var validationResults = new List<ValidationResult>();
+
+        // 处理验证器关系为 And 或者为 Or 且全部验证失败的情况
+        if (Relationship is ValidatorRelationship.Default or ValidatorRelationship.And
+            || (Relationship is ValidatorRelationship.Or
+                && !ValidatorCollection.All(validator => validator.IsValid(value))))
+        {
+            validationResults.AddRange(ValidatorCollection
+                .SelectMany(validator => validator.GetValidationResults(value, memberNames) ?? Enumerable.Empty<ValidationResult>()));
+        }
+
+        return validationResults.Count == 0
+            ? null
+            : validationResults;
     }
 }

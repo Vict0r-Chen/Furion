@@ -23,9 +23,9 @@ public class ValidatorBaseTests
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field is invalid.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} is invalid.", validator._errorMessageResourceAccessor());
         Assert.Null(validator.ErrorMessage);
-        Assert.Equal("The field is invalid.", ((TestValidator)validator).GetErrorMessageString());
+        Assert.Equal("The field {0} is invalid.", ((TestValidator)validator).GetErrorMessageString());
     }
 
     [Fact]
@@ -47,9 +47,9 @@ public class ValidatorBaseTests
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field is invalid.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} is invalid.", validator._errorMessageResourceAccessor());
         Assert.Null(validator.ErrorMessage);
-        Assert.Equal("The field is invalid.", ((TestValidator<string>)validator).GetErrorMessageString());
+        Assert.Equal("The field {0} is invalid.", ((TestValidator<string>)validator).GetErrorMessageString());
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public class ValidatorBaseTests
         var failureResults2 = validator.GetValidationResults("some", memberNames);
         Assert.NotNull(failureResults2);
         Assert.Single(failureResults2);
-        Assert.Equal("The field is invalid.", failureResults2.First().ErrorMessage);
+        Assert.Equal("The field test is invalid.", failureResults2.First().ErrorMessage);
         Assert.Single(failureResults2.First().MemberNames);
         Assert.Equal("test", failureResults2.First().MemberNames.First());
     }
@@ -138,7 +138,7 @@ public class ValidatorBaseTests
         var memberNames = new[] { "test" };
         var failureResult2 = validator.GetValidationResult("some", memberNames);
         Assert.NotNull(failureResult2);
-        Assert.Equal("The field is invalid.", failureResult2.ErrorMessage);
+        Assert.Equal("The field test is invalid.", failureResult2.ErrorMessage);
         Assert.Single(failureResult2.MemberNames);
         Assert.Equal("test", failureResult2.MemberNames.First());
     }
