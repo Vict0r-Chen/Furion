@@ -20,11 +20,15 @@ namespace Furion.Tests.Controllers;
 [Route("[controller]")]
 public class HelloController
 {
-    [AutowiredService]
+    public HelloController(IServiceProvider _)  // 构造函数注入
+    {
+    }
+
+    [AutowiredService]  // 属性注入
     private IConfiguration? Configuration { get; set; }
 
     [HttpGet]
-    public string? Get([FromServices] IConfiguration configuration)
+    public string? Get([FromServices] IConfiguration configuration) // 参数注入
     {
         return configuration["Name"] + "Embed: " + Configuration!["Furion.Tests:Name"];
     }
