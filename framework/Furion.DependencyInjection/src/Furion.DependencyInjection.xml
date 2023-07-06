@@ -4,7 +4,7 @@
         <name>Furion.DependencyInjection</name>
     </assembly>
     <members>
-        <member name="T:Furion.DependencyInjection.AutowiredServicesAttribute">
+        <member name="T:Furion.DependencyInjection.AutowiredServiceAttribute">
             <summary>
             成员注入服务特性
             </summary>

@@ -20,7 +20,7 @@ namespace Furion.Tests.Controllers;
 [Route("[controller]")]
 public class HelloController
 {
-    [AutowiredServices]
+    [AutowiredService]
     private IConfiguration? Configuration { get; set; }
 
     [HttpGet]

@@ -18,31 +18,31 @@ namespace Furion.DependencyInjection.AspNetCore.Tests;
 
 public class ControllerB : Controller
 {
-    [AutowiredServices]
+    [AutowiredService]
     internal IServiceA? _serviceA;
 
-    [AutowiredServices]
+    [AutowiredService]
     internal IServiceB? ServiceB { get; set; }
 }
 
 public class ControllerC : Controller
 {
-    [AutowiredServices]
+    [AutowiredService]
     internal readonly IServiceA? _serviceA;
 }
 
 public class ControllerD : Controller
 {
-    [AutowiredServices]
+    [AutowiredService]
     internal IServiceB? ServiceB { get; }
 }
 
 public class ControllerE : Controller
 {
-    [AutowiredServices]
+    [AutowiredService]
     internal IServiceC? _serviceC;
 
-    [AutowiredServices]
+    [AutowiredService]
     internal IServiceC? ServiceC { get; set; }
 }
 

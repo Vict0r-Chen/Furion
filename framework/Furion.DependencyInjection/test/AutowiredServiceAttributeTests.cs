@@ -14,12 +14,12 @@
 
 namespace Furion.DependencyInjection.Tests;
 
-public class AutowiredServicesAttributeTests
+public class AutowiredServiceAttributeTests
 {
     [Fact]
     public void AttributeUsage_Attribute_Check()
     {
-        var attributeUsageAttribute = typeof(AutowiredServicesAttribute).GetCustomAttribute<AttributeUsageAttribute>();
+        var attributeUsageAttribute = typeof(AutowiredServiceAttribute).GetCustomAttribute<AttributeUsageAttribute>();
         Assert.NotNull(attributeUsageAttribute);
         Assert.Equal(AttributeTargets.Property | AttributeTargets.Field, attributeUsageAttribute.ValidOn);
         Assert.False(attributeUsageAttribute.AllowMultiple);

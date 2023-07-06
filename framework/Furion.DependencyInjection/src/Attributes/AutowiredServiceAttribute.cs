@@ -19,6 +19,6 @@ namespace Furion.DependencyInjection;
 /// </summary>
 /// <remarks>作用于属性/字段注入服务</remarks>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-public sealed class AutowiredServicesAttribute : Attribute
+public sealed class AutowiredServiceAttribute : Attribute
 {
 }
