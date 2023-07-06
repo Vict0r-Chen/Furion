@@ -14,7 +14,7 @@
 
 namespace Furion.Validation.Tests;
 
-public class HalfDayClockTimeValidatorTests
+public class TimeOnly12ValidatorTests
 {
     [Theory]
     [InlineData(null, true)]
@@ -35,14 +35,14 @@ public class HalfDayClockTimeValidatorTests
     [InlineData("03:02:3", false)]
     public void IsValid(object? value, bool result)
     {
-        var validator = new HalfDayClockTimeValidator();
+        var validator = new TimeOnly12Validator();
         Assert.Equal(result, validator.IsValid(value));
     }
 
     [Fact]
     public void Default_ErrorMessage()
     {
-        var validator = new HalfDayClockTimeValidator();
+        var validator = new TimeOnly12Validator();
 
         var failure = validator.GetValidationResult("23:00:00");
         Assert.NotNull(failure);
@@ -56,7 +56,7 @@ public class HalfDayClockTimeValidatorTests
     [Fact]
     public void Custom_ErrorMessage()
     {
-        var validator = new HalfDayClockTimeValidator
+        var validator = new TimeOnly12Validator
         {
             ErrorMessage = "不是一个有效的12小时制时间"
         };

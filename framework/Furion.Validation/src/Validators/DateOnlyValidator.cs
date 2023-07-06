@@ -15,22 +15,17 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 日期验证器
+/// 日期（不含时间部分）验证器
 /// </summary>
-public partial class DateValidator : ValidatorBase
+public partial class DateOnlyValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public DateValidator()
-        : base()
+    public DateOnlyValidator()
+        : base(() => Strings.DateOnlyValidator_Invalid)
     {
     }
-
-    /// <summary>
-    /// 严格模式
-    /// </summary>
-    public bool Strict { get; set; } = true;
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -40,27 +35,27 @@ public partial class DateValidator : ValidatorBase
             return true;
         }
 
+        if (value is DateOnly)
+        {
+            return true;
+        }
+
         if (value is string text)
         {
-            return (Strict
-                ? StrictRegex()
-                : Regex()).IsMatch(text);
+            return Regex().IsMatch(text)
+                && (DateTime.TryParse(text, out _)
+                    || DateTimeOffset.TryParse(text, out _)
+                    || DateOnly.TryParse(text, out _)
+                );
         }
 
         return false;
     }
 
     /// <summary>
-    /// 日期正则表达式（严格模式）
+    /// 日期（不含时间部分）正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29)$")]
-    internal static partial Regex StrictRegex();
-
-    /// <summary>
-    /// 日期正则表达式（宽松模式）
-    /// </summary>
-    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^\d{1,4}(-)(1[0-2]|0?[1-9])\1(0?[1-9]|[1-2]\d|30|31)$")]
+    [GeneratedRegex(@"^(?:\d{4}[-./]\d{2}[-./]\d{2}|\d{2}[-./]\d{2}[-./]\d{4})$")]
     internal static partial Regex Regex();
 }

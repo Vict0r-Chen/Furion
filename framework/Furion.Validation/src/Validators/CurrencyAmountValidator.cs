@@ -40,13 +40,6 @@ public partial class CurrencyAmountValidator : ValidatorBase
             return true;
         }
 
-        if (value is string text)
-        {
-            return (AllowNegative
-                ? Regex()
-                : PositiveRegex()).IsMatch(text);
-        }
-
         if (value is decimal decimalValue)
         {
             if (!AllowNegative && decimalValue < 0)
@@ -58,9 +51,12 @@ public partial class CurrencyAmountValidator : ValidatorBase
             return decimal.GetBits(decimalValue)[3] >> 16 == 0;
         }
 
+        var stringValue = value.ToString()!;
+
         return (AllowNegative
                 ? Regex()
-                : PositiveRegex()).IsMatch(value.ToString()!);
+                : PositiveRegex()).IsMatch(stringValue)
+                && decimal.TryParse(stringValue, out _);
     }
 
     /// <summary>

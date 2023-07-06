@@ -160,6 +160,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid date only format. 的本地化字符串。
+        /// </summary>
+        internal static string DateOnlyValidator_Invalid {
+            get {
+                return ResourceManager.GetString("DateOnlyValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid datetime format. 的本地化字符串。
         /// </summary>
         internal static string DateTimeValidator_Invalid {
@@ -169,29 +178,11 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
-        /// </summary>
-        internal static string FullDayClockTimeValidator_Invalid {
-            get {
-                return ResourceManager.GetString("FullDayClockTimeValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The field {0} is not a valid green plate number format. 的本地化字符串。
         /// </summary>
         internal static string GreenPlateNumberValidator_Invalid {
             get {
                 return ResourceManager.GetString("GreenPlateNumberValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid half day clock time format. 的本地化字符串。
-        /// </summary>
-        internal static string HalfDayClockTimeValidator_Invalid {
-            get {
-                return ResourceManager.GetString("HalfDayClockTimeValidator_Invalid", resourceCulture);
             }
         }
         
@@ -219,6 +210,24 @@ namespace Furion.Validation.Resources {
         internal static string StandardPlateNumberValidator_Invalid {
             get {
                 return ResourceManager.GetString("StandardPlateNumberValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} is not a valid half day clock time format. 的本地化字符串。
+        /// </summary>
+        internal static string TimeOnly12Validator_Invalid {
+            get {
+                return ResourceManager.GetString("TimeOnly12Validator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
+        /// </summary>
+        internal static string TimeOnly24Validator_Invalid {
+            get {
+                return ResourceManager.GetString("TimeOnly24Validator_Invalid", resourceCulture);
             }
         }
         
