@@ -24,7 +24,7 @@ public partial class CompositeValidator : ValidatorBase
     /// </summary>
     /// <param name="validators">验证器集合</param>
     public CompositeValidator(params ValidatorBase[] validators)
-        : this(validators.ToList())
+        : this(validators?.ToList()!)
     {
     }
 
@@ -38,13 +38,19 @@ public partial class CompositeValidator : ValidatorBase
         // 空检查
         ArgumentNullException.ThrowIfNull(validators, nameof(validators));
 
+        // 检查集合中是否存在 null 值
+        if (validators.Any(validator => validator is null))
+        {
+            throw new ArgumentException("The validator collection contains a null value.", nameof(validators));
+        }
+
         ValidatorCollection = validators;
     }
 
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public IList<ValidatorBase> ValidatorCollection { get; set; }
+    public IList<ValidatorBase> ValidatorCollection { get; init; }
 
     /// <inheritdoc cref="ValidatorRelationship" />
     public ValidatorRelationship Relationship { get; set; }
@@ -72,6 +78,12 @@ public partial class CompositeValidator : ValidatorBase
         {
             validationResults.AddRange(ValidatorCollection
                 .SelectMany(validator => validator.GetValidationResults(value, memberNames) ?? Enumerable.Empty<ValidationResult>()));
+        }
+
+        // 处理自定义错误消息情况
+        if (ErrorMessage is not null && validationResults.Count > 0)
+        {
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberNames)));
         }
 
         return validationResults.Count == 0
