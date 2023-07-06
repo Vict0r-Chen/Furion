@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 自定义验证器
 /// </summary>
 /// <typeparam name="T">泛型类型</typeparam>
-public partial class CustomValidator<T> : ValidatorBase<T>
+public partial class CustomValidator<T> : ValidatorBase
 {
     /// <summary>
     /// 构造函数
@@ -38,17 +38,11 @@ public partial class CustomValidator<T> : ValidatorBase<T>
     internal Func<T, bool> ValidatorAccessor { get; init; }
 
     /// <inheritdoc />
-    public override bool IsValid(T? value)
+    public override bool IsValid(object? value)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(value, nameof(value));
 
-        return ValidatorAccessor(value);
-    }
-
-    /// <inheritdoc />
-    public new CustomValidator<T> WithErrorMessage(string errorMessage)
-    {
-        return (CustomValidator<T>)base.WithErrorMessage(errorMessage);
+        return ValidatorAccessor((T)value);
     }
 }

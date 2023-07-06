@@ -2506,10 +2506,7 @@
             验证访问器
             </summary>
         </member>
-        <member name="M:Furion.Validation.CustomValidator`1.IsValid(`0)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.CustomValidator`1.WithErrorMessage(System.String)">
+        <member name="M:Furion.Validation.CustomValidator`1.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.DateTimeValidator">
@@ -4031,19 +4028,6 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.ObjectAnnotationValidator">
-            <summary>
-            对象注解（特性）验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator.WithErrorMessage(System.String)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.Validation.ObjectAnnotationValidator`1">
             <summary>
             对象注解（特性）验证器
@@ -4055,16 +4039,13 @@
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.IsValid(`0)">
+        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.GetValidationResults(`0,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.WithErrorMessage(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.TryValidate(`0,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
+        <member name="M:Furion.Validation.ObjectAnnotationValidator`1.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             验证逻辑
             </summary>
@@ -4873,6 +4854,11 @@
             验证器抽象基类
             </summary>
         </member>
+        <member name="F:Furion.Validation.ValidatorBase._errorMessageResourceAccessor">
+            <summary>
+            错误消息资源访问器
+            </summary>
+        </member>
         <member name="M:Furion.Validation.ValidatorBase.#ctor">
             <summary>
             构造函数
@@ -4884,42 +4870,17 @@
             </summary>
             <param name="errorMessageAccessor">错误消息资源访问器</param>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="T:Furion.Validation.ValidatorBase`1">
-            <summary>
-            验证器抽象基类
-            </summary>
-            <typeparam name="T">验证值的类型</typeparam>
-        </member>
-        <member name="F:Furion.Validation.ValidatorBase`1._errorMessageResourceAccessor">
-            <summary>
-            错误消息资源访问器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.#ctor(System.Func{System.String})">
-            <summary>
-            构造函数
-            </summary>
-            <param name="errorMessageAccessor">错误消息资源访问器</param>
-        </member>
-        <member name="P:Furion.Validation.ValidatorBase`1.ErrorMessage">
+        <member name="P:Furion.Validation.ValidatorBase.ErrorMessage">
             <summary>
             错误消息
             </summary>
         </member>
-        <member name="P:Furion.Validation.ValidatorBase`1.ErrorMessageString">
+        <member name="P:Furion.Validation.ValidatorBase.ErrorMessageString">
             <summary>
             默认错误消息
             </summary>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.GetValidationResults(`0,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             获取验证结果
             </summary>
@@ -4927,7 +4888,7 @@
             <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.GetValidationResult(`0,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResult(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             获取验证结果
             </summary>
@@ -4935,21 +4896,21 @@
             <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.WithErrorMessage(System.String)">
+        <member name="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)">
             <summary>
             设置错误消息
             </summary>
             <param name="errorMessage">错误消息</param>
-            <returns><see cref="T:Furion.Validation.ValidatorBase`1"/></returns>
+            <returns><see cref="T:Furion.Validation.ValidatorBase"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             格式化错误消息
             </summary>
             <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.Validate(`0,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             执行验证
             </summary>
@@ -4957,14 +4918,14 @@
             <param name="memberNames">成员名称集合</param>
             <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.IsValid(`0)">
+        <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
             <summary>
             检查值有效性
             </summary>
             <param name="value">验证的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase`1.PlaceholderRegex">
+        <member name="M:Furion.Validation.ValidatorBase.PlaceholderRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>

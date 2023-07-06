@@ -14,7 +14,7 @@
 
 namespace Furion.Validation.Tests;
 
-public class TestValidator : ValidatorBase<object>
+public class TestValidator : ValidatorBase
 {
     public TestValidator()
         : base()
@@ -42,7 +42,7 @@ public class TestValidator : ValidatorBase<object>
     }
 }
 
-public class TestValidator<T> : ValidatorBase<T>
+public class TestValidator<T> : ValidatorBase
 {
     public TestValidator()
         : base()
@@ -54,7 +54,7 @@ public class TestValidator<T> : ValidatorBase<T>
     {
     }
 
-    public override bool IsValid(T? value)
+    public override bool IsValid(object? value)
     {
         if (value is null)
         {

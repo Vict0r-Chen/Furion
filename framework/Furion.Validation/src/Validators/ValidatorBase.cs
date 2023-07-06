@@ -17,37 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器抽象基类
 /// </summary>
-public abstract partial class ValidatorBase : ValidatorBase<object>
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    protected ValidatorBase()
-        : base()
-    {
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ValidatorBase(Func<string> errorMessageAccessor)
-        : base(errorMessageAccessor)
-    {
-    }
-
-    /// <inheritdoc />
-    internal override ValidatorBase WithErrorMessage(string errorMessage)
-    {
-        return (ValidatorBase)base.WithErrorMessage(errorMessage);
-    }
-}
-
-/// <summary>
-/// 验证器抽象基类
-/// </summary>
-/// <typeparam name="T">验证值的类型</typeparam>
-public abstract partial class ValidatorBase<T>
+public abstract partial class ValidatorBase
 {
     /// <summary>
     /// 错误消息资源访问器
@@ -96,7 +66,7 @@ public abstract partial class ValidatorBase<T>
     /// <param name="value">验证的值</param>
     /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="List{T}"/></returns>
-    public virtual List<ValidationResult>? GetValidationResults(T? value, IEnumerable<string>? memberNames = null)
+    public virtual List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
         if (IsValid(value))
         {
@@ -114,7 +84,7 @@ public abstract partial class ValidatorBase<T>
     /// <param name="value">验证的值</param>
     /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="ValidationResult"/></returns>
-    public virtual ValidationResult? GetValidationResult(T? value, IEnumerable<string>? memberNames = null)
+    public virtual ValidationResult? GetValidationResult(object? value, IEnumerable<string>? memberNames = null)
     {
         return GetValidationResults(value, memberNames)?.FirstOrDefault();
     }
@@ -123,8 +93,8 @@ public abstract partial class ValidatorBase<T>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessage">错误消息</param>
-    /// <returns><see cref="ValidatorBase{T}"/></returns>
-    internal virtual ValidatorBase<T> WithErrorMessage(string errorMessage)
+    /// <returns><see cref="ValidatorBase"/></returns>
+    internal virtual ValidatorBase WithErrorMessage(string errorMessage)
     {
         ErrorMessage = errorMessage;
         return this;
@@ -155,7 +125,7 @@ public abstract partial class ValidatorBase<T>
     /// <param name="value">验证的值</param>
     /// <param name="memberNames">成员名称集合</param>
     /// <exception cref="ValidationException"></exception>
-    public virtual void Validate(T? value, IEnumerable<string>? memberNames = null)
+    public virtual void Validate(object? value, IEnumerable<string>? memberNames = null)
     {
         var validationResult = GetValidationResult(value, memberNames);
         if (validationResult is null)
@@ -171,7 +141,7 @@ public abstract partial class ValidatorBase<T>
     /// </summary>
     /// <param name="value">验证的值</param>
     /// <returns><see cref="bool"/></returns>
-    public abstract bool IsValid(T? value);
+    public abstract bool IsValid(object? value);
 
     /// <summary>
     /// 占位符正则表达式

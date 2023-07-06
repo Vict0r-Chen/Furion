@@ -17,28 +17,8 @@ namespace Furion.Validation;
 /// <summary>
 /// 对象注解（特性）验证器
 /// </summary>
-public partial class ObjectAnnotationValidator : ObjectAnnotationValidator<object>
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ObjectAnnotationValidator()
-        : base()
-    {
-    }
-
-    /// <inheritdoc />
-    public virtual new ObjectAnnotationValidator WithErrorMessage(string errorMessage)
-    {
-        return (ObjectAnnotationValidator)base.WithErrorMessage(errorMessage);
-    }
-}
-
-/// <summary>
-/// 对象注解（特性）验证器
-/// </summary>
 /// <typeparam name="T">泛型类型</typeparam>
-public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
+public partial class ObjectAnnotationValidator<T> : ValidatorBase
     where T : class
 {
     /// <summary>
@@ -50,7 +30,7 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
     }
 
     /// <inheritdoc />
-    public override bool IsValid(T? value)
+    public override bool IsValid(object? value)
     {
         if (value == null)
         {
@@ -61,7 +41,7 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(T? value, IEnumerable<string>? memberNames = null)
+    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
         if (value == null)
         {
@@ -76,19 +56,13 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase<T>
         return null;
     }
 
-    /// <inheritdoc />
-    public virtual new ObjectAnnotationValidator<T> WithErrorMessage(string errorMessage)
-    {
-        return (ObjectAnnotationValidator<T>)base.WithErrorMessage(errorMessage);
-    }
-
     /// <summary>
     /// 验证逻辑
     /// </summary>
     /// <param name="value">待验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool TryValidate(T value, out List<ValidationResult> validationResults)
+    internal static bool TryValidate(object value, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(value, nameof(value));

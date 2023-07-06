@@ -19,7 +19,7 @@ public class ValidatorBaseTests
     [Fact]
     public void NewInstance_Default()
     {
-        ValidatorBase<object> validator = new TestValidator();
+        ValidatorBase validator = new TestValidator();
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._errorMessageResourceAccessor);
@@ -31,7 +31,7 @@ public class ValidatorBaseTests
     [Fact]
     public void NewInstance_With_ErrorMessageAccessor()
     {
-        ValidatorBase<object> validator = new TestValidator(() => "这是错误消息");
+        ValidatorBase validator = new TestValidator(() => "这是错误消息");
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._errorMessageResourceAccessor);
@@ -43,7 +43,7 @@ public class ValidatorBaseTests
     [Fact]
     public void NewInstanceOfT_Default()
     {
-        ValidatorBase<string> validator = new TestValidator<string>();
+        ValidatorBase validator = new TestValidator<string>();
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._errorMessageResourceAccessor);
@@ -55,7 +55,7 @@ public class ValidatorBaseTests
     [Fact]
     public void NewInstanceOfT_With_ErrorMessageAccessor()
     {
-        ValidatorBase<string> validator = new TestValidator<string>(() => "这是错误消息");
+        ValidatorBase validator = new TestValidator<string>(() => "这是错误消息");
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._errorMessageResourceAccessor);
