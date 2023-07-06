@@ -26,10 +26,16 @@ public abstract class ComponentContext
     internal ComponentContext(ComponentOptions options)
     {
         Options = options;
+        Properties = new Dictionary<object, object?>();
     }
 
     /// <inheritdoc cref="IHostEnvironment"/>
     public IHostEnvironment? Environment { get; internal set; }
+
+    /// <summary>
+    /// 附加属性
+    /// </summary>
+    public IDictionary<object, object?> Properties { get; init; }
 
     /// <inheritdoc cref="ComponentOptions"/>
     internal ComponentOptions Options { get; }

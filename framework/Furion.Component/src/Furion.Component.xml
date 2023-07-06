@@ -673,6 +673,11 @@
         <member name="P:Furion.Component.ComponentContext.Environment">
             <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
         </member>
+        <member name="P:Furion.Component.ComponentContext.Properties">
+            <summary>
+            附加属性
+            </summary>
+        </member>
         <member name="P:Furion.Component.ComponentContext.Options">
             <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
         </member>

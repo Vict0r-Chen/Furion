@@ -26,6 +26,8 @@ public class ServiceComponentContextTests
         Assert.NotNull(serviceComponentContext.Services);
         Assert.NotNull(serviceComponentContext.Configuration);
         Assert.NotNull(serviceComponentContext.Options);
+        Assert.NotNull(serviceComponentContext.Properties);
+        Assert.Empty(serviceComponentContext.Properties);
         Assert.Null(serviceComponentContext.Environment);
     }
 
