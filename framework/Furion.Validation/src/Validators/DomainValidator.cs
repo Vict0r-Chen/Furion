@@ -17,13 +17,14 @@ namespace Furion.Validation;
 /// <summary>
 /// 域名验证器
 /// </summary>
+/// <remarks>不包含协议，如 https/http</remarks>
 public partial class DomainValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     public DomainValidator()
-        : base()
+        : base(() => Strings.DomainValidator_Invalid)
     {
     }
 

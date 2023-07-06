@@ -178,6 +178,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid domain format. 的本地化字符串。
+        /// </summary>
+        internal static string DomainValidator_Invalid {
+            get {
+                return ResourceManager.GetString("DomainValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid green plate number format. 的本地化字符串。
         /// </summary>
         internal static string GreenPlateNumberValidator_Invalid {

@@ -1497,6 +1497,11 @@
               查找类似 The field {0} is not a valid datetime format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.DomainValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid domain format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.GreenPlateNumberValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid green plate number format. 的本地化字符串。
@@ -2175,6 +2180,7 @@
             <summary>
             域名验证器
             </summary>
+            <remarks>不包含协议，如 https/http</remarks>
         </member>
         <member name="M:Furion.Validation.DomainValidator.#ctor">
             <summary>
