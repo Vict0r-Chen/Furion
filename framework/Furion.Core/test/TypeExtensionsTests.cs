@@ -216,6 +216,39 @@ public class TypeExtensionsTests
     [InlineData(false, false)]
     [InlineData(1, true)]
     [InlineData((long)1, true)]
+    [InlineData(1.0D, false)]
+    [InlineData(1.0F, false)]
+    [InlineData((byte)1, true)]
+    [InlineData(-1, true)]
+    [InlineData(0, true)]
+    public void IsInteger(object value, bool isInteger)
+    {
+        var result = value.GetType().IsInteger();
+        Assert.Equal(isInteger, result);
+    }
+
+    [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, false)]
+    [InlineData(1, false)]
+    [InlineData((long)1, false)]
+    [InlineData(1.0D, true)]
+    [InlineData(1.0F, true)]
+    [InlineData((byte)1, false)]
+    [InlineData(-1, false)]
+    [InlineData(0, false)]
+    [InlineData(-123.33, true)]
+    public void IsDecimal(object value, bool isDecimal)
+    {
+        var result = value.GetType().IsDecimal();
+        Assert.Equal(isDecimal, result);
+    }
+
+    [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, false)]
+    [InlineData(1, true)]
+    [InlineData((long)1, true)]
     [InlineData(1.0D, true)]
     [InlineData(1.0F, true)]
     [InlineData((byte)1, true)]

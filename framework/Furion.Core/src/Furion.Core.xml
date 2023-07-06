@@ -375,6 +375,20 @@
             <param name="accessibilityBindingFlags">可访问性成员绑定标记</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="M:System.TypeExtensions.IsInteger(System.Type)">
+            <summary>
+            是否为整数类型
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:System.TypeExtensions.IsDecimal(System.Type)">
+            <summary>
+            是否为小数类型
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:System.TypeExtensions.IsNumeric(System.Type)">
             <summary>
             是否为数值类型

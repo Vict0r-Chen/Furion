@@ -43,14 +43,9 @@ public partial class BankCardNumberValidator : ValidatorBase
             return Regex().IsMatch(text);
         }
 
-        if (value is int intValue)
+        if (value.GetType().IsInteger())
         {
-            return Regex().IsMatch(intValue.ToString());
-        }
-
-        if (value is long longValue)
-        {
-            return Regex().IsMatch(longValue.ToString());
+            return Regex().IsMatch(value.ToString()!);
         }
 
         return false;
