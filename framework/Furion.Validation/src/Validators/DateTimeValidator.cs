@@ -23,7 +23,7 @@ public partial class DateTimeValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public DateTimeValidator()
-        : base()
+        : base(() => Strings.DateTimeValidator_Invalid)
     {
     }
 
@@ -35,18 +35,18 @@ public partial class DateTimeValidator : ValidatorBase
             return true;
         }
 
+        if (value is DateTime or DateTimeOffset or DateOnly)
+        {
+            return true;
+        }
+
         if (value is string text)
         {
-            return Regex().IsMatch(text);
+            return DateTime.TryParse(text, out _)
+                || DateTimeOffset.TryParse(text, out _)
+                || DateOnly.TryParse(text, out _);
         }
 
         return false;
     }
-
-    /// <summary>
-    /// 日期时间正则表达式
-    /// </summary>
-    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^\d{4}([/:-])(1[0-2]|0?[1-9])\1(0?[1-9]|[1-2]\d|30|31) (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$")]
-    internal static partial Regex Regex();
 }

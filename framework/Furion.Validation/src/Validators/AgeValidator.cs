@@ -40,17 +40,17 @@ public partial class AgeValidator : ValidatorBase
             return Regex().IsMatch(text);
         }
 
-        if (value is int age)
+        // 使用 TypeCode 进行判断
+        var valueType = value.GetType();
+        var typeCode = Type.GetTypeCode(valueType);
+
+        // 排除浮点数
+        if (typeCode == TypeCode.Double || typeCode == TypeCode.Decimal)
         {
-            return age >= 0 && age <= 120;
+            return false;
         }
 
-        if (value is uint uAge)
-        {
-            return uAge >= 0 && uAge <= 120;
-        }
-
-        return false;
+        return Regex().IsMatch(value.ToString()!);
     }
 
     /// <summary>
