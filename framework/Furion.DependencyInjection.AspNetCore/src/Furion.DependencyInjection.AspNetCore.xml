@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Furion.DependencyInjection.AspNetCore</name>
+    </assembly>
+    <members>
+        <member name="T:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator">
+            <summary>
+            控制器激活器
+            </summary>
+            <remarks>实现基于属性或字段注入服务</remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator._typeActivatorCache">
+            <inheritdoc cref="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache"/>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.#ctor(Furion.DependencyInjection.AspNetCore.ITypeActivatorCache)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="typeActivatorCache"><see cref="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.Create(Microsoft.AspNetCore.Mvc.ControllerContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.Release(Microsoft.AspNetCore.Mvc.ControllerContext,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.ReleaseAsync(Microsoft.AspNetCore.Mvc.ControllerContext,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.Autowried(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
+            <summary>
+            属性和字段注入服务
+            </summary>
+            <param name="controllerInstance">控制器实例</param>
+            <param name="controllerTypeInfo">控制器类型</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedProperties(System.Object,System.Reflection.TypeInfo,System.IServiceProvider,Microsoft.Extensions.DependencyInjection.IServiceProviderIsService)">
+            <summary>
+            属性注入服务
+            </summary>
+            <param name="controllerInstance">控制器实例</param>
+            <param name="controllerTypeInfo">控制器类型</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="serviceProviderIsService"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedFields(System.Object,System.Reflection.TypeInfo,System.IServiceProvider,Microsoft.Extensions.DependencyInjection.IServiceProviderIsService)">
+            <summary>
+            字段注入服务
+            </summary>
+            <param name="controllerInstance">控制器实例</param>
+            <param name="controllerTypeInfo">控制器类型</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="serviceProviderIsService"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService"/></param>
+        </member>
+        <member name="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache">
+            <summary>
+            类型激活器缓存接口
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
+            <summary>
+            创建类型实例
+            </summary>
+            <typeparam name="TInstance">返回值类型</typeparam>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="implementationType">实际类型</param>
+            <returns><typeparamref name="TInstance"/></returns>
+        </member>
+        <member name="T:Furion.DependencyInjection.AspNetCore.TypeActivatorCache">
+            <inheritdoc />
+        </member>
+        <member name="F:Furion.DependencyInjection.AspNetCore.TypeActivatorCache._createFactory">
+            <summary>
+            对象创建工厂
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.AspNetCore.TypeActivatorCache._typeActivatorCache">
+            <summary>
+            类型缓存集合
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.TypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Furion.DependencyInjection.AutowiredAttribute">
+            <summary>
+            成员注入服务特性
+            </summary>
+            <remarks>支持属性或字段注入服务</remarks>
+        </member>
+        <member name="T:Furion.Component.AutowiredControllerActivatorComponent">
+            <summary>
+            依赖注入模块服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.AutowiredControllerActivatorComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorServiceCollectionExtensions">
+            <summary>
+            依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorServiceCollectionExtensions.AddAutowiredControllerActivator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加控制器属性或字段自动注入模块服务
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

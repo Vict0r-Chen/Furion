@@ -23,6 +23,7 @@
 [assembly: InternalsVisibleTo("Furion.Configuration.ManifestResource")]
 [assembly: InternalsVisibleTo("Furion.Crontab")]
 [assembly: InternalsVisibleTo("Furion.DependencyInjection")]
+[assembly: InternalsVisibleTo("Furion.DependencyInjection.AspNetCore")]
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.Named")]
 [assembly: InternalsVisibleTo("Furion.Encryption")]
 [assembly: InternalsVisibleTo("Furion.EventBus")]
