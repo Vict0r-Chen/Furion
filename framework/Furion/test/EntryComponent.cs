@@ -37,7 +37,8 @@ public class EntryComponent : WebComponent
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Services.AddControllers();
+        context.Services.AddControllers()
+                        .AddAutowiredControllerActivator();
         context.Services.AddEndpointsApiExplorer();
         context.Services.AddSwaggerGen();
     }

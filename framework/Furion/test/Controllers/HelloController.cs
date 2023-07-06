@@ -20,10 +20,13 @@ namespace Furion.Tests.Controllers;
 [Route("[controller]")]
 public class HelloController
 {
+    [AutowiredServices]
+    private IConfiguration? Configuration { get; set; }
+
     [HttpGet]
     public string? Get([FromServices] IConfiguration configuration)
     {
-        return configuration["Name"] + "Embed: " + configuration["Furion.Tests:Name"];
+        return configuration["Name"] + "Embed: " + Configuration!["Furion.Tests:Name"];
     }
 
     [HttpPost]

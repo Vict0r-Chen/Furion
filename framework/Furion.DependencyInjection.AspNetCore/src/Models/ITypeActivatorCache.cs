@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection.AspNetCore;
 
 /// <summary>
-/// 类型初始化器缓存接口
+/// 类型初始化器缓存服务
 /// </summary>
 /// <remarks>作用于缓存控制器实例工厂</remarks>
 internal interface ITypeActivatorCache

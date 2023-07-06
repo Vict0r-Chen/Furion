@@ -6,9 +6,9 @@
     <members>
         <member name="T:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator">
             <summary>
-            控制器激活器
+            控制器初始化器
             </summary>
-            <remarks>实现基于属性或字段注入服务</remarks>
+            <remarks>作用于实例化控制器和自动注入属性或字段服务</remarks>
         </member>
         <member name="F:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator._typeActivatorCache">
             <inheritdoc cref="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache"/>
@@ -30,33 +30,31 @@
         </member>
         <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.Autowried(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
             <summary>
-            属性和字段注入服务
+            自动注入属性或字段服务
             </summary>
             <param name="controllerInstance">控制器实例</param>
             <param name="controllerTypeInfo">控制器类型</param>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
-        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedProperties(System.Object,System.Reflection.TypeInfo,System.IServiceProvider,Microsoft.Extensions.DependencyInjection.IServiceProviderIsService)">
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedProperties(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
             <summary>
-            属性注入服务
+            自动注入属性服务
             </summary>
             <param name="controllerInstance">控制器实例</param>
             <param name="controllerTypeInfo">控制器类型</param>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="serviceProviderIsService"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService"/></param>
         </member>
-        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedFields(System.Object,System.Reflection.TypeInfo,System.IServiceProvider,Microsoft.Extensions.DependencyInjection.IServiceProviderIsService)">
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedFields(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
             <summary>
-            字段注入服务
+            自动注入字段服务
             </summary>
             <param name="controllerInstance">控制器实例</param>
             <param name="controllerTypeInfo">控制器类型</param>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="serviceProviderIsService"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService"/></param>
         </member>
         <member name="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache">
             <summary>
-            类型初始化器缓存接口
+            类型初始化器缓存服务
             </summary>
             <remarks>作用于缓存控制器实例工厂</remarks>
         </member>
@@ -92,23 +90,37 @@
         </member>
         <member name="T:Furion.Component.AutowiredControllerActivatorComponent">
             <summary>
-            依赖注入模块服务组件
+            依赖注入 Web 模块服务组件
             </summary>
         </member>
         <member name="M:Furion.Component.AutowiredControllerActivatorComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorMvcBuilderExtensions">
+            <summary>
+            依赖注入 Web 模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/> 拓展类
+            </summary>
+            <remarks>包含控制器自动注入属性或字段服务</remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorMvcBuilderExtensions.AddAutowiredControllerActivator(Microsoft.Extensions.DependencyInjection.IMvcBuilder)">
+            <summary>
+            添加依赖注入 Web 模块服务
+            </summary>
+            <param name="mvcBuilder"><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></returns>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorServiceCollectionExtensions">
             <summary>
-            依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            依赖注入 Web 模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
+            <remarks>包含控制器自动注入属性或字段服务</remarks>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorServiceCollectionExtensions.AddAutowiredControllerActivator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            添加控制器属性或字段自动注入模块服务
+            添加依赖注入 Web 模块服务
             </summary>
-            <param name="services"></param>
-            <returns></returns>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
     </members>
 </doc>

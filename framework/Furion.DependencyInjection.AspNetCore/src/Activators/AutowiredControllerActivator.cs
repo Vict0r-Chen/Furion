@@ -15,13 +15,13 @@
 namespace Furion.DependencyInjection.AspNetCore;
 
 /// <summary>
-/// 控制器激活器
+/// 控制器初始化器
 /// </summary>
-/// <remarks>实现基于属性或字段注入服务</remarks>
+/// <remarks>作用于实例化控制器和自动注入属性或字段服务</remarks>
 internal sealed class AutowiredControllerActivator : IControllerActivator
 {
     /// <inheritdoc cref="ITypeActivatorCache"/>
-    private readonly ITypeActivatorCache _typeActivatorCache;
+    internal readonly ITypeActivatorCache _typeActivatorCache;
 
     /// <summary>
     /// 构造函数
@@ -37,24 +37,22 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(controllerContext);
+
+        // 空检查
         if (controllerContext.ActionDescriptor == null)
         {
-            throw new ArgumentException(string.Format("The '{0}' property of '{1}' must not be null."
-                , nameof(ControllerContext.ActionDescriptor)
-                , nameof(ControllerContext)));
+            throw new ArgumentException(string.Format("The '{0}' property of '{1}' must not be null.", nameof(ControllerContext.ActionDescriptor), nameof(ControllerContext)));
         }
 
-        // 获取控制器类型
+        // 获取控制器类型对象
         var controllerTypeInfo = controllerContext.ActionDescriptor!.ControllerTypeInfo
-            ?? throw new ArgumentException(string.Format("The '{0}' property of '{1}' must not be null."
-                , nameof(controllerContext.ActionDescriptor.ControllerTypeInfo)
-                , nameof(ControllerContext.ActionDescriptor)));
+            ?? throw new ArgumentException(string.Format("The '{0}' property of '{1}' must not be null.", nameof(controllerContext.ActionDescriptor.ControllerTypeInfo), nameof(ControllerContext.ActionDescriptor)));
 
         // 创建控制器实例
         var serviceProvider = controllerContext.HttpContext.RequestServices;
         var controllerInstance = _typeActivatorCache.CreateInstance<object>(serviceProvider, controllerTypeInfo.AsType());
 
-        // 属性和字段注入服务
+        // 自动注入属性或字段服务
         Autowried(controllerInstance, controllerTypeInfo, serviceProvider);
 
         return controllerInstance;
@@ -92,38 +90,28 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
     }
 
     /// <summary>
-    /// 属性和字段注入服务
+    /// 自动注入属性或字段服务
     /// </summary>
     /// <param name="controllerInstance">控制器实例</param>
     /// <param name="controllerTypeInfo">控制器类型</param>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
     internal static void Autowried(object controllerInstance, TypeInfo controllerTypeInfo, IServiceProvider serviceProvider)
     {
-        // 检查服务
-        var serviceProviderIsService = serviceProvider.GetRequiredService<IServiceProviderIsService>();
-
-        // 属性和字段注入
-        AutowriedProperties(controllerInstance, controllerTypeInfo, serviceProvider, serviceProviderIsService);
-        AutowriedFields(controllerInstance, controllerTypeInfo, serviceProvider, serviceProviderIsService);
+        AutowriedProperties(controllerInstance, controllerTypeInfo, serviceProvider);
+        AutowriedFields(controllerInstance, controllerTypeInfo, serviceProvider);
     }
 
     /// <summary>
-    /// 属性注入服务
+    /// 自动注入属性服务
     /// </summary>
     /// <param name="controllerInstance">控制器实例</param>
     /// <param name="controllerTypeInfo">控制器类型</param>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="serviceProviderIsService"><see cref="IServiceProviderIsService"/></param>
-    internal static void AutowriedProperties(object controllerInstance
-        , TypeInfo controllerTypeInfo
-        , IServiceProvider serviceProvider
-        , IServiceProviderIsService serviceProviderIsService)
+    internal static void AutowriedProperties(object controllerInstance, TypeInfo controllerTypeInfo, IServiceProvider serviceProvider)
     {
         // 查找所有可注入的属性集合
         var properties = controllerTypeInfo.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
-            .Where(property => property.CanWrite
-                && property.IsDefined(typeof(AutowiredServicesAttribute), false)
-                && serviceProviderIsService.IsService(property.PropertyType))
+            .Where(property => property.IsDefined(typeof(AutowiredServicesAttribute), false))
             .ToList();
 
         // 空检查
@@ -134,30 +122,33 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
 
         foreach (var property in properties)
         {
+            // 不可写
+            if (!property.CanWrite)
+            {
+                throw new InvalidOperationException(string.Format("It is not possible to inject a service into a read-only `{0}` property of type `{1}`.", property.Name, property.DeclaringType!.Name));
+            }
+
             // 注入服务
             property.SetValue(controllerInstance, serviceProvider.GetRequiredService(property.PropertyType));
+
+            // 输出调试日志
+            Debugging.Warn("The `{0}` property of type `{1}` has been successfully injected with a service instance.", property.Name, property.DeclaringType!.Name);
         }
 
         properties.Clear();
     }
 
     /// <summary>
-    /// 字段注入服务
+    /// 自动注入字段服务
     /// </summary>
     /// <param name="controllerInstance">控制器实例</param>
     /// <param name="controllerTypeInfo">控制器类型</param>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="serviceProviderIsService"><see cref="IServiceProviderIsService"/></param>
-    internal static void AutowriedFields(object controllerInstance
-        , TypeInfo controllerTypeInfo
-        , IServiceProvider serviceProvider
-        , IServiceProviderIsService serviceProviderIsService)
+    internal static void AutowriedFields(object controllerInstance, TypeInfo controllerTypeInfo, IServiceProvider serviceProvider)
     {
         // 查找所有可注入的字段集合
         var fields = controllerTypeInfo.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
-            .Where(field => !field.IsInitOnly
-                && field.IsDefined(typeof(AutowiredServicesAttribute), false)
-                && serviceProviderIsService.IsService(field.FieldType))
+            .Where(field => field.IsDefined(typeof(AutowiredServicesAttribute), false))
             .ToList();
 
         // 空检查
@@ -168,8 +159,17 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
 
         foreach (var field in fields)
         {
+            // 不可写
+            if (field.IsInitOnly)
+            {
+                throw new InvalidOperationException(string.Format("It is not possible to inject a service into a read-only `{0}` field of type `{1}`.", field.Name, field.DeclaringType!.Name));
+            }
+
             // 注入服务
             field.SetValue(controllerInstance, serviceProvider.GetRequiredService(field.FieldType));
+
+            // 输出调试日志
+            Debugging.Warn("The `{0}` field of type `{1}` has been successfully injected with a service instance.", field.Name, field.DeclaringType!.Name);
         }
 
         fields.Clear();

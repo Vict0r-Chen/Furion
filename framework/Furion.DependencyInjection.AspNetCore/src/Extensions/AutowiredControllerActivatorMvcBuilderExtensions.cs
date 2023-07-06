@@ -12,17 +12,23 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 依赖注入 Web 模块服务组件
+/// 依赖注入 Web 模块 <see cref="IMvcBuilder"/> 拓展类
 /// </summary>
-[DependsOn<ComponentCoreComponent>]
-public sealed class AutowiredControllerActivatorComponent : ComponentBase
+/// <remarks>包含控制器自动注入属性或字段服务</remarks>
+public static class AutowiredControllerActivatorMvcBuilderExtensions
 {
-    /// <inheritdoc />
-    public override void ConfigureServices(ServiceComponentContext context)
+    /// <summary>
+    /// 添加依赖注入 Web 模块服务
+    /// </summary>
+    /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
+    /// <returns><see cref="IMvcBuilder"/></returns>
+    public static IMvcBuilder AddAutowiredControllerActivator(this IMvcBuilder mvcBuilder)
     {
-        context.Services.AddAutowiredControllerActivator();
+        mvcBuilder.Services.AddAutowiredControllerActivator();
+
+        return mvcBuilder;
     }
 }
