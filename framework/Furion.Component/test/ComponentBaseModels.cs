@@ -55,6 +55,8 @@ public class AComponent : ComponentBase
             options.CallRecords.Add($"{nameof(AComponent)}.{nameof(PreConfigureServices)}");
             options.CallName = nameof(AComponent);
         });
+
+        context.Properties.Add(nameof(AComponent), nameof(PreConfigureServices));
     }
 
     public override void ConfigureServices(ServiceComponentContext context)
@@ -66,6 +68,8 @@ public class AComponent : ComponentBase
 
         // 重复调用
         context.Services.AddComponent<BComponent>(context.Configuration);
+
+        context.Properties.Add(nameof(AComponent) + "1", nameof(ConfigureServices));
     }
 }
 
@@ -79,6 +83,8 @@ public class BComponent : ComponentBase
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(PreConfigureServices)}");
             options.CallName = nameof(BComponent);
         });
+
+        context.Properties.Add(nameof(BComponent), nameof(PreConfigureServices));
     }
 
     public override void ConfigureServices(ServiceComponentContext context)
@@ -87,6 +93,8 @@ public class BComponent : ComponentBase
         {
             options.CallRecords.Add($"{nameof(BComponent)}.{nameof(ConfigureServices)}");
         });
+
+        context.Properties.Add(nameof(BComponent) + "1", nameof(ConfigureServices));
     }
 }
 
