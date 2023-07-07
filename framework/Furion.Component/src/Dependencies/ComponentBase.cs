@@ -264,6 +264,23 @@ public abstract class ComponentBase
     }
 
     /// <summary>
+    /// 获取或创建组件实例
+    /// </summary>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <returns><see cref="ComponentBase"/></returns>
+    internal static ComponentBase GetOrCreateComponent(Type componentType, ComponentOptions componentOptions)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
+
+        return componentOptions.Components.GetOrAdd(componentType, type =>
+        {
+            return CreateComponent(type, componentOptions);
+        });
+    }
+
+    /// <summary>
     /// 创建组件实例
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
@@ -415,7 +432,7 @@ public abstract class ComponentBase
             }
 
             // 创建组件实例
-            var component = (TTargetComponent)CreateComponent(componentType, componentOptions);
+            var component = (TTargetComponent)GetOrCreateComponent(componentType, componentOptions);
 
             // 检查组件是否激活
             if (!component.CanActivate(componentContext))

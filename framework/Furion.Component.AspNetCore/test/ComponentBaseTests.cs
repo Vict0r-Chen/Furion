@@ -110,4 +110,21 @@ public class ComponentBaseTests
         Assert.Equal(typeof(BComponent), list2[2].GetType());
         Assert.Equal(typeof(AComponent), list2[3].GetType());
     }
+
+    [Fact]
+    public void GetOrCreateComponent()
+    {
+        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var componentOptions = webApplication.GetComponentOptions();
+
+        Assert.Empty(componentOptions.Components);
+        ComponentBase.GetOrCreateComponent(typeof(AComponent), componentOptions);
+
+        Assert.Single(componentOptions.Components);
+
+        ComponentBase.GetOrCreateComponent(typeof(AComponent), componentOptions);
+        ComponentBase.GetOrCreateComponent(typeof(AComponent), componentOptions);
+
+        Assert.Single(componentOptions.Components);
+    }
 }

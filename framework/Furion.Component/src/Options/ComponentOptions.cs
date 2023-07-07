@@ -31,6 +31,7 @@ internal sealed class ComponentOptions
     public ComponentOptions()
     {
         PropsActions ??= new();
+        Components ??= new();
         InvokeRecords ??= new();
 
         _GetPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
@@ -45,6 +46,11 @@ internal sealed class ComponentOptions
     /// 组件配置委托集合
     /// </summary>
     internal Dictionary<Type, List<Delegate>> PropsActions { get; init; }
+
+    /// <summary>
+    /// 组件对象列表
+    /// </summary>
+    internal ConcurrentDictionary<Type, ComponentBase> Components { get; init; }
 
     /// <summary>
     /// 组件调用记录
@@ -116,6 +122,7 @@ internal sealed class ComponentOptions
     internal void Release()
     {
         PropsActions.Clear();
+        Components.Clear();
         InvokeRecords.Clear();
     }
 }

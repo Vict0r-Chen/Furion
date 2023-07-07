@@ -24,6 +24,8 @@ public class ComponentOptionsTests
 
         Assert.NotNull(options.PropsActions);
         Assert.Empty(options.PropsActions);
+        Assert.NotNull(options.Components);
+        Assert.Empty(options.Components);
         Assert.NotNull(options.InvokeRecords);
         Assert.Empty(options.InvokeRecords);
         Assert.True(options.SuppressDuplicateInvoke);
@@ -130,6 +132,7 @@ public class ComponentOptionsTests
 
         options.Release();
         Assert.Empty(options.PropsActions);
+        Assert.Empty(options.Components);
         Assert.Empty(options.InvokeRecords);
     }
 }

@@ -823,6 +823,14 @@
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
+        <member name="M:Furion.Component.ComponentBase.GetOrCreateComponent(System.Type,Furion.Component.ComponentOptions)">
+            <summary>
+            获取或创建组件实例
+            </summary>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
+            <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
+        </member>
         <member name="M:Furion.Component.ComponentBase.CreateComponent(System.Type,Furion.Component.ComponentOptions)">
             <summary>
             创建组件实例
@@ -1012,6 +1020,11 @@
         <member name="P:Furion.Component.ComponentOptions.PropsActions">
             <summary>
             组件配置委托集合
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ComponentOptions.Components">
+            <summary>
+            组件对象列表
             </summary>
         </member>
         <member name="P:Furion.Component.ComponentOptions.InvokeRecords">
