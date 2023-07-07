@@ -915,14 +915,14 @@
         </member>
         <member name="M:Furion.Component.DependencyGraph.FindAllAncestors(System.Type)">
             <summary>
-            查找给定节点类型的所有祖先节点
+            查找给定节点类型的所有祖先节点（内部方法）
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.DependencyGraph.FindAllDescendants(System.Type)">
             <summary>
-            查找给定节点类型的所有后代节点
+            查找给定节点类型的所有后代节点（内部方法）
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>

@@ -90,7 +90,7 @@ internal sealed class DependencyGraph
     }
 
     /// <summary>
-    /// 查找给定节点类型的所有祖先节点
+    /// 查找给定节点类型的所有祖先节点（内部方法）
     /// </summary>
     /// <param name="nodeType">节点类型</param>
     /// <returns><see cref="List{T}"/></returns>
@@ -118,7 +118,7 @@ internal sealed class DependencyGraph
     }
 
     /// <summary>
-    /// 查找给定节点类型的所有后代节点
+    /// 查找给定节点类型的所有后代节点（内部方法）
     /// </summary>
     /// <param name="nodeType">节点类型</param>
     /// <returns><see cref="List{T}"/></returns>
