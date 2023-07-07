@@ -79,38 +79,11 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid base64 format. 的本地化字符串。
-        /// </summary>
-        internal static string Base64Validator_Invalid {
-            get {
-                return ResourceManager.GetString("Base64Validator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid value that can be converted to a boolean type. 的本地化字符串。
-        /// </summary>
-        internal static string BooleanValidator_Invalid {
-            get {
-                return ResourceManager.GetString("BooleanValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The field {0} is not a valid Chinese name. 的本地化字符串。
         /// </summary>
         internal static string ChineseNameValidator_Invalid {
             get {
                 return ResourceManager.GetString("ChineseNameValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid Chinese province. 的本地化字符串。
-        /// </summary>
-        internal static string ChineseProvinceValidator_Invalid {
-            get {
-                return ResourceManager.GetString("ChineseProvinceValidator_Invalid", resourceCulture);
             }
         }
         
@@ -142,38 +115,11 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid currency amount format. 的本地化字符串。
-        /// </summary>
-        internal static string CurrencyAmountValidator_Invalid {
-            get {
-                return ResourceManager.GetString("CurrencyAmountValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The field {0} is invalid. 的本地化字符串。
         /// </summary>
         internal static string CustomValidator_Invalid {
             get {
                 return ResourceManager.GetString("CustomValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid date only format. 的本地化字符串。
-        /// </summary>
-        internal static string DateOnlyValidator_Invalid {
-            get {
-                return ResourceManager.GetString("DateOnlyValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid datetime format. 的本地化字符串。
-        /// </summary>
-        internal static string DateTimeValidator_Invalid {
-            get {
-                return ResourceManager.GetString("DateTimeValidator_Invalid", resourceCulture);
             }
         }
         
@@ -205,38 +151,11 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid green plate number format. 的本地化字符串。
-        /// </summary>
-        internal static string GreenPlateNumberValidator_Invalid {
-            get {
-                return ResourceManager.GetString("GreenPlateNumberValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid number plate format. 的本地化字符串。
-        /// </summary>
-        internal static string NumberPlateValidator_Invalid {
-            get {
-                return ResourceManager.GetString("NumberPlateValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The {0} field is required. 的本地化字符串。
         /// </summary>
         internal static string RequiredValidator_Invalid {
             get {
                 return ResourceManager.GetString("RequiredValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid standard plate number format. 的本地化字符串。
-        /// </summary>
-        internal static string StandardPlateNumberValidator_Invalid {
-            get {
-                return ResourceManager.GetString("StandardPlateNumberValidator_Invalid", resourceCulture);
             }
         }
         
@@ -255,24 +174,6 @@ namespace Furion.Validation.Resources {
         internal static string StringContainsValidator_Invalid {
             get {
                 return ResourceManager.GetString("StringContainsValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid half day clock time format. 的本地化字符串。
-        /// </summary>
-        internal static string TimeOnly12Validator_Invalid {
-            get {
-                return ResourceManager.GetString("TimeOnly12Validator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid full day clock time format. 的本地化字符串。
-        /// </summary>
-        internal static string TimeOnly24Validator_Invalid {
-            get {
-                return ResourceManager.GetString("TimeOnly24Validator_Invalid", resourceCulture);
             }
         }
         
