@@ -104,34 +104,34 @@ public abstract class ComponentBase
     }
 
     /// <summary>
-    /// 创建组件拓扑排序集合
+    /// 创建组件拓扑图排序集合
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="predicate">自定义过滤委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<Type> CreateTopological(Type componentType, Func<Type, bool>? predicate = null)
+    internal static List<Type> CreateTopologicalGraph(Type componentType, Func<Type, bool>? predicate = null)
     {
-        return CreateTopological(CreateDependencies(componentType), predicate);
+        return CreateTopologicalGraph(CreateDependencies(componentType), predicate);
     }
 
     /// <summary>
-    /// 创建拓扑排序集合
+    /// 创建拓扑图排序集合
     /// </summary>
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="predicate">自定义过滤委托</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<Type> CreateTopological(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
+    internal static List<Type> CreateTopologicalGraph(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
     {
         // 检查组件依赖关系集合有效性
         CheckDependencies(dependencies);
 
-        // 获取拓扑排序集合
-        var topologicalSets = Topological.Sort(dependencies);
+        // 获取拓扑图排序集合
+        var topologicalGraph = TopologicalGraph.Sort(dependencies);
 
         // 筛选集合
         return predicate is null
-            ? topologicalSets
-            : topologicalSets.Where(predicate).ToList();
+            ? topologicalGraph
+            : topologicalGraph.Where(predicate).ToList();
     }
 
     /// <summary>
@@ -205,7 +205,7 @@ public abstract class ComponentBase
         }
 
         // 是否存在循环依赖
-        if (Topological.HasCycle(dependencies))
+        if (TopologicalGraph.HasCycle(dependencies))
         {
             throw new InvalidOperationException("The dependency relationship has a circular dependency.");
         }
@@ -364,16 +364,16 @@ public abstract class ComponentBase
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
     /// <param name="predicate">自定义配置委托</param>
-    /// <param name="topologicalPredicate">拓扑排序过滤</param>
+    /// <param name="topologicalGraphPredicate">拓扑图排序过滤</param>
     /// <returns><see cref="List{T}"/></returns>
     internal static List<TTargetComponent> CreateComponents<TTargetComponent>(Dictionary<Type, Type[]> dependencies
         , ComponentContext componentContext
         , Action<TTargetComponent>? predicate = null
-        , Func<Type, bool>? topologicalPredicate = null)
+        , Func<Type, bool>? topologicalGraphPredicate = null)
         where TTargetComponent : ComponentBase
     {
-        // 创建组件拓扑排序集合
-        var topologicalSets = CreateTopological(dependencies, topologicalPredicate);
+        // 创建组件拓扑图排序集合
+        var topologicalGraph = CreateTopologicalGraph(dependencies, topologicalGraphPredicate);
 
         // 组件依赖关系对象集合
         var components = new List<TTargetComponent>();
@@ -390,9 +390,9 @@ public abstract class ComponentBase
         var inactiveComponents = new List<Type>();
 
         // 从尾部依次初始化组件实例
-        for (var i = topologicalSets.Count - 1; i >= 0; i--)
+        for (var i = topologicalGraph.Count - 1; i >= 0; i--)
         {
-            var componentType = topologicalSets[i];
+            var componentType = topologicalGraph[i];
 
             // 检查当前组件类型的下游是否未激活
             if (inactiveComponents.Contains(componentType))
@@ -435,7 +435,7 @@ public abstract class ComponentBase
         }
 
         inactiveComponents.Clear();
-        topologicalSets.Clear();
+        topologicalGraph.Clear();
 
         return components;
     }

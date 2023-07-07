@@ -14,7 +14,7 @@
 
 namespace Furion.Component.Tests;
 
-public class TopologicalTests
+public class TopologicalGraphTests
 {
     [Fact]
     public void Sort_NoCircularDependency()
@@ -27,7 +27,7 @@ public class TopologicalTests
         };
 
         // B E F C A G D
-        var sortedList = Topological.Sort(dependencies);
+        var sortedList = TopologicalGraph.Sort(dependencies);
         Assert.Equal(typeof(BType), sortedList.ElementAt(0));
         Assert.Equal(typeof(EType), sortedList.ElementAt(1));
         Assert.Equal(typeof(FType), sortedList.ElementAt(2));
@@ -48,7 +48,7 @@ public class TopologicalTests
         };
 
         // B E C A G D
-        var sortedList = Topological.Sort(dependencies);
+        var sortedList = TopologicalGraph.Sort(dependencies);
         Assert.Equal(typeof(BType), sortedList.ElementAt(0));
         Assert.Equal(typeof(EType), sortedList.ElementAt(1));
         Assert.Equal(typeof(CType), sortedList.ElementAt(2));
@@ -67,7 +67,7 @@ public class TopologicalTests
             {typeof(DType), new[]{ typeof(GType) } }
         };
 
-        var result = Topological.HasCycle(dependencies);
+        var result = TopologicalGraph.HasCycle(dependencies);
         Assert.False(result);
     }
 
@@ -81,7 +81,7 @@ public class TopologicalTests
             {typeof(DType), new[]{ typeof(GType) } }
         };
 
-        var result = Topological.HasCycle(dependencies);
+        var result = TopologicalGraph.HasCycle(dependencies);
         Assert.True(result);
     }
 }

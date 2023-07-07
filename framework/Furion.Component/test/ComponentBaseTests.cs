@@ -208,11 +208,11 @@ public class ComponentBaseTests
     }
 
     [Fact]
-    public void CreateTopological()
+    public void CreateTopologicalGraph()
     {
         // D C B A
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
-        var list = ComponentBase.CreateTopological(dependencies);
+        var list = ComponentBase.CreateTopologicalGraph(dependencies);
 
         Assert.Equal(4, list.Count);
         Assert.Equal(typeof(DComponent), list.ElementAt(0));
@@ -222,21 +222,21 @@ public class ComponentBaseTests
     }
 
     [Fact]
-    public void CreateTopological_Predicate()
+    public void CreateTopologicalGraph_Predicate()
     {
         // D C B A
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
-        var list = ComponentBase.CreateTopological(dependencies, t => t == typeof(AComponent));
+        var list = ComponentBase.CreateTopologicalGraph(dependencies, t => t == typeof(AComponent));
 
         Assert.Single(list);
         Assert.Equal(typeof(AComponent), list.ElementAt(0));
     }
 
     [Fact]
-    public void CreateTopological_ForType()
+    public void CreateTopologicalGraph_ForType()
     {
         // D C B A
-        var list = ComponentBase.CreateTopological(typeof(AComponent));
+        var list = ComponentBase.CreateTopologicalGraph(typeof(AComponent));
 
         Assert.Equal(4, list.Count);
         Assert.Equal(typeof(DComponent), list.ElementAt(0));
@@ -246,10 +246,10 @@ public class ComponentBaseTests
     }
 
     [Fact]
-    public void CreateTopological_ForType_Predicate()
+    public void CreateTopologicalGraph_ForType_Predicate()
     {
         // D C B A
-        var list = ComponentBase.CreateTopological(typeof(AComponent), t => t == typeof(AComponent));
+        var list = ComponentBase.CreateTopologicalGraph(typeof(AComponent), t => t == typeof(AComponent));
 
         Assert.Single(list);
         Assert.Equal(typeof(AComponent), list.ElementAt(0));

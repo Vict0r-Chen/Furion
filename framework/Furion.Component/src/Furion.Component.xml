@@ -779,17 +779,17 @@
             <param name="context"><see cref="T:Furion.Component.ComponentContext"/></param>
             <param name="eventName">事件名称</param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateTopological(System.Type,System.Func{System.Type,System.Boolean})">
+        <member name="M:Furion.Component.ComponentBase.CreateTopologicalGraph(System.Type,System.Func{System.Type,System.Boolean})">
             <summary>
-            创建组件拓扑排序集合
+            创建组件拓扑图排序集合
             </summary>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="predicate">自定义过滤委托</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateTopological(System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Func{System.Type,System.Boolean})">
+        <member name="M:Furion.Component.ComponentBase.CreateTopologicalGraph(System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Func{System.Type,System.Boolean})">
             <summary>
-            创建拓扑排序集合
+            创建拓扑图排序集合
             </summary>
             <param name="dependencies">组件依赖关系集合</param>
             <param name="predicate">自定义过滤委托</param>
@@ -849,7 +849,7 @@
             <param name="dependencies">组件依赖关系集合</param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
             <param name="predicate">自定义配置委托</param>
-            <param name="topologicalPredicate">拓扑排序过滤</param>
+            <param name="topologicalGraphPredicate">拓扑图排序过滤</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBase.CreateComponents(System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentContext,System.Action{Furion.Component.ComponentBase})">
@@ -884,7 +884,7 @@
         </member>
         <member name="T:Furion.Component.DependencyGraph">
             <summary>
-            依赖关系图
+            依赖关系图算法
             </summary>
         </member>
         <member name="F:Furion.Component.DependencyGraph._dependencies">
@@ -955,26 +955,26 @@
             <param name="source"><typeparamref name="TSource"/></param>
             <param name="destination"><typeparamref name="TSource"/></param>
         </member>
-        <member name="T:Furion.Component.Topological">
+        <member name="T:Furion.Component.TopologicalGraph">
             <summary>
-            拓扑算法
+            拓扑图算法
             </summary>
         </member>
-        <member name="M:Furion.Component.Topological.Sort(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="M:Furion.Component.TopologicalGraph.Sort(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
-            拓扑排序算法
+            拓扑图排序算法
             </summary>
             <param name="dependencies">依赖关系集合</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.Topological.HasCycle(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="M:Furion.Component.TopologicalGraph.HasCycle(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
-            拓扑循环依赖检查
+            拓扑图循环依赖检查
             </summary>
             <param name="dependencies">依赖关系集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Component.Topological.VisitNode(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.VisitNode(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
             <summary>
             节点访问记录
             </summary>
@@ -983,7 +983,7 @@
             <param name="visited">已访问过的节点</param>
             <param name="sortedNodes">已排序的节点</param>
         </member>
-        <member name="M:Furion.Component.Topological.HasCycleHelper(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.HasCycleHelper(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
             <summary>
             检查依赖节点是否存在循环依赖
             </summary>

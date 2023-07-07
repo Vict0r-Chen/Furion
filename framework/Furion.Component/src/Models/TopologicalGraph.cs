@@ -15,12 +15,12 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 拓扑算法
+/// 拓扑图算法
 /// </summary>
-internal static class Topological
+internal static class TopologicalGraph
 {
     /// <summary>
-    /// 拓扑排序算法
+    /// 拓扑图排序算法
     /// </summary>
     /// <param name="dependencies">依赖关系集合</param>
     /// <returns><see cref="List{T}"/></returns>
@@ -43,7 +43,7 @@ internal static class Topological
     }
 
     /// <summary>
-    /// 拓扑循环依赖检查
+    /// 拓扑图循环依赖检查
     /// </summary>
     /// <param name="dependencies">依赖关系集合</param>
     /// <returns><see cref="bool"/></returns>

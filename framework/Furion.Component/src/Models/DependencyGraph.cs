@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 依赖关系图
+/// 依赖关系图算法
 /// </summary>
 internal sealed class DependencyGraph
 {

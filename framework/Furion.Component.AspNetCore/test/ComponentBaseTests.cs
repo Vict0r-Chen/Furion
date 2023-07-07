@@ -88,7 +88,7 @@ public class ComponentBaseTests
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         // D C B A
-        var list = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalPredicate: ComponentBase.IsWebComponent);
+        var list = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalGraphPredicate: ComponentBase.IsWebComponent);
         Assert.NotNull(list);
 
         Assert.Equal(4, list.Count);
@@ -100,7 +100,7 @@ public class ComponentBaseTests
 
         // 避免引发重复调用检查
         componentContext.Options.InvokeRecords.Clear();
-        var list2 = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalPredicate: ComponentBase.IsWebComponent);
+        var list2 = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, topologicalGraphPredicate: ComponentBase.IsWebComponent);
         Assert.NotNull(list2);
 
         Assert.Equal(4, list2.Count);
