@@ -23,14 +23,9 @@ public partial class PhoneNumberValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public PhoneNumberValidator()
-        : base()
+        : base(() => Strings.PhoneNumberValidator_Invalid)
     {
     }
-
-    /// <summary>
-    /// 严格模式
-    /// </summary>
-    public bool Strict { get; set; } = true;
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -42,23 +37,19 @@ public partial class PhoneNumberValidator : ValidatorBase
 
         if (value is string text)
         {
-            return (Strict
-                ? StrictRegex()
-                : Regex()).IsMatch(text);
+            return Regex().IsMatch(text);
+        }
+
+        if (value.GetType().IsInteger())
+        {
+            return Regex().IsMatch(value.ToString()!);
         }
 
         return false;
     }
 
     /// <summary>
-    /// 手机号正则表达式（严格模式）
-    /// </summary>
-    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$")]
-    internal static partial Regex StrictRegex();
-
-    /// <summary>
-    /// 手机号正则表达式（宽松模式）
+    /// 手机号正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:(?:\+|00)86)?1[3-9]\d{9}$")]
