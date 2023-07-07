@@ -52,13 +52,7 @@ public abstract partial class ValidatorBase
     /// <summary>
     /// 默认错误消息
     /// </summary>
-    protected string ErrorMessageString
-    {
-        get
-        {
-            return _errorMessageResourceAccessor();
-        }
-    }
+    protected string ErrorMessageString => _errorMessageResourceAccessor();
 
     /// <summary>
     /// 获取验证结果
@@ -68,11 +62,13 @@ public abstract partial class ValidatorBase
     /// <returns><see cref="List{T}"/></returns>
     public virtual List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
+        // 检查值有效性
         if (IsValid(value))
         {
             return null;
         }
 
+        // 返回默认验证结果
         return new List<ValidationResult> {
             new ValidationResult(FormatErrorMessage(memberNames), memberNames)
         };
@@ -127,12 +123,14 @@ public abstract partial class ValidatorBase
     /// <exception cref="ValidationException"></exception>
     public virtual void Validate(object? value, IEnumerable<string>? memberNames = null)
     {
+        // 获取验证结果
         var validationResult = GetValidationResult(value, memberNames);
         if (validationResult is null)
         {
             return;
         }
 
+        // 抛出验证异常
         throw new ValidationException(validationResult, null, value);
     }
 

@@ -133,7 +133,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
 
         foreach (var property in properties)
         {
-            // 不可写
+            // 检查属性是否可设置值
             if (!property.CanWrite)
             {
                 throw new InvalidOperationException(string.Format("It is not possible to inject a service into a read-only `{0}` property of type `{1}`.", property.Name, property.DeclaringType!.Name));
@@ -175,7 +175,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
 
         foreach (var field in fields)
         {
-            // 不可写
+            // 检查字段是否可设置值
             if (field.IsInitOnly)
             {
                 throw new InvalidOperationException(string.Format("It is not possible to inject a service into a read-only `{0}` field of type `{1}`.", field.Name, field.DeclaringType!.Name));
