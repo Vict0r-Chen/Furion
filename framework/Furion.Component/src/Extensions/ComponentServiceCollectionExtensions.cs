@@ -110,6 +110,9 @@ public static class ComponentServiceCollectionExtensions
         // 可访问性特性
         var accessibilityBinding = BindingFlags.Public;
 
+        // 创建依赖关系图
+        var dependencyGraph = new DependencyGraph(dependencies);
+
         // 创建组件依赖关系对象集合
         var components = ComponentBase.CreateComponents(dependencies, componentContext, component =>
         {
@@ -121,6 +124,9 @@ public static class ComponentServiceCollectionExtensions
             {
                 Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.PreConfigureServices));
             }
+
+            // 调用事件监听
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(ComponentBase.PreConfigureServices));
         });
 
         // 调用配置服务
@@ -134,9 +140,13 @@ public static class ComponentServiceCollectionExtensions
             {
                 Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(ComponentBase.ConfigureServices));
             }
+
+            // 调用事件监听
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(ComponentBase.ConfigureServices));
         });
 
         components.Clear();
+        dependencyGraph.Release();
 
         return services;
     }

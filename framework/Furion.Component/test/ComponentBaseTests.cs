@@ -390,4 +390,20 @@ public class ComponentBaseTests
             ComponentBase.GetProps(typeof(Action<InvalidOptions>), componentOptions);
         });
     }
+
+    [Fact]
+    public void InvokeEvents()
+    {
+        var services = new ServiceCollection();
+        var componentContext = new ServiceComponentContext(services, new ConfigurationManager());
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+        var component = ComponentBase.GetOrCreateComponent(typeof(AComponent), componentContext.Options) as AComponent;
+        Assert.NotNull(component);
+
+        ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(ComponentBase.PreConfigureServices));
+
+        Assert.NotEmpty(component.InvokeEventRecords);
+    }
 }

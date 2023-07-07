@@ -48,6 +48,8 @@ public class CallOptions
 [DependsOn<BComponent, CComponent>]
 public class AComponent : ComponentBase
 {
+    public List<string> InvokeEventRecords { get; init; } = new();
+
     public override void PreConfigureServices(ServiceComponentContext context)
     {
         Props<CallOptions>(options =>
@@ -70,6 +72,11 @@ public class AComponent : ComponentBase
         context.Services.AddComponent<BComponent>(context.Configuration);
 
         context.Properties.Add(nameof(AComponent) + "1", nameof(ConfigureServices));
+    }
+
+    public override void InvokeEvents(ComponentBase component, ComponentContext context, string eventName)
+    {
+        InvokeEventRecords.Add($"{component.GetType().Name}.{eventName}");
     }
 }
 

@@ -101,6 +101,9 @@ public static class ComponentWebApplicationExtensions
         // 可访问性特性
         var accessibilityBinding = BindingFlags.Public;
 
+        // 创建依赖关系图
+        var dependencyGraph = new DependencyGraph(dependencies);
+
         // 创建组件依赖关系对象集合
         var components = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, component =>
         {
@@ -112,6 +115,9 @@ public static class ComponentWebApplicationExtensions
             {
                 Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
             }
+
+            // 调用事件监听
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(WebComponent.PreConfigure));
         }, ComponentBase.IsWebComponent);
 
         // 调用配置中间件
@@ -125,9 +131,13 @@ public static class ComponentWebApplicationExtensions
             {
                 Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.Configure));
             }
+
+            // 调用事件监听
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(WebComponent.Configure));
         });
 
         components.Clear();
+        dependencyGraph.Release();
 
         return webApplication;
     }

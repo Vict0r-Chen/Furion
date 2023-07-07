@@ -22,7 +22,7 @@ internal sealed class DependencyGraph
     /// <summary>
     /// 依赖关系集合
     /// </summary>
-    internal readonly Dictionary<Type, List<Type>> _dependencies;
+    internal readonly Dictionary<Type, Type[]> _dependencies;
 
     /// <summary>
     /// 祖先节点关系集合
@@ -38,7 +38,7 @@ internal sealed class DependencyGraph
     /// 构造函数
     /// </summary>
     /// <param name="dependencies">依赖关系集合</param>
-    internal DependencyGraph(Dictionary<Type, List<Type>> dependencies)
+    internal DependencyGraph(Dictionary<Type, Type[]> dependencies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
@@ -175,5 +175,15 @@ internal sealed class DependencyGraph
         return FindAllDescendants(nodeType)
             .Distinct()
             .ToList();
+    }
+
+    /// <summary>
+    /// 释放对象
+    /// </summary>
+    internal void Release()
+    {
+        _dependencies.Clear();
+        _ancestorsNodes.Clear();
+        _descendantsNodes.Clear();
     }
 }

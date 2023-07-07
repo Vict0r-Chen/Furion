@@ -100,7 +100,33 @@ public abstract class ComponentBase
     /// <param name="eventName">事件名称</param>
     public virtual void InvokeEvents(ComponentBase component, ComponentContext context, string eventName)
     {
-        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 调用事件监听
+    /// </summary>
+    /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
+    /// <param name="component"><see cref="ComponentBase"/></param>
+    /// <param name="componentContext"><see cref="ComponentContext"/></param>
+    /// <param name="eventName">事件名称</param>
+    internal static void InvokeEvents(DependencyGraph dependencyGraph, ComponentBase component, ComponentContext componentContext, string eventName)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(component, nameof(component));
+        ArgumentException.ThrowIfNullOrWhiteSpace(eventName, nameof(eventName));
+
+        // 查找组件依赖关系集合中匹配的祖先组件类型集合
+        var componentType = component.GetType();
+        var ancestors = dependencyGraph.FindAncestors(componentType);
+
+        // 将当前组件插入到集合头部
+        ancestors.Insert(0, componentType);
+
+        // 循环调用所有组件组件（含自己）的监听方法
+        ancestors.Where(componentType => componentType.IsDeclareOnlyMethod(nameof(InvokeEvents), BindingFlags.Public))
+                 .Select(componentType => GetOrCreateComponent(componentType, componentContext.Options))
+                 .ToList()
+                 .ForEach(cmp => cmp.InvokeEvents(component, componentContext, eventName));
     }
 
     /// <summary>

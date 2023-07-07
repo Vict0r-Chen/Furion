@@ -43,11 +43,11 @@ public class DependencyGraphTests
     [Fact]
     public void BuildAncestorsAndDescendantsNodes()
     {
-        var dependencies = new Dictionary<Type, List<Type>>()
+        var dependencies = new Dictionary<Type, Type[]>()
         {
-            { typeof(AType), new List<Type> { typeof(BType), typeof(CType) } },
-            { typeof(BType), new List<Type> { typeof(DType), typeof(FType) } },
-            { typeof(DType), new List<Type> { typeof(CType) } }
+            { typeof(AType), new[] { typeof(BType), typeof(CType) } },
+            { typeof(BType), new[] { typeof(DType), typeof(FType) } },
+            { typeof(DType), new[] { typeof(CType) } }
         };
 
         var dependencyGraph = new DependencyGraph(dependencies);
@@ -65,11 +65,11 @@ public class DependencyGraphTests
     [Fact]
     public void FindAllAncestors()
     {
-        var dependencies = new Dictionary<Type, List<Type>>()
+        var dependencies = new Dictionary<Type, Type[]>()
         {
-            { typeof(AType), new List<Type> { typeof(BType), typeof(CType) } },
-            { typeof(BType), new List<Type> { typeof(DType), typeof(FType) } },
-            { typeof(DType), new List<Type> { typeof(CType) } }
+            { typeof(AType), new[] { typeof(BType), typeof(CType) } },
+            { typeof(BType), new[] { typeof(DType), typeof(FType) } },
+            { typeof(DType), new[] { typeof(CType) } }
         };
 
         var dependencyGraph = new DependencyGraph(dependencies);
@@ -98,11 +98,11 @@ public class DependencyGraphTests
     [Fact]
     public void FindAllDescendants()
     {
-        var dependencies = new Dictionary<Type, List<Type>>()
+        var dependencies = new Dictionary<Type, Type[]>()
         {
-            { typeof(AType), new List<Type> { typeof(BType), typeof(CType) } },
-            { typeof(BType), new List<Type> { typeof(DType), typeof(FType) } },
-            { typeof(DType), new List<Type> { typeof(CType) } }
+            { typeof(AType), new[] { typeof(BType), typeof(CType) } },
+            { typeof(BType), new[] { typeof(DType), typeof(FType) } },
+            { typeof(DType), new[] { typeof(CType) } }
         };
 
         var dependencyGraph = new DependencyGraph(dependencies);
@@ -130,11 +130,11 @@ public class DependencyGraphTests
     [Fact]
     public void FindAncestors()
     {
-        var dependencies = new Dictionary<Type, List<Type>>()
+        var dependencies = new Dictionary<Type, Type[]>()
         {
-            { typeof(AType), new List<Type> { typeof(BType), typeof(CType) } },
-            { typeof(BType), new List<Type> { typeof(DType), typeof(FType) } },
-            { typeof(DType), new List<Type> { typeof(CType) } }
+            { typeof(AType), new[] { typeof(BType), typeof(CType) } },
+            { typeof(BType), new[] { typeof(DType), typeof(FType) } },
+            { typeof(DType), new[] { typeof(CType) } }
         };
 
         var dependencyGraph = new DependencyGraph(dependencies);
@@ -163,11 +163,11 @@ public class DependencyGraphTests
     [Fact]
     public void FindDescendants()
     {
-        var dependencies = new Dictionary<Type, List<Type>>()
+        var dependencies = new Dictionary<Type, Type[]>()
         {
-            { typeof(AType), new List<Type> { typeof(BType), typeof(CType) } },
-            { typeof(BType), new List<Type> { typeof(DType), typeof(FType) } },
-            { typeof(DType), new List<Type> { typeof(CType) } }
+            { typeof(AType), new[] { typeof(BType), typeof(CType) } },
+            { typeof(BType), new[] { typeof(DType), typeof(FType) } },
+            { typeof(DType), new[] { typeof(CType) } }
         };
 
         var dependencyGraph = new DependencyGraph(dependencies);
@@ -190,5 +190,26 @@ public class DependencyGraphTests
         Assert.True(dAncestors.SequenceEqual(new List<Type> { typeof(CType) }));
 
         Assert.Empty(fAncestors);
+    }
+
+    [Fact]
+    public void Release()
+    {
+        var dependencies = new Dictionary<Type, Type[]>()
+        {
+            { typeof(AType), new[] { typeof(BType), typeof(CType) } },
+            { typeof(BType), new[] { typeof(DType), typeof(FType) } },
+            { typeof(DType), new[] { typeof(CType) } }
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        var aAncestors = dependencyGraph.FindDescendants(typeof(AType));
+
+        dependencyGraph.Release();
+
+        Assert.Empty(dependencyGraph._dependencies);
+        Assert.Empty(dependencyGraph._ancestorsNodes);
+        Assert.Empty(dependencyGraph._descendantsNodes);
     }
 }
