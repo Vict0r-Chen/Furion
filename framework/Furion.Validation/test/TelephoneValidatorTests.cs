@@ -38,7 +38,7 @@ public class TelephoneValidatorTests
         Assert.NotNull(failure);
         Assert.Equal("The field is not a valid telephone format.", failure.ErrorMessage);
 
-        var failure2 = validator.GetValidationResult(130, new List<string> { "Value" });
+        var failure2 = validator.GetValidationResult("076088809963", new List<string> { "Value" });
         Assert.NotNull(failure2);
         Assert.Equal("The field Value is not a valid telephone format.", failure2.ErrorMessage);
     }

@@ -23,14 +23,9 @@ public partial class UrlValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public UrlValidator()
-        : base()
+        : base(() => Strings.UrlValidator_Invalid)
     {
     }
-
-    /// <summary>
-    /// 带端口号
-    /// </summary>
-    public bool WithPort { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -42,9 +37,7 @@ public partial class UrlValidator : ValidatorBase
 
         if (value is string text)
         {
-            return (!WithPort
-                ? Regex()
-                : WithPortRegex()).IsMatch(text);
+            return Regex().IsMatch(text);
         }
 
         return false;
@@ -54,13 +47,6 @@ public partial class UrlValidator : ValidatorBase
     /// 网址正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?")]
+    [GeneratedRegex(@"^(((ht|f)tps?):\/\/)?((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6})(:\d{1,5})?\/?")]
     internal static partial Regex Regex();
-
-    /// <summary>
-    /// 带端口的网址正则表达式
-    /// </summary>
-    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^((ht|f)tps?:\/\/)?[\w-]+(\.[\w-]+)+:\d{1,5}\/?$")]
-    internal static partial Regex WithPortRegex();
 }

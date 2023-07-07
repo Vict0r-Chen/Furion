@@ -180,6 +180,9 @@
   <data name="TelephoneValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid telephone format.</value>
   </data>
+  <data name="UrlValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid url format.</value>
+  </data>
   <data name="ValidatorBase_Invalid" xml:space="preserve">
     <value>The field {0} is invalid.</value>
   </data>
