@@ -734,6 +734,11 @@
               查找类似 The field {1} is not end with the string {0}. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
+            <summary>
+              查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.RequiredValidator_Invalid">
             <summary>
               查找类似 The {0} field is required. 的本地化字符串。
@@ -1262,20 +1267,20 @@
         <member name="M:Furion.Validation.EndsWithValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Validation.IDNumberValidator">
+        <member name="T:Furion.Validation.IDCardNumberValidator">
             <summary>
             身份证号验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.IDNumberValidator.#ctor">
+        <member name="M:Furion.Validation.IDCardNumberValidator.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.IDNumberValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.IDCardNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.IDNumberValidator.Regex">
+        <member name="M:Furion.Validation.IDCardNumberValidator.Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>

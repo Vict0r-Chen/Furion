@@ -17,13 +17,13 @@ namespace Furion.Validation;
 /// <summary>
 /// 身份证号验证器
 /// </summary>
-public partial class IDNumberValidator : ValidatorBase
+public partial class IDCardNumberValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public IDNumberValidator()
-        : base()
+    public IDCardNumberValidator()
+        : base(() => Strings.IDCardNumberValidator_invalid)
     {
     }
 
@@ -38,6 +38,11 @@ public partial class IDNumberValidator : ValidatorBase
         if (value is string text)
         {
             return Regex().IsMatch(text);
+        }
+
+        if (value.GetType().IsInteger())
+        {
+            return Regex().IsMatch(value.ToString()!);
         }
 
         return false;
