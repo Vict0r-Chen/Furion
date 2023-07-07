@@ -43,8 +43,10 @@ public partial class EndsWithValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(Value, nameof(Value));
+        if (string.IsNullOrEmpty(Value))
+        {
+            return false;
+        }
 
         if (value is null)
         {

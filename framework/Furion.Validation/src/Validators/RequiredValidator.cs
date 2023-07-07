@@ -23,7 +23,7 @@ public partial class RequiredValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public RequiredValidator()
-        : base()
+        : base(() => Strings.RequiredValidator_Invalid)
     {
     }
 

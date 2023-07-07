@@ -76,26 +76,6 @@ public class EndsWithValidatorTests
     }
 
     [Fact]
-    public void IsValid_Value_Null_Throw()
-    {
-        var validator = new EndsWithValidator("ion")
-        {
-            Comparison = StringComparison.OrdinalIgnoreCase,
-            Value = null!
-        };
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validator.IsValid("furion");
-        });
-
-        validator.Value = string.Empty;
-        Assert.Throws<ArgumentException>(() =>
-        {
-            validator.IsValid("furion");
-        });
-    }
-
-    [Fact]
     public void Default_ErrorMessage()
     {
         var validator = new EndsWithValidator("ion");
