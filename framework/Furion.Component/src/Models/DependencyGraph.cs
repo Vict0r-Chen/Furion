@@ -25,9 +25,14 @@ internal sealed class DependencyGraph
     internal readonly Dictionary<Type, List<Type>> _dependencies;
 
     /// <summary>
-    /// 父节点关系集合
+    /// 祖先节点关系集合
     /// </summary>
-    internal readonly Dictionary<Type, List<Type>> _parentNodes;
+    internal readonly Dictionary<Type, List<Type>> _ancestorsNodes;
+
+    /// <summary>
+    /// 后代节点关系集合
+    /// </summary>
+    internal readonly Dictionary<Type, List<Type>> _descendantsNodes;
 
     /// <summary>
     /// 构造函数
@@ -39,16 +44,17 @@ internal sealed class DependencyGraph
         ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
         _dependencies = dependencies;
-        _parentNodes = new Dictionary<Type, List<Type>>();
+        _ancestorsNodes = new Dictionary<Type, List<Type>>();
+        _descendantsNodes = new Dictionary<Type, List<Type>>();
 
-        // 构建父节点字典
-        BuildParentNodes();
+        // 构建祖先节点和后代节点集合
+        BuildAncestorsAndDescendantsNodes();
     }
 
     /// <summary>
-    /// 构建父节点字典
+    /// 构建祖先节点和后代节点集合
     /// </summary>
-    internal void BuildParentNodes()
+    internal void BuildAncestorsAndDescendantsNodes()
     {
         // 遍历依赖关系集合
         foreach (var entry in _dependencies)
@@ -62,52 +68,111 @@ internal sealed class DependencyGraph
             // 遍历当前节点的每个依赖关系
             foreach (var dependency in dependencies)
             {
-                if (!_parentNodes.TryGetValue(dependency, out var value))
+                if (!_ancestorsNodes.TryGetValue(dependency, out var ancestorsNode))
                 {
-                    value = new List<Type>();
-                    _parentNodes[dependency] = value;
+                    ancestorsNode = new List<Type>();
+                    _ancestorsNodes[dependency] = ancestorsNode;
                 }
 
-                // 将当前节点设为依赖节点的父节点
-                value.Add(dependent);
+                // 将当前节点设为依赖节点的祖先节点
+                ancestorsNode.Add(dependent);
+
+                if (!_descendantsNodes.TryGetValue(dependent, out var descendantsNode))
+                {
+                    descendantsNode = new List<Type>();
+                    _descendantsNodes[dependent] = descendantsNode;
+                }
+
+                // 将依赖节点设为当前节点的后代节点
+                descendantsNode.Add(dependency);
             }
         }
     }
 
     /// <summary>
-    /// 查找给定输入类型的所有父节点
+    /// 查找给定节点类型的所有祖先节点
     /// </summary>
     /// <param name="nodeType">节点类型</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal List<Type> FindAllParents(Type nodeType)
+    internal List<Type> FindAllAncestors(Type nodeType)
     {
-        var parents = new List<Type>();
+        // 空检查
+        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
 
-        if (_parentNodes.TryGetValue(nodeType, out List<Type>? value))
+        var ancestors = new List<Type>();
+
+        if (_ancestorsNodes.TryGetValue(nodeType, out var ancestorsNode))
         {
-            // 直接父节点
-            var directParents = value;
-            parents.AddRange(directParents);
+            // 直接祖先节点
+            var directAncestors = ancestorsNode;
+            ancestors.AddRange(directAncestors);
 
-            foreach (var directParent in directParents)
+            foreach (var directParent in directAncestors)
             {
-                // 递归查找直接父节点的父节点
-                parents.AddRange(FindAllParents(directParent));
+                // 递归查找直接祖先节点的祖先节点
+                ancestors.AddRange(FindAllAncestors(directParent));
             }
         }
 
-        return parents;
+        return ancestors;
     }
 
     /// <summary>
-    /// 查找指定输入类型的所有父节点
+    /// 查找给定节点类型的所有后代节点
     /// </summary>
     /// <param name="nodeType">节点类型</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal List<Type> FindParents(Type nodeType)
+    internal List<Type> FindAllDescendants(Type nodeType)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
+
+        var descendants = new List<Type>();
+
+        if (_descendantsNodes.TryGetValue(nodeType, out var descendantsNode))
+        {
+            // 直接后代节点
+            var directDescendants = descendantsNode;
+            descendants.AddRange(directDescendants);
+
+            foreach (var directChild in directDescendants)
+            {
+                // 递归查找直接后代节点的后代节点
+                descendants.AddRange(FindAllDescendants(directChild));
+            }
+        }
+
+        return descendants;
+    }
+
+    /// <summary>
+    /// 查找指定节点类型的所有祖先节点
+    /// </summary>
+    /// <param name="nodeType">节点类型</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal List<Type> FindAncestors(Type nodeType)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
+
         // 去重并返回结果
-        return FindAllParents(nodeType)
+        return FindAllAncestors(nodeType)
+            .Distinct()
+            .ToList();
+    }
+
+    /// <summary>
+    /// 查找指定节点类型的所有后代节点
+    /// </summary>
+    /// <param name="nodeType">节点类型</param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal List<Type> FindDescendants(Type nodeType)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
+
+        // 去重并返回结果
+        return FindAllDescendants(nodeType)
             .Distinct()
             .ToList();
     }
