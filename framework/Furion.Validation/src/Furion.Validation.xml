@@ -727,6 +727,11 @@
               查找类似 The {0} field is required. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.SingleValidator_Invalid">
+            <summary>
+              查找类似 The field {0} only allows for a single value. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.StartsWithValidator_Invalid">
             <summary>
               查找类似 The field {1} is not start with the string {0}. 的本地化字符串。
@@ -1230,6 +1235,12 @@
             以特定字符串结尾的验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.Char)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
         <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.String)">
             <summary>
             构造函数
@@ -1635,6 +1646,12 @@
             以特定字符串开头的验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.Char)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
         <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.String)">
             <summary>
             构造函数
@@ -1659,6 +1676,12 @@
             <summary>
             包含特定字符串的验证器
             </summary>
+        </member>
+        <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.Char)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
         </member>
         <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.String)">
             <summary>

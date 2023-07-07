@@ -23,6 +23,15 @@ public partial class StartsWithValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="value">检索值</param>
+    public StartsWithValidator(char value)
+        : this(value.ToString())
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="value">检索值</param>
     public StartsWithValidator(string value)
         : base(() => Strings.StartsWithValidator_Invalid)
     {
@@ -43,12 +52,8 @@ public partial class StartsWithValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (string.IsNullOrEmpty(Value))
-        {
-            return false;
-        }
-
-        if (value is null)
+        if (string.IsNullOrEmpty(Value)
+             || value is null)
         {
             return false;
         }

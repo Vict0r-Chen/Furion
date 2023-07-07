@@ -196,6 +196,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} only allows for a single value. 的本地化字符串。
+        /// </summary>
+        internal static string SingleValidator_Invalid {
+            get {
+                return ResourceManager.GetString("SingleValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {1} is not start with the string {0}. 的本地化字符串。
         /// </summary>
         internal static string StartsWithValidator_Invalid {

@@ -23,7 +23,7 @@ public partial class SingleValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public SingleValidator()
-        : base()
+        : base(() => Strings.SingleValidator_Invalid)
     {
     }
 
@@ -33,6 +33,12 @@ public partial class SingleValidator : ValidatorBase
         if (value is null)
         {
             return false;
+        }
+
+        if (value is char
+            || (value is string text && text.Length == 1))
+        {
+            return true;
         }
 
         if (value is IEnumerable collection)

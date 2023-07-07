@@ -23,6 +23,15 @@ public partial class StringContainsValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="value">检索值</param>
+    public StringContainsValidator(char value)
+        : this(value.ToString())
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="value">检索值</param>
     public StringContainsValidator(string value)
         : base(() => Strings.StringContainsValidator_Invalid)
     {
@@ -43,12 +52,8 @@ public partial class StringContainsValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (string.IsNullOrEmpty(Value))
-        {
-            return false;
-        }
-
-        if (value is null)
+        if (string.IsNullOrEmpty(Value)
+            || value is null)
         {
             return false;
         }

@@ -162,6 +162,9 @@
   <data name="RequiredValidator_Invalid" xml:space="preserve">
     <value>The {0} field is required.</value>
   </data>
+  <data name="SingleValidator_Invalid" xml:space="preserve">
+    <value>The field {0} only allows for a single value.</value>
+  </data>
   <data name="StartsWithValidator_Invalid" xml:space="preserve">
     <value>The field {1} is not start with the string {0}.</value>
   </data>

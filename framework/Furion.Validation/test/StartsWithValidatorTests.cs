@@ -36,6 +36,10 @@ public class StartsWithValidatorTests
         var validator = new StartsWithValidator("furion");
         Assert.NotNull(validator);
         Assert.Equal(StringComparison.CurrentCulture, validator.Comparison);
+
+        var validator2 = new StartsWithValidator('c');
+        Assert.NotNull(validator2);
+        Assert.Equal(StringComparison.CurrentCulture, validator.Comparison);
     }
 
     [Theory]
@@ -71,6 +75,27 @@ public class StartsWithValidatorTests
             Comparison = StringComparison.OrdinalIgnoreCase
         };
         Assert.Equal(result, validator.IsValid(value));
+    }
+
+    [Fact]
+    public void IsValid_Char()
+    {
+        var validator = new StartsWithValidator("f");
+        Assert.True(validator.IsValid("furion"));
+        Assert.False(validator.IsValid("Furion"));
+        Assert.False(validator.IsValid("lurion"));
+    }
+
+    [Fact]
+    public void IsValid_Char_SetComparison_OrdinalIgnoreCase()
+    {
+        var validator = new StartsWithValidator("f")
+        {
+            Comparison = StringComparison.OrdinalIgnoreCase
+        };
+        Assert.True(validator.IsValid("furion"));
+        Assert.True(validator.IsValid("Furion"));
+        Assert.False(validator.IsValid("lurion"));
     }
 
     [Fact]
