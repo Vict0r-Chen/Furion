@@ -169,6 +169,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid password format. 的本地化字符串。
+        /// </summary>
+        internal static string PasswordValidator_Invalid {
+            get {
+                return ResourceManager.GetString("PasswordValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid phone number format. 的本地化字符串。
         /// </summary>
         internal static string PhoneNumberValidator_Invalid {
@@ -219,6 +228,15 @@ namespace Furion.Validation.Resources {
         internal static string StringContainsValidator_Invalid {
             get {
                 return ResourceManager.GetString("StringContainsValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} is not a valid strong password format. 的本地化字符串。
+        /// </summary>
+        internal static string StrongPasswordValidator_Invalid {
+            get {
+                return ResourceManager.GetString("StrongPasswordValidator_Invalid", resourceCulture);
             }
         }
         

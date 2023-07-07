@@ -153,6 +153,9 @@
   <data name="NotEmptyValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not allow empty values.</value>
   </data>
+  <data name="PasswordValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid password format.</value>
+  </data>
   <data name="PhoneNumberValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid phone number format.</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="StringContainsValidator_Invalid" xml:space="preserve">
     <value>The field {1} is not contain the string {0}.</value>
+  </data>
+  <data name="StrongPasswordValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid strong password format.</value>
   </data>
   <data name="ValidatorBase_Invalid" xml:space="preserve">
     <value>The field {0} is invalid.</value>

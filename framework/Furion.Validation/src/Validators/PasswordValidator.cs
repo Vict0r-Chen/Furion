@@ -15,15 +15,18 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 强类型密码验证器
+/// 密码验证器
 /// </summary>
-public partial class StronglyPasswordValidator : ValidatorBase
+/// <remarks>
+/// 密码长度为6-18位，包含至少一个字母和一个数字
+/// </remarks>
+public partial class PasswordValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public StronglyPasswordValidator()
-        : base()
+    public PasswordValidator()
+        : base(() => Strings.PasswordValidator_Invalid)
     {
     }
 
@@ -40,13 +43,18 @@ public partial class StronglyPasswordValidator : ValidatorBase
             return Regex().IsMatch(text);
         }
 
+        if (value.GetType().IsNumeric())
+        {
+            return Regex().IsMatch(value.ToString()!);
+        }
+
         return false;
     }
 
     /// <summary>
-    /// 强类型密码正则表达式
+    /// 密码正则表达式
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$")]
+    [GeneratedRegex(@"^(?=.*[a-zA-Z])(?=.*\d).{6,18}$")]
     internal static partial Regex Regex();
 }
