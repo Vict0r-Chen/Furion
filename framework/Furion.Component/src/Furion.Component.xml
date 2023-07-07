@@ -892,9 +892,9 @@
             依赖关系集合
             </summary>
         </member>
-        <member name="F:Furion.Component.DependencyGraph._parentNodes">
+        <member name="F:Furion.Component.DependencyGraph._ancestorsNodes">
             <summary>
-            父节点关系集合
+            祖先节点关系集合
             </summary>
         </member>
         <member name="F:Furion.Component.DependencyGraph._descendantsNodes">
@@ -908,14 +908,14 @@
             </summary>
             <param name="dependencies">依赖关系集合</param>
         </member>
-        <member name="M:Furion.Component.DependencyGraph.BuildParentAndDescendantsNodes">
+        <member name="M:Furion.Component.DependencyGraph.BuildAncestorsAndDescendantsNodes">
             <summary>
-            构建父节点和后代节点集合
+            构建祖先节点和后代节点集合
             </summary>
         </member>
-        <member name="M:Furion.Component.DependencyGraph.FindAllParents(System.Type)">
+        <member name="M:Furion.Component.DependencyGraph.FindAllAncestors(System.Type)">
             <summary>
-            查找给定节点类型的所有父节点
+            查找给定节点类型的所有祖先节点
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
@@ -927,9 +927,9 @@
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.DependencyGraph.FindParents(System.Type)">
+        <member name="M:Furion.Component.DependencyGraph.FindAncestors(System.Type)">
             <summary>
-            查找指定节点类型的所有父节点
+            查找指定节点类型的所有祖先节点
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
