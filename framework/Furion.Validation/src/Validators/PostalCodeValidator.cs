@@ -23,7 +23,7 @@ public partial class PostalCodeValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public PostalCodeValidator()
-        : base()
+        : base(() => Strings.PostalCodeValidator_Invalid)
     {
     }
 
@@ -38,6 +38,11 @@ public partial class PostalCodeValidator : ValidatorBase
         if (value is string text)
         {
             return Regex().IsMatch(text);
+        }
+
+        if (value.GetType().IsInteger())
+        {
+            return Regex().IsMatch(value.ToString()!);
         }
 
         return false;

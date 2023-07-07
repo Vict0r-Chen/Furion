@@ -178,6 +178,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid postal code format. 的本地化字符串。
+        /// </summary>
+        internal static string PostalCodeValidator_Invalid {
+            get {
+                return ResourceManager.GetString("PostalCodeValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The {0} field is required. 的本地化字符串。
         /// </summary>
         internal static string RequiredValidator_Invalid {
