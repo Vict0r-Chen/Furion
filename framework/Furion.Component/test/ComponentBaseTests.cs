@@ -258,14 +258,14 @@ public class ComponentBaseTests
     [Theory]
     [InlineData(typeof(InvalidArgumentComponnet), "`InvalidOptions` parameter type is an invalid component options.")]
     [InlineData(typeof(InvalidArgument2Componnet), "`Action`1` parameter type is an invalid component options.")]
-    public void CreateInstance_InvalidArgument_Throw(Type componentType, string message)
+    public void CreateComponent_InvalidArgument_Throw(Type componentType, string message)
     {
         var services = new ServiceCollection();
         var componentOptions = services.GetComponentOptions();
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
-            ComponentBase.CreateInstance(componentType, componentOptions);
+            ComponentBase.CreateComponent(componentType, componentOptions);
         });
 
         Assert.Equal(message, exception.Message);
@@ -276,23 +276,23 @@ public class ComponentBaseTests
     [InlineData(typeof(OkArgument2Component))]
     [InlineData(typeof(OkArgument3Component))]
     [InlineData(typeof(PrivateNewComponent))]
-    public void CreateInstance_ReturnOK(Type componentType)
+    public void CreateComponent_ReturnOK(Type componentType)
     {
         var services = new ServiceCollection();
         var componentOptions = services.GetComponentOptions();
 
-        var component = ComponentBase.CreateInstance(componentType, componentOptions);
+        var component = ComponentBase.CreateComponent(componentType, componentOptions);
         Assert.NotNull(component);
         Assert.NotNull(component.Options);
     }
 
     [Fact]
-    public void CreateInstance_PropertyProps()
+    public void CreateComponent_PropertyProps()
     {
         var services = new ServiceCollection();
         var componentOptions = services.GetComponentOptions();
 
-        var component = ComponentBase.CreateInstance(typeof(PropertyComponent), componentOptions);
+        var component = ComponentBase.CreateComponent(typeof(PropertyComponent), componentOptions);
         Assert.NotNull(component);
         Assert.NotNull(component.Options);
     }
@@ -300,14 +300,14 @@ public class ComponentBaseTests
     [Theory]
     [InlineData(typeof(PropertyInvalidComponent))]
     [InlineData(typeof(PropertyReadonlyComponent))]
-    public void CreateInstance_PropertyProps_Throw(Type componentType)
+    public void CreateComponent_PropertyProps_Throw(Type componentType)
     {
         var services = new ServiceCollection();
         var componentOptions = services.GetComponentOptions();
 
         Assert.Throws<InvalidOperationException>(() =>
         {
-            ComponentBase.CreateInstance(componentType, componentOptions);
+            ComponentBase.CreateComponent(componentType, componentOptions);
         });
     }
 

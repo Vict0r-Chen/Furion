@@ -41,14 +41,14 @@ public class ComponentBaseTests
     [Theory]
     [InlineData(typeof(InvalidArgumentComponnet), "`InvalidOptions` parameter type is an invalid component options.")]
     [InlineData(typeof(InvalidArgument2Componnet), "`Action`1` parameter type is an invalid component options.")]
-    public void CreateInstance_InvalidArgument_Throw(Type componentType, string message)
+    public void CreateComponent_InvalidArgument_Throw(Type componentType, string message)
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var componentOptions = webApplication.GetComponentOptions();
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
-            ComponentBase.CreateInstance(componentType, componentOptions);
+            ComponentBase.CreateComponent(componentType, componentOptions);
         });
 
         Assert.Equal(message, exception.Message);
@@ -58,12 +58,12 @@ public class ComponentBaseTests
     [InlineData(typeof(OkArgumentComponent))]
     [InlineData(typeof(OkArgument2Component))]
     [InlineData(typeof(OkArgument3Component))]
-    public void CreateInstance_ReturnOK(Type componentType)
+    public void CreateComponent_ReturnOK(Type componentType)
     {
         var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
         var componentOptions = webApplication.GetComponentOptions();
 
-        var component = ComponentBase.CreateInstance(componentType, componentOptions);
+        var component = ComponentBase.CreateComponent(componentType, componentOptions);
         Assert.NotNull(component);
         Assert.NotNull(component.Options);
     }

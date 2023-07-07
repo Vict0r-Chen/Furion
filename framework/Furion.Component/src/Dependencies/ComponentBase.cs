@@ -93,6 +93,17 @@ public abstract class ComponentBase
     }
 
     /// <summary>
+    /// 调用事件监听
+    /// </summary>
+    /// <param name="component"><see cref="ComponentBase"/></param>
+    /// <param name="context"><see cref="ComponentContext"/></param>
+    /// <param name="eventName">事件名称</param>
+    public virtual void InvokeEvents(ComponentBase component, ComponentContext context, string eventName)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
     /// 创建组件拓扑排序集合
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
@@ -259,7 +270,7 @@ public abstract class ComponentBase
     /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
     /// <returns><see cref="ComponentBase"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static ComponentBase CreateInstance(Type componentType, ComponentOptions componentOptions)
+    internal static ComponentBase CreateComponent(Type componentType, ComponentOptions componentOptions)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(componentOptions, nameof(componentOptions));
@@ -404,7 +415,7 @@ public abstract class ComponentBase
             }
 
             // 创建组件实例
-            var component = (TTargetComponent)CreateInstance(componentType, componentOptions);
+            var component = (TTargetComponent)CreateComponent(componentType, componentOptions);
 
             // 检查组件是否激活
             if (!component.CanActivate(componentContext))
