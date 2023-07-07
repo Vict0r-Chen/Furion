@@ -17,13 +17,16 @@ namespace Furion.Validation;
 /// <summary>
 /// 用户名验证器
 /// </summary>
-public partial class UsernameValidator : ValidatorBase
+/// <remarks>
+/// 长度 4-16 位，仅支持字母，数字，下划线，减号组合
+/// </remarks>
+public partial class UserNameValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public UsernameValidator()
-        : base()
+    public UserNameValidator()
+        : base(() => Strings.UserNameValidator_Invalid)
     {
     }
 

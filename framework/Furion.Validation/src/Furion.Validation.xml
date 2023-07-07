@@ -762,6 +762,11 @@
               查找类似 The field {0} is not a valid url format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.UserNameValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid username format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.ValidatorBase_Invalid">
             <summary>
               查找类似 The field {0} is invalid. 的本地化字符串。
@@ -1888,20 +1893,23 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.UsernameValidator">
+        <member name="T:Furion.Validation.UserNameValidator">
             <summary>
             用户名验证器
             </summary>
+            <remarks>
+            长度 4-16 位，仅支持字母，数字，下划线，减号组合
+            </remarks>
         </member>
-        <member name="M:Furion.Validation.UsernameValidator.#ctor">
+        <member name="M:Furion.Validation.UserNameValidator.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Validation.UsernameValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.UserNameValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.UsernameValidator.Regex">
+        <member name="M:Furion.Validation.UserNameValidator.Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>
