@@ -107,7 +107,7 @@ public class EndsWithValidatorTests
 
         var failure = validator.GetValidationResult("furiou");
         Assert.NotNull(failure);
-        Assert.Equal("The field  is not end with the string ion.", failure.ErrorMessage);
+        Assert.Equal("The field is not end with the string ion.", failure.ErrorMessage);
 
         var failure2 = validator.GetValidationResult("furiou", new List<string> { "Value" });
         Assert.NotNull(failure2);

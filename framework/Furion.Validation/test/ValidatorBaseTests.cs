@@ -209,4 +209,14 @@ public class ValidatorBaseTests
         var validator = new TestValidator();
         Assert.Equal(result, validator.IsValid(value));
     }
+
+    [Theory]
+    [InlineData("The field is invalid.", "The field is invalid.")]
+    [InlineData("The field {0} is invalid.", "The field is invalid.")]
+    [InlineData("The field {1} is invalid {0}.", "The field is invalid 5.", 5)]
+    [InlineData("The field {1} is invalid {0}.", "The field Value is invalid 5.", 5, "Value")]
+    public void StringFormat(string format, string result, params object[] args)
+    {
+        Assert.Equal(result, ValidatorBase.StringFormat(format, args));
+    }
 }

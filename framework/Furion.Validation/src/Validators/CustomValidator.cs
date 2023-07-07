@@ -56,10 +56,8 @@ public partial class CustomValidator<T> : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (Predicate is null)
-        {
-            return true;
-        }
+        // 空检查
+        ArgumentNullException.ThrowIfNull(Predicate, nameof(Predicate));
 
         return Predicate(value is null
             ? default

@@ -169,6 +169,33 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {2} must be a string or collection type with a minimum length of {0} and maximum length of {1}. 的本地化字符串。
+        /// </summary>
+        internal static string LengthValidator_Invalid {
+            get {
+                return ResourceManager.GetString("LengthValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {1} must be a string or array type with a maximum length of {0}. 的本地化字符串。
+        /// </summary>
+        internal static string MaxLengthValidator {
+            get {
+                return ResourceManager.GetString("MaxLengthValidator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {1} must be a string or array type with a minimum length of {0}. 的本地化字符串。
+        /// </summary>
+        internal static string MinLengthValidator {
+            get {
+                return ResourceManager.GetString("MinLengthValidator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not allow empty values. 的本地化字符串。
         /// </summary>
         internal static string NotEmptyValidator_Invalid {

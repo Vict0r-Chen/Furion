@@ -107,7 +107,7 @@ public class StringContainsValidatorTests
 
         var failure = validator.GetValidationResult("fuion");
         Assert.NotNull(failure);
-        Assert.Equal("The field  is not contain the string fur.", failure.ErrorMessage);
+        Assert.Equal("The field is not contain the string fur.", failure.ErrorMessage);
 
         var failure2 = validator.GetValidationResult("fuion", new List<string> { "Value" });
         Assert.NotNull(failure2);

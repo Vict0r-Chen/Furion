@@ -153,6 +153,15 @@
   <data name="IDCardNumberValidator_invalid" xml:space="preserve">
     <value>The field {0} is not a valid ID card number format.</value>
   </data>
+  <data name="LengthValidator_Invalid" xml:space="preserve">
+    <value>The field {2} must be a string or collection type with a minimum length of {0} and maximum length of {1}.</value>
+  </data>
+  <data name="MaxLengthValidator" xml:space="preserve">
+    <value>The field {1} must be a string or array type with a maximum length of {0}.</value>
+  </data>
+  <data name="MinLengthValidator" xml:space="preserve">
+    <value>The field {1} must be a string or array type with a minimum length of {0}.</value>
+  </data>
   <data name="NotEmptyValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not allow empty values.</value>
   </data>

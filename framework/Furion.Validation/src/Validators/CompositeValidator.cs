@@ -35,14 +35,8 @@ public partial class CompositeValidator : ValidatorBase
     public CompositeValidator(IList<ValidatorBase> validators)
         : base(() => Strings.CompositeValidator_Invalid)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(validators, nameof(validators));
-
-        // 检查集合中是否存在 null 值
-        if (validators.Any(validator => validator is null))
-        {
-            throw new ArgumentException("The validator collection contains a null value.", nameof(validators));
-        }
+        // 合法数据检查
+        EnsureLegalData(validators);
 
         ValidatorCollection = validators;
     }
@@ -58,6 +52,9 @@ public partial class CompositeValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
+        // 合法数据检查
+        EnsureLegalData(ValidatorCollection);
+
         return Relationship switch
         {
             ValidatorRelationship.Default or ValidatorRelationship.And => ValidatorCollection.All(validator => validator.IsValid(value)),
@@ -89,5 +86,22 @@ public partial class CompositeValidator : ValidatorBase
         return validationResults.Count == 0
             ? null
             : validationResults;
+    }
+
+    /// <summary>
+    /// 合法数据检查
+    /// </summary>
+    /// <param name="validators">验证器集合</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static void EnsureLegalData(IList<ValidatorBase> validators)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validators, nameof(validators));
+
+        // 检查集合中是否存在 null 值
+        if (validators.Any(validator => validator is null))
+        {
+            throw new ArgumentException("The validator collection contains a null value.", nameof(validators));
+        }
     }
 }

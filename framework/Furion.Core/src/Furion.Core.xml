@@ -277,6 +277,19 @@
             <param name="dictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
             <param name="concatDictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
         </member>
+        <member name="T:System.ObjectExtensions">
+            <summary>
+            <see cref="T:System.Object"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.ObjectExtensions.TryGetCount(System.Object,System.Int32@)">
+            <summary>
+            尝试获取对象的数量
+            </summary>
+            <param name="obj">对象</param>
+            <param name="count">数量</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="T:System.TypeExtensions">
             <summary>
             <see cref="T:System.Type"/> 拓展类

@@ -15,54 +15,43 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 以特定字符串结尾的验证器
+/// 最小长度验证器
 /// </summary>
-public partial class EndsWithValidator : ValidatorBase
+public partial class MinLengthValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
-    public EndsWithValidator(char value)
-        : this(value.ToString())
+    /// <param name="length">长度</param>
+    public MinLengthValidator(int length)
+        : base(() => Strings.MinLengthValidator)
     {
+        // 合法数据检查
+        EnsureLegalData(length);
+
+        Length = length;
     }
 
     /// <summary>
-    /// 构造函数
+    /// 长度
     /// </summary>
-    /// <param name="value">检索值</param>
-    public EndsWithValidator(string value)
-        : base(() => Strings.EndsWithValidator_Invalid)
-    {
-        // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(value, nameof(value));
-
-        Value = value;
-    }
-
-    /// <summary>
-    /// 检索值
-    /// </summary>
-    public string Value { get; set; }
-
-    /// <inheritdoc cref="StringComparison"/>
-    public StringComparison Comparison { get; set; }
+    public int Length { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
+        // 合法数据检查
+        EnsureLegalData(Length);
 
         if (value is null)
         {
-            return false;
+            return true;
         }
 
-        if (value is string text)
+        if (value.TryGetCount(out var count)
+            && count >= Length)
         {
-            return text.EndsWith(Value, Comparison);
+            return true;
         }
 
         return false;
@@ -71,6 +60,20 @@ public partial class EndsWithValidator : ValidatorBase
     /// <inheritdoc />
     protected override string[] GetDefaultMemberNames()
     {
-        return new string[] { Value };
+        return new string[] { Length.ToString() };
+    }
+
+    /// <summary>
+    /// 合法数据检查
+    /// </summary>
+    /// <param name="length">长度</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static void EnsureLegalData(int length)
+    {
+        // 长度检查
+        if (length < 0)
+        {
+            throw new InvalidOperationException("The length cannot be less than 0.");
+        }
     }
 }

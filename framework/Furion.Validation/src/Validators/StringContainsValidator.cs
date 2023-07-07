@@ -36,7 +36,7 @@ public partial class StringContainsValidator : ValidatorBase
         : base(() => Strings.StringContainsValidator_Invalid)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(value, nameof(value));
+        ArgumentException.ThrowIfNullOrEmpty(value, nameof(value));
 
         Value = value;
     }
@@ -52,8 +52,10 @@ public partial class StringContainsValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (string.IsNullOrEmpty(Value)
-            || value is null)
+        // 空检查
+        ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
+
+        if (value is null)
         {
             return false;
         }
@@ -67,17 +69,8 @@ public partial class StringContainsValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    protected override string FormatErrorMessage(IEnumerable<string>? memberNames = null)
+    protected override string[] GetDefaultMemberNames()
     {
-        var newMemberNames = memberNames?.ToList() ?? new();
-
-        // 处理默认消息占位符情况
-        newMemberNames.Insert(0, Value);
-        if (newMemberNames.Count == 1)
-        {
-            newMemberNames.Add(string.Empty);
-        }
-
-        return base.FormatErrorMessage(newMemberNames);
+        return new string[] { Value };
     }
 }

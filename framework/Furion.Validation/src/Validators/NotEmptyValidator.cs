@@ -35,15 +35,10 @@ public partial class NotEmptyValidator : ValidatorBase
             return false;
         }
 
-        if (value is string text)
+        if (value.TryGetCount(out var count)
+            && count > 0)
         {
-            return !string.IsNullOrEmpty(text);
-        }
-
-        if (value is IEnumerable collection)
-        {
-            var enumerator = collection.GetEnumerator();
-            return enumerator.MoveNext();
+            return true;
         }
 
         return false;

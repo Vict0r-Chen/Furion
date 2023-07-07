@@ -606,6 +606,38 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
+        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_18">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the SpacesRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.SpacesRegex_18.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
         <member name="T:System.Text.RegularExpressions.Generated.Utilities">
             <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
         </member>
@@ -614,6 +646,9 @@
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
             <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.Utilities.IndexOfAnyWhiteSpace(System.ReadOnlySpan{System.Char})">
+            <summary>Finds the next index of any character that matches a whitespace character.</summary>
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPop(System.Int32[],System.Int32@,System.Int32@,System.Int32@)">
             <summary>Pops 2 values from the backtracking stack.</summary>
@@ -626,6 +661,9 @@
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPush(System.Int32[]@,System.Int32@,System.Int32,System.Int32,System.Int32)">
             <summary>Pushes 3 values onto the backtracking stack.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiExceptWhiteSpace">
+            <summary>Supports searching for characters in or not in "\0\u0001\u0002\u0003\u0004\u0005\u0006\a\b\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f!\"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u007f".</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiLetters">
             <summary>Supports searching for characters in or not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".</summary>
@@ -742,6 +780,21 @@
         <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
             <summary>
               查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.LengthValidator_Invalid">
+            <summary>
+              查找类似 The field {2} must be a string or collection type with a minimum length of {0} and maximum length of {1}. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.MaxLengthValidator">
+            <summary>
+              查找类似 The field {1} must be a string or array type with a maximum length of {0}. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.MinLengthValidator">
+            <summary>
+              查找类似 The field {1} must be a string or array type with a minimum length of {0}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.NotEmptyValidator_Invalid">
@@ -1227,6 +1280,13 @@
         <member name="M:Furion.Validation.CompositeValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.CompositeValidator.EnsureLegalData(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
+            <summary>
+            合法数据检查
+            </summary>
+            <param name="validators">验证器集合</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
         <member name="T:Furion.Validation.CustomValidator">
             <summary>
             自定义验证委托验证器
@@ -1368,7 +1428,7 @@
         <member name="M:Furion.Validation.EndsWithValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.EndsWithValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.EndsWithValidator.GetDefaultMemberNames">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.IDCardNumberValidator">
@@ -1546,6 +1606,100 @@
             ○ Match if at the end of the string or if before an ending newline.<br/>
             </code>
             </remarks>
+        </member>
+        <member name="T:Furion.Validation.LengthValidator">
+            <summary>
+            长度验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.LengthValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="minimumLength">最小长度</param>
+            <param name="maximumLength">最大长度</param>
+        </member>
+        <member name="P:Furion.Validation.LengthValidator.MinimumLength">
+            <summary>
+            最小长度
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.LengthValidator.MaximumLength">
+            <summary>
+            最大长度
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.LengthValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.LengthValidator.GetDefaultMemberNames">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.LengthValidator.EnsureLegalData(System.Int32,System.Int32)">
+            <summary>
+            合法数据检查
+            </summary>
+            <param name="minimumLength">最小长度</param>
+            <param name="maximumLength">最大长度</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="T:Furion.Validation.MaxLengthValidator">
+            <summary>
+            最大长度验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.MaxLengthValidator.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="length">长度</param>
+        </member>
+        <member name="P:Furion.Validation.MaxLengthValidator.Length">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.MaxLengthValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.MaxLengthValidator.GetDefaultMemberNames">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.MaxLengthValidator.EnsureLegalData(System.Int32)">
+            <summary>
+            合法数据检查
+            </summary>
+            <param name="length">长度</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="T:Furion.Validation.MinLengthValidator">
+            <summary>
+            最小长度验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.MinLengthValidator.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="length">长度</param>
+        </member>
+        <member name="P:Furion.Validation.MinLengthValidator.Length">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.MinLengthValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.MinLengthValidator.GetDefaultMemberNames">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.MinLengthValidator.EnsureLegalData(System.Int32)">
+            <summary>
+            合法数据检查
+            </summary>
+            <param name="length">长度</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.Validation.NotEmptyValidator">
             <summary>
@@ -1811,7 +1965,7 @@
         <member name="M:Furion.Validation.StartsWithValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.StartsWithValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.StartsWithValidator.GetDefaultMemberNames">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StringContainsValidator">
@@ -1842,7 +1996,7 @@
         <member name="M:Furion.Validation.StringContainsValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.StringContainsValidator.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.StringContainsValidator.GetDefaultMemberNames">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StrongPasswordValidator">
@@ -2035,6 +2189,13 @@
             默认错误消息
             </summary>
         </member>
+        <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
+            <summary>
+            检查值有效性
+            </summary>
+            <param name="value">验证的值</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             获取验证结果
@@ -2058,6 +2219,12 @@
             <param name="errorMessage">错误消息</param>
             <returns><see cref="T:Furion.Validation.ValidatorBase"/></returns>
         </member>
+        <member name="M:Furion.Validation.ValidatorBase.GetDefaultMemberNames">
+            <summary>
+            获取默认成员名称
+            </summary>
+            <returns><see cref="T:System.String"/>[]</returns>
+        </member>
         <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             格式化错误消息
@@ -2073,21 +2240,29 @@
             <param name="memberNames">成员名称集合</param>
             <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
+        <member name="M:Furion.Validation.ValidatorBase.StringFormat(System.String,System.Object[])">
             <summary>
-            检查值有效性
+            格式化字符串
             </summary>
-            <param name="value">验证的值</param>
-            <returns><see cref="T:System.Boolean"/></returns>
+            <param name="format">字符串</param>
+            <param name="args">格式化参数</param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.PlaceholderRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
             ○ Match '{'.<br/>
-            ○ Match a Unicode digit atomically at least once.<br/>
+            ○ Match '0' through '9' atomically at least once.<br/>
             ○ Match '}'.<br/>
-            ○ Match a whitespace character atomically any number of times.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase.SpacesRegex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match a whitespace character atomically at least once.<br/>
             </code>
             </remarks>
         </member>

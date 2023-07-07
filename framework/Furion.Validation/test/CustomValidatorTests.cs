@@ -72,7 +72,7 @@ public class CustomValidatorTests
     }
 
     [Fact]
-    public void IsValid_Predicate_Null_ReturnOK()
+    public void IsValid_Predicate_Null_Throw()
     {
         var validator = new CustomValidator<string>(str =>
         {
@@ -82,9 +82,12 @@ public class CustomValidatorTests
             Predicate = null!
         };
 
-        Assert.True(validator.IsValid(null));
-        Assert.True(validator.IsValid("Furion"));
-        Assert.True(validator.IsValid("百小僧"));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            Assert.True(validator.IsValid(null));
+            Assert.True(validator.IsValid("Furion"));
+            Assert.True(validator.IsValid("百小僧"));
+        });
     }
 
     [Fact]

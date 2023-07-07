@@ -12,35 +12,35 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace Furion.Core.Tests;
 
-/// <summary>
-/// 单个值验证器
-/// </summary>
-public partial class SingleValidator : ValidatorBase
+public class ObjectExtensionsTests
 {
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public SingleValidator()
-        : base(() => Strings.SingleValidator_Invalid)
+    [Fact]
+    public void TryGetCount_Null_Throw()
     {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            object obj = null!;
+            obj.TryGetCount(out var cout);
+        });
     }
 
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
+    [Fact]
+    public void TryGetCount_Exists()
     {
-        if (value is null)
-        {
-            return false;
-        }
+        Assert.True(string.Empty.TryGetCount(out _));
+        Assert.True(new List<string>().TryGetCount(out _));
+        Assert.True(new Dictionary<string, string>().TryGetCount(out _));
+        Assert.True(new HashSet<string>().TryGetCount(out _));
+        Assert.True(Array.Empty<string>().TryGetCount(out _));
+    }
 
-        if (value.TryGetCount(out var count)
-            && count == 1)
-        {
-            return true;
-        }
-
-        return false;
+    [Fact]
+    public void TryGetCount_NotExists()
+    {
+        Assert.False(1.TryGetCount(out _));
+        Assert.False(true.TryGetCount(out _));
+        Assert.False(123.45d.TryGetCount(out _));
     }
 }
