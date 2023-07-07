@@ -882,6 +882,46 @@
         <member name="M:Furion.Component.ComponentReleaserHostedService.StopAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.Component.DependencyGraph">
+            <summary>
+            依赖关系图
+            </summary>
+        </member>
+        <member name="F:Furion.Component.DependencyGraph._dependencies">
+            <summary>
+            依赖关系集合
+            </summary>
+        </member>
+        <member name="F:Furion.Component.DependencyGraph._parentNodes">
+            <summary>
+            父节点关系集合
+            </summary>
+        </member>
+        <member name="M:Furion.Component.DependencyGraph.#ctor(System.Collections.Generic.Dictionary{System.Type,System.Collections.Generic.List{System.Type}})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="dependencies">依赖关系集合</param>
+        </member>
+        <member name="M:Furion.Component.DependencyGraph.BuildParentNodes">
+            <summary>
+            构建父节点字典
+            </summary>
+        </member>
+        <member name="M:Furion.Component.DependencyGraph.FindAllParents(System.Type)">
+            <summary>
+            查找给定输入类型的所有父节点
+            </summary>
+            <param name="nodeType">节点类型</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Component.DependencyGraph.FindParents(System.Type)">
+            <summary>
+            查找指定输入类型的所有父节点
+            </summary>
+            <param name="nodeType">节点类型</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
         <member name="T:Furion.Component.ObjectMapper">
             <summary>
             简单对象映射
