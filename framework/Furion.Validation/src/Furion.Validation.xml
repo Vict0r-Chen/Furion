@@ -739,6 +739,11 @@
               查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.NotEmptyValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not allow empty values. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.RequiredValidator_Invalid">
             <summary>
               查找类似 The {0} field is required. 的本地化字符串。

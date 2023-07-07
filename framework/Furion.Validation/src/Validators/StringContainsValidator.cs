@@ -46,7 +46,7 @@ public partial class StringContainsValidator : ValidatorBase
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(Value, nameof(Value));
 
-        if (value == null)
+        if (value is null)
         {
             return false;
         }

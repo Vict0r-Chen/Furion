@@ -53,7 +53,7 @@ internal static class ObjectMapper
                                                                                                            && p.PropertyType == sourceProperty.PropertyType);
 
             // 空检查
-            if (destinationProperty == null)
+            if (destinationProperty is null)
             {
                 continue;
             }

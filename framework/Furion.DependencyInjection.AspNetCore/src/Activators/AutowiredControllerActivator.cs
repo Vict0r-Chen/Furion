@@ -39,7 +39,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
         ArgumentNullException.ThrowIfNull(controllerContext, nameof(controllerContext));
 
         // 空检查
-        if (controllerContext.ActionDescriptor == null)
+        if (controllerContext.ActionDescriptor is null)
         {
             throw new ArgumentException(string.Format("The '{0}' property of '{1}' must not be null.", nameof(ControllerContext.ActionDescriptor), nameof(ControllerContext)));
         }

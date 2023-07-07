@@ -32,7 +32,7 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value == null)
+        if (value is null)
         {
             return true;
         }
@@ -43,7 +43,7 @@ public partial class ObjectAnnotationValidator<T> : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
-        if (value == null)
+        if (value is null)
         {
             return null;
         }

@@ -23,14 +23,14 @@ public partial class NotEmptyValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public NotEmptyValidator()
-        : base()
+        : base(() => Strings.NotEmptyValidator_Invalid)
     {
     }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value == null)
+        if (value is null)
         {
             return false;
         }
