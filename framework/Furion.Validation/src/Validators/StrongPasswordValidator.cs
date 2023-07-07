@@ -43,11 +43,6 @@ public partial class StrongPasswordValidator : ValidatorBase
             return Regex().IsMatch(text);
         }
 
-        if (value.GetType().IsNumeric())
-        {
-            return Regex().IsMatch(value.ToString()!);
-        }
-
         return false;
     }
 

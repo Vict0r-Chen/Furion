@@ -784,6 +784,11 @@
               查找类似 The field {0} is not a valid strong password format. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.TelephoneValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid telephone format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.ValidatorBase_Invalid">
             <summary>
               查找类似 The field {0} is invalid. 的本地化字符串。

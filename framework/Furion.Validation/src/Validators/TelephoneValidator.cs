@@ -23,7 +23,7 @@ public partial class TelephoneValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     public TelephoneValidator()
-        : base()
+        : base(() => Strings.TelephoneValidator_Invalid)
     {
     }
 
