@@ -24,7 +24,7 @@ public class ColorValueAttribute : ValidationAttribute
     /// 构造函数
     /// </summary>
     public ColorValueAttribute()
-        : base()
+        : base(() => Strings.ColorValueValidator_Invalid)
     {
     }
 

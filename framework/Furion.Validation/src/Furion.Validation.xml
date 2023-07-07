@@ -1714,6 +1714,16 @@
         <member name="M:Furion.Validation.NotEmptyValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.Validation.ObjectAnnotationValidator">
+            <summary>
+             对象注解（特性）验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ObjectAnnotationValidator.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
         <member name="T:Furion.Validation.ObjectAnnotationValidator`1">
             <summary>
             对象注解（特性）验证器
