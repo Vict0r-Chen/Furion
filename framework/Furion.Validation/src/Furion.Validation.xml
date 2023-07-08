@@ -1751,7 +1751,7 @@
             <summary>
             验证逻辑
             </summary>
-            <param name="value">待验证的值</param>
+            <param name="value">验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -1909,7 +1909,7 @@
             <summary>
             验证逻辑
             </summary>
-            <param name="value">待验证的值</param>
+            <param name="value">验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
@@ -2230,7 +2230,7 @@
         </member>
         <member name="M:Furion.Validation.ValidatorBase.GetDefaultMemberNames">
             <summary>
-            获取默认成员名称
+            默认成员名称集合
             </summary>
             <returns><see cref="T:System.String"/>[]</returns>
         </member>
@@ -2301,7 +2301,7 @@
             <summary>
             验证逻辑
             </summary>
-            <param name="value">待验证的值</param>
+            <param name="value">验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.Boolean"/></returns>

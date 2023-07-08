@@ -76,7 +76,8 @@ public abstract partial class ValidatorBase
         }
 
         // 返回默认验证结果
-        return new List<ValidationResult> {
+        return new List<ValidationResult>
+        {
             new ValidationResult(FormatErrorMessage(memberNames), memberNames)
         };
     }
@@ -93,7 +94,7 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 获取默认成员名称
+    /// 默认成员名称集合
     /// </summary>
     /// <returns><see cref="string"/>[]</returns>
     protected virtual string[] GetDefaultMemberNames()
@@ -153,28 +154,34 @@ public abstract partial class ValidatorBase
         // 使用正则表达式匹配占位符
         var matches = PlaceholderRegex().Matches(format);
 
+        // 创建一个StringBuilder来构建最终的字符串
+        var resultBuilder = new StringBuilder(format);
+
         // 遍历占位符进行替换
-        for (var i = 0; i < matches.Count; i++)
+        foreach (var match in matches.Cast<Match>())
         {
-            var match = matches[i];
             var index = int.Parse(match.Value.Trim('{', '}'));
 
             // 如果索引小于参数列表长度，进行替换
             if (index < args.Length)
             {
                 // 将占位符替换为参数的字符串表示
-                format = format.Replace(match.Value, args[index]?.ToString());
+                resultBuilder.Replace(match.Value, args[index]?.ToString());
             }
             else
             {
                 // 如果索引超出参数列表长度，将占位符替换为空字符串
-                format = format.Replace(match.Value, string.Empty);
+                resultBuilder.Replace(match.Value, string.Empty);
             }
         }
 
-        // 返回替换后的格式化字符串
-        return SpacesRegex().Replace(format, " ");
+        // 替换多个空格
+        var formattedString = SpacesRegex().Replace(resultBuilder.ToString(), " ");
+
+        // 返回最终的字符串
+        return formattedString;
     }
+
 
     /// <summary>
     /// 占位符正则表达式

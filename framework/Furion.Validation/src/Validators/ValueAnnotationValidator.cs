@@ -57,7 +57,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <summary>
     /// 验证逻辑
     /// </summary>
-    /// <param name="value">待验证的值</param>
+    /// <param name="value">验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="bool"/></returns>
