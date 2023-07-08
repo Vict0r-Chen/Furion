@@ -704,7 +704,13 @@
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBaseExtensions.WithErrorMessage``1(``0,System.String)">
-            <inheritdoc cref="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)" />
+            <summary>
+            设置错误消息
+            </summary>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
+            <param name="validator"><typeparamref name="TValidator"/></param>
+            <param name="errorMessage">错误消息</param>
+            <returns><typeparamref name="TValidator"/></returns>
         </member>
         <member name="T:Furion.Validation.Resources.Strings">
             <summary>
@@ -2189,14 +2195,14 @@
             </summary>
             <param name="errorMessageAccessor">错误消息资源访问器</param>
         </member>
-        <member name="P:Furion.Validation.ValidatorBase.ErrorMessage">
-            <summary>
-            错误消息
-            </summary>
-        </member>
         <member name="P:Furion.Validation.ValidatorBase.ErrorMessageString">
             <summary>
             默认错误消息
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.ValidatorBase.ErrorMessage">
+            <summary>
+            错误消息
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
@@ -2221,13 +2227,6 @@
             <param name="value">验证的值</param>
             <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase.WithErrorMessage(System.String)">
-            <summary>
-            设置错误消息
-            </summary>
-            <param name="errorMessage">错误消息</param>
-            <returns><see cref="T:Furion.Validation.ValidatorBase"/></returns>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.GetDefaultMemberNames">
             <summary>

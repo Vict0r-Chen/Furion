@@ -45,14 +45,14 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 错误消息
-    /// </summary>
-    public string? ErrorMessage { get; set; }
-
-    /// <summary>
     /// 默认错误消息
     /// </summary>
     protected string ErrorMessageString => _errorMessageResourceAccessor();
+
+    /// <summary>
+    /// 错误消息
+    /// </summary>
+    public string? ErrorMessage { get; set; }
 
     /// <summary>
     /// 检查值有效性
@@ -93,17 +93,6 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 设置错误消息
-    /// </summary>
-    /// <param name="errorMessage">错误消息</param>
-    /// <returns><see cref="ValidatorBase"/></returns>
-    internal virtual ValidatorBase WithErrorMessage(string errorMessage)
-    {
-        ErrorMessage = errorMessage;
-        return this;
-    }
-
-    /// <summary>
     /// 获取默认成员名称
     /// </summary>
     /// <returns><see cref="string"/>[]</returns>
@@ -124,8 +113,8 @@ public abstract partial class ValidatorBase
 
         // 组合默认成员名称
         var newMemberNames = Enumerable.Empty<string>()
-                                                        .Concat(GetDefaultMemberNames() ?? Enumerable.Empty<string>())
-                                                        .Concat(memberNames ?? Enumerable.Empty<string>());
+                                                       .Concat(GetDefaultMemberNames() ?? Enumerable.Empty<string>())
+                                                       .Concat(memberNames ?? Enumerable.Empty<string>());
 
         return StringFormat(errorMessage, newMemberNames.ToArray());
     }
@@ -136,7 +125,7 @@ public abstract partial class ValidatorBase
     /// <param name="value">验证的值</param>
     /// <param name="memberNames">成员名称集合</param>
     /// <exception cref="ValidationException"></exception>
-    public virtual void Validate(object? value, IEnumerable<string>? memberNames = null)
+    public void Validate(object? value, IEnumerable<string>? memberNames = null)
     {
         // 获取验证结果
         var validationResult = GetValidationResult(value, memberNames);
