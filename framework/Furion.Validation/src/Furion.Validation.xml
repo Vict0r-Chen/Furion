@@ -2286,6 +2286,12 @@
             </summary>
             <param name="validationAttributes">验证特性集合</param>
         </member>
+        <member name="M:Furion.Validation.ValueAnnotationValidator.#ctor(System.ComponentModel.DataAnnotations.ValidationAttribute[])">
+            <summary>
+            构造函数
+            </summary>
+            <param name="validationAttributes">验证特性集合</param>
+        </member>
         <member name="P:Furion.Validation.ValueAnnotationValidator.ValidationAttributes">
             <summary>
             验证特性集合

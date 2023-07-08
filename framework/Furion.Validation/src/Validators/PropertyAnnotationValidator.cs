@@ -27,14 +27,8 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// <param name="instance">对象实例</param>
     /// <param name="propertyExpression">属性表达式</param>
     public PropertyAnnotationValidator(TInstance instance, Expression<Func<TInstance, object?>> propertyExpression)
-        : base()
+        : this(instance, GetPropertyName(propertyExpression))
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-        ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
-
-        Instance = instance;
-        PropertyName = GetPropertyName(propertyExpression);
     }
 
     /// <summary>
@@ -62,12 +56,12 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// <summary>
     /// 对象实例
     /// </summary>
-    internal TInstance Instance { get; init; }
+    public TInstance Instance { get; set; }
 
     /// <summary>
     /// 属性名称
     /// </summary>
-    internal string PropertyName { get; init; }
+    public string PropertyName { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -113,6 +107,9 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// <exception cref="ArgumentException"></exception>
     internal static string GetPropertyName(Expression<Func<TInstance, object?>> propertyExpression)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
+
         // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
         if (propertyExpression.Body is MemberExpression memberExpression)
         {

@@ -182,7 +182,6 @@ public abstract partial class ValidatorBase
         return formattedString;
     }
 
-
     /// <summary>
     /// 占位符正则表达式
     /// </summary>

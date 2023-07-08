@@ -24,6 +24,15 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     public ValueAnnotationValidator(IEnumerable<ValidationAttribute> validationAttributes)
+        : this(validationAttributes?.ToArray()!)
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="validationAttributes">验证特性集合</param>
+    public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
         : base()
     {
         // 空检查
@@ -35,7 +44,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <summary>
     /// 验证特性集合
     /// </summary>
-    internal IEnumerable<ValidationAttribute> ValidationAttributes { get; init; }
+    public ValidationAttribute[] ValidationAttributes { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -63,13 +72,17 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <returns><see cref="bool"/></returns>
     internal bool TryValidate(object? value, out List<ValidationResult> validationResults, IEnumerable<string>? memberNames = null)
     {
-        // 必填特性验证
+        // 如果定义了 [Required] 特性则优先验证
         var requiredAttribute = ValidationAttributes.OfType<RequiredAttribute>().FirstOrDefault();
-        if (requiredAttribute is not null && value is null)
+        if (requiredAttribute is not null
+            && value is null)
         {
+            // 格式化错误消息
+            var errorMessage = requiredAttribute.FormatErrorMessage(memberNames?.FirstOrDefault() ?? string.Empty);
+
             validationResults = new List<ValidationResult>()
             {
-                new ValidationResult(requiredAttribute.FormatErrorMessage( memberNames?.FirstOrDefault() ?? "null"), memberNames)
+                new ValidationResult(errorMessage, memberNames)
             };
 
             return false;
