@@ -49,18 +49,18 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return TryValidate(value, out _);
+        return TryValidate(value, out _, null!);
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
+    public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        if (!TryValidate(value, out var validationResults, memberNames))
+        if (!TryValidate(value, out var validationResults, name))
         {
             // 处理自定义错误消息
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
-                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberNames), memberNames));
+                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name)));
             }
 
             return validationResults;
@@ -74,21 +74,23 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="value">验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
-    /// <param name="memberNames">成员名称集合</param>
+    /// <param name="name">显示名称</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, IEnumerable<string>? memberNames = null)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, string name)
     {
+        var displayName = name ?? value?.GetType().Name ?? "Value";
+
         // 如果定义了 [Required] 特性则优先验证
         var requiredAttribute = Attributes.OfType<RequiredAttribute>().FirstOrDefault();
         if (requiredAttribute is not null
             && value is null)
         {
             // 格式化错误消息
-            var errorMessage = requiredAttribute.FormatErrorMessage(memberNames?.FirstOrDefault() ?? string.Empty);
+            var errorMessage = requiredAttribute.FormatErrorMessage(displayName);
 
             validationResults = new List<ValidationResult>()
             {
-                new ValidationResult(errorMessage, memberNames)
+                new ValidationResult(errorMessage)
             };
 
             return false;
@@ -100,7 +102,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(value)
         {
-            MemberName = memberNames?.FirstOrDefault()
+            MemberName = displayName
         };
         validationResults = new List<ValidationResult>();
 

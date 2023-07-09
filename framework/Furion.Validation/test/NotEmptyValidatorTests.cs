@@ -85,13 +85,9 @@ public class NotEmptyValidatorTests
     {
         var validator = new NotEmptyValidator();
 
-        var failure = validator.GetValidationResult(string.Empty);
+        var failure = validator.GetValidationResult(string.Empty, "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not allow empty values.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult(string.Empty, new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not allow empty values.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not allow empty values.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -102,7 +98,7 @@ public class NotEmptyValidatorTests
             ErrorMessage = "不允许空值"
         };
 
-        var failure = validator.GetValidationResult(string.Empty);
+        var failure = validator.GetValidationResult(string.Empty, null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不允许空值", failure.ErrorMessage);

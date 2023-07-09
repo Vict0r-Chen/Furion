@@ -142,7 +142,7 @@
     <value>The field {0} is not a valid domain format.</value>
   </data>
   <data name="EndsWithValidator_Invalid" xml:space="preserve">
-    <value>The field {1} is not end with the string {0}.</value>
+    <value>The field {0} is not end with the string {1}.</value>
   </data>
   <data name="IDCardNumberValidator_invalid" xml:space="preserve">
     <value>The field {0} is not a valid ID card number format.</value>
@@ -163,10 +163,10 @@
     <value>The field {0} only allows for a single value.</value>
   </data>
   <data name="StartsWithValidator_Invalid" xml:space="preserve">
-    <value>The field {1} is not start with the string {0}.</value>
+    <value>The field {0} is not start with the string {1}.</value>
   </data>
   <data name="StringContainsValidator_Invalid" xml:space="preserve">
-    <value>The field {1} is not contain the string {0}.</value>
+    <value>The field {0} is not contain the string {1}.</value>
   </data>
   <data name="StrongPasswordValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid strong password format.</value>

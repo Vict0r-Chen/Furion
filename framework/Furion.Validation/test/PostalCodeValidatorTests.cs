@@ -39,13 +39,9 @@ public class PostalCodeValidatorTests
     {
         var validator = new PostalCodeValidator();
 
-        var failure = validator.GetValidationResult(1001001);
+        var failure = validator.GetValidationResult(1001001, "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid postal code format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult(1001001, new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid postal code format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid postal code format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -56,7 +52,7 @@ public class PostalCodeValidatorTests
             ErrorMessage = "不是一个有效的邮政编码格式"
         };
 
-        var failure = validator.GetValidationResult(1001001);
+        var failure = validator.GetValidationResult(1001001, null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的邮政编码格式", failure.ErrorMessage);

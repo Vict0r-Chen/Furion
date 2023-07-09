@@ -39,13 +39,9 @@ public class UserNameValidatorTests
     {
         var validator = new UserNameValidator();
 
-        var failure = validator.GetValidationResult("Monk@Soul");
+        var failure = validator.GetValidationResult("Monk@Soul", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid username format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("Monk@Soul", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid username format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid username format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -56,7 +52,7 @@ public class UserNameValidatorTests
             ErrorMessage = "不是一个有效的用户名类型"
         };
 
-        var failure = validator.GetValidationResult("Monk@Soul");
+        var failure = validator.GetValidationResult("Monk@Soul", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的用户名类型", failure.ErrorMessage);

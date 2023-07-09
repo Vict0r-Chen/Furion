@@ -78,25 +78,17 @@ public class ValidatorBaseTests
     {
         var validator = new TestValidator();
 
-        var nullResults = validator.GetValidationResults(null);
+        var nullResults = validator.GetValidationResults(null, null!);
         Assert.Null(nullResults);
 
-        var successResults = validator.GetValidationResults("test");
+        var successResults = validator.GetValidationResults("test", null!);
         Assert.Null(successResults);
 
-        var failureResults = validator.GetValidationResults("some");
+        var name = "test";
+        var failureResults = validator.GetValidationResults("some", name);
         Assert.NotNull(failureResults);
         Assert.Single(failureResults);
-        Assert.Equal("The field is invalid.", failureResults.First().ErrorMessage);
-        Assert.Empty(failureResults.First().MemberNames);
-
-        var memberNames = new[] { "test" };
-        var failureResults2 = validator.GetValidationResults("some", memberNames);
-        Assert.NotNull(failureResults2);
-        Assert.Single(failureResults2);
-        Assert.Equal("The field test is invalid.", failureResults2.First().ErrorMessage);
-        Assert.Single(failureResults2.First().MemberNames);
-        Assert.Equal("test", failureResults2.First().MemberNames.First());
+        Assert.Equal("The field test is invalid.", failureResults.First().ErrorMessage);
     }
 
     [Fact]
@@ -107,13 +99,13 @@ public class ValidatorBaseTests
             ErrorMessage = "这里的{0}有一个错误"
         };
 
-        var failureResults = validator.GetValidationResults("some");
+        var failureResults = validator.GetValidationResults("some", null!);
         Assert.NotNull(failureResults);
         Assert.Single(failureResults);
         Assert.Equal("这里的有一个错误", failureResults.First().ErrorMessage);
 
-        var memberNames = new[] { "Name" };
-        var failureResults2 = validator.GetValidationResults("some", memberNames);
+        var name = "Name";
+        var failureResults2 = validator.GetValidationResults("some", name);
         Assert.NotNull(failureResults2);
         Assert.Single(failureResults2);
         Assert.Equal("这里的Name有一个错误", failureResults2.First().ErrorMessage);
@@ -124,23 +116,16 @@ public class ValidatorBaseTests
     {
         var validator = new TestValidator();
 
-        var nullResult = validator.GetValidationResult(null);
+        var nullResult = validator.GetValidationResult(null, null!);
         Assert.Null(nullResult);
 
-        var successResult = validator.GetValidationResult("test");
+        var successResult = validator.GetValidationResult("test", null!);
         Assert.Null(successResult);
 
-        var failureResult = validator.GetValidationResult("some");
+        var name = "test";
+        var failureResult = validator.GetValidationResult("some", name);
         Assert.NotNull(failureResult);
-        Assert.Equal("The field is invalid.", failureResult.ErrorMessage);
-        Assert.Empty(failureResult.MemberNames);
-
-        var memberNames = new[] { "test" };
-        var failureResult2 = validator.GetValidationResult("some", memberNames);
-        Assert.NotNull(failureResult2);
-        Assert.Equal("The field test is invalid.", failureResult2.ErrorMessage);
-        Assert.Single(failureResult2.MemberNames);
-        Assert.Equal("test", failureResult2.MemberNames.First());
+        Assert.Equal("The field test is invalid.", failureResult.ErrorMessage);
     }
 
     [Fact]
@@ -151,12 +136,12 @@ public class ValidatorBaseTests
             ErrorMessage = "这里的{0}有一个错误"
         };
 
-        var failureResult = validator.GetValidationResult("some");
+        var failureResult = validator.GetValidationResult("some", null!);
         Assert.NotNull(failureResult);
         Assert.Equal("这里的有一个错误", failureResult.ErrorMessage);
 
-        var memberNames = new[] { "Name" };
-        var failureResult2 = validator.GetValidationResult("some", memberNames);
+        var name = "Name";
+        var failureResult2 = validator.GetValidationResult("some", name);
         Assert.NotNull(failureResult2);
         Assert.Equal("这里的Name有一个错误", failureResult2.ErrorMessage);
     }
@@ -177,27 +162,22 @@ public class ValidatorBaseTests
     {
         var validator = new TestValidator();
 
-        validator.Validate(null);
-        validator.Validate("test");
+        validator.Validate(null, null!);
+        validator.Validate("test", null!);
     }
 
     [Fact]
     public void Validate_NotPass_Throw()
     {
-        var validator = new TestValidator();
-
+        var validator = new TestValidator
+        {
+            ErrorMessage = "这里的{0}有一个错误"
+        };
         var exception = Assert.Throws<ValidationException>(() =>
         {
-            validator.Validate("some");
+            validator.Validate("some", "Name");
         });
-        Assert.Equal("The field is invalid.", exception.Message);
-
-        validator.ErrorMessage = "这里的{0}有一个错误";
-        var exception2 = Assert.Throws<ValidationException>(() =>
-        {
-            validator.Validate("some", new List<string> { "Name" });
-        });
-        Assert.Equal("这里的Name有一个错误", exception2.Message);
+        Assert.Equal("这里的Name有一个错误", exception.Message);
     }
 
     [Theory]
@@ -210,13 +190,14 @@ public class ValidatorBaseTests
         Assert.Equal(result, validator.IsValid(value));
     }
 
-    [Theory]
-    [InlineData("The field is invalid.", "The field is invalid.")]
-    [InlineData("The field {0} is invalid.", "The field is invalid.")]
-    [InlineData("The field {1} is invalid {0}.", "The field is invalid 5.", 5)]
-    [InlineData("The field {1} is invalid {0}.", "The field Value is invalid 5.", 5, "Value")]
-    public void StringFormat(string format, string result, params object[] args)
+    [Fact]
+    public void FormatErrorMessage()
     {
-        Assert.Equal(result, ValidatorBase.StringFormat(format, args));
+        var validator = new TestValidator()
+        {
+            ErrorMessage = "测试数据 {0} 验证失败"
+        };
+
+        Assert.Equal("测试数据 Value 验证失败", validator.FormatErrorMessage("Value"));
     }
 }

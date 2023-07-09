@@ -106,7 +106,7 @@ public class PropertyAnnotationValidatorTests
         };
         var validator = new PropertyAnnotationValidator<ObjectModel>(u => u.Name);
 
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
     }
 
@@ -122,7 +122,7 @@ public class PropertyAnnotationValidatorTests
 
         var validator = new PropertyAnnotationValidator<ObjectModel>(u => u.Name);
 
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.Null(validationResults);
     }
 
@@ -140,7 +140,7 @@ public class PropertyAnnotationValidatorTests
         {
             ErrorMessage = "自定义验证失败消息"
         };
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
         Assert.True(validationResults.Count > 1);
 

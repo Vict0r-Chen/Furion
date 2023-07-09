@@ -98,13 +98,9 @@ public class CustomValidatorTests
             return str != null && str == "Furion";
         });
 
-        var failure = validator.GetValidationResult("百小僧");
+        var failure = validator.GetValidationResult("百小僧", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is invalid.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("百小僧", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is invalid.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is invalid.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -118,7 +114,7 @@ public class CustomValidatorTests
             ErrorMessage = "不是一个有效的格式"
         };
 
-        var failure = validator.GetValidationResult("百小僧");
+        var failure = validator.GetValidationResult("百小僧", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的格式", failure.ErrorMessage);

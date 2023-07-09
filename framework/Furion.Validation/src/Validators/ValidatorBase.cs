@@ -45,12 +45,12 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 默认错误消息
+    /// 错误消息
     /// </summary>
-    protected string ErrorMessageString => _errorMessageResourceAccessor();
+    protected string ErrorMessageString => ErrorMessage ?? _errorMessageResourceAccessor();
 
     /// <summary>
-    /// 错误消息
+    /// 自定义错误消息
     /// </summary>
     public string? ErrorMessage { get; set; }
 
@@ -65,9 +65,9 @@ public abstract partial class ValidatorBase
     /// 获取验证结果
     /// </summary>
     /// <param name="value">验证的值</param>
-    /// <param name="memberNames">成员名称集合</param>
+    /// <param name="name">显示名称</param>
     /// <returns><see cref="List{T}"/></returns>
-    public virtual List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
+    public virtual List<ValidationResult>? GetValidationResults(object? value, string name)
     {
         // 检查值有效性
         if (IsValid(value))
@@ -78,7 +78,7 @@ public abstract partial class ValidatorBase
         // 返回默认验证结果
         return new List<ValidationResult>
         {
-            new ValidationResult(FormatErrorMessage(memberNames), memberNames)
+            new ValidationResult(FormatErrorMessage(name))
         };
     }
 
@@ -86,50 +86,33 @@ public abstract partial class ValidatorBase
     /// 获取验证结果
     /// </summary>
     /// <param name="value">验证的值</param>
-    /// <param name="memberNames">成员名称集合</param>
+    /// <param name="name">显示名称</param>
     /// <returns><see cref="ValidationResult"/></returns>
-    public virtual ValidationResult? GetValidationResult(object? value, IEnumerable<string>? memberNames = null)
+    public virtual ValidationResult? GetValidationResult(object? value, string name)
     {
-        return GetValidationResults(value, memberNames)?.FirstOrDefault();
-    }
-
-    /// <summary>
-    /// 默认成员名称集合
-    /// </summary>
-    /// <returns><see cref="string"/>[]</returns>
-    protected virtual string[] GetDefaultMemberNames()
-    {
-        return Array.Empty<string>();
+        return GetValidationResults(value, name)?.FirstOrDefault();
     }
 
     /// <summary>
     /// 格式化错误消息
     /// </summary>
-    /// <param name="memberNames">成员名称集合</param>
+    /// <param name="name">显示名称</param>
     /// <returns><see cref="string"/></returns>
-    protected virtual string FormatErrorMessage(IEnumerable<string>? memberNames = null)
+    public virtual string FormatErrorMessage(string name)
     {
-        // 获取错误消息
-        var errorMessage = ErrorMessage ?? ErrorMessageString;
-
-        // 组合默认成员名称
-        var newMemberNames = Enumerable.Empty<string>()
-                                                       .Concat(GetDefaultMemberNames() ?? Enumerable.Empty<string>())
-                                                       .Concat(memberNames ?? Enumerable.Empty<string>());
-
-        return StringFormat(errorMessage, newMemberNames.ToArray());
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name);
     }
 
     /// <summary>
     /// 执行验证
     /// </summary>
     /// <param name="value">验证的值</param>
-    /// <param name="memberNames">成员名称集合</param>
+    /// <param name="name">显示名称</param>
     /// <exception cref="ValidationException"></exception>
-    public void Validate(object? value, IEnumerable<string>? memberNames = null)
+    public void Validate(object? value, string name)
     {
         // 获取验证结果
-        var validationResult = GetValidationResult(value, memberNames);
+        var validationResult = GetValidationResult(value, name);
         if (validationResult is null)
         {
             return;
@@ -138,61 +121,4 @@ public abstract partial class ValidatorBase
         // 抛出验证异常
         throw new ValidationException(validationResult, null, value);
     }
-
-    /// <summary>
-    /// 格式化字符串
-    /// </summary>
-    /// <param name="format">字符串</param>
-    /// <param name="args">格式化参数</param>
-    /// <returns><see cref="string"/></returns>
-    internal static string StringFormat(string format, params object[] args)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(format, nameof(format));
-        ArgumentNullException.ThrowIfNull(args, nameof(args));
-
-        // 使用正则表达式匹配占位符
-        var matches = PlaceholderRegex().Matches(format);
-
-        // 创建一个StringBuilder来构建最终的字符串
-        var resultBuilder = new StringBuilder(format);
-
-        // 遍历占位符进行替换
-        foreach (var match in matches.Cast<Match>())
-        {
-            var index = int.Parse(match.Value.Trim('{', '}'));
-
-            // 如果索引小于参数列表长度，进行替换
-            if (index < args.Length)
-            {
-                // 将占位符替换为参数的字符串表示
-                resultBuilder.Replace(match.Value, args[index]?.ToString());
-            }
-            else
-            {
-                // 如果索引超出参数列表长度，将占位符替换为空字符串
-                resultBuilder.Replace(match.Value, string.Empty);
-            }
-        }
-
-        // 替换多个空格
-        var formattedString = SpacesRegex().Replace(resultBuilder.ToString(), " ");
-
-        // 返回最终的字符串
-        return formattedString;
-    }
-
-    /// <summary>
-    /// 占位符正则表达式
-    /// </summary>
-    /// <returns></returns>
-    [GeneratedRegex("{[0-9]+}")]
-    internal static partial Regex PlaceholderRegex();
-
-    /// <summary>
-    /// 多个空格正则表达式
-    /// </summary>
-    /// <returns></returns>
-    [GeneratedRegex(@"\s+")]
-    internal static partial Regex SpacesRegex();
 }

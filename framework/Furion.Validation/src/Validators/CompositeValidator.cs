@@ -64,7 +64,7 @@ public partial class CompositeValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
+    public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
         var validationResults = new List<ValidationResult>();
 
@@ -74,13 +74,13 @@ public partial class CompositeValidator : ValidatorBase
                 && !ValidatorCollection.All(validator => validator.IsValid(value))))
         {
             validationResults.AddRange(ValidatorCollection
-                .SelectMany(validator => validator.GetValidationResults(value, memberNames) ?? Enumerable.Empty<ValidationResult>()));
+                .SelectMany(validator => validator.GetValidationResults(value, name) ?? Enumerable.Empty<ValidationResult>()));
         }
 
         // 处理自定义错误消息情况
         if (ErrorMessage is not null && validationResults.Count > 0)
         {
-            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberNames)));
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name)));
         }
 
         return validationResults.Count == 0

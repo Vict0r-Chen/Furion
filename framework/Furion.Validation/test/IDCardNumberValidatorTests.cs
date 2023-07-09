@@ -37,13 +37,9 @@ public class IDCardNumberValidatorTests
     {
         var validator = new IDCardNumberValidator();
 
-        var failure = validator.GetValidationResult(1234569910101933);
+        var failure = validator.GetValidationResult(1234569910101933, "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid ID card number format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult(1234569910101933, new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid ID card number format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid ID card number format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -54,7 +50,7 @@ public class IDCardNumberValidatorTests
             ErrorMessage = "不是一个有效的身份证格式"
         };
 
-        var failure = validator.GetValidationResult(1234569910101933);
+        var failure = validator.GetValidationResult(1234569910101933, null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的身份证格式", failure.ErrorMessage);

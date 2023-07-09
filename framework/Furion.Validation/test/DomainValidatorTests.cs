@@ -51,13 +51,9 @@ public class DomainValidatorTests
     {
         var validator = new DomainValidator();
 
-        var failure = validator.GetValidationResult("https://furion.net");
+        var failure = validator.GetValidationResult("https://furion.net", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid domain format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("https://furion.net", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid domain format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid domain format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -68,7 +64,7 @@ public class DomainValidatorTests
             ErrorMessage = "不是一个有效的域名格式"
         };
 
-        var failure = validator.GetValidationResult("https://furion.net");
+        var failure = validator.GetValidationResult("https://furion.net", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的域名格式", failure.ErrorMessage);

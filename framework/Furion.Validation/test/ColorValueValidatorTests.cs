@@ -77,13 +77,9 @@ public class ColorValueValidatorTests
     {
         var validator = new ColorValueValidator();
 
-        var failure = validator.GetValidationResult("#fffffff");
+        var failure = validator.GetValidationResult("#fffffff", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid color value.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("#fffffff", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid color value.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid color value.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -94,7 +90,7 @@ public class ColorValueValidatorTests
             ErrorMessage = "不是一个有效的颜色值"
         };
 
-        var failure = validator.GetValidationResult("#fffffff");
+        var failure = validator.GetValidationResult("#fffffff", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的颜色值", failure.ErrorMessage);

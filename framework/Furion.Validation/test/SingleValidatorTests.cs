@@ -115,13 +115,9 @@ public class SingleValidatorTests
     {
         var validator = new SingleValidator();
 
-        var failure = validator.GetValidationResult("furion");
+        var failure = validator.GetValidationResult("furion", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field only allows for a single value.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("furion", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value only allows for a single value.", failure2.ErrorMessage);
+        Assert.Equal("The field Value only allows for a single value.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -132,7 +128,7 @@ public class SingleValidatorTests
             ErrorMessage = "只允许单个值"
         };
 
-        var failure = validator.GetValidationResult("furion");
+        var failure = validator.GetValidationResult("furion", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("只允许单个值", failure.ErrorMessage);

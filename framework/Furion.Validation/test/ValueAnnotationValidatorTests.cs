@@ -70,11 +70,11 @@ public class ValueAnnotationValidatorTests
     {
         var validator = new ValueAnnotationValidator(new RequiredAttribute());
 
-        var validationResults = validator.GetValidationResults(null!);
+        var validationResults = validator.GetValidationResults(null!, null!);
         Assert.NotNull(validationResults);
 
         validator.Attributes.Add(new MinLengthAttribute(3));
-        var validationResults2 = validator.GetValidationResults("fu");
+        var validationResults2 = validator.GetValidationResults("fu", null!);
         Assert.NotNull(validationResults2);
     }
 
@@ -83,11 +83,11 @@ public class ValueAnnotationValidatorTests
     {
         var validator = new ValueAnnotationValidator(new RequiredAttribute());
 
-        var validationResults = validator.GetValidationResults("furion");
+        var validationResults = validator.GetValidationResults("furion", null!);
         Assert.Null(validationResults);
 
         validator.Attributes.Add(new MinLengthAttribute(3));
-        var validationResults2 = validator.GetValidationResults("furion");
+        var validationResults2 = validator.GetValidationResults("furion", null!);
         Assert.Null(validationResults2);
     }
 
@@ -98,7 +98,7 @@ public class ValueAnnotationValidatorTests
         {
             ErrorMessage = "自定义验证失败消息"
         };
-        var validationResults = validator.GetValidationResults(null!);
+        var validationResults = validator.GetValidationResults(null!, null!);
         Assert.NotNull(validationResults);
         Assert.True(validationResults.Count > 1);
 

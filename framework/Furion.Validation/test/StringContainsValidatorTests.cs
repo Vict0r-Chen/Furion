@@ -105,13 +105,9 @@ public class StringContainsValidatorTests
     {
         var validator = new StringContainsValidator("fur");
 
-        var failure = validator.GetValidationResult("fuion");
+        var failure = validator.GetValidationResult("fuion", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not contain the string fur.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("fuion", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not contain the string fur.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not contain the string fur.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -122,7 +118,7 @@ public class StringContainsValidatorTests
             ErrorMessage = "该字符串包含fur字符串"
         };
 
-        var failure = validator.GetValidationResult("fuion");
+        var failure = validator.GetValidationResult("fuion", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("该字符串包含fur字符串", failure.ErrorMessage);

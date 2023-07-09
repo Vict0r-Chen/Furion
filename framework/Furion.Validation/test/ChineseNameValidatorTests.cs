@@ -41,13 +41,9 @@ public class ChineseNameValidatorTests
     {
         var validator = new ChineseNameValidator();
 
-        var failure = validator.GetValidationResult("蒙奇·D·路飞");
+        var failure = validator.GetValidationResult("蒙奇·D·路飞", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid Chinese name.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("蒙奇·D·路飞", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid Chinese name.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid Chinese name.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -58,7 +54,7 @@ public class ChineseNameValidatorTests
             ErrorMessage = "不是一个有效的中文姓名"
         };
 
-        var failure = validator.GetValidationResult("蒙奇·D·路飞");
+        var failure = validator.GetValidationResult("蒙奇·D·路飞", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的中文姓名", failure.ErrorMessage);

@@ -61,14 +61,14 @@ public partial class PropertyAnnotationValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
+    public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
         if (!TryValidate(value, out var validationResults))
         {
             // 处理自定义错误消息
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
-                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberNames), memberNames));
+                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name)));
             }
 
             return validationResults;

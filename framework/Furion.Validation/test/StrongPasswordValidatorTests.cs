@@ -34,13 +34,9 @@ public class StrongPasswordValidatorTests
     {
         var validator = new StrongPasswordValidator();
 
-        var failure = validator.GetValidationResult("q1w2e3");
+        var failure = validator.GetValidationResult("q1w2e3", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid strong password format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("q1w2e3", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid strong password format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid strong password format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -51,7 +47,7 @@ public class StrongPasswordValidatorTests
             ErrorMessage = "不是一个有效的强密码类型"
         };
 
-        var failure = validator.GetValidationResult("q1w2e3");
+        var failure = validator.GetValidationResult("q1w2e3", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的强密码类型", failure.ErrorMessage);

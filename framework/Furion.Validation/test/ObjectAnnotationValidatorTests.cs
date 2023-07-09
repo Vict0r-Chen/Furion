@@ -56,7 +56,7 @@ public class ObjectAnnotationValidatorTests
             Age = 130
         };
 
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
         Assert.Equal(3, validationResults.Count);
     }
@@ -72,7 +72,7 @@ public class ObjectAnnotationValidatorTests
             Age = 31
         };
 
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.Null(validationResults);
     }
 
@@ -89,11 +89,11 @@ public class ObjectAnnotationValidatorTests
             Name = "fu",
             Age = 130
         };
-        var failure = validator.GetValidationResult(model);
+        var failure = validator.GetValidationResult(model, null!);
         Assert.NotNull(failure);
         Assert.Equal("自定义验证失败消息", failure.ErrorMessage);
 
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
         Assert.True(validationResults.Count > 1);
         Assert.Equal("自定义验证失败消息", validationResults.First().ErrorMessage);

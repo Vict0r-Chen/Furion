@@ -727,70 +727,6 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_14">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the PlaceholderRegex method.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.Instance">
-            <summary>Cached, thread-safe singleton instance.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.#ctor">
-            <summary>Initializes the instance.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner">
-            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if a possible match was found; false if no more matches are possible.</returns>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_15">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the SpacesRegex method.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.SpacesRegex_15.Instance">
-            <summary>Cached, thread-safe singleton instance.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.#ctor">
-            <summary>Initializes the instance.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner">
-            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if a possible match was found; false if no more matches are possible.</returns>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
-        </member>
         <member name="T:System.Text.RegularExpressions.Generated.Utilities">
             <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
         </member>
@@ -800,9 +736,6 @@
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
             <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Utilities.IndexOfAnyWhiteSpace(System.ReadOnlySpan{System.Char})">
-            <summary>Finds the next index of any character that matches a whitespace character.</summary>
-        </member>
         <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPop(System.Int32[],System.Int32@,System.Int32@,System.Int32@)">
             <summary>Pops 2 values from the backtracking stack.</summary>
         </member>
@@ -811,9 +744,6 @@
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPush(System.Int32[]@,System.Int32@,System.Int32,System.Int32)">
             <summary>Pushes 2 values onto the backtracking stack.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiExceptWhiteSpace">
-            <summary>Supports searching for characters in or not in "\0\u0001\u0002\u0003\u0004\u0005\u0006\a\b\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f!\"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u007f".</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiLetters">
             <summary>Supports searching for characters in or not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".</summary>
@@ -920,7 +850,7 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.EndsWithValidator_Invalid">
             <summary>
-              查找类似 The field {1} is not end with the string {0}. 的本地化字符串。
+              查找类似 The field {0} is not end with the string {1}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
@@ -955,12 +885,12 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StartsWithValidator_Invalid">
             <summary>
-              查找类似 The field {1} is not start with the string {0}. 的本地化字符串。
+              查找类似 The field {0} is not start with the string {1}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StringContainsValidator_Invalid">
             <summary>
-              查找类似 The field {1} is not contain the string {0}. 的本地化字符串。
+              查找类似 The field {0} is not contain the string {1}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StrongPasswordValidator_Invalid">
@@ -1350,7 +1280,7 @@
         <member name="M:Furion.Validation.CompositeValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.CompositeValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.CompositeValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.CompositeValidator.EnsureLegalData(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
@@ -1448,7 +1378,7 @@
         <member name="M:Furion.Validation.EndsWithValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.EndsWithValidator.GetDefaultMemberNames">
+        <member name="M:Furion.Validation.EndsWithValidator.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.IDCardNumberValidator">
@@ -1653,7 +1583,7 @@
         <member name="M:Furion.Validation.ObjectAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ObjectAnnotationValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ObjectAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
@@ -1809,7 +1739,7 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
@@ -1861,7 +1791,7 @@
         <member name="M:Furion.Validation.StartsWithValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.StartsWithValidator.GetDefaultMemberNames">
+        <member name="M:Furion.Validation.StartsWithValidator.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StringContainsValidator">
@@ -1892,7 +1822,7 @@
         <member name="M:Furion.Validation.StringContainsValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.StringContainsValidator.GetDefaultMemberNames">
+        <member name="M:Furion.Validation.StringContainsValidator.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.StrongPasswordValidator">
@@ -2022,12 +1952,12 @@
         </member>
         <member name="P:Furion.Validation.ValidatorBase.ErrorMessageString">
             <summary>
-            默认错误消息
+            错误消息
             </summary>
         </member>
         <member name="P:Furion.Validation.ValidatorBase.ErrorMessage">
             <summary>
-            错误消息
+            自定义错误消息
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
@@ -2037,68 +1967,36 @@
             <param name="value">验证的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object,System.String)">
             <summary>
             获取验证结果
             </summary>
             <param name="value">验证的值</param>
-            <param name="memberNames">成员名称集合</param>
+            <param name="name">显示名称</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.GetValidationResult(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.GetValidationResult(System.Object,System.String)">
             <summary>
             获取验证结果
             </summary>
             <param name="value">验证的值</param>
-            <param name="memberNames">成员名称集合</param>
+            <param name="name">显示名称</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.GetDefaultMemberNames">
-            <summary>
-            默认成员名称集合
-            </summary>
-            <returns><see cref="T:System.String"/>[]</returns>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.String)">
             <summary>
             格式化错误消息
             </summary>
-            <param name="memberNames">成员名称集合</param>
+            <param name="name">显示名称</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValidatorBase.Validate(System.Object,System.String)">
             <summary>
             执行验证
             </summary>
             <param name="value">验证的值</param>
-            <param name="memberNames">成员名称集合</param>
+            <param name="name">显示名称</param>
             <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase.StringFormat(System.String,System.Object[])">
-            <summary>
-            格式化字符串
-            </summary>
-            <param name="format">字符串</param>
-            <param name="args">格式化参数</param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase.PlaceholderRegex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match '{'.<br/>
-            ○ Match '0' through '9' atomically at least once.<br/>
-            ○ Match '}'.<br/>
-            </code>
-            </remarks>
-        </member>
-        <member name="M:Furion.Validation.ValidatorBase.SpacesRegex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match a whitespace character atomically at least once.<br/>
-            </code>
-            </remarks>
         </member>
         <member name="T:Furion.Validation.ValueAnnotationValidator">
             <summary>
@@ -2125,16 +2023,16 @@
         <member name="M:Furion.Validation.ValueAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ValueAnnotationValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValueAnnotationValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ValueAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.ValueAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@,System.String)">
             <summary>
             验证逻辑
             </summary>
             <param name="value">验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
-            <param name="memberNames">成员名称集合</param>
+            <param name="name">显示名称</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
     </members>

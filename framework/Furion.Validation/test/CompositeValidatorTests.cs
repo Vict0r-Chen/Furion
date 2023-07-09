@@ -87,13 +87,9 @@ public class CompositeValidatorTests
     {
         var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }));
 
-        var failure = validator.GetValidationResult(130);
+        var failure = validator.GetValidationResult(130, "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid age format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult(130, new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid age format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid age format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -104,7 +100,7 @@ public class CompositeValidatorTests
             ErrorMessage = "不是一个有效的组合格式"
         };
 
-        var failure = validator.GetValidationResult(130);
+        var failure = validator.GetValidationResult(130, null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的组合格式", failure.ErrorMessage);
@@ -114,20 +110,7 @@ public class CompositeValidatorTests
     public void GetValidationResults()
     {
         var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }));
-        var validationResults = validator.GetValidationResults(123.456m);
-
-        Assert.NotNull(validationResults);
-        Assert.Equal(2, validationResults.Count);
-
-        Assert.Equal("The field is not a valid age format.", validationResults.ElementAt(0).ErrorMessage);
-        Assert.Equal("The field is invalid.", validationResults.ElementAt(1).ErrorMessage);
-    }
-
-    [Fact]
-    public void GetValidationResults_With_MemberNames()
-    {
-        var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }));
-        var validationResults = validator.GetValidationResults(123.456m, new List<string> { "Value" });
+        var validationResults = validator.GetValidationResults(123.456m, "Value");
 
         Assert.NotNull(validationResults);
         Assert.Equal(2, validationResults.Count);

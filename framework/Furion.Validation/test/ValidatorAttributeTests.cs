@@ -71,7 +71,7 @@ public class ValidatorAttributeTests
         var validator = new ObjectAnnotationValidator();
         Assert.False(validator.IsValid(model));
 
-        var validationResults = validator.GetValidationResults(model);
+        var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
 
         Assert.Equal(17, validationResults.Count);

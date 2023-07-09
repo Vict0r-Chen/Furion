@@ -47,13 +47,9 @@ public class PhoneNumberValidatorTests
     {
         var validator = new PhoneNumberValidator();
 
-        var failure = validator.GetValidationResult(10086);
+        var failure = validator.GetValidationResult(10086, "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid phone number format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult(10086, new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid phone number format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid phone number format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -64,7 +60,7 @@ public class PhoneNumberValidatorTests
             ErrorMessage = "不是一个有效的手机号码格式"
         };
 
-        var failure = validator.GetValidationResult(10086);
+        var failure = validator.GetValidationResult(10086, null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的手机号码格式", failure.ErrorMessage);

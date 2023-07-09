@@ -105,13 +105,9 @@ public class EndsWithValidatorTests
     {
         var validator = new EndsWithValidator("ion");
 
-        var failure = validator.GetValidationResult("furiou");
+        var failure = validator.GetValidationResult("furiou", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not end with the string ion.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("furiou", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not end with the string ion.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not end with the string ion.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -122,7 +118,7 @@ public class EndsWithValidatorTests
             ErrorMessage = "该字符串不以ion结尾"
         };
 
-        var failure = validator.GetValidationResult("furiou");
+        var failure = validator.GetValidationResult("furiou", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("该字符串不以ion结尾", failure.ErrorMessage);

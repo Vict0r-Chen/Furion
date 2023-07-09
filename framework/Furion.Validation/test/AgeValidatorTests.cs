@@ -44,13 +44,9 @@ public class AgeValidatorTests
     {
         var validator = new AgeValidator();
 
-        var failure = validator.GetValidationResult(130);
+        var failure = validator.GetValidationResult(130, "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid age format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult(130, new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid age format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid age format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -61,7 +57,7 @@ public class AgeValidatorTests
             ErrorMessage = "不是一个有效的年龄格式"
         };
 
-        var failure = validator.GetValidationResult(130);
+        var failure = validator.GetValidationResult(130, null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的年龄格式", failure.ErrorMessage);

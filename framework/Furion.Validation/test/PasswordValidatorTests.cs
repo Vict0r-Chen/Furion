@@ -34,13 +34,9 @@ public class PasswordValidatorTests
     {
         var validator = new PasswordValidator();
 
-        var failure = validator.GetValidationResult("888888");
+        var failure = validator.GetValidationResult("888888", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not a valid password format.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("888888", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not a valid password format.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not a valid password format.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -51,7 +47,7 @@ public class PasswordValidatorTests
             ErrorMessage = "不是一个有效的密码类型"
         };
 
-        var failure = validator.GetValidationResult("888888");
+        var failure = validator.GetValidationResult("888888", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("不是一个有效的密码类型", failure.ErrorMessage);

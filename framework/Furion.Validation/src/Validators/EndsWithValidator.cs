@@ -69,8 +69,8 @@ public partial class EndsWithValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    protected override string[] GetDefaultMemberNames()
+    public override string FormatErrorMessage(string name)
     {
-        return new string[] { Value };
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
     }
 }

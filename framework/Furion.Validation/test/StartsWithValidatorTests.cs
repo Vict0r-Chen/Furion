@@ -103,13 +103,9 @@ public class StartsWithValidatorTests
     {
         var validator = new StartsWithValidator("fur");
 
-        var failure = validator.GetValidationResult("fuion");
+        var failure = validator.GetValidationResult("fuion", "Value");
         Assert.NotNull(failure);
-        Assert.Equal("The field is not start with the string fur.", failure.ErrorMessage);
-
-        var failure2 = validator.GetValidationResult("fuion", new List<string> { "Value" });
-        Assert.NotNull(failure2);
-        Assert.Equal("The field Value is not start with the string fur.", failure2.ErrorMessage);
+        Assert.Equal("The field Value is not start with the string fur.", failure.ErrorMessage);
     }
 
     [Fact]
@@ -120,7 +116,7 @@ public class StartsWithValidatorTests
             ErrorMessage = "该字符串不以fur开头"
         };
 
-        var failure = validator.GetValidationResult("fuion");
+        var failure = validator.GetValidationResult("fuion", null!);
         Assert.NotNull(failure);
 
         Assert.Equal("该字符串不以fur开头", failure.ErrorMessage);
