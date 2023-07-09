@@ -94,6 +94,9 @@
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.IDCardNumberAttribute">
             <summary>
             身份证号验证特性
@@ -200,6 +203,9 @@
         <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.StringContainsAttribute">
             <summary>
             包含特定字符串的验证特性
@@ -223,6 +229,9 @@
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.StrongPasswordAttribute">

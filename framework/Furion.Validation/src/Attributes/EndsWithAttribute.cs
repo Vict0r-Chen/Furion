@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using System.Globalization;
+
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
@@ -48,5 +50,11 @@ public class EndsWithAttribute : ValidationAttribute
     public override bool IsValid(object? value)
     {
         return new EndsWithValidator(Value).IsValid(value);
+    }
+
+    /// <inheritdoc />
+    public override string FormatErrorMessage(string name)
+    {
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, Value, name);
     }
 }
