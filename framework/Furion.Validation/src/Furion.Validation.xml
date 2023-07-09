@@ -190,66 +190,66 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_5">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
+        <member name="T:System.Text.RegularExpressions.Generated.StandardRegex_5">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the StandardRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Regex_5.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.StandardRegex_5.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_5.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_5.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_5.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.StandardRegex_5.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_5.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_5.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_5.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.StandardRegex_5.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_5.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_5.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_5.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_5.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_5.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_5.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.StandardRegex_6">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the StandardRegex method.</summary>
+        <member name="T:System.Text.RegularExpressions.Generated.Regex_6">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.StandardRegex_6.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.Regex_6.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_6.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_6.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.StandardRegex_6.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.Regex_6.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_6.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_6.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.StandardRegex_6.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.Regex_6.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_6.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_6.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_6.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_6.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.StandardRegex_6.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.Regex_6.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
@@ -478,162 +478,66 @@
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_14">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Regex_14.Instance">
-            <summary>Cached, thread-safe singleton instance.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_14.#ctor">
-            <summary>Initializes the instance.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_14.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_14.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_14.RunnerFactory.Runner">
-            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_14.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_14.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if a possible match was found; false if no more matches are possible.</returns>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_14.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_15">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Regex_15.Instance">
-            <summary>Cached, thread-safe singleton instance.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_15.#ctor">
-            <summary>Initializes the instance.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_15.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_15.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_15.RunnerFactory.Runner">
-            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_15.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_15.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if a possible match was found; false if no more matches are possible.</returns>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_15.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_16">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Regex_16.Instance">
-            <summary>Cached, thread-safe singleton instance.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_16.#ctor">
-            <summary>Initializes the instance.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_16.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_16.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Regex_16.RunnerFactory.Runner">
-            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_16.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_16.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if a possible match was found; false if no more matches are possible.</returns>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Regex_16.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_17">
+        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_14">
             <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the PlaceholderRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_17.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.PlaceholderRegex_14.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_18">
+        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_15">
             <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the SpacesRegex method.</summary>
         </member>
-        <member name="F:System.Text.RegularExpressions.Generated.SpacesRegex_18.Instance">
+        <member name="F:System.Text.RegularExpressions.Generated.SpacesRegex_15.Instance">
             <summary>Cached, thread-safe singleton instance.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.#ctor">
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.#ctor">
             <summary>Initializes the instance.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory">
+        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory">
             <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.CreateInstance">
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.CreateInstance">
             <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
         </member>
-        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner">
+        <member name="T:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner">
             <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
             <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
             <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if a possible match was found; false if no more matches are possible.</returns>
         </member>
-        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_18.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+        <member name="M:System.Text.RegularExpressions.Generated.SpacesRegex_15.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
             <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
             <param name="inputSpan">The text being scanned by the regular expression.</param>
             <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
@@ -658,9 +562,6 @@
         </member>
         <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPush(System.Int32[]@,System.Int32@,System.Int32,System.Int32)">
             <summary>Pushes 2 values onto the backtracking stack.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.Utilities.StackPush(System.Int32[]@,System.Int32@,System.Int32,System.Int32,System.Int32)">
-            <summary>Pushes 3 values onto the backtracking stack.</summary>
         </member>
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiExceptWhiteSpace">
             <summary>Supports searching for characters in or not in "\0\u0001\u0002\u0003\u0004\u0005\u0006\a\b\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f!\"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u007f".</summary>
@@ -738,11 +639,6 @@
               查找类似 The field {0} is not a valid bank card number. 的本地化字符串。
             </summary>
         </member>
-        <member name="P:Furion.Validation.Resources.Strings.Base64Validator_Invalid">
-            <summary>
-              查找类似 The field {0} is not a valid base64 format. 的本地化字符串。
-            </summary>
-        </member>
         <member name="P:Furion.Validation.Resources.Strings.ChineseNameValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid Chinese name. 的本地化字符串。
@@ -773,11 +669,6 @@
               查找类似 The field {0} is not a valid domain format. 的本地化字符串。
             </summary>
         </member>
-        <member name="P:Furion.Validation.Resources.Strings.EmailValidator_Invalid">
-            <summary>
-              查找类似 The field {0} is not a valid email format. 的本地化字符串。
-            </summary>
-        </member>
         <member name="P:Furion.Validation.Resources.Strings.EndsWithValidator_Invalid">
             <summary>
               查找类似 The field {1} is not end with the string {0}. 的本地化字符串。
@@ -786,21 +677,6 @@
         <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
             <summary>
               查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.Resources.Strings.LengthValidator_Invalid">
-            <summary>
-              查找类似 The field {2} must be a string or collection type with a minimum length of {0} and maximum length of {1}. 的本地化字符串。
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.Resources.Strings.MaxLengthValidator">
-            <summary>
-              查找类似 The field {1} must be a string or array type with a maximum length of {0}. 的本地化字符串。
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.Resources.Strings.MinLengthValidator">
-            <summary>
-              查找类似 The field {1} must be a string or array type with a minimum length of {0}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.NotEmptyValidator_Invalid">
@@ -821,11 +697,6 @@
         <member name="P:Furion.Validation.Resources.Strings.PostalCodeValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid postal code format. 的本地化字符串。
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.Resources.Strings.RequiredValidator_Invalid">
-            <summary>
-              查找类似 The {0} field is required. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.SingleValidator_Invalid">
@@ -851,11 +722,6 @@
         <member name="P:Furion.Validation.Resources.Strings.TelephoneValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid telephone format. 的本地化字符串。
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.Resources.Strings.UrlValidator_Invalid">
-            <summary>
-              查找类似 The field {0} is not a valid url format. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.UserNameValidator_Invalid">
@@ -923,54 +789,6 @@
             ○ Match if at the beginning of the string.<br/>
             ○ Match a character in the set [1-9].<br/>
             ○ Match a Unicode digit atomically at least 9 and at most 29 times.<br/>
-            ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
-        </member>
-        <member name="T:Furion.Validation.Base64Validator">
-            <summary>
-            Base64 字符串验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.Base64Validator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.Base64Validator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.Base64Validator.Regex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ Match a whitespace character atomically any number of times.<br/>
-            ○ Match a character in the set [Dd].<br/>
-            ○ Match a character in the set [Aa].<br/>
-            ○ Match a character in the set [Tt].<br/>
-            ○ Match a character in the set [Aa].<br/>
-            ○ Match ':'.<br/>
-            ○ Optional (greedy).<br/>
-                ○ Match a character in the set [A-Za-z\u212A] atomically at least once.<br/>
-                ○ Match '/'.<br/>
-                ○ Match a character in the set [+-.0-9A-Za-z\u212A] greedily at least once.<br/>
-                ○ Optional (greedy).<br/>
-                    ○ Match ';'.<br/>
-                    ○ Match a character in the set [-A-Za-z\u212A] atomically at least once.<br/>
-                    ○ Match '='.<br/>
-                    ○ Match a character in the set [-0-9A-Za-z\u212A] greedily at least once.<br/>
-            ○ Optional (greedy).<br/>
-                ○ Match ';'.<br/>
-                ○ Match a character in the set [Bb].<br/>
-                ○ Match a character in the set [Aa].<br/>
-                ○ Match a character in the set [Ss].<br/>
-                ○ Match a character in the set [Ee].<br/>
-                ○ Match the string "64".<br/>
-            ○ Match ','.<br/>
-            ○ 1st capture group.<br/>
-                ○ Match a character in the set [!$-;=?-Z_a-z~\u212A\s] lazily any number of times.<br/>
-            ○ Match a whitespace character greedily any number of times.<br/>
             ○ Match if at the end of the string or if before an ending newline.<br/>
             </code>
             </remarks>
@@ -1353,59 +1171,6 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.EmailValidator">
-            <summary>
-            电子邮箱验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.EmailValidator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.EmailValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.EmailValidator.Regex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ 1st capture group.<br/>
-                ○ Match with 2 alternative expressions.<br/>
-                    ○ 2nd capture group.<br/>
-                        ○ Match a character in the set [^"(),.:-&lt;&gt;@[-]\s] greedily at least once.<br/>
-                        ○ Loop greedily any number of times.<br/>
-                            ○ 3rd capture group.<br/>
-                                ○ Match '.'.<br/>
-                                ○ Match a character in the set [^"(),.:-&lt;&gt;@[-]\s] atomically at least once.<br/>
-                    ○ 4th capture group.<br/>
-                        ○ Match '"'.<br/>
-                        ○ Match a character other than '\n' greedily at least once.<br/>
-                        ○ Match '"'.<br/>
-            ○ Match '@'.<br/>
-            ○ 5th capture group.<br/>
-                ○ Match with 2 alternative expressions.<br/>
-                    ○ 6th capture group.<br/>
-                        ○ Match '['.<br/>
-                        ○ Match '0' through '9' atomically at least 1 and at most 3 times.<br/>
-                        ○ Match '.'.<br/>
-                        ○ Match '0' through '9' atomically at least 1 and at most 3 times.<br/>
-                        ○ Match '.'.<br/>
-                        ○ Match '0' through '9' atomically at least 1 and at most 3 times.<br/>
-                        ○ Match '.'.<br/>
-                        ○ Match '0' through '9' atomically at least 1 and at most 3 times.<br/>
-                        ○ Match ']'.<br/>
-                    ○ 7th capture group.<br/>
-                        ○ Loop greedily at least once.<br/>
-                            ○ 8th capture group.<br/>
-                                ○ Match a character in the set [-0-9A-Za-z] atomically at least once.<br/>
-                                ○ Match '.'.<br/>
-                        ○ Match a character in the set [A-Za-z] atomically at least twice.<br/>
-            ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
-        </member>
         <member name="T:Furion.Validation.EndsWithValidator">
             <summary>
             以特定字符串结尾的验证器
@@ -1613,100 +1378,6 @@
             </code>
             </remarks>
         </member>
-        <member name="T:Furion.Validation.LengthValidator">
-            <summary>
-            长度验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.LengthValidator.#ctor(System.Int32,System.Int32)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="minimumLength">最小长度</param>
-            <param name="maximumLength">最大长度</param>
-        </member>
-        <member name="P:Furion.Validation.LengthValidator.MinimumLength">
-            <summary>
-            最小长度
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.LengthValidator.MaximumLength">
-            <summary>
-            最大长度
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.LengthValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.LengthValidator.GetDefaultMemberNames">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.LengthValidator.EnsureLegalData(System.Int32,System.Int32)">
-            <summary>
-            合法数据检查
-            </summary>
-            <param name="minimumLength">最小长度</param>
-            <param name="maximumLength">最大长度</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="T:Furion.Validation.MaxLengthValidator">
-            <summary>
-            最大长度验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.MaxLengthValidator.#ctor(System.Int32)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="length">长度</param>
-        </member>
-        <member name="P:Furion.Validation.MaxLengthValidator.Length">
-            <summary>
-            长度
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.MaxLengthValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.MaxLengthValidator.GetDefaultMemberNames">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.MaxLengthValidator.EnsureLegalData(System.Int32)">
-            <summary>
-            合法数据检查
-            </summary>
-            <param name="length">长度</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="T:Furion.Validation.MinLengthValidator">
-            <summary>
-            最小长度验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.MinLengthValidator.#ctor(System.Int32)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="length">长度</param>
-        </member>
-        <member name="P:Furion.Validation.MinLengthValidator.Length">
-            <summary>
-            长度
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.MinLengthValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.MinLengthValidator.GetDefaultMemberNames">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.MinLengthValidator.EnsureLegalData(System.Int32)">
-            <summary>
-            合法数据检查
-            </summary>
-            <param name="length">长度</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
         <member name="T:Furion.Validation.NotEmptyValidator">
             <summary>
             非空验证器
@@ -1900,24 +1571,6 @@
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="T:Furion.Validation.RequiredValidator">
-            <summary>
-            必填验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.RequiredValidator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.RequiredValidator.AllowEmptyStrings">
-            <summary>
-            是否允许空字符串
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.RequiredValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.Validation.SingleValidator">
             <summary>
             单个值验证器
@@ -2068,61 +1721,6 @@
                 ○ Match '-'.<br/>
                 ○ Match a Unicode digit atomically at least once.<br/>
             ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
-        </member>
-        <member name="T:Furion.Validation.UrlValidator">
-            <summary>
-            网址验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.UrlValidator.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.UrlValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.UrlValidator.Regex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ Optional (greedy).<br/>
-                ○ 1st capture group.<br/>
-                    ○ 2nd capture group.<br/>
-                        ○ 3rd capture group.<br/>
-                            ○ Match with 2 alternative expressions.<br/>
-                                ○ Match the string "ht".<br/>
-                                ○ Match 'f'.<br/>
-                        ○ Match the string "tp".<br/>
-                        ○ Match 's' atomically, optionally.<br/>
-                    ○ Match the string "://".<br/>
-            ○ 4th capture group.<br/>
-                ○ Match with 2 alternative expressions.<br/>
-                    ○ 5th capture group.<br/>
-                        ○ Match a Unicode digit atomically at least 1 and at most 3 times.<br/>
-                        ○ Match '.'.<br/>
-                        ○ Match a Unicode digit atomically at least 1 and at most 3 times.<br/>
-                        ○ Match '.'.<br/>
-                        ○ Match a Unicode digit atomically at least 1 and at most 3 times.<br/>
-                        ○ Match '.'.<br/>
-                        ○ Match a Unicode digit greedily at least 1 and at most 3 times.<br/>
-                    ○ Match a sequence of expressions.<br/>
-                        ○ Loop greedily at least once.<br/>
-                            ○ 6th capture group.<br/>
-                                ○ Match a character in the set [^!#-&amp;*-.?@^\s].<br/>
-                                ○ Optional (greedy).<br/>
-                                    ○ 7th capture group.<br/>
-                                        ○ Match a character in the set [^!#-&amp;*.?@^\s] greedily at least 1 and at most 64 times.<br/>
-                                ○ Match '.'.<br/>
-                        ○ Match a character in the set [a-z] greedily at least 2 and at most 6 times.<br/>
-            ○ Optional (greedy).<br/>
-                ○ 8th capture group.<br/>
-                    ○ Match ':'.<br/>
-                    ○ Match a Unicode digit atomically at least 1 and at most 5 times.<br/>
-            ○ Match '/' atomically, optionally.<br/>
             </code>
             </remarks>
         </member>

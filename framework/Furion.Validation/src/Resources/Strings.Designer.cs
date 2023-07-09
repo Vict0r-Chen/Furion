@@ -79,15 +79,6 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid base64 format. 的本地化字符串。
-        /// </summary>
-        internal static string Base64Validator_Invalid {
-            get {
-                return ResourceManager.GetString("Base64Validator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The field {0} is not a valid Chinese name. 的本地化字符串。
         /// </summary>
         internal static string ChineseNameValidator_Invalid {
@@ -142,15 +133,6 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid email format. 的本地化字符串。
-        /// </summary>
-        internal static string EmailValidator_Invalid {
-            get {
-                return ResourceManager.GetString("EmailValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The field {1} is not end with the string {0}. 的本地化字符串。
         /// </summary>
         internal static string EndsWithValidator_Invalid {
@@ -165,33 +147,6 @@ namespace Furion.Validation.Resources {
         internal static string IDCardNumberValidator_invalid {
             get {
                 return ResourceManager.GetString("IDCardNumberValidator_invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {2} must be a string or collection type with a minimum length of {0} and maximum length of {1}. 的本地化字符串。
-        /// </summary>
-        internal static string LengthValidator_Invalid {
-            get {
-                return ResourceManager.GetString("LengthValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {1} must be a string or array type with a maximum length of {0}. 的本地化字符串。
-        /// </summary>
-        internal static string MaxLengthValidator {
-            get {
-                return ResourceManager.GetString("MaxLengthValidator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {1} must be a string or array type with a minimum length of {0}. 的本地化字符串。
-        /// </summary>
-        internal static string MinLengthValidator {
-            get {
-                return ResourceManager.GetString("MinLengthValidator", resourceCulture);
             }
         }
         
@@ -228,15 +183,6 @@ namespace Furion.Validation.Resources {
         internal static string PostalCodeValidator_Invalid {
             get {
                 return ResourceManager.GetString("PostalCodeValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The {0} field is required. 的本地化字符串。
-        /// </summary>
-        internal static string RequiredValidator_Invalid {
-            get {
-                return ResourceManager.GetString("RequiredValidator_Invalid", resourceCulture);
             }
         }
         
@@ -282,15 +228,6 @@ namespace Furion.Validation.Resources {
         internal static string TelephoneValidator_Invalid {
             get {
                 return ResourceManager.GetString("TelephoneValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is not a valid url format. 的本地化字符串。
-        /// </summary>
-        internal static string UrlValidator_Invalid {
-            get {
-                return ResourceManager.GetString("UrlValidator_Invalid", resourceCulture);
             }
         }
         
