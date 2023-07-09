@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 属性注解（特性）验证器
 /// </summary>
 /// <typeparam name="TInstance">对象类型</typeparam>
-public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
+public partial class PropertyAnnotationValidator<TInstance> : PropertyAnnotationValidator
     where TInstance : class
 {
     /// <summary>
@@ -27,27 +27,28 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// <param name="instance">对象实例</param>
     /// <param name="propertyExpression">属性表达式</param>
     public PropertyAnnotationValidator(TInstance instance, Expression<Func<TInstance, object?>> propertyExpression)
-        : this(instance, GetPropertyName(propertyExpression))
+        : base(instance, propertyExpression?.GetPropertyName()!)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
     }
+}
 
+/// <summary>
+/// 属性注解（特性）验证器
+/// </summary>
+public partial class PropertyAnnotationValidator : ValidatorBase
+{
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="instance">对象实例</param>
     /// <param name="propertyName">属性名称</param>
-    public PropertyAnnotationValidator(TInstance instance, string propertyName)
+    public PropertyAnnotationValidator(object instance, string propertyName)
         : base()
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
-
-        // 属性定义检查
-        if (!typeof(TInstance).GetProperties().Any(p => p.Name == propertyName))
-        {
-            throw new ArgumentException($"The definition of the `{propertyName}` attribute cannot be found in Type {typeof(TInstance).Name}.", nameof(propertyName));
-        }
+        // 合法数据检查
+        EnsureLegalData(instance, propertyName);
 
         Instance = instance;
         PropertyName = propertyName;
@@ -56,7 +57,7 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     /// <summary>
     /// 对象实例
     /// </summary>
-    public TInstance Instance { get; set; }
+    public object Instance { get; set; }
 
     /// <summary>
     /// 属性名称
@@ -100,31 +101,22 @@ public partial class PropertyAnnotationValidator<TInstance> : ValidatorBase
     }
 
     /// <summary>
-    /// 解析表达式属性名称
+    /// 合法数据检查
     /// </summary>
-    /// <param name="propertyExpression">属性表达式</param>
-    /// <returns><see cref="string"/></returns>
+    /// <param name="instance">对象实例</param>
+    /// <param name="propertyName">属性名称</param>
     /// <exception cref="ArgumentException"></exception>
-    internal static string GetPropertyName(Expression<Func<TInstance, object?>> propertyExpression)
+    internal static void EnsureLegalData(object instance, string propertyName)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
+        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
 
-        // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
-        if (propertyExpression.Body is MemberExpression memberExpression)
+        // 属性定义检查
+        if (!instance.GetType().GetProperties()
+            .Any(p => p.Name == propertyName))
         {
-            // 获取 MemberExpression 的 Member 属性，返回属性的名称
-            return memberExpression.Member.Name;
+            throw new ArgumentException($"The definition of the `{propertyName}` attribute cannot be found in Type {instance.GetType().Name}.", nameof(propertyName));
         }
-        // 如果主体是 UnaryExpression 类型，则继续解析
-        else if (propertyExpression.Body is UnaryExpression unaryExpression
-            && unaryExpression.Operand is MemberExpression nestedMemberExpression)
-        {
-            // 获取嵌套的 MemberExpression 的 Member 属性，返回属性的名称
-            return nestedMemberExpression.Member.Name;
-        }
-
-        // 如果无法解析属性名称，抛出 ArgumentException 异常
-        throw new ArgumentException($"The property name for type {typeof(TInstance).Name} cannot be resolved.");
     }
 }

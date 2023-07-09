@@ -240,6 +240,20 @@
             <param name="exported">类型导出设置</param>
             <returns><see cref="T:System.Type"/>[]</returns>
         </member>
+        <member name="T:System.Linq.Expressions.ExpressionExtensions">
+            <summary>
+            <see cref="T:System.Linq.Expressions.Expression"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.Linq.Expressions.ExpressionExtensions.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            解析表达式属性名称
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="propertySelector">属性选择器</param>
+            <returns><see cref="T:System.String"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:System.Collections.Generic.ICollectionExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.ICollection`1"/> 拓展类

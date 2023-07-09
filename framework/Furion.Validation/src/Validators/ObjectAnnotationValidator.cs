@@ -15,25 +15,9 @@
 namespace Furion.Validation;
 
 /// <summary>
-///  对象注解（特性）验证器
-/// </summary>
-public partial class ObjectAnnotationValidator : ObjectAnnotationValidator<object>
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ObjectAnnotationValidator()
-        : base()
-    {
-    }
-}
-
-/// <summary>
 /// 对象注解（特性）验证器
 /// </summary>
-/// <typeparam name="T">泛型类型</typeparam>
-public partial class ObjectAnnotationValidator<T> : ValidatorBase
-    where T : class
+public partial class ObjectAnnotationValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数

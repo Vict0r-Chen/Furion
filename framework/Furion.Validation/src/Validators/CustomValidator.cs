@@ -17,29 +17,31 @@ namespace Furion.Validation;
 /// <summary>
 /// 自定义验证委托验证器
 /// </summary>
-public partial class CustomValidator : CustomValidator<object>
-{
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="predicate">验证逻辑委托</param>
-    public CustomValidator(Func<object?, bool> predicate)
-        : base(predicate)
-    {
-    }
-}
-
-/// <summary>
-/// 自定义验证委托验证器
-/// </summary>
 /// <typeparam name="T">泛型类型</typeparam>
-public partial class CustomValidator<T> : ValidatorBase
+public partial class CustomValidator<T> : CustomValidator
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="predicate">验证委托</param>
     public CustomValidator(Func<T?, bool> predicate)
+        : base((obj) => predicate((T?)obj))
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+    }
+}
+
+/// <summary>
+/// 自定义验证委托验证器
+/// </summary>
+public partial class CustomValidator : ValidatorBase
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="predicate">验证委托</param>
+    public CustomValidator(Func<object?, bool> predicate)
         : base(() => Strings.CustomValidator_Invalid)
     {
         // 空检查
@@ -51,7 +53,7 @@ public partial class CustomValidator<T> : ValidatorBase
     /// <summary>
     /// 验证委托
     /// </summary>
-    public Func<T?, bool> Predicate { get; set; }
+    public Func<object?, bool> Predicate { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -60,7 +62,7 @@ public partial class CustomValidator<T> : ValidatorBase
         ArgumentNullException.ThrowIfNull(Predicate, nameof(Predicate));
 
         return Predicate(value is null
-            ? default
-            : (T)value);
+            ? null
+            : value);
     }
 }
