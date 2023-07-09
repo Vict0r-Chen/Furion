@@ -80,4 +80,7 @@ public class ObjectModel
 
     [Age]
     public int Age { get; set; }
+
+    [MaxLength(200)]
+    public string? Address { get; set; }
 }

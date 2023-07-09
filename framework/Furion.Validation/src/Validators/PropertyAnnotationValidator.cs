@@ -17,17 +17,16 @@ namespace Furion.Validation;
 /// <summary>
 /// 属性注解（特性）验证器
 /// </summary>
-/// <typeparam name="TInstance">对象类型</typeparam>
-public partial class PropertyAnnotationValidator<TInstance> : PropertyAnnotationValidator
-    where TInstance : class
+/// <typeparam name="T">对象类型</typeparam>
+public partial class PropertyAnnotationValidator<T> : PropertyAnnotationValidator
+    where T : class
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="instance">对象实例</param>
     /// <param name="propertyExpression">属性表达式</param>
-    public PropertyAnnotationValidator(TInstance instance, Expression<Func<TInstance, object?>> propertyExpression)
-        : base(instance, propertyExpression?.GetPropertyName()!)
+    public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
+        : base(propertyExpression?.GetPropertyName()!)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
@@ -42,22 +41,15 @@ public partial class PropertyAnnotationValidator : ValidatorBase
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="instance">对象实例</param>
     /// <param name="propertyName">属性名称</param>
-    public PropertyAnnotationValidator(object instance, string propertyName)
+    public PropertyAnnotationValidator(string propertyName)
         : base()
     {
-        // 合法数据检查
-        EnsureLegalData(instance, propertyName);
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
 
-        Instance = instance;
         PropertyName = propertyName;
     }
-
-    /// <summary>
-    /// 对象实例
-    /// </summary>
-    public object Instance { get; set; }
 
     /// <summary>
     /// 属性名称
@@ -73,7 +65,7 @@ public partial class PropertyAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, IEnumerable<string>? memberNames = null)
     {
-        if (!TryValidate(value, out var validationResults, memberNames))
+        if (!TryValidate(value, out var validationResults))
         {
             return validationResults;
         }
@@ -86,37 +78,27 @@ public partial class PropertyAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="value">验证的值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
-    /// <param name="memberNames">成员名称集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, IEnumerable<string>? memberNames = null)
+    internal bool TryValidate(object? value, out List<ValidationResult> validationResults)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(value, nameof(value));
+        ArgumentException.ThrowIfNullOrWhiteSpace(PropertyName, nameof(PropertyName));
+
+        // 根据属性名称查找属性对象
+        var propertyInfo = value.GetType().GetProperty(PropertyName);
+        ArgumentNullException.ThrowIfNull(propertyInfo, nameof(propertyInfo));
+
+        // 获取属性值
+        var propertyValue = propertyInfo.GetValue(value);
+
         // 调用 Validator 静态类验证
-        var validationContext = new ValidationContext(Instance)
+        var validationContext = new ValidationContext(value)
         {
-            MemberName = memberNames?.FirstOrDefault() ?? PropertyName
+            MemberName = PropertyName
         };
         validationResults = new List<ValidationResult>();
 
-        return Validator.TryValidateProperty(value, validationContext, validationResults);
-    }
-
-    /// <summary>
-    /// 合法数据检查
-    /// </summary>
-    /// <param name="instance">对象实例</param>
-    /// <param name="propertyName">属性名称</param>
-    /// <exception cref="ArgumentException"></exception>
-    internal static void EnsureLegalData(object instance, string propertyName)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
-
-        // 属性定义检查
-        if (!instance.GetType().GetProperties()
-            .Any(p => p.Name == propertyName))
-        {
-            throw new ArgumentException($"The definition of the `{propertyName}` attribute cannot be found in Type {instance.GetType().Name}.", nameof(propertyName));
-        }
+        return Validator.TryValidateProperty(propertyValue, validationContext, validationResults);
     }
 }

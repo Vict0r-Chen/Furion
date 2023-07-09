@@ -1862,13 +1862,12 @@
             <summary>
             属性注解（特性）验证器
             </summary>
-            <typeparam name="TInstance">对象类型</typeparam>
+            <typeparam name="T">对象类型</typeparam>
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.#ctor(`0,System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
             <summary>
             构造函数
             </summary>
-            <param name="instance">对象实例</param>
             <param name="propertyExpression">属性表达式</param>
         </member>
         <member name="T:Furion.Validation.PropertyAnnotationValidator">
@@ -1876,17 +1875,11 @@
             属性注解（特性）验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator.#ctor(System.Object,System.String)">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="instance">对象实例</param>
             <param name="propertyName">属性名称</param>
-        </member>
-        <member name="P:Furion.Validation.PropertyAnnotationValidator.Instance">
-            <summary>
-            对象实例
-            </summary>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator.PropertyName">
             <summary>
@@ -1899,22 +1892,13 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator.GetValidationResults(System.Object,System.Collections.Generic.IEnumerable{System.String})">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@,System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             验证逻辑
             </summary>
             <param name="value">验证的值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
-            <param name="memberNames">成员名称集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator.EnsureLegalData(System.Object,System.String)">
-            <summary>
-            合法数据检查
-            </summary>
-            <param name="instance">对象实例</param>
-            <param name="propertyName">属性名称</param>
-            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:Furion.Validation.RequiredValidator">
             <summary>
