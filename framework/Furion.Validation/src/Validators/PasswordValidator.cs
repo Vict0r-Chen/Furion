@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 密码验证器
 /// </summary>
 /// <remarks>
-/// 密码长度为6-18位，包含至少一个字母和一个数字
+/// 密码长度为 6-18 位，包含至少一个字母和一个数字
 /// </remarks>
 public partial class PasswordValidator : ValidatorBase
 {

@@ -15,7 +15,7 @@
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 年龄验证特性
+/// 年龄（0-120）验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class AgeAttribute : ValidationAttribute

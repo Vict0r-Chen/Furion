@@ -12,44 +12,25 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 强类型密码验证器
+/// 非空验证特性
 /// </summary>
-/// <remarks>
-/// 密码长度最少 6 位，包括至少 1 个大写字母，1 个小写字母，1 个数字，1 个特殊字符
-/// </remarks>
-public partial class StrongPasswordValidator : ValidatorBase
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+public class NotEmptyAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public StrongPasswordValidator()
-        : base(() => Strings.StrongPasswordValidator_Invalid)
+    public NotEmptyAttribute()
+        : base(() => Strings.NotEmptyValidator_Invalid)
     {
     }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
-        {
-            return true;
-        }
-
-        if (value is string text)
-        {
-            return Regex().IsMatch(text);
-        }
-
-        return false;
+        return new NotEmptyValidator().IsValid(value);
     }
-
-    /// <summary>
-    /// 强类型密码正则表达式
-    /// </summary>
-    /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
-    [GeneratedRegex(@"^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$")]
-    internal static partial Regex Regex();
 }

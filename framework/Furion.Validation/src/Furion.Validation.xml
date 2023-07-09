@@ -6,7 +6,7 @@
     <members>
         <member name="T:System.ComponentModel.DataAnnotations.AgeAttribute">
             <summary>
-            年龄验证特性
+            年龄（0-120）验证特性
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.AgeAttribute.#ctor">
@@ -15,6 +15,32 @@
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.AgeAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.ChineseAttribute">
+            <summary>
+            中文/汉字验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ChineseAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ChineseAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.ChineseNameAttribute">
+            <summary>
+            中文姓名验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ChineseNameAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ChineseNameAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.ColorValueAttribute">
@@ -28,6 +54,220 @@
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.DomainAttribute">
+            <summary>
+            域名验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DomainAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DomainAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.EndsWithAttribute">
+            <summary>
+            以特定字符串结尾的验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.#ctor(System.Char)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.EndsWithAttribute.Value">
+            <summary>
+            检索值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.IDCardNumberAttribute">
+            <summary>
+            身份证号验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.IDCardNumberAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.IDCardNumberAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.NotEmptyAttribute">
+            <summary>
+            非空验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.NotEmptyAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.NotEmptyAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.PasswordAttribute">
+            <summary>
+            密码验证特性
+            </summary>
+            <remarks>
+            密码长度为 6-18 位，包含至少一个字母和一个数字
+            </remarks>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.PasswordAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.PasswordAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.PhoneNumberAttribute">
+            <summary>
+            手机号验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.PhoneNumberAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.PhoneNumberAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.PostalCodeAttribute">
+            <summary>
+            邮政编码验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.PostalCodeAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.PostalCodeAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.SingleAttribute">
+            <summary>
+            单个值验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.SingleAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.SingleAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.StartsWithAttribute">
+            <summary>
+            以特定字符串开头的验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.#ctor(System.Char)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.StartsWithAttribute.Value">
+            <summary>
+            检索值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.StringContainsAttribute">
+            <summary>
+            包含特定字符串的验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.#ctor(System.Char)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">检索值</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.StringContainsAttribute.Value">
+            <summary>
+            检索值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.StrongPasswordAttribute">
+            <summary>
+            强类型密码验证特性
+            </summary>
+            <remarks>
+            密码长度最少 6 位，包括至少 1 个大写字母，1 个小写字母，1 个数字，1 个特殊字符
+            </remarks>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StrongPasswordAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.StrongPasswordAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.TelephoneAttribute">
+            <summary>
+            座机（电话）验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.TelephoneAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.TelephoneAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.UserNameAttribute">
+            <summary>
+            用户名验证特性
+            </summary>
+            <remarks>
+            长度 4-16 位，仅支持字母，数字，下划线，减号组合
+            </remarks>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.UserNameAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.UserNameAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:System.Text.RegularExpressions.Generated.Regex_0">
@@ -1420,7 +1660,7 @@
             密码验证器
             </summary>
             <remarks>
-            密码长度为6-18位，包含至少一个字母和一个数字
+            密码长度为 6-18 位，包含至少一个字母和一个数字
             </remarks>
         </member>
         <member name="M:Furion.Validation.PasswordValidator.#ctor">
@@ -1651,7 +1891,7 @@
             强类型密码验证器
             </summary>
             <remarks>
-            密码长度最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
+            密码长度最少 6 位，包括至少 1 个大写字母，1 个小写字母，1 个数字，1 个特殊字符
             </remarks>
         </member>
         <member name="M:Furion.Validation.StrongPasswordValidator.#ctor">
