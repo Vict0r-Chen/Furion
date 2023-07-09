@@ -257,6 +257,18 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加委托对象验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Predicate(Func<object?, bool> predicate)
+    {
+        Validators.Add(new PredicateValidator(predicate));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加自定义验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
@@ -380,7 +392,7 @@ public sealed class PropertyValidator<T>
         // 获取属性值
         var propertyValue = GetValue(instance);
 
-        return Validators.All(validator => validator.IsValid(validator.IsSameAs(typeof(CustomValidator)) ? instance : propertyValue));
+        return Validators.All(validator => validator.IsValid(GetValidationObject(validator, instance, propertyValue)));
     }
 
     /// <summary>
@@ -397,7 +409,7 @@ public sealed class PropertyValidator<T>
         var propertyValue = GetValue(instance);
 
         // 获取所有验证器验证结果集合
-        var validatorResults = Validators.SelectMany(validator => validator.GetValidationResults(validator.IsSameAs(typeof(CustomValidator)) ? instance : propertyValue, PropertyName) ?? Enumerable.Empty<ValidationResult>())
+        var validatorResults = Validators.SelectMany(validator => validator.GetValidationResults(GetValidationObject(validator, instance, propertyValue), PropertyName) ?? Enumerable.Empty<ValidationResult>())
                                                             .ToList();
         if (validatorResults.Count == 0)
         {
@@ -431,6 +443,24 @@ public sealed class PropertyValidator<T>
 
         // 返回属性值
         return propertyInfo.GetValue(instance);
+    }
+
+    /// <summary>
+    /// 获取验证对象
+    /// </summary>
+    /// <param name="validator"><see cref="ValidatorBase"/></param>
+    /// <param name="instance">对象实例</param>
+    /// <param name="propertyValue">属性值</param>
+    /// <returns><see cref="object"/></returns>
+    internal static object? GetValidationObject(ValidatorBase validator, T instance, object? propertyValue)
+    {
+        // 如果是自定义验证器则返回对象实例
+        if (validator.IsSameAs(typeof(CustomValidator)))
+        {
+            return instance;
+        }
+
+        return propertyValue;
     }
 
     /// <summary>
