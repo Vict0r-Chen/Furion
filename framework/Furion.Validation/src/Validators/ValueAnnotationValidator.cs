@@ -23,8 +23,8 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
-    public ValueAnnotationValidator(IEnumerable<ValidationAttribute> validationAttributes)
-        : this(validationAttributes?.ToArray()!)
+    public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
+        : this((IEnumerable<ValidationAttribute>)validationAttributes)
     {
     }
 
@@ -32,19 +32,19 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
-    public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
+    public ValueAnnotationValidator(IEnumerable<ValidationAttribute> validationAttributes)
         : base()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validationAttributes, nameof(validationAttributes));
 
-        ValidationAttributes = validationAttributes;
+        Attributes = validationAttributes.ToList();
     }
 
     /// <summary>
     /// 验证特性集合
     /// </summary>
-    public ValidationAttribute[] ValidationAttributes { get; init; }
+    public IList<ValidationAttribute> Attributes { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -73,7 +73,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     internal bool TryValidate(object? value, out List<ValidationResult> validationResults, IEnumerable<string>? memberNames = null)
     {
         // 如果定义了 [Required] 特性则优先验证
-        var requiredAttribute = ValidationAttributes.OfType<RequiredAttribute>().FirstOrDefault();
+        var requiredAttribute = Attributes.OfType<RequiredAttribute>().FirstOrDefault();
         if (requiredAttribute is not null
             && value is null)
         {
@@ -94,10 +94,10 @@ public partial class ValueAnnotationValidator : ValidatorBase
         // 调用 Validator 静态类验证
         var validationContext = new ValidationContext(value)
         {
-            MemberName = memberNames?.FirstOrDefault() ?? value.ToString()
+            MemberName = memberNames?.FirstOrDefault()
         };
         validationResults = new List<ValidationResult>();
 
-        return Validator.TryValidateValue(value, validationContext, validationResults, ValidationAttributes);
+        return Validator.TryValidateValue(value, validationContext, validationResults, Attributes);
     }
 }

@@ -78,6 +78,24 @@ public class PropertyAnnotationValidatorTests
     }
 
     [Fact]
+    public void IsValid_Throw()
+    {
+        var model = new ObjectModel
+        {
+            Id = 1,
+            Name = "furion",
+            Age = 31
+        };
+
+        var validator = new PropertyAnnotationValidator<ObjectModel>(u => u.Id)
+        {
+            PropertyName = "Name1"
+        };
+
+        Assert.Throws<ArgumentNullException>(() => validator.IsValid(model));
+    }
+
+    [Fact]
     public void GetValidationResults_Failure()
     {
         var model = new ObjectModel

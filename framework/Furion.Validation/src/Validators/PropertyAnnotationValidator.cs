@@ -28,8 +28,6 @@ public partial class PropertyAnnotationValidator<T> : PropertyAnnotationValidato
     public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
         : base(propertyExpression?.GetPropertyName()!)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(propertyExpression, nameof(propertyExpression));
     }
 }
 
