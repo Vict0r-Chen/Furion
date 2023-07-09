@@ -35,6 +35,11 @@ public sealed class Validator<T>
     }
 
     /// <summary>
+    /// 对象注解（特性）验证器
+    /// </summary>
+    internal ObjectAnnotationValidator? AnnotationValidator { get; private set; }
+
+    /// <summary>
     /// 创建类型验证器
     /// </summary>
     /// <param name="predicate">配置委托</param>
@@ -49,6 +54,18 @@ public sealed class Validator<T>
         predicate(validator);
 
         return validator;
+    }
+
+    /// <summary>
+    /// 创建类型注解（特性）验证器
+    /// </summary>
+    /// <returns><see cref="Validator{T}"/></returns>
+    public static Validator<T> Annotate()
+    {
+        return new Validator<T>
+        {
+            AnnotationValidator = new ObjectAnnotationValidator()
+        };
     }
 
     /// <summary>
@@ -71,6 +88,12 @@ public sealed class Validator<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
+        // 处理对象注解（特性）验证器
+        if (AnnotationValidator is not null)
+        {
+            return AnnotationValidator.IsValid(instance);
+        }
+
         return _propertyValidators.All(validator => validator.IsValid(instance));
     }
 
@@ -83,6 +106,12 @@ public sealed class Validator<T>
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 处理对象注解（特性）验证器
+        if (AnnotationValidator is not null)
+        {
+            return AnnotationValidator.GetValidationResults(instance, null!);
+        }
 
         // 获取所有验证器验证结果集合
         var validatorResults = _propertyValidators.SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>())

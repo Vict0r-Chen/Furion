@@ -357,6 +357,17 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 创建注解（特性）验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Annotate()
+    {
+        Validators.Add(new ObjectAnnotationValidator());
+
+        return this;
+    }
+
+    /// <summary>
     /// 检查值有效性
     /// </summary>
     /// <param name="instance">对象实例</param>

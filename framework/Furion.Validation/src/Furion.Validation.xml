@@ -1954,6 +1954,12 @@
             <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Annotate">
+            <summary>
+            创建注解（特性）验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`1.IsValid(`0)">
             <summary>
             检查值有效性
@@ -2189,11 +2195,22 @@
             构造函数
             </summary>
         </member>
+        <member name="P:Furion.Validation.Validator`1.AnnotationValidator">
+            <summary>
+            对象注解（特性）验证器
+            </summary>
+        </member>
         <member name="M:Furion.Validation.Validator`1.Rule(System.Action{Furion.Validation.Validator{`0}})">
             <summary>
             创建类型验证器
             </summary>
             <param name="predicate">配置委托</param>
+            <returns><see cref="T:Furion.Validation.Validator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.Validator`1.Annotate">
+            <summary>
+            创建类型注解（特性）验证器
+            </summary>
             <returns><see cref="T:Furion.Validation.Validator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.Validator`1.For(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
