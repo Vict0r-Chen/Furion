@@ -69,3 +69,15 @@ public class TestValidator<T> : ValidatorBase
         return ErrorMessageString;
     }
 }
+
+public class ObjectModel
+{
+    [Range(1, 10)]
+    public int Id { get; set; }
+
+    [Required, MinLength(3)]
+    public string? Name { get; set; }
+
+    [Age]
+    public int Age { get; set; }
+}
