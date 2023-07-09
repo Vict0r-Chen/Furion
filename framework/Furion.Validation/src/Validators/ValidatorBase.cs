@@ -123,7 +123,7 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 验证器类型是否一致
+    /// 检查类型是否一致
     /// </summary>
     /// <param name="validatorType">验证器类型</param>
     /// <returns><see cref="bool"/></returns>

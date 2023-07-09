@@ -17,71 +17,61 @@ namespace Furion.Validation;
 /// <summary>
 /// 属性验证器
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">对象类型</typeparam>
 public sealed class PropertyValidator<T>
     where T : class
 {
-    internal sealed class CustomValidator : ValidatorBase
-    {
-        internal CustomValidator(Func<T, bool> predicate)
-            : base()
-        {
-            Predicate = predicate;
-        }
-
-        internal Func<T, bool> Predicate { get; init; }
-
-        public override bool IsValid(object? instance)
-        {
-            ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-
-            return Predicate((T)instance);
-        }
-    }
-
+    /// <summary>
+    /// 验证器集合
+    /// </summary>
     internal readonly Validator<T> _validator;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="validator"><see cref="Validator{T}"/></param>
+    /// <param name="propertyExpression">属性选择器</param>
     internal PropertyValidator(Validator<T> validator, Expression<Func<T, object?>> propertyExpression)
     {
         Validators = new();
         PropertyName = propertyExpression.GetPropertyName();
-        _validator = validator;
 
-        _validator.AddProperty(this);
+        // 将当前属性验证器添加到类型验证器集合中
+        _validator = validator;
+        _validator.AddPropertyValidator(this);
     }
 
-    internal List<ValidatorBase> Validators { get; init; }
+    /// <summary>
+    /// 验证器集合
+    /// </summary>
+    public List<ValidatorBase> Validators { get; init; }
 
-    internal string PropertyName { get; init; }
+    /// <summary>
+    /// 属性名称
+    /// </summary>
+    public string PropertyName { get; init; }
 
+    /// <summary>
+    /// 错误消息访问器
+    /// </summary>
     internal Func<T, string>? ErrorMessageAccessor { get; private set; }
 
     /// <summary>
-    /// 创建规则
+    /// 设置错误消息
     /// </summary>
-    /// <param name="propertySelector"></param>
-    /// <returns></returns>
-    public PropertyValidator<T> ThenFor(Expression<Func<T, object?>> propertySelector)
-    {
-        return new PropertyValidator<T>(_validator, propertySelector);
-    }
-
-    /// <summary>
-    /// 设置消息
-    /// </summary>
-    /// <param name="errorMessage"></param>
+    /// <param name="errorMessage">错误消息</param>
     public void WithErrorMessage(string errorMessage)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(errorMessage, nameof(errorMessage));
 
-        ErrorMessageAccessor = (T instance) => errorMessage;
+        ErrorMessageAccessor = (_) => errorMessage;
     }
 
     /// <summary>
-    /// 设置消息
+    /// 设置错误消息
     /// </summary>
-    /// <param name="errorMessageAccessor"></param>
+    /// <param name="errorMessageAccessor">错误消息访问器</param>
     public void WithErrorMessage(Func<T, string> errorMessageAccessor)
     {
         // 空检查
@@ -91,9 +81,10 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
-    /// 非空
+    /// 添加必填验证器
     /// </summary>
-    /// <returns></returns>
+    /// <param name="allowEmptyStrings">是否允许空字符串</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> NotNull(bool allowEmptyStrings = false)
     {
         Validators.Add(new ValueAnnotationValidator(new RequiredAttribute
@@ -105,9 +96,9 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
-    /// 非空
+    /// 添加非空验证器
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> NotEmpty()
     {
         Validators.Add(new NotEmptyValidator());
@@ -116,76 +107,293 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
-    /// 自定义
+    /// 添加以特定字符串结尾的验证器
     /// </summary>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
+    /// <param name="value">检索值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> EndsWith(string value)
+    {
+        Validators.Add(new EndsWithValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串结尾的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> EndsWith(char value)
+    {
+        Validators.Add(new EndsWithValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串结尾的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <param name="comparison"><see cref="StringComparison"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> EndsWith(string value, StringComparison comparison)
+    {
+        Validators.Add(new EndsWithValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串结尾的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <param name="comparison"><see cref="StringComparison"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> EndsWith(char value, StringComparison comparison)
+    {
+        Validators.Add(new EndsWithValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串开头的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StartsWith(string value)
+    {
+        Validators.Add(new StartsWithValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串开头的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StartsWith(char value)
+    {
+        Validators.Add(new StartsWithValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串开头的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <param name="comparison"><see cref="StringComparison"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StartsWith(string value, StringComparison comparison)
+    {
+        Validators.Add(new StartsWithValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加以特定字符串开头的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <param name="comparison"><see cref="StringComparison"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StartsWith(char value, StringComparison comparison)
+    {
+        Validators.Add(new StartsWithValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加包含特定字符串的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StringContains(string value)
+    {
+        Validators.Add(new StringContainsValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加包含特定字符串的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StringContains(char value)
+    {
+        Validators.Add(new StringContainsValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加包含特定字符串的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <param name="comparison"><see cref="StringComparison"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StringContains(string value, StringComparison comparison)
+    {
+        Validators.Add(new StringContainsValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加包含特定字符串的验证器
+    /// </summary>
+    /// <param name="value">检索值</param>
+    /// <param name="comparison"><see cref="StringComparison"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StringContains(char value, StringComparison comparison)
+    {
+        Validators.Add(new StringContainsValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加自定义验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> Custom(Func<T, bool> predicate)
     {
         Validators.Add(new CustomValidator(predicate));
+
         return this;
     }
 
     /// <summary>
-    /// 组合验证器
+    /// 添加组合验证器
     /// </summary>
-    /// <param name="validators"></param>
-    /// <returns></returns>
+    /// <param name="validators">验证器集合</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> Composite(params ValidatorBase[] validators)
     {
         Validators.Add(new CompositeValidator(validators));
+
         return this;
     }
 
     /// <summary>
-    /// 组合验证器
+    /// 添加组合验证器
     /// </summary>
-    /// <param name="validators"></param>
-    /// <returns></returns>
+    /// <param name="validators">验证器集合</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> Composite(IList<ValidatorBase> validators)
     {
         Validators.Add(new CompositeValidator(validators));
+
         return this;
     }
 
     /// <summary>
-    /// 设置验证器
+    /// 添加注解（特性）验证器
     /// </summary>
-    /// <param name="validator"></param>
-    /// <returns></returns>
+    /// <param name="validationAttributes">验证特性集合</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> SetAnnotations(params ValidationAttribute[] validationAttributes)
+    {
+        Validators.Add(new ValueAnnotationValidator(validationAttributes));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加注解（特性）验证器
+    /// </summary>
+    /// <param name="validationAttributes">验证特性集合</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> SetAnnotations(IList<ValidationAttribute> validationAttributes)
+    {
+        Validators.Add(new ValueAnnotationValidator(validationAttributes));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加验证器
+    /// </summary>
+    /// <param name="validator"><see cref="ValidatorBase"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> SetValidator(ValidatorBase validator)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validator, nameof(validator));
 
         Validators.Add(validator);
+
         return this;
     }
 
+    /// <summary>
+    /// 添加验证器
+    /// </summary>
+    /// <param name="validator"><see cref="ValidatorBase"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> SetValidators(params ValidatorBase[] validator)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validator, nameof(validator));
+
+        Validators.AddRange(validator);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加验证器
+    /// </summary>
+    /// <param name="validator"><see cref="ValidatorBase"/></param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> SetValidators(IEnumerable<ValidatorBase> validator)
+    {
+        return SetValidators(validator?.ToArray()!);
+    }
+
+    /// <summary>
+    /// 检查值有效性
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="bool"/></returns>
     internal bool IsValid(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
-        var value = GetValue(instance);
+        // 获取属性值
+        var propertyValue = GetValue(instance);
 
-        return Validators.All(validator => validator.IsValid(validator.IsSameAs(typeof(CustomValidator)) ? instance : value));
+        return Validators.All(validator => validator.IsValid(validator.IsSameAs(typeof(CustomValidator)) ? instance : propertyValue));
     }
 
+    /// <summary>
+    /// 获取验证结果
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="ValidationResult"/> 集合</returns>
     internal List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
-        var value = GetValue(instance);
+        // 获取属性值
+        var propertyValue = GetValue(instance);
 
-        var validatorResults = Validators.SelectMany(validator => validator.GetValidationResults(validator.IsSameAs(typeof(CustomValidator)) ? instance : value, PropertyName) ?? Enumerable.Empty<ValidationResult>())
+        // 获取所有验证器验证结果集合
+        var validatorResults = Validators.SelectMany(validator => validator.GetValidationResults(validator.IsSameAs(typeof(CustomValidator)) ? instance : propertyValue, PropertyName) ?? Enumerable.Empty<ValidationResult>())
                                                             .ToList();
         if (validatorResults.Count == 0)
         {
             return null;
         }
 
+        // 添加自定义错误消息
         if (ErrorMessageAccessor != null)
         {
             validatorResults.Insert(0, new ValidationResult(ErrorMessageAccessor(instance), new[] { PropertyName }));
@@ -194,6 +402,11 @@ public sealed class PropertyValidator<T>
         return validatorResults;
     }
 
+    /// <summary>
+    /// 获取属性值
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="object"/></returns>
     internal object? GetValue(T instance)
     {
         // 空检查
@@ -201,10 +414,44 @@ public sealed class PropertyValidator<T>
 
         // 根据属性名称查找属性对象
         var propertyInfo = instance.GetType().GetProperty(PropertyName);
+
+        // 空检查
         ArgumentNullException.ThrowIfNull(propertyInfo, nameof(propertyInfo));
 
-        // 获取属性值
-        var propertyValue = propertyInfo.GetValue(instance);
-        return propertyValue;
+        // 返回属性值
+        return propertyInfo.GetValue(instance);
+    }
+
+    /// <summary>
+    /// 自定义验证器
+    /// </summary>
+    internal sealed class CustomValidator : ValidatorBase
+    {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="predicate">委托对象</param>
+        internal CustomValidator(Func<T, bool> predicate)
+            : base()
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+            Predicate = predicate;
+        }
+
+        /// <summary>
+        /// 委托对象
+        /// </summary>
+        internal Func<T, bool> Predicate { get; init; }
+
+        /// <inheritdoc />
+        public override bool IsValid(object? instance)
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+            return Predicate((T)instance);
+        }
     }
 }

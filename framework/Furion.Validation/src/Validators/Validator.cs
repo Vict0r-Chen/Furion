@@ -15,14 +15,14 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 验证器
+/// 类型验证器
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">对象类型</typeparam>
 public sealed class Validator<T>
     where T : class
 {
     /// <summary>
-    /// 属性验证器
+    /// 属性验证器集合
     /// </summary>
     internal readonly List<PropertyValidator<T>> _propertyValidators;
 
@@ -35,33 +35,16 @@ public sealed class Validator<T>
     }
 
     /// <summary>
-    /// 创建规则
+    /// 创建类型验证器
     /// </summary>
-    /// <param name="propertySelector"></param>
-    /// <returns></returns>
-    public PropertyValidator<T> For(Expression<Func<T, object?>> propertySelector)
-    {
-        return new PropertyValidator<T>(this, propertySelector);
-    }
-
-    /// <summary>
-    /// 创建
-    /// </summary>
-    /// <returns></returns>
-    public Validator<T> Create()
-    {
-        return this;
-    }
-
-    /// <summary>
-    /// 创建
-    /// </summary>
-    /// <returns></returns>
-    public static Validator<T> Create(Action<Validator<T>> predicate)
+    /// <param name="predicate">配置委托</param>
+    /// <returns><see cref="Validator{T}"/></returns>
+    public static Validator<T> Rule(Action<Validator<T>> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
+        // 创建类型验证器实例
         var validator = new Validator<T>();
         predicate(validator);
 
@@ -69,10 +52,20 @@ public sealed class Validator<T>
     }
 
     /// <summary>
+    /// 创建属性验证器
+    /// </summary>
+    /// <param name="propertySelector">属性选择器</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> For(Expression<Func<T, object?>> propertySelector)
+    {
+        return new PropertyValidator<T>(this, propertySelector);
+    }
+
+    /// <summary>
     /// 检查值有效性
     /// </summary>
-    /// <param name="instance"></param>
-    /// <returns></returns>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="bool"/></returns>
     public bool IsValid(T instance)
     {
         // 空检查
@@ -84,13 +77,14 @@ public sealed class Validator<T>
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="instance"></param>
-    /// <returns></returns>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="ValidationResult"/> 集合</returns>
     public List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
+        // 获取所有验证器验证结果集合
         var validatorResults = _propertyValidators.SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>())
                                                                      .ToList();
 
@@ -105,8 +99,8 @@ public sealed class Validator<T>
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="instance"></param>
-    /// <returns></returns>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="ValidationResult"/></returns>
     public ValidationResult? GetValidationResult(T instance)
     {
         // 空检查
@@ -118,7 +112,8 @@ public sealed class Validator<T>
     /// <summary>
     /// 执行验证
     /// </summary>
-    /// <param name="instance"></param>
+    /// <param name="instance">对象实例</param>
+    /// <exception cref="ValidationException"></exception>
     public void Validate(T instance)
     {
         // 空检查
@@ -135,7 +130,11 @@ public sealed class Validator<T>
         throw new ValidationException(validationResult, null, instance);
     }
 
-    internal void AddProperty(PropertyValidator<T> propertyValidator)
+    /// <summary>
+    /// 添加属性验证器
+    /// </summary>
+    /// <param name="propertyValidator"><see cref="PropertyValidator{T}"/></param>
+    internal void AddPropertyValidator(PropertyValidator<T> propertyValidator)
     {
         _propertyValidators.Add(propertyValidator);
     }

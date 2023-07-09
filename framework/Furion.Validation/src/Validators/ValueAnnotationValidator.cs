@@ -24,7 +24,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
-        : this((IEnumerable<ValidationAttribute>)validationAttributes)
+        : this(validationAttributes?.ToList()!)
     {
     }
 
@@ -32,7 +32,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// 构造函数
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
-    public ValueAnnotationValidator(IEnumerable<ValidationAttribute> validationAttributes)
+    public ValueAnnotationValidator(IList<ValidationAttribute> validationAttributes)
         : base()
     {
         // 空检查

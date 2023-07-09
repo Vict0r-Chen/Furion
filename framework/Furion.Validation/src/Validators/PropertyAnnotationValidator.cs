@@ -91,6 +91,8 @@ public partial class PropertyAnnotationValidator : ValidatorBase
 
         // 根据属性名称查找属性对象
         var propertyInfo = value.GetType().GetProperty(PropertyName);
+
+        // 空检查
         ArgumentNullException.ThrowIfNull(propertyInfo, nameof(propertyInfo));
 
         // 获取属性值
