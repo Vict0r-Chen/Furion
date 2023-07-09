@@ -90,4 +90,18 @@ public class ValueAnnotationValidatorTests
         var validationResults2 = validator.GetValidationResults("furion");
         Assert.Null(validationResults2);
     }
+
+    [Fact]
+    public void Custom_ErrorMessage()
+    {
+        var validator = new ValueAnnotationValidator(new RequiredAttribute())
+        {
+            ErrorMessage = "自定义验证失败消息"
+        };
+        var validationResults = validator.GetValidationResults(null!);
+        Assert.NotNull(validationResults);
+        Assert.True(validationResults.Count > 1);
+
+        Assert.Equal("自定义验证失败消息", validationResults.First().ErrorMessage);
+    }
 }

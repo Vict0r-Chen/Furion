@@ -57,6 +57,12 @@ public partial class ValueAnnotationValidator : ValidatorBase
     {
         if (!TryValidate(value, out var validationResults, memberNames))
         {
+            // 处理自定义错误消息
+            if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberNames), memberNames));
+            }
+
             return validationResults;
         }
 

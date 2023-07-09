@@ -125,4 +125,25 @@ public class PropertyAnnotationValidatorTests
         var validationResults = validator.GetValidationResults(model);
         Assert.Null(validationResults);
     }
+
+    [Fact]
+    public void Custom_ErrorMessage()
+    {
+        var model = new ObjectModel
+        {
+            Id = 0,
+            Name = "fu",
+            Age = 130
+        };
+
+        var validator = new PropertyAnnotationValidator<ObjectModel>(u => u.Name)
+        {
+            ErrorMessage = "自定义验证失败消息"
+        };
+        var validationResults = validator.GetValidationResults(model);
+        Assert.NotNull(validationResults);
+        Assert.True(validationResults.Count > 1);
+
+        Assert.Equal("自定义验证失败消息", validationResults.First().ErrorMessage);
+    }
 }
