@@ -14,33 +14,33 @@
 
 namespace Furion.Validation.Tests;
 
-public class CustomValidatorTests
+public class PredicateValidatorTests
 {
     [Fact]
     public void NewInstance_Throw()
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new CustomValidator(null!);
+            var validator = new PredicateValidator(null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new CustomValidator<string>(null!);
+            var validator = new PredicateValidator<string>(null!);
         });
     }
 
     [Fact]
     public void NewInstance_ReturnOK()
     {
-        var validator = new CustomValidator(o =>
+        var validator = new PredicateValidator(o =>
         {
             return true;
         });
         Assert.NotNull(validator);
         Assert.NotNull(validator.Predicate);
 
-        var validator2 = new CustomValidator<string>(o =>
+        var validator2 = new PredicateValidator<string>(o =>
         {
             return true;
         });
@@ -52,7 +52,7 @@ public class CustomValidatorTests
     [Fact]
     public void IsValid()
     {
-        var validator = new CustomValidator<string>(str =>
+        var validator = new PredicateValidator<string>(str =>
         {
             return str != null && str == "Furion";
         });
@@ -61,7 +61,7 @@ public class CustomValidatorTests
         Assert.True(validator.IsValid("Furion"));
         Assert.False(validator.IsValid("百小僧"));
 
-        var validator2 = new CustomValidator(str =>
+        var validator2 = new PredicateValidator(str =>
         {
             return str != null && str.ToString() == "Furion";
         });
@@ -74,7 +74,7 @@ public class CustomValidatorTests
     [Fact]
     public void IsValid_Predicate_Null_Throw()
     {
-        var validator = new CustomValidator<string>(str =>
+        var validator = new PredicateValidator<string>(str =>
         {
             return str != null && str == "Furion";
         })
@@ -93,7 +93,7 @@ public class CustomValidatorTests
     [Fact]
     public void Default_ErrorMessage()
     {
-        var validator = new CustomValidator<string>(str =>
+        var validator = new PredicateValidator<string>(str =>
         {
             return str != null && str == "Furion";
         });
@@ -106,7 +106,7 @@ public class CustomValidatorTests
     [Fact]
     public void Custom_ErrorMessage()
     {
-        var validator = new CustomValidator<string>(str =>
+        var validator = new PredicateValidator<string>(str =>
         {
             return str != null && str == "Furion";
         })

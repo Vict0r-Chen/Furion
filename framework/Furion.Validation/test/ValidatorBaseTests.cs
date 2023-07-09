@@ -200,4 +200,13 @@ public class ValidatorBaseTests
 
         Assert.Equal("测试数据 Value 验证失败", validator.FormatErrorMessage("Value"));
     }
+
+    [Theory]
+    [InlineData(typeof(AgeValidator), false)]
+    [InlineData(typeof(TestValidator), true)]
+    public void IsSameAs(Type type, bool result)
+    {
+        var validator = new TestValidator();
+        Assert.Equal(result, validator.IsSameAs(type));
+    }
 }

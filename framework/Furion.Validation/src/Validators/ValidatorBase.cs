@@ -78,7 +78,7 @@ public abstract partial class ValidatorBase
         // 返回默认验证结果
         return new List<ValidationResult>
         {
-            new ValidationResult(FormatErrorMessage(name))
+            new ValidationResult(FormatErrorMessage(name),new[] { name })
         };
     }
 
@@ -120,5 +120,15 @@ public abstract partial class ValidatorBase
 
         // 抛出验证异常
         throw new ValidationException(validationResult, null, value);
+    }
+
+    /// <summary>
+    /// 验证器类型是否一致
+    /// </summary>
+    /// <param name="validatorType">验证器类型</param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool IsSameAs(Type validatorType)
+    {
+        return GetType() == validatorType;
     }
 }

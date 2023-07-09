@@ -15,16 +15,16 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 自定义验证委托验证器
+/// 委托对象验证器
 /// </summary>
 /// <typeparam name="T">泛型类型</typeparam>
-public partial class CustomValidator<T> : CustomValidator
+public partial class PredicateValidator<T> : PredicateValidator
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="predicate">验证委托</param>
-    public CustomValidator(Func<T?, bool> predicate)
+    /// <param name="predicate">委托对象</param>
+    public PredicateValidator(Func<T?, bool> predicate)
         : base((obj) => predicate((T?)obj))
     {
         // 空检查
@@ -33,15 +33,15 @@ public partial class CustomValidator<T> : CustomValidator
 }
 
 /// <summary>
-/// 自定义验证委托验证器
+/// 委托对象验证器
 /// </summary>
-public partial class CustomValidator : ValidatorBase
+public partial class PredicateValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="predicate">验证委托</param>
-    public CustomValidator(Func<object?, bool> predicate)
+    /// <param name="predicate">委托对象</param>
+    public PredicateValidator(Func<object?, bool> predicate)
         : base(() => Strings.CustomValidator_Invalid)
     {
         // 空检查
@@ -51,7 +51,7 @@ public partial class CustomValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 验证委托
+    /// 委托对象
     /// </summary>
     public Func<object?, bool> Predicate { get; set; }
 

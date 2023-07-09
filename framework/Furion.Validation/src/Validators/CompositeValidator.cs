@@ -80,7 +80,7 @@ public partial class CompositeValidator : ValidatorBase
         // 处理自定义错误消息情况
         if (ErrorMessage is not null && validationResults.Count > 0)
         {
-            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name)));
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name), new[] { name }));
         }
 
         return validationResults.Count == 0

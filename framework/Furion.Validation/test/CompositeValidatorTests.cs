@@ -65,7 +65,7 @@ public class CompositeValidatorTests
     [Fact]
     public void IsValid_ValidatorRelationship_And()
     {
-        var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }));
+        var validator = new CompositeValidator(new AgeValidator(), new PredicateValidator(v => { return v is int; }));
         Assert.False(validator.IsValid(130));
         Assert.True(validator.IsValid(100));
     }
@@ -73,7 +73,7 @@ public class CompositeValidatorTests
     [Fact]
     public void IsValid_ValidatorRelationship_Or()
     {
-        var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }))
+        var validator = new CompositeValidator(new AgeValidator(), new PredicateValidator(v => { return v is int; }))
         {
             Relationship = ValidatorRelationship.Or
         };
@@ -85,7 +85,7 @@ public class CompositeValidatorTests
     [Fact]
     public void Default_ErrorMessage()
     {
-        var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }));
+        var validator = new CompositeValidator(new AgeValidator(), new PredicateValidator(v => { return v is int; }));
 
         var failure = validator.GetValidationResult(130, "Value");
         Assert.NotNull(failure);
@@ -95,7 +95,7 @@ public class CompositeValidatorTests
     [Fact]
     public void Custom_ErrorMessage()
     {
-        var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }))
+        var validator = new CompositeValidator(new AgeValidator(), new PredicateValidator(v => { return v is int; }))
         {
             ErrorMessage = "不是一个有效的组合格式"
         };
@@ -109,7 +109,7 @@ public class CompositeValidatorTests
     [Fact]
     public void GetValidationResults()
     {
-        var validator = new CompositeValidator(new AgeValidator(), new CustomValidator(v => { return v is int; }));
+        var validator = new CompositeValidator(new AgeValidator(), new PredicateValidator(v => { return v is int; }));
         var validationResults = validator.GetValidationResults(123.456m, "Value");
 
         Assert.NotNull(validationResults);
