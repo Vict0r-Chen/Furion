@@ -3066,5 +3066,25 @@
             <param name="name">显示名称</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="T:Furion.Component.ValidationComponent">
+            <summary>
+            数据验证模块服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ValidationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions">
+            <summary>
+            数据验证模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加数据验证模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
     </members>
 </doc>

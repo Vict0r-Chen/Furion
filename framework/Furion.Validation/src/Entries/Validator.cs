@@ -29,7 +29,7 @@ public sealed class Validator<T> : IValidator<T>
     /// <summary>
     /// 构造函数
     /// </summary>
-    internal Validator()
+    public Validator()
     {
         _propertyValidators = new();
     }
