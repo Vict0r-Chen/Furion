@@ -66,4 +66,10 @@ public class ValidatorModel
 
     [UserName]
     public string? UserName { get; set; }
+
+    [NotEqual("furion")]
+    public string? NotEqual { get; set; }
+
+    [Equal("furion")]
+    public string? Equal { get; set; }
 }

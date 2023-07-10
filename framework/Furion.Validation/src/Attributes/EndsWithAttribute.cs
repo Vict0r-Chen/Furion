@@ -23,7 +23,7 @@ public class EndsWithAttribute : ValidationAttribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     public EndsWithAttribute(char value)
         : this(value.ToString())
     {
@@ -32,7 +32,7 @@ public class EndsWithAttribute : ValidationAttribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     public EndsWithAttribute(string value)
         : base(() => Strings.EndsWithValidator_Invalid)
     {
@@ -40,7 +40,7 @@ public class EndsWithAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 检索值
+    /// 检索的值
     /// </summary>
     public string Value { get; init; }
 

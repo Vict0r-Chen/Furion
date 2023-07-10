@@ -109,7 +109,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串结尾的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> EndsWith(string value)
     {
@@ -121,7 +121,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串结尾的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> EndsWith(char value)
     {
@@ -133,7 +133,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串结尾的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> EndsWith(string value, StringComparison comparison)
@@ -146,7 +146,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串结尾的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> EndsWith(char value, StringComparison comparison)
@@ -159,7 +159,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串开头的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StartsWith(string value)
     {
@@ -171,7 +171,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串开头的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StartsWith(char value)
     {
@@ -183,7 +183,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串开头的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StartsWith(string value, StringComparison comparison)
@@ -196,7 +196,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加以特定字符串开头的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StartsWith(char value, StringComparison comparison)
@@ -209,7 +209,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加包含特定字符串的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StringContains(string value)
     {
@@ -221,7 +221,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加包含特定字符串的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StringContains(char value)
     {
@@ -233,7 +233,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加包含特定字符串的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StringContains(string value, StringComparison comparison)
@@ -246,12 +246,127 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 添加包含特定字符串的验证器
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
     public PropertyValidator<T> StringContains(char value, StringComparison comparison)
     {
         Validators.Add(new StringContainsValidator(value) { Comparison = comparison });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加最大长度验证器
+    /// </summary>
+    /// <param name="length">长度</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> MaxLength(int length)
+    {
+        Validators.Add(new ValueAnnotationValidator(new MaxLengthAttribute(length)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加最小长度验证器
+    /// </summary>
+    /// <param name="length">长度</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> MinLength(int length)
+    {
+        Validators.Add(new ValueAnnotationValidator(new MinLengthAttribute(length)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加长度验证器
+    /// </summary>
+    /// <param name="minimumLength">最小长度</param>
+    /// <param name="maximumLength">最大长度</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Length(int minimumLength, int maximumLength)
+    {
+        Validators.Add(new ValueAnnotationValidator(new LengthAttribute(minimumLength, maximumLength)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加字符串长度验证器
+    /// </summary>
+    /// <param name="maximumLength">最大长度</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StringLength(int maximumLength)
+    {
+        Validators.Add(new ValueAnnotationValidator(new StringLengthAttribute(maximumLength)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加字符串长度验证器
+    /// </summary>
+    /// <param name="minimumLength">最小长度</param>
+    /// <param name="maximumLength">最大长度</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StringLength(int minimumLength, int maximumLength)
+    {
+        Validators.Add(new ValueAnnotationValidator(new StringLengthAttribute(maximumLength)
+        {
+            MinimumLength = minimumLength
+        }));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加范围验证器
+    /// </summary>
+    /// <param name="minimum">最小值</param>
+    /// <param name="maximum">最大值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Range(int minimum, int maximum)
+    {
+        Validators.Add(new ValueAnnotationValidator(new RangeAttribute(minimum, maximum)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加范围验证器
+    /// </summary>
+    /// <param name="minimum">最小值</param>
+    /// <param name="maximum">最大值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Range(double minimum, double maximum)
+    {
+        Validators.Add(new ValueAnnotationValidator(new RangeAttribute(minimum, maximum)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加不相等验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> NotEqual(object? value)
+    {
+        Validators.Add(new NotEqualValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加相等验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Equal(object? value)
+    {
+        Validators.Add(new EqualValidator(value));
 
         return this;
     }

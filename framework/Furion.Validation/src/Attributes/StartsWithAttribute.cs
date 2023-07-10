@@ -23,7 +23,7 @@ public class StartsWithAttribute : ValidationAttribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     public StartsWithAttribute(char value)
         : this(value.ToString())
     {
@@ -32,7 +32,7 @@ public class StartsWithAttribute : ValidationAttribute
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     public StartsWithAttribute(string value)
         : base(() => Strings.StartsWithValidator_Invalid)
     {
@@ -40,7 +40,7 @@ public class StartsWithAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 检索值
+    /// 检索的值
     /// </summary>
     public string Value { get; init; }
 

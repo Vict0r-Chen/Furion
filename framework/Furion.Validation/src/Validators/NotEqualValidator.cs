@@ -12,42 +12,37 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion.Validation;
 
 /// <summary>
-/// 包含特定字符串的验证特性
+/// 不相等验证器
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class StringContainsAttribute : ValidationAttribute
+public partial class NotEqualValidator : ValidatorBase
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public StringContainsAttribute(char value)
-        : this(value.ToString())
-    {
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="value">检索的值</param>
-    public StringContainsAttribute(string value)
-        : base(() => Strings.StringContainsValidator_Invalid)
+    /// <param name="value">比较的值</param>
+    public NotEqualValidator(object? value)
+        : base(() => Strings.NotEqualValidator_Invalid)
     {
         Value = value;
     }
 
     /// <summary>
-    /// 检索的值
+    /// 比较的值
     /// </summary>
-    public string Value { get; init; }
+    public object? Value { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new StringContainsValidator(Value).IsValid(value);
+        if (value is null)
+        {
+            return true;
+        }
+
+        return !value.Equals(Value);
     }
 
     /// <inheritdoc />

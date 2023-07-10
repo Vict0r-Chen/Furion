@@ -34,6 +34,8 @@ public class ValidatorAttributeTests
     [InlineData(typeof(StrongPasswordAttribute))]
     [InlineData(typeof(TelephoneAttribute))]
     [InlineData(typeof(UserNameAttribute))]
+    [InlineData(typeof(NotEqualAttribute))]
+    [InlineData(typeof(EqualAttribute))]
     public void Attribute_Defined(Type attributeType)
     {
         Assert.True(typeof(ValidationAttribute).IsAssignableFrom(attributeType));
@@ -65,7 +67,9 @@ public class ValidatorAttributeTests
             StringContains = "dotnetchina",
             StrongPassword = "q1w2e3r4",
             Telephone = "076088809963",
-            UserName = "😐monk"
+            UserName = "😐monk",
+            NotEqual = "furion",
+            Equal = "fur"
         };
 
         var validator = new ObjectAnnotationValidator();
@@ -74,6 +78,6 @@ public class ValidatorAttributeTests
         var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
 
-        Assert.Equal(17, validationResults.Count);
+        Assert.Equal(19, validationResults.Count);
     }
 }

@@ -15,39 +15,30 @@
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 包含特定字符串的验证特性
+/// 不相等验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class StringContainsAttribute : ValidationAttribute
+public class NotEqualAttribute : ValidationAttribute
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public StringContainsAttribute(char value)
-        : this(value.ToString())
-    {
-    }
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="value">检索的值</param>
-    public StringContainsAttribute(string value)
-        : base(() => Strings.StringContainsValidator_Invalid)
+    /// <param name="value">比较的值</param>
+    public NotEqualAttribute(object? value)
+        : base(() => Strings.NotEqualValidator_Invalid)
     {
         Value = value;
     }
 
     /// <summary>
-    /// 检索的值
+    /// 比较的值
     /// </summary>
-    public string Value { get; init; }
+    public object? Value { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new StringContainsValidator(Value).IsValid(value);
+        return new NotEqualValidator(Value).IsValid(value);
     }
 
     /// <inheritdoc />

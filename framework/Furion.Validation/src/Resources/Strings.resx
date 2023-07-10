@@ -144,11 +144,17 @@
   <data name="EndsWithValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not end with the string {1}.</value>
   </data>
+  <data name="EqualValidator_Invalid" xml:space="preserve">
+    <value>The field {0} must be equal to {1}.</value>
+  </data>
   <data name="IDCardNumberValidator_invalid" xml:space="preserve">
     <value>The field {0} is not a valid ID card number format.</value>
   </data>
   <data name="NotEmptyValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not allow empty values.</value>
+  </data>
+  <data name="NotEqualValidator_Invalid" xml:space="preserve">
+    <value>The field {0} cannot be equal to {1}.</value>
   </data>
   <data name="PasswordValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid password format.</value>

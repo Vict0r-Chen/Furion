@@ -22,7 +22,7 @@ public partial class StringContainsValidator : ValidatorBase
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     public StringContainsValidator(char value)
         : this(value.ToString())
     {
@@ -31,7 +31,7 @@ public partial class StringContainsValidator : ValidatorBase
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="value">检索值</param>
+    /// <param name="value">检索的值</param>
     public StringContainsValidator(string value)
         : base(() => Strings.StringContainsValidator_Invalid)
     {
@@ -42,7 +42,7 @@ public partial class StringContainsValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 检索值
+    /// 检索的值
     /// </summary>
     public string Value { get; set; }
 

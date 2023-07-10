@@ -78,23 +78,45 @@
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="P:System.ComponentModel.DataAnnotations.EndsWithAttribute.Value">
             <summary>
-            检索值
+            检索的值
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.EqualAttribute">
+            <summary>
+            相等验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EqualAttribute.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.EqualAttribute.Value">
+            <summary>
+            比较的值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EqualAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.EqualAttribute.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.IDCardNumberAttribute">
@@ -121,6 +143,28 @@
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.NotEmptyAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.NotEqualAttribute">
+            <summary>
+            不相等验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.NotEqualAttribute.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.NotEqualAttribute.Value">
+            <summary>
+            比较的值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.NotEqualAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.NotEqualAttribute.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.PasswordAttribute">
@@ -187,17 +231,17 @@
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="P:System.ComponentModel.DataAnnotations.StartsWithAttribute.Value">
             <summary>
-            检索值
+            检索的值
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.IsValid(System.Object)">
@@ -215,17 +259,17 @@
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="P:System.ComponentModel.DataAnnotations.StringContainsAttribute.Value">
             <summary>
-            检索值
+            检索的值
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.IsValid(System.Object)">
@@ -853,6 +897,11 @@
               查找类似 The field {0} is not end with the string {1}. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.EqualValidator_Invalid">
+            <summary>
+              查找类似 The field {0} must be equal to {1}. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
             <summary>
               查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
@@ -861,6 +910,11 @@
         <member name="P:Furion.Validation.Resources.Strings.NotEmptyValidator_Invalid">
             <summary>
               查找类似 The field {0} is not allow empty values. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.NotEqualValidator_Invalid">
+            <summary>
+              查找类似 The field {0} cannot be equal to {1}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.PasswordValidator_Invalid">
@@ -1328,17 +1382,17 @@
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="P:Furion.Validation.EndsWithValidator.Value">
             <summary>
-            检索值
+            检索的值
             </summary>
         </member>
         <member name="P:Furion.Validation.EndsWithValidator.Comparison">
@@ -1348,6 +1402,28 @@
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.EndsWithValidator.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Validation.EqualValidator">
+            <summary>
+            相等验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.EqualValidator.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="P:Furion.Validation.EqualValidator.Value">
+            <summary>
+            比较的值
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.EqualValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.EqualValidator.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.IDCardNumberValidator">
@@ -1537,6 +1613,28 @@
             </summary>
         </member>
         <member name="M:Furion.Validation.NotEmptyValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Validation.NotEqualValidator">
+            <summary>
+            不相等验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.NotEqualValidator.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="P:Furion.Validation.NotEqualValidator.Value">
+            <summary>
+            比较的值
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.NotEqualValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.NotEqualValidator.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.ObjectAnnotationValidator">
@@ -1812,21 +1910,21 @@
             <summary>
             添加以特定字符串结尾的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.EndsWith(System.Char)">
             <summary>
             添加以特定字符串结尾的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.EndsWith(System.String,System.StringComparison)">
             <summary>
             添加以特定字符串结尾的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
@@ -1834,7 +1932,7 @@
             <summary>
             添加以特定字符串结尾的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
@@ -1842,21 +1940,21 @@
             <summary>
             添加以特定字符串开头的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.StartsWith(System.Char)">
             <summary>
             添加以特定字符串开头的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.StartsWith(System.String,System.StringComparison)">
             <summary>
             添加以特定字符串开头的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
@@ -1864,7 +1962,7 @@
             <summary>
             添加以特定字符串开头的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
@@ -1872,21 +1970,21 @@
             <summary>
             添加包含特定字符串的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.StringContains(System.Char)">
             <summary>
             添加包含特定字符串的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.StringContains(System.String,System.StringComparison)">
             <summary>
             添加包含特定字符串的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
@@ -1894,8 +1992,75 @@
             <summary>
             添加包含特定字符串的验证器
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.MaxLength(System.Int32)">
+            <summary>
+            添加最大长度验证器
+            </summary>
+            <param name="length">长度</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.MinLength(System.Int32)">
+            <summary>
+            添加最小长度验证器
+            </summary>
+            <param name="length">长度</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Length(System.Int32,System.Int32)">
+            <summary>
+            添加长度验证器
+            </summary>
+            <param name="minimumLength">最小长度</param>
+            <param name="maximumLength">最大长度</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.StringLength(System.Int32)">
+            <summary>
+            添加字符串长度验证器
+            </summary>
+            <param name="maximumLength">最大长度</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.StringLength(System.Int32,System.Int32)">
+            <summary>
+            添加字符串长度验证器
+            </summary>
+            <param name="minimumLength">最小长度</param>
+            <param name="maximumLength">最大长度</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Range(System.Int32,System.Int32)">
+            <summary>
+            添加范围验证器
+            </summary>
+            <param name="minimum">最小值</param>
+            <param name="maximum">最大值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Range(System.Double,System.Double)">
+            <summary>
+            添加范围验证器
+            </summary>
+            <param name="minimum">最小值</param>
+            <param name="maximum">最大值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.NotEqual(System.Object)">
+            <summary>
+            添加不相等验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Equal(System.Object)">
+            <summary>
+            添加相等验证器
+            </summary>
+            <param name="value">比较的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.Predicate(System.Func{System.Object,System.Boolean})">
@@ -2038,17 +2203,17 @@
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="P:Furion.Validation.StartsWithValidator.Value">
             <summary>
-            检索值
+            检索的值
             </summary>
         </member>
         <member name="P:Furion.Validation.StartsWithValidator.Comparison">
@@ -2069,17 +2234,17 @@
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.String)">
             <summary>
             构造函数
             </summary>
-            <param name="value">检索值</param>
+            <param name="value">检索的值</param>
         </member>
         <member name="P:Furion.Validation.StringContainsValidator.Value">
             <summary>
-            检索值
+            检索的值
             </summary>
         </member>
         <member name="P:Furion.Validation.StringContainsValidator.Comparison">

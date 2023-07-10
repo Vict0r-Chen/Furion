@@ -142,6 +142,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} must be equal to {1}. 的本地化字符串。
+        /// </summary>
+        internal static string EqualValidator_Invalid {
+            get {
+                return ResourceManager.GetString("EqualValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
         /// </summary>
         internal static string IDCardNumberValidator_invalid {
@@ -156,6 +165,15 @@ namespace Furion.Validation.Resources {
         internal static string NotEmptyValidator_Invalid {
             get {
                 return ResourceManager.GetString("NotEmptyValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} cannot be equal to {1}. 的本地化字符串。
+        /// </summary>
+        internal static string NotEqualValidator_Invalid {
+            get {
+                return ResourceManager.GetString("NotEqualValidator_Invalid", resourceCulture);
             }
         }
         
