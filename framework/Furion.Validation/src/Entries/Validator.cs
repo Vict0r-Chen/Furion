@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 类型验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public sealed class Validator<T>
+public sealed class Validator<T> : IValidator<T>
     where T : class
 {
     /// <summary>
@@ -42,6 +42,15 @@ public sealed class Validator<T>
     /// <summary>
     /// 创建类型验证器
     /// </summary>
+    /// <returns><see cref="Validator{T}"/></returns>
+    public static Validator<T> Create()
+    {
+        return new Validator<T>();
+    }
+
+    /// <summary>
+    /// 创建类型验证器
+    /// </summary>
     /// <param name="predicate">配置委托</param>
     /// <returns><see cref="Validator{T}"/></returns>
     public static Validator<T> Create(Action<Validator<T>> predicate)
@@ -50,7 +59,7 @@ public sealed class Validator<T>
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
         // 创建类型验证器实例
-        var validator = new Validator<T>();
+        var validator = Create();
         predicate(validator);
 
         return validator;
@@ -78,11 +87,7 @@ public sealed class Validator<T>
         return new PropertyValidator<T>(this, propertySelector);
     }
 
-    /// <summary>
-    /// 检查值有效性
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><see cref="bool"/></returns>
+    /// <inheritdoc />
     public bool IsValid(T instance)
     {
         // 空检查
@@ -97,11 +102,7 @@ public sealed class Validator<T>
         return _propertyValidators.All(validator => validator.IsValid(instance));
     }
 
-    /// <summary>
-    /// 获取验证结果
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><see cref="ValidationResult"/> 集合</returns>
+    /// <inheritdoc />
     public List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
@@ -125,38 +126,25 @@ public sealed class Validator<T>
         return validatorResults;
     }
 
-    /// <summary>
-    /// 获取验证结果
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><see cref="ValidationResult"/></returns>
-    public ValidationResult? GetValidationResult(T instance)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-
-        return GetValidationResults(instance)?.FirstOrDefault();
-    }
-
-    /// <summary>
-    /// 执行验证
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <exception cref="ValidationException"></exception>
+    /// <inheritdoc />
     public void Validate(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
         // 获取验证结果
-        var validationResult = GetValidationResult(instance);
-        if (validationResult is null)
+        var validationResults = GetValidationResults(instance);
+
+        if (validationResults is null)
         {
             return;
         }
 
-        // 抛出验证异常
-        throw new ValidationException(validationResult, null, instance);
+        // 创建组合异常
+        var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, instance));
+
+        // 抛出组合验证异常
+        throw new AggregateValidationException(validationExceptions);
     }
 
     /// <summary>

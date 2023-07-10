@@ -938,6 +938,69 @@
             或者
             </summary>
         </member>
+        <member name="T:Furion.Validation.AbstractValidator`1">
+            <summary>
+            类型验证器抽象基类
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+        </member>
+        <member name="F:Furion.Validation.AbstractValidator`1._validator">
+            <summary>
+            <see cref="T:Furion.Validation.Validator`1"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.RuleFor(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            创建属性验证器
+            </summary>
+            <param name="propertySelector">属性选择器</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.IsValid(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.GetValidationResults(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.Validate(`0)">
+            <summary>
+            执行验证
+            </summary>
+            <param name="instance"><typeparamref name="T"/></param>
+            <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        </member>
+        <member name="T:Furion.Validation.IValidator`1">
+            <summary>
+            类型验证器接口
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+        </member>
+        <member name="M:Furion.Validation.IValidator`1.IsValid(`0)">
+            <summary>
+            检查值有效性
+            </summary>
+            <param name="instance"><typeparamref name="T"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:Furion.Validation.IValidator`1.GetValidationResults(`0)">
+            <summary>
+            获取验证结果
+            </summary>
+            <param name="instance"><typeparamref name="T"/></param>
+            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
+        </member>
+        <member name="M:Furion.Validation.IValidator`1.Validate(`0)">
+            <summary>
+            执行验证
+            </summary>
+            <param name="instance"><typeparamref name="T"/></param>
+            <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
+        </member>
         <member name="T:Furion.Validation.PropertyValidator`1">
             <summary>
             属性验证器
@@ -1387,6 +1450,9 @@
             <param name="instance"><typeparamref name="T"/></param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Validate(`0)">
+            <inheritdoc />
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`1.GetValue(`0)">
             <summary>
             获取属性值
@@ -1453,6 +1519,12 @@
             对象注解（特性）验证器
             </summary>
         </member>
+        <member name="M:Furion.Validation.Validator`1.Create">
+            <summary>
+            创建类型验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.Validator`1"/></returns>
+        </member>
         <member name="M:Furion.Validation.Validator`1.Create(System.Action{Furion.Validation.Validator{`0}})">
             <summary>
             创建类型验证器
@@ -1474,38 +1546,45 @@
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.Validator`1.IsValid(`0)">
-            <summary>
-            检查值有效性
-            </summary>
-            <param name="instance"><typeparamref name="T"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Validation.Validator`1.GetValidationResults(`0)">
-            <summary>
-            获取验证结果
-            </summary>
-            <param name="instance"><typeparamref name="T"/></param>
-            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
-        </member>
-        <member name="M:Furion.Validation.Validator`1.GetValidationResult(`0)">
-            <summary>
-            获取验证结果
-            </summary>
-            <param name="instance"><typeparamref name="T"/></param>
-            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Validation.Validator`1.Validate(`0)">
-            <summary>
-            执行验证
-            </summary>
-            <param name="instance"><typeparamref name="T"/></param>
-            <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Validation.Validator`1.AddPropertyValidator(Furion.Validation.PropertyValidator{`0})">
             <summary>
             添加属性验证器
             </summary>
             <param name="propertyValidator"><see cref="T:Furion.Validation.PropertyValidator`1"/></param>
+        </member>
+        <member name="T:Furion.Validation.AggregateValidationException">
+            <summary>
+            组合的验证异常
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationException[])">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException[])">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.ValidatorBaseExtensions">
             <summary>
@@ -2941,7 +3020,7 @@
             </summary>
             <param name="value">验证的值</param>
             <param name="name">显示名称</param>
-            <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException"></exception>
+            <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsSameAs(System.Type)">
             <summary>

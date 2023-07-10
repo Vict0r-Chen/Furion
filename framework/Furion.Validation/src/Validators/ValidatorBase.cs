@@ -118,18 +118,22 @@ public abstract partial class ValidatorBase
     /// </summary>
     /// <param name="value">验证的值</param>
     /// <param name="name">显示名称</param>
-    /// <exception cref="ValidationException"></exception>
+    /// <exception cref="AggregateValidationException"></exception>
     public void Validate(object? value, string name)
     {
         // 获取验证结果
-        var validationResult = GetValidationResult(value, name);
-        if (validationResult is null)
+        var validationResults = GetValidationResults(value, name);
+
+        if (validationResults is null)
         {
             return;
         }
 
-        // 抛出验证异常
-        throw new ValidationException(validationResult, null, value);
+        // 创建组合异常
+        var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, value));
+
+        // 抛出组合验证异常
+        throw new AggregateValidationException(validationExceptions);
     }
 
     /// <summary>

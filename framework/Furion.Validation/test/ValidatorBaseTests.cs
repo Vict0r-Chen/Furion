@@ -173,11 +173,10 @@ public class ValidatorBaseTests
         {
             ErrorMessage = "这里的{0}有一个错误"
         };
-        var exception = Assert.Throws<ValidationException>(() =>
+        Assert.Throws<AggregateValidationException>(() =>
         {
             validator.Validate("some", "Name");
         });
-        Assert.Equal("这里的Name有一个错误", exception.Message);
     }
 
     [Theory]

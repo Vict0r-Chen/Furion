@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 属性验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public sealed class PropertyValidator<T>
+public sealed class PropertyValidator<T> : IValidator<T>
     where T : class
 {
     /// <summary>
@@ -792,7 +792,7 @@ public sealed class PropertyValidator<T>
     /// </summary>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool IsValid(T instance)
+    public bool IsValid(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
@@ -814,7 +814,7 @@ public sealed class PropertyValidator<T>
     /// </summary>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
-    internal List<ValidationResult>? GetValidationResults(T instance)
+    public List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
@@ -843,6 +843,33 @@ public sealed class PropertyValidator<T>
         }
 
         return validatorResults;
+    }
+
+    /// <inheritdoc />
+    public void Validate(T instance)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 检查是否可以执行验证程序
+        if (!CanValidate(instance))
+        {
+            return;
+        }
+
+        // 获取验证结果
+        var validationResults = GetValidationResults(instance);
+
+        if (validationResults is null)
+        {
+            return;
+        }
+
+        // 创建组合异常
+        var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, instance));
+
+        // 抛出组合验证异常
+        throw new AggregateValidationException(validationExceptions);
     }
 
     /// <summary>
