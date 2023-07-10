@@ -157,11 +157,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
         return Condition(instance);
     }
 
-    /// <summary>
-    /// 检查值有效性
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><see cref="bool"/></returns>
+    /// <inheritdoc />
     public bool IsValid(T instance)
     {
         // 空检查
@@ -186,11 +182,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
         return isValid && Validators.All(validator => validator.IsValid(GetValidationObject(validator, instance, propertyValue)));
     }
 
-    /// <summary>
-    /// 获取验证结果
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><see cref="ValidationResult"/> 集合</returns>
+    /// <inheritdoc />
     public List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
