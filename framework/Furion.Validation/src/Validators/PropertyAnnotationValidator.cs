@@ -68,7 +68,7 @@ public partial class PropertyAnnotationValidator : ValidatorBase
             // 处理自定义错误消息
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
-                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name), new[] { name }));
+                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
             }
 
             return validationResults;

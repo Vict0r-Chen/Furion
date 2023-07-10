@@ -41,7 +41,7 @@ public partial class GreaterThanOrEqualToValidator : ComparableValidator
     /// 构造函数
     /// </summary>
     /// <param name="value">比较的值</param>
-    protected GreaterThanOrEqualToValidator(object value)
+    public GreaterThanOrEqualToValidator(object? value)
         : base(value, () => Strings.GreaterThanOrEqualToValidator_Invalid)
     {
     }

@@ -69,7 +69,7 @@ public partial class EndsWithValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override string FormatErrorMessage(string name)
+    public override string FormatErrorMessage(string name, object? value = default)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
     }

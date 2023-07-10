@@ -42,7 +42,7 @@ public class LessThanAttribute : ComparableAttribute<LessThanValidator>
     /// 构造函数
     /// </summary>
     /// <param name="value">比较的值</param>
-    protected LessThanAttribute(object value)
+    public LessThanAttribute(object? value)
         : base(value, () => Strings.LessThanValidator_Invalid)
     {
     }

@@ -35,6 +35,15 @@ public abstract partial class ValidatorBase
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="defaultErrorMessage">默认错误消息</param>
+    protected ValidatorBase(string? defaultErrorMessage)
+        : this(() => defaultErrorMessage ?? Strings.ValidatorBase_Invalid)
+    {
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
     protected ValidatorBase(Func<string> errorMessageAccessor)
     {
@@ -78,7 +87,7 @@ public abstract partial class ValidatorBase
         // 返回默认验证结果
         return new List<ValidationResult>
         {
-            new ValidationResult(FormatErrorMessage(name),new[] { name })
+            new ValidationResult(FormatErrorMessage(name, value),new[] { name })
         };
     }
 
@@ -97,8 +106,9 @@ public abstract partial class ValidatorBase
     /// 格式化错误消息
     /// </summary>
     /// <param name="name">显示名称</param>
+    /// <param name="value">验证的值</param>
     /// <returns><see cref="string"/></returns>
-    public virtual string FormatErrorMessage(string name)
+    public virtual string FormatErrorMessage(string name, object? value = default)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name);
     }

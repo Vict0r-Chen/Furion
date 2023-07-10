@@ -27,7 +27,7 @@ public abstract class ComparableAttribute<TComparableValidator> : ValidationAttr
     /// </summary>
     /// <param name="value">比较的值</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableAttribute(object value, Func<string> errorMessageAccessor)
+    public ComparableAttribute(object? value, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查

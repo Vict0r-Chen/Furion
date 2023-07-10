@@ -62,6 +62,11 @@ public sealed class PropertyValidator<T>
     internal Func<ValidatorBase, T, object?, object?>? ValidationObjectAccessor { get; private set; }
 
     /// <summary>
+    /// 验证条件
+    /// </summary>
+    internal Func<T, bool>? Condition { get; private set; }
+
+    /// <summary>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessage">错误消息</param>
@@ -381,6 +386,17 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加邮箱地址验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> EmailAddress()
+    {
+        Validators.Add(new ValueAnnotationValidator(new EmailAddressAttribute()));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
@@ -400,6 +416,23 @@ public sealed class PropertyValidator<T>
     public PropertyValidator<T> GreaterThanOrEqualTo(double value)
     {
         Validators.Add(new GreaterThanOrEqualToValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于等于验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> GreaterThanOrEqualTo(Func<T, object?> predicate)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        Validators.Add(new CustomValidator(instance => new GreaterThanOrEqualToValidator(predicate(instance)).IsValid(GetValue(instance))
+            , Strings.GreaterThanOrEqualToValidator_Invalid
+            , instance => new[] { GetValue(instance)?.ToString() }));
 
         return this;
     }
@@ -429,6 +462,23 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加大于验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> GreaterThan(Func<T, object?> predicate)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        Validators.Add(new CustomValidator(instance => new GreaterThanValidator(predicate(instance)).IsValid(GetValue(instance))
+            , Strings.GreaterThanValidator_Invalid
+            , instance => new[] { GetValue(instance)?.ToString() }));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
@@ -448,6 +498,23 @@ public sealed class PropertyValidator<T>
     public PropertyValidator<T> LessThanOrEqualTo(double value)
     {
         Validators.Add(new LessThanOrEqualToValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于等于验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> LessThanOrEqualTo(Func<T, object?> predicate)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        Validators.Add(new CustomValidator(instance => new LessThanOrEqualToValidator(predicate(instance)).IsValid(GetValue(instance))
+            , Strings.LessThanOrEqualToValidator_Invalid
+            , instance => new[] { GetValue(instance)?.ToString() }));
 
         return this;
     }
@@ -477,6 +544,23 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加大于验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> LessThan(Func<T, object?> predicate)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        Validators.Add(new CustomValidator(instance => new LessThanValidator(predicate(instance)).IsValid(GetValue(instance))
+            , Strings.LessThanValidator_Invalid
+            , instance => new[] { GetValue(instance)?.ToString() }));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加不相等验证器
     /// </summary>
     /// <param name="value">比较的值</param>
@@ -484,6 +568,23 @@ public sealed class PropertyValidator<T>
     public PropertyValidator<T> NotEqual(object? value)
     {
         Validators.Add(new NotEqualValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加不相等验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> NotEqual(Func<T, object?> predicate)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        Validators.Add(new CustomValidator(instance => new NotEqualValidator(predicate(instance)).IsValid(GetValue(instance))
+            , Strings.NotEqualValidator_Invalid
+            , instance => new[] { GetValue(instance)?.ToString() }));
 
         return this;
     }
@@ -501,6 +602,23 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加相等验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Equal(Func<T, object?> predicate)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+
+        Validators.Add(new CustomValidator(instance => new EqualValidator(predicate(instance)).IsValid(GetValue(instance))
+            , Strings.EqualValidator_Invalid
+            , instance => new[] { GetValue(instance)?.ToString() }));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加委托对象验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
@@ -508,18 +626,6 @@ public sealed class PropertyValidator<T>
     public PropertyValidator<T> Predicate(Func<object?, bool> predicate)
     {
         Validators.Add(new PredicateValidator(predicate));
-
-        return this;
-    }
-
-    /// <summary>
-    /// 添加自定义验证器
-    /// </summary>
-    /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Custom(Func<T, bool> predicate)
-    {
-        Validators.Add(new CustomValidator(predicate));
 
         return this;
     }
@@ -624,6 +730,34 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加自定义验证器
+    /// </summary>
+    /// <param name="predicate">委托对象</param>
+    /// <param name="defaultErrorMessage">默认错误消息</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Custom(Func<T, bool> predicate, string? defaultErrorMessage = default)
+    {
+        Validators.Add(new CustomValidator(predicate, defaultErrorMessage));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加自定义验证器
+    /// </summary>
+    /// <param name="condition">条件委托</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> When(Func<T, bool> condition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+
+        Condition = condition;
+
+        return this;
+    }
+
+    /// <summary>
     /// 设置验证对象访问器
     /// </summary>
     /// <param name="validationObjectAccessor">验证对象访问器</param>
@@ -639,14 +773,35 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 检查是否可以执行验证程序
+    /// </summary>
+    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool CanValidate(T instance)
+    {
+        if (Condition is null)
+        {
+            return true;
+        }
+
+        return Condition(instance);
+    }
+
+    /// <summary>
     /// 检查值有效性
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="bool"/></returns>
     internal bool IsValid(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 检查是否可以执行验证程序
+        if (!CanValidate(instance))
+        {
+            return true;
+        }
 
         // 获取属性值
         var propertyValue = GetValue(instance);
@@ -657,12 +812,18 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
     internal List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 检查是否可以执行验证程序
+        if (!CanValidate(instance))
+        {
+            return null;
+        }
 
         // 获取属性值
         var propertyValue = GetValue(instance);
@@ -687,7 +848,7 @@ public sealed class PropertyValidator<T>
     /// <summary>
     /// 获取属性值
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="object"/></returns>
     internal object? GetValue(T instance)
     {
@@ -708,7 +869,7 @@ public sealed class PropertyValidator<T>
     /// 获取验证对象
     /// </summary>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
     internal object? GetValidationObject(ValidatorBase validator, T instance, object? propertyValue)
@@ -734,16 +895,25 @@ public sealed class PropertyValidator<T>
     internal sealed class CustomValidator : ValidatorBase
     {
         /// <summary>
+        /// 格式化参数访问器
+        /// </summary>
+        internal readonly Func<T, string?[]>? _formatArgsAccessor;
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="predicate">委托对象</param>
-        internal CustomValidator(Func<T, bool> predicate)
-            : base()
+        /// <param name="defaultErrorMessage">默认错误消息</param>
+        /// <param name="formatArgsAccessor">格式化参数访问器</param>
+        internal CustomValidator(Func<T, bool> predicate, string? defaultErrorMessage = default, Func<T, string?[]>? formatArgsAccessor = default)
+            : base(defaultErrorMessage)
         {
             // 空检查
             ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
             Predicate = predicate;
+            ErrorMessage = defaultErrorMessage;
+            _formatArgsAccessor = formatArgsAccessor;
         }
 
         /// <summary>
@@ -758,6 +928,22 @@ public sealed class PropertyValidator<T>
             ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
             return Predicate((T)instance);
+        }
+
+        /// <inheritdoc />
+        public override string FormatErrorMessage(string name, object? instance = default)
+        {
+            var args = new List<string?> { name };
+
+            if (_formatArgsAccessor is not null)
+            {
+                // 空检查
+                ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+                args.AddRange(_formatArgsAccessor((T)instance));
+            }
+
+            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, args.ToArray());
         }
     }
 }

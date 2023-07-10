@@ -24,7 +24,7 @@ public abstract class ComparableValidator : ValidatorBase
     /// </summary>
     /// <param name="value">比较的值</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableValidator(object value, Func<string> errorMessageAccessor)
+    public ComparableValidator(object? value, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查
@@ -65,7 +65,7 @@ public abstract class ComparableValidator : ValidatorBase
     public abstract bool IsValid(IComparable value, IComparable compareValue);
 
     /// <inheritdoc />
-    public override string FormatErrorMessage(string name)
+    public override string FormatErrorMessage(string name, object? value = default)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
     }

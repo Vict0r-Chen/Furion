@@ -44,7 +44,7 @@ public sealed class Validator<T>
     /// </summary>
     /// <param name="predicate">配置委托</param>
     /// <returns><see cref="Validator{T}"/></returns>
-    public static Validator<T> Rule(Action<Validator<T>> predicate)
+    public static Validator<T> Create(Action<Validator<T>> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -73,7 +73,7 @@ public sealed class Validator<T>
     /// </summary>
     /// <param name="propertySelector">属性选择器</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> For(Expression<Func<T, object?>> propertySelector)
+    public PropertyValidator<T> Property(Expression<Func<T, object?>> propertySelector)
     {
         return new PropertyValidator<T>(this, propertySelector);
     }
@@ -81,7 +81,7 @@ public sealed class Validator<T>
     /// <summary>
     /// 检查值有效性
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="bool"/></returns>
     public bool IsValid(T instance)
     {
@@ -100,7 +100,7 @@ public sealed class Validator<T>
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="ValidationResult"/> 集合</returns>
     public List<ValidationResult>? GetValidationResults(T instance)
     {
@@ -128,7 +128,7 @@ public sealed class Validator<T>
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="ValidationResult"/></returns>
     public ValidationResult? GetValidationResult(T instance)
     {
@@ -141,7 +141,7 @@ public sealed class Validator<T>
     /// <summary>
     /// 执行验证
     /// </summary>
-    /// <param name="instance">对象实例</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
     /// <exception cref="ValidationException"></exception>
     public void Validate(T instance)
     {

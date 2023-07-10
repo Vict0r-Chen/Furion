@@ -21,4 +21,7 @@ public class Student
 
     [Age]
     public int Age { get; set; }
+
+    [Length(3, 10)]
+    public string? NickName { get; set; }
 }

@@ -42,7 +42,7 @@ public class GreaterThanOrEqualToAttribute : ComparableAttribute<GreaterThanOrEq
     /// 构造函数
     /// </summary>
     /// <param name="value">比较的值</param>
-    protected GreaterThanOrEqualToAttribute(object value)
+    public GreaterThanOrEqualToAttribute(object? value)
         : base(value, () => Strings.GreaterThanOrEqualToValidator_Invalid)
     {
     }
