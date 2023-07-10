@@ -36,6 +36,10 @@ public class ValidatorAttributeTests
     [InlineData(typeof(UserNameAttribute))]
     [InlineData(typeof(NotEqualAttribute))]
     [InlineData(typeof(EqualAttribute))]
+    [InlineData(typeof(GreaterThanAttribute))]
+    [InlineData(typeof(GreaterThanOrEqualToAttribute))]
+    [InlineData(typeof(LessThanAttribute))]
+    [InlineData(typeof(LessThanOrEqualToAttribute))]
     public void Attribute_Defined(Type attributeType)
     {
         Assert.True(typeof(ValidationAttribute).IsAssignableFrom(attributeType));
@@ -69,7 +73,11 @@ public class ValidatorAttributeTests
             Telephone = "076088809963",
             UserName = "😐monk",
             NotEqual = "furion",
-            Equal = "fur"
+            Equal = "fur",
+            GreaterThan = 9,
+            GreaterThanOrEqualTo = 9.0d,
+            LessThan = 11,
+            LessThanOrEqualTo = 11.0d
         };
 
         var validator = new ObjectAnnotationValidator();
@@ -78,6 +86,6 @@ public class ValidatorAttributeTests
         var validationResults = validator.GetValidationResults(model, null!);
         Assert.NotNull(validationResults);
 
-        Assert.Equal(19, validationResults.Count);
+        Assert.Equal(23, validationResults.Count);
     }
 }

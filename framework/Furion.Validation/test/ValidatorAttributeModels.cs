@@ -72,4 +72,16 @@ public class ValidatorModel
 
     [Equal("furion")]
     public string? Equal { get; set; }
+
+    [GreaterThan(10)]
+    public int GreaterThan { get; set; }
+
+    [GreaterThanOrEqualTo(10)]
+    public double GreaterThanOrEqualTo { get; set; }
+
+    [LessThan(10)]
+    public int LessThan { get; set; }
+
+    [LessThanOrEqualTo(10)]
+    public double LessThanOrEqualTo { get; set; }
 }

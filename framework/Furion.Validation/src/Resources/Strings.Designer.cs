@@ -151,11 +151,47 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} must be greater than or equal to {1}. 的本地化字符串。
+        /// </summary>
+        internal static string GreaterThanOrEqualToValidator_Invalid {
+            get {
+                return ResourceManager.GetString("GreaterThanOrEqualToValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} must be greater than {1}. 的本地化字符串。
+        /// </summary>
+        internal static string GreaterThanValidator_Invalid {
+            get {
+                return ResourceManager.GetString("GreaterThanValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
         /// </summary>
         internal static string IDCardNumberValidator_invalid {
             get {
                 return ResourceManager.GetString("IDCardNumberValidator_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} must be less than or equal to {1}. 的本地化字符串。
+        /// </summary>
+        internal static string LessThanOrEqualToValidator_Invalid {
+            get {
+                return ResourceManager.GetString("LessThanOrEqualToValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The field {0} must be less than {1}. 的本地化字符串。
+        /// </summary>
+        internal static string LessThanValidator_Invalid {
+            get {
+                return ResourceManager.GetString("LessThanValidator_Invalid", resourceCulture);
             }
         }
         

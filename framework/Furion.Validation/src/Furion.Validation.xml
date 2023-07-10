@@ -56,6 +56,30 @@
         <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.ComparableAttribute`1">
+            <summary>
+            比较验证器验证特性
+            </summary>
+            <typeparam name="TComparableValidator"><see cref="T:Furion.Validation.ComparableValidator"/></typeparam>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.#ctor(System.Object,System.Func{System.String})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+            <param name="errorMessageAccessor">错误消息资源访问器</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.ComparableAttribute`1.Value">
+            <summary>
+            比较的值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.DomainAttribute">
             <summary>
             域名验证特性
@@ -119,6 +143,52 @@
         <member name="M:System.ComponentModel.DataAnnotations.EqualAttribute.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.GreaterThanAttribute">
+            <summary>
+            大于验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanAttribute.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanAttribute.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanAttribute.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute">
+            <summary>
+            大于等于验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.IDCardNumberAttribute">
             <summary>
             身份证号验证特性
@@ -131,6 +201,52 @@
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.IDCardNumberAttribute.IsValid(System.Object)">
             <inheritdoc />
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.LessThanAttribute">
+            <summary>
+            小于验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanAttribute.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanAttribute.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanAttribute.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute">
+            <summary>
+            小于等于验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.NotEmptyAttribute">
             <summary>
@@ -902,9 +1018,29 @@
               查找类似 The field {0} must be equal to {1}. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.GreaterThanOrEqualToValidator_Invalid">
+            <summary>
+              查找类似 The field {0} must be greater than or equal to {1}. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.GreaterThanValidator_Invalid">
+            <summary>
+              查找类似 The field {0} must be greater than {1}. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
             <summary>
               查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.LessThanOrEqualToValidator_Invalid">
+            <summary>
+              查找类似 The field {0} must be less than or equal to {1}. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Resources.Strings.LessThanValidator_Invalid">
+            <summary>
+              查找类似 The field {0} must be less than {1}. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.NotEmptyValidator_Invalid">
@@ -1306,6 +1442,37 @@
             </code>
             </remarks>
         </member>
+        <member name="T:Furion.Validation.ComparableValidator">
+            <summary>
+            比较验证器抽象基类
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ComparableValidator.#ctor(System.Object,System.Func{System.String})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+            <param name="errorMessageAccessor">错误消息资源访问器</param>
+        </member>
+        <member name="P:Furion.Validation.ComparableValidator.Value">
+            <summary>
+            比较的值
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ComparableValidator.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ComparableValidator.IsValid(System.IComparable,System.IComparable)">
+            <summary>
+            检查值有效性
+            </summary>
+            <param name="value">验证的值</param>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ComparableValidator.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Validation.CompositeValidator">
             <summary>
             组合验证器
@@ -1424,6 +1591,58 @@
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.EqualValidator.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Validation.GreaterThanOrEqualToValidator">
+            <summary>
+            大于等于验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.IsValid(System.IComparable,System.IComparable)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Validation.GreaterThanValidator">
+            <summary>
+            大于验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanValidator.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanValidator.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanValidator.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanValidator.IsValid(System.IComparable,System.IComparable)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.IDCardNumberValidator">
@@ -1601,6 +1820,58 @@
             ○ Match if at the end of the string or if before an ending newline.<br/>
             </code>
             </remarks>
+        </member>
+        <member name="T:Furion.Validation.LessThanOrEqualToValidator">
+            <summary>
+            小于等于验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.LessThanOrEqualToValidator.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanOrEqualToValidator.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanOrEqualToValidator.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanOrEqualToValidator.IsValid(System.IComparable,System.IComparable)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Validation.LessThanValidator">
+            <summary>
+            小于验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.LessThanValidator.#ctor(System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanValidator.#ctor(System.Double)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanValidator.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="value">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanValidator.IsValid(System.IComparable,System.IComparable)">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.NotEmptyValidator">
             <summary>
@@ -2054,6 +2325,77 @@
             <param name="maximum">最大值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.RegularExpression(System.String)">
+            <summary>
+            添加正则表达式验证器
+            </summary>
+            <param name="pattern">正则表达式</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.RegularExpression(System.String,System.Int32)">
+            <summary>
+            添加正则表达式验证器
+            </summary>
+            <param name="pattern">正则表达式</param>
+            <param name="matchTimeoutInMilliseconds">匹配超时毫秒数</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.GreaterThanOrEqualTo(System.Int32)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.GreaterThanOrEqualTo(System.Double)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.GreaterThan(System.Int32)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.GreaterThan(System.Double)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.LessThanOrEqualTo(System.Int32)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.LessThanOrEqualTo(System.Double)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.LessThan(System.Int32)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.LessThan(System.Double)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="value">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`1.NotEqual(System.Object)">
             <summary>
             添加不相等验证器
@@ -2142,7 +2484,7 @@
             设置验证对象访问器
             </summary>
             <param name="validationObjectAccessor">验证对象访问器</param>
-            <returns></returns>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.IsValid(`0)">
             <summary>

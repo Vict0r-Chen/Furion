@@ -353,6 +353,130 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 添加正则表达式验证器
+    /// </summary>
+    /// <param name="pattern">正则表达式</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> RegularExpression(string pattern)
+    {
+        Validators.Add(new ValueAnnotationValidator(new RegularExpressionAttribute(pattern)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加正则表达式验证器
+    /// </summary>
+    /// <param name="pattern">正则表达式</param>
+    /// <param name="matchTimeoutInMilliseconds">匹配超时毫秒数</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> RegularExpression(string pattern, int matchTimeoutInMilliseconds)
+    {
+        Validators.Add(new ValueAnnotationValidator(new RegularExpressionAttribute(pattern)
+        {
+            MatchTimeoutInMilliseconds = matchTimeoutInMilliseconds
+        }));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于等于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> GreaterThanOrEqualTo(int value)
+    {
+        Validators.Add(new GreaterThanOrEqualToValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于等于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> GreaterThanOrEqualTo(double value)
+    {
+        Validators.Add(new GreaterThanOrEqualToValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> GreaterThan(int value)
+    {
+        Validators.Add(new GreaterThanValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> GreaterThan(double value)
+    {
+        Validators.Add(new GreaterThanValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于等于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> LessThanOrEqualTo(int value)
+    {
+        Validators.Add(new LessThanOrEqualToValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于等于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> LessThanOrEqualTo(double value)
+    {
+        Validators.Add(new LessThanOrEqualToValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> LessThan(int value)
+    {
+        Validators.Add(new LessThanValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加大于验证器
+    /// </summary>
+    /// <param name="value">比较的值</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> LessThan(double value)
+    {
+        Validators.Add(new LessThanValidator(value));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加不相等验证器
     /// </summary>
     /// <param name="value">比较的值</param>
