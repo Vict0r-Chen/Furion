@@ -27,17 +27,21 @@ public sealed class Validator<T> : IValidator<T>
     internal readonly List<PropertyValidator<T>> _propertyValidators;
 
     /// <summary>
+    /// <see cref="ObjectAnnotationValidator"/>
+    /// </summary>
+    internal readonly ObjectAnnotationValidator _objectAnnotationValidator;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     public Validator()
     {
         _propertyValidators = new();
+        _objectAnnotationValidator = new();
     }
 
-    /// <summary>
-    /// 对象注解（特性）验证器
-    /// </summary>
-    internal ObjectAnnotationValidator? AnnotationValidator { get; private set; }
+    /// <inheritdoc />
+    public bool SuppressAnnotations { get; set; } = true;
 
     /// <summary>
     /// 创建类型验证器
@@ -66,18 +70,6 @@ public sealed class Validator<T> : IValidator<T>
     }
 
     /// <summary>
-    /// 创建类型注解（特性）验证器
-    /// </summary>
-    /// <returns><see cref="Validator{T}"/></returns>
-    public static Validator<T> Annotate()
-    {
-        return new Validator<T>
-        {
-            AnnotationValidator = new ObjectAnnotationValidator()
-        };
-    }
-
-    /// <summary>
     /// 创建属性验证器
     /// </summary>
     /// <param name="propertySelector">属性选择器</param>
@@ -87,6 +79,18 @@ public sealed class Validator<T> : IValidator<T>
         return new PropertyValidator<T>(this, propertySelector);
     }
 
+    /// <summary>
+    /// 启用/禁用注解（特性）验证器
+    /// </summary>
+    /// <param name="enable">是否启用</param>
+    /// <returns><see cref="Validate(T)"/></returns>
+    public Validator<T> WithAnnotations(bool enable = true)
+    {
+        SuppressAnnotations = !enable;
+
+        return this;
+    }
+
     /// <inheritdoc />
     public bool IsValid(T instance)
     {
@@ -94,12 +98,13 @@ public sealed class Validator<T> : IValidator<T>
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
         // 处理对象注解（特性）验证器
-        if (AnnotationValidator is not null)
+        var isValid = true;
+        if (!SuppressAnnotations)
         {
-            return AnnotationValidator.IsValid(instance);
+            isValid = _objectAnnotationValidator.IsValid(instance);
         }
 
-        return _propertyValidators.All(validator => validator.IsValid(instance));
+        return isValid && _propertyValidators.All(validator => validator.IsValid(instance));
     }
 
     /// <inheritdoc />
@@ -108,22 +113,23 @@ public sealed class Validator<T> : IValidator<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
+        var validationResults = new List<ValidationResult>();
+
         // 处理对象注解（特性）验证器
-        if (AnnotationValidator is not null)
+        if (!SuppressAnnotations)
         {
-            return AnnotationValidator.GetValidationResults(instance, null!);
+            validationResults.AddRange(_objectAnnotationValidator.GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
         }
 
         // 获取所有验证器验证结果集合
-        var validatorResults = _propertyValidators.SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>())
-                                                                     .ToList();
+        validationResults.AddRange(_propertyValidators.SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>()));
 
-        if (validatorResults.Count == 0)
+        if (validationResults.Count == 0)
         {
             return null;
         }
 
-        return validatorResults;
+        return validationResults;
     }
 
     /// <inheritdoc />

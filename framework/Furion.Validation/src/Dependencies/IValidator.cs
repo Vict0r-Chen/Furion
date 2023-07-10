@@ -22,6 +22,11 @@ public interface IValidator<T>
    where T : class
 {
     /// <summary>
+    /// 禁止注解（特性）验证
+    /// </summary>
+    bool SuppressAnnotations { get; set; }
+
+    /// <summary>
     /// 检查值有效性
     /// </summary>
     /// <param name="instance"><typeparamref name="T"/></param>

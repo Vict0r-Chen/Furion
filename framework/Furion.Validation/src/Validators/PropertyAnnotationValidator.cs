@@ -80,26 +80,26 @@ public partial class PropertyAnnotationValidator : ValidatorBase
     /// <summary>
     /// 验证逻辑
     /// </summary>
-    /// <param name="value">验证的值</param>
+    /// <param name="instance">对象实例</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults)
+    internal bool TryValidate(object? instance, out List<ValidationResult> validationResults)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
+        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
         ArgumentException.ThrowIfNullOrWhiteSpace(PropertyName, nameof(PropertyName));
 
         // 根据属性名称查找属性对象
-        var propertyInfo = value.GetType().GetProperty(PropertyName);
+        var propertyInfo = instance.GetType().GetProperty(PropertyName);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyInfo, nameof(propertyInfo));
 
         // 获取属性值
-        var propertyValue = propertyInfo.GetValue(value);
+        var propertyValue = propertyInfo.GetValue(instance);
 
         // 调用 Validator 静态类验证
-        var validationContext = new ValidationContext(value)
+        var validationContext = new ValidationContext(instance)
         {
             MemberName = PropertyName
         };

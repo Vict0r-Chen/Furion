@@ -35,6 +35,24 @@ public abstract class AbstractValidator<T> : IValidator<T>
     }
 
     /// <summary>
+    /// 禁止注解（特性）验证
+    /// </summary>
+    private bool _suppressAnnotations = true;
+
+    /// <summary>
+    /// 禁止注解（特性）验证
+    /// </summary>
+    public bool SuppressAnnotations
+    {
+        get { return _suppressAnnotations; }
+        set
+        {
+            _suppressAnnotations = value;
+            _validator.SuppressAnnotations = value;
+        }
+    }
+
+    /// <summary>
     /// 创建属性验证器
     /// </summary>
     /// <param name="propertySelector">属性选择器</param>
