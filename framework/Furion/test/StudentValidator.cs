@@ -12,22 +12,14 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+using Furion.Tests.Models;
 
-/// <summary>
-/// 嵌入资源配置模块服务组件
-/// </summary>
-public sealed class ManifestResourceConfigurationComponent : ComponentBase
+namespace Furion.Tests;
+
+public class StudentValidator : AbstractValidator<Student>, ITransientDependency
 {
-    /// <summary>
-    /// 组件配置
-    /// </summary>
-    [ComponentProps]
-    public Action<ManifestResourceConfigurationBuilder>? Props { get; set; }
-
-    /// <inheritdoc />
-    public override void ConfigureServices(ServiceComponentContext context)
+    public StudentValidator()
     {
-        context.Configuration.AddManifestResource(Props);
+        RuleFor(s => s.Name).NotNull().NotEqual("Furion");
     }
 }

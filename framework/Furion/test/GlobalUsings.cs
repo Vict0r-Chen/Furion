@@ -16,5 +16,6 @@ global using Furion.Component;
 global using Furion.Configuration;
 global using Furion.DependencyInjection;
 global using Furion.Tests;
+global using Furion.Validation;
 global using Microsoft.AspNetCore.Mvc;
 global using System.ComponentModel.DataAnnotations;

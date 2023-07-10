@@ -1233,6 +1233,24 @@
             </summary>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.UserName">
+            <summary>
+            添加用户名验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Password">
+            <summary>
+            添加密码验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.StrongPassword">
+            <summary>
+            添加强密码验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`1.GreaterThanOrEqualTo(System.Int32)">
             <summary>
             添加大于等于验证器

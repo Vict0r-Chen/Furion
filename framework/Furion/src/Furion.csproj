@@ -16,7 +16,7 @@
 		<ProjectReference Include="..\..\Furion.Configuration\src\Furion.Configuration.csproj" />
 		<ProjectReference Include="..\..\Furion.DependencyInjection.AspNetCore\src\Furion.DependencyInjection.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\Furion.DependencyInjection.Named\src\Furion.DependencyInjection.Named.csproj" />
-		<ProjectReference Include="..\..\Furion.Validation\src\Furion.Validation.csproj" />
+		<ProjectReference Include="..\..\Furion.Validation.AspNetCore\src\Furion.Validation.AspNetCore.csproj" />
 	</ItemGroup>
 
 </Project>

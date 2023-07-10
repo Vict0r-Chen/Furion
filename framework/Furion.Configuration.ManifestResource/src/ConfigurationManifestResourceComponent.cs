@@ -15,9 +15,19 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块应用组件
+/// 嵌入资源配置模块服务组件
 /// </summary>
-[DependsOn<ComponentCoreComponent>]
-public sealed class HostingComponentCoreComponent : ComponentBase
+public sealed class ConfigurationManifestResourceComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    [ComponentProps]
+    public Action<ManifestResourceConfigurationBuilder>? Props { get; set; }
+
+    /// <inheritdoc />
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        context.Configuration.AddManifestResource(Props);
+    }
 }

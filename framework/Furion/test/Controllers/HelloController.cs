@@ -34,8 +34,10 @@ public class HelloController
     }
 
     [HttpPost]
-    public Student Post(Student stu)
+    public Student Post([FromServices] IValidator<Student> validator, Student stu)
     {
+        _ = validator.GetValidationResults(new Student { Name = "Furion" });
+
         return stu;
     }
 }

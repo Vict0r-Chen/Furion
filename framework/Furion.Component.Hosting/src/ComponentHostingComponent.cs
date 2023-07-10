@@ -18,17 +18,6 @@ namespace Furion.Component;
 /// 组件模块应用组件
 /// </summary>
 [DependsOn<ComponentCoreComponent>]
-public sealed class WebComponentCoreComponent : WebComponent
+public sealed class ComponentHostingComponent : ComponentBase
 {
-    /// <summary>
-    /// 组件配置
-    /// </summary>
-    [ComponentProps]
-    public Action<WebComponentBuilder>? Props { get; set; }
-
-    /// <inheritdoc />
-    public override void Configure(ApplicationComponentContext context)
-    {
-        context.Application.UseComponentCore(Props);
-    }
 }

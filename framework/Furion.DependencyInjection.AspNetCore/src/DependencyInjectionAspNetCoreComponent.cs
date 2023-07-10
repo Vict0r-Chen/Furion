@@ -12,20 +12,17 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Furion.Component;
 
 /// <summary>
-/// 数据验证模块 <see cref="IServiceCollection"/> 拓展类
+/// 依赖注入 Web 模块服务组件
 /// </summary>
-public static class ValidationServiceCollectionExtensions
+[DependsOn<ComponentCoreComponent>]
+public sealed class DependencyInjectionAspNetCoreComponent : ComponentBase
 {
-    /// <summary>
-    /// 添加数据验证模块服务
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddValidation(this IServiceCollection services)
+    /// <inheritdoc />
+    public override void ConfigureServices(ServiceComponentContext context)
     {
-        return services;
+        context.Services.AddAutowiredControllerActivator();
     }
 }

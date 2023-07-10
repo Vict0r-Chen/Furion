@@ -57,6 +57,19 @@
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
         </member>
+        <member name="T:Furion.Component.ComponentAspNetCoreComponent">
+            <summary>
+            组件模块应用组件
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ComponentAspNetCoreComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentAspNetCoreComponent.Configure(Furion.Component.ApplicationComponentContext)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Component.ApplicationComponentContext">
             <summary>
             应用组件上下文
@@ -91,19 +104,6 @@
             配置中间件
             </summary>
             <param name="context"><see cref="T:Furion.Component.ApplicationComponentContext"/></param>
-        </member>
-        <member name="T:Furion.Component.WebComponentCoreComponent">
-            <summary>
-            组件模块应用组件
-            </summary>
-        </member>
-        <member name="P:Furion.Component.WebComponentCoreComponent.Props">
-            <summary>
-            组件配置
-            </summary>
-        </member>
-        <member name="M:Furion.Component.WebComponentCoreComponent.Configure(Furion.Component.ApplicationComponentContext)">
-            <inheritdoc />
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.ComponentWebApplicationBuilderExtensions">
             <summary>

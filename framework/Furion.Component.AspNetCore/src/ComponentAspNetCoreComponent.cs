@@ -15,14 +15,20 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 依赖注入 Web 模块服务组件
+/// 组件模块应用组件
 /// </summary>
 [DependsOn<ComponentCoreComponent>]
-public sealed class AutowiredControllerActivatorComponent : ComponentBase
+public sealed class ComponentAspNetCoreComponent : WebComponent
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    [ComponentProps]
+    public Action<WebComponentBuilder>? Props { get; set; }
+
     /// <inheritdoc />
-    public override void ConfigureServices(ServiceComponentContext context)
+    public override void Configure(ApplicationComponentContext context)
     {
-        context.Services.AddAutowiredControllerActivator();
+        context.Application.UseComponentCore(Props);
     }
 }

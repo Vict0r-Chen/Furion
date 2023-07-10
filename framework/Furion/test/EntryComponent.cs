@@ -17,9 +17,9 @@ namespace Furion.Tests;
 [DependsOn<ConfigurationComponent
     , DependencyInjectionComponent
     , DependencyInjectionNamedComponent
-    , WebComponentCoreComponent
-    , HostingComponentCoreComponent
-    , ManifestResourceConfigurationComponent>]
+    , ComponentAspNetCoreComponent
+    , ComponentHostingComponent
+    , ConfigurationManifestResourceComponent>]
 public class EntryComponent : WebComponent
 {
     public override void PreConfigureServices(ServiceComponentContext context)

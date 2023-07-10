@@ -88,12 +88,12 @@
         <member name="M:Furion.DependencyInjection.AspNetCore.TypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
             <inheritdoc/>
         </member>
-        <member name="T:Furion.Component.AutowiredControllerActivatorComponent">
+        <member name="T:Furion.Component.DependencyInjectionAspNetCoreComponent">
             <summary>
             依赖注入 Web 模块服务组件
             </summary>
         </member>
-        <member name="M:Furion.Component.AutowiredControllerActivatorComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+        <member name="M:Furion.Component.DependencyInjectionAspNetCoreComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorMvcBuilderExtensions">

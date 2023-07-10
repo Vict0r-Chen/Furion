@@ -217,17 +217,17 @@
         <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <inheritdoc/>
         </member>
-        <member name="T:Furion.Component.ManifestResourceConfigurationComponent">
+        <member name="T:Furion.Component.ConfigurationManifestResourceComponent">
             <summary>
             嵌入资源配置模块服务组件
             </summary>
         </member>
-        <member name="P:Furion.Component.ManifestResourceConfigurationComponent.Props">
+        <member name="P:Furion.Component.ConfigurationManifestResourceComponent.Props">
             <summary>
             组件配置
             </summary>
         </member>
-        <member name="M:Furion.Component.ManifestResourceConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+        <member name="M:Furion.Component.ConfigurationManifestResourceComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.Configuration.ManifestResourceConfigurationBuilderExtensions">

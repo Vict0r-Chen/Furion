@@ -397,6 +397,39 @@ public sealed class PropertyValidator<T> : IValidator<T>
     }
 
     /// <summary>
+    /// 添加用户名验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> UserName()
+    {
+        Validators.Add(new UserNameValidator());
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加密码验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> Password()
+    {
+        Validators.Add(new PasswordValidator());
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加强密码验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> StrongPassword()
+    {
+        Validators.Add(new StrongPasswordValidator());
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
