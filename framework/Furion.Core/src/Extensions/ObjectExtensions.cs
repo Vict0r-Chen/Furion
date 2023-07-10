@@ -55,7 +55,7 @@ internal static class ObjectExtensions
         var runtimeProperty = obj.GetType().GetRuntimeProperty("Count");
 
         // 检查是否获取到 Count 属性，且该属性可读且类型为 int
-        if (runtimeProperty != null
+        if (runtimeProperty is not null
             && runtimeProperty.CanRead
             && runtimeProperty.PropertyType == typeof(int))
         {

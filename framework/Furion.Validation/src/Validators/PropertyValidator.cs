@@ -57,6 +57,11 @@ public sealed class PropertyValidator<T>
     internal Func<T, string>? ErrorMessageAccessor { get; private set; }
 
     /// <summary>
+    /// 验证对象访问器
+    /// </summary>
+    internal Func<ValidatorBase, T, object?, object?>? ValidationObjectAccessor { get; private set; }
+
+    /// <summary>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessage">错误消息</param>
@@ -495,6 +500,21 @@ public sealed class PropertyValidator<T>
     }
 
     /// <summary>
+    /// 设置验证对象访问器
+    /// </summary>
+    /// <param name="validationObjectAccessor">验证对象访问器</param>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> SetValidationObjectAccessor(Func<ValidatorBase, T, object?, object?> validationObjectAccessor)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validationObjectAccessor, nameof(validationObjectAccessor));
+
+        ValidationObjectAccessor = validationObjectAccessor;
+
+        return this;
+    }
+
+    /// <summary>
     /// 检查值有效性
     /// </summary>
     /// <param name="instance">对象实例</param>
@@ -532,7 +552,7 @@ public sealed class PropertyValidator<T>
         }
 
         // 添加自定义错误消息
-        if (ErrorMessageAccessor != null)
+        if (ErrorMessageAccessor is not null)
         {
             validatorResults.Insert(0, new ValidationResult(ErrorMessageAccessor(instance), new[] { PropertyName }));
         }
@@ -567,12 +587,18 @@ public sealed class PropertyValidator<T>
     /// <param name="instance">对象实例</param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
-    internal static object? GetValidationObject(ValidatorBase validator, T instance, object? propertyValue)
+    internal object? GetValidationObject(ValidatorBase validator, T instance, object? propertyValue)
     {
         // 如果是自定义验证器则返回对象实例
         if (validator.IsSameAs(typeof(CustomValidator)))
         {
             return instance;
+        }
+
+        // 检查是否设置了验证对象访问器
+        if (ValidationObjectAccessor is not null)
+        {
+            return ValidationObjectAccessor(validator, instance, propertyValue);
         }
 
         return propertyValue;

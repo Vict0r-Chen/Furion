@@ -54,7 +54,7 @@ public class PredicateValidatorTests
     {
         var validator = new PredicateValidator<string>(str =>
         {
-            return str != null && str == "Furion";
+            return str is not null && str == "Furion";
         });
 
         Assert.False(validator.IsValid(null));
@@ -63,7 +63,7 @@ public class PredicateValidatorTests
 
         var validator2 = new PredicateValidator(str =>
         {
-            return str != null && str.ToString() == "Furion";
+            return str is not null && str.ToString() == "Furion";
         });
 
         Assert.False(validator2.IsValid(null));
@@ -76,7 +76,7 @@ public class PredicateValidatorTests
     {
         var validator = new PredicateValidator<string>(str =>
         {
-            return str != null && str == "Furion";
+            return str is not null && str == "Furion";
         })
         {
             Predicate = null!
@@ -95,7 +95,7 @@ public class PredicateValidatorTests
     {
         var validator = new PredicateValidator<string>(str =>
         {
-            return str != null && str == "Furion";
+            return str is not null && str == "Furion";
         });
 
         var failure = validator.GetValidationResult("百小僧", "Value");
@@ -108,7 +108,7 @@ public class PredicateValidatorTests
     {
         var validator = new PredicateValidator<string>(str =>
         {
-            return str != null && str == "Furion";
+            return str is not null && str == "Furion";
         })
         {
             ErrorMessage = "不是一个有效的格式"
