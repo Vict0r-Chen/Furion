@@ -1,4 +1,4 @@
-![](./assets/banner.jpeg)
+![](./assets/joinus.jpeg)
 
 ## 先知（v5）
 
