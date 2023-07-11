@@ -103,31 +103,16 @@ public static class ComponentHostApplicationBuilderExtensions
     public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, ComponentBuilder componentBuilder)
     {
         // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
         ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
 
         // 构建模块服务
         componentBuilder.Build(hostApplicationBuilder);
 
-        // 创建组件上下文
-        var componentContext = new ServiceComponentContext(hostApplicationBuilder);
-
-        // 创建依赖关系图
-        var dependencyGraph = new DependencyGraph(dependencies);
-
-        // 创建组件依赖关系对象集合
-        var components = ComponentBase.CreateComponents(dependencies, componentContext, component =>
-        {
-            ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, nameof(ComponentBase.PreConfigureServices));
-        });
-
-        // 调用配置服务
-        components.ForEach(component =>
-        {
-            ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, nameof(ComponentBase.ConfigureServices));
-        });
-
-        components.Clear();
-        dependencyGraph.Release();
+        // 根据组件依赖关系依次调用
+        ComponentBase.InvokeComponents(dependencies
+            , new ServiceComponentContext(hostApplicationBuilder)
+            , new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
 
         return hostApplicationBuilder;
     }

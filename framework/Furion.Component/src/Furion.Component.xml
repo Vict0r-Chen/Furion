@@ -770,24 +770,6 @@
             </summary>
             <param name="context"><see cref="T:Furion.Component.ComponentEventContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeMethod(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
-            <summary>
-            调用组件方法
-            </summary>
-            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
-            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="invokeMethod">方法名称</param>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
-            <summary>
-            调用事件监听
-            </summary>
-            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
-            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="event">事件</param>
-        </member>
         <member name="M:Furion.Component.ComponentBase.CreateTopologicalGraph(System.Type,System.Func{System.Type,System.Boolean})">
             <summary>
             创建组件拓扑图排序集合
@@ -858,25 +840,33 @@
             <returns><see cref="T:System.Object"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateComponents``1(System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentContext,System.Action{``0},System.Func{System.Type,System.Boolean})">
+        <member name="M:Furion.Component.ComponentBase.InvokeComponents(System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentContext,System.String[],System.Func{System.Type,System.Boolean})">
             <summary>
-            创建组件依赖关系对象集合
+            根据组件依赖关系依次调用
             </summary>
-            <typeparam name="TTargetComponent">目标组件类型</typeparam>
             <param name="dependencies">组件依赖关系集合</param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="predicate">自定义配置委托</param>
+            <param name="methods">调用方法集合</param>
             <param name="topologicalGraphPredicate">拓扑图排序过滤</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateComponents(System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentContext,System.Action{Furion.Component.ComponentBase})">
+        <member name="M:Furion.Component.ComponentBase.InvokeMethod(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
-            创建组件依赖关系对象集合
+            调用组件方法
             </summary>
-            <param name="dependencies">组件依赖关系集合</param>
+            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="predicate">自定义配置委托</param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+            <param name="invokeMethod">方法名称</param>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+            <summary>
+            调用事件监听
+            </summary>
+            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
+            <param name="event">事件</param>
         </member>
         <member name="T:Furion.Component.ComponentReleaserHostedService">
             <summary>

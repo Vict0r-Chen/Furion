@@ -53,26 +53,14 @@ public static class ComponentWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies)
     {
-        // 创建组件上下文
-        var componentContext = new ApplicationComponentContext(webApplication);
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
 
-        // 创建依赖关系图
-        var dependencyGraph = new DependencyGraph(dependencies);
-
-        // 创建组件依赖关系对象集合
-        var components = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, component =>
-        {
-            ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, nameof(WebComponent.PreConfigure));
-        }, ComponentBase.IsWebComponent);
-
-        // 调用配置中间件
-        components.ForEach(component =>
-        {
-            ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, nameof(WebComponent.Configure));
-        });
-
-        components.Clear();
-        dependencyGraph.Release();
+        // 根据组件依赖关系依次调用
+        ComponentBase.InvokeComponents(dependencies
+            , new ApplicationComponentContext(webApplication)
+            , new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }
+            , ComponentBase.IsWebComponent);
 
         return webApplication;
     }
