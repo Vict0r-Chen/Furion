@@ -8,7 +8,7 @@
 
 ## 愿景
 
-**⌈ 希望有生之年我能创造一个奇迹，你们也能见证一个奇迹。 ⌋**
+**⌈ 希望有生之年能创造一个奇迹，你们也能见证一个奇迹。 ⌋**
 
 ## 新域名
 
@@ -108,6 +108,8 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 [百小僧](https://gitee.com/monksoul)
 <br />
 [Furion 开发团队](https://furion.net/)
+
+<img src="./assets/support.png" width="300" />
 
 ## 协议
 
