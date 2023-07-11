@@ -17,7 +17,6 @@ namespace Furion.Component;
 /// <summary>
 /// 依赖注入 Web 模块服务组件
 /// </summary>
-[DependsOn<ComponentCoreComponent>]
 public sealed class DependencyInjectionAspNetCoreComponent : ComponentBase
 {
     /// <inheritdoc />

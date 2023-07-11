@@ -32,7 +32,6 @@ internal sealed class ComponentOptions
     {
         PropsActions ??= new();
         Components ??= new();
-        InvokeRecords ??= new();
 
         _GetPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
             , 1
@@ -51,35 +50,6 @@ internal sealed class ComponentOptions
     /// 组件对象列表
     /// </summary>
     internal ConcurrentDictionary<Type, ComponentBase> Components { get; init; }
-
-    /// <summary>
-    /// 组件调用记录
-    /// </summary>
-    /// <remarks>作用于组件重复调用检查</remarks>
-    internal ConcurrentBag<string> InvokeRecords { get; init; }
-
-    /// <summary>
-    /// 禁用组件重复调用
-    /// </summary>
-    internal bool SuppressDuplicateInvoke { get; set; } = true;
-
-    /// <summary>
-    /// 禁用 Web 组件重复调用
-    /// </summary>
-    internal bool SuppressDuplicateInvokeForWeb { get; set; } = true;
-
-    /// <summary>
-    /// SuppressDuplicateInvoke[ForWeb] 属性索引
-    /// </summary>
-    /// <param name="propName">属性名</param>
-    /// <returns><see cref="bool"/></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    internal bool this[string propName] => propName switch
-    {
-        nameof(SuppressDuplicateInvoke) => SuppressDuplicateInvoke,
-        nameof(SuppressDuplicateInvokeForWeb) => SuppressDuplicateInvokeForWeb,
-        _ => throw new InvalidOperationException("Unsupported property name index.")
-    };
 
     /// <summary>
     /// 获取组件配置委托
@@ -123,6 +93,5 @@ internal sealed class ComponentOptions
     {
         PropsActions.Clear();
         Components.Clear();
-        InvokeRecords.Clear();
     }
 }

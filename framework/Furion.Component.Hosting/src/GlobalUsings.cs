@@ -15,5 +15,4 @@
 global using Furion;
 global using Furion.Component;
 global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Hosting;
 global using System.Runtime.CompilerServices;

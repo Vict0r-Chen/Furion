@@ -17,7 +17,6 @@ namespace Furion.Component;
 /// <summary>
 /// 配置模块服务组件
 /// </summary>
-[DependsOn<ComponentCoreComponent>]
 public sealed class ConfigurationComponent : ComponentBase
 {
     /// <summary>

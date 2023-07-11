@@ -583,75 +583,39 @@
             组件模块构建器
             </summary>
         </member>
+        <member name="F:Furion.Component.ComponentBuilder._propsActions">
+            <summary>
+            组件配置委托集合
+            </summary>
+        </member>
         <member name="M:Furion.Component.ComponentBuilder.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="P:Furion.Component.ComponentBuilder.SuppressDuplicateInvoke">
-            <summary>
-            禁用组件重复调用
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <inheritdoc />
-        </member>
-        <member name="T:Furion.Component.ComponentBuilderBase">
-            <summary>
-            组件模块构建器基类
-            </summary>
-        </member>
-        <member name="F:Furion.Component.ComponentBuilderBase._propsActions">
-            <summary>
-            组件配置委托集合
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentBuilderBase.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentBuilderBase.Props``1(System.Action{``0})">
+        <member name="M:Furion.Component.ComponentBuilder.Props``1(System.Action{``0})">
             <summary>
             添加组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
         </member>
-        <member name="M:Furion.Component.ComponentBuilderBase.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Component.ComponentBuilder.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             添加组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBuilderBase.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Furion.Component.ComponentBuilder.Build(Microsoft.Extensions.Hosting.IHostApplicationBuilder)">
             <summary>
             构建模块服务
             </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-        </member>
-        <member name="T:Furion.Component.ComponentCoreComponent">
-            <summary>
-            组件模块服务组件
-            </summary>
-        </member>
-        <member name="P:Furion.Component.ComponentCoreComponent.Props">
-            <summary>
-            组件配置
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentCoreComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
-            <inheritdoc />
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
         </member>
         <member name="T:Furion.Component.Constants">
             <summary>
             常量配置
-            </summary>
-        </member>
-        <member name="F:Furion.Component.Constants.IWEBHOSTENVIRONMENT_TYPE_FULLNAME">
-            <summary>
-            IWebHostEnvironment 类型限定名
             </summary>
         </member>
         <member name="F:Furion.Component.Constants.WEBCOMPONENT_TYPE_FULLNAME">
@@ -707,17 +671,43 @@
             <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
+        <member name="T:Furion.Component.ComponentEventContext">
+            <summary>
+            组件事件上下文
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentEventContext.#ctor(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
+            <param name="event">事件</param>
+        </member>
+        <member name="P:Furion.Component.ComponentEventContext.Component">
+            <inheritdoc cref="T:Furion.Component.ComponentBase" />
+        </member>
+        <member name="P:Furion.Component.ComponentEventContext.ComponentContext">
+            <inheritdoc cref="T:Furion.Component.ComponentContext" />
+        </member>
+        <member name="P:Furion.Component.ComponentEventContext.Event">
+            <summary>
+            事件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ComponentEventContext.ToString">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Component.ServiceComponentContext">
             <summary>
             服务组件上下文
             </summary>
         </member>
-        <member name="M:Furion.Component.ServiceComponentContext.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+        <member name="M:Furion.Component.ServiceComponentContext.#ctor(Microsoft.Extensions.Hosting.IHostApplicationBuilder)">
             <summary>
             构造函数
             </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
         </member>
         <member name="P:Furion.Component.ServiceComponentContext.Services">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
@@ -774,13 +764,11 @@
             <remarks>根据组件依赖关系顺序调用，被依赖的组件优先调用</remarks>
             <param name="context"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.ComponentEventContext)">
             <summary>
             调用事件监听
             </summary>
-            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="context"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="eventName">事件名称</param>
+            <param name="context"><see cref="T:Furion.Component.ComponentEventContext"/></param>
         </member>
         <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
@@ -789,7 +777,7 @@
             <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="eventName">事件名称</param>
+            <param name="event">事件</param>
         </member>
         <member name="M:Furion.Component.ComponentBase.CreateTopologicalGraph(System.Type,System.Func{System.Type,System.Boolean})">
             <summary>
@@ -1044,30 +1032,6 @@
             组件对象列表
             </summary>
         </member>
-        <member name="P:Furion.Component.ComponentOptions.InvokeRecords">
-            <summary>
-            组件调用记录
-            </summary>
-            <remarks>作用于组件重复调用检查</remarks>
-        </member>
-        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateInvoke">
-            <summary>
-            禁用组件重复调用
-            </summary>
-        </member>
-        <member name="P:Furion.Component.ComponentOptions.SuppressDuplicateInvokeForWeb">
-            <summary>
-            禁用 Web 组件重复调用
-            </summary>
-        </member>
-        <member name="P:Furion.Component.ComponentOptions.Item(System.String)">
-            <summary>
-            SuppressDuplicateInvoke[ForWeb] 属性索引
-            </summary>
-            <param name="propName">属性名</param>
-            <returns><see cref="T:System.Boolean"/></returns>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
         <member name="M:Furion.Component.ComponentOptions.GetPropsAction``1">
             <summary>
             获取组件配置委托
@@ -1092,23 +1056,7 @@
             组件模块 <see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentCore(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
-            <summary>
-            添加组件模块服务
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentCore(Microsoft.Extensions.Hosting.IHostApplicationBuilder,Furion.Component.ComponentBuilder)">
-            <summary>
-            添加组件模块服务
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加服务组件
             </summary>
@@ -1117,7 +1065,16 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Type,System.Action{Furion.Component.ComponentBuilderBase})">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.IHostApplicationBuilder,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加服务组件
+            </summary>
+            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Type,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加服务组件
             </summary>
@@ -1126,13 +1083,31 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.ComponentBuilderBase})">
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Type,Furion.Component.ComponentBuilder)">
+            <summary>
+            添加服务组件
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加服务组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
             <param name="dependencies">组件依赖关系集合</param>
             <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentBuilder)">
+            <summary>
+            添加服务组件
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
+            <param name="dependencies">组件依赖关系集合</param>
+            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.GetComponentOptions(Microsoft.Extensions.Hosting.IHostApplicationBuilder)">
@@ -1140,74 +1115,6 @@
             获取组件模块配置选项
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
-        </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
-            <summary>
-            组件模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponentCore(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.Component.ComponentBuilder})">
-            <summary>
-            添加组件模块服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponentCore(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.Component.ComponentBuilder)">
-            <summary>
-            添加组件模块服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfigurationBuilder,Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
-            <summary>
-            添加服务组件
-            </summary>
-            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="logging"><see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,Microsoft.Extensions.Configuration.IConfigurationBuilder,Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
-            <summary>
-            添加服务组件
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="logging"><see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Microsoft.Extensions.Configuration.IConfigurationBuilder,Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
-            <summary>
-            添加服务组件
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="dependencies">组件依赖关系集合</param>
-            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="logging"><see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.GetHostEnvironment(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            获取环境对象
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.GetComponentOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            获取组件模块配置选项
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
         </member>
     </members>

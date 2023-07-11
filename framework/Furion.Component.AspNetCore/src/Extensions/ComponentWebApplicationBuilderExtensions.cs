@@ -22,13 +22,14 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <summary>
     /// 添加组件模块入口服务
     /// </summary>
+    /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication Entry(this WebApplicationBuilder webApplicationBuilder)
+    public static WebApplication Entry<TComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
+        where TComponent : WebComponent
     {
-        webApplicationBuilder.AddComponentCore();
-
-        return webApplicationBuilder.Build();
+        return webApplicationBuilder.Entry<TComponent, TComponent>(configure);
     }
 
     /// <summary>
@@ -36,11 +37,12 @@ public static class ComponentWebApplicationBuilderExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication Entry<TComponent>(this WebApplicationBuilder webApplicationBuilder)
+    public static WebApplication Entry<TComponent>(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
         where TComponent : WebComponent
     {
-        return webApplicationBuilder.Entry<TComponent, TComponent>();
+        return webApplicationBuilder.Entry<TComponent, TComponent>(componentBuilder);
     }
 
     /// <summary>
@@ -49,12 +51,36 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <typeparam name="TWebComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication Entry<TComponent, TWebComponent>(this WebApplicationBuilder webApplicationBuilder)
+    public static WebApplication Entry<TComponent, TWebComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
         where TComponent : ComponentBase
         where TWebComponent : WebComponent
     {
-        webApplicationBuilder.AddComponent<TComponent>();
+        // 添加根组件
+        webApplicationBuilder.AddComponent<TComponent>(configure);
+
+        return webApplicationBuilder.Build()
+            .UseComponent<TWebComponent>();
+    }
+
+    /// <summary>
+    /// 添加组件模块入口服务
+    /// </summary>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
+    /// <typeparam name="TWebComponent"><see cref="WebComponent"/></typeparam>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication Entry<TComponent, TWebComponent>(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
+        where TComponent : ComponentBase
+        where TWebComponent : WebComponent
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 添加根组件
+        webApplicationBuilder.AddComponent<TComponent>(componentBuilder);
 
         return webApplicationBuilder.Build()
             .UseComponent<TWebComponent>();

@@ -17,7 +17,6 @@ namespace Furion.Component;
 /// <summary>
 /// 数据验证模块服务组件
 /// </summary>
-[DependsOn<ComponentCoreComponent>]
 public sealed class ValidationComponent : ComponentBase
 {
     /// <summary>

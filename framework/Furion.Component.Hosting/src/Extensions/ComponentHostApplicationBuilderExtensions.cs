@@ -22,11 +22,15 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <summary>
     /// 添加组件模块入口服务
     /// </summary>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHost"/></returns>
-    public static IHost Entry(this HostApplicationBuilder hostApplicationBuilder)
+    public static IHost Entry<TComponent>(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
+        where TComponent : ComponentBase
     {
-        hostApplicationBuilder.AddComponentCore();
+        // 添加根组件
+        hostApplicationBuilder.AddComponent<TComponent>(configure);
 
         return hostApplicationBuilder.Build();
     }
@@ -36,11 +40,16 @@ public static class ComponentHostApplicationBuilderExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IHost"/></returns>
-    public static IHost Entry<TComponent>(this HostApplicationBuilder hostApplicationBuilder)
+    public static IHost Entry<TComponent>(this HostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
         where TComponent : ComponentBase
     {
-        hostApplicationBuilder.AddComponent<TComponent>();
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 添加根组件
+        hostApplicationBuilder.AddComponent<TComponent>(componentBuilder);
 
         return hostApplicationBuilder.Build();
     }

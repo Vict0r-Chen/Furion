@@ -37,7 +37,7 @@ public class NamedServiceTests
     public void AddNamedService_ReturnNotNull()
     {
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         var serviceProvider = services.BuildServiceProvider();
 
         var namedService = serviceProvider.GetRequiredService(typeof(INamedService<INamedServiceClass>));
@@ -51,7 +51,7 @@ public class NamedServiceTests
     public void GetIndex_NotExists_Throw()
     {
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         var serviceProvider = services.BuildServiceProvider();
 
         var namedService = serviceProvider.GetRequiredService<INamedService<INamedServiceClass>>();
@@ -68,7 +68,7 @@ public class NamedServiceTests
     {
         var name = "name1";
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         services.AddNamedScoped<INamedServiceClass, NamedServiceClass>(name);
         var serviceProvider = services.BuildServiceProvider();
 
@@ -84,7 +84,7 @@ public class NamedServiceTests
     public void Get_NotExists_ReturnNull()
     {
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         var serviceProvider = services.BuildServiceProvider();
 
         var namedService = serviceProvider.GetRequiredService<INamedService<INamedServiceClass>>();
@@ -99,7 +99,7 @@ public class NamedServiceTests
     {
         var name = "name1";
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         services.AddNamedScoped<INamedServiceClass, NamedServiceClass>(name);
         var serviceProvider = services.BuildServiceProvider();
 
@@ -115,7 +115,7 @@ public class NamedServiceTests
     public void GetEnumerator_NotExists_ReturnEmpty()
     {
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         var serviceProvider = services.BuildServiceProvider();
 
         var namedService = serviceProvider.GetRequiredService<INamedService<INamedServiceClass>>();
@@ -130,7 +130,7 @@ public class NamedServiceTests
     {
         var name = "name1";
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         services.AddNamedScoped<INamedServiceClass, NamedServiceClass>(name);
         services.AddNamedScoped<INamedServiceClass, NamedServiceClass2>(name);
         var serviceProvider = services.BuildServiceProvider();

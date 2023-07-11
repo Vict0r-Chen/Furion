@@ -15,36 +15,42 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块构建器
+/// 组件事件上下文
 /// </summary>
-public sealed class WebComponentBuilder : WebComponentBuilderBase
+public sealed class ComponentEventContext
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    public WebComponentBuilder()
-        : base()
+    /// <param name="component"><see cref="ComponentBase"/></param>
+    /// <param name="componentContext"><see cref="Component.ComponentContext"/></param>
+    /// <param name="event">事件</param>
+    internal ComponentEventContext(ComponentBase component, ComponentContext componentContext, string @event)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(component, nameof(component));
+        ArgumentNullException.ThrowIfNull(componentContext, nameof(componentContext));
+        ArgumentException.ThrowIfNullOrWhiteSpace(@event, nameof(@event));
+
+        Component = component;
+        ComponentContext = componentContext;
+        Event = @event;
     }
 
+    /// <inheritdoc cref="ComponentBase" />
+    public ComponentBase Component { get; }
+
+    /// <inheritdoc cref="Component.ComponentContext" />
+    public ComponentContext ComponentContext { get; }
+
     /// <summary>
-    /// 禁用组件重复调用
+    /// 事件
     /// </summary>
-    public bool SuppressDuplicateInvoke { get; set; } = true;
+    public string Event { get; set; }
 
     /// <inheritdoc />
-    internal override void Build(WebApplication webApplication)
+    public override string ToString()
     {
-        // 添加组件模块自身配置
-        Props<WebComponentBuilder>(builder =>
-        {
-            builder.SuppressDuplicateInvoke = SuppressDuplicateInvoke;
-        });
-
-        // 添加组件配置
-        var componentOptions = webApplication.GetComponentOptions();
-        componentOptions.SuppressDuplicateInvokeForWeb = SuppressDuplicateInvoke;
-
-        base.Build(webApplication);
+        return Component.GetType().FullName + "." + Event;
     }
 }

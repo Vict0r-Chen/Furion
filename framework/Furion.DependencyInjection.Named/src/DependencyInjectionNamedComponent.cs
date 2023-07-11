@@ -22,6 +22,6 @@ public sealed class DependencyInjectionNamedComponent : ComponentBase
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Services.AddNamed();
+        context.Services.AddNamedService();
     }
 }

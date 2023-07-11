@@ -20,11 +20,6 @@ namespace Furion.Component;
 internal static class Constants
 {
     /// <summary>
-    /// IWebHostEnvironment 类型限定名
-    /// </summary>
-    internal const string IWEBHOSTENVIRONMENT_TYPE_FULLNAME = "Microsoft.AspNetCore.Hosting.IWebHostEnvironment";
-
-    /// <summary>
     /// WebComponent 类型限定名
     /// </summary>
     internal const string WEBCOMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";

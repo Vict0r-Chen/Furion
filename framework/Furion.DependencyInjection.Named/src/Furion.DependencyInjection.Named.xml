@@ -106,7 +106,7 @@
             依赖注入命名模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamed(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.NamedServiceCollectionExtensions.AddNamedService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             添加命名服务
             </summary>

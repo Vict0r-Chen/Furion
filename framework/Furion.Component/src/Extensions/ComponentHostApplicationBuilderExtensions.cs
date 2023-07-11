@@ -20,29 +20,16 @@ namespace Microsoft.Extensions.Hosting;
 public static class ComponentHostApplicationBuilderExtensions
 {
     /// <summary>
-    /// 添加组件模块服务
+    /// 添加服务组件
     /// </summary>
+    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponentCore(this IHostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
+    public static IHostApplicationBuilder AddComponent<TComponent>(this IHostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
+        where TComponent : ComponentBase
     {
-        hostApplicationBuilder.Services.AddComponentCore(configure);
-
-        return hostApplicationBuilder;
-    }
-
-    /// <summary>
-    /// 添加组件模块服务
-    /// </summary>
-    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
-    /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponentCore(this IHostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
-    {
-        hostApplicationBuilder.Services.AddComponentCore(componentBuilder);
-
-        return hostApplicationBuilder;
+        return hostApplicationBuilder.AddComponent(typeof(TComponent), configure);
     }
 
     /// <summary>
@@ -50,14 +37,12 @@ public static class ComponentHostApplicationBuilderExtensions
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="configure">自定义配置委托</param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent<TComponent>(this IHostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilderBase>? configure = null)
+    public static IHostApplicationBuilder AddComponent<TComponent>(this IHostApplicationBuilder hostApplicationBuilder, ComponentBuilder componentBuilder)
         where TComponent : ComponentBase
     {
-        hostApplicationBuilder.Services.AddComponent<TComponent>(hostApplicationBuilder.Configuration, hostApplicationBuilder.Logging, configure);
-
-        return hostApplicationBuilder;
+        return hostApplicationBuilder.AddComponent(typeof(TComponent), componentBuilder);
     }
 
     /// <summary>
@@ -67,11 +52,27 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Type componentType, Action<ComponentBuilderBase>? configure = null)
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Type componentType, Action<ComponentBuilder>? configure = null)
     {
-        hostApplicationBuilder.Services.AddComponent(componentType, hostApplicationBuilder.Configuration, hostApplicationBuilder.Logging, configure);
+        // 创建组件依赖关系集合
+        var dependencies = ComponentBase.CreateDependencies(componentType);
 
-        return hostApplicationBuilder;
+        return hostApplicationBuilder.AddComponent(dependencies, configure);
+    }
+
+    /// <summary>
+    /// 添加服务组件
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="IHostApplicationBuilder"/></returns>
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Type componentType, ComponentBuilder componentBuilder)
+    {
+        // 创建组件依赖关系集合
+        var dependencies = ComponentBase.CreateDependencies(componentType);
+
+        return hostApplicationBuilder.AddComponent(dependencies, componentBuilder);
     }
 
     /// <summary>
@@ -81,9 +82,87 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilderBase>? configure = null)
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilder>? configure = null)
     {
-        hostApplicationBuilder.Services.AddComponent(dependencies, hostApplicationBuilder.Configuration, hostApplicationBuilder.Logging, configure);
+        // 初始化组件模块构建器
+        var componentBuilder = new ComponentBuilder();
+
+        // 调用自定义配置委托
+        configure?.Invoke(componentBuilder);
+
+        return hostApplicationBuilder.AddComponent(dependencies, componentBuilder);
+    }
+
+    /// <summary>
+    /// 添加服务组件
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
+    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
+    /// <returns><see cref="IHostApplicationBuilder"/></returns>
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, ComponentBuilder componentBuilder)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+
+        // 构建模块服务
+        componentBuilder.Build(hostApplicationBuilder);
+
+        // 创建组件上下文
+        var componentContext = new ServiceComponentContext(hostApplicationBuilder);
+
+        // 可访问性特性
+        var accessibilityBinding = BindingFlags.Public;
+
+        // 创建依赖关系图
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        // 创建组件依赖关系对象集合
+        var components = ComponentBase.CreateComponents(dependencies, componentContext, component =>
+        {
+            // 将调用的方法
+            var invokeMethod = nameof(ComponentBase.PreConfigureServices);
+
+            // 若方法未定义则跳过
+            if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, accessibilityBinding))
+            {
+                return;
+            }
+
+            // 调用前置配置服务
+            component.PreConfigureServices(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
+
+            // 调用事件监听
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
+        });
+
+        // 调用配置服务
+        components.ForEach(component =>
+        {
+            // 将调用的方法
+            var invokeMethod = nameof(ComponentBase.ConfigureServices);
+
+            // 若方法未定义则跳过
+            if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, accessibilityBinding))
+            {
+                return;
+            }
+
+            // 调用前置配置服务
+            component.ConfigureServices(componentContext);
+
+            // 输出调试事件
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
+
+            // 调用事件监听
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
+        });
+
+        components.Clear();
+        dependencyGraph.Release();
 
         return hostApplicationBuilder;
     }

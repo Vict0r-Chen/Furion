@@ -20,50 +20,15 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ComponentWebApplicationExtensions
 {
     /// <summary>
-    /// 添加组件模块中间件
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="configure">自定义配置委托</param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponentCore(this WebApplication webApplication, Action<WebComponentBuilder>? configure = null)
-    {
-        // 初始化组件模块构建器
-        var componentBuilder = new WebComponentBuilder();
-
-        // 调用自定义配置委托
-        configure?.Invoke(componentBuilder);
-
-        return webApplication.UseComponentCore(componentBuilder);
-    }
-
-    /// <summary>
-    /// 添加组件模块中间件
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="componentBuilder"><see cref="WebComponentBuilder"/></param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponentCore(this WebApplication webApplication, WebComponentBuilder componentBuilder)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
-
-        // 构建模块服务
-        componentBuilder.Build(webApplication);
-
-        return webApplication;
-    }
-
-    /// <summary>
     /// 添加应用组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication, Action<WebComponentBuilderBase>? configure = null)
+    public static WebApplication UseComponent<TComponent>(this WebApplication webApplication)
         where TComponent : WebComponent
     {
-        return webApplication.UseComponent(typeof(TComponent), configure);
+        return webApplication.UseComponent(typeof(TComponent));
     }
 
     /// <summary>
@@ -71,14 +36,13 @@ public static class ComponentWebApplicationExtensions
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="componentType"><see cref="WebComponent"/></param>
-    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType, Action<WebComponentBuilderBase>? configure = null)
+    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType)
     {
         // 生成组件依赖字典
         var dependencies = ComponentBase.CreateDependencies(componentType);
 
-        return webApplication.UseComponent(dependencies, configure);
+        return webApplication.UseComponent(dependencies);
     }
 
     /// <summary>
@@ -86,15 +50,9 @@ public static class ComponentWebApplicationExtensions
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="dependencies">组件依赖关系集合</param>
-    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies, Action<WebComponentBuilderBase>? configure = null)
+    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies)
     {
-        // 创建组件模块构建器同时调用自定义配置委托
-        var componentBuilder = new WebComponentBuilderBase();
-        configure?.Invoke(componentBuilder);
-        componentBuilder.Build(webApplication);
-
         // 创建组件上下文
         var componentContext = new ApplicationComponentContext(webApplication);
 
@@ -107,33 +65,45 @@ public static class ComponentWebApplicationExtensions
         // 创建组件依赖关系对象集合
         var components = ComponentBase.CreateComponents<WebComponent>(dependencies, componentContext, component =>
         {
-            // 调用前置配置中间件
+            // 将调用的方法
+            var invokeMethod = nameof(WebComponent.PreConfigure);
+
+            // 若方法未定义则跳过
+            if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, accessibilityBinding))
+            {
+                return;
+            }
+
+            // 调用前置配置服务
             component.PreConfigure(componentContext);
 
             // 输出调试事件
-            if (component.GetType().IsDeclareOnlyMethod(nameof(WebComponent.PreConfigure), accessibilityBinding))
-            {
-                Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.PreConfigure));
-            }
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
 
             // 调用事件监听
-            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(WebComponent.PreConfigure));
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
         }, ComponentBase.IsWebComponent);
 
         // 调用配置中间件
         components.ForEach(component =>
         {
-            // 调用配置中间件
+            // 将调用的方法
+            var invokeMethod = nameof(WebComponent.Configure);
+
+            // 若方法未定义则跳过
+            if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, accessibilityBinding))
+            {
+                return;
+            }
+
+            // 调用前置配置服务
             component.Configure(componentContext);
 
             // 输出调试事件
-            if (component.GetType().IsDeclareOnlyMethod(nameof(WebComponent.Configure), accessibilityBinding))
-            {
-                Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), nameof(WebComponent.Configure));
-            }
+            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
 
             // 调用事件监听
-            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, nameof(WebComponent.Configure));
+            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
         });
 
         components.Clear();

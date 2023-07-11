@@ -17,11 +17,9 @@ namespace Furion.Tests;
 [DependsOn<ConfigurationComponent
     , DependencyInjectionComponent
     , DependencyInjectionNamedComponent
-    , ComponentAspNetCoreComponent
-    , ComponentHostingComponent
     , ConfigurationManifestResourceComponent
     , ValidationComponent>]
-public class EntryComponent : WebComponent
+public class ServiceComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
     {
@@ -43,7 +41,10 @@ public class EntryComponent : WebComponent
         context.Services.AddEndpointsApiExplorer();
         context.Services.AddSwaggerGen();
     }
+}
 
+public class ApplicationComponent : WebComponent
+{
     public override void Configure(ApplicationComponentContext context)
     {
         var app = context.Application;

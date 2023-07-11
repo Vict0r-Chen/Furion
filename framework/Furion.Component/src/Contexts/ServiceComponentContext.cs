@@ -22,17 +22,14 @@ public sealed class ServiceComponentContext : ComponentContext
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
-    internal ServiceComponentContext(IServiceCollection services, IConfigurationBuilder configuration)
-        : base(services.GetComponentOptions())
+    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
+    internal ServiceComponentContext(IHostApplicationBuilder hostApplicationBuilder)
+        : base(hostApplicationBuilder.GetComponentOptions())
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
-
-        Services = services;
-        Configuration = configuration;
-        Environment = services.GetHostEnvironment();
+        Services = hostApplicationBuilder.Services;
+        Configuration = hostApplicationBuilder.Configuration;
+        Environment = hostApplicationBuilder.Environment;
+        Logging = hostApplicationBuilder.Logging;
     }
 
     /// <inheritdoc cref="IServiceCollection"/>
@@ -42,8 +39,8 @@ public sealed class ServiceComponentContext : ComponentContext
     public IConfigurationBuilder Configuration { get; }
 
     /// <inheritdoc cref="IHostEnvironment"/>
-    public IHostEnvironment? Environment { get; }
+    public IHostEnvironment Environment { get; }
 
     /// <inheritdoc cref="ILoggingBuilder"/>
-    public ILoggingBuilder? Logging { get; internal set; }
+    public ILoggingBuilder Logging { get; }
 }

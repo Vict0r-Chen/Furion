@@ -17,34 +17,78 @@ namespace Furion.Component;
 /// <summary>
 /// 组件模块构建器
 /// </summary>
-public sealed class ComponentBuilder : ComponentBuilderBase
+public sealed class ComponentBuilder
 {
+    /// <summary>
+    /// 组件配置委托集合
+    /// </summary>
+    internal readonly Dictionary<Type, List<Delegate>> _propsActions;
+
     /// <summary>
     /// 构造函数
     /// </summary>
     public ComponentBuilder()
-        : base()
     {
+        _propsActions = new();
     }
 
     /// <summary>
-    /// 禁用组件重复调用
+    /// 添加组件配置
     /// </summary>
-    public bool SuppressDuplicateInvoke { get; set; } = true;
-
-    /// <inheritdoc />
-    internal override void Build(IServiceCollection services)
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configure">自定义组件配置委托</param>
+    public void Props<TProps>(Action<TProps> configure)
+        where TProps : class, new()
     {
-        // 添加组件模块自身配置
-        Props<ComponentBuilder>(builder =>
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+
+        _propsActions.AddOrUpdate(typeof(TProps), configure);
+    }
+
+    /// <summary>
+    /// 添加组件配置
+    /// </summary>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    public void Props<TProps>(IConfiguration configuration)
+        where TProps : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+
+        // 获取配置实例
+        var props = configuration.Get<TProps>();
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(props, nameof(props));
+
+        // 创建组件配置委托
+        var configure = new Action<TProps>(destination =>
         {
-            builder.SuppressDuplicateInvoke = SuppressDuplicateInvoke;
+            ObjectMapper.Map(props, destination);
         });
 
         // 添加组件配置
-        var componentOptions = services.GetComponentOptions();
-        componentOptions.SuppressDuplicateInvoke = SuppressDuplicateInvoke;
+        Props(configure);
+    }
 
-        base.Build(services);
+    /// <summary>
+    /// 构建模块服务
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
+    internal void Build(IHostApplicationBuilder hostApplicationBuilder)
+    {
+        // 添加核心模块选项服务
+        hostApplicationBuilder.Services.AddCoreOptions();
+
+        // 添加组件模块对象释放器主机服务
+        hostApplicationBuilder.Services.AddHostedService<ComponentReleaserHostedService>();
+
+        // 添加组件配置
+        var componentOptions = hostApplicationBuilder.GetComponentOptions();
+        componentOptions.PropsActions.AddOrUpdate(_propsActions);
+
+        _propsActions.Clear();
     }
 }

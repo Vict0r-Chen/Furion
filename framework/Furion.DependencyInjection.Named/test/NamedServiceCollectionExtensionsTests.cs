@@ -17,13 +17,13 @@ namespace Furion.DependencyInjection.Named.Tests;
 public class NamedServiceCollectionExtensionsTests
 {
     [Fact]
-    public void AddNamed_Parameterless_Duplicate_OnlyOne()
+    public void AddNamedService_Parameterless_Duplicate_OnlyOne()
     {
         var services = new ServiceCollection();
-        services.AddNamed();
+        services.AddNamedService();
         Assert.Single(services);
 
-        services.AddNamed();
+        services.AddNamedService();
         Assert.Single(services);
 
         var serviceDescriptor = services.First();

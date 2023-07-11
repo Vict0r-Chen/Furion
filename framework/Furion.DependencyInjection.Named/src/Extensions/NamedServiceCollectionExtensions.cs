@@ -24,7 +24,7 @@ public static class NamedServiceCollectionExtensions
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddNamed(this IServiceCollection services)
+    public static IServiceCollection AddNamedService(this IServiceCollection services)
     {
         // 注册泛型命名服务
         services.TryAddTransient(typeof(INamedService<>), typeof(NamedService<>));
@@ -42,7 +42,7 @@ public static class NamedServiceCollectionExtensions
     /// <exception cref="InvalidOperationException"></exception>
     public static IServiceCollection AddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
-        services.AddNamed()
+        services.AddNamedService()
                 .Add(CreateDelegator(name, serviceDescriptor));
 
         return services;
@@ -57,7 +57,7 @@ public static class NamedServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
-        services.AddNamed()
+        services.AddNamedService()
                 .TryAdd(CreateDelegator(name, serviceDescriptor));
 
         return services;

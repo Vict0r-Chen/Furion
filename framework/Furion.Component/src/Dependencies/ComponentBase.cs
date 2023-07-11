@@ -80,8 +80,7 @@ public abstract class ComponentBase
     /// <remarks>将在组件初始化完成后立即调用</remarks>
     /// <param name="context"><see cref="ServiceComponentContext"/></param>
     public virtual void PreConfigureServices(ServiceComponentContext context)
-    {
-    }
+    { }
 
     /// <summary>
     /// 配置服务
@@ -89,18 +88,14 @@ public abstract class ComponentBase
     /// <remarks>根据组件依赖关系顺序调用，被依赖的组件优先调用</remarks>
     /// <param name="context"><see cref="ServiceComponentContext"/></param>
     public virtual void ConfigureServices(ServiceComponentContext context)
-    {
-    }
+    { }
 
     /// <summary>
     /// 调用事件监听
     /// </summary>
-    /// <param name="component"><see cref="ComponentBase"/></param>
-    /// <param name="context"><see cref="ComponentContext"/></param>
-    /// <param name="eventName">事件名称</param>
-    public virtual void InvokeEvents(ComponentBase component, ComponentContext context, string eventName)
-    {
-    }
+    /// <param name="context"><see cref="ComponentEventContext"/></param>
+    public virtual void InvokeEvents(ComponentEventContext context)
+    { }
 
     /// <summary>
     /// 调用事件监听
@@ -108,12 +103,13 @@ public abstract class ComponentBase
     /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
-    /// <param name="eventName">事件名称</param>
-    internal static void InvokeEvents(DependencyGraph dependencyGraph, ComponentBase component, ComponentContext componentContext, string eventName)
+    /// <param name="event">事件</param>
+    internal static void InvokeEvents(DependencyGraph dependencyGraph, ComponentBase component, ComponentContext componentContext, string @event)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(component, nameof(component));
-        ArgumentException.ThrowIfNullOrWhiteSpace(eventName, nameof(eventName));
+        ArgumentNullException.ThrowIfNull(componentContext, nameof(componentContext));
+        ArgumentException.ThrowIfNullOrWhiteSpace(@event, nameof(@event));
 
         // 查找组件依赖关系集合中匹配的祖先组件类型集合
         var componentType = component.GetType();
@@ -122,11 +118,14 @@ public abstract class ComponentBase
         // 将当前组件插入到集合头部
         ancestors.Insert(0, componentType);
 
+        // 创建组件事件上下文
+        var componentEventContext = new ComponentEventContext(component, componentContext, @event);
+
         // 循环调用所有组件组件（含自己）的监听方法
         ancestors.Where(componentType => componentType.IsDeclareOnlyMethod(nameof(InvokeEvents), BindingFlags.Public))
                  .Select(componentType => GetOrCreateComponent(componentType, componentContext.Options))
                  .ToList()
-                 .ForEach(cmp => cmp.InvokeEvents(component, componentContext, eventName));
+                 .ForEach(cmp => cmp.InvokeEvents(componentEventContext));
     }
 
     /// <summary>
@@ -424,11 +423,6 @@ public abstract class ComponentBase
         // 获取组件模块配置选项
         var componentOptions = componentContext.Options;
 
-        // 组件重复调用检查标识
-        var suppressDuplicateInvoke = typeof(TTargetComponent).FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
-            ? nameof(ComponentOptions.SuppressDuplicateInvokeForWeb)
-            : nameof(ComponentOptions.SuppressDuplicateInvoke);
-
         // 存储未激活的且只有自身依赖的组件类型
         var inactiveComponents = new List<Type>();
 
@@ -441,20 +435,6 @@ public abstract class ComponentBase
             if (inactiveComponents.Contains(componentType))
             {
                 continue;
-            }
-
-            // 组件重复调用检测
-            var recordName = componentType.FullName + $" (Type '{typeof(TTargetComponent).Name}')";
-            if (componentOptions[suppressDuplicateInvoke])
-            {
-                if (componentOptions.InvokeRecords.Any(t => t == recordName))
-                {
-                    // 输出调试事件
-                    Debugging.Warn("`{0}` component has been prevented from duplicate invocation.", componentType.Name);
-                    continue;
-                }
-
-                componentOptions.InvokeRecords.Add(recordName);
             }
 
             // 创建组件实例
