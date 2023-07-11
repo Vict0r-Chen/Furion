@@ -24,6 +24,7 @@ public class ApplicationComponentContextTests
 
         Assert.NotNull(applicationComponentContext);
         Assert.NotNull(applicationComponentContext.Application);
+        Assert.NotNull(applicationComponentContext.Services);
         Assert.NotNull(applicationComponentContext.Configuration);
         Assert.NotNull(applicationComponentContext.Options);
         Assert.NotNull(applicationComponentContext.Items);

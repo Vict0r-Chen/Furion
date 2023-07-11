@@ -27,12 +27,16 @@ public sealed class ApplicationComponentContext : ComponentContext
         : base(application.GetComponentOptions())
     {
         Application = application;
+        Services = application.Services;
         Configuration = application.Configuration;
         Environment = application.Environment;
     }
 
     /// <inheritdoc cref="WebApplication"/>
     public WebApplication Application { get; }
+
+    /// <inheritdoc cref="IServiceProvider"/>
+    public IServiceProvider Services { get; }
 
     /// <inheritdoc cref="IConfiguration"/>
     public IConfiguration Configuration { get; }
