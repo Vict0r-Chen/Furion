@@ -24,7 +24,7 @@ public sealed class Validator<T> : IValidator<T>
     /// <summary>
     /// 属性验证器集合
     /// </summary>
-    internal readonly List<PropertyValidator<T>> _propertyValidators;
+    internal readonly List<IValidator<T>> _propertyValidators;
 
     /// <summary>
     /// <see cref="ObjectAnnotationValidator"/>
@@ -82,11 +82,12 @@ public sealed class Validator<T> : IValidator<T>
     /// <summary>
     /// 创建属性验证器
     /// </summary>
+    /// <typeparam name="TProperty">属性类型</typeparam>
     /// <param name="propertySelector">属性选择器</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Property(Expression<Func<T, object?>> propertySelector)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertySelector)
     {
-        return new PropertyValidator<T>(this, propertySelector);
+        return new PropertyValidator<T, TProperty>(this, propertySelector);
     }
 
     /// <summary>
@@ -235,8 +236,9 @@ public sealed class Validator<T> : IValidator<T>
     /// <summary>
     /// 添加属性验证器
     /// </summary>
-    /// <param name="propertyValidator"><see cref="PropertyValidator{T}"/></param>
-    internal void AddPropertyValidator(PropertyValidator<T> propertyValidator)
+    /// <typeparam name="TProperty">属性类型</typeparam>
+    /// <param name="propertyValidator"><see cref="PropertyValidator{T, TProperty}" /></param>
+    internal void AddPropertyValidator<TProperty>(PropertyValidator<T, TProperty> propertyValidator)
     {
         _propertyValidators.Add(propertyValidator);
     }

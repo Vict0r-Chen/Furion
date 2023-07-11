@@ -23,10 +23,11 @@ internal static class ExpressionExtensions
     /// 解析表达式属性名称
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
+    /// <typeparam name="TProperty">属性类型</typeparam>
     /// <param name="propertySelector">属性选择器</param>
     /// <returns><see cref="string"/></returns>
     /// <exception cref="ArgumentException"></exception>
-    internal static string GetPropertyName<T>(this Expression<Func<T, object?>> propertySelector)
+    internal static string GetPropertyName<T, TProperty>(this Expression<Func<T, TProperty?>> propertySelector)
         where T : class
     {
         // 空检查

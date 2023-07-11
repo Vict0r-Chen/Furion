@@ -55,9 +55,10 @@ public abstract class AbstractValidator<T> : IValidator<T>
     /// <summary>
     /// 创建属性验证器
     /// </summary>
+    /// <typeparam name="TProperty">属性类型</typeparam>
     /// <param name="propertySelector">属性选择器</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> RuleFor(Expression<Func<T, object?>> propertySelector)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertySelector)
     {
         return _validator.Property(propertySelector);
     }

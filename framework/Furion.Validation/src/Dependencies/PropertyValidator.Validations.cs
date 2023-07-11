@@ -17,15 +17,15 @@ namespace Furion.Validation;
 /// <summary>
 /// 属性验证器
 /// </summary>
-public sealed partial class PropertyValidator<T> : IValidator<T>
+public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     where T : class
 {
     /// <summary>
     /// 添加必填验证器
     /// </summary>
     /// <param name="allowEmptyStrings">是否允许空字符串</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> NotNull(bool allowEmptyStrings = false)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> NotNull(bool allowEmptyStrings = false)
     {
         Validators.Add(new ValueAnnotationValidator(new RequiredAttribute
         {
@@ -38,8 +38,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 添加非空验证器
     /// </summary>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> NotEmpty()
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> NotEmpty()
     {
         Validators.Add(new NotEmptyValidator());
 
@@ -50,8 +50,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加以特定字符串结尾的验证器
     /// </summary>
     /// <param name="value">检索的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> EndsWith(string value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> EndsWith(string value)
     {
         Validators.Add(new EndsWithValidator(value));
 
@@ -62,8 +62,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加以特定字符串结尾的验证器
     /// </summary>
     /// <param name="value">检索的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> EndsWith(char value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> EndsWith(char value)
     {
         Validators.Add(new EndsWithValidator(value));
 
@@ -75,8 +75,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> EndsWith(string value, StringComparison comparison)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> EndsWith(string value, StringComparison comparison)
     {
         Validators.Add(new EndsWithValidator(value) { Comparison = comparison });
 
@@ -88,8 +88,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> EndsWith(char value, StringComparison comparison)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> EndsWith(char value, StringComparison comparison)
     {
         Validators.Add(new EndsWithValidator(value) { Comparison = comparison });
 
@@ -100,8 +100,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加以特定字符串开头的验证器
     /// </summary>
     /// <param name="value">检索的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StartsWith(string value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StartsWith(string value)
     {
         Validators.Add(new StartsWithValidator(value));
 
@@ -112,8 +112,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加以特定字符串开头的验证器
     /// </summary>
     /// <param name="value">检索的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StartsWith(char value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StartsWith(char value)
     {
         Validators.Add(new StartsWithValidator(value));
 
@@ -125,8 +125,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StartsWith(string value, StringComparison comparison)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StartsWith(string value, StringComparison comparison)
     {
         Validators.Add(new StartsWithValidator(value) { Comparison = comparison });
 
@@ -138,8 +138,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StartsWith(char value, StringComparison comparison)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StartsWith(char value, StringComparison comparison)
     {
         Validators.Add(new StartsWithValidator(value) { Comparison = comparison });
 
@@ -150,8 +150,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加包含特定字符串的验证器
     /// </summary>
     /// <param name="value">检索的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StringContains(string value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StringContains(string value)
     {
         Validators.Add(new StringContainsValidator(value));
 
@@ -162,8 +162,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加包含特定字符串的验证器
     /// </summary>
     /// <param name="value">检索的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StringContains(char value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StringContains(char value)
     {
         Validators.Add(new StringContainsValidator(value));
 
@@ -175,8 +175,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StringContains(string value, StringComparison comparison)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StringContains(string value, StringComparison comparison)
     {
         Validators.Add(new StringContainsValidator(value) { Comparison = comparison });
 
@@ -188,8 +188,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="value">检索的值</param>
     /// <param name="comparison"><see cref="StringComparison"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StringContains(char value, StringComparison comparison)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StringContains(char value, StringComparison comparison)
     {
         Validators.Add(new StringContainsValidator(value) { Comparison = comparison });
 
@@ -200,8 +200,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加最大长度验证器
     /// </summary>
     /// <param name="length">长度</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> MaxLength(int length)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> MaxLength(int length)
     {
         Validators.Add(new ValueAnnotationValidator(new MaxLengthAttribute(length)));
 
@@ -212,8 +212,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加最小长度验证器
     /// </summary>
     /// <param name="length">长度</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> MinLength(int length)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> MinLength(int length)
     {
         Validators.Add(new ValueAnnotationValidator(new MinLengthAttribute(length)));
 
@@ -225,8 +225,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="minimumLength">最小长度</param>
     /// <param name="maximumLength">最大长度</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Length(int minimumLength, int maximumLength)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Length(int minimumLength, int maximumLength)
     {
         Validators.Add(new ValueAnnotationValidator(new LengthAttribute(minimumLength, maximumLength)));
 
@@ -237,8 +237,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加字符串长度验证器
     /// </summary>
     /// <param name="maximumLength">最大长度</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StringLength(int maximumLength)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StringLength(int maximumLength)
     {
         Validators.Add(new ValueAnnotationValidator(new StringLengthAttribute(maximumLength)));
 
@@ -250,8 +250,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="minimumLength">最小长度</param>
     /// <param name="maximumLength">最大长度</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StringLength(int minimumLength, int maximumLength)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StringLength(int minimumLength, int maximumLength)
     {
         Validators.Add(new ValueAnnotationValidator(new StringLengthAttribute(maximumLength)
         {
@@ -266,8 +266,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="minimum">最小值</param>
     /// <param name="maximum">最大值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Range(int minimum, int maximum)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Range(int minimum, int maximum)
     {
         Validators.Add(new ValueAnnotationValidator(new RangeAttribute(minimum, maximum)));
 
@@ -279,8 +279,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="minimum">最小值</param>
     /// <param name="maximum">最大值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Range(double minimum, double maximum)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Range(double minimum, double maximum)
     {
         Validators.Add(new ValueAnnotationValidator(new RangeAttribute(minimum, maximum)));
 
@@ -291,8 +291,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加正则表达式验证器
     /// </summary>
     /// <param name="pattern">正则表达式</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> RegularExpression(string pattern)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> RegularExpression(string pattern)
     {
         Validators.Add(new ValueAnnotationValidator(new RegularExpressionAttribute(pattern)));
 
@@ -304,8 +304,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="pattern">正则表达式</param>
     /// <param name="matchTimeoutInMilliseconds">匹配超时毫秒数</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> RegularExpression(string pattern, int matchTimeoutInMilliseconds)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> RegularExpression(string pattern, int matchTimeoutInMilliseconds)
     {
         Validators.Add(new ValueAnnotationValidator(new RegularExpressionAttribute(pattern)
         {
@@ -318,8 +318,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 添加邮箱地址验证器
     /// </summary>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> EmailAddress()
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> EmailAddress()
     {
         Validators.Add(new ValueAnnotationValidator(new EmailAddressAttribute()));
 
@@ -329,8 +329,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 添加用户名验证器
     /// </summary>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> UserName()
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> UserName()
     {
         Validators.Add(new UserNameValidator());
 
@@ -340,8 +340,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 添加密码验证器
     /// </summary>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Password()
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Password()
     {
         Validators.Add(new PasswordValidator());
 
@@ -351,8 +351,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 添加强密码验证器
     /// </summary>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> StrongPassword()
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> StrongPassword()
     {
         Validators.Add(new StrongPasswordValidator());
 
@@ -363,8 +363,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> GreaterThanOrEqualTo(int value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> GreaterThanOrEqualTo(int value)
     {
         Validators.Add(new GreaterThanOrEqualToValidator(value));
 
@@ -375,8 +375,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> GreaterThanOrEqualTo(double value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> GreaterThanOrEqualTo(double value)
     {
         Validators.Add(new GreaterThanOrEqualToValidator(value));
 
@@ -387,8 +387,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> GreaterThanOrEqualTo(Func<T, object?> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> GreaterThanOrEqualTo(Func<T, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -404,8 +404,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> GreaterThan(int value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> GreaterThan(int value)
     {
         Validators.Add(new GreaterThanValidator(value));
 
@@ -416,8 +416,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> GreaterThan(double value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> GreaterThan(double value)
     {
         Validators.Add(new GreaterThanValidator(value));
 
@@ -428,8 +428,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> GreaterThan(Func<T, object?> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> GreaterThan(Func<T, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -445,8 +445,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> LessThanOrEqualTo(int value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> LessThanOrEqualTo(int value)
     {
         Validators.Add(new LessThanOrEqualToValidator(value));
 
@@ -457,8 +457,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> LessThanOrEqualTo(double value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> LessThanOrEqualTo(double value)
     {
         Validators.Add(new LessThanOrEqualToValidator(value));
 
@@ -469,8 +469,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于等于验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> LessThanOrEqualTo(Func<T, object?> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> LessThanOrEqualTo(Func<T, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -486,8 +486,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> LessThan(int value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> LessThan(int value)
     {
         Validators.Add(new LessThanValidator(value));
 
@@ -498,8 +498,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> LessThan(double value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> LessThan(double value)
     {
         Validators.Add(new LessThanValidator(value));
 
@@ -510,8 +510,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加大于验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> LessThan(Func<T, object?> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> LessThan(Func<T, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -527,8 +527,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加不相等验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> NotEqual(object? value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> NotEqual(object? value)
     {
         Validators.Add(new NotEqualValidator(value));
 
@@ -539,8 +539,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加不相等验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> NotEqual(Func<T, object?> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> NotEqual(Func<T, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -556,8 +556,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加相等验证器
     /// </summary>
     /// <param name="value">比较的值</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Equal(object? value)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Equal(object? value)
     {
         Validators.Add(new EqualValidator(value));
 
@@ -568,8 +568,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加相等验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Equal(Func<T, object?> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Equal(Func<T, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -585,8 +585,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加委托对象验证器
     /// </summary>
     /// <param name="predicate">委托对象</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Predicate(Func<object?, bool> predicate)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Predicate(Func<object?, bool> predicate)
     {
         Validators.Add(new PredicateValidator(predicate));
 
@@ -597,8 +597,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加组合验证器
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Composite(params ValidatorBase[] validators)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Composite(params ValidatorBase[] validators)
     {
         Validators.Add(new CompositeValidator(validators));
 
@@ -609,8 +609,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加组合验证器
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Composite(IList<ValidatorBase> validators)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Composite(IList<ValidatorBase> validators)
     {
         Validators.Add(new CompositeValidator(validators));
 
@@ -621,8 +621,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加注解（特性）验证器
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddAttributes(params ValidationAttribute[] validationAttributes)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddAttributes(params ValidationAttribute[] validationAttributes)
     {
         Validators.Add(new ValueAnnotationValidator(validationAttributes));
 
@@ -633,8 +633,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加注解（特性）验证器
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddAttributes(IList<ValidationAttribute> validationAttributes)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddAttributes(IList<ValidationAttribute> validationAttributes)
     {
         Validators.Add(new ValueAnnotationValidator(validationAttributes));
 
@@ -645,8 +645,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加验证器
     /// </summary>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddValidator(ValidatorBase validator)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddValidator(ValidatorBase validator)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validator, nameof(validator));
@@ -660,8 +660,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加验证器
     /// </summary>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddValidators(params ValidatorBase[] validator)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddValidators(params ValidatorBase[] validator)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validator, nameof(validator));
@@ -675,8 +675,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 添加验证器
     /// </summary>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddValidators(IEnumerable<ValidatorBase> validator)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddValidators(IEnumerable<ValidatorBase> validator)
     {
         return AddValidators(validator?.ToArray()!);
     }
@@ -686,8 +686,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="predicate">委托对象</param>
     /// <param name="defaultErrorMessage">默认错误消息</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> Custom(Func<T, bool> predicate, string? defaultErrorMessage = default)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> Custom(Func<T, bool> predicate, string? defaultErrorMessage = default)
     {
         Validators.Add(new CustomValidator(predicate, defaultErrorMessage));
 
@@ -697,8 +697,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 添加对象注解（特性）验证器
     /// </summary>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> ObjectAnnotation()
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> ObjectAnnotation()
     {
         Validators.Add(new ObjectAnnotationValidator());
 

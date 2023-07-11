@@ -18,7 +18,8 @@ namespace Furion.Validation;
 /// 属性验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public sealed partial class PropertyValidator<T> : IValidator<T>
+/// <typeparam name="TProperty">属性类型</typeparam>
+public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     where T : class
 {
     /// <summary>
@@ -29,14 +30,14 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// <see cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
-    internal readonly PropertyAnnotationValidator<T> _propertyAnnotationValidator;
+    internal readonly PropertyAnnotationValidator _propertyAnnotationValidator;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="validator"><see cref="Validator{T}"/></param>
     /// <param name="propertyExpression">属性选择器</param>
-    internal PropertyValidator(Validator<T> validator, Expression<Func<T, object?>> propertyExpression)
+    internal PropertyValidator(Validator<T> validator, Expression<Func<T, TProperty?>> propertyExpression)
     {
         Validators = new();
         PropertyName = propertyExpression.GetPropertyName();
@@ -45,7 +46,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
         _validator = validator;
         _validator.AddPropertyValidator(this);
 
-        _propertyAnnotationValidator = new(propertyExpression);
+        _propertyAnnotationValidator = new(PropertyName);
     }
 
     /// <summary>
@@ -80,8 +81,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 启用/禁用注解（特性）验证器
     /// </summary>
     /// <param name="enable">是否启用</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> WithAnnotations(bool enable = true)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> WithAnnotations(bool enable = true)
     {
         SuppressAnnotations = !enable;
 
@@ -92,8 +93,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessage">错误消息</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> WithErrorMessage(string errorMessage)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> WithErrorMessage(string errorMessage)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(errorMessage, nameof(errorMessage));
@@ -107,8 +108,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessageAccessor">错误消息访问器</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> WithErrorMessage(Func<T, string> errorMessageAccessor)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> WithErrorMessage(Func<T, string> errorMessageAccessor)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(errorMessageAccessor, nameof(errorMessageAccessor));
@@ -122,8 +123,8 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 设置验证对象访问器
     /// </summary>
     /// <param name="validationObjectAccessor">验证对象访问器</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> SetValidationObjectAccessor(Func<ValidatorBase, T, object?, object?> validationObjectAccessor)
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> SetValidationObjectAccessor(Func<ValidatorBase, T, object?, object?> validationObjectAccessor)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validationObjectAccessor, nameof(validationObjectAccessor));
@@ -273,13 +274,13 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="object"/></returns>
-    internal object? GetPropertyValue(T instance)
+    internal TProperty? GetPropertyValue(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
         // 返回属性值
-        return GetPropertyInfo().GetValue(instance);
+        return (TProperty?)GetPropertyInfo().GetValue(instance);
     }
 
     /// <summary>
@@ -304,7 +305,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
-    internal object? GetValidationObject(ValidatorBase validator, T instance, object? propertyValue)
+    internal object? GetValidationObject(ValidatorBase validator, T instance, TProperty? propertyValue)
     {
         // 如果是自定义验证器则返回对象实例
         if (validator.IsSameAs(typeof(CustomValidator)))

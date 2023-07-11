@@ -245,11 +245,12 @@
             <see cref="T:System.Linq.Expressions.Expression"/> 拓展类
             </summary>
         </member>
-        <member name="M:System.Linq.Expressions.ExpressionExtensions.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+        <member name="M:System.Linq.Expressions.ExpressionExtensions.GetPropertyName``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
             <summary>
             解析表达式属性名称
             </summary>
             <typeparam name="T">对象类型</typeparam>
+            <typeparam name="TProperty">属性类型</typeparam>
             <param name="propertySelector">属性选择器</param>
             <returns><see cref="T:System.String"/></returns>
             <exception cref="T:System.ArgumentException"></exception>
