@@ -7,7 +7,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Furion.Component\src\Furion.Component.csproj" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.5.23280.8" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.6.23329.7" />
 	</ItemGroup>
 
 </Project>

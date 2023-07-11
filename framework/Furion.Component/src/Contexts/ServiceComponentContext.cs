@@ -40,4 +40,7 @@ public sealed class ServiceComponentContext : ComponentContext
 
     /// <inheritdoc cref="IConfigurationBuilder"/>
     public IConfigurationBuilder Configuration { get; }
+
+    /// <inheritdoc cref="ILoggingBuilder"/>
+    public ILoggingBuilder? Logging { get; internal set; }
 }

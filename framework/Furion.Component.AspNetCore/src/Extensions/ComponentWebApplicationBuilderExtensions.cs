@@ -22,6 +22,18 @@ public static class ComponentWebApplicationBuilderExtensions
     /// <summary>
     /// 添加组件模块入口服务
     /// </summary>
+    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication Entry(this WebApplicationBuilder webApplicationBuilder)
+    {
+        webApplicationBuilder.AddComponentCore();
+
+        return webApplicationBuilder.Build();
+    }
+
+    /// <summary>
+    /// 添加组件模块入口服务
+    /// </summary>
     /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
     /// <returns><see cref="WebApplication"/></returns>
@@ -42,76 +54,9 @@ public static class ComponentWebApplicationBuilderExtensions
         where TComponent : ComponentBase
         where TWebComponent : WebComponent
     {
-        return webApplicationBuilder.AddComponent<TComponent>().Build()
-                                    .UseComponent<TWebComponent>();
-    }
+        webApplicationBuilder.AddComponent<TComponent>();
 
-    /// <summary>
-    /// 添加组件模块服务
-    /// </summary>
-    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="configure">自定义配置委托</param>
-    /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponentCore(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilder>? configure = null)
-    {
-        webApplicationBuilder.Services.AddComponentCore(configure);
-
-        return webApplicationBuilder;
-    }
-
-    /// <summary>
-    /// 添加组件模块服务
-    /// </summary>
-    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
-    /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponentCore(this WebApplicationBuilder webApplicationBuilder, ComponentBuilder componentBuilder)
-    {
-        webApplicationBuilder.Services.AddComponentCore(componentBuilder);
-
-        return webApplicationBuilder;
-    }
-
-    /// <summary>
-    /// 添加服务组件
-    /// </summary>
-    /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
-    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="configure">自定义配置委托</param>
-    /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponent<TComponent>(this WebApplicationBuilder webApplicationBuilder, Action<ComponentBuilderBase>? configure = null)
-        where TComponent : ComponentBase
-    {
-        webApplicationBuilder.Services.AddComponent<TComponent>(webApplicationBuilder.Configuration, configure);
-
-        return webApplicationBuilder;
-    }
-
-    /// <summary>
-    /// 添加服务组件
-    /// </summary>
-    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="configure">自定义配置委托</param>
-    /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Type componentType, Action<ComponentBuilderBase>? configure = null)
-    {
-        webApplicationBuilder.Services.AddComponent(componentType, webApplicationBuilder.Configuration, configure);
-
-        return webApplicationBuilder;
-    }
-
-    /// <summary>
-    /// 添加服务组件
-    /// </summary>
-    /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
-    /// <param name="dependencies">组件依赖关系集合</param>
-    /// <param name="configure">自定义配置委托</param>
-    /// <returns><see cref="WebApplicationBuilder"/></returns>
-    public static WebApplicationBuilder AddComponent(this WebApplicationBuilder webApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilderBase>? configure = null)
-    {
-        webApplicationBuilder.Services.AddComponent(dependencies, webApplicationBuilder.Configuration, configure);
-
-        return webApplicationBuilder;
+        return webApplicationBuilder.Build()
+            .UseComponent<TWebComponent>();
     }
 }

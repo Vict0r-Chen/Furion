@@ -122,8 +122,8 @@ public class WebWebComponentBuilderTests
             SuppressDuplicateInvoke = false
         };
         var services = new ServiceCollection();
-        var webApplicationBuilder = WebApplication.CreateBuilder().AddComponentCore();
-        var webApplication = webApplicationBuilder.Build();
+        var webApplicationBuilder = WebApplication.CreateBuilder();
+        var webApplication = webApplicationBuilder.Entry();
 
         webComponentBuilder.Build(webApplication);
         var componentOptions = webApplication.GetComponentOptions();

@@ -65,12 +65,13 @@ public static class ComponentServiceCollectionExtensions
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
+    /// <param name="logging"><see cref="ILoggingBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfigurationBuilder configuration, Action<ComponentBuilderBase>? configure = null)
+    public static IServiceCollection AddComponent<TComponent>(this IServiceCollection services, IConfigurationBuilder configuration, ILoggingBuilder? logging = null, Action<ComponentBuilderBase>? configure = null)
         where TComponent : ComponentBase
     {
-        return services.AddComponent(typeof(TComponent), configuration, configure);
+        return services.AddComponent(typeof(TComponent), configuration, logging, configure);
     }
 
     /// <summary>
@@ -79,14 +80,15 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
+    /// <param name="logging"><see cref="ILoggingBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfigurationBuilder configuration, Action<ComponentBuilderBase>? configure = null)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Type componentType, IConfigurationBuilder configuration, ILoggingBuilder? logging = null, Action<ComponentBuilderBase>? configure = null)
     {
         // 创建组件依赖关系集合
         var dependencies = ComponentBase.CreateDependencies(componentType);
 
-        return services.AddComponent(dependencies, configuration, configure);
+        return services.AddComponent(dependencies, configuration, logging, configure);
     }
 
     /// <summary>
@@ -95,9 +97,10 @@ public static class ComponentServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="configuration"><see cref="IConfigurationBuilder"/></param>
+    /// <param name="logging"><see cref="ILoggingBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfigurationBuilder configuration, Action<ComponentBuilderBase>? configure = null)
+    public static IServiceCollection AddComponent(this IServiceCollection services, Dictionary<Type, Type[]> dependencies, IConfigurationBuilder configuration, ILoggingBuilder? logging = null, Action<ComponentBuilderBase>? configure = null)
     {
         // 创建组件模块构建器同时调用自定义配置委托
         var componentBuilder = new ComponentBuilderBase();
@@ -105,7 +108,10 @@ public static class ComponentServiceCollectionExtensions
         componentBuilder.Build(services);
 
         // 创建组件上下文
-        var componentContext = new ServiceComponentContext(services, configuration);
+        var componentContext = new ServiceComponentContext(services, configuration)
+        {
+            Logging = logging,
+        };
 
         // 可访问性特性
         var accessibilityBinding = BindingFlags.Public;

@@ -14,6 +14,13 @@
             组件模块 <see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/> 拓展类
             </summary>
         </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
+            <summary>
+            添加组件模块入口服务
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
+        </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder)">
             <summary>
             添加组件模块入口服务
@@ -21,49 +28,6 @@
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentCore(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
-            <summary>
-            添加组件模块服务
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponentCore(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
-            <summary>
-            添加组件模块服务
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilderBase})">
-            <summary>
-            添加服务组件
-            </summary>
-            <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Type,System.Action{Furion.Component.ComponentBuilderBase})">
-            <summary>
-            添加服务组件
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.ComponentBuilderBase})">
-            <summary>
-            添加服务组件
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
-            <param name="dependencies">组件依赖关系集合</param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.Hosting.IHostExtensions">
             <summary>

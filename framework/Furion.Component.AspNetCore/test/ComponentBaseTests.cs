@@ -31,7 +31,7 @@ public class ComponentBaseTests
         component.PreConfigureServices(componentContext);
         component.ConfigureServices(componentContext);
 
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationContext = new ApplicationComponentContext(webApplication);
 
         component.PreConfigure(applicationContext);
@@ -43,7 +43,7 @@ public class ComponentBaseTests
     [InlineData(typeof(InvalidArgument2Componnet), "`Action`1` parameter type is an invalid component options.")]
     public void CreateComponent_InvalidArgument_Throw(Type componentType, string message)
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var componentOptions = webApplication.GetComponentOptions();
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -60,7 +60,7 @@ public class ComponentBaseTests
     [InlineData(typeof(OkArgument3Component))]
     public void CreateComponent_ReturnOK(Type componentType)
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var componentOptions = webApplication.GetComponentOptions();
 
         var component = ComponentBase.CreateComponent(componentType, componentOptions);
@@ -83,7 +83,7 @@ public class ComponentBaseTests
     [Fact]
     public void CreateComponents()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var componentContext = new ApplicationComponentContext(webApplication);
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
@@ -114,7 +114,7 @@ public class ComponentBaseTests
     [Fact]
     public void GetOrCreateComponent()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var componentOptions = webApplication.GetComponentOptions();
 
         Assert.Empty(componentOptions.Components);

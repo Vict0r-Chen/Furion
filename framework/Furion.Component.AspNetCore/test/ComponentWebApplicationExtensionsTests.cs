@@ -19,7 +19,7 @@ public class ComponentWebApplicationExtensionsTests
     [Fact]
     public void UseComponentCore_Null_Throw()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         Assert.Throws<ArgumentNullException>(() =>
         {
             webApplication.UseComponentCore((WebComponentBuilder)null!);
@@ -29,7 +29,7 @@ public class ComponentWebApplicationExtensionsTests
     [Fact]
     public void UseComponentCore_ReturnOK()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var componentBuilder = new WebComponentBuilder()
         {
             SuppressDuplicateInvoke = false
@@ -52,7 +52,7 @@ public class ComponentWebApplicationExtensionsTests
     [Fact]
     public void UseComponentCore_Action_Null_ReturnOK()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         webApplication.UseComponentCore();
 
         var componentOptions = webApplication.GetComponentOptions();
@@ -62,7 +62,7 @@ public class ComponentWebApplicationExtensionsTests
     [Fact]
     public void UseComponentCore_Action_ReturnOK()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         webApplication.UseComponentCore(builder =>
         {
             builder.SuppressDuplicateInvoke = false;
@@ -83,7 +83,7 @@ public class ComponentWebApplicationExtensionsTests
     [Fact]
     public void GetComponentOptions()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
 
         var componentOptions = webApplication.GetComponentOptions();
         Assert.NotNull(componentOptions);
@@ -95,7 +95,7 @@ public class ComponentWebApplicationExtensionsTests
     [Fact]
     public void UseComponent_Dependencies_Null_Throw()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -109,7 +109,7 @@ public class ComponentWebApplicationExtensionsTests
     public void UseComponent_CallMethods()
     {
         // D C B A
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         webApplication.UseComponent(dependencies);
@@ -136,7 +136,7 @@ public class ComponentWebApplicationExtensionsTests
     public void UseComponent_DuplicateCallMethods()
     {
         // D C B A
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         webApplication.UseComponentCore(builder =>
@@ -157,7 +157,7 @@ public class ComponentWebApplicationExtensionsTests
     public void UseComponent_Generic()
     {
         // D C B A
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         webApplication.UseComponent<AComponent>();
 
         var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();
@@ -173,7 +173,7 @@ public class ComponentWebApplicationExtensionsTests
     public void UseComponent_Type()
     {
         // D C B A
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         webApplication.UseComponent(typeof(AComponent));
 
         var action = webApplication.GetComponentOptions().GetPropsAction<CallOptions>();

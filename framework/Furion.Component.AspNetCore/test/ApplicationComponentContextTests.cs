@@ -19,7 +19,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void NewInstance_Default()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         Assert.NotNull(applicationComponentContext);
@@ -34,7 +34,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void GetPropsAction_NotExists_ReturnNull()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         var action = applicationComponentContext.GetPropsAction<ComponentActionOptions>();
@@ -44,7 +44,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void GetPropsAction_Exists_ReturnAction()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         static void Action(ComponentActionOptions options)
@@ -59,7 +59,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void GetProps_NotExists_ReturnNull()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         var action = applicationComponentContext.GetProps<ComponentActionOptions>();
@@ -69,7 +69,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void GetProps_Exists_ReturnAction()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         static void Action(ComponentActionOptions options)
@@ -84,7 +84,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void GetPropsOrNew_NotExists_ReturnNull()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         var action = applicationComponentContext.GetPropsOrNew<ComponentActionOptions>();
@@ -94,7 +94,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void GetPropsOrNew_Exists_ReturnAction()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         static void Action(ComponentActionOptions options)
@@ -109,7 +109,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void Props_Null_Throw()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -120,7 +120,7 @@ public class ApplicationComponentContextTests
     [Fact]
     public void Props_ReturnOK()
     {
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var applicationComponentContext = new ApplicationComponentContext(webApplication);
 
         Assert.NotNull(applicationComponentContext.Options);

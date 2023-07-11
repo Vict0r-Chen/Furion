@@ -143,7 +143,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
     public void AddComponent_CallMethods()
     {
         // D C B A
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         webApplication.UseComponent(dependencies);
@@ -170,7 +170,7 @@ public class ComponentWebApplicationBuilderExtensionsTests
     public void AddComponent_DuplicateCallMethods()
     {
         // D C B A
-        var webApplication = WebApplication.CreateBuilder().AddComponentCore().Build();
+        var webApplication = WebApplication.CreateBuilder().Entry();
         var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
 
         webApplication.UseComponentCore(builder =>
