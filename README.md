@@ -10,7 +10,7 @@
 
 过去 Furion 没有独立好记的域名，这一次我们出手了，以合理的交易价格购买下了 [furion.net](https://furion.net) 域名。
 
-这个域名寓意非常好 —— Furion 是基于 .NET 开发的基础框架，域名正是 `furioin` + `.net` 的组合。
+这个域名寓意非常好 —— **Furion 是基于 .NET 开发的基础框架，正是 `furioin` + `.net` 的组合。**
 
 访问新官网（建设中）：[https://furion.net](https://furion.net)
 
@@ -30,6 +30,10 @@
 - 虽有单元测试，但是非常混乱
 
 正是因为存在以上诸多问题，为了 Furion 能够长期发展，我们团队决定进行下一版本（v5）开发。
+
+## 架构思想
+
+![](./assets/banner.jpeg)
 
 ## 技术选择
 
