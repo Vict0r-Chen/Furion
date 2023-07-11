@@ -61,7 +61,7 @@ public sealed class ComponentBuilder
         var props = configuration.Get<TProps>();
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(props, nameof(props));
+        ArgumentNullException.ThrowIfNull(props);
 
         // 创建组件配置委托
         var configure = new Action<TProps>(destination =>

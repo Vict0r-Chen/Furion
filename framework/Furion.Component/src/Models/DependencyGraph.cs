@@ -40,9 +40,6 @@ internal sealed class DependencyGraph
     /// <param name="dependencies">依赖关系集合</param>
     internal DependencyGraph(Dictionary<Type, Type[]> dependencies)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
-
         _dependencies = dependencies;
         _ancestorsNodes = new Dictionary<Type, List<Type>>();
         _descendantsNodes = new Dictionary<Type, List<Type>>();
@@ -96,9 +93,6 @@ internal sealed class DependencyGraph
     /// <returns><see cref="List{T}"/></returns>
     internal List<Type> FindAllAncestors(Type nodeType)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
-
         var ancestors = new List<Type>();
 
         if (_ancestorsNodes.TryGetValue(nodeType, out var ancestorsNode))
@@ -124,9 +118,6 @@ internal sealed class DependencyGraph
     /// <returns><see cref="List{T}"/></returns>
     internal List<Type> FindAllDescendants(Type nodeType)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
-
         var descendants = new List<Type>();
 
         if (_descendantsNodes.TryGetValue(nodeType, out var descendantsNode))
@@ -152,9 +143,6 @@ internal sealed class DependencyGraph
     /// <returns><see cref="List{T}"/></returns>
     internal List<Type> FindAncestors(Type nodeType)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
-
         // 去重并返回结果
         return FindAllAncestors(nodeType)
             .Distinct()
@@ -168,9 +156,6 @@ internal sealed class DependencyGraph
     /// <returns><see cref="List{T}"/></returns>
     internal List<Type> FindDescendants(Type nodeType)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(nodeType, nameof(nodeType));
-
         // 去重并返回结果
         return FindAllDescendants(nodeType)
             .Distinct()

@@ -30,10 +30,6 @@ internal static class ObjectMapper
         where TSource : class, new()
         where TDestination : class, new()
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(source, nameof(source));
-        ArgumentNullException.ThrowIfNull(destination, nameof(destination));
-
         // 反射查找成员绑定标记
         var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 

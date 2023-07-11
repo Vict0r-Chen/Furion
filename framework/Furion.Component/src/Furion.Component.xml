@@ -634,7 +634,7 @@
             </summary>
             <param name="options"><see cref="T:Furion.Component.ComponentOptions"/></param>
         </member>
-        <member name="P:Furion.Component.ComponentContext.Items">
+        <member name="P:Furion.Component.ComponentContext.Properties">
             <summary>
             附加属性
             </summary>
@@ -648,6 +648,13 @@
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
             <param name="configure">自定义组件配置委托</param>
+        </member>
+        <member name="M:Furion.Component.ComponentContext.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加组件配置
+            </summary>
+            <typeparam name="TProps">组件配置类型</typeparam>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
         </member>
         <member name="M:Furion.Component.ComponentContext.GetProps``1">
             <summary>

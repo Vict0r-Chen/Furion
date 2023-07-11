@@ -27,11 +27,6 @@ public sealed class ComponentEventContext
     /// <param name="event">事件</param>
     internal ComponentEventContext(ComponentBase component, ComponentContext componentContext, string @event)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(component, nameof(component));
-        ArgumentNullException.ThrowIfNull(componentContext, nameof(componentContext));
-        ArgumentException.ThrowIfNullOrWhiteSpace(@event, nameof(@event));
-
         Component = component;
         ComponentContext = componentContext;
         Event = @event;
@@ -51,6 +46,6 @@ public sealed class ComponentEventContext
     /// <inheritdoc />
     public override string ToString()
     {
-        return Component.GetType().FullName + "." + Event;
+        return $"{Component.GetType().FullName}.{Event}";
     }
 }

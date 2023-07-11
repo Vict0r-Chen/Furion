@@ -68,7 +68,8 @@ public sealed class DependsOnAttribute<TComponent> : DependsOnAttribute
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
 {
@@ -88,7 +89,9 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2> : DependsOnAttr
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent3"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -111,7 +114,10 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3> : 
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent3"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent4"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -137,7 +143,11 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent3"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent4"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent5"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -166,7 +176,12 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent4"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent5"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent6"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -198,7 +213,13 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent5"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent6"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent7"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -233,7 +254,14 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent6"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent7"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent8"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -271,7 +299,15 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent7"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent8"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent9"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -312,7 +348,16 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent8"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent9"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent10"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -356,7 +401,17 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent9"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent10"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent11"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -403,7 +458,18 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent10"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent11"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent12"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -453,7 +519,19 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent11"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent12"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent13"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -506,7 +584,20 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent12"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent13"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent14"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -562,7 +653,21 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent13"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent14"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent15"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -621,7 +726,22 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent14"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent15"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent16"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -683,7 +803,23 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent15"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent16"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent17"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -748,7 +884,24 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent16"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent17"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent18"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -816,7 +969,25 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent17"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent18"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent19"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18
+    , TComponent19> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -887,7 +1058,26 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent18"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent19"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent20"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18
+    , TComponent19
+    , TComponent20> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -961,7 +1151,27 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent19"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent20"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent21"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18
+    , TComponent19
+    , TComponent20
+    , TComponent21> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -1038,7 +1248,28 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent20"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent21"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent22"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21, TComponent22> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18
+    , TComponent19
+    , TComponent20
+    , TComponent21
+    , TComponent22> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -1118,7 +1349,29 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent21"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent22"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent23"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21, TComponent22, TComponent23> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18
+    , TComponent19
+    , TComponent20
+    , TComponent21
+    , TComponent22
+    , TComponent23> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase
@@ -1201,7 +1454,30 @@ public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TC
 /// <typeparam name="TComponent22"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent23"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent24"><see cref="ComponentBase"/></typeparam>
-public sealed class DependsOnAttribute<TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21, TComponent22, TComponent23, TComponent24> : DependsOnAttribute
+public sealed class DependsOnAttribute<TComponent1
+    , TComponent2
+    , TComponent3
+    , TComponent4
+    , TComponent5
+    , TComponent6
+    , TComponent7
+    , TComponent8
+    , TComponent9
+    , TComponent10
+    , TComponent11
+    , TComponent12
+    , TComponent13
+    , TComponent14
+    , TComponent15
+    , TComponent16
+    , TComponent17
+    , TComponent18
+    , TComponent19
+    , TComponent20
+    , TComponent21
+    , TComponent22
+    , TComponent23
+    , TComponent24> : DependsOnAttribute
     where TComponent1 : ComponentBase
     where TComponent2 : ComponentBase
     where TComponent3 : ComponentBase

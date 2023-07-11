@@ -410,7 +410,7 @@
             <param name="type"><see cref="T:System.Type"/></param>
             <param name="name">方法名称</param>
             <param name="accessibilityBindingFlags">可访问性成员绑定标记</param>
-            <param name="method"><see cref="T:System.Reflection.MethodInfo"/></param>
+            <param name="methodInfo"><see cref="T:System.Reflection.MethodInfo"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:System.TypeExtensions.IsInteger(System.Type)">

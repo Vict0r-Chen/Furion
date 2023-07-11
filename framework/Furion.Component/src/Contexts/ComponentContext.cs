@@ -26,13 +26,13 @@ public abstract class ComponentContext
     internal ComponentContext(ComponentOptions options)
     {
         Options = options;
-        Items = new Dictionary<object, object?>();
+        Properties = new Dictionary<object, object?>();
     }
 
     /// <summary>
     /// 附加属性
     /// </summary>
-    public IDictionary<object, object?> Items { get; init; }
+    public IDictionary<object, object?> Properties { get; init; }
 
     /// <inheritdoc cref="ComponentOptions"/>
     internal ComponentOptions Options { get; }
@@ -47,9 +47,35 @@ public abstract class ComponentContext
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
-        ArgumentNullException.ThrowIfNull(Options, nameof(Options));
 
         Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
+    }
+
+    /// <summary>
+    /// 添加组件配置
+    /// </summary>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    public void Props<TProps>(IConfiguration configuration)
+        where TProps : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+
+        // 获取配置实例
+        var props = configuration.Get<TProps>();
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(props);
+
+        // 创建组件配置委托
+        var configure = new Action<TProps>(destination =>
+        {
+            ObjectMapper.Map(props, destination);
+        });
+
+        // 添加组件配置
+        Props(configure);
     }
 
     /// <summary>

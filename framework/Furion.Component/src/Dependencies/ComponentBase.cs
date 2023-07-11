@@ -32,7 +32,7 @@ public abstract class ComponentBase
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
-        ArgumentNullException.ThrowIfNull(Options, nameof(Options));
+        ArgumentNullException.ThrowIfNull(Options);
 
         Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
     }
@@ -52,7 +52,7 @@ public abstract class ComponentBase
         var props = configuration.Get<TProps>();
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(props, nameof(props));
+        ArgumentNullException.ThrowIfNull(props);
 
         // 创建组件配置委托
         var configure = new Action<TProps>(destination =>
@@ -300,7 +300,7 @@ public abstract class ComponentBase
 
         // 调用组件构造函数进行实例化
         var component = buildingConstructor.Invoke(args) as ComponentBase;
-        ArgumentNullException.ThrowIfNull(component, nameof(component));
+        ArgumentNullException.ThrowIfNull(component);
 
         // 组件模块配置选项
         component.Options = componentOptions;
@@ -438,16 +438,16 @@ public abstract class ComponentBase
         , string invokeMethod)
     {
         // 若方法未定义则跳过
-        if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, BindingFlags.Public, out var method))
+        if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, BindingFlags.Public, out var methodInfo))
         {
             return;
         }
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(method, nameof(method));
+        ArgumentNullException.ThrowIfNull(methodInfo);
 
         // 调用方法
-        method.Invoke(component, new object[] { componentContext });
+        methodInfo.Invoke(component, new object[] { componentContext });
 
         // 输出调试事件
         Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
