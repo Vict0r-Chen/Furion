@@ -162,4 +162,18 @@ public class IConfigurationExtensionsTests
 
         Assert.Equal("'ErrorOnUnknownConfiguration' was set on the provided BinderOptions, but the following properties were not found on the instance of Furion.Configuration.Tests.FurionAuthor: 'Email'", exception.Message);
     }
+
+    [Fact]
+    public void Reload()
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "appsettings.json");
+        Assert.True(File.Exists(filePath));
+
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddJsonFile(filePath);
+        var configuration = configurationBuilder.Build();
+
+        Assert.NotNull(configuration);
+        configuration.Reload();
+    }
 }

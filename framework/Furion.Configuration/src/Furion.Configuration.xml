@@ -340,6 +340,12 @@
             <param name="configureOptions">配置值绑定到指定类型额外配置</param>
             <returns><see cref="T:System.Object"/></returns>
         </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationExtensions.Reload(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            重新加载应用配置
+            </summary>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+        </member>
         <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0">
             <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the FileExtensionRegex method.</summary>
         </member>

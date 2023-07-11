@@ -79,4 +79,18 @@ public static class IConfigurationExtensions
     {
         return configuration.GetSection(key).Get(type, configureOptions);
     }
+
+    /// <summary>
+    /// 重新加载应用配置
+    /// </summary>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    public static void Reload(this IConfiguration configuration)
+    {
+        var configurationRoot = configuration as IConfigurationRoot;
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configurationRoot, nameof(configurationRoot));
+
+        configurationRoot.Reload();
+    }
 }
