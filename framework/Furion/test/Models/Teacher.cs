@@ -19,3 +19,11 @@ public class Teacher
     [MinLength(5)]
     public string? Name { get; set; }
 }
+
+public class TeacherValidator : AbstractValidator<Teacher>, ITransientDependency
+{
+    public TeacherValidator()
+    {
+        RuleFor(s => s.Name).NotNull().NotEqual("Furion");
+    }
+}

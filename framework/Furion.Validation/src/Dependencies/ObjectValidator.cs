@@ -18,13 +18,13 @@ namespace Furion.Validation;
 /// 类型验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public sealed class Validator<T> : IValidator<T>
+public sealed class ObjectValidator<T> : IObjectValidator<T>
     where T : class
 {
     /// <summary>
     /// 属性验证器集合
     /// </summary>
-    internal readonly List<IValidator<T>> _propertyValidators;
+    internal readonly List<IObjectValidator<T>> _propertyValidators;
 
     /// <summary>
     /// <see cref="ObjectAnnotationValidator"/>
@@ -34,7 +34,8 @@ public sealed class Validator<T> : IValidator<T>
     /// <summary>
     /// 构造函数
     /// </summary>
-    public Validator()
+    /// <exception cref="InvalidOperationException"></exception>
+    public ObjectValidator()
     {
         _propertyValidators = new();
         _objectAnnotationValidator = new();
@@ -56,18 +57,18 @@ public sealed class Validator<T> : IValidator<T>
     /// <summary>
     /// 创建类型验证器
     /// </summary>
-    /// <returns><see cref="Validator{T}"/></returns>
-    public static Validator<T> Create()
+    /// <returns><see cref="ObjectValidator{T}"/></returns>
+    public static ObjectValidator<T> Create()
     {
-        return new Validator<T>();
+        return new ObjectValidator<T>();
     }
 
     /// <summary>
     /// 创建类型验证器
     /// </summary>
     /// <param name="predicate">配置委托</param>
-    /// <returns><see cref="Validator{T}"/></returns>
-    public static Validator<T> Create(Action<Validator<T>> predicate)
+    /// <returns><see cref="ObjectValidator{T}"/></returns>
+    public static ObjectValidator<T> Create(Action<ObjectValidator<T>> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -95,7 +96,7 @@ public sealed class Validator<T> : IValidator<T>
     /// </summary>
     /// <param name="enable">是否启用</param>
     /// <returns><see cref="Validate(T)"/></returns>
-    public Validator<T> WithAnnotations(bool enable = true)
+    public ObjectValidator<T> WithAnnotations(bool enable = true)
     {
         SuppressAnnotations = !enable;
 
@@ -103,7 +104,7 @@ public sealed class Validator<T> : IValidator<T>
     }
 
     /// <inheritdoc />
-    public IValidator<T> When(Func<T, bool> condition)
+    public IObjectValidator<T> When(Func<T, bool> condition)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(condition, nameof(condition));
@@ -112,7 +113,7 @@ public sealed class Validator<T> : IValidator<T>
     }
 
     /// <inheritdoc />
-    public IValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(condition, nameof(condition));
@@ -123,7 +124,7 @@ public sealed class Validator<T> : IValidator<T>
     }
 
     /// <inheritdoc />
-    public IValidator<T> Reset()
+    public IObjectValidator<T> Reset()
     {
         Condition = null;
         Items?.Clear();
@@ -138,6 +139,9 @@ public sealed class Validator<T> : IValidator<T>
     /// <returns><see cref="bool"/></returns>
     internal bool CanValidate(T instance)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
         if (Condition is null)
         {
             return true;
@@ -212,15 +216,8 @@ public sealed class Validator<T> : IValidator<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
-        // 检查是否可以执行验证程序
-        if (!CanValidate(instance))
-        {
-            return;
-        }
-
         // 获取验证结果
         var validationResults = GetValidationResults(instance);
-
         if (validationResults is null)
         {
             return;
@@ -240,6 +237,9 @@ public sealed class Validator<T> : IValidator<T>
     /// <param name="propertyValidator"><see cref="PropertyValidator{T, TProperty}" /></param>
     internal void AddPropertyValidator<TProperty>(PropertyValidator<T, TProperty> propertyValidator)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyValidator, nameof(propertyValidator));
+
         _propertyValidators.Add(propertyValidator);
     }
 }

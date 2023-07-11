@@ -27,3 +27,12 @@ public class Student
 
     public Teacher? Teacher { get; set; }
 }
+
+public class StudentValidator : AbstractValidator<Student>, ITransientDependency
+{
+    public StudentValidator()
+    {
+        RuleFor(s => s.Name).NotNull().NotEqual("Furion");
+        RuleFor(s => s.Teacher).SetValidator(new TeacherValidator());
+    }
+}

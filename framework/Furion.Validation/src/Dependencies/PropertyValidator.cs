@@ -19,13 +19,13 @@ namespace Furion.Validation;
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
 /// <typeparam name="TProperty">属性类型</typeparam>
-public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
+public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T>
     where T : class
 {
     /// <summary>
-    /// 验证器集合
+    /// <see cref="ObjectValidator{T}"/>
     /// </summary>
-    internal readonly Validator<T> _validator;
+    internal readonly ObjectValidator<T> _objectValidator;
 
     /// <summary>
     /// <see cref="PropertyAnnotationValidator{T}"/>
@@ -35,16 +35,16 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="validator"><see cref="Validator{T}"/></param>
+    /// <param name="objectValidator"><see cref="ObjectValidator{T}"/></param>
     /// <param name="propertyExpression">属性选择器</param>
-    internal PropertyValidator(Validator<T> validator, Expression<Func<T, TProperty?>> propertyExpression)
+    internal PropertyValidator(ObjectValidator<T> objectValidator, Expression<Func<T, TProperty?>> propertyExpression)
     {
         Validators = new();
         PropertyName = propertyExpression.GetPropertyName();
 
         // 将当前属性验证器添加到类型验证器集合中
-        _validator = validator;
-        _validator.AddPropertyValidator(this);
+        _objectValidator = objectValidator;
+        _objectValidator.AddPropertyValidator(this);
 
         _propertyAnnotationValidator = new(PropertyName);
     }
@@ -76,6 +76,11 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     /// 验证条件
     /// </summary>
     internal Func<ValidationContext, bool>? Condition { get; private set; }
+
+    /// <summary>
+    /// 类型验证器
+    /// </summary>
+    internal IObjectValidator<TProperty>? Validator { get; private set; }
 
     /// <summary>
     /// 启用/禁用注解（特性）验证器
@@ -135,7 +140,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     }
 
     /// <inheritdoc />
-    public IValidator<T> When(Func<T, bool> condition)
+    public IObjectValidator<T> When(Func<T, bool> condition)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(condition, nameof(condition));
@@ -144,7 +149,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     }
 
     /// <inheritdoc />
-    public IValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(condition, nameof(condition));
@@ -155,7 +160,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     }
 
     /// <inheritdoc />
-    public IValidator<T> Reset()
+    public IObjectValidator<T> Reset()
     {
         Condition = null;
 
@@ -169,12 +174,15 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     /// <returns><see cref="bool"/></returns>
     internal bool CanValidate(T instance)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
         if (Condition is null)
         {
             return true;
         }
 
-        return Condition(new ValidationContext(instance, _validator.Items));
+        return Condition(new ValidationContext(instance, _objectValidator.Items));
     }
 
     /// <inheritdoc />
@@ -198,6 +206,17 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
 
         // 获取属性值
         var propertyValue = GetPropertyValue(instance);
+
+        // 处理设置类型验证器
+        if (Validator is not null)
+        {
+            if (propertyValue is null)
+            {
+                return isValid;
+            }
+
+            return isValid && Validator.IsValid(propertyValue);
+        }
 
         return isValid && Validators.All(validator => validator.IsValid(GetValidationObject(validator, instance, propertyValue)));
     }
@@ -225,8 +244,19 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
         // 获取属性值
         var propertyValue = GetPropertyValue(instance);
 
-        // 获取所有验证器验证结果集合
-        validationResults.AddRange(Validators.SelectMany(validator => validator.GetValidationResults(GetValidationObject(validator, instance, propertyValue), PropertyName) ?? Enumerable.Empty<ValidationResult>()));
+        // 处理设置类型验证器
+        if (Validator is not null)
+        {
+            if (propertyValue is not null)
+            {
+                validationResults.AddRange(Validator.GetValidationResults(propertyValue) ?? Enumerable.Empty<ValidationResult>());
+            }
+        }
+        else
+        {
+            // 获取所有验证器验证结果集合
+            validationResults.AddRange(Validators.SelectMany(validator => validator.GetValidationResults(GetValidationObject(validator, instance, propertyValue), PropertyName) ?? Enumerable.Empty<ValidationResult>()));
+        }
 
         if (validationResults.Count == 0)
         {
@@ -248,15 +278,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
 
-        // 检查是否可以执行验证程序
-        if (!CanValidate(instance))
-        {
-            return;
-        }
-
         // 获取验证结果
         var validationResults = GetValidationResults(instance);
-
         if (validationResults is null)
         {
             return;

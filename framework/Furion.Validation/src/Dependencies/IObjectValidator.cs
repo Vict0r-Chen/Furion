@@ -18,8 +18,7 @@ namespace Furion.Validation;
 /// 类型验证器接口
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public interface IValidator<T>
-   where T : class
+public interface IObjectValidator<T>
 {
     /// <summary>
     /// 禁止注解（特性）验证
@@ -30,21 +29,21 @@ public interface IValidator<T>
     /// 配置条件
     /// </summary>
     /// <param name="condition">条件委托</param>
-    /// <returns><see cref="IValidator{T}"/></returns>
-    IValidator<T> When(Func<T, bool> condition);
+    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    IObjectValidator<T> When(Func<T, bool> condition);
 
     /// <summary>
     /// 配置条件
     /// </summary>
     /// <param name="condition">条件委托</param>
-    /// <returns><see cref="IValidator{T}"/></returns>
-    IValidator<T> WhenContext(Func<ValidationContext, bool> condition);
+    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition);
 
     /// <summary>
     /// 清空条件
     /// </summary>
-    /// <returns><see cref="IValidator{T}"/></returns>
-    IValidator<T> Reset();
+    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    IObjectValidator<T> Reset();
 
     /// <summary>
     /// 检查值有效性

@@ -18,20 +18,20 @@ namespace Furion.Validation;
 /// 类型验证器抽象基类
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public abstract class AbstractValidator<T> : IValidator<T>
+public abstract class AbstractValidator<T> : IObjectValidator<T>
     where T : class
 {
     /// <summary>
-    /// <see cref="Validator{T}"/>
+    /// <see cref="ObjectValidator{T}"/>
     /// </summary>
-    internal readonly Validator<T> _validator;
+    internal readonly ObjectValidator<T> _objectValidator;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public AbstractValidator()
     {
-        _validator = Validator<T>.Create();
+        _objectValidator = ObjectValidator<T>.Create();
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public abstract class AbstractValidator<T> : IValidator<T>
         set
         {
             _suppressAnnotations = value;
-            _validator.SuppressAnnotations = value;
+            _objectValidator.SuppressAnnotations = value;
         }
     }
 
@@ -60,37 +60,37 @@ public abstract class AbstractValidator<T> : IValidator<T>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertySelector)
     {
-        return _validator.Property(propertySelector);
+        return _objectValidator.Property(propertySelector);
     }
 
     /// <inheritdoc />
-    public IValidator<T> When(Func<T, bool> condition)
+    public IObjectValidator<T> When(Func<T, bool> condition)
     {
-        return _validator.When(condition);
+        return _objectValidator.When(condition);
     }
 
     /// <inheritdoc />
-    public IValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
-        return _validator.WhenContext(condition);
+        return _objectValidator.WhenContext(condition);
     }
 
     /// <inheritdoc />
-    public IValidator<T> Reset()
+    public IObjectValidator<T> Reset()
     {
-        return _validator.Reset();
+        return _objectValidator.Reset();
     }
 
     /// <inheritdoc />
     public bool IsValid(T instance)
     {
-        return _validator.IsValid(instance);
+        return _objectValidator.IsValid(instance);
     }
 
     /// <inheritdoc />
     public List<ValidationResult>? GetValidationResults(T instance)
     {
-        return _validator.GetValidationResults(instance);
+        return _objectValidator.GetValidationResults(instance);
     }
 
     /// <summary>
@@ -100,6 +100,6 @@ public abstract class AbstractValidator<T> : IValidator<T>
     /// <exception cref="ValidationException"></exception>
     public void Validate(T instance)
     {
-        _validator.Validate(instance);
+        _objectValidator.Validate(instance);
     }
 }

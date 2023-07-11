@@ -28,7 +28,6 @@ internal static class ExpressionExtensions
     /// <returns><see cref="string"/></returns>
     /// <exception cref="ArgumentException"></exception>
     internal static string GetPropertyName<T, TProperty>(this Expression<Func<T, TProperty?>> propertySelector)
-        where T : class
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(propertySelector, nameof(propertySelector));
@@ -57,7 +56,6 @@ internal static class ExpressionExtensions
     /// <returns><see cref="string"/></returns>
     /// <exception cref="ArgumentException"></exception>
     private static string GetPropertyName<T>(MemberExpression memberExpression)
-        where T : class
     {
         // 获取属性声明类型
         var propertyType = memberExpression.Member.DeclaringType;

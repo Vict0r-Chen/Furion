@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 属性验证器
 /// </summary>
-public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
+public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T>
     where T : class
 {
     /// <summary>
@@ -701,6 +701,21 @@ public sealed partial class PropertyValidator<T, TProperty> : IValidator<T>
     public PropertyValidator<T, TProperty> ObjectAnnotation()
     {
         Validators.Add(new ObjectAnnotationValidator());
+
+        return this;
+    }
+
+    /// <summary>
+    /// 设置类型验证器
+    /// </summary>
+    /// <param name="objectValidator"><see cref="IObjectValidator{T}"/></param>
+    /// <returns></returns>
+    public PropertyValidator<T, TProperty> SetValidator(IObjectValidator<TProperty> objectValidator)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(objectValidator, nameof(objectValidator));
+
+        Validator = objectValidator;
 
         return this;
     }
