@@ -670,9 +670,6 @@
             </summary>
             <param name="options"><see cref="T:Furion.Component.ComponentOptions"/></param>
         </member>
-        <member name="P:Furion.Component.ComponentContext.Environment">
-            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
-        </member>
         <member name="P:Furion.Component.ComponentContext.Items">
             <summary>
             附加属性
@@ -727,6 +724,9 @@
         </member>
         <member name="P:Furion.Component.ServiceComponentContext.Configuration">
             <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>
+        </member>
+        <member name="P:Furion.Component.ServiceComponentContext.Environment">
+            <inheritdoc cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/>
         </member>
         <member name="P:Furion.Component.ServiceComponentContext.Logging">
             <inheritdoc cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/>
@@ -1134,6 +1134,13 @@
             <param name="dependencies">组件依赖关系集合</param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.GetComponentOptions(Microsoft.Extensions.Hosting.IHostApplicationBuilder)">
+            <summary>
+            获取组件模块配置选项
+            </summary>
+            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
+            <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions">
             <summary>

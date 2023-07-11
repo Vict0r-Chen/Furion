@@ -42,5 +42,5 @@ public sealed class ApplicationComponentContext : ComponentContext
     public IConfiguration Configuration { get; }
 
     /// <inheritdoc cref="IWebHostEnvironment"/>
-    public new IWebHostEnvironment Environment { get; }
+    public IWebHostEnvironment Environment { get; }
 }

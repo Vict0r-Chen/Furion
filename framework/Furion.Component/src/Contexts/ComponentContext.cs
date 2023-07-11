@@ -29,9 +29,6 @@ public abstract class ComponentContext
         Items = new Dictionary<object, object?>();
     }
 
-    /// <inheritdoc cref="IHostEnvironment"/>
-    public IHostEnvironment? Environment { get; internal set; }
-
     /// <summary>
     /// 附加属性
     /// </summary>

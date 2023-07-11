@@ -87,4 +87,14 @@ public static class ComponentHostApplicationBuilderExtensions
 
         return hostApplicationBuilder;
     }
+
+    /// <summary>
+    /// 获取组件模块配置选项
+    /// </summary>
+    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
+    /// <returns><see cref="ComponentOptions"/></returns>
+    internal static ComponentOptions GetComponentOptions(this IHostApplicationBuilder hostApplicationBuilder)
+    {
+        return hostApplicationBuilder.Services.GetCoreOptions().Get<ComponentOptions>();
+    }
 }
