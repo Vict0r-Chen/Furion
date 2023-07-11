@@ -770,6 +770,15 @@
             </summary>
             <param name="context"><see cref="T:Furion.Component.ComponentEventContext"/></param>
         </member>
+        <member name="M:Furion.Component.ComponentBase.InvokeMethod(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+            <summary>
+            调用组件方法
+            </summary>
+            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
+            <param name="invokeMethod">方法名称</param>
+        </member>
         <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
             调用事件监听

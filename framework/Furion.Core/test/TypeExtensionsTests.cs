@@ -207,7 +207,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(OverrideDelaryMethodClass), true)]
     public void IsDeclareOnlyMethod(Type type, bool isMultiple)
     {
-        var result = type.IsDeclareOnlyMethod("Test", BindingFlags.Public);
+        var result = type.IsDeclareOnlyMethod("Test", BindingFlags.Public, out _);
         Assert.Equal(isMultiple, result);
     }
 

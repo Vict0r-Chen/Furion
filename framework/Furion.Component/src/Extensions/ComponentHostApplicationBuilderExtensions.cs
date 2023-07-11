@@ -111,54 +111,19 @@ public static class ComponentHostApplicationBuilderExtensions
         // 创建组件上下文
         var componentContext = new ServiceComponentContext(hostApplicationBuilder);
 
-        // 可访问性特性
-        var accessibilityBinding = BindingFlags.Public;
-
         // 创建依赖关系图
         var dependencyGraph = new DependencyGraph(dependencies);
 
         // 创建组件依赖关系对象集合
         var components = ComponentBase.CreateComponents(dependencies, componentContext, component =>
         {
-            // 将调用的方法
-            var invokeMethod = nameof(ComponentBase.PreConfigureServices);
-
-            // 若方法未定义则跳过
-            if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, accessibilityBinding))
-            {
-                return;
-            }
-
-            // 调用前置配置服务
-            component.PreConfigureServices(componentContext);
-
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
-
-            // 调用事件监听
-            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
+            ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, nameof(ComponentBase.PreConfigureServices));
         });
 
         // 调用配置服务
         components.ForEach(component =>
         {
-            // 将调用的方法
-            var invokeMethod = nameof(ComponentBase.ConfigureServices);
-
-            // 若方法未定义则跳过
-            if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, accessibilityBinding))
-            {
-                return;
-            }
-
-            // 调用前置配置服务
-            component.ConfigureServices(componentContext);
-
-            // 输出调试事件
-            Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
-
-            // 调用事件监听
-            ComponentBase.InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
+            ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, nameof(ComponentBase.ConfigureServices));
         });
 
         components.Clear();

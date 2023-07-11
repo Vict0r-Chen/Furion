@@ -98,6 +98,34 @@ public abstract class ComponentBase
     { }
 
     /// <summary>
+    /// 调用组件方法
+    /// </summary>
+    /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
+    /// <param name="component"><see cref="ComponentBase"/></param>
+    /// <param name="componentContext"><see cref="ComponentContext"/></param>
+    /// <param name="invokeMethod">方法名称</param>
+    internal static void InvokeMethod(DependencyGraph dependencyGraph, ComponentBase component, ComponentContext componentContext, string invokeMethod)
+    {
+        // 若方法未定义则跳过
+        if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, BindingFlags.Public, out var method))
+        {
+            return;
+        }
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(method, nameof(method));
+
+        // 调用方法
+        method.Invoke(component, new object[] { componentContext });
+
+        // 输出调试事件
+        Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
+
+        // 调用事件监听
+        InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
+    }
+
+    /// <summary>
     /// 调用事件监听
     /// </summary>
     /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
@@ -122,7 +150,7 @@ public abstract class ComponentBase
         var componentEventContext = new ComponentEventContext(component, componentContext, @event);
 
         // 循环调用所有组件组件（含自己）的监听方法
-        ancestors.Where(componentType => componentType.IsDeclareOnlyMethod(nameof(InvokeEvents), BindingFlags.Public))
+        ancestors.Where(componentType => componentType.IsDeclareOnlyMethod(nameof(InvokeEvents), BindingFlags.Public, out _))
                  .Select(componentType => GetOrCreateComponent(componentType, componentContext.Options))
                  .ToList()
                  .ForEach(cmp => cmp.InvokeEvents(componentEventContext));
