@@ -255,6 +255,15 @@
             <returns><see cref="T:System.String"/></returns>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
+        <member name="M:System.Linq.Expressions.ExpressionExtensions.GetPropertyName``1(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            解析表达式属性名称
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="memberExpression"><see cref="T:System.Linq.Expressions.MemberExpression"/></param>
+            <returns><see cref="T:System.String"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:System.Collections.Generic.ICollectionExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.ICollection`1"/> 拓展类

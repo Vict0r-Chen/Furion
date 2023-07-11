@@ -36,18 +36,39 @@ internal static class ExpressionExtensions
         // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
         if (propertySelector.Body is MemberExpression memberExpression)
         {
-            // 获取 MemberExpression 的 Member 属性，返回属性的名称
-            return memberExpression.Member.Name;
+            return GetPropertyName<T>(memberExpression);
         }
         // 如果主体是 UnaryExpression 类型，则继续解析
         else if (propertySelector.Body is UnaryExpression unaryExpression
             && unaryExpression.Operand is MemberExpression nestedMemberExpression)
         {
-            // 获取嵌套的 MemberExpression 的 Member 属性，返回属性的名称
-            return nestedMemberExpression.Member.Name;
+            return GetPropertyName<T>(nestedMemberExpression);
         }
 
         // 如果无法解析属性名称，抛出 ArgumentException 异常
-        throw new ArgumentException($"The property name for type {typeof(T).Name} cannot be resolved.");
+        throw new ArgumentException("Expression is not valid for property selection.");
+    }
+
+    /// <summary>
+    /// 解析表达式属性名称
+    /// </summary>
+    /// <typeparam name="T">对象类型</typeparam>
+    /// <param name="memberExpression"><see cref="MemberExpression"/></param>
+    /// <returns><see cref="string"/></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static string GetPropertyName<T>(MemberExpression memberExpression)
+        where T : class
+    {
+        // 获取属性声明类型
+        var propertyType = memberExpression.Member.DeclaringType;
+
+        // 检查是否越界访问属性
+        if (propertyType != typeof(T))
+        {
+            throw new ArgumentException("Invalid property selection.");
+        }
+
+        // 获取 MemberExpression 的 Member 属性，返回属性的名称
+        return memberExpression.Member.Name;
     }
 }
