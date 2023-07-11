@@ -99,7 +99,12 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 
 感谢您的慷慨捐助！如果您愿意给予您的支持，请点击以下链接进行捐赠：
 
-[捐赠链接](http://furion.baiqian.ltd/docs/donate)
+- [捐赠链接](http://furion.baiqian.ltd/docs/donate)
+- 微信扫码
+
+<img src="./assets/support.png" width="300" />
+
+<br />
 
 再次向您表达我们最衷心的感激之情，期待继续为您提供更好的软件和服务！
 
@@ -108,8 +113,6 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 [百小僧](https://gitee.com/monksoul)
 <br />
 [Furion 开发团队](https://furion.net/)
-
-<img src="./assets/support.png" width="300" />
 
 ## 协议
 
