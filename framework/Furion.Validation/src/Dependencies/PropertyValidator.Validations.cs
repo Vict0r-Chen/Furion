@@ -622,7 +622,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddAnnotations(params ValidationAttribute[] validationAttributes)
+    public PropertyValidator<T> AddAttributes(params ValidationAttribute[] validationAttributes)
     {
         Validators.Add(new ValueAnnotationValidator(validationAttributes));
 
@@ -634,7 +634,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> AddAnnotations(IList<ValidationAttribute> validationAttributes)
+    public PropertyValidator<T> AddAttributes(IList<ValidationAttribute> validationAttributes)
     {
         Validators.Add(new ValueAnnotationValidator(validationAttributes));
 
@@ -690,6 +690,17 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     public PropertyValidator<T> Custom(Func<T, bool> predicate, string? defaultErrorMessage = default)
     {
         Validators.Add(new CustomValidator(predicate, defaultErrorMessage));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加对象注解（特性）验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> ObjectAnnotation()
+    {
+        Validators.Add(new ObjectAnnotationValidator());
 
         return this;
     }

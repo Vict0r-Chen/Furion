@@ -74,7 +74,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// <summary>
     /// 验证条件
     /// </summary>
-    internal Func<T, bool>? Condition { get; private set; }
+    internal Func<ValidationContext, bool>? Condition { get; private set; }
 
     /// <summary>
     /// 启用/禁用注解（特性）验证器
@@ -92,37 +92,28 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessage">错误消息</param>
-    public void WithErrorMessage(string errorMessage)
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> WithErrorMessage(string errorMessage)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(errorMessage, nameof(errorMessage));
 
         ErrorMessageAccessor = (_) => errorMessage;
+
+        return this;
     }
 
     /// <summary>
     /// 设置错误消息
     /// </summary>
     /// <param name="errorMessageAccessor">错误消息访问器</param>
-    public void WithErrorMessage(Func<T, string> errorMessageAccessor)
+    /// <returns><see cref="PropertyValidator{T}"/></returns>
+    public PropertyValidator<T> WithErrorMessage(Func<T, string> errorMessageAccessor)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(errorMessageAccessor, nameof(errorMessageAccessor));
 
         ErrorMessageAccessor = errorMessageAccessor;
-    }
-
-    /// <summary>
-    /// 添加自定义验证器
-    /// </summary>
-    /// <param name="condition">条件委托</param>
-    /// <returns><see cref="PropertyValidator{T}"/></returns>
-    public PropertyValidator<T> When(Func<T, bool> condition)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
-
-        Condition = condition;
 
         return this;
     }
@@ -142,6 +133,34 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
         return this;
     }
 
+    /// <inheritdoc />
+    public IValidator<T> When(Func<T, bool> condition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+
+        return WhenContext(context => condition((T)context.ObjectInstance));
+    }
+
+    /// <inheritdoc />
+    public IValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+
+        Condition = condition;
+
+        return this;
+    }
+
+    /// <inheritdoc />
+    public IValidator<T> Reset()
+    {
+        Condition = null;
+
+        return this;
+    }
+
     /// <summary>
     /// 检查是否可以执行验证程序
     /// </summary>
@@ -154,7 +173,7 @@ public sealed partial class PropertyValidator<T> : IValidator<T>
             return true;
         }
 
-        return Condition(instance);
+        return Condition(new ValidationContext(instance, _validator.Items));
     }
 
     /// <inheritdoc />

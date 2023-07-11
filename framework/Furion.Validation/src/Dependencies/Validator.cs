@@ -44,6 +44,16 @@ public sealed class Validator<T> : IValidator<T>
     public bool SuppressAnnotations { get; set; } = true;
 
     /// <summary>
+    /// 验证条件
+    /// </summary>
+    internal Func<ValidationContext, bool>? Condition { get; private set; }
+
+    /// <summary>
+    /// 附加属性
+    /// </summary>
+    internal IDictionary<object, object?>? Items { get; private set; }
+
+    /// <summary>
     /// 创建类型验证器
     /// </summary>
     /// <returns><see cref="Validator{T}"/></returns>
@@ -92,10 +102,67 @@ public sealed class Validator<T> : IValidator<T>
     }
 
     /// <inheritdoc />
+    public IValidator<T> When(Func<T, bool> condition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+
+        return WhenContext(context => condition((T)context.ObjectInstance));
+    }
+
+    /// <inheritdoc />
+    public IValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+
+        Condition = condition;
+
+        return this;
+    }
+
+    /// <inheritdoc />
+    public IValidator<T> Reset()
+    {
+        Condition = null;
+        Items?.Clear();
+
+        return this;
+    }
+
+    /// <summary>
+    /// 检查是否可以执行验证程序
+    /// </summary>
+    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool CanValidate(T instance)
+    {
+        if (Condition is null)
+        {
+            return true;
+        }
+
+        // 执行条件配置
+        var validationContext = new ValidationContext(instance, new Dictionary<object, object?>());
+        var result = Condition(validationContext);
+
+        // 同步附加属性
+        Items = validationContext.Items;
+
+        return result;
+    }
+
+    /// <inheritdoc />
     public bool IsValid(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 检查是否可以执行验证程序
+        if (!CanValidate(instance))
+        {
+            return true;
+        }
 
         // 处理对象注解（特性）验证器
         var isValid = true;
@@ -112,6 +179,12 @@ public sealed class Validator<T> : IValidator<T>
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 检查是否可以执行验证程序
+        if (!CanValidate(instance))
+        {
+            return null;
+        }
 
         var validationResults = new List<ValidationResult>();
 
@@ -137,6 +210,12 @@ public sealed class Validator<T> : IValidator<T>
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+        // 检查是否可以执行验证程序
+        if (!CanValidate(instance))
+        {
+            return;
+        }
 
         // 获取验证结果
         var validationResults = GetValidationResults(instance);

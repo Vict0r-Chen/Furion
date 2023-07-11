@@ -971,6 +971,15 @@
             <param name="propertySelector">属性选择器</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.When(System.Func{`0,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.Reset">
+            <inheritdoc />
+        </member>
         <member name="M:Furion.Validation.AbstractValidator`1.IsValid(`0)">
             <inheritdoc />
         </member>
@@ -994,6 +1003,26 @@
             <summary>
             禁止注解（特性）验证
             </summary>
+        </member>
+        <member name="M:Furion.Validation.IValidator`1.When(System.Func{`0,System.Boolean})">
+            <summary>
+            配置条件
+            </summary>
+            <param name="condition">条件委托</param>
+            <returns><see cref="T:Furion.Validation.IValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.IValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
+            <summary>
+            配置条件
+            </summary>
+            <param name="condition">条件委托</param>
+            <returns><see cref="T:Furion.Validation.IValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.IValidator`1.Reset">
+            <summary>
+            清空条件
+            </summary>
+            <returns><see cref="T:Furion.Validation.IValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IValidator`1.IsValid(`0)">
             <summary>
@@ -1082,18 +1111,13 @@
             设置错误消息
             </summary>
             <param name="errorMessage">错误消息</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.WithErrorMessage(System.Func{`0,System.String})">
             <summary>
             设置错误消息
             </summary>
             <param name="errorMessageAccessor">错误消息访问器</param>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`1.When(System.Func{`0,System.Boolean})">
-            <summary>
-            添加自定义验证器
-            </summary>
-            <param name="condition">条件委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.SetValidationObjectAccessor(System.Func{Furion.Validation.ValidatorBase,`0,System.Object,System.Object})">
@@ -1102,6 +1126,15 @@
             </summary>
             <param name="validationObjectAccessor">验证对象访问器</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.When(System.Func{`0,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.Reset">
+            <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PropertyValidator`1.CanValidate(`0)">
             <summary>
@@ -1498,14 +1531,14 @@
             <param name="validators">验证器集合</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`1.AddAnnotations(System.ComponentModel.DataAnnotations.ValidationAttribute[])">
+        <member name="M:Furion.Validation.PropertyValidator`1.AddAttributes(System.ComponentModel.DataAnnotations.ValidationAttribute[])">
             <summary>
             添加注解（特性）验证器
             </summary>
             <param name="validationAttributes">验证特性集合</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`1.AddAnnotations(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+        <member name="M:Furion.Validation.PropertyValidator`1.AddAttributes(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">
             <summary>
             添加注解（特性）验证器
             </summary>
@@ -1541,6 +1574,12 @@
             <param name="defaultErrorMessage">默认错误消息</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`1.ObjectAnnotation">
+            <summary>
+            添加对象注解（特性）验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`1"/></returns>
+        </member>
         <member name="T:Furion.Validation.Validator`1">
             <summary>
             类型验证器
@@ -1564,6 +1603,16 @@
         </member>
         <member name="P:Furion.Validation.Validator`1.SuppressAnnotations">
             <inheritdoc />
+        </member>
+        <member name="P:Furion.Validation.Validator`1.Condition">
+            <summary>
+            验证条件
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.Validator`1.Items">
+            <summary>
+            附加属性
+            </summary>
         </member>
         <member name="M:Furion.Validation.Validator`1.Create">
             <summary>
@@ -1591,6 +1640,22 @@
             </summary>
             <param name="enable">是否启用</param>
             <returns><see cref="M:Furion.Validation.Validator`1.Validate(`0)"/></returns>
+        </member>
+        <member name="M:Furion.Validation.Validator`1.When(System.Func{`0,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.Validator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.Validator`1.Reset">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.Validator`1.CanValidate(`0)">
+            <summary>
+            检查是否可以执行验证程序
+            </summary>
+            <param name="instance"><typeparamref name="T"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Validation.Validator`1.IsValid(`0)">
             <inheritdoc />

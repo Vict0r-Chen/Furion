@@ -26,7 +26,7 @@ public abstract class ComponentContext
     internal ComponentContext(ComponentOptions options)
     {
         Options = options;
-        Properties = new Dictionary<object, object?>();
+        Items = new Dictionary<object, object?>();
     }
 
     /// <inheritdoc cref="IHostEnvironment"/>
@@ -35,7 +35,7 @@ public abstract class ComponentContext
     /// <summary>
     /// 附加属性
     /// </summary>
-    public IDictionary<object, object?> Properties { get; init; }
+    public IDictionary<object, object?> Items { get; init; }
 
     /// <inheritdoc cref="ComponentOptions"/>
     internal ComponentOptions Options { get; }

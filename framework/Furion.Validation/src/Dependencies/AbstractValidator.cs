@@ -63,6 +63,24 @@ public abstract class AbstractValidator<T> : IValidator<T>
     }
 
     /// <inheritdoc />
+    public IValidator<T> When(Func<T, bool> condition)
+    {
+        return _validator.When(condition);
+    }
+
+    /// <inheritdoc />
+    public IValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    {
+        return _validator.WhenContext(condition);
+    }
+
+    /// <inheritdoc />
+    public IValidator<T> Reset()
+    {
+        return _validator.Reset();
+    }
+
+    /// <inheritdoc />
     public bool IsValid(T instance)
     {
         return _validator.IsValid(instance);

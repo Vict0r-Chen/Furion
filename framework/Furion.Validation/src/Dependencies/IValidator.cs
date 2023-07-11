@@ -27,6 +27,26 @@ public interface IValidator<T>
     bool SuppressAnnotations { get; set; }
 
     /// <summary>
+    /// 配置条件
+    /// </summary>
+    /// <param name="condition">条件委托</param>
+    /// <returns><see cref="IValidator{T}"/></returns>
+    IValidator<T> When(Func<T, bool> condition);
+
+    /// <summary>
+    /// 配置条件
+    /// </summary>
+    /// <param name="condition">条件委托</param>
+    /// <returns><see cref="IValidator{T}"/></returns>
+    IValidator<T> WhenContext(Func<ValidationContext, bool> condition);
+
+    /// <summary>
+    /// 清空条件
+    /// </summary>
+    /// <returns><see cref="IValidator{T}"/></returns>
+    IValidator<T> Reset();
+
+    /// <summary>
     /// 检查值有效性
     /// </summary>
     /// <param name="instance"><typeparamref name="T"/></param>
