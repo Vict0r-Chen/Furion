@@ -4,5 +4,13 @@
         <name>Furion.Configuration.Remoted</name>
     </assembly>
     <members>
+        <member name="T:Furion.Component.ConfigurationRemotedComponent">
+            <summary>
+            远程配置模块服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ConfigurationRemotedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
