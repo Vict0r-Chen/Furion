@@ -23,9 +23,33 @@ public static class ValidationServiceCollectionExtensions
     /// 添加数据验证模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddValidation(this IServiceCollection services)
+    public static IServiceCollection AddValidation(this IServiceCollection services, Action<ValidationBuilder>? configure = null)
     {
+        // 初始化数据验证模块构建器
+        var validationBuilder = new ValidationBuilder();
+
+        // 调用自定义配置委托
+        configure?.Invoke(validationBuilder);
+
+        return services.AddValidation(validationBuilder);
+    }
+
+    /// <summary>
+    /// 添加数据验证模块服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="validationBuilder"><see cref="ValidationBuilder"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddValidation(this IServiceCollection services, ValidationBuilder validationBuilder)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validationBuilder, nameof(validationBuilder));
+
+        // 构建模块服务
+        validationBuilder.Build(services);
+
         return services;
     }
 }

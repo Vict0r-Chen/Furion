@@ -917,6 +917,46 @@
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_ascii_7B0400800100004000000000">
             <summary>Supports searching for characters in or not in " !#$%&amp;*?@^".</summary>
         </member>
+        <member name="T:Furion.Validation.ValidationBuilder">
+            <summary>
+            数据验证模块构建器
+            </summary>
+        </member>
+        <member name="F:Furion.Validation.ValidationBuilder._validators">
+            <summary>
+            待注册的验证器服务集合
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidationBuilder.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidationBuilder.AddValidator``1">
+            <summary>
+            添加验证器
+            </summary>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></typeparam>
+            <returns><see cref="T:Furion.Validation.ValidationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ValidationBuilder.AddValidator(System.Type)">
+            <summary>
+            添加验证器
+            </summary>
+            <param name="validatorType"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
+            <returns><see cref="T:Furion.Validation.ValidationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ValidationBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            构建模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+        </member>
+        <member name="M:Furion.Validation.ValidationBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
         <member name="T:Furion.Validation.ValidatorRelationship">
             <summary>
             验证器关系
@@ -1045,6 +1085,11 @@
             </summary>
             <param name="instance"><typeparamref name="T"/></param>
             <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
+        </member>
+        <member name="T:Furion.Validation.IObjectValidator">
+            <summary>
+            类型验证器接口
+            </summary>
         </member>
         <member name="T:Furion.Validation.ObjectValidator`1">
             <summary>
@@ -3200,6 +3245,11 @@
             数据验证模块服务组件
             </summary>
         </member>
+        <member name="P:Furion.Component.ValidationComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
         <member name="M:Furion.Component.ValidationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
@@ -3208,11 +3258,20 @@
             数据验证模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.Validation.ValidationBuilder})">
             <summary>
             添加数据验证模块服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.Validation.ValidationBuilder)">
+            <summary>
+            添加数据验证模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="validationBuilder"><see cref="T:Furion.Validation.ValidationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
     </members>

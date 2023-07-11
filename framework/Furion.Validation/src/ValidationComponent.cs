@@ -20,9 +20,15 @@ namespace Furion.Component;
 [DependsOn<ComponentCoreComponent>]
 public sealed class ValidationComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    [ComponentProps]
+    public Action<ValidationBuilder>? Props { get; set; }
+
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Services.AddValidation();
+        context.Services.AddValidation(Props);
     }
 }

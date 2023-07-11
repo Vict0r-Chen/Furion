@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 类型验证器接口
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public interface IObjectValidator<T>
+public interface IObjectValidator<T> : IObjectValidator
 {
     /// <summary>
     /// 禁止注解（特性）验证
@@ -65,4 +65,11 @@ public interface IObjectValidator<T>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <exception cref="AggregateValidationException"></exception>
     void Validate(T instance);
+}
+
+/// <summary>
+/// 类型验证器接口
+/// </summary>
+public interface IObjectValidator
+{
 }
