@@ -12,12 +12,4 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Configuration;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.Configuration.Ini;
-global using Microsoft.Extensions.Configuration.Json;
-global using Microsoft.Extensions.Configuration.Xml;
-global using Microsoft.Extensions.FileProviders;
-global using Microsoft.Extensions.FileSystemGlobbing;
 global using System.Runtime.CompilerServices;
-global using System.Text.RegularExpressions;

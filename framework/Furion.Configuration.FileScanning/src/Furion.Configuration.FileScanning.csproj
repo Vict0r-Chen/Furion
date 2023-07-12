@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<Description>Furion 框架配置模块。</Description>
-		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Configuration;ManifestResource</PackageTags>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Configuration;File Scanning</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>

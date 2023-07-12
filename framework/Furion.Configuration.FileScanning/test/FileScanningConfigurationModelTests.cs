@@ -14,31 +14,31 @@
 
 namespace Furion.Configuration.Tests;
 
-public class FileConfigurationModelTests
+public class FileScanningConfigurationModelTests
 {
     [Fact]
     public void NewInstace_Throw()
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var fileConfigurationModel = new FileConfigurationModel(null!);
+            var fileConfigurationModel = new FileScanningConfigurationModel(null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            var fileConfigurationModel = new FileConfigurationModel(string.Empty);
+            var fileConfigurationModel = new FileScanningConfigurationModel(string.Empty);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
         {
-            var fileConfigurationModel = new FileConfigurationModel("folder/appsettings.json");
+            var fileConfigurationModel = new FileScanningConfigurationModel("folder/appsettings.json");
         });
         Assert.Equal("The path `folder/appsettings.json` is not an absolute path. (Parameter 'filePath')", exception.Message);
 
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "appsettings.json");
         Assert.True(File.Exists(filePath));
 
-        var fileConfigurationModel = new FileConfigurationModel(filePath);
+        var fileConfigurationModel = new FileScanningConfigurationModel(filePath);
         Assert.NotNull(fileConfigurationModel);
     }
 
@@ -48,7 +48,7 @@ public class FileConfigurationModelTests
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "appsettings.json");
         Assert.True(File.Exists(filePath));
 
-        var fileConfigurationModel = new FileConfigurationModel(filePath);
+        var fileConfigurationModel = new FileScanningConfigurationModel(filePath);
         Assert.NotNull(fileConfigurationModel);
 
         Assert.Equal(filePath, fileConfigurationModel.FilePath);
@@ -73,7 +73,7 @@ public class FileConfigurationModelTests
     [InlineData("appsettings.(Application).Development.json", "appsettings")]
     public void ResolveGroup(string fileName, string group)
     {
-        Assert.Equal(group, FileConfigurationModel.ResolveGroup(fileName));
+        Assert.Equal(group, FileScanningConfigurationModel.ResolveGroup(fileName));
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class FileConfigurationModelTests
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "appsettings.json");
         Assert.True(File.Exists(filePath));
 
-        var fileConfigurationModel = new FileConfigurationModel(filePath);
+        var fileConfigurationModel = new FileScanningConfigurationModel(filePath);
         Assert.Equal($"[{fileConfigurationModel.Group}] FileName: {fileConfigurationModel.FileName} Path: {fileConfigurationModel.FilePath}", fileConfigurationModel.ToString());
     }
 }

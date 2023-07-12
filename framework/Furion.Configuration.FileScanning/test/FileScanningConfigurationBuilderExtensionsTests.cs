@@ -14,31 +14,31 @@
 
 namespace Furion.Configuration.Tests;
 
-public class FileScannerConfigurationBuilderExtensionsTests
+public class FileScanningConfigurationBuilderExtensionsTests
 {
     [Fact]
-    public void AddFileScanner_Null_Throw()
+    public void AddFileScanning_Null_Throw()
     {
         var configurationBuilder = new ConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            configurationBuilder.AddFileScanner((FileScannerConfigurationBuilder)null!);
+            configurationBuilder.AddFileScanning((FileScanningConfigurationBuilder)null!);
         });
     }
 
     [Fact]
-    public void AddFileScanner_Parameterless_ReturnOK()
+    public void AddFileScanning_Parameterless_ReturnOK()
     {
         var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddFileScanner();
+        configurationBuilder.AddFileScanning();
     }
 
     [Fact]
-    public void AddFileScanner_ActionConfigure()
+    public void AddFileScanning_ActionConfigure()
     {
         var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddFileScanner(builder =>
+        configurationBuilder.AddFileScanning(builder =>
         {
             builder.MaxScanDepth = 10;
         });
@@ -47,14 +47,14 @@ public class FileScannerConfigurationBuilderExtensionsTests
     }
 
     [Fact]
-    public void AddFileScanner_Instance()
+    public void AddFileScanning_Instance()
     {
         var configurationBuilder = new ConfigurationBuilder();
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             MaxScanDepth = 10
         };
-        configurationBuilder.AddFileScanner(fileScannerConfigurationBuilder);
+        configurationBuilder.AddFileScanning(fileScannerConfigurationBuilder);
 
         Assert.True(configurationBuilder.Sources.Count > 0);
     }

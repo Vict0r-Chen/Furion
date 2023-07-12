@@ -14,12 +14,12 @@
 
 namespace Furion.Configuration.Tests;
 
-public class FileScannerConfigurationBuilderTests
+public class FileScanningConfigurationBuilderTests
 {
     [Fact]
     public void NewInstance_Default()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         Assert.NotNull(fileScannerConfigurationBuilder);
 
         Assert.NotNull(fileScannerConfigurationBuilder._directories);
@@ -65,7 +65,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddFilter_Null_Throw()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -76,7 +76,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddFilter_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddFilter(s =>
         {
             return true;
@@ -87,7 +87,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddDirectories_Throw()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -109,7 +109,7 @@ public class FileScannerConfigurationBuilderTests
     public void AddDirectories_NotExists_AddedSuccessfully()
     {
         var currentDirectory = Directory.GetCurrentDirectory();
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories(currentDirectory);
 
         Assert.Single(fileScannerConfigurationBuilder._directories);
@@ -120,7 +120,7 @@ public class FileScannerConfigurationBuilderTests
     public void AddDirectories_Exists_Skip()
     {
         var currentDirectory = Directory.GetCurrentDirectory();
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories(currentDirectory);
 
         Assert.Single(fileScannerConfigurationBuilder._directories);
@@ -137,7 +137,7 @@ public class FileScannerConfigurationBuilderTests
         var currentDirectory = Directory.GetCurrentDirectory();
         var folder1Directory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories(currentDirectory, folder1Directory);
         Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
 
@@ -151,7 +151,7 @@ public class FileScannerConfigurationBuilderTests
         var currentDirectory = Directory.GetCurrentDirectory();
         var folder1Directory = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories(new List<string> { currentDirectory, folder1Directory });
         Assert.Equal(2, fileScannerConfigurationBuilder._directories.Count);
 
@@ -162,7 +162,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddGlobbings_Throw()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -178,7 +178,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddGlobbings_NotExists_AddedSuccessfully()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddGlobbings("*.xml");
 
         Assert.Equal(2, fileScannerConfigurationBuilder._fileGlobbing.Count);
@@ -188,7 +188,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddGlobbings_Exists_Skip()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddGlobbings("*.json");
 
         Assert.Single(fileScannerConfigurationBuilder._fileGlobbing);
@@ -202,7 +202,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddGlobbings_Multiple_Arguments_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddGlobbings("*.xml", "*.ini");
 
         Assert.Equal(3, fileScannerConfigurationBuilder._fileGlobbing.Count);
@@ -212,7 +212,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddGlobbings_IEnumerable_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddGlobbings(new List<string> { "*.xml", "*.ini" });
 
         Assert.Equal(3, fileScannerConfigurationBuilder._fileGlobbing.Count);
@@ -222,7 +222,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddBlacklistGlobbings_Throw()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -238,7 +238,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddBlacklistGlobbings_NotExists_AddedSuccessfully()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddBlacklistGlobbings("embed.json");
 
         Assert.Equal(12, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
@@ -248,7 +248,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddBlacklistGlobbings_Exists_Skip()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddBlacklistGlobbings("*.runtimeconfig.json");
 
         Assert.Equal(11, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
@@ -262,7 +262,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddBlacklistGlobbings_Multiple_Arguments_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddBlacklistGlobbings("embed.xml", "embed.ini");
 
         Assert.Equal(13, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
@@ -272,7 +272,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddBlacklistGlobbings_IEnumerable_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddBlacklistGlobbings(new List<string> { "embed.xml", "embed.ini" });
 
         Assert.Equal(13, fileScannerConfigurationBuilder._fileBlacklistGlobbing.Count);
@@ -282,7 +282,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddConfigurationSources_Throw()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -310,7 +310,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddConfigurationSources_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddConfigurationSources(".json", typeof(JsonConfigurationSource));
         fileScannerConfigurationBuilder.AddConfigurationSources(".yaml", typeof(YamlConfigurationSource));
 
@@ -322,7 +322,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void AddConfigurationSourcesOfT_ReturnOK()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddConfigurationSources<YamlConfigurationSource>(".yaml");
 
         Assert.Equal(4, fileScannerConfigurationBuilder._fileConfigurationSources.Count);
@@ -335,12 +335,12 @@ public class FileScannerConfigurationBuilderTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            FileScannerConfigurationBuilder.ScanDirectory(null!, 0);
+            FileScanningConfigurationBuilder.ScanDirectory(null!, 0);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            FileScannerConfigurationBuilder.ScanDirectory(string.Empty, 0);
+            FileScanningConfigurationBuilder.ScanDirectory(string.Empty, 0);
         });
     }
 
@@ -350,7 +350,7 @@ public class FileScannerConfigurationBuilderTests
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
         Assert.True(Directory.Exists(filePath));
 
-        var files = FileScannerConfigurationBuilder.ScanDirectory(filePath);
+        var files = FileScanningConfigurationBuilder.ScanDirectory(filePath);
         Assert.NotEmpty(files);
         Assert.Single(files);
         Assert.Equal("folder1.json", Path.GetFileName(files[0]));
@@ -368,7 +368,7 @@ public class FileScannerConfigurationBuilderTests
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "folder1");
         Assert.True(Directory.Exists(filePath));
 
-        var files = FileScannerConfigurationBuilder.ScanDirectory(filePath, maxScanDepth);
+        var files = FileScanningConfigurationBuilder.ScanDirectory(filePath, maxScanDepth);
         Assert.NotEmpty(files);
         Assert.Equal(count, files.Count);
     }
@@ -383,7 +383,7 @@ public class FileScannerConfigurationBuilderTests
         var matcher = new Matcher();
         matcher.AddIncludePatterns(fileGlobbing);
 
-        var files = FileScannerConfigurationBuilder.ScanDirectory(filePath, 0, matcher);
+        var files = FileScanningConfigurationBuilder.ScanDirectory(filePath, 0, matcher);
         Assert.NotEmpty(files);
         Assert.Equal(4, files.Count);
 
@@ -402,14 +402,14 @@ public class FileScannerConfigurationBuilderTests
         };
         matcher.AddExcludePatterns(fileBlacklistGlobbing);
 
-        var files2 = FileScannerConfigurationBuilder.ScanDirectory(filePath, 0, matcher);
+        var files2 = FileScanningConfigurationBuilder.ScanDirectory(filePath, 0, matcher);
         Assert.NotEmpty(files2);
     }
 
     [Fact]
     public void Release_ClearAll()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.Release();
 
         Assert.Empty(fileScannerConfigurationBuilder._directories);
@@ -427,7 +427,7 @@ public class FileScannerConfigurationBuilderTests
         Assert.True(Directory.Exists(configsFilePath));
         Assert.True(Directory.Exists(folder1FilePath));
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             MaxScanDepth = 1
         };
@@ -454,7 +454,7 @@ public class FileScannerConfigurationBuilderTests
         Assert.True(Directory.Exists(configsFilePath));
         Assert.True(Directory.Exists(folder1FilePath));
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             MaxScanDepth = 1
         };
@@ -489,7 +489,7 @@ public class FileScannerConfigurationBuilderTests
         Assert.True(Directory.Exists(configsFilePath));
         Assert.True(Directory.Exists(folder1FilePath));
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             MaxScanDepth = 1
         };
@@ -518,7 +518,7 @@ public class FileScannerConfigurationBuilderTests
         Assert.True(Directory.Exists(configsFilePath));
         Assert.True(Directory.Exists(folder1FilePath));
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             MaxScanDepth = 1
         };
@@ -542,7 +542,7 @@ public class FileScannerConfigurationBuilderTests
     {
         var configurationBuilder = new ConfigurationBuilder();
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         Assert.Throws<ArgumentNullException>(() =>
         {
             fileScannerConfigurationBuilder.AddFileConfigurationSource(configurationBuilder, null!);
@@ -554,7 +554,7 @@ public class FileScannerConfigurationBuilderTests
     {
         var configurationBuilder = new ConfigurationBuilder();
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
@@ -571,7 +571,7 @@ public class FileScannerConfigurationBuilderTests
         Assert.True(Directory.Exists(configsFilePath));
         Assert.True(Directory.Exists(folder1FilePath));
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             MaxScanDepth = 1
         };
@@ -608,7 +608,7 @@ public class FileScannerConfigurationBuilderTests
     [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\bin\\Debug\\net8.0\\appsettings.json")]
     public void GetFilePublishPaths(string filePath, string filePublishPath)
     {
-        var filePublishPaths = FileScannerConfigurationBuilder.GetFilePublishPaths(filePath, "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test");
+        var filePublishPaths = FileScanningConfigurationBuilder.GetFilePublishPaths(filePath, "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test");
         Assert.Equal(filePublishPath, filePublishPaths[^1]);
     }
 
@@ -619,7 +619,7 @@ public class FileScannerConfigurationBuilderTests
 
         var configurationBuilder = new ConfigurationBuilder();
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
         fileScannerConfigurationBuilder.Build(configurationBuilder);
 
@@ -643,7 +643,7 @@ public class FileScannerConfigurationBuilderTests
         });
         var configurationBuilder = webApplicationBuilder.Configuration;
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files", filesDirectory);
         fileScannerConfigurationBuilder.Build(configurationBuilder);
 
@@ -672,7 +672,7 @@ public class FileScannerConfigurationBuilderTests
         });
         var configurationBuilder = hostApplicationBuilder.Configuration;
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files", filesDirectory);
         fileScannerConfigurationBuilder.Build(configurationBuilder);
 
@@ -700,7 +700,7 @@ public class FileScannerConfigurationBuilderTests
         });
         var configurationBuilder = webApplicationBuilder.Configuration;
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories(filesDirectory);
         fileScannerConfigurationBuilder.AddFilter(model =>
         {
@@ -738,7 +738,7 @@ public class FileScannerConfigurationBuilderTests
         });
         var configurationBuilder = webApplicationBuilder.Configuration;
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             DefaultOptional = false
         };
@@ -761,7 +761,7 @@ public class FileScannerConfigurationBuilderTests
 
         var configurationBuilder = new ConfigurationBuilder();
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddFilter(s =>
         {
             return false;
@@ -774,7 +774,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void CreateDefaultFileConfigurationModel_NullOrEmpty_Throw()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             DefaultOptional = false,
             DefaultReloadDelay = 100,
@@ -795,7 +795,7 @@ public class FileScannerConfigurationBuilderTests
     [Fact]
     public void CreateDefaultFileConfigurationModel()
     {
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder
         {
             DefaultOptional = false,
             DefaultReloadDelay = 100,
@@ -819,7 +819,7 @@ public class FileScannerConfigurationBuilderTests
         });
         var configurationBuilder = webApplicationBuilder.Configuration;
 
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
         fileScannerConfigurationBuilder.AddDirectories("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration\\test\\assets\\files", filesDirectory);
         fileScannerConfigurationBuilder.Build(configurationBuilder);
 

@@ -4,6 +4,60 @@
         <name>Furion.Configuration.Remoted</name>
     </assembly>
     <members>
+        <member name="T:Furion.Configuration.RemotedConfigurationBuilder">
+            <summary>
+            远程配置构建器
+            </summary>
+        </member>
+        <member name="T:Furion.Configuration.RemotedConfigurationModel">
+            <summary>
+            远程配置模型
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationModel.#ctor(System.String,System.Net.Http.HttpMethod)">
+            <summary>
+            Url 地址
+            </summary>
+            <param name="url">Url 地址</param>
+            <param name="httpMethod"><see cref="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod"/></param>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.Url">
+            <summary>
+            Url 地址
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod">
+            <summary>
+            <see cref="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.Order">
+            <summary>
+            排序
+            </summary>
+            <remarks>值越大则越后添加</remarks>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.Prefix">
+            <summary>
+            配置前缀
+            </summary>
+        </member>
+        <member name="T:Furion.Configuration.RemotedConfigurationProvider">
+            <summary>
+            远程配置提供程序
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationProvider.Load">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Configuration.RemotedConfigurationSource">
+            <summary>
+            远程配置源
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Component.ConfigurationRemotedComponent">
             <summary>
             远程配置模块服务组件

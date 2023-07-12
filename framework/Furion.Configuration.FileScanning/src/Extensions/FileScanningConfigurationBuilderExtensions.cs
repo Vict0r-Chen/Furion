@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Configuration;
 /// <summary>
 /// 配置模块 <see cref="IConfigurationBuilder"/> 拓展类
 /// </summary>
-public static class FileScannerConfigurationBuilderExtensions
+public static class FileScanningConfigurationBuilderExtensions
 {
     /// <summary>
     /// 添加配置模块文件扫描器服务
@@ -25,24 +25,24 @@ public static class FileScannerConfigurationBuilderExtensions
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
-    public static IConfigurationBuilder AddFileScanner(this IConfigurationBuilder builder, Action<FileScannerConfigurationBuilder>? configure = null)
+    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, Action<FileScanningConfigurationBuilder>? configure = null)
     {
         // 初始化配置模块文件扫描器构建器
-        var fileScannerConfigurationBuilder = new FileScannerConfigurationBuilder();
+        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         // 调用自定义配置委托
         configure?.Invoke(fileScannerConfigurationBuilder);
 
-        return builder.AddFileScanner(fileScannerConfigurationBuilder);
+        return builder.AddFileScanning(fileScannerConfigurationBuilder);
     }
 
     /// <summary>
     /// 添加配置模块文件扫描器服务
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
-    /// <param name="fileScannerConfigurationBuilder"><see cref="FileScannerConfigurationBuilder"/></param>
+    /// <param name="fileScannerConfigurationBuilder"><see cref="FileScanningConfigurationBuilder"/></param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
-    public static IConfigurationBuilder AddFileScanner(this IConfigurationBuilder builder, FileScannerConfigurationBuilder fileScannerConfigurationBuilder)
+    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, FileScanningConfigurationBuilder fileScannerConfigurationBuilder)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(fileScannerConfigurationBuilder, nameof(fileScannerConfigurationBuilder));

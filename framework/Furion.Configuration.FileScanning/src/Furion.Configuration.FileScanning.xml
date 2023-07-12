@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Furion.Configuration.FileScanning</name>
+    </assembly>
+    <members>
+        <member name="T:Furion.Configuration.FileScanningConfigurationBuilder">
+            <summary>
+            配置模块文件扫描器构建器
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationBuilder._directories">
+            <summary>
+            待扫描的目录集合
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationBuilder._fileGlobbing">
+            <summary>
+            文件通配符
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationBuilder._fileBlacklistGlobbing">
+            <summary>
+            文件黑名单通配符
+            </summary>
+            <remarks>禁止已扫描的文件名作为配置文件</remarks>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationBuilder._fileConfigurationSources">
+            <summary>
+            文件配置程序集合
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationBuilder._filterConfigure">
+            <summary>
+            文件配置模型过滤器
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.MaxScanDepth">
+            <summary>
+            文件扫描最大深度
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.DefaultOptional">
+            <summary>
+            默认文件可选配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.DefaultReloadOnChange">
+            <summary>
+            默认文件变更时刷新配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.DefaultReloadDelay">
+            <summary>
+            默认文件变更延迟刷新毫秒数配置
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.FileScanningConfigurationModel,System.Boolean})">
+            <summary>
+            添加文件配置模型过滤器
+            </summary>
+            <param name="configure"><see cref="T:System.Func`2"/></param>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddDirectories(System.String[])">
+            <summary>
+            添加文件扫描的目录
+            </summary>
+            <param name="directories"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddDirectories(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件扫描的目录
+            </summary>
+            <param name="directories"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddGlobbings(System.String[])">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddBlacklistGlobbings(System.String[])">
+            <summary>
+            添加文件黑名单通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddBlacklistGlobbings(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加文件黑名单通配符
+            </summary>
+            <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddConfigurationSources``1(System.String)">
+            <summary>
+            添加配置文件处理程序
+            </summary>
+            <typeparam name="TConfigurationSource"><see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/></typeparam>
+            <param name="extension">文件拓展名</param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddConfigurationSources(System.String,System.Type)">
+            <summary>
+            添加配置文件处理程序
+            </summary>
+            <param name="extension">文件拓展名</param>
+            <param name="configurationSourceType"><see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/></param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            构建模块服务
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.ScanDirectories(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)">
+            <summary>
+            扫描所有配置文件目录
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="conentRoot">应用程序内容目录</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddFileConfigurationSource(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScanningConfigurationModel)">
+            <summary>
+            添加文件配置提供程序
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="model"><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.CreateDefaultFileConfigurationModel(System.String)">
+            <summary>
+            创建默认的 <see cref="T:Furion.Configuration.FileScanningConfigurationModel"/>
+            </summary>
+            <param name="filePath">文件路径</param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.ScanDirectory(System.String,System.UInt32,Microsoft.Extensions.FileSystemGlobbing.Matcher)">
+            <summary>
+            执行目录扫描，返回符合匹配条件的文件路径列表
+            </summary>
+            <param name="folderPath">要扫描的目录路径</param>
+            <param name="maxScanDepth">文件扫描的最大深度，默认 0</param>
+            <param name="matcher">可选的文件通配符匹配对象</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.GetFilePublishPaths(System.String,System.String)">
+            <summary>
+            获取文件发布后的路径
+            </summary>
+            <param name="filePath">文件路径</param>
+            <param name="contentRoot">应用程序内容目录</param>
+            <returns><see cref="T:System.String"/>[]</returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.FileExtensionRegex">
+            <remarks>
+            Pattern explanation:<br/>
+            <code>
+            ○ Match if at the beginning of the string.<br/>
+            ○ Match '.'.<br/>
+            ○ Match a character in the set [0-9A-Za-z] atomically at least once.<br/>
+            ○ Match if at the end of the string or if before an ending newline.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:Furion.Configuration.FileScanningConfigurationModel">
+            <summary>
+            文件配置模型
+            </summary>
+            <remarks>作用于配置文件扫描</remarks>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationModel.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="filePath">文件绝对路径</param>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.FilePath">
+            <summary>
+            文件绝对路径
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.Extension">
+            <summary>
+            文件拓展名
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.DirectoryName">
+            <summary>
+            文件目录名
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.Group">
+            <summary>
+            分组名
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.Optional">
+            <summary>
+            文件可选配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.ReloadOnChange">
+            <summary>
+            文件变更时刷新配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.ReloadDelay">
+            <summary>
+            文件变更延迟刷新毫秒数配置
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.Order">
+            <summary>
+            排序
+            </summary>
+            <remarks>值越大则越后添加</remarks>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationModel.ResolveGroup(System.String)">
+            <summary>
+            解析文件分组
+            </summary>
+            <remarks>若文件名包含 () 则使用其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
+            <param name="fileName">文件名</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationModel.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Component.ConfigurationFileScanningComponent">
+            <summary>
+            配置模块服务组件
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ConfigurationFileScanningComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ConfigurationFileScanningComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions">
+            <summary>
+            配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions.AddFileScanning(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.FileScanningConfigurationBuilder})">
+            <summary>
+            添加配置模块文件扫描器服务
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions.AddFileScanning(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScanningConfigurationBuilder)">
+            <summary>
+            添加配置模块文件扫描器服务
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="fileScannerConfigurationBuilder"><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the FileExtensionRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiLettersAndDigits">
+            <summary>Supports searching for characters in or not in "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".</summary>
+        </member>
+    </members>
+</doc>

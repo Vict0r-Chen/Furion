@@ -58,7 +58,7 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
     internal static Dictionary<string, string?> ParseResource(FileConfigurationParser fileConfigurationParser, ManifestResourceConfigurationModel manifestResource)
     {
-        // 配置前缀检查
+        // 配置前缀检查（这里可能不用检查）
         if (string.IsNullOrWhiteSpace(manifestResource.Prefix))
         {
             throw new InvalidOperationException($"The configuration prefix of assembly `{manifestResource.Assembly.GetName().Name}` cannot be null or an empty string.");

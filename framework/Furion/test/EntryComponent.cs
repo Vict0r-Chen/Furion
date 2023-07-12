@@ -28,7 +28,7 @@ public class ServiceComponent : ComponentBase
             builder.AddAssemblies(GetType().Assembly);
         });
 
-        Props<FileScannerConfigurationBuilder>(builder =>
+        Props<FileScanningConfigurationBuilder>(builder =>
         {
             builder.AddBlacklistGlobbings("embed.json");
         });

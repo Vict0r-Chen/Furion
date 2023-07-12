@@ -17,7 +17,7 @@ namespace Furion.Configuration;
 /// <summary>
 /// 配置模块文件扫描器构建器
 /// </summary>
-public sealed partial class FileScannerConfigurationBuilder
+public sealed partial class FileScanningConfigurationBuilder
 {
     /// <summary>
     /// 待扫描的目录集合
@@ -43,12 +43,12 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <summary>
     /// 文件配置模型过滤器
     /// </summary>
-    internal Func<FileConfigurationModel, bool>? _filterConfigure;
+    internal Func<FileScanningConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    public FileScannerConfigurationBuilder()
+    public FileScanningConfigurationBuilder()
     {
         _directories = new(StringComparer.OrdinalIgnoreCase);
 
@@ -104,7 +104,7 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件配置模型过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
-    public void AddFilter(Func<FileConfigurationModel, bool> configure)
+    public void AddFilter(Func<FileScanningConfigurationModel, bool> configure)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure, nameof(configure));
@@ -116,8 +116,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件扫描的目录
     /// </summary>
     /// <param name="directories"><see cref="string"/>[]</param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddDirectories(params string?[] directories)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddDirectories(params string?[] directories)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(directories, nameof(directories));
@@ -143,8 +143,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件扫描的目录
     /// </summary>
     /// <param name="directories"><see cref="IEnumerable{T}"/></param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddDirectories(IEnumerable<string> directories)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddDirectories(IEnumerable<string> directories)
     {
         return AddDirectories(directories.ToArray());
     }
@@ -153,8 +153,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件通配符
     /// </summary>
     /// <param name="globbings"><see cref="string"/>[]</param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddGlobbings(params string[] globbings)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddGlobbings(params string[] globbings)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
@@ -174,8 +174,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件通配符
     /// </summary>
     /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddGlobbings(IEnumerable<string> globbings)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddGlobbings(IEnumerable<string> globbings)
     {
         return AddGlobbings(globbings.ToArray());
     }
@@ -184,8 +184,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件黑名单通配符
     /// </summary>
     /// <param name="globbings"><see cref="string"/>[]</param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddBlacklistGlobbings(params string[] globbings)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddBlacklistGlobbings(params string[] globbings)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
@@ -205,8 +205,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件黑名单通配符
     /// </summary>
     /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddBlacklistGlobbings(IEnumerable<string> globbings)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddBlacklistGlobbings(IEnumerable<string> globbings)
     {
         return AddBlacklistGlobbings(globbings.ToArray());
     }
@@ -216,8 +216,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// </summary>
     /// <typeparam name="TConfigurationSource"><see cref="FileConfigurationSource"/></typeparam>
     /// <param name="extension">文件拓展名</param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddConfigurationSources<TConfigurationSource>(string extension)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddConfigurationSources<TConfigurationSource>(string extension)
         where TConfigurationSource : FileConfigurationSource
     {
         return AddConfigurationSources(extension, typeof(TConfigurationSource));
@@ -228,8 +228,8 @@ public sealed partial class FileScannerConfigurationBuilder
     /// </summary>
     /// <param name="extension">文件拓展名</param>
     /// <param name="configurationSourceType"><see cref="FileConfigurationSource"/></param>
-    /// <returns><see cref="FileScannerConfigurationBuilder"/></returns>
-    public FileScannerConfigurationBuilder AddConfigurationSources(string extension, Type configurationSourceType)
+    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
+    public FileScanningConfigurationBuilder AddConfigurationSources(string extension, Type configurationSourceType)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(extension, nameof(extension));
@@ -307,7 +307,7 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="conentRoot">应用程序内容目录</param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal IEnumerable<FileConfigurationModel> ScanDirectories(IConfigurationBuilder builder, string? conentRoot = null)
+    internal IEnumerable<FileScanningConfigurationModel> ScanDirectories(IConfigurationBuilder builder, string? conentRoot = null)
     {
         // 查找所有配置的文件配置提供程序
         var filesExists = builder.Sources.OfType<FileConfigurationSource>()
@@ -356,9 +356,9 @@ public sealed partial class FileScannerConfigurationBuilder
     /// 添加文件配置提供程序
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
-    /// <param name="model"><see cref="FileConfigurationModel"/></param>
+    /// <param name="model"><see cref="FileScanningConfigurationModel"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel model)
+    internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileScanningConfigurationModel model)
     {
         // 拓展配置提供程序检查
         if (!_fileConfigurationSources.TryGetValue(model.Extension, out var fileConfigurationSourceType))
@@ -400,11 +400,11 @@ public sealed partial class FileScannerConfigurationBuilder
     }
 
     /// <summary>
-    /// 创建默认的 <see cref="FileConfigurationModel"/>
+    /// 创建默认的 <see cref="FileScanningConfigurationModel"/>
     /// </summary>
     /// <param name="filePath">文件路径</param>
-    /// <returns><see cref="FileConfigurationModel"/></returns>
-    internal FileConfigurationModel CreateDefaultFileConfigurationModel(string filePath)
+    /// <returns><see cref="FileScanningConfigurationModel"/></returns>
+    internal FileScanningConfigurationModel CreateDefaultFileConfigurationModel(string filePath)
     {
         return new(filePath)
         {

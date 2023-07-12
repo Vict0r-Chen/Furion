@@ -18,13 +18,13 @@ namespace Furion.Configuration;
 /// 文件配置模型
 /// </summary>
 /// <remarks>作用于配置文件扫描</remarks>
-public sealed class FileConfigurationModel
+public sealed class FileScanningConfigurationModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="filePath">文件绝对路径</param>
-    internal FileConfigurationModel(string filePath)
+    internal FileScanningConfigurationModel(string filePath)
     {
         FilePath = filePath;
         Extension = Path.GetExtension(filePath);
