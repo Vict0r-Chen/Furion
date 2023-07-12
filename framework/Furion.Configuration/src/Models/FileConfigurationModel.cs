@@ -26,15 +26,6 @@ public sealed class FileConfigurationModel
     /// <param name="filePath">文件绝对路径</param>
     internal FileConfigurationModel(string filePath)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
-
-        // 检查绝对路径
-        if (!Path.IsPathRooted(filePath))
-        {
-            throw new ArgumentException($"The path `{filePath}` is not an absolute path.", nameof(filePath));
-        }
-
         FilePath = filePath;
         Extension = Path.GetExtension(filePath);
         FileName = Path.GetFileName(filePath);
@@ -46,27 +37,27 @@ public sealed class FileConfigurationModel
     /// <summary>
     /// 文件绝对路径
     /// </summary>
-    public string FilePath { get; init; }
+    public string FilePath { get; }
 
     /// <summary>
     /// 文件拓展名
     /// </summary>
-    public string Extension { get; init; }
+    public string Extension { get; }
 
     /// <summary>
     /// 文件名
     /// </summary>
-    public string FileName { get; init; }
+    public string FileName { get; }
 
     /// <summary>
     /// 文件目录名
     /// </summary>
-    public string DirectoryName { get; init; }
+    public string DirectoryName { get; }
 
     /// <summary>
     /// 分组名
     /// </summary>
-    public string Group { get; init; }
+    public string Group { get; }
 
     /// <summary>
     /// 文件可选配置

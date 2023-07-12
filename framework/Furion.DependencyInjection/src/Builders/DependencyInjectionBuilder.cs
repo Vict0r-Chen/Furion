@@ -109,7 +109,7 @@ public sealed class DependencyInjectionBuilder
         Array.ForEach(assemblies, assembly =>
         {
             // 空检查
-            ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
+            ArgumentNullException.ThrowIfNull(assembly);
 
             _assemblies.Add(assembly);
         });

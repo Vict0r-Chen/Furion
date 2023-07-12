@@ -45,7 +45,7 @@ public static class CoreServiceCollectionExtensions
                                             .ImplementationInstance as CoreOptions;
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(coreOptions, nameof(coreOptions));
+        ArgumentNullException.ThrowIfNull(coreOptions);
 
         return coreOptions;
     }

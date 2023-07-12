@@ -44,7 +44,7 @@ public partial class CompositeValidator : ValidatorBase
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public IList<ValidatorBase> ValidatorCollection { get; init; }
+    public IList<ValidatorBase> ValidatorCollection { get; }
 
     /// <inheritdoc cref="ValidatorRelationship" />
     public ValidatorRelationship Relationship { get; set; }

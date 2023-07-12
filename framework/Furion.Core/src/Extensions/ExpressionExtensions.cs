@@ -29,9 +29,6 @@ internal static class ExpressionExtensions
     /// <exception cref="ArgumentException"></exception>
     internal static string GetPropertyName<T, TProperty>(this Expression<Func<T, TProperty?>> propertySelector)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(propertySelector, nameof(propertySelector));
-
         // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
         if (propertySelector.Body is MemberExpression memberExpression)
         {

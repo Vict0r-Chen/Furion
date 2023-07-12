@@ -33,9 +33,6 @@ internal sealed class NamedType : TypeDelegator
     internal NamedType(string name, Type delegatingType)
         : base(delegatingType)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
-
         this.name = name;
     }
 

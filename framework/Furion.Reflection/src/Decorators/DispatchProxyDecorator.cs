@@ -73,7 +73,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
         var proxyObject = Create(interfaceType, proxyType) as DispatchProxyDecorator;
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(proxyObject, nameof(proxyObject));
+        ArgumentNullException.ThrowIfNull(proxyObject);
 
         // 设置目标对象数据
         proxyObject.Target = target;

@@ -30,9 +30,6 @@ internal sealed class ManifestResourceConfigurationSource : IConfigurationSource
     /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
     internal ManifestResourceConfigurationSource(List<ManifestResourceConfigurationModel> manifestResources)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(manifestResources, nameof(manifestResources));
-
         _manifestResources = manifestResources;
     }
 

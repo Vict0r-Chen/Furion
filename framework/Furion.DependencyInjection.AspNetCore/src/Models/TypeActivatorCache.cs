@@ -39,10 +39,6 @@ internal sealed class TypeActivatorCache : ITypeActivatorCache
     /// <inheritdoc/>
     public TInstance CreateInstance<TInstance>(IServiceProvider serviceProvider, Type implementationType)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(serviceProvider);
-        ArgumentNullException.ThrowIfNull(implementationType);
-
         // 创建实例
         var createFactory = _typeActivatorCache.GetOrAdd(implementationType, _createFactory);
         return (TInstance)createFactory(serviceProvider, null);

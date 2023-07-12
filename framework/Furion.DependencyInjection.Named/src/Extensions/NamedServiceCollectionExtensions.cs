@@ -42,6 +42,10 @@ public static class NamedServiceCollectionExtensions
     /// <exception cref="InvalidOperationException"></exception>
     public static IServiceCollection AddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
+
         services.AddNamedService()
                 .Add(CreateDelegator(name, serviceDescriptor));
 
@@ -57,6 +61,10 @@ public static class NamedServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamed(this IServiceCollection services, string name, ServiceDescriptor serviceDescriptor)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
+
         services.AddNamedService()
                 .TryAdd(CreateDelegator(name, serviceDescriptor));
 
@@ -552,10 +560,6 @@ public static class NamedServiceCollectionExtensions
     /// <exception cref="InvalidOperationException"></exception>
     internal static ServiceDescriptor CreateDelegator(string name, ServiceDescriptor serviceDescriptor)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
-        ArgumentNullException.ThrowIfNull(serviceDescriptor, nameof(serviceDescriptor));
-
         // 创建命名服务类型
         var namedServiceType = new NamedType(name, serviceDescriptor.ServiceType);
 

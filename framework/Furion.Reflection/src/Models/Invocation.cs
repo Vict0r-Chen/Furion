@@ -86,7 +86,7 @@ public sealed class Invocation
             var task = Method.Invoke(Target, Args) as Task;
 
             // 空检查
-            ArgumentNullException.ThrowIfNull(task, nameof(task));
+            ArgumentNullException.ThrowIfNull(task);
 
             // 创建 TaskCompletionSource 实例，用于控制 Task 什么时候结束、取消、错误
             var taskCompletionSource = new TaskCompletionSource<object>();

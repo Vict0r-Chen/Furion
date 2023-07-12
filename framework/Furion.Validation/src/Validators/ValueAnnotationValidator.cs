@@ -44,7 +44,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <summary>
     /// 验证特性集合
     /// </summary>
-    public IList<ValidationAttribute> Attributes { get; init; }
+    public IList<ValidationAttribute> Attributes { get; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)

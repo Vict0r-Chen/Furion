@@ -25,9 +25,6 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
     /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
     internal ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> manifestResources)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(manifestResources, nameof(manifestResources));
-
         ManifestResources = manifestResources;
     }
 

@@ -30,9 +30,6 @@ internal static class IDictionaryExtensions
     internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value)
          where TKey : notnull
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
-
         // 尝试获取值
         if (!dictionary.TryGetValue(key, out var values))
         {
@@ -53,9 +50,6 @@ internal static class IDictionaryExtensions
     internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, IDictionary<TKey, List<TValue>> concatDictionary)
          where TKey : notnull
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(concatDictionary, nameof(concatDictionary));
-
         // 逐条遍历合并更新
         foreach (var (key, newValues) in concatDictionary)
         {

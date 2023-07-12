@@ -39,7 +39,7 @@ public abstract class ComparableAttribute<TComparableValidator> : ValidationAttr
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object Value { get; init; }
+    public object Value { get; }
 
     /// <inheritdoc />
     public override sealed bool IsValid(object? value)

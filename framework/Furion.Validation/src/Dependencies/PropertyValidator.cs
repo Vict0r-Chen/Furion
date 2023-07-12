@@ -52,12 +52,12 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public List<ValidatorBase> Validators { get; init; }
+    public List<ValidatorBase> Validators { get; }
 
     /// <summary>
     /// 属性名称
     /// </summary>
-    public string PropertyName { get; init; }
+    public string PropertyName { get; }
 
     /// <inheritdoc />
     public bool SuppressAnnotations { get; set; } = true;
@@ -375,7 +375,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         /// <summary>
         /// 委托对象
         /// </summary>
-        internal Func<T, bool> Predicate { get; init; }
+        internal Func<T, bool> Predicate { get; }
 
         /// <inheritdoc />
         public override bool IsValid(object? instance)

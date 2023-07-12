@@ -32,16 +32,12 @@ public sealed class ServiceDescriptorModel
         , ServiceLifetime serviceLifetime
         , ServiceAddition serviceAddition)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
-        ArgumentNullException.ThrowIfNull(implementationType, nameof(implementationType));
-
         Descriptor = ServiceDescriptor.Describe(serviceType, implementationType, serviceLifetime);
         Addition = serviceAddition;
     }
 
     /// <inheritdoc cref="ServiceDescriptor"/>
-    public ServiceDescriptor Descriptor { get; init; }
+    public ServiceDescriptor Descriptor { get; }
 
     /// <inheritdoc cref="ServiceAddition"/>
     public ServiceAddition Addition { get; set; }

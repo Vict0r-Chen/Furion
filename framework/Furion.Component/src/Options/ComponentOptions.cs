@@ -44,12 +44,12 @@ internal sealed class ComponentOptions
     /// <summary>
     /// 组件配置委托集合
     /// </summary>
-    internal Dictionary<Type, List<Delegate>> PropsActions { get; init; }
+    internal Dictionary<Type, List<Delegate>> PropsActions { get; }
 
     /// <summary>
     /// 组件对象列表
     /// </summary>
-    internal ConcurrentDictionary<Type, ComponentBase> Components { get; init; }
+    internal ConcurrentDictionary<Type, ComponentBase> Components { get; }
 
     /// <summary>
     /// 获取组件配置委托

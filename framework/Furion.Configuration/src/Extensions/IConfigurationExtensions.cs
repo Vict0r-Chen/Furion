@@ -27,6 +27,9 @@ public static class IConfigurationExtensions
     /// <returns><see cref="bool"/></returns>
     public static bool Exists(this IConfiguration configuration, string key)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+
         return configuration.GetSection(key).Exists();
     }
 
@@ -39,6 +42,9 @@ public static class IConfigurationExtensions
     /// <returns><typeparamref name="T"/></returns>
     public static T? Get<T>(this IConfiguration configuration, string key)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+
         return configuration.GetSection(key).Get<T>();
     }
 
@@ -50,8 +56,11 @@ public static class IConfigurationExtensions
     /// <param name="key">节点路径</param>
     /// <param name="configureOptions">配置值绑定到指定类型额外配置</param>
     /// <returns><typeparamref name="T"/></returns>
-    public static T? Get<T>(this IConfiguration configuration, string key, Action<BinderOptions> configureOptions)
+    public static T? Get<T>(this IConfiguration configuration, string key, Action<BinderOptions>? configureOptions)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+
         return configuration.GetSection(key).Get<T>(configureOptions);
     }
 
@@ -64,6 +73,10 @@ public static class IConfigurationExtensions
     /// <returns><see cref="object"/></returns>
     public static object? Get(this IConfiguration configuration, string key, Type type)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+        ArgumentNullException.ThrowIfNull(type, nameof(type));
+
         return configuration.GetSection(key).Get(type);
     }
 
@@ -75,8 +88,11 @@ public static class IConfigurationExtensions
     /// <param name="type">节点类型</param>
     /// <param name="configureOptions">配置值绑定到指定类型额外配置</param>
     /// <returns><see cref="object"/></returns>
-    public static object? Get(this IConfiguration configuration, string key, Type type, Action<BinderOptions> configureOptions)
+    public static object? Get(this IConfiguration configuration, string key, Type type, Action<BinderOptions>? configureOptions)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+
         return configuration.GetSection(key).Get(type, configureOptions);
     }
 
@@ -89,7 +105,7 @@ public static class IConfigurationExtensions
         var configurationRoot = configuration as IConfigurationRoot;
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(configurationRoot, nameof(configurationRoot));
+        ArgumentNullException.ThrowIfNull(configurationRoot);
 
         configurationRoot.Reload();
     }

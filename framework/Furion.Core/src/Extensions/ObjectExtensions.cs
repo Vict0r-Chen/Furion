@@ -27,9 +27,6 @@ internal static class ObjectExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool TryGetCount(this object obj, out int count)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(obj, nameof(obj));
-
         // 处理字符类型
         if (obj is char)
         {

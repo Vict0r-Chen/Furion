@@ -46,10 +46,6 @@ internal sealed partial class FileConfigurationParser
     /// <exception cref="InvalidOperationException"></exception>
     internal IDictionary<string, string?>? Parse(string extension, Stream stream)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
-        ArgumentNullException.ThrowIfNull(stream);
-
         // 检查文件拓展名有效性
         if (!FileExtensionRegex().IsMatch(extension))
         {
@@ -79,7 +75,7 @@ internal sealed partial class FileConfigurationParser
         var parseStaticMethod = assembly.GetType($"{assembly.GetName().Name}.JsonConfigurationFileParser")
                                                  ?.GetMethod(nameof(Parse), BindingFlags.Public | BindingFlags.Static, new[] { typeof(Stream) });
         // 空检查
-        ArgumentNullException.ThrowIfNull(parseStaticMethod, nameof(parseStaticMethod));
+        ArgumentNullException.ThrowIfNull(parseStaticMethod);
 
         // 创建 JSON 配置文件内容解析器
         return parseStaticMethod.CreateDelegate<Func<Stream, IDictionary<string, string?>>>();

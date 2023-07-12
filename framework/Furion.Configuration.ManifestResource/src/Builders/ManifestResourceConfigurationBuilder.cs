@@ -80,7 +80,7 @@ public sealed class ManifestResourceConfigurationBuilder
         Array.ForEach(assemblies, assembly =>
         {
             // 空检查
-            ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
+            ArgumentNullException.ThrowIfNull(assembly);
 
             _assemblies.Add(assembly);
         });
@@ -111,7 +111,7 @@ public sealed class ManifestResourceConfigurationBuilder
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
-            ArgumentException.ThrowIfNullOrWhiteSpace(globbing, nameof(globbing));
+            ArgumentException.ThrowIfNullOrWhiteSpace(globbing);
 
             _fileGlobbing.Add(globbing);
         });
@@ -142,7 +142,7 @@ public sealed class ManifestResourceConfigurationBuilder
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
-            ArgumentException.ThrowIfNullOrWhiteSpace(globbing, nameof(globbing));
+            ArgumentException.ThrowIfNullOrWhiteSpace(globbing);
 
             _fileBlacklistGlobbing.Add(globbing);
         });

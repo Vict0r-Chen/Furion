@@ -26,10 +26,6 @@ public sealed class ManifestResourceConfigurationModel
     /// <param name="resourceName">嵌入资源名称</param>
     internal ManifestResourceConfigurationModel(Assembly assembly, string resourceName)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
-        ArgumentException.ThrowIfNullOrWhiteSpace(resourceName, nameof(resourceName));
-
         Assembly = assembly;
         ResourceName = resourceName;
         Extension = Path.GetExtension(resourceName);
@@ -39,17 +35,17 @@ public sealed class ManifestResourceConfigurationModel
     /// <summary>
     /// 程序集
     /// </summary>
-    public Assembly Assembly { get; init; }
+    public Assembly Assembly { get; }
 
     /// <summary>
     /// 嵌入资源名称
     /// </summary>
-    public string ResourceName { get; init; }
+    public string ResourceName { get; }
 
     /// <summary>
     /// 文件拓展名
     /// </summary>
-    public string Extension { get; init; }
+    public string Extension { get; }
 
     /// <summary>
     /// 配置前缀

@@ -125,7 +125,7 @@ public sealed partial class FileScannerConfigurationBuilder
         Array.ForEach(directories, directory =>
         {
             // 空检查
-            ArgumentException.ThrowIfNullOrWhiteSpace(directory, nameof(directory));
+            ArgumentException.ThrowIfNullOrWhiteSpace(directory);
 
             // 检查绝对路径
             if (!Path.IsPathRooted(directory))
@@ -162,7 +162,7 @@ public sealed partial class FileScannerConfigurationBuilder
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
-            ArgumentException.ThrowIfNullOrWhiteSpace(globbing, nameof(globbing));
+            ArgumentException.ThrowIfNullOrWhiteSpace(globbing);
 
             _fileGlobbing.Add(globbing);
         });
@@ -193,7 +193,7 @@ public sealed partial class FileScannerConfigurationBuilder
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
-            ArgumentException.ThrowIfNullOrWhiteSpace(globbing, nameof(globbing));
+            ArgumentException.ThrowIfNullOrWhiteSpace(globbing);
 
             _fileBlacklistGlobbing.Add(globbing);
         });
@@ -360,9 +360,6 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <exception cref="InvalidOperationException"></exception>
     internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileConfigurationModel model)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(model, nameof(model));
-
         // 拓展配置提供程序检查
         if (!_fileConfigurationSources.TryGetValue(model.Extension, out var fileConfigurationSourceType))
         {
@@ -373,7 +370,7 @@ public sealed partial class FileScannerConfigurationBuilder
         var fileConfigurationSource = Activator.CreateInstance(fileConfigurationSourceType) as FileConfigurationSource;
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(fileConfigurationSource, nameof(fileConfigurationSourceType));
+        ArgumentNullException.ThrowIfNull(fileConfigurationSource);
 
         // 初始化
         fileConfigurationSource.FileProvider = null;
@@ -409,9 +406,6 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <returns><see cref="FileConfigurationModel"/></returns>
     internal FileConfigurationModel CreateDefaultFileConfigurationModel(string filePath)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(filePath, nameof(filePath));
-
         return new(filePath)
         {
             Optional = DefaultOptional,
@@ -429,9 +423,6 @@ public sealed partial class FileScannerConfigurationBuilder
     /// <returns><see cref="List{T}"/></returns>
     internal static List<string> ScanDirectory(string folderPath, uint maxScanDepth = 0, Matcher? matcher = null)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(folderPath, nameof(folderPath));
-
         // 创建一个空的文件列表和一个元组类型的栈，压入初始目录和深度值
         var files = new List<string>();
         var stack = new Stack<(string folderPath, int depth)>();
