@@ -60,12 +60,11 @@ internal sealed partial class FileConfigurationProvider
     /// <param name="parser"><see cref="Func{T, TResult}"/></param>
     internal void AddParser(string extension, Func<Stream, IDictionary<string, string?>> parser)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
-        ArgumentNullException.ThrowIfNull(parser);
-
         // 检查文件拓展名有效性
         EnsureLegalExtension(extension);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(parser);
 
         // 添加或更新解析器
         _parsers[extension] = parser;
@@ -79,12 +78,11 @@ internal sealed partial class FileConfigurationProvider
     /// <exception cref="InvalidOperationException"></exception>
     internal void AddSource(string extension, Type sourceType)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
-        ArgumentNullException.ThrowIfNull(sourceType);
-
         // 检查文件拓展名有效性
         EnsureLegalExtension(extension);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(sourceType);
 
         // 检查是否派生自 FileConfigurationSource
         var baseType = typeof(FileConfigurationSource);
@@ -106,12 +104,11 @@ internal sealed partial class FileConfigurationProvider
     /// <exception cref="ArgumentException"></exception>
     internal FileConfigurationSource CreateSourceInstance(string extension, Action<FileConfigurationSource> configure)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
-        ArgumentNullException.ThrowIfNull(configure);
-
         // 检查文件拓展名有效性
         EnsureLegalExtension(extension);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
 
         // 查找该拓展名配置源
         if (!_sourceTypes.TryGetValue(extension, out var sourceType))
@@ -143,12 +140,11 @@ internal sealed partial class FileConfigurationProvider
     /// <exception cref="ArgumentException"></exception>
     internal IDictionary<string, string?> Parse(string extension, Stream stream)
     {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
-        ArgumentNullException.ThrowIfNull(stream);
-
         // 检查文件拓展名有效性
         EnsureLegalExtension(extension);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(stream);
 
         // 查找该拓展名解析器
         if (!_parsers.TryGetValue(extension, out var parser))
