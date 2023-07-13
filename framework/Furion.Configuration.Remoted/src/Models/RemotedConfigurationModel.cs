@@ -60,6 +60,19 @@ public sealed class RemotedConfigurationModel
     /// </summary>
     public string? Prefix { get; set; }
 
+    internal Action<HttpClient>? Configure { get; private set; }
+
+    /// <summary>
+    /// 配置 HttpClient
+    /// </summary>
+    public void ConfigureClient(Action<HttpClient> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        Configure = configure;
+    }
+
     /// <inheritdoc />
     public override string ToString()
     {

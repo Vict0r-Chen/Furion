@@ -30,6 +30,11 @@ public sealed class RemotedConfigurationBuilder
     internal Func<RemotedConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
+    /// 默认请求客户端配置
+    /// </summary>
+    internal Action<HttpClient>? _defaultHttpClientConfigure;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     public RemotedConfigurationBuilder()
@@ -60,6 +65,18 @@ public sealed class RemotedConfigurationBuilder
         ArgumentNullException.ThrowIfNull(configure);
 
         _filterConfigure = configure;
+    }
+
+    /// <summary>
+    /// 添加远程配置模型过滤器
+    /// </summary>
+    /// <param name="configure">自定义配置委托</param>
+    public void ConfigureClient(Action<HttpClient> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        _defaultHttpClientConfigure = configure;
     }
 
     /// <summary>
@@ -101,7 +118,7 @@ public sealed class RemotedConfigurationBuilder
     internal List<RemotedConfigurationModel> Build()
     {
         // 创建远程配置模型集合
-        var remotedConfigurationModels = CreateModels();
+        var remotedConfigurationModels = CreateModels().ToList();
 
         // 释放对象
         Release();
@@ -113,14 +130,21 @@ public sealed class RemotedConfigurationBuilder
     /// 创建远程配置模型集合
     /// </summary>
     /// <returns><see cref="RemotedConfigurationBuilder"/> 集合</returns>
-    internal List<RemotedConfigurationModel> CreateModels()
+    internal IEnumerable<RemotedConfigurationModel> CreateModels()
     {
-        var models = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod) { Timeout = DefaultTimeout })
-            .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model))
-            .OrderByDescending(u => u.Order)
-            .ToList();
+        var remotedConfigurationModels = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod) { Timeout = DefaultTimeout });
 
-        return models;
+        foreach (var remotedConfigurationModel in remotedConfigurationModels)
+        {
+            if (!(_filterConfigure is null || _filterConfigure.Invoke(remotedConfigurationModel)))
+            {
+                continue;
+            }
+
+            SetConfigureClient(remotedConfigurationModel);
+
+            yield return remotedConfigurationModel;
+        }
     }
 
     /// <summary>
@@ -130,6 +154,34 @@ public sealed class RemotedConfigurationBuilder
     {
         _urlAddresses.Clear();
         _filterConfigure = null;
+    }
+
+    /// <summary>
+    /// 设置远程配置
+    /// </summary>
+    /// <param name="remotedConfigurationModel"></param>
+    /// <returns><see cref="RemotedConfigurationModel"/></returns>
+    internal void SetConfigureClient(RemotedConfigurationModel remotedConfigurationModel)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
+
+        if (_defaultHttpClientConfigure is null)
+        {
+            return;
+        }
+
+        // 创建级联委托
+        var cconfigureHttpClient = new[] { _defaultHttpClientConfigure }
+            .Concat(remotedConfigurationModel.Configure is null ? Enumerable.Empty<Action<HttpClient>>() : new[] { remotedConfigurationModel.Configure })
+            .Cast<Action<HttpClient>>()
+            .Aggregate((previous, current) => (t) =>
+            {
+                previous(t);
+                current(t);
+            });
+
+        remotedConfigurationModel.ConfigureClient(cconfigureHttpClient);
     }
 
     /// <summary>

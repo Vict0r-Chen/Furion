@@ -33,6 +33,25 @@ public class ServiceComponent : ComponentBase
         {
             builder.AddBlacklistGlobbings("embed.json");
         });
+
+        //Props<RemotedConfigurationBuilder>(builder =>
+        //{
+        //    builder.AddUrlAddresses("https://localhost:5001/api/person/all");
+        //    builder.ConfigureClient(s =>
+        //    {
+        //        s.Timeout = TimeSpan.FromSeconds(5);
+        //    });
+
+        //    builder.AddFilter(m =>
+        //    {
+        //        m.ConfigureClient(s =>
+        //        {
+        //            s.Timeout = TimeSpan.FromSeconds(6);
+        //        });
+
+        //        return true;
+        //    });
+        //});
     }
 
     public override void ConfigureServices(ServiceComponentContext context)

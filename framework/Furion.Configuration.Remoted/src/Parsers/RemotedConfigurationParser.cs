@@ -111,6 +111,9 @@ internal sealed class RemotedConfigurationParser
         // 设置超时时间
         httpClient.Timeout = remotedConfigurationModel.Timeout;
 
+        // 调用自定义配置委托
+        remotedConfigurationModel.Configure?.Invoke(httpClient);
+
         // 创建请求消息
         var httpRequestMessage = new HttpRequestMessage(remotedConfigurationModel.HttpMethod, remotedConfigurationModel.RequestUri);
 
