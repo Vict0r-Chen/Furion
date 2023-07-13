@@ -45,7 +45,7 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
 
         // 解析嵌入资源配置文件并生成字典集合
         Data = ManifestResources.SelectMany(resource => ParseResource(fileConfigurationParser, resource))
-                                .ToDictionary(u => u.Key, u => u.Value);
+                                .ToDictionary(u => u.Key, u => u.Value, StringComparer.OrdinalIgnoreCase);
 
         ManifestResources.Clear();
     }
@@ -78,7 +78,7 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
             return new();
         }
 
-        var data = new Dictionary<string, string?>();
+        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
 
         // 将 程序集名称:键 添加到集合中
         foreach (var (key, value) in keyValues)

@@ -28,9 +28,10 @@ public static class IConfigurationExtensions
     public static bool Exists(this IConfiguration configuration, string key)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
 
-        return configuration.GetSection(key).Exists();
+        return configuration.GetSection(key)
+            .Exists();
     }
 
     /// <summary>
@@ -43,9 +44,10 @@ public static class IConfigurationExtensions
     public static T? Get<T>(this IConfiguration configuration, string key)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
 
-        return configuration.GetSection(key).Get<T>();
+        return configuration.GetSection(key)
+            .Get<T>();
     }
 
     /// <summary>
@@ -56,12 +58,15 @@ public static class IConfigurationExtensions
     /// <param name="key">节点路径</param>
     /// <param name="configureOptions">配置值绑定到指定类型额外配置</param>
     /// <returns><typeparamref name="T"/></returns>
-    public static T? Get<T>(this IConfiguration configuration, string key, Action<BinderOptions>? configureOptions)
+    public static T? Get<T>(this IConfiguration configuration
+        , string key
+        , Action<BinderOptions>? configureOptions)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
 
-        return configuration.GetSection(key).Get<T>(configureOptions);
+        return configuration.GetSection(key)
+            .Get<T>(configureOptions);
     }
 
     /// <summary>
@@ -71,13 +76,16 @@ public static class IConfigurationExtensions
     /// <param name="key">节点路径</param>
     /// <param name="type">节点类型</param>
     /// <returns><see cref="object"/></returns>
-    public static object? Get(this IConfiguration configuration, string key, Type type)
+    public static object? Get(this IConfiguration configuration
+        , string key
+        , Type type)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
-        ArgumentNullException.ThrowIfNull(type, nameof(type));
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
+        ArgumentNullException.ThrowIfNull(type);
 
-        return configuration.GetSection(key).Get(type);
+        return configuration.GetSection(key)
+            .Get(type);
     }
 
     /// <summary>
@@ -88,12 +96,17 @@ public static class IConfigurationExtensions
     /// <param name="type">节点类型</param>
     /// <param name="configureOptions">配置值绑定到指定类型额外配置</param>
     /// <returns><see cref="object"/></returns>
-    public static object? Get(this IConfiguration configuration, string key, Type type, Action<BinderOptions>? configureOptions)
+    public static object? Get(this IConfiguration configuration
+        , string key
+        , Type type
+        , Action<BinderOptions>? configureOptions)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(key, nameof(key));
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
+        ArgumentNullException.ThrowIfNull(type);
 
-        return configuration.GetSection(key).Get(type, configureOptions);
+        return configuration.GetSection(key)
+            .Get(type, configureOptions);
     }
 
     /// <summary>
@@ -102,11 +115,13 @@ public static class IConfigurationExtensions
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     public static void Reload(this IConfiguration configuration)
     {
+        // 转换为 IConfigurationRoot 接口
         var configurationRoot = configuration as IConfigurationRoot;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(configurationRoot);
 
+        // 重载所有配置提供程序
         configurationRoot.Reload();
     }
 }

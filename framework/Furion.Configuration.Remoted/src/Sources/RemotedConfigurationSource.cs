@@ -26,6 +26,6 @@ internal sealed class RemotedConfigurationSource : IConfigurationSource
     /// <inheritdoc />
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return null;
+        return null!;
     }
 }
