@@ -173,7 +173,7 @@ public sealed class RemotedConfigurationBuilder
 
         // 创建级联委托
         var cconfigureHttpClient = new[] { _defaultHttpClientConfigure }
-            .Concat(remotedConfigurationModel.Configure is null ? Enumerable.Empty<Action<HttpClient>>() : new[] { remotedConfigurationModel.Configure })
+            .Concat(remotedConfigurationModel.InternalConfigureClient is null ? Enumerable.Empty<Action<HttpClient>>() : new[] { remotedConfigurationModel.InternalConfigureClient })
             .Cast<Action<HttpClient>>()
             .Aggregate((previous, current) => (t) =>
             {

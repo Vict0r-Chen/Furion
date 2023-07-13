@@ -19,8 +19,14 @@ namespace Furion.Configuration;
 /// </summary>
 internal sealed class RemotedConfigurationParser
 {
-    internal readonly IDictionary<string, string> _contentTypeExtensions;
+    /// <summary>
+    /// Content-Type 和文件拓展名映射集合
+    /// </summary>
+    internal readonly IDictionary<string, string> _contentTypeMappings;
 
+    /// <summary>
+    /// <see cref="FileConfigurationParser"/>
+    /// </summary>
     internal readonly FileConfigurationParser _fileConfigurationParser;
 
     /// <summary>
@@ -28,7 +34,7 @@ internal sealed class RemotedConfigurationParser
     /// </summary>
     public RemotedConfigurationParser()
     {
-        _contentTypeExtensions = new Dictionary<string, string>(StringComparer.Ordinal)
+        _contentTypeMappings = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             {"application/json", ".json" },
             {"application/vnd.api+json", ".json" },
@@ -41,65 +47,63 @@ internal sealed class RemotedConfigurationParser
     }
 
     /// <summary>
-    /// 解析内容
+    /// 解析远程请求地址
     /// </summary>
-    /// <param name="remotedConfigurationModel"></param>
-    /// <returns></returns>
-    internal Dictionary<string, string?> Parse(RemotedConfigurationModel remotedConfigurationModel)
+    /// <param name="remotedConfigurationModel"><see cref="RemotedConfigurationModel"/></param>
+    /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
+    internal IDictionary<string, string?> ParseRequestUri(RemotedConfigurationModel remotedConfigurationModel)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
 
-        // 发送请求并读取响应流
-        using var stream = Send(remotedConfigurationModel, out var extension);
+        // 请求远程地址并返回响应流
+        using var stream = ReadAsStream(remotedConfigurationModel, out var extension);
 
+        // 调用文件配置解析器对象进行解析
         var keyValues = _fileConfigurationParser.Parse(extension, stream);
 
-        if (keyValues is null || keyValues.Count == 0)
+        // 检查是否定义了配置前缀
+        if (string.IsNullOrWhiteSpace(remotedConfigurationModel.Prefix))
         {
-            return new();
+            // 输出调试事件
+            Debugging.File("The remote address `{0}` has been successfully loaded into the configuration.", remotedConfigurationModel.RequestUri);
+
+            return keyValues;
         }
 
-        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
-
-        // 将 程序集名称:键 添加到集合中
-        foreach (var (key, value) in keyValues)
-        {
-            if (string.IsNullOrWhiteSpace(remotedConfigurationModel.Prefix))
-            {
-                data[key] = value;
-                continue;
-            }
-
-            data[$"{remotedConfigurationModel.Prefix}:{key}"] = value;
-        }
-
-        // 清空集合
-        keyValues.Clear();
+        // 遍历字典集合并包装 Key
+        var data = keyValues.ToDictionary(u => $"{remotedConfigurationModel.Prefix}:{u.Key}"
+            , u => u.Value
+            , StringComparer.OrdinalIgnoreCase);
 
         // 输出调试事件
-        Debugging.File("The remoted `{0}` with prefix `{1}` has been successfully added to the configuration.", remotedConfigurationModel.RequestUri, remotedConfigurationModel.Prefix);
+        Debugging.File("The remote address `{0}` has been successfully loaded into the configuration with the prefix `{1}`."
+            , remotedConfigurationModel.RequestUri
+            , remotedConfigurationModel.Prefix);
 
         return data;
     }
 
     /// <summary>
-    /// 发送请求并读取响应流
+    /// 请求远程地址并返回响应流
     /// </summary>
     /// <param name="remotedConfigurationModel"><see cref="RemotedConfigurationModel"/></param>
     /// <param name="extension">文件拓展名</param>
     /// <returns><see cref="Stream"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="NotSupportedException"></exception>
-    internal Stream Send(RemotedConfigurationModel remotedConfigurationModel, out string extension)
+    internal Stream ReadAsStream(RemotedConfigurationModel remotedConfigurationModel, out string extension)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
 
-        // 创建 HttpClient 实例
-        using var httpClient = new HttpClient();
+        // 创建 HttpClient 请求对象
+        using var httpClient = new HttpClient
+        {
+            Timeout = remotedConfigurationModel.Timeout
+        };
 
-        // 配置 GET 请求禁止缓存头
+        // 若请求为 GET 请求则禁用 HTTP 缓存
         if (remotedConfigurationModel.HttpMethod == HttpMethod.Get)
         {
             httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
@@ -108,40 +112,39 @@ internal sealed class RemotedConfigurationParser
             };
         }
 
-        // 设置超时时间
-        httpClient.Timeout = remotedConfigurationModel.Timeout;
+        // 调用自定义 HttpClient 配置委托
+        remotedConfigurationModel.InternalConfigureClient?.Invoke(httpClient);
 
-        // 调用自定义配置委托
-        remotedConfigurationModel.Configure?.Invoke(httpClient);
-
-        // 创建请求消息
-        var httpRequestMessage = new HttpRequestMessage(remotedConfigurationModel.HttpMethod, remotedConfigurationModel.RequestUri);
-
-        // 请求 Url 地址
-        var httpResponseMessage = httpClient.Send(httpRequestMessage);
+        // 发送 HTTP 请求
+        var httpResponseMessage = httpClient.Send(
+            new HttpRequestMessage(remotedConfigurationModel.HttpMethod, remotedConfigurationModel.RequestUri));
 
         // 确保请求成功
         httpResponseMessage.EnsureSuccessStatusCode();
 
-        // 查找响应 Content-Type
-        if (!httpResponseMessage.Content.Headers.TryGetValues("Content-Type", out var contentTypes))
+        // 读取响应报文中的 Content-Type
+        if (!httpResponseMessage.Content.Headers.TryGetValues("Content-Type", out var contentTypeValues))
         {
             throw new InvalidOperationException("Content-Type definition not found in the response message.");
         }
 
-        // 判断 Content-Type 是否受支持
-        var contentType = contentTypes.First()
+        // 取出首个 Content-Type 并根据 ; 切割，目的是处理携带 charset 的值
+        var contentType = contentTypeValues.First()
             .Split(';', StringSplitOptions.RemoveEmptyEntries)
             .First();
-        if (!_contentTypeExtensions.TryGetValue(contentType, out var value))
+
+        // 检查当前 Content-Type 是否是受支持的类型
+        if (!_contentTypeMappings.TryGetValue(contentType, out var extensionValue))
         {
             throw new NotSupportedException($"`{contentType}` is not a supported Content-Type type.");
         }
 
-        // 读取请求响应流
+        // 设置拓展名 out 返回值
+        extension = extensionValue;
+
+        // 读取响应流
         var stream = httpResponseMessage.Content.ReadAsStream();
 
-        extension = value;
         return stream;
     }
 }

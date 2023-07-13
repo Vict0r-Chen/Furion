@@ -45,7 +45,7 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
         var remotedConfigurationParser = new RemotedConfigurationParser();
 
         // 解析嵌入资源配置文件并生成字典集合
-        Data = _remotedConfigurationModels.SelectMany(model => remotedConfigurationParser.Parse(model))
+        Data = _remotedConfigurationModels.SelectMany(model => remotedConfigurationParser.ParseRequestUri(model))
             .ToDictionary(u => u.Key, u => u.Value, StringComparer.OrdinalIgnoreCase);
     }
 }
