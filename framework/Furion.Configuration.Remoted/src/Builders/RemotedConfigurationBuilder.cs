@@ -17,7 +17,7 @@ namespace Furion.Configuration;
 /// <summary>
 /// 远程配置构建器
 /// </summary>
-public sealed class RemotedConfigurationBuilder
+public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
 {
     /// <summary>
     /// 待请求的 Url 地址集合
@@ -115,13 +115,26 @@ public sealed class RemotedConfigurationBuilder
     /// <summary>
     /// 构建模块服务
     /// </summary>
+    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal List<RemotedConfigurationModel> Build()
+    internal List<RemotedConfigurationModel> Build(out FileConfigurationParser? fileConfigurationParser)
     {
         // 创建远程配置模型集合并排序
         var remotedConfigurationModels = CreateModels()
             .OrderByDescending(m => m.Order)
             .ToList();
+
+        // 空检查
+        if (remotedConfigurationModels.Count == 0)
+        {
+            fileConfigurationParser = null;
+        }
+        else
+        {
+            // 初始化文件配置解析器
+            fileConfigurationParser = new FileConfigurationParser();
+            Initialize(fileConfigurationParser);
+        }
 
         // 释放对象
         Release();
@@ -145,7 +158,8 @@ public sealed class RemotedConfigurationBuilder
         foreach (var remotedConfigurationModel in remotedConfigurationModels)
         {
             // 过滤器检查
-            if (_filterConfigure is not null && !_filterConfigure.Invoke(remotedConfigurationModel))
+            if (_filterConfigure is not null
+                && !_filterConfigure.Invoke(remotedConfigurationModel))
             {
                 continue;
             }
@@ -177,27 +191,19 @@ public sealed class RemotedConfigurationBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
 
-        // 若默认 HttpClient 配置委托为空则跳过
-        if (_defaultHttpClientConfigure is null)
+        // 若默认 HttpClient 配置委托为空或者远程配置模型已经配置了 HttpClient 委托则直接返回
+        if (_defaultHttpClientConfigure is null
+            || remotedConfigurationModel.ClientConfigurator is not null)
         {
             return;
         }
 
-        // 若远程配置模型未配置 HttpClient 委托则设置为默认值
-        if (remotedConfigurationModel.ClientConfigurator is null)
+        // 创建级联调用委托
+        void clientConfigurator(HttpClient t)
         {
-            remotedConfigurationModel.ConfigureClient(_defaultHttpClientConfigure);
-            return;
+            _defaultHttpClientConfigure(t);
+            remotedConfigurationModel.ClientConfigurator?.Invoke(t);
         }
-
-        // 若两者都配置了则创建级联调用委托
-        var clientConfigurator = new[] { _defaultHttpClientConfigure, remotedConfigurationModel.ClientConfigurator }
-            .Cast<Action<HttpClient>>()
-            .Aggregate((previous, current) => (t) =>
-            {
-                previous(t);
-                current(t);
-            });
 
         remotedConfigurationModel.ConfigureClient(clientConfigurator);
     }
@@ -213,9 +219,8 @@ public sealed class RemotedConfigurationBuilder
         ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
 
         // Url 合法性检查
-        var isValidUrl = Uri.TryCreate(urlAddress, UriKind.Absolute, out var uri)
-            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-        if (isValidUrl)
+        if (Uri.TryCreate(urlAddress, UriKind.Absolute, out var uri)
+            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
         {
             return;
         }

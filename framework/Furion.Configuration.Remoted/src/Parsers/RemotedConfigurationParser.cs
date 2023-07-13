@@ -32,9 +32,13 @@ internal sealed class RemotedConfigurationParser
     /// <summary>
     /// 构造函数
     /// </summary>
-    public RemotedConfigurationParser()
+    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
+    public RemotedConfigurationParser(FileConfigurationParser fileConfigurationParser)
     {
-        _contentTypeMappings = new Dictionary<string, string>(StringComparer.Ordinal)
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
+
+        _contentTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             {"application/json", ".json" },
             {"application/vnd.api+json", ".json" },
@@ -43,7 +47,18 @@ internal sealed class RemotedConfigurationParser
             {"text/x-json", ".json" }
         };
 
-        _fileConfigurationParser = new();
+        _fileConfigurationParser = fileConfigurationParser;
+    }
+
+    /// <summary>
+    /// 添加 Content-Type 和文件拓展名映射
+    /// </summary>
+    internal void AddContentTypeMapping(KeyValuePair<string, string> keyValue)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(keyValue);
+
+        _contentTypeMappings[keyValue.Key] = keyValue.Value;
     }
 
     /// <summary>
@@ -62,26 +77,28 @@ internal sealed class RemotedConfigurationParser
         // 调用文件配置解析器对象进行解析
         var keyValues = _fileConfigurationParser.Parse(extension, stream);
 
-        // 检查是否定义了配置前缀
+        // 调试事件消息
+        string debugMessage;
+
+        // 检查是否设置了前缀
         if (string.IsNullOrWhiteSpace(remotedConfigurationModel.Prefix))
         {
-            // 输出调试事件
-            Debugging.File("The remote address `{0}` has been successfully loaded into the configuration.", remotedConfigurationModel.RequestUri);
+            debugMessage = "The remote address `{0}` has been successfully loaded into the configuration.";
+        }
+        else
+        {
+            // 遍历字典集合并包装 Key
+            keyValues = keyValues.ToDictionary(u => $"{remotedConfigurationModel.Prefix}:{u.Key}"
+                , u => u.Value
+                , StringComparer.OrdinalIgnoreCase);
 
-            return keyValues;
+            debugMessage = "The remote address `{0}` has been successfully loaded into the configuration with the prefix `{1}`.";
         }
 
-        // 遍历字典集合并包装 Key
-        var data = keyValues.ToDictionary(u => $"{remotedConfigurationModel.Prefix}:{u.Key}"
-            , u => u.Value
-            , StringComparer.OrdinalIgnoreCase);
-
         // 输出调试事件
-        Debugging.File("The remote address `{0}` has been successfully loaded into the configuration with the prefix `{1}`."
-            , remotedConfigurationModel.RequestUri
-            , remotedConfigurationModel.Prefix);
+        Debugging.File(debugMessage, remotedConfigurationModel.RequestUri, remotedConfigurationModel.Prefix);
 
-        return data;
+        return keyValues;
     }
 
     /// <summary>
@@ -139,7 +156,7 @@ internal sealed class RemotedConfigurationParser
             throw new NotSupportedException($"`{contentType}` is not a supported Content-Type type.");
         }
 
-        // 设置拓展名 out 返回值
+        // 设置拓展名
         extension = extensionValue;
 
         // 读取响应流

@@ -25,22 +25,31 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
     /// <summary>
+    /// <see cref="FileConfigurationParser"/>
+    /// </summary>
+    internal readonly FileConfigurationParser _fileConfigurationParser;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="remotedConfigurationModels"><see cref="RemotedConfigurationModel"/> 集合</param>
-    internal RemotedConfigurationProvider(List<RemotedConfigurationModel> remotedConfigurationModels)
+    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
+    internal RemotedConfigurationProvider(List<RemotedConfigurationModel> remotedConfigurationModels
+        , FileConfigurationParser fileConfigurationParser)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModels);
+        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
 
         _remotedConfigurationModels = remotedConfigurationModels;
+        _fileConfigurationParser = fileConfigurationParser;
     }
 
     /// <inheritdoc />
     public override void Load()
     {
         // 初始化远程配置解析器对象
-        var remotedConfigurationParser = new RemotedConfigurationParser();
+        var remotedConfigurationParser = new RemotedConfigurationParser(_fileConfigurationParser);
 
         // 解析远程请求地址并返回配置集合
         var data = _remotedConfigurationModels.SelectMany(remotedConfigurationParser.ParseRequestUri)

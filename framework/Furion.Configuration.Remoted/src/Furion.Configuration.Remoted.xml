@@ -66,10 +66,11 @@
             <param name="urlAddresses">Url 地址</param>
             <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></returns>
         </member>
-        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Build">
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Build(Furion.Configuration.FileConfigurationParser@)">
             <summary>
             构建模块服务
             </summary>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.CreateModels">
@@ -163,9 +164,15 @@
             <see cref="T:Furion.Configuration.FileConfigurationParser"/>
             </summary>
         </member>
-        <member name="M:Furion.Configuration.RemotedConfigurationParser.#ctor">
+        <member name="M:Furion.Configuration.RemotedConfigurationParser.#ctor(Furion.Configuration.FileConfigurationParser)">
             <summary>
             构造函数
+            </summary>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationParser.AddContentTypeMapping(System.Collections.Generic.KeyValuePair{System.String,System.String})">
+            <summary>
+            添加 Content-Type 和文件拓展名映射
             </summary>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationParser.ParseRequestUri(Furion.Configuration.RemotedConfigurationModel)">
@@ -195,11 +202,17 @@
             <see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合
             </summary>
         </member>
-        <member name="M:Furion.Configuration.RemotedConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel})">
+        <member name="F:Furion.Configuration.RemotedConfigurationProvider._fileConfigurationParser">
+            <summary>
+            <see cref="T:Furion.Configuration.FileConfigurationParser"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel},Furion.Configuration.FileConfigurationParser)">
             <summary>
             构造函数
             </summary>
             <param name="remotedConfigurationModels"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</param>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.Load">
             <inheritdoc />
@@ -214,11 +227,17 @@
             <see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合
             </summary>
         </member>
-        <member name="M:Furion.Configuration.RemotedConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel})">
+        <member name="F:Furion.Configuration.RemotedConfigurationSource._fileConfigurationParser">
+            <summary>
+            <see cref="T:Furion.Configuration.FileConfigurationParser"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel},Furion.Configuration.FileConfigurationParser)">
             <summary>
             构造函数
             </summary>
             <param name="remotedConfigurationModels"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</param>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <inheritdoc />

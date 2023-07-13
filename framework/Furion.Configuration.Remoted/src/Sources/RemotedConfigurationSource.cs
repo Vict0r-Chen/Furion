@@ -25,20 +25,29 @@ internal sealed class RemotedConfigurationSource : IConfigurationSource
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
     /// <summary>
+    /// <see cref="FileConfigurationParser"/>
+    /// </summary>
+    internal readonly FileConfigurationParser _fileConfigurationParser;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="remotedConfigurationModels"><see cref="RemotedConfigurationModel"/> 集合</param>
-    internal RemotedConfigurationSource(List<RemotedConfigurationModel> remotedConfigurationModels)
+    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
+    internal RemotedConfigurationSource(List<RemotedConfigurationModel> remotedConfigurationModels
+        , FileConfigurationParser fileConfigurationParser)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModels);
+        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
 
         _remotedConfigurationModels = remotedConfigurationModels;
+        _fileConfigurationParser = fileConfigurationParser;
     }
 
     /// <inheritdoc />
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return new RemotedConfigurationProvider(_remotedConfigurationModels);
+        return new RemotedConfigurationProvider(_remotedConfigurationModels, _fileConfigurationParser);
     }
 }

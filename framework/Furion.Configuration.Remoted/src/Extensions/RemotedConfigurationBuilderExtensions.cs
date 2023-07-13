@@ -48,13 +48,16 @@ public static class RemotedConfigurationBuilderExtensions
         ArgumentNullException.ThrowIfNull(remotedConfigurationBuilder);
 
         // 构建模块服务
-        var remotedConfigurationModels = remotedConfigurationBuilder.Build();
+        var remotedConfigurationModels = remotedConfigurationBuilder.Build(out var fileConfigurationParser);
         if (remotedConfigurationModels.Count == 0)
         {
             return builder;
         }
 
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
+
         // 添加远程配置提供源
-        return builder.Add(new RemotedConfigurationSource(remotedConfigurationModels));
+        return builder.Add(new RemotedConfigurationSource(remotedConfigurationModels, fileConfigurationParser));
     }
 }
