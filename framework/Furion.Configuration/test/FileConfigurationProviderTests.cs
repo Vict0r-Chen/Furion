@@ -14,16 +14,19 @@
 
 namespace Furion.Configuration.Tests;
 
-public class FileConfigurationProviderTests
+public class FileConfigurationProviderTests : IDisposable
 {
     [Fact]
     public void New_Default()
     {
+        Assert.Null(FileConfigurationProvider._jsonParser);
+
         var fileConfigurationProvider = new FileConfigurationProvider();
 
         Assert.NotNull(fileConfigurationProvider);
         Assert.NotNull(fileConfigurationProvider._parsers);
         Assert.NotNull(fileConfigurationProvider._sourceTypes);
+        Assert.NotNull(FileConfigurationProvider._jsonParser);
 
         Assert.Single(fileConfigurationProvider._parsers);
         Assert.Single(fileConfigurationProvider._sourceTypes);
@@ -304,5 +307,21 @@ public class FileConfigurationProviderTests
     public void EnsureLegalExtension_ReturnOK()
     {
         FileConfigurationProvider.EnsureLegalExtension(".xml");
+    }
+
+    [Fact]
+    public void ResolveJsonParser()
+    {
+        Assert.Null(FileConfigurationProvider._jsonParser);
+
+        var @delegate = FileConfigurationProvider.ResolveJsonParser();
+
+        Assert.NotNull(@delegate);
+        Assert.NotNull(FileConfigurationProvider._jsonParser);
+    }
+
+    public void Dispose()
+    {
+        FileConfigurationProvider._jsonParser = null;
     }
 }

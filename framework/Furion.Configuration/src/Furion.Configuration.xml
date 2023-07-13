@@ -24,6 +24,11 @@
             文件拓展名配置源
             </summary>
         </member>
+        <member name="F:Furion.Configuration.FileConfigurationProvider._jsonParser">
+            <summary>
+            JSON 文件解析器
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.FileConfigurationProvider.#ctor">
             <summary>
             构造函数
@@ -62,18 +67,18 @@
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.CreateJsonParser">
-            <summary>
-            创建 JSON 文件解析器
-            </summary>
-            <returns><see cref="T:System.Func`2"/></returns>
-        </member>
         <member name="M:Furion.Configuration.FileConfigurationProvider.EnsureLegalExtension(System.String)">
             <summary>
             检查文件拓展名有效性
             </summary>
             <param name="extension">文件拓展名</param>
             <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Furion.Configuration.FileConfigurationProvider.ResolveJsonParser">
+            <summary>
+            解析 JSON 文件解析器
+            </summary>
+            <returns><see cref="T:System.Func`2"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileConfigurationProvider.FileExtensionRegex">
             <remarks>

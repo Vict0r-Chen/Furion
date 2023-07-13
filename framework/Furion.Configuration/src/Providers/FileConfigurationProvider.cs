@@ -30,13 +30,18 @@ internal sealed partial class FileConfigurationProvider
     internal readonly IDictionary<string, Type> _sourceTypes;
 
     /// <summary>
+    /// JSON 文件解析器
+    /// </summary>
+    internal static Func<Stream, IDictionary<string, string?>>? _jsonParser;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
     internal FileConfigurationProvider()
     {
         _parsers = new Dictionary<string, Func<Stream, IDictionary<string, string?>>>(StringComparer.OrdinalIgnoreCase)
         {
-            {".json", CreateJsonParser() },
+            {".json", ResolveJsonParser() },
             /*
              * {".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance) },
              * {".ini", IniStreamConfigurationProvider.Read }
@@ -159,28 +164,6 @@ internal sealed partial class FileConfigurationProvider
     }
 
     /// <summary>
-    /// 创建 JSON 文件解析器
-    /// </summary>
-    /// <returns><see cref="Func{T, TResult}"/></returns>
-    internal static Func<Stream, IDictionary<string, string?>> CreateJsonParser()
-    {
-        // 获取 JsonConfigurationProvider 所在程序集
-        var assembly = typeof(JsonConfigurationProvider).Assembly;
-
-        // 查找 JsonConfigurationFileParser.Parse 静态方法
-        var parseStaticMethodInfo = assembly.GetType($"{assembly.GetName().Name}.JsonConfigurationFileParser")
-            ?.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static, new[] { typeof(Stream) });
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(parseStaticMethodInfo);
-
-        // 将静态方法转换为 Func 委托
-        var @delegate = parseStaticMethodInfo.CreateDelegate<Func<Stream, IDictionary<string, string?>>>();
-
-        return @delegate;
-    }
-
-    /// <summary>
     /// 检查文件拓展名有效性
     /// </summary>
     /// <param name="extension">文件拓展名</param>
@@ -197,6 +180,35 @@ internal sealed partial class FileConfigurationProvider
         }
 
         throw new ArgumentException($"The `{extension}` is not a valid file extension.", nameof(extension));
+    }
+
+    /// <summary>
+    /// 解析 JSON 文件解析器
+    /// </summary>
+    /// <returns><see cref="Func{T, TResult}"/></returns>
+    internal static Func<Stream, IDictionary<string, string?>> ResolveJsonParser()
+    {
+        // 检查 JSON 解析器是否已初始化
+        if (_jsonParser is not null)
+        {
+            return _jsonParser;
+        }
+
+        // 获取 JsonConfigurationProvider 所在程序集
+        var assembly = typeof(JsonConfigurationProvider).Assembly;
+
+        // 查找 JsonConfigurationFileParser.Parse 静态方法
+        var parseStaticMethodInfo = assembly.GetType($"{assembly.GetName().Name}.JsonConfigurationFileParser")
+            ?.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static, new[] { typeof(Stream) });
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(parseStaticMethodInfo);
+
+        // 将静态方法转换为 Func 委托
+        var @delegate = parseStaticMethodInfo.CreateDelegate<Func<Stream, IDictionary<string, string?>>>();
+        _jsonParser = @delegate;
+
+        return @delegate;
     }
 
     /// <summary>
