@@ -15,9 +15,9 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 文件配置提供器
+/// 文件配置解析器
 /// </summary>
-internal sealed partial class FileConfigurationProvider
+internal sealed partial class FileConfigurationParser
 {
     /// <summary>
     /// 文件拓展名解析器
@@ -37,7 +37,7 @@ internal sealed partial class FileConfigurationProvider
     /// <summary>
     /// 构造函数
     /// </summary>
-    internal FileConfigurationProvider()
+    internal FileConfigurationParser()
     {
         _parsers = new Dictionary<string, Func<Stream, IDictionary<string, string?>>>(StringComparer.OrdinalIgnoreCase)
         {

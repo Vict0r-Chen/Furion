@@ -9,6 +9,70 @@
             远程配置构建器
             </summary>
         </member>
+        <member name="F:Furion.Configuration.RemotedConfigurationBuilder._urlAddresses">
+            <summary>
+            待请求的 Url 地址集合
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.RemotedConfigurationBuilder._filterConfigure">
+            <summary>
+            远程配置模型过滤器
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationBuilder.DefaultHttpMethod">
+            <summary>
+            默认 <see cref="T:System.Net.Http.HttpMethod"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.RemotedConfigurationModel,System.Boolean})">
+            <summary>
+            添加远程配置模型过滤器
+            </summary>
+            <param name="configure">自定义配置委托</param>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddUrlAddresses(System.String[])">
+            <summary>
+            添加 Url 地址
+            </summary>
+            <param name="urlAddresses">Url 集合</param>
+            <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddUrlAddresses(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            添加 Url 地址
+            </summary>
+            <param name="urlAddresses">Url 集合</param>
+            <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Build">
+            <summary>
+            构建模块服务
+            </summary>
+            <returns><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</returns>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.CreateModels">
+            <summary>
+            创建远程配置模型集合
+            </summary>
+            <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/> 集合</returns>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.EnsureLegalUrlAddress(System.String)">
+            <summary>
+            检查 Url 地址有效性
+            </summary>
+            <param name="urlAddress">Url 地址</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:Furion.Configuration.RemotedConfigurationModel">
             <summary>
             远程配置模型
@@ -16,12 +80,12 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationModel.#ctor(System.String,System.Net.Http.HttpMethod)">
             <summary>
-            Url 地址
+            构造函数
             </summary>
-            <param name="url">Url 地址</param>
+            <param name="urlAddress">Url 地址</param>
             <param name="httpMethod"><see cref="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod"/></param>
         </member>
-        <member name="P:Furion.Configuration.RemotedConfigurationModel.Url">
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.UrlAddress">
             <summary>
             Url 地址
             </summary>
@@ -65,6 +129,27 @@
         </member>
         <member name="M:Furion.Component.ConfigurationRemotedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions">
+            <summary>
+            配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions.AddRemoted(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.RemotedConfigurationBuilder})">
+            <summary>
+            添加远程配置提供程序
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions.AddRemoted(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.RemotedConfigurationBuilder)">
+            <summary>
+            添加远程配置提供程序
+            </summary>
+            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="remotedConfigurationBuilder"><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
         </member>
     </members>
 </doc>

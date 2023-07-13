@@ -14,24 +14,6 @@
 
 namespace Furion.Configuration;
 
-/// <summary>
-/// 远程配置源
-/// </summary>
-internal sealed class RemotedConfigurationSource : IConfigurationSource
+internal sealed class RemotedConfigurationParser
 {
-    internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
-
-    internal RemotedConfigurationSource(List<RemotedConfigurationModel> remotedConfigurationModels)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(remotedConfigurationModels);
-
-        _remotedConfigurationModels = remotedConfigurationModels;
-    }
-
-    /// <inheritdoc />
-    public IConfigurationProvider Build(IConfigurationBuilder builder)
-    {
-        return new RemotedConfigurationProvider(_remotedConfigurationModels);
-    }
 }

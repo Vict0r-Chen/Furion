@@ -19,4 +19,131 @@ namespace Furion.Configuration;
 /// </summary>
 public sealed class RemotedConfigurationBuilder
 {
+    /// <summary>
+    /// 待请求的 Url 地址集合
+    /// </summary>
+    internal readonly HashSet<string> _urlAddresses;
+
+    /// <summary>
+    /// 远程配置模型过滤器
+    /// </summary>
+    internal Func<RemotedConfigurationModel, bool>? _filterConfigure;
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public RemotedConfigurationBuilder()
+    {
+        _urlAddresses = new(StringComparer.OrdinalIgnoreCase);
+        DefaultHttpMethod = HttpMethod.Get;
+    }
+
+    /// <summary>
+    /// 默认 <see cref="HttpMethod"/>
+    /// </summary>
+    public HttpMethod DefaultHttpMethod { get; set; }
+
+    /// <summary>
+    /// 添加远程配置模型过滤器
+    /// </summary>
+    /// <param name="configure">自定义配置委托</param>
+    public void AddFilter(Func<RemotedConfigurationModel, bool> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        _filterConfigure = configure;
+    }
+
+    /// <summary>
+    /// 添加 Url 地址
+    /// </summary>
+    /// <param name="urlAddresses">Url 集合</param>
+    /// <returns><see cref="RemotedConfigurationBuilder"/></returns>
+    public RemotedConfigurationBuilder AddUrlAddresses(params string[] urlAddresses)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(urlAddresses);
+
+        // 逐条添加到 Url 地址集合中
+        Array.ForEach(urlAddresses, urlAddress =>
+        {
+            // 检查 Url 地址有效性
+            EnsureLegalUrlAddress(urlAddress);
+
+            _urlAddresses.Add(urlAddress);
+        });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加 Url 地址
+    /// </summary>
+    /// <param name="urlAddresses">Url 集合</param>
+    /// <returns><see cref="RemotedConfigurationBuilder"/></returns>
+    public RemotedConfigurationBuilder AddUrlAddresses(IEnumerable<string> urlAddresses)
+    {
+        return AddUrlAddresses(urlAddresses.ToArray());
+    }
+
+    /// <summary>
+    /// 构建模块服务
+    /// </summary>
+    /// <returns><see cref="RemotedConfigurationModel"/> 集合</returns>
+    internal List<RemotedConfigurationModel> Build()
+    {
+        // 创建远程配置模型集合
+        var remotedConfigurationModels = CreateModels();
+
+        // 释放对象
+        Release();
+
+        return remotedConfigurationModels;
+    }
+
+    /// <summary>
+    /// 创建远程配置模型集合
+    /// </summary>
+    /// <returns><see cref="RemotedConfigurationBuilder"/> 集合</returns>
+    internal List<RemotedConfigurationModel> CreateModels()
+    {
+        var models = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod))
+            .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model))
+            .OrderByDescending(u => u.Order)
+            .ToList();
+
+        return models;
+    }
+
+    /// <summary>
+    /// 释放对象
+    /// </summary>
+    internal void Release()
+    {
+        _urlAddresses.Clear();
+        _filterConfigure = null;
+    }
+
+    /// <summary>
+    /// 检查 Url 地址有效性
+    /// </summary>
+    /// <param name="urlAddress">Url 地址</param>
+    /// <exception cref="ArgumentException"></exception>
+    internal static void EnsureLegalUrlAddress(string urlAddress)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
+
+        // Url 合法性检查
+        var isValidUrl = Uri.TryCreate(urlAddress, UriKind.Absolute, out var uri)
+            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
+
+        if (isValidUrl)
+        {
+            return;
+        }
+
+        throw new ArgumentException($"The given address `{urlAddress}` is invalid.", nameof(urlAddress));
+    }
 }

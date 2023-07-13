@@ -19,8 +19,14 @@ namespace Furion.Configuration;
 /// </summary>
 internal sealed class RemotedConfigurationProvider : ConfigurationProvider
 {
-    internal RemotedConfigurationProvider()
+    internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
+
+    internal RemotedConfigurationProvider(List<RemotedConfigurationModel> remotedConfigurationModels)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(remotedConfigurationModels);
+
+        _remotedConfigurationModels = remotedConfigurationModels;
     }
 
     /// <inheritdoc />

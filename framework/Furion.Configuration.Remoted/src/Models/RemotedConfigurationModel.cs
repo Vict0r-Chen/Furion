@@ -20,29 +20,29 @@ namespace Furion.Configuration;
 public sealed class RemotedConfigurationModel
 {
     /// <summary>
-    /// Url 地址
+    /// 构造函数
     /// </summary>
-    /// <param name="url">Url 地址</param>
+    /// <param name="urlAddress">Url 地址</param>
     /// <param name="httpMethod"><see cref="HttpMethod"/></param>
-    internal RemotedConfigurationModel(string url, HttpMethod httpMethod)
+    internal RemotedConfigurationModel(string urlAddress, HttpMethod httpMethod)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(url);
+        ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
         ArgumentNullException.ThrowIfNull(httpMethod);
 
-        Url = url;
+        UrlAddress = urlAddress;
         HttpMethod = httpMethod;
     }
 
     /// <summary>
     /// Url 地址
     /// </summary>
-    public string Url { get; init; }
+    public string UrlAddress { get; init; }
 
     /// <summary>
     /// <see cref="HttpMethod"/>
     /// </summary>
-    public HttpMethod HttpMethod { get; init; }
+    public HttpMethod HttpMethod { get; set; }
 
     /// <summary>
     /// 排序

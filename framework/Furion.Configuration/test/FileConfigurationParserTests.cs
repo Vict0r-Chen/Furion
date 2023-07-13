@@ -14,53 +14,53 @@
 
 namespace Furion.Configuration.Tests;
 
-public class FileConfigurationProviderTests : IDisposable
+public class FileConfigurationParserTests : IDisposable
 {
     [Fact]
     public void New_Default()
     {
-        Assert.Null(FileConfigurationProvider._jsonParser);
+        Assert.Null(FileConfigurationParser._jsonParser);
 
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
-        Assert.NotNull(fileConfigurationProvider);
-        Assert.NotNull(fileConfigurationProvider._parsers);
-        Assert.NotNull(fileConfigurationProvider._sourceTypes);
-        Assert.NotNull(FileConfigurationProvider._jsonParser);
+        Assert.NotNull(fileConfigurationParser);
+        Assert.NotNull(fileConfigurationParser._parsers);
+        Assert.NotNull(fileConfigurationParser._sourceTypes);
+        Assert.NotNull(FileConfigurationParser._jsonParser);
 
-        Assert.Single(fileConfigurationProvider._parsers);
-        Assert.Single(fileConfigurationProvider._sourceTypes);
+        Assert.Single(fileConfigurationParser._parsers);
+        Assert.Single(fileConfigurationParser._sourceTypes);
 
-        Assert.Equal(".json", fileConfigurationProvider._parsers.Keys.ElementAt(0));
-        Assert.NotNull(fileConfigurationProvider._parsers.Values.ElementAt(0));
+        Assert.Equal(".json", fileConfigurationParser._parsers.Keys.ElementAt(0));
+        Assert.NotNull(fileConfigurationParser._parsers.Values.ElementAt(0));
 
-        Assert.Equal(".json", fileConfigurationProvider._sourceTypes.Keys.ElementAt(0));
-        Assert.Equal(typeof(JsonConfigurationSource), fileConfigurationProvider._sourceTypes.Values.ElementAt(0));
+        Assert.Equal(".json", fileConfigurationParser._sourceTypes.Keys.ElementAt(0));
+        Assert.Equal(typeof(JsonConfigurationSource), fileConfigurationParser._sourceTypes.Values.ElementAt(0));
     }
 
     [Fact]
     public void AddParser_Invalid_Parameters()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.AddParser(null!, null!);
+            fileConfigurationParser.AddParser(null!, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.AddParser(string.Empty, null!);
+            fileConfigurationParser.AddParser(string.Empty, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.AddParser(".xml", null!);
+            fileConfigurationParser.AddParser(".xml", null!);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.AddParser("xml", stream => new Dictionary<string, string?>());
+            fileConfigurationParser.AddParser("xml", stream => new Dictionary<string, string?>());
         });
         Assert.Equal("The `xml` is not a valid file extension. (Parameter 'extension')", exception.Message);
     }
@@ -68,49 +68,49 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void AddParser_ReturnOK()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
-        fileConfigurationProvider.AddParser(".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance));
-        fileConfigurationProvider.AddParser(".ini", IniStreamConfigurationProvider.Read);
+        fileConfigurationParser.AddParser(".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance));
+        fileConfigurationParser.AddParser(".ini", IniStreamConfigurationProvider.Read);
 
-        Assert.Equal(3, fileConfigurationProvider._parsers.Count);
+        Assert.Equal(3, fileConfigurationParser._parsers.Count);
 
-        Assert.Equal(".xml", fileConfigurationProvider._parsers.Keys.ElementAt(1));
-        Assert.NotNull(fileConfigurationProvider._parsers.Values.ElementAt(1));
+        Assert.Equal(".xml", fileConfigurationParser._parsers.Keys.ElementAt(1));
+        Assert.NotNull(fileConfigurationParser._parsers.Values.ElementAt(1));
 
-        Assert.Equal(".ini", fileConfigurationProvider._parsers.Keys.ElementAt(2));
-        Assert.NotNull(fileConfigurationProvider._parsers.Values.ElementAt(2));
+        Assert.Equal(".ini", fileConfigurationParser._parsers.Keys.ElementAt(2));
+        Assert.NotNull(fileConfigurationParser._parsers.Values.ElementAt(2));
     }
 
     [Fact]
     public void AddSource_Invalid_Parameters()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.AddSource(null!, null!);
+            fileConfigurationParser.AddSource(null!, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.AddSource(string.Empty, null!);
+            fileConfigurationParser.AddSource(string.Empty, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.AddSource(".xml", null!);
+            fileConfigurationParser.AddSource(".xml", null!);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.AddSource("xml", typeof(JsonConfigurationSource));
+            fileConfigurationParser.AddSource("xml", typeof(JsonConfigurationSource));
         });
         Assert.Equal("The `xml` is not a valid file extension. (Parameter 'extension')", exception.Message);
 
         var exception2 = Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.AddSource(".xml", typeof(UnknownConfigurationSource));
+            fileConfigurationParser.AddSource(".xml", typeof(UnknownConfigurationSource));
         });
         Assert.Equal("The `UnknownConfigurationSource` type is not assignable from `FileConfigurationSource`. (Parameter 'sourceType')", exception2.Message);
     }
@@ -118,49 +118,49 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void AddSource_ReturnOK()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
-        fileConfigurationProvider.AddSource(".xml", typeof(XmlConfigurationSource));
-        fileConfigurationProvider.AddSource(".ini", typeof(IniConfigurationSource));
+        fileConfigurationParser.AddSource(".xml", typeof(XmlConfigurationSource));
+        fileConfigurationParser.AddSource(".ini", typeof(IniConfigurationSource));
 
-        Assert.Equal(3, fileConfigurationProvider._sourceTypes.Count);
+        Assert.Equal(3, fileConfigurationParser._sourceTypes.Count);
 
-        Assert.Equal(".xml", fileConfigurationProvider._sourceTypes.Keys.ElementAt(1));
-        Assert.Equal(typeof(XmlConfigurationSource), fileConfigurationProvider._sourceTypes.Values.ElementAt(1));
+        Assert.Equal(".xml", fileConfigurationParser._sourceTypes.Keys.ElementAt(1));
+        Assert.Equal(typeof(XmlConfigurationSource), fileConfigurationParser._sourceTypes.Values.ElementAt(1));
 
-        Assert.Equal(".ini", fileConfigurationProvider._sourceTypes.Keys.ElementAt(2));
-        Assert.Equal(typeof(IniConfigurationSource), fileConfigurationProvider._sourceTypes.Values.ElementAt(2));
+        Assert.Equal(".ini", fileConfigurationParser._sourceTypes.Keys.ElementAt(2));
+        Assert.Equal(typeof(IniConfigurationSource), fileConfigurationParser._sourceTypes.Values.ElementAt(2));
     }
 
     [Fact]
     public void CreateSourceInstance_Invalid_Parameters()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.CreateSourceInstance(null!, null!);
+            fileConfigurationParser.CreateSourceInstance(null!, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.CreateSourceInstance(string.Empty, null!);
+            fileConfigurationParser.CreateSourceInstance(string.Empty, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.CreateSourceInstance(".xml", null!);
+            fileConfigurationParser.CreateSourceInstance(".xml", null!);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.CreateSourceInstance("xml", source => { });
+            fileConfigurationParser.CreateSourceInstance("xml", source => { });
         });
         Assert.Equal("The `xml` is not a valid file extension. (Parameter 'extension')", exception.Message);
 
         var exception2 = Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.CreateSourceInstance(".xml", source => { });
+            fileConfigurationParser.CreateSourceInstance(".xml", source => { });
         });
         Assert.Equal("Configuration source for file with the extension `.xml` not found. (Parameter 'extension')", exception2.Message);
     }
@@ -168,9 +168,9 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void CreateSourceInstance_Default()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
-        var fileConfiguration = fileConfigurationProvider.CreateSourceInstance(".json", source =>
+        var fileConfiguration = fileConfigurationParser.CreateSourceInstance(".json", source =>
         {
             source.Optional = true;
         });
@@ -182,12 +182,12 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void CreateSourceInstance_Additional()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
-        fileConfigurationProvider.AddSource(".xml", typeof(XmlConfigurationSource));
-        fileConfigurationProvider.AddSource(".ini", typeof(IniConfigurationSource));
+        fileConfigurationParser.AddSource(".xml", typeof(XmlConfigurationSource));
+        fileConfigurationParser.AddSource(".ini", typeof(IniConfigurationSource));
 
-        var xmlFileConfiguration = fileConfigurationProvider.CreateSourceInstance(".xml", source =>
+        var xmlFileConfiguration = fileConfigurationParser.CreateSourceInstance(".xml", source =>
         {
             source.Optional = true;
         });
@@ -195,7 +195,7 @@ public class FileConfigurationProviderTests : IDisposable
         Assert.NotNull(xmlFileConfiguration);
         Assert.True(xmlFileConfiguration.Optional);
 
-        var iniFileConfiguration = fileConfigurationProvider.CreateSourceInstance(".ini", source =>
+        var iniFileConfiguration = fileConfigurationParser.CreateSourceInstance(".ini", source =>
         {
             source.Optional = true;
         });
@@ -207,34 +207,34 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void Parse_Invalid_Parameters()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.Parse(null!, null!);
+            fileConfigurationParser.Parse(null!, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            fileConfigurationProvider.Parse(string.Empty, null!);
+            fileConfigurationParser.Parse(string.Empty, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fileConfigurationProvider.Parse(".xml", null!);
+            fileConfigurationParser.Parse(".xml", null!);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
         {
             using var stream = new MemoryStream();
-            fileConfigurationProvider.Parse("xml", stream);
+            fileConfigurationParser.Parse("xml", stream);
         });
         Assert.Equal("The `xml` is not a valid file extension. (Parameter 'extension')", exception.Message);
 
         var exception2 = Assert.Throws<ArgumentException>(() =>
         {
             using var stream = new MemoryStream();
-            fileConfigurationProvider.Parse(".xml", stream);
+            fileConfigurationParser.Parse(".xml", stream);
         });
         Assert.Equal("Configuration parser for file with the extension `.xml` not found. (Parameter 'extension')", exception2.Message);
     }
@@ -245,8 +245,8 @@ public class FileConfigurationProviderTests : IDisposable
         var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "config.json");
         using var fileStream = File.OpenRead(jsonFilePath);
 
-        var fileConfigurationProvider = new FileConfigurationProvider();
-        var data = fileConfigurationProvider.Parse(".json", fileStream);
+        var fileConfigurationParser = new FileConfigurationParser();
+        var data = fileConfigurationParser.Parse(".json", fileStream);
 
         Assert.NotNull(data);
         Assert.Single(data);
@@ -257,15 +257,15 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void Parse_Additional()
     {
-        var fileConfigurationProvider = new FileConfigurationProvider();
+        var fileConfigurationParser = new FileConfigurationParser();
 
-        fileConfigurationProvider.AddParser(".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance));
-        fileConfigurationProvider.AddParser(".ini", IniStreamConfigurationProvider.Read);
+        fileConfigurationParser.AddParser(".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance));
+        fileConfigurationParser.AddParser(".ini", IniStreamConfigurationProvider.Read);
 
         var xmlFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "config.xml");
         using var xmlFileStream = File.OpenRead(xmlFilePath);
 
-        var xmlData = fileConfigurationProvider.Parse(".xml", xmlFileStream);
+        var xmlData = fileConfigurationParser.Parse(".xml", xmlFileStream);
 
         Assert.NotNull(xmlData);
         Assert.Single(xmlData);
@@ -275,7 +275,7 @@ public class FileConfigurationProviderTests : IDisposable
         var iniFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "config.ini");
         using var iniFileStream = File.OpenRead(iniFilePath);
 
-        var iniData = fileConfigurationProvider.Parse(".ini", iniFileStream);
+        var iniData = fileConfigurationParser.Parse(".ini", iniFileStream);
 
         Assert.NotNull(iniData);
         Assert.Single(iniData);
@@ -288,17 +288,17 @@ public class FileConfigurationProviderTests : IDisposable
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            FileConfigurationProvider.EnsureLegalExtension(null!);
+            FileConfigurationParser.EnsureLegalExtension(null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            FileConfigurationProvider.EnsureLegalExtension(string.Empty);
+            FileConfigurationParser.EnsureLegalExtension(string.Empty);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
         {
-            FileConfigurationProvider.EnsureLegalExtension("xml");
+            FileConfigurationParser.EnsureLegalExtension("xml");
         });
         Assert.Equal("The `xml` is not a valid file extension. (Parameter 'extension')", exception.Message);
     }
@@ -306,22 +306,22 @@ public class FileConfigurationProviderTests : IDisposable
     [Fact]
     public void EnsureLegalExtension_ReturnOK()
     {
-        FileConfigurationProvider.EnsureLegalExtension(".xml");
+        FileConfigurationParser.EnsureLegalExtension(".xml");
     }
 
     [Fact]
     public void ResolveJsonParser()
     {
-        Assert.Null(FileConfigurationProvider._jsonParser);
+        Assert.Null(FileConfigurationParser._jsonParser);
 
-        var @delegate = FileConfigurationProvider.ResolveJsonParser();
+        var @delegate = FileConfigurationParser.ResolveJsonParser();
 
         Assert.NotNull(@delegate);
-        Assert.NotNull(FileConfigurationProvider._jsonParser);
+        Assert.NotNull(FileConfigurationParser._jsonParser);
     }
 
     public void Dispose()
     {
-        FileConfigurationProvider._jsonParser = null;
+        FileConfigurationParser._jsonParser = null;
     }
 }

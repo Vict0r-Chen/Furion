@@ -9,39 +9,39 @@
             配置模块服务组件
             </summary>
         </member>
-        <member name="T:Furion.Configuration.FileConfigurationProvider">
+        <member name="T:Furion.Configuration.FileConfigurationParser">
             <summary>
-            文件配置提供器
+            文件配置解析器
             </summary>
         </member>
-        <member name="F:Furion.Configuration.FileConfigurationProvider._parsers">
+        <member name="F:Furion.Configuration.FileConfigurationParser._parsers">
             <summary>
             文件拓展名解析器
             </summary>
         </member>
-        <member name="F:Furion.Configuration.FileConfigurationProvider._sourceTypes">
+        <member name="F:Furion.Configuration.FileConfigurationParser._sourceTypes">
             <summary>
             文件拓展名配置源
             </summary>
         </member>
-        <member name="F:Furion.Configuration.FileConfigurationProvider._jsonParser">
+        <member name="F:Furion.Configuration.FileConfigurationParser._jsonParser">
             <summary>
             JSON 文件解析器
             </summary>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.#ctor">
+        <member name="M:Furion.Configuration.FileConfigurationParser.#ctor">
             <summary>
             构造函数
             </summary>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.AddParser(System.String,System.Func{System.IO.Stream,System.Collections.Generic.IDictionary{System.String,System.String}})">
+        <member name="M:Furion.Configuration.FileConfigurationParser.AddParser(System.String,System.Func{System.IO.Stream,System.Collections.Generic.IDictionary{System.String,System.String}})">
             <summary>
             添加文件拓展名解析器
             </summary>
             <param name="extension">文件拓展名</param>
             <param name="parser"><see cref="T:System.Func`2"/></param>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.AddSource(System.String,System.Type)">
+        <member name="M:Furion.Configuration.FileConfigurationParser.AddSource(System.String,System.Type)">
             <summary>
             添加文件拓展名配置源
             </summary>
@@ -49,7 +49,7 @@
             <param name="sourceType">实现 <see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/> 的类型</param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.CreateSourceInstance(System.String,System.Action{Microsoft.Extensions.Configuration.FileConfigurationSource})">
+        <member name="M:Furion.Configuration.FileConfigurationParser.CreateSourceInstance(System.String,System.Action{Microsoft.Extensions.Configuration.FileConfigurationSource})">
             <summary>
             创建文件拓展名配置源对象
             </summary>
@@ -58,7 +58,7 @@
             <returns><see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/></returns>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.Parse(System.String,System.IO.Stream)">
+        <member name="M:Furion.Configuration.FileConfigurationParser.Parse(System.String,System.IO.Stream)">
             <summary>
             解析指定文件拓展名内容并返回字典集合
             </summary>
@@ -67,20 +67,20 @@
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.EnsureLegalExtension(System.String)">
+        <member name="M:Furion.Configuration.FileConfigurationParser.EnsureLegalExtension(System.String)">
             <summary>
             检查文件拓展名有效性
             </summary>
             <param name="extension">文件拓展名</param>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.ResolveJsonParser">
+        <member name="M:Furion.Configuration.FileConfigurationParser.ResolveJsonParser">
             <summary>
             解析 JSON 文件解析器
             </summary>
             <returns><see cref="T:System.Func`2"/></returns>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationProvider.FileExtensionRegex">
+        <member name="M:Furion.Configuration.FileConfigurationParser.FileExtensionRegex">
             <remarks>
             Pattern explanation:<br/>
             <code>
