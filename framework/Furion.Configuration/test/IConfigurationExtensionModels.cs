@@ -60,4 +60,8 @@ public class IConfigurationExtensionModels
             };
         }
     }
+
+    public class UnknownConfigurationSource
+    {
+    }
 }

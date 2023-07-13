@@ -38,7 +38,7 @@ internal sealed partial class FileConfigurationProvider
         {
             {".json", CreateJsonParser() },
             /*
-             * {".xml",stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance) },
+             * {".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance) },
              * {".ini", IniStreamConfigurationProvider.Read }
              */
         };
@@ -88,9 +88,9 @@ internal sealed partial class FileConfigurationProvider
 
         // 检查是否派生自 FileConfigurationSource
         var baseType = typeof(FileConfigurationSource);
-        if (baseType.IsAssignableFrom(sourceType))
+        if (!baseType.IsAssignableFrom(sourceType))
         {
-            throw new InvalidOperationException($"The `{sourceType.Name}` type is not assignable from `{baseType.Name}`.");
+            throw new ArgumentException($"The `{sourceType.Name}` type is not assignable from `{baseType.Name}`.", nameof(sourceType));
         }
 
         // 添加或更新配置源
