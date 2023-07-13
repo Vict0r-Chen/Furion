@@ -14,7 +14,7 @@
 
 namespace Furion.Tests;
 
-[DependsOn<ConfigurationComponent
+[DependsOn<ConfigurationFileScanningComponent
     , DependencyInjectionComponent
     , DependencyInjectionNamedComponent
     , ConfigurationManifestResourceComponent
