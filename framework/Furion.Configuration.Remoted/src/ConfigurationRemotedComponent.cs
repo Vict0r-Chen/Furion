@@ -19,8 +19,15 @@ namespace Furion.Component;
 /// </summary>
 public sealed class ConfigurationRemotedComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    [ComponentProps]
+    public Action<RemotedConfigurationBuilder>? Props { get; set; }
+
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
+        context.Configuration.AddRemoted(Props);
     }
 }

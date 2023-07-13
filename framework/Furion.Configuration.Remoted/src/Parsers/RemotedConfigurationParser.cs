@@ -51,7 +51,7 @@ internal sealed class RemotedConfigurationParser
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
 
         // 发送请求并读取响应流
-        var stream = Send(remotedConfigurationModel, out var extension);
+        using var stream = Send(remotedConfigurationModel, out var extension);
 
         var keyValues = _fileConfigurationParser.Parse(extension, stream);
 
@@ -67,6 +67,7 @@ internal sealed class RemotedConfigurationParser
         {
             if (string.IsNullOrWhiteSpace(remotedConfigurationModel.Prefix))
             {
+                data[key] = value;
                 continue;
             }
 
@@ -126,7 +127,9 @@ internal sealed class RemotedConfigurationParser
         }
 
         // 判断 Content-Type 是否受支持
-        var contentType = contentTypes.First();
+        var contentType = contentTypes.First()
+            .Split(';', StringSplitOptions.RemoveEmptyEntries)
+            .First();
         if (!_contentTypeExtensions.TryGetValue(contentType, out var value))
         {
             throw new NotSupportedException($"`{contentType}` is not a supported Content-Type type.");

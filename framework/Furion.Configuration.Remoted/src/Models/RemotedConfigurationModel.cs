@@ -59,4 +59,10 @@ public sealed class RemotedConfigurationModel
     /// 配置前缀
     /// </summary>
     public string? Prefix { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return RequestUri.ToString();
+    }
 }

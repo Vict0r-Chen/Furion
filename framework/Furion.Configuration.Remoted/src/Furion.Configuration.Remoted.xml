@@ -117,6 +117,9 @@
             配置前缀
             </summary>
         </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationModel.ToString">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Configuration.RemotedConfigurationParser">
             <summary>
             远程配置解析器
@@ -169,6 +172,11 @@
         <member name="T:Furion.Component.ConfigurationRemotedComponent">
             <summary>
             远程配置模块服务组件
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ConfigurationRemotedComponent.Props">
+            <summary>
+            组件配置
             </summary>
         </member>
         <member name="M:Furion.Component.ConfigurationRemotedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">

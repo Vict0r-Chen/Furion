@@ -15,9 +15,10 @@
 namespace Furion.Tests;
 
 [DependsOn<ConfigurationFileScanningComponent
+    , ConfigurationManifestResourceComponent
+    , ConfigurationRemotedComponent
     , DependencyInjectionComponent
     , DependencyInjectionNamedComponent
-    , ConfigurationManifestResourceComponent
     , ValidationComponent>]
 public class ServiceComponent : ComponentBase
 {
