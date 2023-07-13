@@ -19,8 +19,15 @@ namespace Furion.Configuration;
 /// </summary>
 internal sealed class RemotedConfigurationSource : IConfigurationSource
 {
+    /// <summary>
+    /// <see cref="RemotedConfigurationModel"/> 集合
+    /// </summary>
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="remotedConfigurationModels"><see cref="RemotedConfigurationModel"/> 集合</param>
     internal RemotedConfigurationSource(List<RemotedConfigurationModel> remotedConfigurationModels)
     {
         // 空检查

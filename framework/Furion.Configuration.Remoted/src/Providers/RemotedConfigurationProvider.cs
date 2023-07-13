@@ -15,16 +15,19 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 远程配置提供程序
+/// 远程配置提供器
 /// </summary>
 internal sealed class RemotedConfigurationProvider : ConfigurationProvider
 {
+    /// <summary>
+    /// <see cref="RemotedConfigurationModel"/> 集合
+    /// </summary>
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="remotedConfigurationModels"></param>
+    /// <param name="remotedConfigurationModels"><see cref="RemotedConfigurationModel"/> 集合</param>
     internal RemotedConfigurationProvider(List<RemotedConfigurationModel> remotedConfigurationModels)
     {
         // 空检查
@@ -36,16 +39,15 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
     /// <inheritdoc />
     public override void Load()
     {
-        // 空检查
-        if (_remotedConfigurationModels.Count == 0)
-        {
-            return;
-        }
-
+        // 初始化远程配置解析器对象
         var remotedConfigurationParser = new RemotedConfigurationParser();
 
-        // 解析嵌入资源配置文件并生成字典集合
-        Data = _remotedConfigurationModels.SelectMany(model => remotedConfigurationParser.ParseRequestUri(model))
-            .ToDictionary(u => u.Key, u => u.Value, StringComparer.OrdinalIgnoreCase);
+        // 解析远程请求地址并返回配置集合
+        var data = _remotedConfigurationModels.SelectMany(remotedConfigurationParser.ParseRequestUri)
+            .ToDictionary(u => u.Key
+            , u => u.Value
+            , StringComparer.OrdinalIgnoreCase);
+
+        Data = data;
     }
 }

@@ -49,6 +49,10 @@ public static class RemotedConfigurationBuilderExtensions
 
         // 构建模块服务
         var remotedConfigurationModels = remotedConfigurationBuilder.Build();
+        if (remotedConfigurationModels.Count == 0)
+        {
+            return builder;
+        }
 
         // 添加远程配置提供源
         return builder.Add(new RemotedConfigurationSource(remotedConfigurationModels));

@@ -30,12 +30,12 @@ public sealed class RemotedConfigurationModel
         ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
         ArgumentNullException.ThrowIfNull(httpMethod);
 
-        RequestUri = new Uri(urlAddress);
+        RequestUri = new(urlAddress);
         HttpMethod = httpMethod;
     }
 
     /// <summary>
-    /// Url 地址
+    /// 请求地址
     /// </summary>
     public Uri RequestUri { get; init; }
 
@@ -45,7 +45,7 @@ public sealed class RemotedConfigurationModel
     public HttpMethod HttpMethod { get; set; }
 
     /// <summary>
-    /// 请求超时前等待的时间跨度
+    /// 超时配置
     /// </summary>
     public TimeSpan Timeout { get; set; }
 
@@ -60,17 +60,21 @@ public sealed class RemotedConfigurationModel
     /// </summary>
     public string? Prefix { get; set; }
 
-    internal Action<HttpClient>? InternalConfigureClient { get; private set; }
+    /// <summary>
+    /// HttpClient 配置委托
+    /// </summary>
+    internal Action<HttpClient>? ClientConfigurator { get; private set; }
 
     /// <summary>
-    /// 配置 HttpClient
+    /// 配置 HttpClient 客户端对象
     /// </summary>
+    /// <param name="configure">自定义配置委托</param>
     public void ConfigureClient(Action<HttpClient> configure)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure);
 
-        InternalConfigureClient = configure;
+        ClientConfigurator = configure;
     }
 
     /// <inheritdoc />

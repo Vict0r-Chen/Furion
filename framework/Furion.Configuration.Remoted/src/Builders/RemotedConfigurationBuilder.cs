@@ -30,7 +30,7 @@ public sealed class RemotedConfigurationBuilder
     internal Func<RemotedConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
-    /// 默认请求客户端配置
+    /// 默认 HttpClient 配置委托
     /// </summary>
     internal Action<HttpClient>? _defaultHttpClientConfigure;
 
@@ -40,6 +40,7 @@ public sealed class RemotedConfigurationBuilder
     public RemotedConfigurationBuilder()
     {
         _urlAddresses = new(StringComparer.OrdinalIgnoreCase);
+
         DefaultHttpMethod = HttpMethod.Get;
         DefaultTimeout = TimeSpan.FromSeconds(30);
     }
@@ -50,7 +51,7 @@ public sealed class RemotedConfigurationBuilder
     public HttpMethod DefaultHttpMethod { get; set; }
 
     /// <summary>
-    /// 默认请求超时前等等的时间跨度
+    /// 默认超时配置
     /// </summary>
     /// <remarks>默认值 30 秒</remarks>
     public TimeSpan DefaultTimeout { get; set; }
@@ -68,7 +69,7 @@ public sealed class RemotedConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加远程配置模型过滤器
+    /// 配置默认 HttpClient 客户端对象
     /// </summary>
     /// <param name="configure">自定义配置委托</param>
     public void ConfigureClient(Action<HttpClient> configure)
@@ -82,14 +83,14 @@ public sealed class RemotedConfigurationBuilder
     /// <summary>
     /// 添加 Url 地址
     /// </summary>
-    /// <param name="urlAddresses">Url 集合</param>
+    /// <param name="urlAddresses">Url 地址</param>
     /// <returns><see cref="RemotedConfigurationBuilder"/></returns>
     public RemotedConfigurationBuilder AddUrlAddresses(params string[] urlAddresses)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(urlAddresses);
 
-        // 逐条添加到 Url 地址集合中
+        // 逐条添加到 Url 地址到集合中
         Array.ForEach(urlAddresses, urlAddress =>
         {
             // 检查 Url 地址有效性
@@ -104,7 +105,7 @@ public sealed class RemotedConfigurationBuilder
     /// <summary>
     /// 添加 Url 地址
     /// </summary>
-    /// <param name="urlAddresses">Url 集合</param>
+    /// <param name="urlAddresses">Url 地址</param>
     /// <returns><see cref="RemotedConfigurationBuilder"/></returns>
     public RemotedConfigurationBuilder AddUrlAddresses(IEnumerable<string> urlAddresses)
     {
@@ -114,11 +115,13 @@ public sealed class RemotedConfigurationBuilder
     /// <summary>
     /// 构建模块服务
     /// </summary>
-    /// <returns><see cref="RemotedConfigurationModel"/> 集合</returns>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
     internal List<RemotedConfigurationModel> Build()
     {
-        // 创建远程配置模型集合
-        var remotedConfigurationModels = CreateModels().ToList();
+        // 创建远程配置模型集合并排序
+        var remotedConfigurationModels = CreateModels()
+            .OrderByDescending(m => m.Order)
+            .ToList();
 
         // 释放对象
         Release();
@@ -129,20 +132,28 @@ public sealed class RemotedConfigurationBuilder
     /// <summary>
     /// 创建远程配置模型集合
     /// </summary>
-    /// <returns><see cref="RemotedConfigurationBuilder"/> 集合</returns>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
     internal IEnumerable<RemotedConfigurationModel> CreateModels()
     {
-        var remotedConfigurationModels = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod) { Timeout = DefaultTimeout });
+        // 根据 Url 地址集合生成远程配置模型
+        var remotedConfigurationModels = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod)
+        {
+            Timeout = DefaultTimeout
+        });
 
+        // 遍历远程配置模型集合并设置 HttpClient 配置委托
         foreach (var remotedConfigurationModel in remotedConfigurationModels)
         {
-            if (!(_filterConfigure is null || _filterConfigure.Invoke(remotedConfigurationModel)))
+            // 过滤器检查
+            if (_filterConfigure is not null && !_filterConfigure.Invoke(remotedConfigurationModel))
             {
                 continue;
             }
 
-            SetConfigureClient(remotedConfigurationModel);
+            // 设置 HttpClient 配置委托
+            SetClientConfigurator(remotedConfigurationModel);
 
+            // 返回当前集合项
             yield return remotedConfigurationModel;
         }
     }
@@ -154,26 +165,33 @@ public sealed class RemotedConfigurationBuilder
     {
         _urlAddresses.Clear();
         _filterConfigure = null;
+        _defaultHttpClientConfigure = null;
     }
 
     /// <summary>
-    /// 设置远程配置
+    /// 设置远程配置模型 HttpClient 配置委托
     /// </summary>
-    /// <param name="remotedConfigurationModel"></param>
-    /// <returns><see cref="RemotedConfigurationModel"/></returns>
-    internal void SetConfigureClient(RemotedConfigurationModel remotedConfigurationModel)
+    /// <param name="remotedConfigurationModel"><see cref="RemotedConfigurationModel"/></param>
+    internal void SetClientConfigurator(RemotedConfigurationModel remotedConfigurationModel)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
 
+        // 若默认 HttpClient 配置委托为空则跳过
         if (_defaultHttpClientConfigure is null)
         {
             return;
         }
 
-        // 创建级联委托
-        var cconfigureHttpClient = new[] { _defaultHttpClientConfigure }
-            .Concat(remotedConfigurationModel.InternalConfigureClient is null ? Enumerable.Empty<Action<HttpClient>>() : new[] { remotedConfigurationModel.InternalConfigureClient })
+        // 若远程配置模型未配置 HttpClient 委托则设置为默认值
+        if (remotedConfigurationModel.ClientConfigurator is null)
+        {
+            remotedConfigurationModel.ConfigureClient(_defaultHttpClientConfigure);
+            return;
+        }
+
+        // 若两者都配置了则创建级联调用委托
+        var clientConfigurator = new[] { _defaultHttpClientConfigure, remotedConfigurationModel.ClientConfigurator }
             .Cast<Action<HttpClient>>()
             .Aggregate((previous, current) => (t) =>
             {
@@ -181,7 +199,7 @@ public sealed class RemotedConfigurationBuilder
                 current(t);
             });
 
-        remotedConfigurationModel.ConfigureClient(cconfigureHttpClient);
+        remotedConfigurationModel.ConfigureClient(clientConfigurator);
     }
 
     /// <summary>
@@ -197,7 +215,6 @@ public sealed class RemotedConfigurationBuilder
         // Url 合法性检查
         var isValidUrl = Uri.TryCreate(urlAddress, UriKind.Absolute, out var uri)
             && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
-
         if (isValidUrl)
         {
             return;

@@ -21,7 +21,7 @@
         </member>
         <member name="F:Furion.Configuration.RemotedConfigurationBuilder._defaultHttpClientConfigure">
             <summary>
-            默认请求客户端配置
+            默认 HttpClient 配置委托
             </summary>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.#ctor">
@@ -36,7 +36,7 @@
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationBuilder.DefaultTimeout">
             <summary>
-            默认请求超时前等等的时间跨度
+            默认超时配置
             </summary>
             <remarks>默认值 30 秒</remarks>
         </member>
@@ -48,7 +48,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.ConfigureClient(System.Action{System.Net.Http.HttpClient})">
             <summary>
-            添加远程配置模型过滤器
+            配置默认 HttpClient 客户端对象
             </summary>
             <param name="configure">自定义配置委托</param>
         </member>
@@ -56,39 +56,38 @@
             <summary>
             添加 Url 地址
             </summary>
-            <param name="urlAddresses">Url 集合</param>
+            <param name="urlAddresses">Url 地址</param>
             <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></returns>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddUrlAddresses(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             添加 Url 地址
             </summary>
-            <param name="urlAddresses">Url 集合</param>
+            <param name="urlAddresses">Url 地址</param>
             <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></returns>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Build">
             <summary>
             构建模块服务
             </summary>
-            <returns><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</returns>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.CreateModels">
             <summary>
             创建远程配置模型集合
             </summary>
-            <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/> 集合</returns>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Release">
             <summary>
             释放对象
             </summary>
         </member>
-        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.SetConfigureClient(Furion.Configuration.RemotedConfigurationModel)">
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.SetClientConfigurator(Furion.Configuration.RemotedConfigurationModel)">
             <summary>
-            设置远程配置
+            设置远程配置模型 HttpClient 配置委托
             </summary>
-            <param name="remotedConfigurationModel"></param>
-            <returns><see cref="T:Furion.Configuration.RemotedConfigurationModel"/></returns>
+            <param name="remotedConfigurationModel"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/></param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.EnsureLegalUrlAddress(System.String)">
             <summary>
@@ -111,7 +110,7 @@
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationModel.RequestUri">
             <summary>
-            Url 地址
+            请求地址
             </summary>
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod">
@@ -121,7 +120,7 @@
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationModel.Timeout">
             <summary>
-            请求超时前等待的时间跨度
+            超时配置
             </summary>
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationModel.Order">
@@ -135,10 +134,16 @@
             配置前缀
             </summary>
         </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.ClientConfigurator">
+            <summary>
+            HttpClient 配置委托
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.RemotedConfigurationModel.ConfigureClient(System.Action{System.Net.Http.HttpClient})">
             <summary>
-            配置 HttpClient
+            配置 HttpClient 客户端对象
             </summary>
+            <param name="configure">自定义配置委托</param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationModel.ToString">
             <inheritdoc />
@@ -165,7 +170,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationParser.ParseRequestUri(Furion.Configuration.RemotedConfigurationModel)">
             <summary>
-            解析远程请求地址
+            解析远程请求地址并返回配置集合
             </summary>
             <param name="remotedConfigurationModel"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/></param>
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
@@ -182,14 +187,19 @@
         </member>
         <member name="T:Furion.Configuration.RemotedConfigurationProvider">
             <summary>
-            远程配置提供程序
+            远程配置提供器
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.RemotedConfigurationProvider._remotedConfigurationModels">
+            <summary>
+            <see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合
             </summary>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel})">
             <summary>
             构造函数
             </summary>
-            <param name="remotedConfigurationModels"></param>
+            <param name="remotedConfigurationModels"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.Load">
             <inheritdoc />
@@ -198,6 +208,17 @@
             <summary>
             远程配置源
             </summary>
+        </member>
+        <member name="F:Furion.Configuration.RemotedConfigurationSource._remotedConfigurationModels">
+            <summary>
+            <see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="remotedConfigurationModels"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <inheritdoc />

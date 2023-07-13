@@ -47,7 +47,7 @@ internal sealed class RemotedConfigurationParser
     }
 
     /// <summary>
-    /// 解析远程请求地址
+    /// 解析远程请求地址并返回配置集合
     /// </summary>
     /// <param name="remotedConfigurationModel"><see cref="RemotedConfigurationModel"/></param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
@@ -113,7 +113,7 @@ internal sealed class RemotedConfigurationParser
         }
 
         // 调用自定义 HttpClient 配置委托
-        remotedConfigurationModel.InternalConfigureClient?.Invoke(httpClient);
+        remotedConfigurationModel.ClientConfigurator?.Invoke(httpClient);
 
         // 发送 HTTP 请求
         var httpResponseMessage = httpClient.Send(
