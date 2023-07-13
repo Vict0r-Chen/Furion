@@ -29,6 +29,12 @@
             默认 <see cref="T:System.Net.Http.HttpMethod"/>
             </summary>
         </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationBuilder.DefaultTimeout">
+            <summary>
+            默认请求超时前等等的时间跨度
+            </summary>
+            <remarks>默认值 30 秒</remarks>
+        </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.RemotedConfigurationModel,System.Boolean})">
             <summary>
             添加远程配置模型过滤器
@@ -85,7 +91,7 @@
             <param name="urlAddress">Url 地址</param>
             <param name="httpMethod"><see cref="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod"/></param>
         </member>
-        <member name="P:Furion.Configuration.RemotedConfigurationModel.UrlAddress">
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.RequestUri">
             <summary>
             Url 地址
             </summary>
@@ -93,6 +99,11 @@
         <member name="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod">
             <summary>
             <see cref="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.Timeout">
+            <summary>
+            请求超时前等待的时间跨度
             </summary>
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationModel.Order">
@@ -106,10 +117,43 @@
             配置前缀
             </summary>
         </member>
+        <member name="T:Furion.Configuration.RemotedConfigurationParser">
+            <summary>
+            远程配置解析器
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationParser.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationParser.Parse(Furion.Configuration.RemotedConfigurationModel)">
+            <summary>
+            解析内容
+            </summary>
+            <param name="remotedConfigurationModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationParser.Send(Furion.Configuration.RemotedConfigurationModel,System.String@)">
+            <summary>
+            发送请求并读取响应流
+            </summary>
+            <param name="remotedConfigurationModel"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/></param>
+            <param name="extension">文件拓展名</param>
+            <returns><see cref="T:System.IO.Stream"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
         <member name="T:Furion.Configuration.RemotedConfigurationProvider">
             <summary>
             远程配置提供程序
             </summary>
+        </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="remotedConfigurationModels"></param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.Load">
             <inheritdoc />

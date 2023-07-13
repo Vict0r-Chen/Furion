@@ -36,12 +36,19 @@ public sealed class RemotedConfigurationBuilder
     {
         _urlAddresses = new(StringComparer.OrdinalIgnoreCase);
         DefaultHttpMethod = HttpMethod.Get;
+        DefaultTimeout = TimeSpan.FromSeconds(30);
     }
 
     /// <summary>
     /// 默认 <see cref="HttpMethod"/>
     /// </summary>
     public HttpMethod DefaultHttpMethod { get; set; }
+
+    /// <summary>
+    /// 默认请求超时前等等的时间跨度
+    /// </summary>
+    /// <remarks>默认值 30 秒</remarks>
+    public TimeSpan DefaultTimeout { get; set; }
 
     /// <summary>
     /// 添加远程配置模型过滤器
@@ -108,7 +115,7 @@ public sealed class RemotedConfigurationBuilder
     /// <returns><see cref="RemotedConfigurationBuilder"/> 集合</returns>
     internal List<RemotedConfigurationModel> CreateModels()
     {
-        var models = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod))
+        var models = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod) { Timeout = DefaultTimeout })
             .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model))
             .OrderByDescending(u => u.Order)
             .ToList();

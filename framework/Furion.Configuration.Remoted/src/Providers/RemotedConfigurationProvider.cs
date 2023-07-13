@@ -21,6 +21,10 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
 {
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="remotedConfigurationModels"></param>
     internal RemotedConfigurationProvider(List<RemotedConfigurationModel> remotedConfigurationModels)
     {
         // 空检查
@@ -32,5 +36,16 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
     /// <inheritdoc />
     public override void Load()
     {
+        // 空检查
+        if (_remotedConfigurationModels.Count == 0)
+        {
+            return;
+        }
+
+        var remotedConfigurationParser = new RemotedConfigurationParser();
+
+        // 解析嵌入资源配置文件并生成字典集合
+        Data = _remotedConfigurationModels.SelectMany(model => remotedConfigurationParser.Parse(model))
+            .ToDictionary(u => u.Key, u => u.Value, StringComparer.OrdinalIgnoreCase);
     }
 }
