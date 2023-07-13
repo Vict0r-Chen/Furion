@@ -322,6 +322,7 @@ public class FileConfigurationParserTests : IDisposable
 
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
         FileConfigurationParser._jsonParser = null;
     }
 }

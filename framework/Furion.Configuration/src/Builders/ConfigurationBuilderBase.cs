@@ -73,6 +73,9 @@ public abstract class ConfigurationBuilderBase
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
     internal void Initialize(FileConfigurationParser fileConfigurationParser)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
+
         // 添加文件拓展名解析器
         foreach (var (extension, parser) in _parsers)
         {
