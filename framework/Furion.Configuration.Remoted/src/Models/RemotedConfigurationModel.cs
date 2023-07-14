@@ -80,6 +80,7 @@ public sealed class RemotedConfigurationModel
     /// <inheritdoc />
     public override string ToString()
     {
-        return RequestUri.ToString();
+        return RequestUri.ToString()
+            .TrimEnd('/');
     }
 }

@@ -111,6 +111,7 @@ public class ConfigurationBuilderBaseTests
         configurationBuilder.AddSource(".xml", typeof(XmlConfigurationSource));
 
         var fileConfigurationParser = configurationBuilder.InitializeParser();
+        Assert.NotNull(fileConfigurationParser);
 
         Assert.Equal(2, fileConfigurationParser._parsers.Count);
         Assert.Equal(2, fileConfigurationParser._sourceTypes.Count);
