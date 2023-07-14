@@ -32,7 +32,7 @@ internal sealed class RemotedConfigurationParser
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
     /// <param name="mediaTypeMappings">媒体类型和文件拓展名映射集合</param>
-    public RemotedConfigurationParser(FileConfigurationParser fileConfigurationParser
+    internal RemotedConfigurationParser(FileConfigurationParser fileConfigurationParser
         , IDictionary<string, string> mediaTypeMappings)
     {
         // 空检查

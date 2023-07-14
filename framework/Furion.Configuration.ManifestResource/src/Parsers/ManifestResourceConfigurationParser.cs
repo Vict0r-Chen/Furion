@@ -26,7 +26,7 @@ internal sealed class ManifestResourceConfigurationParser
     /// 构造函数
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
-    public ManifestResourceConfigurationParser(FileConfigurationParser fileConfigurationParser)
+    internal ManifestResourceConfigurationParser(FileConfigurationParser fileConfigurationParser)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(fileConfigurationParser);
