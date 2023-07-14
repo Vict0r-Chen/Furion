@@ -79,7 +79,8 @@ public class RemotedConfigurationParserTests
     {
         var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
 
-        var urls = new[] { "--urls", "http://localhost:5001" };
+        var port = Helpers.GetIdlePort();
+        var urls = new[] { "--urls", $"http://localhost:{port}" };
         var builder = WebApplication.CreateBuilder(urls);
         await using var app = builder.Build();
 
@@ -96,13 +97,13 @@ public class RemotedConfigurationParserTests
 
         await app.StartAsync();
 
-        var remotedConfigurationModel = new RemotedConfigurationModel("http://localhost:5001/not-found", HttpMethod.Get);
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/not-found", HttpMethod.Get);
         var exception = Assert.Throws<HttpRequestException>(() =>
         {
             var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel, out var extension);
         });
 
-        var remotedConfigurationModel1 = new RemotedConfigurationModel("http://localhost:5001/not-content-type", HttpMethod.Get);
+        var remotedConfigurationModel1 = new RemotedConfigurationModel($"http://localhost:{port}/not-content-type", HttpMethod.Get);
         var exception1 = Assert.Throws<InvalidOperationException>(() =>
         {
             var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel1, out var extension);
@@ -110,7 +111,7 @@ public class RemotedConfigurationParserTests
 
         Assert.Equal("Content-Type definition not found in the response message.", exception1.Message);
 
-        var remotedConfigurationModel2 = new RemotedConfigurationModel("http://localhost:5001/not-support-content-type", HttpMethod.Get);
+        var remotedConfigurationModel2 = new RemotedConfigurationModel($"http://localhost:{port}/not-support-content-type", HttpMethod.Get);
         var exception2 = Assert.Throws<NotSupportedException>(() =>
         {
             var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel2, out var extension);
@@ -124,7 +125,8 @@ public class RemotedConfigurationParserTests
     {
         var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
 
-        var urls = new[] { "--urls", "http://localhost:5001" };
+        var port = Helpers.GetIdlePort();
+        var urls = new[] { "--urls", $"http://localhost:{port}" };
         var builder = WebApplication.CreateBuilder(urls);
         await using var app = builder.Build();
 
@@ -139,7 +141,7 @@ public class RemotedConfigurationParserTests
 
         await app.StartAsync();
 
-        var remotedConfigurationModel = new RemotedConfigurationModel("http://localhost:5001/return-json", HttpMethod.Get);
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/return-json", HttpMethod.Get);
         using var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel, out var extension);
 
         Assert.NotNull(stream);
@@ -153,7 +155,8 @@ public class RemotedConfigurationParserTests
     {
         var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
 
-        var urls = new[] { "--urls", "http://localhost:5001" };
+        var port = Helpers.GetIdlePort();
+        var urls = new[] { "--urls", $"http://localhost:{port}" };
         var builder = WebApplication.CreateBuilder(urls);
         await using var app = builder.Build();
 
@@ -171,7 +174,7 @@ public class RemotedConfigurationParserTests
         var remotedConfigurationModel = new RemotedConfigurationModel("/return-json", HttpMethod.Get);
         remotedConfigurationModel.ConfigureClient(client =>
         {
-            client.BaseAddress = new Uri("http://localhost:5001");
+            client.BaseAddress = new Uri($"http://localhost:{port}");
         });
 
         using var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel, out var extension);
@@ -198,7 +201,8 @@ public class RemotedConfigurationParserTests
     {
         var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
 
-        var urls = new[] { "--urls", "http://localhost:5001" };
+        var port = Helpers.GetIdlePort();
+        var urls = new[] { "--urls", $"http://localhost:{port}" };
         var builder = WebApplication.CreateBuilder(urls);
         await using var app = builder.Build();
 
@@ -213,7 +217,7 @@ public class RemotedConfigurationParserTests
 
         await app.StartAsync();
 
-        var remotedConfigurationModel = new RemotedConfigurationModel("http://localhost:5001/return-json", HttpMethod.Get);
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/return-json", HttpMethod.Get);
         var data = remotedConfigurationParser.ParseRequestUri(remotedConfigurationModel);
 
         Assert.NotNull(data);
@@ -233,7 +237,8 @@ public class RemotedConfigurationParserTests
     {
         var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
 
-        var urls = new[] { "--urls", "http://localhost:5001" };
+        var port = Helpers.GetIdlePort();
+        var urls = new[] { "--urls", $"http://localhost:{port}" };
         var builder = WebApplication.CreateBuilder(urls);
         await using var app = builder.Build();
 
@@ -248,7 +253,7 @@ public class RemotedConfigurationParserTests
 
         await app.StartAsync();
 
-        var remotedConfigurationModel = new RemotedConfigurationModel("http://localhost:5001/return-json", HttpMethod.Get)
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/return-json", HttpMethod.Get)
         {
             Prefix = "Remoted"
         };
