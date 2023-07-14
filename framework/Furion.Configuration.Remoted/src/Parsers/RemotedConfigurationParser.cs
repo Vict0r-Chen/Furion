@@ -20,9 +20,9 @@ namespace Furion.Configuration;
 internal sealed class RemotedConfigurationParser
 {
     /// <summary>
-    /// Content-Type 和文件拓展名映射集合
+    /// 媒体类型和文件拓展名映射集合
     /// </summary>
-    internal readonly IDictionary<string, string> _contentTypeMappings;
+    internal readonly IDictionary<string, string> _mediaTypeMappings;
 
     /// <inheritdoc cref="FileConfigurationParser" />
     internal readonly FileConfigurationParser _fileConfigurationParser;
@@ -31,15 +31,15 @@ internal sealed class RemotedConfigurationParser
     /// 构造函数
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
-    /// <param name="contentTypeMappings">Content-Type 和文件拓展名映射集合</param>
+    /// <param name="mediaTypeMappings">媒体类型和文件拓展名映射集合</param>
     public RemotedConfigurationParser(FileConfigurationParser fileConfigurationParser
-        , IDictionary<string, string> contentTypeMappings)
+        , IDictionary<string, string> mediaTypeMappings)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(fileConfigurationParser);
-        ArgumentNullException.ThrowIfNull(contentTypeMappings);
+        ArgumentNullException.ThrowIfNull(mediaTypeMappings);
 
-        _contentTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        _mediaTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             {"application/json", ".json" },
             {"application/vnd.api+json", ".json" },
@@ -48,10 +48,10 @@ internal sealed class RemotedConfigurationParser
             {"text/x-json", ".json" }
         };
 
-        // 遍历集合添加/更新 Content-Type 和文件拓展名映射
-        foreach (var (contentType, extension) in contentTypeMappings)
+        // 遍历集合添加/更新 媒体类型和文件拓展名映射
+        foreach (var (mediaType, extension) in mediaTypeMappings)
         {
-            _contentTypeMappings[contentType] = extension;
+            _mediaTypeMappings[mediaType] = extension;
         }
 
         _fileConfigurationParser = fileConfigurationParser;
@@ -136,20 +136,20 @@ internal sealed class RemotedConfigurationParser
         httpResponseMessage.EnsureSuccessStatusCode();
 
         // 读取响应报文中的 Content-Type
-        if (!httpResponseMessage.Content.Headers.TryGetValues("Content-Type", out var contentTypeValues))
+        if (!httpResponseMessage.Content.Headers.TryGetValues("Content-Type", out var contentTypes))
         {
             throw new InvalidOperationException("Content-Type definition not found in the response message.");
         }
 
         // 取出首个 Content-Type 并根据 ; 切割，目的是处理携带 charset 的值
-        var contentType = contentTypeValues.First()
+        var mediaType = contentTypes.First()
             .Split(';', StringSplitOptions.RemoveEmptyEntries)
             .First();
 
-        // 检查当前 Content-Type 是否是受支持的类型
-        if (!_contentTypeMappings.TryGetValue(contentType, out var extensionValue))
+        // 检查当前媒体类型是否是受支持的类型
+        if (!_mediaTypeMappings.TryGetValue(mediaType, out var extensionValue))
         {
-            throw new NotSupportedException($"`{contentType}` is not a supported Content-Type type.");
+            throw new NotSupportedException($"`{mediaType}` is not a supported media type.");
         }
 
         // 设置拓展名

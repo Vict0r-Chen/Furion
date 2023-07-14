@@ -14,9 +14,9 @@
             待请求的 Url 地址集合
             </summary>
         </member>
-        <member name="F:Furion.Configuration.RemotedConfigurationBuilder._contentTypeMappings">
+        <member name="F:Furion.Configuration.RemotedConfigurationBuilder._mediaTypeMappings">
             <summary>
-            Content-Type 和文件拓展名映射集合
+            媒体类型和文件拓展名映射集合
             </summary>
         </member>
         <member name="F:Furion.Configuration.RemotedConfigurationBuilder._filterConfigure">
@@ -71,11 +71,11 @@
             <param name="urlAddresses">Url 地址</param>
             <returns><see cref="T:Furion.Configuration.RemotedConfigurationBuilder"/></returns>
         </member>
-        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddContentTypeMapping(System.String,System.String)">
+        <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddMediaTypeMapping(System.String,System.String)">
             <summary>
-            添加 Content-Type 和文件拓展名映射
+            添加媒体类型和文件拓展名映射
             </summary>
-            <param name="contentType">Content-Type</param>
+            <param name="mediaType">媒体类型</param>
             <param name="extension">文件拓展名</param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.Build(Furion.Configuration.RemotedConfigurationParser@)">
@@ -161,9 +161,9 @@
             远程配置解析器
             </summary>
         </member>
-        <member name="F:Furion.Configuration.RemotedConfigurationParser._contentTypeMappings">
+        <member name="F:Furion.Configuration.RemotedConfigurationParser._mediaTypeMappings">
             <summary>
-            Content-Type 和文件拓展名映射集合
+            媒体类型和文件拓展名映射集合
             </summary>
         </member>
         <member name="F:Furion.Configuration.RemotedConfigurationParser._fileConfigurationParser">
@@ -174,7 +174,7 @@
             构造函数
             </summary>
             <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
-            <param name="contentTypeMappings">Content-Type 和文件拓展名映射集合</param>
+            <param name="mediaTypeMappings">媒体类型和文件拓展名映射集合</param>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationParser.ParseRequestUri(Furion.Configuration.RemotedConfigurationModel)">
             <summary>

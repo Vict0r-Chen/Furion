@@ -25,9 +25,9 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     internal readonly HashSet<string> _urlAddresses;
 
     /// <summary>
-    /// Content-Type 和文件拓展名映射集合
+    /// 媒体类型和文件拓展名映射集合
     /// </summary>
-    internal readonly IDictionary<string, string> _contentTypeMappings;
+    internal readonly IDictionary<string, string> _mediaTypeMappings;
 
     /// <summary>
     /// 远程配置模型过滤器
@@ -45,7 +45,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     public RemotedConfigurationBuilder()
     {
         _urlAddresses = new(StringComparer.OrdinalIgnoreCase);
-        _contentTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        _mediaTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         DefaultHttpMethod = HttpMethod.Get;
         DefaultTimeout = TimeSpan.FromSeconds(30);
@@ -119,17 +119,17 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     }
 
     /// <summary>
-    /// 添加 Content-Type 和文件拓展名映射
+    /// 添加媒体类型和文件拓展名映射
     /// </summary>
-    /// <param name="contentType">Content-Type</param>
+    /// <param name="mediaType">媒体类型</param>
     /// <param name="extension">文件拓展名</param>
-    public RemotedConfigurationBuilder AddContentTypeMapping(string contentType, string extension)
+    public RemotedConfigurationBuilder AddMediaTypeMapping(string mediaType, string extension)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
+        ArgumentException.ThrowIfNullOrWhiteSpace(mediaType);
         ArgumentException.ThrowIfNullOrWhiteSpace(extension);
 
-        _contentTypeMappings[contentType] = extension;
+        _mediaTypeMappings[mediaType] = extension;
 
         return this;
     }
@@ -149,7 +149,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 初始化远程配置解析器
         remotedConfigurationParser = remotedConfigurationModels.Count == 0
             ? null
-            : new RemotedConfigurationParser(InitializeParser(), _contentTypeMappings);
+            : new RemotedConfigurationParser(InitializeParser(), _mediaTypeMappings);
 
         return remotedConfigurationModels;
     }

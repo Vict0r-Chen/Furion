@@ -37,9 +37,9 @@ public class RemotedConfigurationParserTests
 
         Assert.NotNull(remotedConfigurationParser);
         Assert.NotNull(remotedConfigurationParser._fileConfigurationParser);
-        Assert.NotNull(remotedConfigurationParser._contentTypeMappings);
+        Assert.NotNull(remotedConfigurationParser._mediaTypeMappings);
 
-        Assert.Equal(5, remotedConfigurationParser._contentTypeMappings.Count);
+        Assert.Equal(5, remotedConfigurationParser._mediaTypeMappings.Count);
 
         var contentTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -50,17 +50,17 @@ public class RemotedConfigurationParserTests
             {"text/x-json", ".json" }
         };
 
-        Assert.Equal(contentTypeMappings, remotedConfigurationParser._contentTypeMappings);
+        Assert.Equal(contentTypeMappings, remotedConfigurationParser._mediaTypeMappings);
 
         var remotedConfigurationParser2 = new RemotedConfigurationParser(new(), new Dictionary<string, string>
         {
             { "text/xml", ".xml" }
         });
 
-        Assert.Equal(6, remotedConfigurationParser2._contentTypeMappings.Count);
+        Assert.Equal(6, remotedConfigurationParser2._mediaTypeMappings.Count);
         contentTypeMappings.Add("text/xml", ".xml");
 
-        Assert.Equal(contentTypeMappings, remotedConfigurationParser2._contentTypeMappings);
+        Assert.Equal(contentTypeMappings, remotedConfigurationParser2._mediaTypeMappings);
     }
 
     [Fact]
@@ -117,7 +117,7 @@ public class RemotedConfigurationParserTests
             var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel2, out var extension);
         });
 
-        Assert.Equal("`text/plain` is not a supported Content-Type type.", exception2.Message);
+        Assert.Equal("`text/plain` is not a supported media type.", exception2.Message);
     }
 
     [Fact]

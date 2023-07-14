@@ -26,8 +26,8 @@ public class RemotedConfigurationBuilderTests
         Assert.NotNull(remotedConfigurationBuilder);
         Assert.NotNull(remotedConfigurationBuilder._urlAddresses);
         Assert.Empty(remotedConfigurationBuilder._urlAddresses);
-        Assert.NotNull(remotedConfigurationBuilder._contentTypeMappings);
-        Assert.Empty(remotedConfigurationBuilder._contentTypeMappings);
+        Assert.NotNull(remotedConfigurationBuilder._mediaTypeMappings);
+        Assert.Empty(remotedConfigurationBuilder._mediaTypeMappings);
         Assert.Null(remotedConfigurationBuilder._filterConfigure);
         Assert.Null(remotedConfigurationBuilder._defaultClientConfigurator);
 
@@ -141,53 +141,53 @@ public class RemotedConfigurationBuilderTests
     }
 
     [Fact]
-    public void AddContentTypeMapping_Invalid_Parameters()
+    public void AddMediaTypeMapping_Invalid_Parameters()
     {
         var remotedConfigurationBuilder = new RemotedConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            remotedConfigurationBuilder.AddContentTypeMapping(null!, null!);
+            remotedConfigurationBuilder.AddMediaTypeMapping(null!, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            remotedConfigurationBuilder.AddContentTypeMapping(string.Empty, null!);
+            remotedConfigurationBuilder.AddMediaTypeMapping(string.Empty, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            remotedConfigurationBuilder.AddContentTypeMapping("", null!);
+            remotedConfigurationBuilder.AddMediaTypeMapping("", null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            remotedConfigurationBuilder.AddContentTypeMapping("application/json", null!);
+            remotedConfigurationBuilder.AddMediaTypeMapping("application/json", null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            remotedConfigurationBuilder.AddContentTypeMapping("application/json", string.Empty);
+            remotedConfigurationBuilder.AddMediaTypeMapping("application/json", string.Empty);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            remotedConfigurationBuilder.AddContentTypeMapping("application/json", "");
+            remotedConfigurationBuilder.AddMediaTypeMapping("application/json", "");
         });
     }
 
     [Fact]
-    public void AddContentTypeMapping_ReturnOK()
+    public void AddMediaTypeMapping_ReturnOK()
     {
         var remotedConfigurationBuilder = new RemotedConfigurationBuilder();
-        remotedConfigurationBuilder.AddContentTypeMapping("application/json", ".json");
-        remotedConfigurationBuilder.AddContentTypeMapping("text/xml", ".xml");
+        remotedConfigurationBuilder.AddMediaTypeMapping("application/json", ".json");
+        remotedConfigurationBuilder.AddMediaTypeMapping("text/xml", ".xml");
 
-        Assert.Equal(2, remotedConfigurationBuilder._contentTypeMappings.Count);
-        Assert.Equal("application/json", remotedConfigurationBuilder._contentTypeMappings.Keys.ElementAt(0));
-        Assert.Equal(".json", remotedConfigurationBuilder._contentTypeMappings.Values.ElementAt(0));
-        Assert.Equal("text/xml", remotedConfigurationBuilder._contentTypeMappings.Keys.ElementAt(1));
-        Assert.Equal(".xml", remotedConfigurationBuilder._contentTypeMappings.Values.ElementAt(1));
+        Assert.Equal(2, remotedConfigurationBuilder._mediaTypeMappings.Count);
+        Assert.Equal("application/json", remotedConfigurationBuilder._mediaTypeMappings.Keys.ElementAt(0));
+        Assert.Equal(".json", remotedConfigurationBuilder._mediaTypeMappings.Values.ElementAt(0));
+        Assert.Equal("text/xml", remotedConfigurationBuilder._mediaTypeMappings.Keys.ElementAt(1));
+        Assert.Equal(".xml", remotedConfigurationBuilder._mediaTypeMappings.Values.ElementAt(1));
     }
 
     [Fact]
