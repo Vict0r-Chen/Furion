@@ -37,6 +37,7 @@ internal sealed class RemotedConfigurationParser
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(fileConfigurationParser);
+        ArgumentNullException.ThrowIfNull(contentTypeMappings);
 
         _contentTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
