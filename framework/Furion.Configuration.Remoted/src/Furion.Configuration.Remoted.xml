@@ -160,9 +160,7 @@
             </summary>
         </member>
         <member name="F:Furion.Configuration.RemotedConfigurationParser._fileConfigurationParser">
-            <summary>
-            <see cref="T:Furion.Configuration.FileConfigurationParser"/>
-            </summary>
+            <inheritdoc cref="T:Furion.Configuration.FileConfigurationParser" />
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationParser.#ctor(Furion.Configuration.FileConfigurationParser)">
             <summary>
@@ -203,9 +201,7 @@
             </summary>
         </member>
         <member name="F:Furion.Configuration.RemotedConfigurationProvider._fileConfigurationParser">
-            <summary>
-            <see cref="T:Furion.Configuration.FileConfigurationParser"/>
-            </summary>
+            <inheritdoc cref="T:Furion.Configuration.FileConfigurationParser" />
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel},Furion.Configuration.FileConfigurationParser)">
             <summary>
@@ -228,9 +224,7 @@
             </summary>
         </member>
         <member name="F:Furion.Configuration.RemotedConfigurationSource._fileConfigurationParser">
-            <summary>
-            <see cref="T:Furion.Configuration.FileConfigurationParser"/>
-            </summary>
+            <inheritdoc cref="T:Furion.Configuration.FileConfigurationParser" />
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel},Furion.Configuration.FileConfigurationParser)">
             <summary>

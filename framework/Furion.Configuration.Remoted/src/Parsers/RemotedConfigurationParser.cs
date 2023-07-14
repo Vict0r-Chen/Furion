@@ -24,9 +24,7 @@ internal sealed class RemotedConfigurationParser
     /// </summary>
     internal readonly IDictionary<string, string> _contentTypeMappings;
 
-    /// <summary>
-    /// <see cref="FileConfigurationParser"/>
-    /// </summary>
+    /// <inheritdoc cref="FileConfigurationParser" />
     internal readonly FileConfigurationParser _fileConfigurationParser;
 
     /// <summary>

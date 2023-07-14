@@ -24,9 +24,7 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
     /// </summary>
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
-    /// <summary>
-    /// <see cref="FileConfigurationParser"/>
-    /// </summary>
+    /// <inheritdoc cref="FileConfigurationParser" />
     internal readonly FileConfigurationParser _fileConfigurationParser;
 
     /// <summary>
