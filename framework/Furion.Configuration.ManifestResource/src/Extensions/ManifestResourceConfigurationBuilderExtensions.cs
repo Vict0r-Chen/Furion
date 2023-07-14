@@ -27,7 +27,7 @@ public static class ManifestResourceConfigurationBuilderExtensions
     /// <returns><see cref="IConfigurationBuilder"/></returns>
     public static IConfigurationBuilder AddManifestResource(this IConfigurationBuilder builder, Action<ManifestResourceConfigurationBuilder>? configure = null)
     {
-        // 初始化配置模块嵌入资源构建器
+        // 初始化嵌入资源配置构建器
         var manifestResourceConfigurationBuilder = new ManifestResourceConfigurationBuilder();
 
         // 调用自定义配置委托
@@ -45,11 +45,19 @@ public static class ManifestResourceConfigurationBuilderExtensions
     public static IConfigurationBuilder AddManifestResource(this IConfigurationBuilder builder, ManifestResourceConfigurationBuilder manifestResourceConfigurationBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationBuilder, nameof(manifestResourceConfigurationBuilder));
+        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationBuilder);
 
         // 构建模块服务
-        var manifestResources = manifestResourceConfigurationBuilder.Build();
+        var manifestResourceConfigurationModels = manifestResourceConfigurationBuilder.Build(out var manifestResourceConfigurationParser);
+        if (manifestResourceConfigurationModels.Count == 0)
+        {
+            return builder;
+        }
 
-        return builder.Add(new ManifestResourceConfigurationSource(manifestResources));
+        // 空检查
+        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationParser);
+
+        // 添加嵌入资源配置提供源
+        return builder.Add(new ManifestResourceConfigurationSource(manifestResourceConfigurationModels, manifestResourceConfigurationParser));
     }
 }

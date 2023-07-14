@@ -96,7 +96,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 空检查
         ArgumentNullException.ThrowIfNull(urlAddresses);
 
-        // 逐条添加到 Url 地址到集合中
+        // 逐条添加 Url 地址到集合中
         Array.ForEach(urlAddresses, urlAddress =>
         {
             // 检查 Url 地址有效性
@@ -138,7 +138,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     /// 构建模块服务
     /// </summary>
     /// <param name="remotedConfigurationParser"><see cref="RemotedConfigurationParser"/></param>
-    /// <returns><see cref="IEnumerable{T}"/></returns>
+    /// <returns><see cref="List{T}"/></returns>
     internal List<RemotedConfigurationModel> Build(out RemotedConfigurationParser? remotedConfigurationParser)
     {
         // 创建远程配置模型集合并排序

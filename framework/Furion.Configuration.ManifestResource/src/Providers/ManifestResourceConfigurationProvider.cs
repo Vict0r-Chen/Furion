@@ -20,78 +20,38 @@ namespace Furion.Configuration;
 internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvider
 {
     /// <summary>
+    /// <see cref="ManifestResourceConfigurationModel"/> 集合
+    /// </summary>
+    internal readonly List<ManifestResourceConfigurationModel> _manifestResourceConfigurationModels;
+
+    /// <inheritdoc cref="ManifestResourceConfigurationParser" />
+    internal readonly ManifestResourceConfigurationParser _manifestResourceConfigurationParser;
+
+    /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
-    internal ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> manifestResources)
+    /// <param name="manifestResourceConfigurationModels"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
+    /// <param name="manifestResourceConfigurationParser"><see cref="ManifestResourceConfigurationParser"/></param>
+    internal ManifestResourceConfigurationProvider(List<ManifestResourceConfigurationModel> manifestResourceConfigurationModels
+        , ManifestResourceConfigurationParser manifestResourceConfigurationParser)
     {
-        ManifestResources = manifestResources;
-    }
+        // 空检查
+        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationModels);
+        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationParser);
 
-    /// <inheritdoc cref="ManifestResourceConfigurationModel" />
-    internal List<ManifestResourceConfigurationModel> ManifestResources { get; }
+        _manifestResourceConfigurationModels = manifestResourceConfigurationModels;
+        _manifestResourceConfigurationParser = manifestResourceConfigurationParser;
+    }
 
     /// <inheritdoc />
     public override void Load()
     {
-        // 空检查
-        if (ManifestResources.Count == 0)
-        {
-            return;
-        }
+        // 解析嵌入资源并返回配置集合
+        var data = _manifestResourceConfigurationModels.SelectMany(_manifestResourceConfigurationParser.ParseResource)
+            .ToDictionary(u => u.Key
+            , u => u.Value
+            , StringComparer.OrdinalIgnoreCase);
 
-        // 创建配置文件内容解析器
-        var fileConfigurationParser = new FileConfigurationParser();
-
-        // 解析嵌入资源配置文件并生成字典集合
-        Data = ManifestResources.SelectMany(resource => ParseResource(fileConfigurationParser, resource))
-                                .ToDictionary(u => u.Key, u => u.Value, StringComparer.OrdinalIgnoreCase);
-
-        ManifestResources.Clear();
-    }
-
-    /// <summary>
-    /// 解析嵌入资源配置文件并生成字典集合
-    /// </summary>
-    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
-    /// <param name="manifestResource"><see cref="ManifestResourceConfigurationModel"/></param>
-    /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
-    internal static Dictionary<string, string?> ParseResource(FileConfigurationParser fileConfigurationParser, ManifestResourceConfigurationModel manifestResource)
-    {
-        // 配置前缀检查（这里可能不用检查）
-        if (string.IsNullOrWhiteSpace(manifestResource.Prefix))
-        {
-            throw new InvalidOperationException($"The configuration prefix of assembly `{manifestResource.Assembly.GetName().Name}` cannot be null or an empty string.");
-        }
-
-        // 读取嵌入资源内容流
-        using var stream = manifestResource.Assembly.GetManifestResourceStream(manifestResource.ResourceName);
-        if (stream is null)
-        {
-            return new();
-        }
-
-        // 解析嵌入资源配置文件并生成集合
-        var keyValues = fileConfigurationParser.Parse(manifestResource.Extension, stream);
-        if (keyValues is null || keyValues.Count == 0)
-        {
-            return new();
-        }
-
-        var data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
-
-        // 将 程序集名称:键 添加到集合中
-        foreach (var (key, value) in keyValues)
-        {
-            data[$"{manifestResource.Prefix}:{key}"] = value;
-        }
-
-        // 清空集合
-        keyValues.Clear();
-
-        // 输出调试事件
-        Debugging.File("The embed resource `{0}` with prefix `{1}` has been successfully added to the configuration.", manifestResource.ResourceName, manifestResource.Prefix);
-
-        return data;
+        Data = data;
     }
 }

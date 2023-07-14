@@ -15,7 +15,7 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 嵌入资源配置文件模型
+/// 嵌入资源配置模型
 /// </summary>
 public sealed class ManifestResourceConfigurationModel
 {
@@ -28,6 +28,7 @@ public sealed class ManifestResourceConfigurationModel
     {
         Assembly = assembly;
         ResourceName = resourceName;
+
         Extension = Path.GetExtension(resourceName);
         Prefix = assembly.GetName().Name;
     }
@@ -35,20 +36,32 @@ public sealed class ManifestResourceConfigurationModel
     /// <summary>
     /// 程序集
     /// </summary>
-    public Assembly Assembly { get; }
+    public Assembly Assembly { get; init; }
 
     /// <summary>
     /// 嵌入资源名称
     /// </summary>
-    public string ResourceName { get; }
+    public string ResourceName { get; init; }
 
     /// <summary>
     /// 文件拓展名
     /// </summary>
-    public string Extension { get; }
+    public string Extension { get; init; }
+
+    /// <summary>
+    /// 排序
+    /// </summary>
+    /// <remarks>值越大则越后添加</remarks>
+    public int Order { get; set; }
 
     /// <summary>
     /// 配置前缀
     /// </summary>
     public string? Prefix { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return ResourceName;
+    }
 }

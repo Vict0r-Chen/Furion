@@ -15,9 +15,9 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 配置模块嵌入资源构建器
+/// 嵌入资源配置构建器
 /// </summary>
-public sealed class ManifestResourceConfigurationBuilder
+public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderBase
 {
     /// <summary>
     /// 待扫描的程序集集合
@@ -30,13 +30,12 @@ public sealed class ManifestResourceConfigurationBuilder
     internal readonly HashSet<string> _fileGlobbing;
 
     /// <summary>
-    /// 文件黑名单通配符
+    /// 黑名单文件通配符
     /// </summary>
-    /// <remarks>禁止已扫描的文件名作为配置文件</remarks>
     internal readonly HashSet<string> _fileBlacklistGlobbing;
 
     /// <summary>
-    /// 嵌入资源配置过滤器
+    /// 嵌入资源配置模型过滤器
     /// </summary>
     internal Func<ManifestResourceConfigurationModel, bool>? _filterConfigure;
 
@@ -56,7 +55,7 @@ public sealed class ManifestResourceConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加嵌入资源配置过滤器
+    /// 添加嵌入资源配置模型过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T1, T2, TResult}"/></param>
     public void AddFilter(Func<ManifestResourceConfigurationModel, bool> configure)
@@ -68,7 +67,7 @@ public sealed class ManifestResourceConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加待扫描的程序集
+    /// 添加程序集
     /// </summary>
     /// <param name="assemblies"><see cref="Assembly"/>[]</param>
     /// <returns><see cref="ManifestResourceConfigurationBuilder"/></returns>
@@ -89,7 +88,7 @@ public sealed class ManifestResourceConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加待扫描的程序集
+    /// 添加程序集
     /// </summary>
     /// <param name="assemblies"><see cref="IEnumerable{T}"/></param>
     /// <returns><see cref="ManifestResourceConfigurationBuilder"/></returns>
@@ -101,13 +100,14 @@ public sealed class ManifestResourceConfigurationBuilder
     /// <summary>
     /// 添加文件通配符
     /// </summary>
-    /// <param name="globbings"><see cref="string"/>[]</param>
+    /// <param name="globbings">文件通配符</param>
     /// <returns><see cref="ManifestResourceConfigurationBuilder"/></returns>
     public ManifestResourceConfigurationBuilder AddGlobbings(params string[] globbings)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
 
+        // 逐条添加文件通配符到集合中
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
@@ -130,7 +130,7 @@ public sealed class ManifestResourceConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加文件黑名单通配符
+    /// 添加黑名单文件通配符
     /// </summary>
     /// <param name="globbings"><see cref="string"/>[]</param>
     /// <returns><see cref="ManifestResourceConfigurationBuilder"/></returns>
@@ -139,6 +139,7 @@ public sealed class ManifestResourceConfigurationBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
 
+        // 逐条添加黑名单文件通配符到集合中
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
@@ -151,7 +152,7 @@ public sealed class ManifestResourceConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加文件黑名单通配符
+    /// 添加黑名单文件通配符
     /// </summary>
     /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
     /// <returns><see cref="ManifestResourceConfigurationBuilder"/></returns>
@@ -163,47 +164,40 @@ public sealed class ManifestResourceConfigurationBuilder
     /// <summary>
     /// 构建模块服务
     /// </summary>
-    /// <returns><see cref="ManifestResourceConfigurationModel"/> 集合</returns>
-    internal List<ManifestResourceConfigurationModel> Build()
+    /// <param name="manifestResourceConfigurationParser"><see cref="ManifestResourceConfigurationParser"/></param>
+    /// <returns><see cref="List{T}"/></returns>
+    internal List<ManifestResourceConfigurationModel> Build(out ManifestResourceConfigurationParser? manifestResourceConfigurationParser)
     {
         // 扫描程序集并创建嵌入资源配置文件模型
-        var manifestResources = ScanAssemblies();
+        var manifestResourceConfigurationModels = CreateModels()
+            .OrderBy(m => m.Order)
+            .ToList();
 
-        // 释放对象
-        Release();
+        // 初始化嵌入资源配置解析器
+        manifestResourceConfigurationParser = manifestResourceConfigurationModels.Count == 0
+            ? null
+            : new ManifestResourceConfigurationParser(InitializeParser());
 
-        return manifestResources;
+        return manifestResourceConfigurationModels;
     }
 
     /// <summary>
-    /// 释放对象
+    /// 创建嵌入资源配置模型集合
     /// </summary>
-    internal void Release()
-    {
-        _assemblies.Clear();
-        _fileGlobbing.Clear();
-        _fileBlacklistGlobbing.Clear();
-        _filterConfigure = null;
-    }
-
-    /// <summary>
-    /// 扫描程序集并创建嵌入资源配置文件模型
-    /// </summary>
-    /// <returns><see cref="ManifestResourceConfigurationModel"/> 集合</returns>
-    internal List<ManifestResourceConfigurationModel> ScanAssemblies()
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    internal IEnumerable<ManifestResourceConfigurationModel> CreateModels()
     {
         // 初始化文件通配符匹配对象
         var matcher = new Matcher();
         matcher.AddIncludePatterns(_fileGlobbing);
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
-        // 查找程序集中匹配的嵌入资源配置文件并创建嵌入资源配置文件模型
+        // 扫描程序集并创建嵌入资源配置模型集合
         var manifestResourceConfigurationModels = _assemblies
             .SelectMany(assembly => assembly.GetManifestResourceNames()
-                .Where(resource => matcher.Match(resource).HasMatches)
-                .Select(resource => new ManifestResourceConfigurationModel(assembly, resource))
-                .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model)))
-            .ToList();
+            .Where(resource => matcher.Match(resource).HasMatches)
+            .Select(resource => new ManifestResourceConfigurationModel(assembly, resource))
+            .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model)));
 
         return manifestResourceConfigurationModels;
     }

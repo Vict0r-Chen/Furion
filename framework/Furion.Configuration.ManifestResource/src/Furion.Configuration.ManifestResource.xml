@@ -6,7 +6,7 @@
     <members>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationBuilder">
             <summary>
-            配置模块嵌入资源构建器
+            嵌入资源配置构建器
             </summary>
         </member>
         <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._assemblies">
@@ -21,13 +21,12 @@
         </member>
         <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._fileBlacklistGlobbing">
             <summary>
-            文件黑名单通配符
+            黑名单文件通配符
             </summary>
-            <remarks>禁止已扫描的文件名作为配置文件</remarks>
         </member>
         <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._filterConfigure">
             <summary>
-            嵌入资源配置过滤器
+            嵌入资源配置模型过滤器
             </summary>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.#ctor">
@@ -37,20 +36,20 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.ManifestResourceConfigurationModel,System.Boolean})">
             <summary>
-            添加嵌入资源配置过滤器
+            添加嵌入资源配置模型过滤器
             </summary>
             <param name="configure"><see cref="T:System.Func`3"/></param>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddAssemblies(System.Reflection.Assembly[])">
             <summary>
-            添加待扫描的程序集
+            添加程序集
             </summary>
             <param name="assemblies"><see cref="T:System.Reflection.Assembly"/>[]</param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddAssemblies(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
             <summary>
-            添加待扫描的程序集
+            添加程序集
             </summary>
             <param name="assemblies"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
@@ -59,7 +58,7 @@
             <summary>
             添加文件通配符
             </summary>
-            <param name="globbings"><see cref="T:System.String"/>[]</param>
+            <param name="globbings">文件通配符</param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddGlobbings(System.Collections.Generic.IEnumerable{System.String})">
@@ -71,38 +70,34 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddBlacklistGlobbings(System.String[])">
             <summary>
-            添加文件黑名单通配符
+            添加黑名单文件通配符
             </summary>
             <param name="globbings"><see cref="T:System.String"/>[]</param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddBlacklistGlobbings(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
-            添加文件黑名单通配符
+            添加黑名单文件通配符
             </summary>
             <param name="globbings"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
             <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></returns>
         </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Build">
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Build(Furion.Configuration.ManifestResourceConfigurationParser@)">
             <summary>
             构建模块服务
             </summary>
-            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</returns>
+            <param name="manifestResourceConfigurationParser"><see cref="T:Furion.Configuration.ManifestResourceConfigurationParser"/></param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.Release">
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.CreateModels">
             <summary>
-            释放对象
+            创建嵌入资源配置模型集合
             </summary>
-        </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.ScanAssemblies">
-            <summary>
-            扫描程序集并创建嵌入资源配置文件模型
-            </summary>
-            <returns><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</returns>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationModel">
             <summary>
-            嵌入资源配置文件模型
+            嵌入资源配置模型
             </summary>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationModel.#ctor(System.Reflection.Assembly,System.String)">
@@ -127,95 +122,86 @@
             文件拓展名
             </summary>
         </member>
+        <member name="P:Furion.Configuration.ManifestResourceConfigurationModel.Order">
+            <summary>
+            排序
+            </summary>
+            <remarks>值越大则越后添加</remarks>
+        </member>
         <member name="P:Furion.Configuration.ManifestResourceConfigurationModel.Prefix">
             <summary>
             配置前缀
             </summary>
         </member>
-        <member name="T:Furion.Configuration.FileConfigurationParser">
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationModel.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Configuration.ManifestResourceConfigurationParser">
             <summary>
-            配置文件内容解析器
+            嵌入资源配置解析器
             </summary>
         </member>
-        <member name="F:Furion.Configuration.FileConfigurationParser._parsers">
-            <summary>
-            配置文件解析器集合
-            </summary>
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationParser._fileConfigurationParser">
+            <inheritdoc cref="T:Furion.Configuration.FileConfigurationParser" />
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationParser.#ctor">
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationParser.#ctor(Furion.Configuration.FileConfigurationParser)">
             <summary>
             构造函数
             </summary>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
         </member>
-        <member name="M:Furion.Configuration.FileConfigurationParser.Parse(System.String,System.IO.Stream)">
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationParser.ParseResource(Furion.Configuration.ManifestResourceConfigurationModel)">
             <summary>
-            解析嵌入资源配置文件并生成集合
+            解析嵌入资源并返回配置集合
             </summary>
-            <param name="extension">文件拓展名</param>
-            <param name="stream"><see cref="T:System.IO.Stream"/></param>
+            <param name="manifestResourceConfigurationModel"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/></param>
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Furion.Configuration.FileConfigurationParser.CreateJsonParser">
-            <summary>
-            创建 JSON 配置文件内容解析器
-            </summary>
-            <returns><see cref="T:System.Func`2"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.FileConfigurationParser.FileExtensionRegex">
-            <remarks>
-            Pattern explanation:<br/>
-            <code>
-            ○ Match if at the beginning of the string.<br/>
-            ○ Match '.'.<br/>
-            ○ Match a character in the set [0-9A-Za-z] atomically at least once.<br/>
-            ○ Match if at the end of the string or if before an ending newline.<br/>
-            </code>
-            </remarks>
         </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationProvider">
             <summary>
             嵌入资源配置提供器
             </summary>
         </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel})">
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationProvider._manifestResourceConfigurationModels">
+            <summary>
+            <see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationProvider._manifestResourceConfigurationParser">
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationParser" />
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel},Furion.Configuration.ManifestResourceConfigurationParser)">
             <summary>
             构造函数
             </summary>
-            <param name="manifestResources"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
-        </member>
-        <member name="P:Furion.Configuration.ManifestResourceConfigurationProvider.ManifestResources">
-            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationModel" />
+            <param name="manifestResourceConfigurationModels"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
+            <param name="manifestResourceConfigurationParser"><see cref="T:Furion.Configuration.ManifestResourceConfigurationParser"/></param>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.Load">
             <inheritdoc />
-        </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.ParseResource(Furion.Configuration.FileConfigurationParser,Furion.Configuration.ManifestResourceConfigurationModel)">
-            <summary>
-            解析嵌入资源配置文件并生成字典集合
-            </summary>
-            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
-            <param name="manifestResource"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/></param>
-            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
         </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationSource">
             <summary>
             嵌入资源配置源
             </summary>
         </member>
-        <member name="F:Furion.Configuration.ManifestResourceConfigurationSource._manifestResources">
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationSource._manifestResourceConfigurationModels">
             <summary>
             <see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合
             </summary>
         </member>
-        <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel})">
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationSource._manifestResourceConfigurationParser">
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationParser" />
+        </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel},Furion.Configuration.ManifestResourceConfigurationParser)">
             <summary>
             构造函数
             </summary>
-            <param name="manifestResources"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
+            <param name="manifestResourceConfigurationModels"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
+            <param name="manifestResourceConfigurationParser"><see cref="T:Furion.Configuration.ManifestResourceConfigurationParser"/></param>
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
-            <inheritdoc/>
+            <inheritdoc />
         </member>
         <member name="T:Furion.Component.ConfigurationManifestResourceComponent">
             <summary>
@@ -250,50 +236,6 @@
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="manifestResourceConfigurationBuilder"><see cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0">
-            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the FileExtensionRegex method.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.Instance">
-            <summary>Cached, thread-safe singleton instance.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.#ctor">
-            <summary>Initializes the instance.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory">
-            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.CreateInstance">
-            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner">
-            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
-            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if a possible match was found; false if no more matches are possible.</returns>
-        </member>
-        <member name="M:System.Text.RegularExpressions.Generated.FileExtensionRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
-            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
-            <param name="inputSpan">The text being scanned by the regular expression.</param>
-            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
-        </member>
-        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
-            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
-            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
-            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
-        </member>
-        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_asciiLettersAndDigits">
-            <summary>Supports searching for characters in or not in "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".</summary>
         </member>
     </members>
 </doc>

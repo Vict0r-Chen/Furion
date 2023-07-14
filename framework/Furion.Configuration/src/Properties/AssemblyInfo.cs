@@ -19,4 +19,5 @@
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.Configuration.Tests")]
+[assembly: InternalsVisibleTo("Furion.Configuration.ManifestResource.Tests")]
 [assembly: InternalsVisibleTo("Furion.Configuration.Remoted.Tests")]

@@ -83,7 +83,7 @@
             构建模块服务
             </summary>
             <param name="remotedConfigurationParser"><see cref="T:Furion.Configuration.RemotedConfigurationParser"/></param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.CreateModels">
             <summary>

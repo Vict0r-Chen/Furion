@@ -22,20 +22,30 @@ internal sealed class ManifestResourceConfigurationSource : IConfigurationSource
     /// <summary>
     /// <see cref="ManifestResourceConfigurationModel"/> 集合
     /// </summary>
-    internal readonly List<ManifestResourceConfigurationModel> _manifestResources;
+    internal readonly List<ManifestResourceConfigurationModel> _manifestResourceConfigurationModels;
+
+    /// <inheritdoc cref="ManifestResourceConfigurationParser" />
+    internal readonly ManifestResourceConfigurationParser _manifestResourceConfigurationParser;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="manifestResources"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
-    internal ManifestResourceConfigurationSource(List<ManifestResourceConfigurationModel> manifestResources)
+    /// <param name="manifestResourceConfigurationModels"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
+    /// <param name="manifestResourceConfigurationParser"><see cref="ManifestResourceConfigurationParser"/></param>
+    internal ManifestResourceConfigurationSource(List<ManifestResourceConfigurationModel> manifestResourceConfigurationModels
+        , ManifestResourceConfigurationParser manifestResourceConfigurationParser)
     {
-        _manifestResources = manifestResources;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationModels);
+        ArgumentNullException.ThrowIfNull(manifestResourceConfigurationParser);
+
+        _manifestResourceConfigurationModels = manifestResourceConfigurationModels;
+        _manifestResourceConfigurationParser = manifestResourceConfigurationParser;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return new ManifestResourceConfigurationProvider(_manifestResources);
+        return new ManifestResourceConfigurationProvider(_manifestResourceConfigurationModels, _manifestResourceConfigurationParser);
     }
 }
