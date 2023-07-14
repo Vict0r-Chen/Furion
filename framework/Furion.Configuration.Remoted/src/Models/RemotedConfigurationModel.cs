@@ -30,7 +30,7 @@ public sealed class RemotedConfigurationModel
         ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
         ArgumentNullException.ThrowIfNull(httpMethod);
 
-        RequestUri = new(urlAddress);
+        RequestUri = new(urlAddress, UriKind.RelativeOrAbsolute);
         HttpMethod = httpMethod;
     }
 
@@ -47,7 +47,7 @@ public sealed class RemotedConfigurationModel
     /// <summary>
     /// 超时配置
     /// </summary>
-    public TimeSpan Timeout { get; set; }
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// 排序

@@ -40,15 +40,17 @@ public class RemotedConfigurationModelTests
         });
     }
 
-    [Fact]
-    public void New_ReturnOK()
+    [Theory]
+    [InlineData("https://furion.net")]
+    [InlineData("/docs")]
+    public void New_ReturnOK(string url)
     {
-        var remotedConfigurationModel = new RemotedConfigurationModel("https://furion.net", HttpMethod.Get);
+        var remotedConfigurationModel = new RemotedConfigurationModel(url, HttpMethod.Get);
 
         Assert.NotNull(remotedConfigurationModel);
-        Assert.Equal("https://furion.net", remotedConfigurationModel.RequestUri.AbsoluteUri.TrimEnd('/'));
+        Assert.Equal(url, remotedConfigurationModel.RequestUri.ToString().TrimEnd('/'));
         Assert.Equal(HttpMethod.Get, remotedConfigurationModel.HttpMethod);
-        Assert.Equal(TimeSpan.Zero, remotedConfigurationModel.Timeout);
+        Assert.Equal(TimeSpan.FromSeconds(30), remotedConfigurationModel.Timeout);
         Assert.Equal(0, remotedConfigurationModel.Order);
         Assert.Null(remotedConfigurationModel.Prefix);
         Assert.Null(remotedConfigurationModel.ClientConfigurator);

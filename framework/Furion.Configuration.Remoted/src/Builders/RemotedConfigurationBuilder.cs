@@ -221,8 +221,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
 
         // Url 合法性检查
-        if (Uri.TryCreate(urlAddress, UriKind.Absolute, out var uri)
-            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+        if (Uri.TryCreate(urlAddress, UriKind.RelativeOrAbsolute, out _))
         {
             return;
         }
