@@ -162,7 +162,7 @@ internal sealed class RemotedConfigurationParser
             }
 
             // 输出调试事件
-            Debugging.Warn("The request encountered an error but has been processed.");
+            Debugging.Warn("The HTTP request encountered an error but has been processed.");
 
             extension = null;
             return null;
