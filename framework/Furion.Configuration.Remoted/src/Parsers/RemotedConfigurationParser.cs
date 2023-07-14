@@ -70,8 +70,14 @@ internal sealed class RemotedConfigurationParser
         // 请求远程地址并返回响应流
         using var stream = ReadAsStream(remotedConfigurationModel, out var extension);
 
+        // 空检查
+        if (stream is null)
+        {
+            return new Dictionary<string, string?>();
+        }
+
         // 调用文件配置解析器对象进行解析
-        var keyValues = _fileConfigurationParser.Parse(extension, stream);
+        var keyValues = _fileConfigurationParser.Parse(extension!, stream);
 
         // 调试事件消息
         string debugMessage;
@@ -84,7 +90,7 @@ internal sealed class RemotedConfigurationParser
         else
         {
             // 遍历字典集合并包装 Key
-            keyValues = keyValues.ToDictionary(u => $"{remotedConfigurationModel.Prefix}:{u.Key}"
+            keyValues = keyValues.ToDictionary(u => $"{remotedConfigurationModel.Prefix.TrimEnd(':')}:{u.Key}"
                 , u => u.Value
                 , StringComparer.OrdinalIgnoreCase);
 
@@ -92,7 +98,7 @@ internal sealed class RemotedConfigurationParser
         }
 
         // 输出调试事件
-        Debugging.File(debugMessage, remotedConfigurationModel.RequestUri, remotedConfigurationModel.Prefix);
+        Debugging.File(debugMessage, remotedConfigurationModel.RequestUri, remotedConfigurationModel.Prefix?.TrimEnd(':'));
 
         return keyValues;
     }
@@ -105,7 +111,7 @@ internal sealed class RemotedConfigurationParser
     /// <returns><see cref="Stream"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="NotSupportedException"></exception>
-    internal Stream ReadAsStream(RemotedConfigurationModel remotedConfigurationModel, out string extension)
+    internal Stream? ReadAsStream(RemotedConfigurationModel remotedConfigurationModel, out string? extension)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
@@ -115,6 +121,12 @@ internal sealed class RemotedConfigurationParser
         {
             Timeout = remotedConfigurationModel.Timeout
         };
+
+        // 添加默认 User-Agent
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(RemotedConfigurationParser));
+
+        // 限制最大的响应流大小为 10M
+        httpClient.MaxResponseContentBufferSize = 1024 * 1024 * 10;
 
         // 若请求为 GET 请求则禁用 HTTP 缓存
         if (remotedConfigurationModel.HttpMethod == HttpMethod.Get)
@@ -128,12 +140,33 @@ internal sealed class RemotedConfigurationParser
         // 调用自定义 HttpClient 配置委托
         remotedConfigurationModel.ClientConfigurator?.Invoke(httpClient);
 
-        // 发送 HTTP 请求
-        var httpResponseMessage = httpClient.Send(
-            new HttpRequestMessage(remotedConfigurationModel.HttpMethod, remotedConfigurationModel.RequestUri));
+        // 声明 HTTP 请求响应消息
+        HttpResponseMessage httpResponseMessage;
 
-        // 确保请求成功
-        httpResponseMessage.EnsureSuccessStatusCode();
+        // 处理可选配置
+        try
+        {
+            // 发送 HTTP 请求
+            httpResponseMessage = httpClient.Send(
+                new HttpRequestMessage(remotedConfigurationModel.HttpMethod, remotedConfigurationModel.RequestUri));
+
+            // 确保请求成功
+            httpResponseMessage.EnsureSuccessStatusCode();
+        }
+        catch
+        {
+            // 检查是否设置可选配置
+            if (!remotedConfigurationModel.Optional)
+            {
+                throw;
+            }
+
+            // 输出调试事件
+            Debugging.Warn("The request encountered an error but has been processed.");
+
+            extension = null;
+            return null;
+        }
 
         // 读取响应报文中的 Content-Type
         if (!httpResponseMessage.Content.Headers.TryGetValues("Content-Type", out var contentTypes))

@@ -62,6 +62,11 @@ public sealed class RemotedConfigurationModel
     public string? Prefix { get; set; }
 
     /// <summary>
+    /// 可选配置
+    /// </summary>
+    public bool Optional { get; set; }
+
+    /// <summary>
     /// HttpClient 配置委托
     /// </summary>
     internal Action<HttpClient>? ClientConfigurator { get; private set; }

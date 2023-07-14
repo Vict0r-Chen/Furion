@@ -39,6 +39,7 @@ internal sealed class ManifestResourceConfigurationParser
     /// </summary>
     /// <param name="manifestResourceConfigurationModel"><see cref="ManifestResourceConfigurationModel"/></param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     internal IDictionary<string, string?> ParseResource(ManifestResourceConfigurationModel manifestResourceConfigurationModel)
     {
         // 空检查
@@ -51,6 +52,12 @@ internal sealed class ManifestResourceConfigurationParser
         if (stream is null)
         {
             return new Dictionary<string, string?>();
+        }
+
+        // 限制最大的文件流大小为 10M
+        if (stream.Length > 1024 * 1024 * 10)
+        {
+            throw new InvalidOperationException("The size of the embedded resource file content cannot exceed 10485760 (10M) bytes.");
         }
 
         // 调用文件配置解析器对象进行解析
@@ -67,7 +74,7 @@ internal sealed class ManifestResourceConfigurationParser
         else
         {
             // 遍历字典集合并包装 Key
-            keyValues = keyValues.ToDictionary(u => $"{manifestResourceConfigurationModel.Prefix}:{u.Key}"
+            keyValues = keyValues.ToDictionary(u => $"{manifestResourceConfigurationModel.Prefix.TrimEnd(':')}:{u.Key}"
                 , u => u.Value
                 , StringComparer.OrdinalIgnoreCase);
 
@@ -75,7 +82,7 @@ internal sealed class ManifestResourceConfigurationParser
         }
 
         // 输出调试事件
-        Debugging.File(debugMessage, manifestResourceConfigurationModel.ResourceName, manifestResourceConfigurationModel.Prefix);
+        Debugging.File(debugMessage, manifestResourceConfigurationModel.ResourceName, manifestResourceConfigurationModel.Prefix?.TrimEnd(':'));
 
         return keyValues;
     }

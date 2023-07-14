@@ -45,6 +45,11 @@
             </summary>
             <remarks>默认值 30 秒</remarks>
         </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationBuilder.DefaultOptional">
+            <summary>
+            默认可选配置
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.RemotedConfigurationModel,System.Boolean})">
             <summary>
             添加远程配置模型过滤器
@@ -140,6 +145,11 @@
         <member name="P:Furion.Configuration.RemotedConfigurationModel.Prefix">
             <summary>
             配置前缀
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationModel.Optional">
+            <summary>
+            可选配置
             </summary>
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationModel.ClientConfigurator">
@@ -257,12 +267,13 @@
             配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions.AddRemoted(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.RemotedConfigurationBuilder})">
+        <member name="M:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions.AddRemoted(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.RemotedConfigurationBuilder},System.Boolean)">
             <summary>
             添加远程配置提供程序
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="configure">自定义配置委托</param>
+            <param name="optional">可选配置</param>
             <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions.AddRemoted(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.RemotedConfigurationBuilder)">

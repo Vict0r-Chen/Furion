@@ -49,6 +49,8 @@ public static class ManifestResourceConfigurationBuilderExtensions
 
         // 构建模块服务
         var manifestResourceConfigurationModels = manifestResourceConfigurationBuilder.Build(out var manifestResourceConfigurationParser);
+
+        // 空检查
         if (manifestResourceConfigurationModels.Count == 0)
         {
             return builder;

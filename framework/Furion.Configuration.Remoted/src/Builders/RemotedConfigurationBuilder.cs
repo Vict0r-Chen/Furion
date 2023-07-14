@@ -63,6 +63,11 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     public TimeSpan DefaultTimeout { get; set; }
 
     /// <summary>
+    /// 默认可选配置
+    /// </summary>
+    public bool DefaultOptional { get; set; }
+
+    /// <summary>
     /// 添加远程配置模型过滤器
     /// </summary>
     /// <param name="configure">自定义配置委托</param>
@@ -163,7 +168,8 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 根据 Url 地址集合生成远程配置模型
         var remotedConfigurationModels = _urlAddresses.Select(urlAddress => new RemotedConfigurationModel(urlAddress, DefaultHttpMethod)
         {
-            Timeout = DefaultTimeout
+            Timeout = DefaultTimeout,
+            Optional = DefaultOptional,
         });
 
         // 遍历远程配置模型集合并设置 HttpClient 配置委托

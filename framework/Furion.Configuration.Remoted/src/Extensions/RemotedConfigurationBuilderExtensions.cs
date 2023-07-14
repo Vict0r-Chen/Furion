@@ -24,11 +24,15 @@ public static class RemotedConfigurationBuilderExtensions
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
+    /// <param name="optional">可选配置</param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
-    public static IConfigurationBuilder AddRemoted(this IConfigurationBuilder builder, Action<RemotedConfigurationBuilder>? configure = null)
+    public static IConfigurationBuilder AddRemoted(this IConfigurationBuilder builder, Action<RemotedConfigurationBuilder>? configure = null, bool optional = false)
     {
         // 初始化远程配置构建器
-        var remotedConfigurationBuilder = new RemotedConfigurationBuilder();
+        var remotedConfigurationBuilder = new RemotedConfigurationBuilder
+        {
+            DefaultOptional = optional,
+        };
 
         // 调用自定义配置委托
         configure?.Invoke(remotedConfigurationBuilder);
@@ -49,6 +53,8 @@ public static class RemotedConfigurationBuilderExtensions
 
         // 构建模块服务
         var remotedConfigurationModels = remotedConfigurationBuilder.Build(out var remotedConfigurationParser);
+
+        // 空检查
         if (remotedConfigurationModels.Count == 0)
         {
             return builder;

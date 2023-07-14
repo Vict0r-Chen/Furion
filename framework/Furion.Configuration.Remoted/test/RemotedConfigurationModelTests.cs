@@ -53,6 +53,7 @@ public class RemotedConfigurationModelTests
         Assert.Equal(TimeSpan.FromSeconds(30), remotedConfigurationModel.Timeout);
         Assert.Equal(0, remotedConfigurationModel.Order);
         Assert.Null(remotedConfigurationModel.Prefix);
+        Assert.False(remotedConfigurationModel.Optional);
         Assert.Null(remotedConfigurationModel.ClientConfigurator);
     }
 

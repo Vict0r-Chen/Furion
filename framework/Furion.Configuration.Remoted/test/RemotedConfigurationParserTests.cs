@@ -75,7 +75,7 @@ public class RemotedConfigurationParserTests
     }
 
     [Fact]
-    public async Task ReadAsStream_NotDefine_ContentType()
+    public async Task ReadAsStream_Invalid_ContentType()
     {
         var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
 
@@ -97,12 +97,6 @@ public class RemotedConfigurationParserTests
 
         await app.StartAsync();
 
-        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/not-found", HttpMethod.Get);
-        var exception = Assert.Throws<HttpRequestException>(() =>
-        {
-            var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel, out var extension);
-        });
-
         var remotedConfigurationModel1 = new RemotedConfigurationModel($"http://localhost:{port}/not-content-type", HttpMethod.Get);
         var exception1 = Assert.Throws<InvalidOperationException>(() =>
         {
@@ -118,6 +112,33 @@ public class RemotedConfigurationParserTests
         });
 
         Assert.Equal("`text/plain` is not a supported media type.", exception2.Message);
+    }
+
+    [Fact]
+    public void ReadAsStream_Request_Failure()
+    {
+        var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
+
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:5001/not-found", HttpMethod.Get);
+        var exception = Assert.Throws<HttpRequestException>(() =>
+        {
+            var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel, out var extension);
+        });
+    }
+
+    [Fact]
+    public void ReadAsStream_Request_Failure_But_With_Optional()
+    {
+        var remotedConfigurationParser = new RemotedConfigurationParser(new(), new Dictionary<string, string>());
+
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:5001/not-found", HttpMethod.Get)
+        {
+            Optional = true
+        };
+
+        var stream = remotedConfigurationParser.ReadAsStream(remotedConfigurationModel, out var extension);
+        Assert.Null(stream);
+        Assert.Null(extension);
     }
 
     [Fact]

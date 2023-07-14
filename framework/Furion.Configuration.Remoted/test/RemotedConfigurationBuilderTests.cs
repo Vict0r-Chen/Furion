@@ -33,6 +33,7 @@ public class RemotedConfigurationBuilderTests
 
         Assert.Equal(HttpMethod.Get, remotedConfigurationBuilder.DefaultHttpMethod);
         Assert.Equal(TimeSpan.FromSeconds(30), remotedConfigurationBuilder.DefaultTimeout);
+        Assert.False(remotedConfigurationBuilder.DefaultOptional);
     }
 
     [Fact]

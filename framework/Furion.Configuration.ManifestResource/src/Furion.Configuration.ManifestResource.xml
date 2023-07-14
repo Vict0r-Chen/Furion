@@ -156,6 +156,7 @@
             </summary>
             <param name="manifestResourceConfigurationModel"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/></param>
             <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationProvider">
             <summary>
