@@ -24,7 +24,7 @@
             远程配置模型过滤器
             </summary>
         </member>
-        <member name="F:Furion.Configuration.RemotedConfigurationBuilder._defaultHttpClientConfigure">
+        <member name="F:Furion.Configuration.RemotedConfigurationBuilder._defaultClientConfigurator">
             <summary>
             默认 HttpClient 配置委托
             </summary>

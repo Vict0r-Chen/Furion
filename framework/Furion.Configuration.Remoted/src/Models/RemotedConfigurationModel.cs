@@ -32,6 +32,7 @@ public sealed class RemotedConfigurationModel
 
         RequestUri = new(urlAddress, UriKind.RelativeOrAbsolute);
         HttpMethod = httpMethod;
+        Timeout = TimeSpan.FromSeconds(30);
     }
 
     /// <summary>
@@ -47,7 +48,7 @@ public sealed class RemotedConfigurationModel
     /// <summary>
     /// 超时配置
     /// </summary>
-    public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
+    public TimeSpan Timeout { get; set; }
 
     /// <summary>
     /// 排序

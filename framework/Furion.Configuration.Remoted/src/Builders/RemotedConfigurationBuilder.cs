@@ -37,7 +37,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     /// <summary>
     /// 默认 HttpClient 配置委托
     /// </summary>
-    internal Action<HttpClient>? _defaultHttpClientConfigure;
+    internal Action<HttpClient>? _defaultClientConfigurator;
 
     /// <summary>
     /// 构造函数
@@ -83,7 +83,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 空检查
         ArgumentNullException.ThrowIfNull(configure);
 
-        _defaultHttpClientConfigure = configure;
+        _defaultClientConfigurator = configure;
     }
 
     /// <summary>
@@ -193,18 +193,22 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModel);
 
-        // 若默认 HttpClient 配置委托为空或者远程配置模型已经配置了 HttpClient 委托则直接返回
-        if (_defaultHttpClientConfigure is null
-            || remotedConfigurationModel.ClientConfigurator is not null)
+        // 若默认 HttpClient 配置委托为空则直接返回
+        if (_defaultClientConfigurator is null)
         {
             return;
         }
 
+        // 复制一个新的委托避免死循环
+        var modelClientConfigurator = remotedConfigurationModel.ClientConfigurator is null
+            ? null
+            : new Action<HttpClient>(remotedConfigurationModel.ClientConfigurator);
+
         // 创建级联调用委托
         void clientConfigurator(HttpClient t)
         {
-            _defaultHttpClientConfigure(t);
-            remotedConfigurationModel.ClientConfigurator?.Invoke(t);
+            _defaultClientConfigurator(t);
+            modelClientConfigurator?.Invoke(t);
         }
 
         remotedConfigurationModel.ConfigureClient(clientConfigurator);
@@ -221,7 +225,8 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         ArgumentException.ThrowIfNullOrWhiteSpace(urlAddress);
 
         // Url 合法性检查
-        if (Uri.TryCreate(urlAddress, UriKind.RelativeOrAbsolute, out _))
+        if (Uri.TryCreate(urlAddress, UriKind.RelativeOrAbsolute, out var uri)
+            && (!uri.IsAbsoluteUri || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
         {
             return;
         }
