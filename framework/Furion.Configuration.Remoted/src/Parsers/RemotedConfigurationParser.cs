@@ -31,7 +31,9 @@ internal sealed class RemotedConfigurationParser
     /// 构造函数
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
-    public RemotedConfigurationParser(FileConfigurationParser fileConfigurationParser)
+    /// <param name="contentTypeMappings">Content-Type 和文件拓展名映射集合</param>
+    public RemotedConfigurationParser(FileConfigurationParser fileConfigurationParser
+        , IDictionary<string, string> contentTypeMappings)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(fileConfigurationParser);
@@ -45,18 +47,13 @@ internal sealed class RemotedConfigurationParser
             {"text/x-json", ".json" }
         };
 
+        // 遍历集合添加/更新 Content-Type 和文件拓展名映射
+        foreach (var (contentType, extension) in contentTypeMappings)
+        {
+            _contentTypeMappings[contentType] = extension;
+        }
+
         _fileConfigurationParser = fileConfigurationParser;
-    }
-
-    /// <summary>
-    /// 添加 Content-Type 和文件拓展名映射
-    /// </summary>
-    internal void AddContentTypeMapping(KeyValuePair<string, string> keyValue)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(keyValue);
-
-        _contentTypeMappings[keyValue.Key] = keyValue.Value;
     }
 
     /// <summary>

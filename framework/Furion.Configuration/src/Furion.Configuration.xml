@@ -39,11 +39,11 @@
             <param name="sourceType">实现 <see cref="T:Microsoft.Extensions.Configuration.FileConfigurationSource"/> 的类型</param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Configuration.ConfigurationBuilderBase.Initialize(Furion.Configuration.FileConfigurationParser)">
+        <member name="M:Furion.Configuration.ConfigurationBuilderBase.InitializeParser">
             <summary>
             初始化 <see cref="T:Furion.Configuration.FileConfigurationParser"/>
             </summary>
-            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
+            <returns><see cref="T:Furion.Configuration.FileConfigurationParser"/></returns>
         </member>
         <member name="T:Furion.Configuration.FileConfigurationParser">
             <summary>

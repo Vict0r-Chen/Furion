@@ -25,6 +25,11 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     internal readonly HashSet<string> _urlAddresses;
 
     /// <summary>
+    /// Content-Type 和文件拓展名映射集合
+    /// </summary>
+    internal readonly IDictionary<string, string> _contentTypeMappings;
+
+    /// <summary>
     /// 远程配置模型过滤器
     /// </summary>
     internal Func<RemotedConfigurationModel, bool>? _filterConfigure;
@@ -40,6 +45,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     public RemotedConfigurationBuilder()
     {
         _urlAddresses = new(StringComparer.OrdinalIgnoreCase);
+        _contentTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         DefaultHttpMethod = HttpMethod.Get;
         DefaultTimeout = TimeSpan.FromSeconds(30);
@@ -113,31 +119,37 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     }
 
     /// <summary>
+    /// 添加 Content-Type 和文件拓展名映射
+    /// </summary>
+    /// <param name="contentType">Content-Type</param>
+    /// <param name="extension">文件拓展名</param>
+    public RemotedConfigurationBuilder AddContentTypeMapping(string contentType, string extension)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
+        ArgumentException.ThrowIfNullOrWhiteSpace(extension);
+
+        _contentTypeMappings[contentType] = extension;
+
+        return this;
+    }
+
+    /// <summary>
     /// 构建模块服务
     /// </summary>
-    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
+    /// <param name="remotedConfigurationParser"><see cref="RemotedConfigurationParser"/></param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal List<RemotedConfigurationModel> Build(out FileConfigurationParser? fileConfigurationParser)
+    internal List<RemotedConfigurationModel> Build(out RemotedConfigurationParser? remotedConfigurationParser)
     {
         // 创建远程配置模型集合并排序
         var remotedConfigurationModels = CreateModels()
-            .OrderByDescending(m => m.Order)
+            .OrderBy(m => m.Order)
             .ToList();
 
-        // 空检查
-        if (remotedConfigurationModels.Count == 0)
-        {
-            fileConfigurationParser = null;
-        }
-        else
-        {
-            // 初始化文件配置解析器
-            fileConfigurationParser = new FileConfigurationParser();
-            Initialize(fileConfigurationParser);
-        }
-
-        // 释放对象
-        Release();
+        // 初始化远程配置解析器
+        remotedConfigurationParser = remotedConfigurationModels.Count == 0
+            ? null
+            : new RemotedConfigurationParser(InitializeParser(), _contentTypeMappings);
 
         return remotedConfigurationModels;
     }
@@ -170,16 +182,6 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
             // 返回当前集合项
             yield return remotedConfigurationModel;
         }
-    }
-
-    /// <summary>
-    /// 释放对象
-    /// </summary>
-    internal void Release()
-    {
-        _urlAddresses.Clear();
-        _filterConfigure = null;
-        _defaultHttpClientConfigure = null;
     }
 
     /// <summary>

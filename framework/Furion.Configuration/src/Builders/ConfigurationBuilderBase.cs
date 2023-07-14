@@ -70,11 +70,11 @@ public abstract class ConfigurationBuilderBase
     /// <summary>
     /// 初始化 <see cref="FileConfigurationParser"/>
     /// </summary>
-    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
-    internal void Initialize(FileConfigurationParser fileConfigurationParser)
+    /// <returns><see cref="FileConfigurationParser"/></returns>
+    internal FileConfigurationParser InitializeParser()
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
+        // 初始化文件配置解析器
+        var fileConfigurationParser = new FileConfigurationParser();
 
         // 添加文件拓展名解析器
         foreach (var (extension, parser) in _parsers)
@@ -88,8 +88,6 @@ public abstract class ConfigurationBuilderBase
             fileConfigurationParser.AddSource(extension, sourceType);
         }
 
-        // 释放对象
-        _parsers.Clear();
-        _sourceTypes.Clear();
+        return fileConfigurationParser;
     }
 }

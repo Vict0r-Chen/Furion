@@ -104,34 +104,15 @@ public class ConfigurationBuilderBaseTests
     }
 
     [Fact]
-    public void Initialize_Invalid_Parameters()
-    {
-        var configurationBuilder = new TestConfigurationBuilder();
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            configurationBuilder.Initialize(null!);
-        });
-    }
-
-    [Fact]
-    public void Initialize_ReturnOK()
+    public void InitializeParser_ReturnOK()
     {
         var configurationBuilder = new TestConfigurationBuilder();
         configurationBuilder.AddParser(".xml", stream => XmlStreamConfigurationProvider.Read(stream, XmlDocumentDecryptor.Instance));
         configurationBuilder.AddSource(".xml", typeof(XmlConfigurationSource));
 
-        var fileConfigurationParser = new FileConfigurationParser();
-
-        Assert.Single(fileConfigurationParser._parsers);
-        Assert.Single(fileConfigurationParser._sourceTypes);
-
-        configurationBuilder.Initialize(fileConfigurationParser);
+        var fileConfigurationParser = configurationBuilder.InitializeParser();
 
         Assert.Equal(2, fileConfigurationParser._parsers.Count);
         Assert.Equal(2, fileConfigurationParser._sourceTypes.Count);
-
-        Assert.Empty(configurationBuilder._parsers);
-        Assert.Empty(configurationBuilder._sourceTypes);
     }
 }

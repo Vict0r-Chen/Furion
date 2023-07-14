@@ -24,33 +24,30 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
     /// </summary>
     internal readonly List<RemotedConfigurationModel> _remotedConfigurationModels;
 
-    /// <inheritdoc cref="FileConfigurationParser" />
-    internal readonly FileConfigurationParser _fileConfigurationParser;
+    /// <inheritdoc cref="RemotedConfigurationParser" />
+    internal readonly RemotedConfigurationParser _remotedConfigurationParser;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="remotedConfigurationModels"><see cref="RemotedConfigurationModel"/> 集合</param>
-    /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
+    /// <param name="remotedConfigurationParser"><see cref="RemotedConfigurationParser"/></param>
     internal RemotedConfigurationProvider(List<RemotedConfigurationModel> remotedConfigurationModels
-        , FileConfigurationParser fileConfigurationParser)
+        , RemotedConfigurationParser remotedConfigurationParser)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(remotedConfigurationModels);
-        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
+        ArgumentNullException.ThrowIfNull(remotedConfigurationParser);
 
         _remotedConfigurationModels = remotedConfigurationModels;
-        _fileConfigurationParser = fileConfigurationParser;
+        _remotedConfigurationParser = remotedConfigurationParser;
     }
 
     /// <inheritdoc />
     public override void Load()
     {
-        // 初始化远程配置解析器对象
-        var remotedConfigurationParser = new RemotedConfigurationParser(_fileConfigurationParser);
-
         // 解析远程请求地址并返回配置集合
-        var data = _remotedConfigurationModels.SelectMany(remotedConfigurationParser.ParseRequestUri)
+        var data = _remotedConfigurationModels.SelectMany(_remotedConfigurationParser.ParseRequestUri)
             .ToDictionary(u => u.Key
             , u => u.Value
             , StringComparer.OrdinalIgnoreCase);
