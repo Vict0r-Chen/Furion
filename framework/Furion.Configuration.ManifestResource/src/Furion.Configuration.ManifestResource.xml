@@ -34,6 +34,11 @@
             构造函数
             </summary>
         </member>
+        <member name="P:Furion.Configuration.ManifestResourceConfigurationBuilder.DefaultPrefix">
+            <summary>
+            默认前缀
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.ManifestResourceConfigurationModel,System.Boolean})">
             <summary>
             添加嵌入资源配置模型过滤器

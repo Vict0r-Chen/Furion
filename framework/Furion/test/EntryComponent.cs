@@ -26,6 +26,7 @@ public class ServiceComponent : ComponentBase
     {
         Props<ManifestResourceConfigurationBuilder>(builder =>
         {
+            builder.DefaultPrefix = "Embed";
             builder.AddAssemblies(GetType().Assembly);
         });
 

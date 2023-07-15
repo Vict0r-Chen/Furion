@@ -68,6 +68,11 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     public bool DefaultOptional { get; set; }
 
     /// <summary>
+    /// 默认前缀
+    /// </summary>
+    public string? DefaultPrefix { get; set; }
+
+    /// <summary>
     /// 添加远程配置模型过滤器
     /// </summary>
     /// <param name="configure">自定义配置委托</param>
@@ -170,6 +175,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         {
             Timeout = DefaultTimeout,
             Optional = DefaultOptional,
+            Prefix = DefaultPrefix
         });
 
         // 遍历远程配置模型集合并设置 HttpClient 配置委托

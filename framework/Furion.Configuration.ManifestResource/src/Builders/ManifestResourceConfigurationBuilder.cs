@@ -55,6 +55,11 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     }
 
     /// <summary>
+    /// 默认前缀
+    /// </summary>
+    public string? DefaultPrefix { get; set; }
+
+    /// <summary>
     /// 添加嵌入资源配置模型过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T1, T2, TResult}"/></param>
@@ -196,7 +201,10 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
         var manifestResourceConfigurationModels = _assemblies
             .SelectMany(assembly => assembly.GetManifestResourceNames()
             .Where(resource => matcher.Match(resource).HasMatches)
-            .Select(resource => new ManifestResourceConfigurationModel(assembly, resource))
+            .Select(resource => new ManifestResourceConfigurationModel(assembly, resource)
+            {
+                Prefix = DefaultPrefix
+            })
             .Where(model => _filterConfigure is null || _filterConfigure.Invoke(model)));
 
         return manifestResourceConfigurationModels;

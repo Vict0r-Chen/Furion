@@ -32,6 +32,8 @@ public class ManifestResourceConfigurationBuilderTests
         Assert.NotNull(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
         Assert.Empty(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
         Assert.Null(manifestResourceConfigurationBuilder._filterConfigure);
+
+        Assert.Null(manifestResourceConfigurationBuilder.DefaultPrefix);
     }
 
     [Fact]
@@ -254,18 +256,19 @@ public class ManifestResourceConfigurationBuilderTests
     }
 
     [Fact]
-    public void CreateModels_WithNotExtension()
+    public void CreateModels_WithDefaultPrefix()
     {
         var manifestResourceConfigurationBuilder = new ManifestResourceConfigurationBuilder();
         manifestResourceConfigurationBuilder.AddAssemblies(GetType().Assembly);
-        manifestResourceConfigurationBuilder.AddGlobbings("*.*");
-        manifestResourceConfigurationBuilder.AddBlacklistGlobbings("*.unknown");
+        manifestResourceConfigurationBuilder.AddGlobbings("*.ini");
+        manifestResourceConfigurationBuilder.DefaultPrefix = "Embed";
 
         var models = manifestResourceConfigurationBuilder.CreateModels().ToList();
         Assert.NotNull(models);
         Assert.NotEmpty(models);
         Assert.Equal(2, models.Count);
-        Assert.DoesNotContain(models, m => m.ResourceName.Contains("unknown"));
+        Assert.True(models.First().Prefix == "Embed");
+        Assert.True(models.Last().Prefix == "Embed");
     }
 
     [Fact]

@@ -50,6 +50,11 @@
             默认可选配置
             </summary>
         </member>
+        <member name="P:Furion.Configuration.RemotedConfigurationBuilder.DefaultPrefix">
+            <summary>
+            默认前缀
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.AddFilter(System.Func{Furion.Configuration.RemotedConfigurationModel,System.Boolean})">
             <summary>
             添加远程配置模型过滤器

@@ -30,7 +30,7 @@ public class HelloController
     [HttpGet]
     public string? Get([FromServices] IConfiguration configuration) // 参数注入
     {
-        return configuration["Name"] + "Embed: " + Configuration!["Furion.Tests:Name"];
+        return configuration["Name"] + "Embed: " + Configuration!["Embed:Name"];
     }
 
     [HttpPost]

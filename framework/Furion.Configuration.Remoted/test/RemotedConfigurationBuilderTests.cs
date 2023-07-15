@@ -34,6 +34,7 @@ public class RemotedConfigurationBuilderTests
         Assert.Equal(HttpMethod.Get, remotedConfigurationBuilder.DefaultHttpMethod);
         Assert.Equal(TimeSpan.FromSeconds(30), remotedConfigurationBuilder.DefaultTimeout);
         Assert.False(remotedConfigurationBuilder.DefaultOptional);
+        Assert.Null(remotedConfigurationBuilder.DefaultPrefix);
     }
 
     [Fact]
@@ -264,6 +265,21 @@ public class RemotedConfigurationBuilderTests
         Assert.NotEmpty(models);
         Assert.Single(models);
         Assert.Equal("/get", models.First().ToString());
+    }
+
+    [Fact]
+    public void CreateModels_WithDefaultPrefix()
+    {
+        var remotedConfigurationBuilder = new RemotedConfigurationBuilder();
+        remotedConfigurationBuilder.AddUrlAddresses(new List<string> { "https://furion.net", "/get" });
+        remotedConfigurationBuilder.DefaultPrefix = "Remoted";
+
+        var models = remotedConfigurationBuilder.CreateModels().ToList();
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+        Assert.Equal(2, models.Count);
+        Assert.True(models.First().Prefix == "Remoted");
+        Assert.True(models.Last().Prefix == "Remoted");
     }
 
     [Fact]
