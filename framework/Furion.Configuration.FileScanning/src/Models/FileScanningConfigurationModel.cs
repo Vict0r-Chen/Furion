@@ -15,64 +15,66 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 文件配置模型
+/// 文件扫描配置模型
 /// </summary>
-/// <remarks>作用于配置文件扫描</remarks>
 public sealed class FileScanningConfigurationModel
 {
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="filePath">文件绝对路径</param>
+    /// <param name="filePath">文件路径</param>
     internal FileScanningConfigurationModel(string filePath)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
+
         FilePath = filePath;
+
         Extension = Path.GetExtension(filePath);
         FileName = Path.GetFileName(filePath);
-        DirectoryName = Path.GetDirectoryName(filePath)!;
-
         Group = ResolveGroup(FileName);
+        DirectoryName = Path.GetDirectoryName(filePath) ?? string.Empty;
     }
 
     /// <summary>
-    /// 文件绝对路径
+    /// 文件路径
     /// </summary>
-    public string FilePath { get; }
+    public string FilePath { get; init; }
 
     /// <summary>
     /// 文件拓展名
     /// </summary>
-    public string Extension { get; }
+    public string Extension { get; init; }
 
     /// <summary>
     /// 文件名
     /// </summary>
-    public string FileName { get; }
+    public string FileName { get; init; }
 
     /// <summary>
     /// 文件目录名
     /// </summary>
-    public string DirectoryName { get; }
+    public string DirectoryName { get; init; }
 
     /// <summary>
     /// 分组名
     /// </summary>
-    public string Group { get; }
+    public string Group { get; init; }
 
     /// <summary>
     /// 文件可选配置
     /// </summary>
-    public bool Optional { get; set; } = true;
+    public bool Optional { get; set; }
 
     /// <summary>
     /// 文件变更时刷新配置
     /// </summary>
-    public bool ReloadOnChange { get; set; } = true;
+    public bool ReloadOnChange { get; set; }
 
     /// <summary>
     /// 文件变更延迟刷新毫秒数配置
     /// </summary>
-    public int ReloadDelay { get; set; } = 250;
+    public int ReloadDelay { get; set; }
 
     /// <summary>
     /// 排序
@@ -83,19 +85,22 @@ public sealed class FileScanningConfigurationModel
     /// <summary>
     /// 解析文件分组
     /// </summary>
-    /// <remarks>若文件名包含 () 则使用其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
+    /// <remarks>若文件名包含 () 则取其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
     /// <param name="fileName">文件名</param>
     /// <returns><see cref="string"/></returns>
     internal static string ResolveGroup(string fileName)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+
         return fileName.StartsWith('(') && fileName.Contains(')')
-                ? fileName[fileName.IndexOf("(")..(fileName.IndexOf(")") + 1)]
-                : fileName[..fileName.IndexOf(".")];
+            ? fileName[fileName.IndexOf("(")..(fileName.IndexOf(")") + 1)]
+            : fileName[..fileName.IndexOf(".")];
     }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"[{Group}] FileName: {FileName} Path: {FilePath}";
+        return $"[{Group}], FileName: {FileName}, Path: {FilePath}";
     }
 }

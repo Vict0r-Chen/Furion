@@ -20,36 +20,45 @@ namespace Microsoft.Extensions.Configuration;
 public static class FileScanningConfigurationBuilderExtensions
 {
     /// <summary>
-    /// 添加配置模块文件扫描器服务
+    /// 添加文件扫描配置提供程序
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
     public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, Action<FileScanningConfigurationBuilder>? configure = null)
     {
-        // 初始化配置模块文件扫描器构建器
-        var fileScannerConfigurationBuilder = new FileScanningConfigurationBuilder();
+        // 初始化文件扫描配置构建器
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
 
         // 调用自定义配置委托
-        configure?.Invoke(fileScannerConfigurationBuilder);
+        configure?.Invoke(fileScanningConfigurationBuilder);
 
-        return builder.AddFileScanning(fileScannerConfigurationBuilder);
+        return builder.AddFileScanning(fileScanningConfigurationBuilder);
     }
 
     /// <summary>
-    /// 添加配置模块文件扫描器服务
+    /// 添加文件扫描配置提供程序
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
-    /// <param name="fileScannerConfigurationBuilder"><see cref="FileScanningConfigurationBuilder"/></param>
+    /// <param name="fileScanningConfigurationBuilder"><see cref="FileScanningConfigurationBuilder"/></param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
-    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, FileScanningConfigurationBuilder fileScannerConfigurationBuilder)
+    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, FileScanningConfigurationBuilder fileScanningConfigurationBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(fileScannerConfigurationBuilder, nameof(fileScannerConfigurationBuilder));
+        ArgumentNullException.ThrowIfNull(fileScanningConfigurationBuilder);
 
         // 构建模块服务
-        fileScannerConfigurationBuilder.Build(builder);
+        fileScanningConfigurationBuilder.Build(builder);
 
+        // 添加文件扫描配置提供源
         return builder;
     }
+
+
+
+
+
+
+
+
 }

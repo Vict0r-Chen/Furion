@@ -15,9 +15,9 @@
 namespace Furion.Configuration;
 
 /// <summary>
-/// 配置模块文件扫描器构建器
+/// 文件扫描配置构建器
 /// </summary>
-public sealed partial class FileScanningConfigurationBuilder
+public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuilderBase
 {
     /// <summary>
     /// 待扫描的目录集合
@@ -30,18 +30,12 @@ public sealed partial class FileScanningConfigurationBuilder
     internal readonly HashSet<string> _fileGlobbing;
 
     /// <summary>
-    /// 文件黑名单通配符
+    /// 黑名单文件通配符
     /// </summary>
-    /// <remarks>禁止已扫描的文件名作为配置文件</remarks>
     internal readonly HashSet<string> _fileBlacklistGlobbing;
 
     /// <summary>
-    /// 文件配置程序集合
-    /// </summary>
-    internal readonly Dictionary<string, Type> _fileConfigurationSources;
-
-    /// <summary>
-    /// 文件配置模型过滤器
+    /// 文件扫描配置模型过滤器
     /// </summary>
     internal Func<FileScanningConfigurationModel, bool>? _filterConfigure;
 
@@ -64,36 +58,25 @@ public sealed partial class FileScanningConfigurationBuilder
             "*.deps.json",
             "*.staticwebassets.*.json",
             "*.nuget.dgspec.json",
-            "launchSettings.json",
-            "tsconfig.json",
-            "package.json",
             "project.assets.json",
-            "manifest.json",
             "MvcTestingAppManifest.json"
-        };
-
-        _fileConfigurationSources = new(StringComparer.OrdinalIgnoreCase)
-        {
-            {".json", typeof(JsonConfigurationSource) },
-            {".xml", typeof(XmlConfigurationSource) },
-            {".ini", typeof(IniConfigurationSource) }
         };
     }
 
     /// <summary>
-    /// 文件扫描最大深度
+    /// 扫描最大深度
     /// </summary>
     public uint MaxScanDepth { get; set; }
 
     /// <summary>
     /// 默认文件可选配置
     /// </summary>
-    public bool DefaultOptional { get; set; } = true;
+    public bool DefaultOptional { get; set; }
 
     /// <summary>
     /// 默认文件变更时刷新配置
     /// </summary>
-    public bool DefaultReloadOnChange { get; set; } = true;
+    public bool DefaultReloadOnChange { get; set; }
 
     /// <summary>
     /// 默认文件变更延迟刷新毫秒数配置
@@ -101,37 +84,32 @@ public sealed partial class FileScanningConfigurationBuilder
     public int DefaultReloadDelay { get; set; } = 250;
 
     /// <summary>
-    /// 添加文件配置模型过滤器
+    /// 添加文件扫描配置模型过滤器
     /// </summary>
-    /// <param name="configure"><see cref="Func{T, TResult}"/></param>
+    /// <param name="configure">自定义配置委托</param>
     public void AddFilter(Func<FileScanningConfigurationModel, bool> configure)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+        ArgumentNullException.ThrowIfNull(configure);
 
         _filterConfigure = configure;
     }
 
     /// <summary>
-    /// 添加文件扫描的目录
+    /// 添加扫描目录
     /// </summary>
-    /// <param name="directories"><see cref="string"/>[]</param>
+    /// <param name="directories">目录</param>
     /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
-    public FileScanningConfigurationBuilder AddDirectories(params string?[] directories)
+    public FileScanningConfigurationBuilder AddDirectories(params string[] directories)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(directories, nameof(directories));
+        ArgumentNullException.ThrowIfNull(directories);
 
+        // 逐条添加目录到集合中
         Array.ForEach(directories, directory =>
         {
-            // 空检查
-            ArgumentException.ThrowIfNullOrWhiteSpace(directory);
-
-            // 检查绝对路径
-            if (!Path.IsPathRooted(directory))
-            {
-                throw new ArgumentException($"The path `{directory}` is not an absolute path.", nameof(directory));
-            }
+            // 检查目录有效性
+            EnsureLegalDirectory(directory);
 
             _directories.Add(directory);
         });
@@ -140,7 +118,7 @@ public sealed partial class FileScanningConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加文件扫描的目录
+    /// 添加扫描目录
     /// </summary>
     /// <param name="directories"><see cref="IEnumerable{T}"/></param>
     /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
@@ -152,13 +130,14 @@ public sealed partial class FileScanningConfigurationBuilder
     /// <summary>
     /// 添加文件通配符
     /// </summary>
-    /// <param name="globbings"><see cref="string"/>[]</param>
+    /// <param name="globbings">文件通配符</param>
     /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
     public FileScanningConfigurationBuilder AddGlobbings(params string[] globbings)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
 
+        // 逐条添加文件通配符到集合中
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
@@ -181,7 +160,7 @@ public sealed partial class FileScanningConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加文件黑名单通配符
+    /// 添加黑名单文件通配符
     /// </summary>
     /// <param name="globbings"><see cref="string"/>[]</param>
     /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
@@ -190,6 +169,7 @@ public sealed partial class FileScanningConfigurationBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
 
+        // 逐条添加黑名单文件通配符到集合中
         Array.ForEach(globbings, globbing =>
         {
             // 空检查
@@ -202,55 +182,13 @@ public sealed partial class FileScanningConfigurationBuilder
     }
 
     /// <summary>
-    /// 添加文件黑名单通配符
+    /// 添加黑名单文件通配符
     /// </summary>
     /// <param name="globbings"><see cref="IEnumerable{T}"/></param>
     /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
     public FileScanningConfigurationBuilder AddBlacklistGlobbings(IEnumerable<string> globbings)
     {
         return AddBlacklistGlobbings(globbings.ToArray());
-    }
-
-    /// <summary>
-    /// 添加配置文件处理程序
-    /// </summary>
-    /// <typeparam name="TConfigurationSource"><see cref="FileConfigurationSource"/></typeparam>
-    /// <param name="extension">文件拓展名</param>
-    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
-    public FileScanningConfigurationBuilder AddConfigurationSources<TConfigurationSource>(string extension)
-        where TConfigurationSource : FileConfigurationSource
-    {
-        return AddConfigurationSources(extension, typeof(TConfigurationSource));
-    }
-
-    /// <summary>
-    /// 添加配置文件处理程序
-    /// </summary>
-    /// <param name="extension">文件拓展名</param>
-    /// <param name="configurationSourceType"><see cref="FileConfigurationSource"/></param>
-    /// <returns><see cref="FileScanningConfigurationBuilder"/></returns>
-    public FileScanningConfigurationBuilder AddConfigurationSources(string extension, Type configurationSourceType)
-    {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(extension, nameof(extension));
-        ArgumentNullException.ThrowIfNull(configurationSourceType, nameof(configurationSourceType));
-
-        // 检查文件拓展名有效性
-        if (!FileExtensionRegex().IsMatch(extension))
-        {
-            throw new ArgumentException($"`{extension}` is not a valid file extension.", nameof(extension));
-        }
-
-        // 检查配置文件处理程序类型有效性
-        if (!typeof(FileConfigurationSource).IsAssignableFrom(configurationSourceType))
-        {
-            throw new ArgumentException($"`{configurationSourceType.Name}` type is not assignable from `{typeof(FileConfigurationSource).Name}`.", nameof(configurationSourceType));
-        }
-
-        // 添加或更新配置文件处理程序
-        _fileConfigurationSources[extension] = configurationSourceType;
-
-        return this;
     }
 
     /// <summary>
@@ -296,9 +234,6 @@ public sealed partial class FileScanningConfigurationBuilder
                     ?? CreateDefaultFileConfigurationModel(envFilePath));
             }
         }
-
-        // 释放对象
-        Release();
     }
 
     /// <summary>
@@ -356,47 +291,31 @@ public sealed partial class FileScanningConfigurationBuilder
     /// 添加文件配置提供程序
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
-    /// <param name="model"><see cref="FileScanningConfigurationModel"/></param>
+    /// <param name="fileScanningConfigurationModel"><see cref="FileScanningConfigurationModel"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal void AddFileConfigurationSource(IConfigurationBuilder builder, FileScanningConfigurationModel model)
+    internal static void AddFileConfigurationSource(IConfigurationBuilder builder, FileScanningConfigurationModel fileScanningConfigurationModel)
     {
-        // 拓展配置提供程序检查
-        if (!_fileConfigurationSources.TryGetValue(model.Extension, out var fileConfigurationSourceType))
-        {
-            throw new InvalidOperationException($"Configuration provider for `{model.Extension}` extension not found.");
-        }
-
-        // 创建文件配置源
-        var fileConfigurationSource = Activator.CreateInstance(fileConfigurationSourceType) as FileConfigurationSource;
-
         // 空检查
-        ArgumentNullException.ThrowIfNull(fileConfigurationSource);
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(fileScanningConfigurationModel);
 
-        // 初始化
-        fileConfigurationSource.FileProvider = null;
-        fileConfigurationSource.Path = model.FilePath;
-        fileConfigurationSource.Optional = model.Optional;
-        fileConfigurationSource.ReloadOnChange = model.ReloadOnChange;
-        fileConfigurationSource.ReloadDelay = model.ReloadDelay;
-        fileConfigurationSource.ResolveFileProvider();
+        // 初始化文件配置解析器
+        var fileConfigurationParser = new FileConfigurationParser();
+
+        // 创建文件拓展名配置源对象
+        var fileConfigurationSource = fileConfigurationParser.CreateSourceInstance(fileScanningConfigurationModel.Extension, fileConfigurationSource =>
+        {
+            fileConfigurationSource.Path = fileScanningConfigurationModel.FilePath;
+            fileConfigurationSource.Optional = fileScanningConfigurationModel.Optional;
+            fileConfigurationSource.ReloadOnChange = fileScanningConfigurationModel.ReloadOnChange;
+            fileConfigurationSource.ReloadDelay = fileScanningConfigurationModel.ReloadDelay;
+        });
 
         // 添加到配置构建器中
         builder.Add(fileConfigurationSource);
 
         // 输出调试事件
-        Debugging.File("The path `{0}` has been successfully added to the configuration.", model.FilePath);
-    }
-
-    /// <summary>
-    /// 释放对象
-    /// </summary>
-    internal void Release()
-    {
-        _directories.Clear();
-        _fileGlobbing.Clear();
-        _fileBlacklistGlobbing.Clear();
-        _fileConfigurationSources.Clear();
-        _filterConfigure = null;
+        Debugging.File("The path `{0}` has been successfully added to the configuration.", fileScanningConfigurationModel.FilePath);
     }
 
     /// <summary>
@@ -495,9 +414,21 @@ public sealed partial class FileScanningConfigurationBuilder
     }
 
     /// <summary>
-    /// 文件拓展名正则表达式
+    /// 检查目录有效性
     /// </summary>
-    /// <returns><see cref="Regex"/></returns>
-    [GeneratedRegex("^\\.[a-zA-Z0-9]+$")]
-    internal static partial Regex FileExtensionRegex();
+    /// <param name="directory">目录</param>
+    /// <exception cref="ArgumentException"></exception>
+    internal static void EnsureLegalDirectory(string directory)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(directory);
+
+        // 检查是否为绝对路径
+        if (Path.IsPathRooted(directory))
+        {
+            return;
+        }
+
+        throw new ArgumentException($"The path `{directory}` is not an absolute path.", nameof(directory));
+    }
 }
