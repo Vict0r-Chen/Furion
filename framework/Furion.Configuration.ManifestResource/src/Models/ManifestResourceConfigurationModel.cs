@@ -26,11 +26,14 @@ public sealed class ManifestResourceConfigurationModel
     /// <param name="resourceName">嵌入资源名称</param>
     internal ManifestResourceConfigurationModel(Assembly assembly, string resourceName)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(assembly);
+        ArgumentException.ThrowIfNullOrWhiteSpace(resourceName);
+
         Assembly = assembly;
         ResourceName = resourceName;
 
         Extension = Path.GetExtension(resourceName);
-        Prefix = assembly.GetName().Name;
     }
 
     /// <summary>

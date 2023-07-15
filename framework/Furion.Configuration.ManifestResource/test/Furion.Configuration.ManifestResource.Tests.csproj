@@ -1,6 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<ItemGroup>
+		<Content Remove="embed.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="unknown" />
+		<EmbeddedResource Include="embed.ini" />
+		<EmbeddedResource Include="embed.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\src\Furion.Configuration.ManifestResource.csproj" />
 	</ItemGroup>
 

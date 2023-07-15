@@ -262,7 +262,7 @@ public class RemotedConfigurationBuilderTests
         var models = remotedConfigurationBuilder.CreateModels().ToList();
         Assert.NotNull(models);
         Assert.NotEmpty(models);
-        Assert.Equal(1, models.Count);
+        Assert.Single(models);
         Assert.Equal("/get", models.First().ToString());
     }
 
