@@ -48,18 +48,18 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
 
         _fileGlobbing = new(StringComparer.OrdinalIgnoreCase)
         {
-            "*.json"
+            "**/**.json"
         };
 
         _fileBlacklistGlobbing = new(StringComparer.OrdinalIgnoreCase)
         {
-            "*.runtimeconfig.json",
-            "*.runtimeconfig.*.json",
-            "*.deps.json",
-            "*.staticwebassets.*.json",
-            "*.nuget.dgspec.json",
-            "project.assets.json",
-            "MvcTestingAppManifest.json"
+            "**/**.runtimeconfig.json",
+            "**/**.runtimeconfig.*.json",
+            "**/**.deps.json",
+            "**/**.staticwebassets.*.json",
+            "**/**.nuget.dgspec.json",
+            "**/project.assets.json",
+            "**/MvcTestingAppManifest.json"
         };
     }
 
@@ -257,7 +257,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
         matcher.AddExcludePatterns(_fileBlacklistGlobbing);
 
         // 扫描目录配置文件
-        var files = _directories.SelectMany(directory => ScanDirectory(directory, MaxScanDepth, matcher))
+        var files = _directories.SelectMany(directory => ScanDirectory(matcher, directory, MaxScanDepth))
                                                  .Distinct(StringComparer.OrdinalIgnoreCase)
                                                  .Except(filesExists, StringComparer.OrdinalIgnoreCase);
 
@@ -336,11 +336,11 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     /// <summary>
     /// 执行目录扫描，返回符合匹配条件的文件路径列表
     /// </summary>
+    /// <param name="matcher">可选的文件通配符匹配对象</param>
     /// <param name="folderPath">要扫描的目录路径</param>
     /// <param name="maxScanDepth">文件扫描的最大深度，默认 0</param>
-    /// <param name="matcher">可选的文件通配符匹配对象</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal static List<string> ScanDirectory(string folderPath, uint maxScanDepth = 0, Matcher? matcher = null)
+    internal static List<string> ScanDirectory(Matcher matcher, string folderPath, uint maxScanDepth = 0)
     {
         // 创建一个空的文件列表和一个元组类型的栈，压入初始目录和深度值
         var files = new List<string>();
@@ -354,13 +354,8 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
             var (currentFolderPath, currentDepth) = stack.Pop();
 
             // 查找当前目录下所有匹配的文件
-            var matchFiles = from filePath in Directory.EnumerateFiles(currentFolderPath)
-                             let fileName = Path.GetFileName(filePath)
-                             let isXmlFile = fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
-                             let dllFileExists = isXmlFile && File.Exists(Path.ChangeExtension(filePath, ".dll"))
-                             where (matcher is null || matcher.Match(fileName).HasMatches)
-                                    && (!isXmlFile || !dllFileExists)
-                             select filePath;
+            var matchFiles = Directory.EnumerateFiles(currentFolderPath)
+                .Where(filePath => matcher.Match(filePath).HasMatches);
 
             // 将匹配的文件添加到列表中
             files.AddRange(matchFiles);

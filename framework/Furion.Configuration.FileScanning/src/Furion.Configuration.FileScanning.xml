@@ -131,13 +131,13 @@
             <param name="filePath">文件路径</param>
             <returns><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></returns>
         </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.ScanDirectory(System.String,System.UInt32,Microsoft.Extensions.FileSystemGlobbing.Matcher)">
+        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.ScanDirectory(Microsoft.Extensions.FileSystemGlobbing.Matcher,System.String,System.UInt32)">
             <summary>
             执行目录扫描，返回符合匹配条件的文件路径列表
             </summary>
+            <param name="matcher">可选的文件通配符匹配对象</param>
             <param name="folderPath">要扫描的目录路径</param>
             <param name="maxScanDepth">文件扫描的最大深度，默认 0</param>
-            <param name="matcher">可选的文件通配符匹配对象</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.GetFilePublishPaths(System.String,System.String)">
