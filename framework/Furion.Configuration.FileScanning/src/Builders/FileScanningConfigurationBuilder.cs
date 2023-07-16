@@ -116,7 +116,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
             // 检查目录有效性
             EnsureLegalDirectory(directory);
 
-            _directories.Add(directory);
+            _directories.Add(Path.GetFullPath(directory));
         });
 
         return this;

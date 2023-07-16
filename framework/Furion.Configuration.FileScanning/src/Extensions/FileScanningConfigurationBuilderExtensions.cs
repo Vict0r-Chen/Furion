@@ -27,7 +27,10 @@ public static class FileScanningConfigurationBuilderExtensions
     /// <param name="optional">文件可选配置</param>
     /// <param name="reloadOnChange">文件变更时刷新配置</param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
-    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, Action<FileScanningConfigurationBuilder>? configure = null, bool optional = false, bool reloadOnChange = false)
+    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder
+        , Action<FileScanningConfigurationBuilder>? configure = null
+        , bool optional = false
+        , bool reloadOnChange = false)
     {
         // 初始化文件扫描配置构建器
         var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder
