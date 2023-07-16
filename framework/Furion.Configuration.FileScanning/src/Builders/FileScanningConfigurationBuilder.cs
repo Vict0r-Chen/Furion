@@ -230,7 +230,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
         // 创建文件配置解析器
         var fileConfigurationParser = new FileConfigurationParser();
 
-        // 遍历分组并添加配置文件
+        // 逐条添加配置文件
         foreach (var groupedFileScanningConfigurationModel in groupedFileScanningConfigurationModels)
         {
             // 获取当前分组的文件扫描配置模型集合
