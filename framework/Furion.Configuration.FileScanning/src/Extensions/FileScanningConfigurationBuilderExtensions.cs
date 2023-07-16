@@ -53,12 +53,4 @@ public static class FileScanningConfigurationBuilderExtensions
         // 添加文件扫描配置提供源
         return builder;
     }
-
-
-
-
-
-
-
-
 }

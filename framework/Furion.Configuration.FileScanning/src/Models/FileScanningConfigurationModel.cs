@@ -23,7 +23,8 @@ public sealed class FileScanningConfigurationModel
     /// 构造函数
     /// </summary>
     /// <param name="filePath">文件路径</param>
-    internal FileScanningConfigurationModel(string filePath)
+    /// <param name="environmentFlag">环境标识</param>
+    internal FileScanningConfigurationModel(string filePath, bool environmentFlag)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
@@ -34,6 +35,8 @@ public sealed class FileScanningConfigurationModel
         FileName = Path.GetFileName(filePath);
         Group = ResolveGroup(FileName);
         DirectoryName = Path.GetDirectoryName(filePath) ?? string.Empty;
+
+        EnvironmentFlag = environmentFlag;
     }
 
     /// <summary>
@@ -83,6 +86,22 @@ public sealed class FileScanningConfigurationModel
     public int Order { get; set; }
 
     /// <summary>
+    /// 环境标识
+    /// </summary>
+    /// <remarks>内部维护属性，作用于 <see cref="FileScanningConfigurationBuilder.AllowEnvironmentSwitching"/></remarks>
+    internal bool EnvironmentFlag { get; init; }
+
+    /// <summary>
+    /// 检查文件路径是否和模型文件路径匹配
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool IsMatch(string filePath)
+    {
+        return FilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
     /// 解析文件分组
     /// </summary>
     /// <remarks>若文件名包含 () 则取其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
@@ -101,6 +120,6 @@ public sealed class FileScanningConfigurationModel
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"[{Group}], FileName: {FileName}, Path: {FilePath}";
+        return $"Group = {Group}, FileName = {FileName}, Path = {FilePath}";
     }
 }

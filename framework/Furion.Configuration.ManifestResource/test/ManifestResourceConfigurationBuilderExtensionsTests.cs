@@ -46,6 +46,7 @@ public class ManifestResourceConfigurationBuilderExtensionsTests
         configurationBuilder.AddManifestResource(remotedConfigurationBuilder);
 
         Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Single(configurationBuilder.Sources);
 
         var configuration = configurationBuilder.Build();
 
@@ -72,6 +73,7 @@ public class ManifestResourceConfigurationBuilderExtensionsTests
         });
 
         Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Single(configurationBuilder.Sources);
 
         var configuration = configurationBuilder.Build();
 

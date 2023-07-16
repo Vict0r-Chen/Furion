@@ -62,6 +62,7 @@ public class RemotedConfigurationBuilderExtensionsTests
         configurationBuilder.AddRemoted(remotedConfigurationBuilder);
 
         Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Single(configurationBuilder.Sources);
 
         var configuration = configurationBuilder.Build();
 
@@ -104,6 +105,7 @@ public class RemotedConfigurationBuilderExtensionsTests
         });
 
         Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Single(configurationBuilder.Sources);
 
         var configuration = configurationBuilder.Build();
 

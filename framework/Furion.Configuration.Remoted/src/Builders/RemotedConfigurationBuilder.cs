@@ -46,21 +46,18 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     {
         _urlAddresses = new(StringComparer.OrdinalIgnoreCase);
         _mediaTypeMappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-        DefaultHttpMethod = HttpMethod.Get;
-        DefaultTimeout = TimeSpan.FromSeconds(30);
     }
 
     /// <summary>
     /// 默认 <see cref="HttpMethod"/>
     /// </summary>
-    public HttpMethod DefaultHttpMethod { get; set; }
+    public HttpMethod DefaultHttpMethod { get; set; } = HttpMethod.Get;
 
     /// <summary>
     /// 默认超时配置
     /// </summary>
     /// <remarks>默认值 30 秒</remarks>
-    public TimeSpan DefaultTimeout { get; set; }
+    public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// 默认可选配置
