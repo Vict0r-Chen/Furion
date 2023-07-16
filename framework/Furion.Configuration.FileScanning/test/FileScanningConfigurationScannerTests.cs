@@ -17,6 +17,361 @@ namespace Furion.Configuration.FileScanning.Tests;
 public class FileScanningConfigurationScannerTests
 {
     [Fact]
+    public void New_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(new ConfigurationBuilder(), null!);
+        });
+    }
+
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(new ConfigurationBuilder(), new());
+
+        Assert.NotNull(fileScanningConfigurationScanner);
+        Assert.NotNull(fileScanningConfigurationScanner._configurationBuilder);
+        Assert.NotNull(fileScanningConfigurationScanner._fileScanningConfigurationBuilder);
+
+        Assert.Null(fileScanningConfigurationScanner.ContentRoot);
+        Assert.Null(fileScanningConfigurationScanner.EnvironmentName);
+    }
+
+    [Fact]
+    public void New_WithConfigurationManager()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(builder.Configuration, new());
+
+        Assert.NotNull(fileScanningConfigurationScanner);
+        Assert.NotNull(fileScanningConfigurationScanner._configurationBuilder);
+        Assert.NotNull(fileScanningConfigurationScanner._fileScanningConfigurationBuilder);
+
+        Assert.NotNull(fileScanningConfigurationScanner.ContentRoot);
+        Assert.Null(fileScanningConfigurationScanner.EnvironmentName);
+    }
+
+    [Fact]
+    public void Initialize_ReturnOK()
+    {
+        var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            EnvironmentName = "Development"
+        });
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(builder.Configuration, new());
+        fileScanningConfigurationScanner.Initialize();
+
+        Assert.NotNull(fileScanningConfigurationScanner.ContentRoot);
+        Assert.NotNull(fileScanningConfigurationScanner.EnvironmentName);
+        Assert.Equal("Development", fileScanningConfigurationScanner.EnvironmentName);
+    }
+
+    [Fact]
+    public void Initialize_DisableEnvironmentSwitching()
+    {
+        var builder = WebApplication.CreateBuilder();
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(builder.Configuration, new()
+        {
+            AllowEnvironmentSwitching  = false
+        });
+        fileScanningConfigurationScanner.Initialize();
+
+        Assert.NotNull(fileScanningConfigurationScanner.ContentRoot);
+        Assert.Null(fileScanningConfigurationScanner.EnvironmentName);
+    }
+
+    [Fact]
+    public void ScanToAddFiles_ReturnOK()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, fileScanningConfigurationBuilder);
+        fileScanningConfigurationScanner.ScanToAddFiles();
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Equal(2, configurationBuilder.Sources.Count);
+
+        var firstSource = configurationBuilder.Sources.OfType<JsonConfigurationSource>().First();
+        Assert.Equal("config.json", firstSource.Path);
+    }
+
+    [Fact]
+    public void ScanToAddFiles_WithOrder()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+        fileScanningConfigurationBuilder.AddFilter(model =>
+        {
+            if (model.Group == "config")
+            {
+                model.Order = 1;
+            }
+            return true;
+        });
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, fileScanningConfigurationBuilder);
+        fileScanningConfigurationScanner.ScanToAddFiles();
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Equal(2, configurationBuilder.Sources.Count);
+
+        var firstSource = configurationBuilder.Sources.OfType<JsonConfigurationSource>().First();
+        Assert.Equal("appsettings.json", firstSource.Path);
+    }
+
+    [Fact]
+    public void CreateModels()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, fileScanningConfigurationBuilder);
+        var models = fileScanningConfigurationScanner.CreateModels().ToList();
+
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+        Assert.Equal(3, models.Count);
+    }
+
+    [Fact]
+    public void CreateModels_WithFilter()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+        fileScanningConfigurationBuilder.AddFilter(model =>
+        {
+            return model.FileName != "config.json";
+        });
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, fileScanningConfigurationBuilder);
+        var models = fileScanningConfigurationScanner.CreateModels().ToList();
+
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+        Assert.Equal(2, models.Count);
+    }
+
+    [Fact]
+    public void CreateModel_Invalid_Parameters()
+    {
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(new ConfigurationBuilder(), new());
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationScanner.CreateModel(null!, true);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScanningConfigurationScanner.CreateModel(string.Empty, true);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScanningConfigurationScanner.CreateModel("", true);
+        });
+    }
+
+    [Fact]
+    public void CreateModel_ReturnOK()
+    {
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(new ConfigurationBuilder(), new());
+        var model = fileScanningConfigurationScanner.CreateModel("C:/workplace/config.json", true);
+
+        Assert.NotNull(model);
+    }
+
+    [Fact]
+    public void AddFile_Invalid_Parameters()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new());
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFile(null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFile(new(), null!);
+        });
+
+        Assert.Throws<FileNotFoundException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFile(new(), new("C:/workplace/config.json", false));
+            configurationBuilder.Build();
+        });
+    }
+
+    [Fact]
+    public void AddFile_ReturnOK()
+    {
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new());
+
+        fileScanningConfigurationScanner.AddFile(new(), new(Path.Combine(directory, "config.json"), true));
+        Assert.Single(configurationBuilder.Sources);
+    }
+
+    [Fact]
+    public void AddFile_Optional_IsTrue()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new());
+
+        fileScanningConfigurationScanner.AddFile(new(), new("C:/workplace/config.json", false)
+        {
+            Optional = true
+        });
+        configurationBuilder.Build();
+    }
+
+    [Fact]
+    public void AddFileByEnvironment_Invalid_Parameters()
+    {
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(new ConfigurationBuilder(), new());
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFileByEnvironment(null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFileByEnvironment(new(), null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFileByEnvironment(new(), null!, string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScanningConfigurationScanner.AddFileByEnvironment(new(), null!, "");
+        });
+    }
+
+    [Fact]
+    public void AddFileByEnvironment_ReturnOK()
+    {
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        var configurationBuilder = new ConfigurationBuilder();
+        var file = Path.Combine(directory, "config.json");
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new());
+
+        fileScanningConfigurationScanner.AddFileByEnvironment(new(), new(file, true), file);
+        Assert.Single(configurationBuilder.Sources);
+    }
+
+    [Fact]
+    public void AddFileByEnvironment_AllowEnvironmentSwitching ()
+    {
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        var configurationBuilder = new ConfigurationBuilder();
+        var file = Path.Combine(directory, "config.json");
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new()
+        {
+            AllowEnvironmentSwitching  = true
+        });
+
+        fileScanningConfigurationScanner.AddFileByEnvironment(new(), null, file);
+        Assert.Single(configurationBuilder.Sources);
+    }
+
+    [Fact]
+    public void AddFileByEnvironment_DisableEnvironmentSwitching()
+    {
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        var configurationBuilder = new ConfigurationBuilder();
+        var file = Path.Combine(directory, "config.json");
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new()
+        {
+            AllowEnvironmentSwitching  = false
+        });
+
+        fileScanningConfigurationScanner.AddFileByEnvironment(new(), null, file);
+        Assert.Empty(configurationBuilder.Sources);
+    }
+
+    [Fact]
+    public void GetAddedFiles()
+    {
+        var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+        {
+            EnvironmentName = "Development"
+        });
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(builder.Configuration, new());
+
+        var files = fileScanningConfigurationScanner.GetAddedFiles();
+        Assert.NotNull(files);
+        Assert.Equal(2, files.Count);
+    }
+
+    [Fact]
+    public void ResolvePublicationFile_Invalid_Parameters()
+    {
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(new ConfigurationBuilder(), new());
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationScanner.ResolvePublicationFile(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScanningConfigurationScanner.ResolvePublicationFile(string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            fileScanningConfigurationScanner.ResolvePublicationFile("");
+        });
+    }
+
+    [Theory]
+    [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\assets\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
+    [InlineData("C:/Workspace/furion.net/Furion/framework/Furion.Configuration.FileScanning/test/assets/appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
+    [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\appsettings.json")]
+    public void ResolvePublicationFile(string filePath, string publicationFile)
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            {"CONTENTROOT","C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test" }
+        });
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new());
+        var filePublishPaths = fileScanningConfigurationScanner.ResolvePublicationFile(filePath);
+        Assert.Equal(publicationFile, filePublishPaths.Last());
+    }
+
+    [Fact]
     public void EnsureLegalDirectory_Invalid_Parameters()
     {
         Assert.Throws<ArgumentNullException>(() =>
@@ -39,12 +394,6 @@ public class FileScanningConfigurationScannerTests
             FileScanningConfigurationScanner.EnsureLegalDirectory("workplace");
         });
         Assert.Equal("The path `workplace` is not an absolute path. (Parameter 'directory')", exception.Message);
-
-        var exception2 = Assert.Throws<ArgumentException>(() =>
-        {
-            FileScanningConfigurationScanner.EnsureLegalDirectory("C:/workplace/configuration.json");
-        });
-        Assert.Equal("The path `C:/workplace/configuration.json` is not a directory. (Parameter 'directory')", exception2.Message);
     }
 
     [Theory]

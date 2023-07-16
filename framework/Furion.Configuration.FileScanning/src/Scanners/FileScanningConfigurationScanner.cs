@@ -71,7 +71,8 @@ internal sealed class FileScanningConfigurationScanner
         _fileScanningConfigurationBuilder.AddDirectories(ContentRoot ?? AppContext.BaseDirectory, AppContext.BaseDirectory);
 
         // 初始化环境变量名称
-        EnvironmentName = configurationRoot["ENVIRONMENT"];
+        EnvironmentName = configurationRoot["ENVIRONMENT"]
+            ?? (_fileScanningConfigurationBuilder.AllowEnvironmentSwitching  ? "Production" : null);
     }
 
     /// <summary>
@@ -90,8 +91,8 @@ internal sealed class FileScanningConfigurationScanner
                 model.Group
             });
 
-        // 创建文件配置解析器
-        var fileConfigurationParser = new FileConfigurationParser();
+        // 初始化文件配置解析器
+        var fileConfigurationParser = _fileScanningConfigurationBuilder.InitializeParser();
 
         // 逐条添加配置文件
         foreach (var groupedFileScanningConfigurationModel in groupedFileScanningConfigurationModels)
@@ -109,10 +110,15 @@ internal sealed class FileScanningConfigurationScanner
             var baseFile = filePathWithoutExtension + extension;
             var baseFileModel = fileInGroupModels.Find(model => model.IsMatch(baseFile));
 
-            // 添加配置文件
-            AddFileByEnvironment(fileConfigurationParser
-                , baseFileModel
-                , baseFile);
+            // 处理不携带环境变量名且文件不存在的情况
+            // 不存在则跳过，存在则添加
+            if (baseFileModel is not null)
+            {
+                // 添加配置文件
+                AddFileByEnvironment(fileConfigurationParser
+                    , baseFileModel
+                    , baseFile);
+            }
 
             // 检查是否定义环境变量名称
             if (!string.IsNullOrWhiteSpace(EnvironmentName))
@@ -158,12 +164,7 @@ internal sealed class FileScanningConfigurationScanner
             }
 
             // 创建文件扫描配置模型
-            var fileScanningConfigurationModel = new FileScanningConfigurationModel(filePath, true)
-            {
-                Optional = _fileScanningConfigurationBuilder.DefaultOptional,
-                ReloadOnChange = _fileScanningConfigurationBuilder.DefaultReloadOnChange,
-                ReloadDelay = _fileScanningConfigurationBuilder.DefaultReloadDelay
-            };
+            var fileScanningConfigurationModel = CreateModel(filePath, true);
 
             // 检查文件拓展名
             if (string.IsNullOrWhiteSpace(fileScanningConfigurationModel.Extension))
@@ -180,6 +181,26 @@ internal sealed class FileScanningConfigurationScanner
     }
 
     /// <summary>
+    /// 创建文件扫描配置模型
+    /// </summary>
+    /// <param name="filePath">文件路径</param>
+    /// <param name="environmentFlag">环境标识</param>
+    /// <returns><see cref="FileScanningConfigurationModel"/></returns>
+    internal FileScanningConfigurationModel CreateModel(string filePath, bool environmentFlag)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
+
+        return new FileScanningConfigurationModel(filePath, environmentFlag)
+        {
+            Optional = _fileScanningConfigurationBuilder.DefaultOptional,
+            ReloadOnChange = _fileScanningConfigurationBuilder.DefaultReloadOnChange,
+            ReloadDelay = _fileScanningConfigurationBuilder.DefaultReloadDelay,
+            OnLoadException = _fileScanningConfigurationBuilder.OnLoadException ?? _fileScanningConfigurationBuilder.OnLoadException
+        };
+    }
+
+    /// <summary>
     /// 添加配置文件（支持环境切换）
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
@@ -190,17 +211,13 @@ internal sealed class FileScanningConfigurationScanner
         , string filePath)
     {
         // 空检查
+        ArgumentNullException.ThrowIfNull(fileConfigurationParser);
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
 
         // 检查是否启用支持环境切换，如果启用则创建默认值
-        fileScanningConfigurationModel = !_fileScanningConfigurationBuilder.AllowEnvironmentSwitching
+        fileScanningConfigurationModel = !_fileScanningConfigurationBuilder.AllowEnvironmentSwitching 
             ? fileScanningConfigurationModel
-            : fileScanningConfigurationModel ?? new FileScanningConfigurationModel(filePath, false)
-            {
-                Optional = _fileScanningConfigurationBuilder.DefaultOptional,
-                ReloadOnChange = _fileScanningConfigurationBuilder.DefaultReloadOnChange,
-                ReloadDelay = _fileScanningConfigurationBuilder.DefaultReloadDelay
-            };
+            : fileScanningConfigurationModel ?? CreateModel(filePath, false);
 
         // 空检查
         if (fileScanningConfigurationModel is null)
@@ -232,6 +249,7 @@ internal sealed class FileScanningConfigurationScanner
                 fileConfigurationSource.Optional = fileScanningConfigurationModel.Optional;
                 fileConfigurationSource.ReloadOnChange = fileScanningConfigurationModel.ReloadOnChange;
                 fileConfigurationSource.ReloadDelay = fileScanningConfigurationModel.ReloadDelay;
+                fileConfigurationSource.OnLoadException = fileScanningConfigurationModel.OnLoadException;
             });
 
         // 添加配置文件
@@ -271,6 +289,9 @@ internal sealed class FileScanningConfigurationScanner
     /// <returns><see cref="string"/>[]</returns>
     internal string[] ResolvePublicationFile(string filePath)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
+
         // 获取应用程序执行目录
         var baseDirectory = AppContext.BaseDirectory;
 
@@ -288,10 +309,10 @@ internal sealed class FileScanningConfigurationScanner
             && originalFile.StartsWith(ContentRoot, StringComparison.OrdinalIgnoreCase))
         {
             // 生成发布后的文件路径
-            var publicationFilePath = Path.Combine(baseDirectory, originalFile[ContentRoot.Length..]
+            var publicationFile = Path.Combine(baseDirectory, originalFile[ContentRoot.Length..]
                 .TrimStart(Path.DirectorySeparatorChar));
 
-            return new[] { originalFile, publicationFilePath };
+            return new[] { originalFile, publicationFile };
         }
 
         return new[] { originalFile };
@@ -363,12 +384,6 @@ internal sealed class FileScanningConfigurationScanner
         if (!Path.IsPathRooted(directory))
         {
             throw new ArgumentException($"The path `{directory}` is not an absolute path.", nameof(directory));
-        }
-
-        // 检查是否为文件目录
-        if (!string.IsNullOrEmpty(Path.GetExtension(directory)))
-        {
-            throw new ArgumentException($"The path `{directory}` is not a directory.", nameof(directory));
         }
     }
 }

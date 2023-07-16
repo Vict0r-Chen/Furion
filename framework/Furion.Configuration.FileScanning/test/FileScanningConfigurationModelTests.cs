@@ -51,6 +51,7 @@ public class FileScanningConfigurationModelTests
         Assert.False(fileScanningConfigurationModel.ReloadOnChange);
         Assert.Equal(250, fileScanningConfigurationModel.ReloadDelay);
         Assert.Equal(0, fileScanningConfigurationModel.Order);
+        Assert.Null(fileScanningConfigurationModel.OnLoadException);
         Assert.True(fileScanningConfigurationModel.EnvironmentFlag);
     }
 

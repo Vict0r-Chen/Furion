@@ -54,6 +54,11 @@
             默认文件变更延迟刷新毫秒数配置
             </summary>
         </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.OnLoadException">
+            <summary>
+            文件加载异常委托
+            </summary>
+        </member>
         <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.AllowEnvironmentSwitching">
             <summary>
             允许基于环境切换
@@ -171,6 +176,11 @@
             </summary>
             <remarks>值越大则越后添加</remarks>
         </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationModel.OnLoadException">
+            <summary>
+            文件加载异常委托
+            </summary>
+        </member>
         <member name="P:Furion.Configuration.FileScanningConfigurationModel.EnvironmentFlag">
             <summary>
             环境标识
@@ -238,6 +248,14 @@
             创建文件扫描配置模型集合
             </summary>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.CreateModel(System.String,System.Boolean)">
+            <summary>
+            创建文件扫描配置模型
+            </summary>
+            <param name="filePath">文件路径</param>
+            <param name="environmentFlag">环境标识</param>
+            <returns><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationScanner.AddFileByEnvironment(Furion.Configuration.FileConfigurationParser,Furion.Configuration.FileScanningConfigurationModel,System.String)">
             <summary>

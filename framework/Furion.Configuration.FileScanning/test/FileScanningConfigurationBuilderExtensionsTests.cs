@@ -12,64 +12,28 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Configuration.ManifestResource.Tests;
+namespace Furion.Configuration.FileScanning.Tests;
 
-public class ManifestResourceConfigurationBuilderExtensionsTests
+public class FileScanningConfigurationBuilderExtensionsTests
 {
     [Fact]
-    public void AddManifestResource_Invalid_Parameters()
+    public void AddFileScanning_Invalid_Parameters()
     {
         var configurationBuilder = new ConfigurationBuilder();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            configurationBuilder.AddManifestResource((ManifestResourceConfigurationBuilder)null!);
+            configurationBuilder.AddFileScanning(null!);
         });
     }
 
     [Fact]
-    public void AddManifestResource_Emtpty()
+    public void AddFileScanning_ReturnOK()
     {
         var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddManifestResource(new ManifestResourceConfigurationBuilder());
-
-        Assert.Empty(configurationBuilder.Sources);
-    }
-
-    [Fact]
-    public void AddManifestResource_ReturnOK()
-    {
-        var configurationBuilder = new ConfigurationBuilder();
-
-        ManifestResourceConfigurationBuilder? manifestResourceConfigurationBuilder = new ManifestResourceConfigurationBuilder();
-        manifestResourceConfigurationBuilder.AddAssemblies(GetType().Assembly);
-        configurationBuilder.AddManifestResource(manifestResourceConfigurationBuilder);
-
-        Assert.NotEmpty(configurationBuilder.Sources);
-        Assert.Single(configurationBuilder.Sources);
-
-        var configuration = configurationBuilder.Build();
-
-        Assert.Equal("Furion", configuration["Name"]);
-        Assert.Equal("3", configuration["Age"]);
-    }
-
-    [Fact]
-    public void AddManifestResourceAction_Empty_Parameters()
-    {
-        var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddManifestResource();
-        Assert.Empty(configurationBuilder.Sources);
-    }
-
-    [Fact]
-    public void AddManifestResourceAction_ReturnOK()
-    {
-        var configurationBuilder = new ConfigurationBuilder();
-
-        configurationBuilder.AddManifestResource(builder =>
+        configurationBuilder.AddFileScanning(new FileScanningConfigurationBuilder()
         {
-            builder.AddAssemblies(GetType().Assembly);
+            DefaultOptional = true
         });
 
         Assert.NotEmpty(configurationBuilder.Sources);
@@ -78,6 +42,38 @@ public class ManifestResourceConfigurationBuilderExtensionsTests
         var configuration = configurationBuilder.Build();
 
         Assert.Equal("Furion", configuration["Name"]);
-        Assert.Equal("3", configuration["Age"]);
+    }
+
+    [Fact]
+    public void AddFileScanningAction_Empty_Parameters()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddFileScanning();
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Single(configurationBuilder.Sources);
+
+        var configuration = configurationBuilder.Build();
+
+        Assert.Equal("Furion", configuration["Name"]);
+    }
+
+    [Fact]
+    public void AddFileScanningAction_ReturnOK()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        configurationBuilder.AddFileScanning(builder =>
+        {
+            builder.AllowEnvironmentSwitching  = true;
+            builder.DefaultOptional = true;
+        });
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Equal(2, configurationBuilder.Sources.Count);
+
+        var configuration = configurationBuilder.Build();
+
+        Assert.Equal("Furion", configuration["Name"]);
     }
 }

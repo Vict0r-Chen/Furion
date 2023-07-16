@@ -86,9 +86,14 @@ public sealed class FileScanningConfigurationModel
     public int Order { get; set; }
 
     /// <summary>
+    /// 文件加载异常委托
+    /// </summary>
+    public Action<FileLoadExceptionContext>? OnLoadException { get; set; }
+
+    /// <summary>
     /// 环境标识
     /// </summary>
-    /// <remarks>内部维护属性，作用于 <see cref="FileScanningConfigurationBuilder.AllowEnvironmentSwitching"/></remarks>
+    /// <remarks>内部维护属性，作用于 <see cref="FileScanningConfigurationBuilder.AllowEnvironmentSwitching "/></remarks>
     internal bool EnvironmentFlag { get; init; }
 
     /// <summary>

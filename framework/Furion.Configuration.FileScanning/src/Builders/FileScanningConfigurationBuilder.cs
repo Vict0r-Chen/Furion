@@ -84,9 +84,14 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     public int DefaultReloadDelay { get; set; } = 250;
 
     /// <summary>
+    /// 文件加载异常委托
+    /// </summary>
+    public Action<FileLoadExceptionContext>? OnLoadException { get; set; }
+
+    /// <summary>
     /// 允许基于环境切换
     /// </summary>
-    public bool AllowEnvironmentSwitching { get; set; } = true;
+    public bool AllowEnvironmentSwitching { get; set; }
 
     /// <summary>
     /// 添加文件扫描配置模型过滤器

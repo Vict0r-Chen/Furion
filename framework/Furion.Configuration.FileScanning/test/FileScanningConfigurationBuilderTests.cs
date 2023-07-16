@@ -53,7 +53,8 @@ public class FileScanningConfigurationBuilderTests
         Assert.False(fileScanningConfigurationBuilder.DefaultOptional);
         Assert.False(fileScanningConfigurationBuilder.DefaultReloadOnChange);
         Assert.Equal(250, fileScanningConfigurationBuilder.DefaultReloadDelay);
-        Assert.True(fileScanningConfigurationBuilder.AllowEnvironmentSwitching);
+        Assert.Null(fileScanningConfigurationBuilder.OnLoadException);
+        Assert.False(fileScanningConfigurationBuilder.AllowEnvironmentSwitching );
 
         Assert.Null(fileScanningConfigurationBuilder._filterConfigure);
     }
@@ -241,5 +242,23 @@ public class FileScanningConfigurationBuilderTests
         Assert.NotEmpty(fileScanningConfigurationBuilder._fileBlacklistGlobbing);
         Assert.Equal(8, fileScanningConfigurationBuilder._fileBlacklistGlobbing.Count);
         Assert.Equal("**/**.unknown", fileScanningConfigurationBuilder._fileBlacklistGlobbing.Last());
+    }
+
+    [Fact]
+    public void Build()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        fileScanningConfigurationBuilder.Build(configurationBuilder);
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Equal(2, configurationBuilder.Sources.Count);
+
+        var firstSource = configurationBuilder.Sources.OfType<JsonConfigurationSource>().First();
+        Assert.Equal("config.json", firstSource.Path);
     }
 }
