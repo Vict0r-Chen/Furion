@@ -390,6 +390,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     /// <returns><see cref="HashSet{T}"/></returns>
     internal static HashSet<string> GetAddedFiles(IConfigurationBuilder builder, string? contentRoot)
     {
+        // 查找所有实现 FileConfigurationSource 的配置
         var addedFiles = builder.Sources.OfType<FileConfigurationSource>()
             .Select(s => (s.Path, s.FileProvider as PhysicalFileProvider))
             .OfType<(string Path, PhysicalFileProvider Provider)>()
