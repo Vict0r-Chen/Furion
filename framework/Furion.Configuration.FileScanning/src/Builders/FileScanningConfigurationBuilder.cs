@@ -503,11 +503,15 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
         ArgumentException.ThrowIfNullOrWhiteSpace(directory);
 
         // 检查是否为绝对路径
-        if (Path.IsPathRooted(directory))
+        if (!Path.IsPathRooted(directory))
         {
-            return;
+            throw new ArgumentException($"The path `{directory}` is not an absolute path.", nameof(directory));
         }
 
-        throw new ArgumentException($"The path `{directory}` is not an absolute path.", nameof(directory));
+        // 检查是否为文件目录
+        if (!string.IsNullOrEmpty(Path.GetExtension(directory)))
+        {
+            throw new ArgumentException($"The path `{directory}` is not a directory.", nameof(directory));
+        }
     }
 }

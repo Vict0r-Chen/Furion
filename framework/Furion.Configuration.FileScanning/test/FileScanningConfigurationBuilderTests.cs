@@ -14,6 +14,8 @@
 
 namespace Furion.Configuration.FileScanning.Tests;
 
+#pragma warning disable
+
 public class FileScanningConfigurationBuilderTests
 {
     [Fact]
@@ -239,5 +241,93 @@ public class FileScanningConfigurationBuilderTests
         Assert.NotEmpty(fileScanningConfigurationBuilder._fileBlacklistGlobbing);
         Assert.Equal(8, fileScanningConfigurationBuilder._fileBlacklistGlobbing.Count);
         Assert.Equal("**/**.unknown", fileScanningConfigurationBuilder._fileBlacklistGlobbing.Last());
+    }
+
+    [Fact]
+    public void EnsureLegalDirectory_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            FileScanningConfigurationBuilder.EnsureLegalDirectory(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            FileScanningConfigurationBuilder.EnsureLegalDirectory(string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            FileScanningConfigurationBuilder.EnsureLegalDirectory("");
+        });
+
+        var exception = Assert.Throws<ArgumentException>(() =>
+        {
+            FileScanningConfigurationBuilder.EnsureLegalDirectory("workplace");
+        });
+        Assert.Equal("The path `workplace` is not an absolute path. (Parameter 'directory')", exception.Message);
+
+        var exception2 = Assert.Throws<ArgumentException>(() =>
+        {
+            FileScanningConfigurationBuilder.EnsureLegalDirectory("C:/workplace/configuration.json");
+        });
+        Assert.Equal("The path `C:/workplace/configuration.json` is not a directory. (Parameter 'directory')", exception2.Message);
+    }
+
+    [Theory]
+    [InlineData("C:/workplace")]
+    [InlineData("C:\\workplace")]
+    [InlineData("C:/workplace/")]
+    [InlineData("C:\\workplace\\")]
+    [InlineData("/workplace")]
+    public void EnsureLegalDirectory_ReturnOK(string directory)
+    {
+        FileScanningConfigurationBuilder.EnsureLegalDirectory(directory);
+    }
+
+    [Fact]
+    public void ScanDirectory_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            FileScanningConfigurationBuilder.ScanDirectory(null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            FileScanningConfigurationBuilder.ScanDirectory(string.Empty, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            FileScanningConfigurationBuilder.ScanDirectory("", null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            FileScanningConfigurationBuilder.ScanDirectory("C:/workplace", null!);
+        });
+    }
+
+    [Fact]
+    public void ScanDirectory_ReturnOK()
+    {
+        var directory = Path.Combine(AppContext.BaseDirectory, "directories");
+        var matcher = new Matcher();
+        matcher.AddIncludePatterns(new[] { "**/**.json" });
+
+        var files1 = FileScanningConfigurationBuilder.ScanDirectory(directory, matcher);
+        Assert.Single(files1);
+        Assert.Equal(new List<string> { Path.Combine(directory, "config.json") }, files1);
+
+        var directory2 = Path.Combine(directory, "sub1");
+        var files2 = FileScanningConfigurationBuilder.ScanDirectory(directory, matcher, 1);
+        Assert.Equal(3, files2.Count);
+        Assert.Equal(new List<string> { Path.Combine(directory, "config.json"), Path.Combine(directory2, "config.json"), Path.Combine(directory2, "config1.json") }, files2);
+
+        var directory3 = Path.Combine(directory2, "sub2");
+        var files3 = FileScanningConfigurationBuilder.ScanDirectory(directory, matcher, 2);
+        Assert.Equal(5, files3.Count);
+        Assert.Equal(new List<string> { Path.Combine(directory, "config.json"), Path.Combine(directory2, "config.json"), Path.Combine(directory2, "config1.json"), Path.Combine(directory3, "config1.json"), Path.Combine(directory3, "config2.json") }, files3);
     }
 }
