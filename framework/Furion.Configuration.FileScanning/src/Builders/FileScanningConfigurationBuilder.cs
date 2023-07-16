@@ -411,7 +411,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
         // 获取应用程序执行目录
         var baseDirectory = AppContext.BaseDirectory;
 
-        // 处理不同操作系统目录分隔符
+        // 获取不同操作系统下的文件路径
         var originalFile = filePath.Replace('/', Path.DirectorySeparatorChar);
 
         // 若文件路径以 baseDirectory 开头，则直接返回
@@ -420,11 +420,11 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
             return new[] { originalFile };
         }
 
-        // 若内容目录不为空
+        // 若应用程序内容目录不为空
         if (!string.IsNullOrWhiteSpace(contentRoot)
             && originalFile.StartsWith(contentRoot, StringComparison.OrdinalIgnoreCase))
         {
-            // 生成文件发布后路径
+            // 生成发布后的文件路径
             var publicationFilePath = Path.Combine(baseDirectory, originalFile[contentRoot.Length..]
                 .TrimStart(Path.DirectorySeparatorChar));
 
