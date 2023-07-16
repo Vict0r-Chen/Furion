@@ -111,64 +111,7 @@
             <summary>
             构建模块服务
             </summary>
-            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.CreateModels(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)">
-            <summary>
-            创建文件扫描配置模型集合
-            </summary>
-            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="contentRoot">应用程序内容目录</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddFileByEnvironment(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileConfigurationParser,Furion.Configuration.FileScanningConfigurationModel,System.String)">
-            <summary>
-            添加配置文件（支持环境切换）
-            </summary>
-            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
-            <param name="fileScanningConfigurationModel"><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></param>
-            <param name="filePath">文件路径</param>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.AddFile(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileConfigurationParser,Furion.Configuration.FileScanningConfigurationModel)">
-            <summary>
-            添加配置文件
-            </summary>
-            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
-            <param name="fileScanningConfigurationModel"><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></param>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.GetAddedFiles(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)">
-            <summary>
-            查找已注册的配置文件集合
-            </summary>
-            <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
-            <param name="contentRoot">应用程序内容目录</param>
-            <returns><see cref="T:System.Collections.Generic.HashSet`1"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.ResolvePublicationFile(System.String,System.String)">
-            <summary>
-            根据文件路径解析发布后的对应路径
-            </summary>
-            <param name="filePath">文件路径</param>
-            <param name="contentRoot">应用程序内容目录</param>
-            <returns><see cref="T:System.String"/>[]</returns>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.ScanDirectory(System.String,Microsoft.Extensions.FileSystemGlobbing.Matcher,System.UInt32)">
-            <summary>
-            扫描目录文件
-            </summary>
-            <param name="matcher"><see cref="T:Microsoft.Extensions.FileSystemGlobbing.Matcher"/></param>
-            <param name="directory">目录</param>
-            <param name="maxScanDepth">扫描最大深度</param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.EnsureLegalDirectory(System.String)">
-            <summary>
-            检查目录有效性
-            </summary>
-            <param name="directory">目录</param>
-            <exception cref="T:System.ArgumentException"></exception>
+            <param name="configurationBuilder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
         </member>
         <member name="T:Furion.Configuration.FileScanningConfigurationModel">
             <summary>
@@ -251,6 +194,94 @@
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationModel.ToString">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.Configuration.FileScanningConfigurationScanner">
+            <summary>
+            文件扫描配置扫描器
+            </summary>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationScanner._configurationBuilder">
+            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>
+        </member>
+        <member name="F:Furion.Configuration.FileScanningConfigurationScanner._fileScanningConfigurationBuilder">
+            <inheritdoc cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.#ctor(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScanningConfigurationBuilder)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="configurationBuilder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
+            <param name="fileScanningConfigurationBuilder"><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></param>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationScanner.ContentRoot">
+            <summary>
+            应用程序内容目录
+            </summary>
+        </member>
+        <member name="P:Furion.Configuration.FileScanningConfigurationScanner.EnvironmentName">
+            <summary>
+            环境变量名称
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.Initialize">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.ScanToAddFiles">
+            <summary>
+            扫描并添加配置文件
+            </summary>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.CreateModels">
+            <summary>
+            创建文件扫描配置模型集合
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.AddFileByEnvironment(Furion.Configuration.FileConfigurationParser,Furion.Configuration.FileScanningConfigurationModel,System.String)">
+            <summary>
+            添加配置文件（支持环境切换）
+            </summary>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
+            <param name="fileScanningConfigurationModel"><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></param>
+            <param name="filePath">文件路径</param>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.AddFile(Furion.Configuration.FileConfigurationParser,Furion.Configuration.FileScanningConfigurationModel)">
+            <summary>
+            添加配置文件
+            </summary>
+            <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
+            <param name="fileScanningConfigurationModel"><see cref="T:Furion.Configuration.FileScanningConfigurationModel"/></param>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.GetAddedFiles">
+            <summary>
+            查找已注册的配置文件集合
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.HashSet`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.ResolvePublicationFile(System.String)">
+            <summary>
+            根据文件路径解析发布后的对应路径
+            </summary>
+            <param name="filePath">文件路径</param>
+            <returns><see cref="T:System.String"/>[]</returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.ScanDirectory(System.String,Microsoft.Extensions.FileSystemGlobbing.Matcher,System.UInt32)">
+            <summary>
+            扫描目录文件
+            </summary>
+            <param name="matcher"><see cref="T:Microsoft.Extensions.FileSystemGlobbing.Matcher"/></param>
+            <param name="directory">目录</param>
+            <param name="maxScanDepth">扫描最大深度</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.EnsureLegalDirectory(System.String)">
+            <summary>
+            检查目录有效性
+            </summary>
+            <param name="directory">目录</param>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:Furion.Component.ConfigurationFileScanningComponent">
             <summary>

@@ -44,7 +44,7 @@ internal sealed class RemotedConfigurationSource : IConfigurationSource
     }
 
     /// <inheritdoc />
-    public IConfigurationProvider Build(IConfigurationBuilder builder)
+    public IConfigurationProvider Build(IConfigurationBuilder configurationBuilder)
     {
         return new RemotedConfigurationProvider(_remotedConfigurationModels, _remotedConfigurationParser);
     }

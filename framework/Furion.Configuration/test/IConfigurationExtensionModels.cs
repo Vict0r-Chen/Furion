@@ -41,7 +41,7 @@ public class IConfigurationExtensionModels
 
     public class ReloadConfigurationSource : IConfigurationSource
     {
-        public IConfigurationProvider Build(IConfigurationBuilder builder)
+        public IConfigurationProvider Build(IConfigurationBuilder configurationBuilder)
         {
             return new ReloadConfigurationProvider();
         }

@@ -44,7 +44,7 @@ internal sealed class ManifestResourceConfigurationSource : IConfigurationSource
     }
 
     /// <inheritdoc />
-    public IConfigurationProvider Build(IConfigurationBuilder builder)
+    public IConfigurationProvider Build(IConfigurationBuilder configurationBuilder)
     {
         return new ManifestResourceConfigurationProvider(_manifestResourceConfigurationModels, _manifestResourceConfigurationParser);
     }
