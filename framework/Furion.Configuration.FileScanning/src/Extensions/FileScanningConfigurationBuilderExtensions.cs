@@ -24,11 +24,17 @@ public static class FileScanningConfigurationBuilderExtensions
     /// </summary>
     /// <param name="builder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="configure">自定义配置委托</param>
+    /// <param name="optional">文件可选配置</param>
+    /// <param name="reloadOnChange">文件变更时刷新配置</param>
     /// <returns><see cref="IConfigurationBuilder"/></returns>
-    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, Action<FileScanningConfigurationBuilder>? configure = null)
+    public static IConfigurationBuilder AddFileScanning(this IConfigurationBuilder builder, Action<FileScanningConfigurationBuilder>? configure = null, bool optional = false, bool reloadOnChange = false)
     {
         // 初始化文件扫描配置构建器
-        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder
+        {
+            DefaultOptional = optional,
+            DefaultReloadOnChange = reloadOnChange
+        };
 
         // 调用自定义配置委托
         configure?.Invoke(fileScanningConfigurationBuilder);

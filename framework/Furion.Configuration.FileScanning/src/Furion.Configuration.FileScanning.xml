@@ -246,7 +246,7 @@
             解析文件分组
             </summary>
             <remarks>若文件名包含 () 则取其之间内容作为分组名，否则取第一个 . 前面的字符作为分组名</remarks>
-            <param name="fileName">文件名</param>
+            <param name="filePath">文件路径</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationModel.ToString">
@@ -270,12 +270,14 @@
             配置模块 <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions.AddFileScanning(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.FileScanningConfigurationBuilder})">
+        <member name="M:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions.AddFileScanning(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Furion.Configuration.FileScanningConfigurationBuilder},System.Boolean,System.Boolean)">
             <summary>
             添加文件扫描配置提供程序
             </summary>
             <param name="builder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="configure">自定义配置委托</param>
+            <param name="optional">文件可选配置</param>
+            <param name="reloadOnChange">文件变更时刷新配置</param>
             <returns><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions.AddFileScanning(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScanningConfigurationBuilder)">

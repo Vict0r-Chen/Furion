@@ -300,6 +300,12 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
                 ReloadDelay = DefaultReloadDelay
             };
 
+            // 检查文件拓展名
+            if (string.IsNullOrWhiteSpace(fileScanningConfigurationModel.Extension))
+            {
+                continue;
+            }
+
             // 调用文件扫描配置模型过滤器
             if (_filterConfigure is null || _filterConfigure.Invoke(fileScanningConfigurationModel))
             {
