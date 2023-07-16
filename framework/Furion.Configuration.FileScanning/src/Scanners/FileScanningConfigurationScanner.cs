@@ -47,12 +47,12 @@ internal sealed class FileScanningConfigurationScanner
     /// <summary>
     /// 应用程序内容目录
     /// </summary>
-    internal string? ContentRoot { get; set; }
+    internal string? ContentRoot { get; private set; }
 
     /// <summary>
     /// 环境变量名称
     /// </summary>
-    internal string? EnvironmentName { get; set; }
+    internal string? EnvironmentName { get; private set; }
 
     /// <summary>
     /// 初始化
