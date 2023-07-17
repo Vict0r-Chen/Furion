@@ -5,13 +5,16 @@
     </assembly>
     <members>
         <member name="T:Furion.DependencyInjection.AutowiredMemberActivator">
+            <inheritdoc />
+        </member>
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typePropertiesCache">
             <summary>
-            自动装配成员激活器
+            可自动装配的类型属性值的缓存集合
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._instanceType">
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeFieldsCache">
             <summary>
-            实例类型
+            可自动装配的类型字段值的缓存集合
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._autowiredServiceAttributeType">
@@ -19,42 +22,54 @@
             <see cref="T:Furion.DependencyInjection.AutowiredServiceAttribute"/> 类型
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.#ctor(System.Object,System.IServiceProvider)">
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.#ctor">
             <summary>
             构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.GetBindingFlags">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowiredMembers(System.Object,System.IServiceProvider)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowriedProperties(System.Object,System.IServiceProvider)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowriedFields(System.Object,System.IServiceProvider)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.DependencyInjection.IAutowiredMemberActivator">
+            <summary>
+            自动装配成员激活器
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.GetBindingFlags">
+            <summary>
+            获取反射搜索成员方式
+            </summary>
+            <returns><see cref="T:System.Reflection.BindingFlags"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowiredMembers(System.Object,System.IServiceProvider)">
+            <summary>
+            自动装配成员值
             </summary>
             <param name="instance">对象实例</param>
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
-        <member name="P:Furion.DependencyInjection.AutowiredMemberActivator.Instance">
-            <summary>
-            对象实例
-            </summary>
-        </member>
-        <member name="P:Furion.DependencyInjection.AutowiredMemberActivator.Services">
-            <inheritdoc cref="T:System.IServiceProvider"/>
-        </member>
-        <member name="P:Furion.DependencyInjection.AutowiredMemberActivator.Bindings">
-            <summary>
-            反射搜索成员方式
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowiredMembers">
-            <summary>
-            自动装配成员值
-            </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowriedProperties">
+        <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowriedProperties(System.Object,System.IServiceProvider)">
             <summary>
             自动装配属性值
             </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
+            <param name="instance">对象实例</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
-        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowriedFields">
+        <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowriedFields(System.Object,System.IServiceProvider)">
             <summary>
             自动装配字段值
             </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
+            <param name="instance">对象实例</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="T:Furion.DependencyInjection.AutowiredServiceAttribute">
             <summary>
@@ -75,6 +90,18 @@
             <summary>
             依赖注入模块服务组件
             </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">
+            <summary>
+            依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions.AddAutowiredMemberActivator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加自动装配成员激活器服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
     </members>
 </doc>

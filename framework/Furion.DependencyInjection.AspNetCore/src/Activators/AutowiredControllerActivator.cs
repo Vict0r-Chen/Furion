@@ -23,13 +23,19 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
     /// <inheritdoc cref="ITypeActivatorCache"/>
     internal readonly ITypeActivatorCache _typeActivatorCache;
 
+    /// <inheritdoc cref="IAutowiredMemberActivator" />
+    internal readonly IAutowiredMemberActivator _autowiredMemberActivator;
+
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="typeActivatorCache"><see cref="ITypeActivatorCache"/></param>
-    public AutowiredControllerActivator(ITypeActivatorCache typeActivatorCache)
+    /// <param name="autowiredMemberActivator"><see cref="IAutowiredMemberActivator"/></param>
+    public AutowiredControllerActivator(ITypeActivatorCache typeActivatorCache
+        , IAutowiredMemberActivator autowiredMemberActivator)
     {
         _typeActivatorCache = typeActivatorCache;
+        _autowiredMemberActivator = autowiredMemberActivator;
     }
 
     /// <inheritdoc />
@@ -49,11 +55,8 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
         var serviceProvider = controllerContext.HttpContext.RequestServices;
         var controllerInstance = _typeActivatorCache.CreateInstance<object>(serviceProvider, controllerTypeInfo.AsType());
 
-        // 创建自动装配成员激活器
-        var autowiredMemberActivator = new AutowiredMemberActivator(controllerInstance, serviceProvider);
-
         // 自动装配成员值
-        autowiredMemberActivator.AutowiredMembers();
+        _autowiredMemberActivator.AutowiredMembers(controllerInstance, serviceProvider);
 
         return controllerInstance;
     }

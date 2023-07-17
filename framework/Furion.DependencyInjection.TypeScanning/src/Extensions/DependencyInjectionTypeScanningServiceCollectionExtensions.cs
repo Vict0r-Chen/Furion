@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public static class DependencyInjectionServiceCollectionExtensions
+public static class DependencyInjectionTypeScanningServiceCollectionExtensions
 {
     /// <summary>
     /// 添加依赖注入模块服务
@@ -25,7 +25,7 @@ public static class DependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = null)
+    public static IServiceCollection AddDependencyInjectionTypeScanning(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = null)
     {
         // 初始化依赖注入模块构建器
         var dependencyInjectionBuilder = new DependencyInjectionBuilder();
@@ -33,7 +33,7 @@ public static class DependencyInjectionServiceCollectionExtensions
         // 调用自定义配置委托
         configure?.Invoke(dependencyInjectionBuilder);
 
-        return services.AddDependencyInjection(dependencyInjectionBuilder);
+        return services.AddDependencyInjectionTypeScanning(dependencyInjectionBuilder);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public static class DependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="dependencyInjectionBuilder"><see cref="DependencyInjectionBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddDependencyInjection(this IServiceCollection services, DependencyInjectionBuilder dependencyInjectionBuilder)
+    public static IServiceCollection AddDependencyInjectionTypeScanning(this IServiceCollection services, DependencyInjectionBuilder dependencyInjectionBuilder)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencyInjectionBuilder, nameof(dependencyInjectionBuilder));

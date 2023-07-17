@@ -23,7 +23,7 @@ public class DependencyInjectionServiceCollectionExtensionsTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            services.AddDependencyInjection((DependencyInjectionBuilder)null!);
+            services.AddDependencyInjectionTypeScanning((DependencyInjectionBuilder)null!);
         });
     }
 
@@ -31,14 +31,14 @@ public class DependencyInjectionServiceCollectionExtensionsTests
     public void AddDependencyInjection_Parameterless_ReturnOK()
     {
         var services = new ServiceCollection();
-        services.AddDependencyInjection();
+        services.AddDependencyInjectionTypeScanning();
     }
 
     [Fact]
     public void AddDependencyInjection_ActionConfigure()
     {
         var services = new ServiceCollection();
-        services.AddDependencyInjection(builder =>
+        services.AddDependencyInjectionTypeScanning(builder =>
         {
             builder.ValidateLifetime = false;
             builder.ValidateExposeService = false;
@@ -58,7 +58,7 @@ public class DependencyInjectionServiceCollectionExtensionsTests
             ValidateExposeService = false
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
-        services.AddDependencyInjection(dependencyInjectionBuilder);
+        services.AddDependencyInjectionTypeScanning(dependencyInjectionBuilder);
 
         Assert.True(services.Count > 0);
     }
@@ -73,7 +73,7 @@ public class DependencyInjectionServiceCollectionExtensionsTests
             ValidateExposeService = false
         };
         dependencyInjectionBuilder.AddAssemblies(GetType().Assembly);
-        services.AddDependencyInjection(dependencyInjectionBuilder);
+        services.AddDependencyInjectionTypeScanning(dependencyInjectionBuilder);
 
         Assert.True(services.Count > 0);
 
@@ -83,7 +83,7 @@ public class DependencyInjectionServiceCollectionExtensionsTests
             ValidateExposeService = false
         };
         dependencyInjectionBuilder2.AddAssemblies(GetType().Assembly);
-        services.AddDependencyInjection(dependencyInjectionBuilder2);
+        services.AddDependencyInjectionTypeScanning(dependencyInjectionBuilder2);
 
         Assert.True(services.Count > 0);
     }

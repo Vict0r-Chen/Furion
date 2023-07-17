@@ -12,22 +12,23 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 依赖注入模块服务组件
+/// 依赖注入模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public sealed class DependencyInjectionTypeScanningComponent : ComponentBase
+internal static class DependencyInjectionServiceCollectionExtensions
 {
     /// <summary>
-    /// 组件配置
+    /// 添加自动装配成员激活器服务
     /// </summary>
-    [ComponentProps]
-    public Action<DependencyInjectionBuilder>? Props { get; set; }
-
-    /// <inheritdoc />
-    public override void ConfigureServices(ServiceComponentContext context)
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    internal static IServiceCollection AddAutowiredMemberActivator(this IServiceCollection services)
     {
-        context.Services.AddDependencyInjectionTypeScanning(Props);
+        // 注册自动装配成员激活器服务
+        services.TryAddSingleton<IAutowiredMemberActivator, AutowiredMemberActivator>();
+
+        return services;
     }
 }

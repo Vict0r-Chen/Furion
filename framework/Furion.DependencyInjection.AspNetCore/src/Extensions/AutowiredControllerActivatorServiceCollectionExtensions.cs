@@ -17,7 +17,6 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入 Web 模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-/// <remarks>包含控制器自动注入属性或字段服务</remarks>
 public static class AutowiredControllerActivatorServiceCollectionExtensions
 {
     /// <summary>
@@ -32,6 +31,9 @@ public static class AutowiredControllerActivatorServiceCollectionExtensions
         {
             throw new InvalidOperationException("Please make sure that this service is registered after `services.AddControllers()`.");
         }
+
+        // 注册自动装配成员激活器服务
+        services.AddAutowiredMemberActivator();
 
         // 注册类型初始化器缓存服务
         services.TryAddSingleton<ITypeActivatorCache, TypeActivatorCache>();

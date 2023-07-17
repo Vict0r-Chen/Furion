@@ -14,15 +14,18 @@
 
 namespace Furion.DependencyInjection;
 
-/// <summary>
-/// 自动装配成员激活器
-/// </summary>
-internal sealed class AutowiredMemberActivator
+/// <inheritdoc />
+internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 {
     /// <summary>
-    /// 实例类型
+    /// 可自动装配的类型属性值的缓存集合
     /// </summary>
-    internal readonly Type _instanceType;
+    internal readonly ConcurrentDictionary<Type, List<PropertyInfo>> _typePropertiesCache;
+
+    /// <summary>
+    /// 可自动装配的类型字段值的缓存集合
+    /// </summary>
+    internal readonly ConcurrentDictionary<Type, List<FieldInfo>> _typeFieldsCache;
 
     /// <summary>
     /// <see cref="AutowiredServiceAttribute"/> 类型
@@ -32,56 +35,51 @@ internal sealed class AutowiredMemberActivator
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="instance">对象实例</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    internal AutowiredMemberActivator(object instance
-        , IServiceProvider serviceProvider)
+    public AutowiredMemberActivator()
+    {
+        _typePropertiesCache = new();
+        _typeFieldsCache = new();
+
+        _autowiredServiceAttributeType = typeof(AutowiredServiceAttribute);
+    }
+
+    /// <inheritdoc />
+    public BindingFlags GetBindingFlags()
+    {
+        return BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+    }
+
+    /// <inheritdoc />
+    public void AutowiredMembers(object instance, IServiceProvider serviceProvider)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
         ArgumentNullException.ThrowIfNull(serviceProvider);
 
-        Instance = instance;
-        _instanceType = instance.GetType();
-        Services = serviceProvider;
-
-        _autowiredServiceAttributeType = typeof(AutowiredServiceAttribute);
-    }
-
-    /// <summary>
-    /// 对象实例
-    /// </summary>
-    internal object Instance { get; init; }
-
-    /// <inheritdoc cref="IServiceProvider"/>
-    internal IServiceProvider Services { get; init; }
-
-    /// <summary>
-    /// 反射搜索成员方式
-    /// </summary>
-    internal BindingFlags Bindings { get; set; } = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
-
-    /// <summary>
-    /// 自动装配成员值
-    /// </summary>
-    internal void AutowiredMembers()
-    {
         // 自动装配属性值
-        AutowriedProperties();
+        AutowriedProperties(instance, serviceProvider);
 
         // 自动装配字段值
-        AutowriedFields();
+        AutowriedFields(instance, serviceProvider);
     }
 
-    /// <summary>
-    /// 自动装配属性值
-    /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
-    internal void AutowriedProperties()
+    /// <inheritdoc />
+    public void AutowriedProperties(object instance, IServiceProvider serviceProvider)
     {
-        // 查找所有符合反射搜索成员方式的属性
-        var declaredProperties = _instanceType.GetProperties(Bindings)
-            .Where(property => property.IsDefined(_autowiredServiceAttributeType, false));
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance);
+        ArgumentNullException.ThrowIfNull(serviceProvider);
+
+        // 对象类型
+        var instanceType = instance.GetType();
+
+        // 查找所有符合反射搜索成员方式的属性集合
+        var declaredProperties = _typePropertiesCache.GetOrAdd(instanceType, type =>
+        {
+            return type.GetProperties(GetBindingFlags())
+                .Where(property => property.IsDefined(_autowiredServiceAttributeType, false))
+                .ToList();
+        });
 
         // 遍历属性并初始化值
         foreach (var property in declaredProperties)
@@ -89,10 +87,10 @@ internal sealed class AutowiredMemberActivator
             // 检查属性是否可写
             if (!property.CanWrite)
             {
-                throw new InvalidOperationException($"Cannot automatically assign read-only property `{property.Name}` of type `{_instanceType}`.");
+                throw new InvalidOperationException($"Cannot automatically assign read-only property `{property.Name}` of type `{instanceType}`.");
             }
 
-            // 获取 [AutowiredService] 特性定义
+            // 获取 [AutowiredService] 特性对象
             var autowiredServiceAttribute = property.GetCustomAttribute<AutowiredServiceAttribute>(false);
 
             // 空检查
@@ -100,11 +98,11 @@ internal sealed class AutowiredMemberActivator
 
             // 解析属性值
             var value = autowiredServiceAttribute.AllowNullValue
-                ? Services.GetService(property.PropertyType)
-                : Services.GetRequiredService(property.PropertyType);
+                ? serviceProvider.GetService(property.PropertyType)
+                : serviceProvider.GetRequiredService(property.PropertyType);
 
             // 设置属性值
-            property.SetValue(Instance, value);
+            property.SetValue(instance, value);
 
             // 调试事件消息
             var debugMessage = "The property {0} of type {1} has been successfully injected into the service.";
@@ -114,19 +112,27 @@ internal sealed class AutowiredMemberActivator
             }
 
             // 输出调试事件
-            Debugging.Warn(debugMessage, property.Name, _instanceType);
+            Debugging.Warn(debugMessage, property.Name, instanceType);
         }
     }
 
-    /// <summary>
-    /// 自动装配字段值
-    /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
-    internal void AutowriedFields()
+    /// <inheritdoc />
+    public void AutowriedFields(object instance, IServiceProvider serviceProvider)
     {
-        // 查找所有符合反射搜索成员方式的字段
-        var declaredFields = _instanceType.GetFields(Bindings)
-            .Where(field => field.IsDefined(_autowiredServiceAttributeType, false));
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance);
+        ArgumentNullException.ThrowIfNull(serviceProvider);
+
+        // 对象类型
+        var instanceType = instance.GetType();
+
+        // 查找所有符合反射搜索成员方式的字段集合
+        var declaredFields = _typeFieldsCache.GetOrAdd(instanceType, type =>
+        {
+            return type.GetFields(GetBindingFlags())
+                .Where(field => field.IsDefined(_autowiredServiceAttributeType, false))
+                .ToList();
+        });
 
         // 遍历字段并初始化值
         foreach (var field in declaredFields)
@@ -134,22 +140,22 @@ internal sealed class AutowiredMemberActivator
             // 检查字段是否可写
             if (field.IsInitOnly)
             {
-                throw new InvalidOperationException($"Cannot automatically assign read-only field `{field.Name}` of type `{_instanceType}`.");
+                throw new InvalidOperationException($"Cannot automatically assign read-only field `{field.Name}` of type `{instanceType}`.");
             }
 
-            // 获取 [AutowiredService] 特性定义
+            // 获取 [AutowiredService] 特性对象
             var autowiredServiceAttribute = field.GetCustomAttribute<AutowiredServiceAttribute>(false);
 
             // 空检查
             ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
 
-            // 解析属性值
+            // 解析字段值
             var value = autowiredServiceAttribute.AllowNullValue
-                ? Services.GetService(field.FieldType)
-                : Services.GetRequiredService(field.FieldType);
+                ? serviceProvider.GetService(field.FieldType)
+                : serviceProvider.GetRequiredService(field.FieldType);
 
             // 设置字段值
-            field.SetValue(Instance, value);
+            field.SetValue(instance, value);
 
             // 调试事件消息
             var debugMessage = "The field {0} of type {1} has been successfully injected into the service.";
@@ -159,7 +165,7 @@ internal sealed class AutowiredMemberActivator
             }
 
             // 输出调试事件
-            Debugging.Warn(debugMessage, field.Name, _instanceType);
+            Debugging.Warn(debugMessage, field.Name, instanceType);
         }
     }
 }

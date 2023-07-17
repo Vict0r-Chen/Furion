@@ -13,11 +13,15 @@
         <member name="F:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator._typeActivatorCache">
             <inheritdoc cref="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache"/>
         </member>
-        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.#ctor(Furion.DependencyInjection.AspNetCore.ITypeActivatorCache)">
+        <member name="F:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator._autowiredMemberActivator">
+            <inheritdoc cref="T:Furion.DependencyInjection.IAutowiredMemberActivator" />
+        </member>
+        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.#ctor(Furion.DependencyInjection.AspNetCore.ITypeActivatorCache,Furion.DependencyInjection.IAutowiredMemberActivator)">
             <summary>
             构造函数
             </summary>
             <param name="typeActivatorCache"><see cref="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache"/></param>
+            <param name="autowiredMemberActivator"><see cref="T:Furion.DependencyInjection.IAutowiredMemberActivator"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.Create(Microsoft.AspNetCore.Mvc.ControllerContext)">
             <inheritdoc />
@@ -89,7 +93,6 @@
             <summary>
             依赖注入 Web 模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
-            <remarks>包含控制器自动注入属性或字段服务</remarks>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.AutowiredControllerActivatorServiceCollectionExtensions.AddAutowiredControllerActivator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
