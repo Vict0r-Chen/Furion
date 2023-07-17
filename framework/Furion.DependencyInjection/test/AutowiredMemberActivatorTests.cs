@@ -69,6 +69,8 @@ public class AutowiredMemberActivatorTests
         Assert.NotNull(autowiredService.Configuration);
         Assert.NotNull(autowiredService.NotPublicConfiguration);
         Assert.Null(autowiredService.BaseConfiguration);
+
+        Assert.NotEmpty(autowiredMemberActivator._typePropertiesCache);
     }
 
     [Theory]
@@ -120,6 +122,8 @@ public class AutowiredMemberActivatorTests
         Assert.NotNull(autowiredService._services);
         Assert.NotNull(autowiredService._notPublicServices);
         Assert.Null(autowiredService._baseServices);
+
+        Assert.NotEmpty(autowiredMemberActivator._typeFieldsCache);
     }
 
     [Theory]
@@ -174,5 +178,8 @@ public class AutowiredMemberActivatorTests
         Assert.NotNull(autowiredService._notPublicServices);
         Assert.Null(autowiredService.BaseConfiguration);
         Assert.Null(autowiredService._baseServices);
+
+        Assert.NotEmpty(autowiredMemberActivator._typePropertiesCache);
+        Assert.NotEmpty(autowiredMemberActivator._typeFieldsCache);
     }
 }
