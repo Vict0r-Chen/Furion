@@ -78,7 +78,7 @@ public class FileScanningConfigurationScannerTests
         var builder = WebApplication.CreateBuilder();
         var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(builder.Configuration, new()
         {
-            AllowEnvironmentSwitching  = false
+            AllowEnvironmentSwitching = false
         });
         fileScanningConfigurationScanner.Initialize();
 
@@ -130,6 +130,57 @@ public class FileScanningConfigurationScannerTests
 
         var firstSource = configurationBuilder.Sources.OfType<JsonConfigurationSource>().First();
         Assert.Equal("appsettings.json", firstSource.Path);
+    }
+
+    [Theory]
+    [InlineData(null, 2)]
+    [InlineData("Development", 3)]
+    [InlineData("Production", 3)]
+    public void ScanToAddFiles_DisableEnvironmentSwitching_And_SetEnvironment(string? environment, int count)
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            {"ENVIRONMENT", environment }
+        });
+
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "environment");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, fileScanningConfigurationBuilder);
+        fileScanningConfigurationScanner.ScanToAddFiles();
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Equal(count, configurationBuilder.Sources.Skip(1).Count());
+    }
+
+    [Theory]
+    [InlineData(null, 5)]
+    [InlineData("Development", 5)]
+    [InlineData("Production", 5)]
+    public void ScanToAddFiles_AllowEnvironmentSwitching_And_SetEnvironment(string? environment, int count)
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            {"ENVIRONMENT", environment }
+        });
+
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder
+        {
+            AllowEnvironmentSwitching = true
+        };
+
+        var directory = Path.Combine(AppContext.BaseDirectory, "environment");
+        fileScanningConfigurationBuilder.AddDirectories(directory);
+
+        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, fileScanningConfigurationBuilder);
+        fileScanningConfigurationScanner.ScanToAddFiles();
+
+        Assert.NotEmpty(configurationBuilder.Sources);
+        Assert.Equal(count, configurationBuilder.Sources.Skip(1).Count());
     }
 
     [Fact]
@@ -288,7 +339,7 @@ public class FileScanningConfigurationScannerTests
     }
 
     [Fact]
-    public void AddFileByEnvironment_AllowEnvironmentSwitching ()
+    public void AddFileByEnvironment_AllowEnvironmentSwitching()
     {
         var directory = Path.Combine(AppContext.BaseDirectory, "directories");
         var configurationBuilder = new ConfigurationBuilder();
@@ -296,7 +347,7 @@ public class FileScanningConfigurationScannerTests
 
         var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new()
         {
-            AllowEnvironmentSwitching  = true
+            AllowEnvironmentSwitching = true
         });
 
         fileScanningConfigurationScanner.AddFileByEnvironment(new(), null, file);
@@ -312,7 +363,7 @@ public class FileScanningConfigurationScannerTests
 
         var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, new()
         {
-            AllowEnvironmentSwitching  = false
+            AllowEnvironmentSwitching = false
         });
 
         fileScanningConfigurationScanner.AddFileByEnvironment(new(), null, file);

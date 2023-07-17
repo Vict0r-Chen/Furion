@@ -72,7 +72,7 @@ internal sealed class FileScanningConfigurationScanner
 
         // 初始化环境变量名称
         EnvironmentName = configurationRoot["ENVIRONMENT"]
-            ?? (_fileScanningConfigurationBuilder.AllowEnvironmentSwitching  ? "Production" : null);
+            ?? (_fileScanningConfigurationBuilder.AllowEnvironmentSwitching ? "Production" : null);
     }
 
     /// <summary>
@@ -215,7 +215,7 @@ internal sealed class FileScanningConfigurationScanner
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
 
         // 检查是否启用支持环境切换，如果启用则创建默认值
-        fileScanningConfigurationModel = !_fileScanningConfigurationBuilder.AllowEnvironmentSwitching 
+        fileScanningConfigurationModel = !_fileScanningConfigurationBuilder.AllowEnvironmentSwitching
             ? fileScanningConfigurationModel
             : fileScanningConfigurationModel ?? CreateModel(filePath, false);
 
