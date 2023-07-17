@@ -59,7 +59,7 @@ internal sealed class FileScanningConfigurationScanner
     /// </summary>
     internal void Initialize()
     {
-        // 获取配置根结构
+        // 获取配置根对象
         var configurationRoot = _configurationBuilder is ConfigurationManager configurationManager
         ? configurationManager
             : _configurationBuilder.Build();
