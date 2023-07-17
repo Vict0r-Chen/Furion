@@ -65,7 +65,7 @@ public class FileScanningConfigurationBuilderExtensionsTests
 
         configurationBuilder.AddFileScanning(builder =>
         {
-            builder.AllowEnvironmentSwitching  = true;
+            builder.AllowEnvironmentSwitching = true;
             builder.DefaultOptional = true;
         });
 

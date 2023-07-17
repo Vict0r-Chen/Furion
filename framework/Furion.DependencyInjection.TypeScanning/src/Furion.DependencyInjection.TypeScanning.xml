@@ -4,5 +4,428 @@
         <name>Furion.DependencyInjection.TypeScanning</name>
     </assembly>
     <members>
+        <member name="T:Furion.DependencyInjection.DependencyAttribute">
+            <summary>
+            服务注册配置
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.ServiceAddition)">
+            <summary>
+            注册方式
+            </summary>
+            <param name="addition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Addition">
+            <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Ignore">
+            <summary>
+            忽略注册
+            </summary>
+            <remarks>若设置为 true 则跳过配置类型扫描</remarks>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Order">
+            <summary>
+            排序
+            </summary>
+            <remarks>值越大则越后注册</remarks>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.IncludeSelf">
+            <summary>
+            注册自身
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.IncludeBase">
+            <summary>
+            注册基类
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute">
+            <summary>
+            服务导出配置
+            </summary>
+            <remarks>
+            <para>作用于程序集扫描，若类型配置了该特性则将指定的类型作为服务。</para>
+            </remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor(System.Type[])">
+            <summary>
+            构造函数
+            </summary>
+            <param name="serviceTypes"><see cref="P:Furion.DependencyInjection.ExposeServicesAttribute.ServiceTypes"/></param>
+        </member>
+        <member name="P:Furion.DependencyInjection.ExposeServicesAttribute.ServiceTypes">
+            <summary>
+            类型集合
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`1">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`1.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`2">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`2.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`3">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`3.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`4">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`4.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`5">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`5.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`6">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+            <typeparam name="TService6">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`6.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`7">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+            <typeparam name="TService6">服务类型</typeparam>
+            <typeparam name="TService7">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`7.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`8">
+            <summary>
+            服务导出配置
+            </summary>
+            <typeparam name="TService1">服务类型</typeparam>
+            <typeparam name="TService2">服务类型</typeparam>
+            <typeparam name="TService3">服务类型</typeparam>
+            <typeparam name="TService4">服务类型</typeparam>
+            <typeparam name="TService5">服务类型</typeparam>
+            <typeparam name="TService6">服务类型</typeparam>
+            <typeparam name="TService7">服务类型</typeparam>
+            <typeparam name="TService8">服务类型</typeparam>
+        </member>
+        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`8.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.DependencyInjectionBuilder">
+            <summary>
+            依赖注入模块构建器
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._dependencyType">
+            <summary>
+            服务依赖注入接口类型
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._assemblies">
+            <summary>
+            待扫描的程序集集合
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._serviceTypeBlacklist">
+            <summary>
+            服务类型黑名单
+            </summary>
+            <remarks>禁止已扫描的服务类型作为服务注册</remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.DependencyInjectionBuilder._filterConfigure">
+            <summary>
+            服务描述器过滤器
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressAssemblyScanning">
+            <summary>
+            禁用程序集扫描
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressNonPublicType">
+            <summary>
+            禁用非公开类型
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateLifetime">
+            <summary>
+            验证服务生存期合法化
+            </summary>
+            <remarks>设置 false 将跳过合法验证</remarks>
+        </member>
+        <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateExposeService">
+            <summary>
+            验证服务导出配置合法化
+            </summary>
+            <remarks>设置 false 将跳过合法验证</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddFilter(System.Func{Furion.DependencyInjection.ServiceDescriptorModel,System.Boolean})">
+            <summary>
+            添加服务描述器过滤器
+            </summary>
+            <param name="configure"><see cref="T:System.Func`2"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddAssemblies(System.Reflection.Assembly[])">
+            <summary>
+            添加待扫描的程序集
+            </summary>
+            <param name="assemblies"><see cref="T:System.Reflection.Assembly"/>[]</param>
+            <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddAssemblies(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            添加待扫描的程序集
+            </summary>
+            <param name="assemblies"><see cref="T:System.Collections.Generic.IEnumerable`1"/></param>
+            <returns><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            构建模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.ScanAssemblies">
+            <summary>
+            扫描程序集并创建服务描述器模型集合
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.CreateServiceDescriptors(System.Type)">
+            <summary>
+            根据类型创建服务描述器模型集合
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetEffectiveServiceTypes(System.Type,System.Type[],System.Type@)">
+            <summary>
+            获取有效的服务类型集合
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <param name="limitTypes"><see cref="T:System.Type"/>[]</param>
+            <param name="dependencyType"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.Release">
+            <summary>
+            释放对象
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.GetServiceLifetime(System.Type,System.Boolean)">
+            <summary>
+            根据依赖类型获取对应的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
+            </summary>
+            <param name="dependencyType"><see cref="T:System.Type"/></param>
+            <param name="validateLifetime"><see cref="P:Furion.DependencyInjection.DependencyInjectionBuilder.ValidateLifetime"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.AddingToServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.ServiceDescriptorModel)">
+            <summary>
+            将服务描述器添加到 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 中
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="serviceDescriptorModel"><see cref="T:Furion.DependencyInjection.ServiceDescriptorModel"/></param>
+        </member>
+        <member name="T:Furion.DependencyInjection.ServiceAddition">
+            <summary>
+            服务注册方式
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceAddition.Default">
+            <summary>
+            缺省值
+            </summary>
+            <remarks><seealso cref="F:Furion.DependencyInjection.ServiceAddition.Add"/></remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceAddition.Add">
+            <summary>
+            添加
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceAddition.TryAdd">
+            <summary>
+            尝试添加
+            </summary>
+            <remarks>若服务存在则跳过</remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceAddition.TryAddEnumerable">
+            <summary>
+            尝试添加
+            </summary>
+            <remarks>若服务和实现类型同时存在则跳过</remarks>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceAddition.Replace">
+            <summary>
+            替换
+            </summary>
+            <remarks>若服务存在则替换</remarks>
+        </member>
+        <member name="T:Furion.DependencyInjection.IDependency">
+            <summary>
+            服务依赖接口
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="T:Furion.DependencyInjection.IScopedDependency">
+            <summary>
+            范围服务依赖接口
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="T:Furion.DependencyInjection.ISingletonDependency">
+            <summary>
+            单例服务依赖接口
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="T:Furion.DependencyInjection.ITransientDependency">
+            <summary>
+            瞬时服务依赖接口
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="T:Furion.DependencyInjection.ServiceDescriptorModel">
+            <summary>
+            <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/> 模型
+            </summary>
+            <remarks>作用于程序集扫描</remarks>
+        </member>
+        <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,Furion.DependencyInjection.ServiceAddition)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="serviceType">服务类型</param>
+            <param name="implementationType">实现类类型</param>
+            <param name="serviceLifetime"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></param>
+            <param name="serviceAddition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
+        </member>
+        <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Descriptor">
+            <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Addition">
+            <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.ServiceDescriptorModel.Order">
+            <inheritdoc cref="P:Furion.DependencyInjection.DependencyAttribute.Order"/>
+        </member>
+        <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Component.DependencyInjectionTypeScanningComponent">
+            <summary>
+            依赖注入模块服务组件
+            </summary>
+        </member>
+        <member name="P:Furion.Component.DependencyInjectionTypeScanningComponent.Props">
+            <summary>
+            组件配置
+            </summary>
+        </member>
+        <member name="M:Furion.Component.DependencyInjectionTypeScanningComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">
+            <summary>
+            依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions.AddDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.DependencyInjection.DependencyInjectionBuilder})">
+            <summary>
+            添加依赖注入模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions.AddDependencyInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.DependencyInjectionBuilder)">
+            <summary>
+            添加依赖注入模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="dependencyInjectionBuilder"><see cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
     </members>
 </doc>

@@ -54,7 +54,7 @@ public class FileScanningConfigurationBuilderTests
         Assert.False(fileScanningConfigurationBuilder.DefaultReloadOnChange);
         Assert.Equal(250, fileScanningConfigurationBuilder.DefaultReloadDelay);
         Assert.Null(fileScanningConfigurationBuilder.OnLoadException);
-        Assert.False(fileScanningConfigurationBuilder.AllowEnvironmentSwitching );
+        Assert.False(fileScanningConfigurationBuilder.AllowEnvironmentSwitching);
 
         Assert.Null(fileScanningConfigurationBuilder._filterConfigure);
     }
