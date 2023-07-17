@@ -18,12 +18,12 @@ namespace Furion.DependencyInjection;
 internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 {
     /// <summary>
-    /// 可自动装配的类型属性值的缓存集合
+    /// 可自动装配的类型属性缓存集合
     /// </summary>
     internal readonly ConcurrentDictionary<Type, List<PropertyInfo>> _typePropertiesCache;
 
     /// <summary>
-    /// 可自动装配的类型字段值的缓存集合
+    /// 可自动装配的类型字段缓存集合
     /// </summary>
     internal readonly ConcurrentDictionary<Type, List<FieldInfo>> _typeFieldsCache;
 
@@ -46,29 +46,29 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
     /// <inheritdoc />
     public BindingFlags GetBindingFlags()
     {
-        return BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+        return BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic;
     }
 
     /// <inheritdoc />
-    public void AutowiredMembers(object instance, IServiceProvider serviceProvider)
+    public void AutowiredMembers(object instance, IServiceProvider services)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentNullException.ThrowIfNull(serviceProvider);
+        ArgumentNullException.ThrowIfNull(services);
 
         // 自动装配属性值
-        AutowriedProperties(instance, serviceProvider);
+        AutowriedProperties(instance, services);
 
         // 自动装配字段值
-        AutowriedFields(instance, serviceProvider);
+        AutowriedFields(instance, services);
     }
 
     /// <inheritdoc />
-    public void AutowriedProperties(object instance, IServiceProvider serviceProvider)
+    public void AutowriedProperties(object instance, IServiceProvider services)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentNullException.ThrowIfNull(serviceProvider);
+        ArgumentNullException.ThrowIfNull(services);
 
         // 对象类型
         var instanceType = instance.GetType();
@@ -98,8 +98,8 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 
             // 解析属性值
             var value = autowiredServiceAttribute.AllowNullValue
-                ? serviceProvider.GetService(property.PropertyType)
-                : serviceProvider.GetRequiredService(property.PropertyType);
+                ? services.GetService(property.PropertyType)
+                : services.GetRequiredService(property.PropertyType);
 
             // 设置属性值
             property.SetValue(instance, value);
@@ -117,11 +117,11 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
     }
 
     /// <inheritdoc />
-    public void AutowriedFields(object instance, IServiceProvider serviceProvider)
+    public void AutowriedFields(object instance, IServiceProvider services)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentNullException.ThrowIfNull(serviceProvider);
+        ArgumentNullException.ThrowIfNull(services);
 
         // 对象类型
         var instanceType = instance.GetType();
@@ -151,8 +151,8 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 
             // 解析字段值
             var value = autowiredServiceAttribute.AllowNullValue
-                ? serviceProvider.GetService(field.FieldType)
-                : serviceProvider.GetRequiredService(field.FieldType);
+                ? services.GetService(field.FieldType)
+                : services.GetRequiredService(field.FieldType);
 
             // 设置字段值
             field.SetValue(instance, value);

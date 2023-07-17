@@ -29,20 +29,20 @@ internal interface IAutowiredMemberActivator
     /// 自动装配成员值
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    void AutowiredMembers(object instance, IServiceProvider serviceProvider);
+    /// <param name="services"><see cref="IServiceProvider"/></param>
+    void AutowiredMembers(object instance, IServiceProvider services);
 
     /// <summary>
     /// 自动装配属性值
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    void AutowriedProperties(object instance, IServiceProvider serviceProvider);
+    /// <param name="services"><see cref="IServiceProvider"/></param>
+    void AutowriedProperties(object instance, IServiceProvider services);
 
     /// <summary>
     /// 自动装配字段值
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    void AutowriedFields(object instance, IServiceProvider serviceProvider);
+    /// <param name="services"><see cref="IServiceProvider"/></param>
+    void AutowriedFields(object instance, IServiceProvider services);
 }

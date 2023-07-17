@@ -9,12 +9,12 @@
         </member>
         <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typePropertiesCache">
             <summary>
-            可自动装配的类型属性值的缓存集合
+            可自动装配的类型属性缓存集合
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeFieldsCache">
             <summary>
-            可自动装配的类型字段值的缓存集合
+            可自动装配的类型字段缓存集合
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._autowiredServiceAttributeType">
@@ -55,21 +55,21 @@
             自动装配成员值
             </summary>
             <param name="instance">对象实例</param>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="services"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowriedProperties(System.Object,System.IServiceProvider)">
             <summary>
             自动装配属性值
             </summary>
             <param name="instance">对象实例</param>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="services"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowriedFields(System.Object,System.IServiceProvider)">
             <summary>
             自动装配字段值
             </summary>
             <param name="instance">对象实例</param>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="services"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="T:Furion.DependencyInjection.AutowiredServiceAttribute">
             <summary>

@@ -52,11 +52,11 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
             ?? throw new ArgumentException(string.Format("The '{0}' property of '{1}' must not be null.", nameof(controllerContext.ActionDescriptor.ControllerTypeInfo), nameof(ControllerContext.ActionDescriptor)));
 
         // 创建控制器实例
-        var serviceProvider = controllerContext.HttpContext.RequestServices;
-        var controllerInstance = _typeActivatorCache.CreateInstance<object>(serviceProvider, controllerTypeInfo.AsType());
+        var requestServices = controllerContext.HttpContext.RequestServices;
+        var controllerInstance = _typeActivatorCache.CreateInstance<object>(requestServices, controllerTypeInfo.AsType());
 
         // 自动装配成员值
-        _autowiredMemberActivator.AutowiredMembers(controllerInstance, serviceProvider);
+        _autowiredMemberActivator.AutowiredMembers(controllerInstance, requestServices);
 
         return controllerInstance;
     }
