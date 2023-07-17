@@ -17,12 +17,34 @@ namespace Furion.DependencyInjection.Tests;
 public class AutowiredServiceAttributeTests
 {
     [Fact]
-    public void AttributeUsage_Attribute_Check()
+    public void AttributeUsage()
     {
         var attributeUsageAttribute = typeof(AutowiredServiceAttribute).GetCustomAttribute<AttributeUsageAttribute>();
+
         Assert.NotNull(attributeUsageAttribute);
         Assert.Equal(AttributeTargets.Property | AttributeTargets.Field, attributeUsageAttribute.ValidOn);
         Assert.False(attributeUsageAttribute.AllowMultiple);
         Assert.False(attributeUsageAttribute.Inherited);
+    }
+
+    [Fact]
+    public void New_Default()
+    {
+        var autowiredServiceAttribute = new AutowiredServiceAttribute();
+
+        Assert.NotNull(autowiredServiceAttribute);
+        Assert.False(autowiredServiceAttribute.AllowNullValue);
+    }
+
+    [Fact]
+    public void New_SetAllowNullValue()
+    {
+        var autowiredServiceAttribute = new AutowiredServiceAttribute
+        {
+            AllowNullValue = true
+        };
+
+        Assert.NotNull(autowiredServiceAttribute);
+        Assert.True(autowiredServiceAttribute.AllowNullValue);
     }
 }

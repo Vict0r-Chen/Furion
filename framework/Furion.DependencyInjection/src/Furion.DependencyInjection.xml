@@ -4,9 +4,71 @@
         <name>Furion.DependencyInjection</name>
     </assembly>
     <members>
+        <member name="T:Furion.DependencyInjection.AutowiredMemberActivator">
+            <summary>
+            自动装配成员激活器
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._instanceType">
+            <summary>
+            实例类型
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._autowiredServiceAttributeType">
+            <summary>
+            <see cref="T:Furion.DependencyInjection.AutowiredServiceAttribute"/> 类型
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.#ctor(System.Object,System.IServiceProvider)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="instance">对象实例</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+        </member>
+        <member name="P:Furion.DependencyInjection.AutowiredMemberActivator.Instance">
+            <summary>
+            对象实例
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.AutowiredMemberActivator.Services">
+            <inheritdoc cref="T:System.IServiceProvider"/>
+        </member>
+        <member name="P:Furion.DependencyInjection.AutowiredMemberActivator.Bindings">
+            <summary>
+            反射搜索成员方式
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowiredMembers">
+            <summary>
+            自动装配成员值
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowriedProperties">
+            <summary>
+            自动装配属性值
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.AutowriedFields">
+            <summary>
+            自动装配字段值
+            </summary>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
         <member name="T:Furion.DependencyInjection.AutowiredServiceAttribute">
             <summary>
             自动装配服务特性
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.AutowiredServiceAttribute.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="P:Furion.DependencyInjection.AutowiredServiceAttribute.AllowNullValue">
+            <summary>
+            允许空值
             </summary>
         </member>
         <member name="T:Furion.Component.DependencyInjectionComponent">

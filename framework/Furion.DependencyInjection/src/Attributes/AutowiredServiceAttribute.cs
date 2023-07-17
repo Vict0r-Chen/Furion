@@ -20,4 +20,15 @@ namespace Furion.DependencyInjection;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
 public sealed class AutowiredServiceAttribute : Attribute
 {
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public AutowiredServiceAttribute()
+    {
+    }
+
+    /// <summary>
+    /// 允许空值
+    /// </summary>
+    public bool AllowNullValue { get; init; }
 }

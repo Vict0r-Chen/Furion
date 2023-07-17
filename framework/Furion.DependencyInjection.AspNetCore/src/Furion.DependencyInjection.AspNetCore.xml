@@ -28,30 +28,6 @@
         <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.ReleaseAsync(Microsoft.AspNetCore.Mvc.ControllerContext,System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.Autowried(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
-            <summary>
-            自动注入属性或字段服务
-            </summary>
-            <param name="controllerInstance">控制器实例</param>
-            <param name="controllerTypeInfo">控制器类型</param>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-        </member>
-        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedProperties(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
-            <summary>
-            自动注入属性服务
-            </summary>
-            <param name="controllerInstance">控制器实例</param>
-            <param name="controllerTypeInfo">控制器类型</param>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-        </member>
-        <member name="M:Furion.DependencyInjection.AspNetCore.AutowiredControllerActivator.AutowriedFields(System.Object,System.Reflection.TypeInfo,System.IServiceProvider)">
-            <summary>
-            自动注入字段服务
-            </summary>
-            <param name="controllerInstance">控制器实例</param>
-            <param name="controllerTypeInfo">控制器类型</param>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-        </member>
         <member name="T:Furion.DependencyInjection.AspNetCore.ITypeActivatorCache">
             <summary>
             类型初始化器缓存服务

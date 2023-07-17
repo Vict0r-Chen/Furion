@@ -259,7 +259,7 @@ internal sealed class FileScanningConfigurationScanner
         var debugMessage = "The file `{0}` has been successfully added to the configuration.";
         if (!fileScanningConfigurationModel.EnvironmentFlag)
         {
-            debugMessage += " (File does not actually exist)";
+            debugMessage += " (File does not exist)";
         }
 
         // 输出调试事件

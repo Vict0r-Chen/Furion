@@ -49,8 +49,11 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
         var serviceProvider = controllerContext.HttpContext.RequestServices;
         var controllerInstance = _typeActivatorCache.CreateInstance<object>(serviceProvider, controllerTypeInfo.AsType());
 
-        // 自动注入属性或字段服务
-        Autowried(controllerInstance, controllerTypeInfo, serviceProvider);
+        // 创建自动装配成员激活器
+        var autowiredMemberActivator = new AutowiredMemberActivator(controllerInstance, serviceProvider);
+
+        // 自动装配成员值
+        autowiredMemberActivator.AutowiredMembers();
 
         return controllerInstance;
     }
@@ -76,92 +79,5 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
 
         Release(context, controller);
         return default;
-    }
-
-    /// <summary>
-    /// 自动注入属性或字段服务
-    /// </summary>
-    /// <param name="controllerInstance">控制器实例</param>
-    /// <param name="controllerTypeInfo">控制器类型</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    internal static void Autowried(object controllerInstance, TypeInfo controllerTypeInfo, IServiceProvider serviceProvider)
-    {
-        // 自动注入属性或字段服务
-        AutowriedProperties(controllerInstance, controllerTypeInfo, serviceProvider);
-        AutowriedFields(controllerInstance, controllerTypeInfo, serviceProvider);
-    }
-
-    /// <summary>
-    /// 自动注入属性服务
-    /// </summary>
-    /// <param name="controllerInstance">控制器实例</param>
-    /// <param name="controllerTypeInfo">控制器类型</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    internal static void AutowriedProperties(object controllerInstance, TypeInfo controllerTypeInfo, IServiceProvider serviceProvider)
-    {
-        // 查找所有可注入的属性集合
-        var properties = controllerTypeInfo.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
-            .Where(property => property.IsDefined(typeof(AutowiredServiceAttribute), false))
-            .ToList();
-
-        // 空检查
-        if (properties.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var property in properties)
-        {
-            // 检查属性是否可设置值
-            if (!property.CanWrite)
-            {
-                throw new InvalidOperationException(string.Format("It is not possible to inject a service into a read-only `{0}` property of type `{1}`.", property.Name, property.DeclaringType!.Name));
-            }
-
-            // 注入服务
-            property.SetValue(controllerInstance, serviceProvider.GetRequiredService(property.PropertyType));
-
-            // 输出调试日志
-            Debugging.Warn("The `{0}` property of type `{1}` has been successfully injected with a service instance.", property.Name, property.DeclaringType!.Name);
-        }
-
-        properties.Clear();
-    }
-
-    /// <summary>
-    /// 自动注入字段服务
-    /// </summary>
-    /// <param name="controllerInstance">控制器实例</param>
-    /// <param name="controllerTypeInfo">控制器类型</param>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    internal static void AutowriedFields(object controllerInstance, TypeInfo controllerTypeInfo, IServiceProvider serviceProvider)
-    {
-        // 查找所有可注入的字段集合
-        var fields = controllerTypeInfo.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
-            .Where(field => field.IsDefined(typeof(AutowiredServiceAttribute), false))
-            .ToList();
-
-        // 空检查
-        if (fields.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var field in fields)
-        {
-            // 检查字段是否可设置值
-            if (field.IsInitOnly)
-            {
-                throw new InvalidOperationException(string.Format("It is not possible to inject a service into a read-only `{0}` field of type `{1}`.", field.Name, field.DeclaringType!.Name));
-            }
-
-            // 注入服务
-            field.SetValue(controllerInstance, serviceProvider.GetRequiredService(field.FieldType));
-
-            // 输出调试日志
-            Debugging.Warn("The `{0}` field of type `{1}` has been successfully injected with a service instance.", field.Name, field.DeclaringType!.Name);
-        }
-
-        fields.Clear();
     }
 }
