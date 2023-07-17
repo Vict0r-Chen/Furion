@@ -15,9 +15,8 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 成员注入服务特性
+/// 自动装配服务特性
 /// </summary>
-/// <remarks>作用于属性/字段注入服务</remarks>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
 public sealed class AutowiredServiceAttribute : Attribute
 {

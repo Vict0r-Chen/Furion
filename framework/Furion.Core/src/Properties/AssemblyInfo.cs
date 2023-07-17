@@ -26,6 +26,7 @@
 [assembly: InternalsVisibleTo("Furion.Crontab")]
 [assembly: InternalsVisibleTo("Furion.DependencyInjection")]
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.AspNetCore")]
+[assembly: InternalsVisibleTo("Furion.DependencyInjection.Hosting")]
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.Named")]
 [assembly: InternalsVisibleTo("Furion.DependencyInjection.TypeScanning")]
 [assembly: InternalsVisibleTo("Furion.Encryption")]
