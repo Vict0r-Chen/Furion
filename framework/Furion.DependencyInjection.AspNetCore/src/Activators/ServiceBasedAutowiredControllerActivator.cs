@@ -17,27 +17,20 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 自动装配控制器激活器
 /// </summary>
-internal sealed class AutowiredControllerActivator : IControllerActivator
+public class ServiceBasedAutowiredControllerActivator : IControllerActivator
 {
-    /// <inheritdoc cref="ITypeActivatorCache"/>
-    internal readonly ITypeActivatorCache _typeActivatorCache;
-
     /// <inheritdoc cref="IAutowiredMemberActivator" />
     internal readonly IAutowiredMemberActivator _autowiredMemberActivator;
 
     /// <summary>
     /// 控制器
     /// </summary>
-    /// <param name="typeActivatorCache"><see cref="ITypeActivatorCache"/></param>
     /// <param name="autowiredMemberActivator"><see cref="IAutowiredMemberActivator"/></param>
-    public AutowiredControllerActivator(ITypeActivatorCache typeActivatorCache
-        , IAutowiredMemberActivator autowiredMemberActivator)
+    public ServiceBasedAutowiredControllerActivator(IAutowiredMemberActivator autowiredMemberActivator)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(typeActivatorCache);
         ArgumentNullException.ThrowIfNull(autowiredMemberActivator);
 
-        _typeActivatorCache = typeActivatorCache;
         _autowiredMemberActivator = autowiredMemberActivator;
     }
 
@@ -55,8 +48,8 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
         // 获取请求上下文服务提供器
         var requestServices = context.HttpContext.RequestServices;
 
-        // 创建控制器实例
-        var controller = _typeActivatorCache.CreateInstance<object>(requestServices, controllerType);
+        // 解析控制器实例
+        var controller = requestServices.GetRequiredService(controllerType);
 
         // 自动装配控制器成员值
         _autowiredMemberActivator.AutowiredMembers(controller, requestServices);
@@ -65,34 +58,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
     }
 
     /// <inheritdoc />
-    public void Release(ControllerContext context, object controller)
+    public virtual void Release(ControllerContext context, object controller)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(controller);
-
-        // 检查是否实现了 IDisposable 接口
-        if (controller is IDisposable disposable)
-        {
-            disposable.Dispose();
-        }
-    }
-
-    /// <inheritdoc />
-    public ValueTask ReleaseAsync(ControllerContext context, object controller)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(controller);
-
-        // 检查是否实现了 IAsyncDisposable 接口
-        if (controller is IAsyncDisposable asyncDisposable)
-        {
-            return asyncDisposable.DisposeAsync();
-        }
-
-        Release(context, controller);
-
-        return default;
     }
 }

@@ -39,7 +39,7 @@ public class ServiceComponent : ComponentBase
     public override void ConfigureServices(ServiceComponentContext context)
     {
         context.Services.AddControllers()
-                        .AddAutowiredControllerActivator();
+                        .AddControllersWithAutowired();
         context.Services.AddEndpointsApiExplorer();
         context.Services.AddSwaggerGen();
     }

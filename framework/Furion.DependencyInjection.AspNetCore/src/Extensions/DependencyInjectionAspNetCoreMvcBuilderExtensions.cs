@@ -17,7 +17,6 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入 Web 模块 <see cref="IMvcBuilder"/> 拓展类
 /// </summary>
-/// <remarks>包含控制器自动注入属性或字段服务</remarks>
 public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
 {
     /// <summary>
@@ -25,9 +24,37 @@ public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
     /// </summary>
     /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
     /// <returns><see cref="IMvcBuilder"/></returns>
-    public static IMvcBuilder AddAutowiredControllerActivator(this IMvcBuilder mvcBuilder)
+    public static IMvcBuilder AddControllersWithAutowired(this IMvcBuilder mvcBuilder)
     {
-        mvcBuilder.Services.AddAutowiredControllerActivator();
+        return mvcBuilder.ReplaceControllerActivator<AutowiredControllerActivator>();
+    }
+
+    /// <summary>
+    /// 添加依赖注入 Web 模块服务
+    /// </summary>
+    /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
+    /// <returns><see cref="IMvcBuilder"/></returns>
+    public static IMvcBuilder AddControllersAsServicesWithAutowired(this IMvcBuilder mvcBuilder)
+    {
+        return mvcBuilder.ReplaceControllerActivator<ServiceBasedAutowiredControllerActivator>();
+    }
+
+    /// <summary>
+    /// 替换默认控制器激活器
+    /// </summary>
+    /// <typeparam name="TControllerActivator"><see cref="IControllerActivator"/></typeparam>
+    /// <param name="mvcBuilder"><see cref="IMvcCoreBuilder"/></param>
+    /// <returns><see cref="IMvcCoreBuilder"/></returns>
+    internal static IMvcBuilder ReplaceControllerActivator<TControllerActivator>(this IMvcBuilder mvcBuilder)
+        where TControllerActivator : class, IControllerActivator
+    {
+        var services = mvcBuilder.Services;
+
+        // 注册自动装配成员激活器服务
+        services.AddAutowiredMemberActivator();
+
+        // 替换默认控制器初始化器
+        services.Replace(ServiceDescriptor.Transient<IControllerActivator, TControllerActivator>());
 
         return mvcBuilder;
     }
