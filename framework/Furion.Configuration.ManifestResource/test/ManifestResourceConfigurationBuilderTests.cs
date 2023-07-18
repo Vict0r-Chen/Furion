@@ -19,7 +19,7 @@ namespace Furion.Configuration.ManifestResource.Tests;
 public class ManifestResourceConfigurationBuilderTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var manifestResourceConfigurationBuilder = new ManifestResourceConfigurationBuilder();
 

@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection.Tests;
 public class AutowiredMemberActivatorTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var autowiredMemberActivator = new AutowiredMemberActivator();
 

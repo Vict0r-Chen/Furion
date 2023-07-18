@@ -17,7 +17,7 @@ namespace Furion.Configuration.Tests;
 public class ConfigurationBuilderBaseTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var configurationBuilder = new TestConfigurationBuilder();
 

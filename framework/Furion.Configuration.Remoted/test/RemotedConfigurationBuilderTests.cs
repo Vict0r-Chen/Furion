@@ -19,7 +19,7 @@ namespace Furion.Configuration.Remoted.Tests;
 public class RemotedConfigurationBuilderTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var remotedConfigurationBuilder = new RemotedConfigurationBuilder();
 

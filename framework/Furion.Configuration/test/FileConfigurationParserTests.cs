@@ -17,7 +17,7 @@ namespace Furion.Configuration.Tests;
 public class FileConfigurationParserTests : IDisposable
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         Assert.Null(FileConfigurationParser._jsonParser);
 

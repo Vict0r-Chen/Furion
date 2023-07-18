@@ -28,7 +28,7 @@ public class AutowiredServiceAttributeTests
     }
 
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var autowiredServiceAttribute = new AutowiredServiceAttribute();
 

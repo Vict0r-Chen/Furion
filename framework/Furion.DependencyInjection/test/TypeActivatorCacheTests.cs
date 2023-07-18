@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection.Tests;
 public class TypeActivatorCacheTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var typeActivatorCache = new TypeActivatorCache();
 

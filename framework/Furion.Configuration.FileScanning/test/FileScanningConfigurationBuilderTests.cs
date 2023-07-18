@@ -19,7 +19,7 @@ namespace Furion.Configuration.FileScanning.Tests;
 public class FileScanningConfigurationBuilderTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
 
