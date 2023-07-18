@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入命名模块 <see cref="IServiceProvider"/> 拓展类
 /// </summary>
-public static class NamedServiceProviderExtensions
+public static class DependencyInjectionNamedServiceProviderExtensions
 {
     /// <summary>
     /// 获取命名服务
@@ -32,7 +32,7 @@ public static class NamedServiceProviderExtensions
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
         ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
-        return serviceProvider.GetService(new NamedType(name, serviceType));
+        return serviceProvider.GetService(new NamedTypeDelegator(name, serviceType));
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public static class NamedServiceProviderExtensions
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
         ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
-        return serviceProvider.GetRequiredService(new NamedType(name, serviceType));
+        return serviceProvider.GetRequiredService(new NamedTypeDelegator(name, serviceType));
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public static class NamedServiceProviderExtensions
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
-        return serviceProvider.GetServices(new NamedType(name, typeof(TService)))
+        return serviceProvider.GetServices(new NamedTypeDelegator(name, typeof(TService)))
                               .OfType<TService>();
     }
 
@@ -107,7 +107,7 @@ public static class NamedServiceProviderExtensions
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
         ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
 
-        return serviceProvider.GetServices(new NamedType(name, serviceType))
+        return serviceProvider.GetServices(new NamedTypeDelegator(name, serviceType))
                               .Where(serviceType.IsInstanceOfType);
     }
 }

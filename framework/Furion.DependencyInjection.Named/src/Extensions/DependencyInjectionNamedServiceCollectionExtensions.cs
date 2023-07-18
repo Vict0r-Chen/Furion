@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入命名模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public static class NamedServiceCollectionExtensions
+public static class DependencyInjectionNamedServiceCollectionExtensions
 {
     /// <summary>
     /// 添加命名服务
@@ -561,7 +561,7 @@ public static class NamedServiceCollectionExtensions
     internal static ServiceDescriptor CreateDelegator(string name, ServiceDescriptor serviceDescriptor)
     {
         // 创建命名服务类型
-        var namedServiceType = new NamedType(name, serviceDescriptor.ServiceType);
+        var namedServiceType = new NamedTypeDelegator(name, serviceDescriptor.ServiceType);
 
         return serviceDescriptor switch
         {

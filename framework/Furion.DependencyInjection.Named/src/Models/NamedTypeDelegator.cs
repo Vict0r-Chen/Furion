@@ -15,58 +15,46 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 具有命名的 <see cref="Type"/>
+/// 命名类型委托器
 /// </summary>
-/// <remarks><see href="https://learn.microsoft.com/zh-cn/dotnet/api/system.reflection.typedelegator?redirectedfrom=MSDN">TypeDelegator</see></remarks>
-internal sealed class NamedType : TypeDelegator
+internal sealed class NamedTypeDelegator : TypeDelegator
 {
     /// <summary>
-    /// 类型命名
+    /// 名称
     /// </summary>
     internal readonly string name;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="name">类型命名</param>
-    /// <param name="delegatingType"><see cref="Type"/></param>
-    internal NamedType(string name, Type delegatingType)
+    /// <param name="name">名称</param>
+    /// <param name="delegatingType">委托类型</param>
+    internal NamedTypeDelegator(string name, [DynamicallyAccessedMembers((DynamicallyAccessedMemberTypes)(-1))] Type delegatingType)
         : base(delegatingType)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
         this.name = name;
     }
-
-    /// <summary>
-    /// 被代理类型
-    /// </summary>
-    internal Type DelegatingType => typeImpl;
-
-    /// <inheritdoc />
-    public override string Name => $"{typeImpl.Name} (Type '{nameof(NamedType)}')";
-
-    /// <inheritdoc />
-    public override string? FullName => $"{typeImpl.FullName} (Type '{nameof(NamedType)}')";
-
-    /// <inheritdoc />
-    public override Guid GUID => Guid.NewGuid();
 
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        return name.GetHashCode() + typeImpl.GetHashCode();
+        return HashCode.Combine(name, typeImpl);
     }
 
     /// <inheritdoc />
-    public override bool Equals(object? o)
+    public override bool Equals(object? obj)
     {
-        return Equals(o as NamedType);
+        return Equals(obj as NamedTypeDelegator);
     }
 
     /// <inheritdoc />
-    public override bool Equals(Type? o)
+    public override bool Equals(Type? type)
     {
-        return o is NamedType namedType
-                && namedType.name == name
-                && namedType.DelegatingType == DelegatingType;
+        return type is NamedTypeDelegator namedTypeDelegator
+            && namedTypeDelegator.name == name
+            && namedTypeDelegator.typeImpl == typeImpl;
     }
 }
