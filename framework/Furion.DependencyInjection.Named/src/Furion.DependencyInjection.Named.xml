@@ -19,14 +19,14 @@
         </member>
         <member name="F:Furion.DependencyInjection.NamedTypeDelegator.name">
             <summary>
-            名称
+            命名
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.NamedTypeDelegator.#ctor(System.String,System.Type)">
             <summary>
             构造函数
             </summary>
-            <param name="name">名称</param>
+            <param name="name">命名</param>
             <param name="delegatingType">委托类型</param>
         </member>
         <member name="M:Furion.DependencyInjection.NamedTypeDelegator.GetHashCode">

@@ -20,14 +20,14 @@ namespace Furion.DependencyInjection;
 internal sealed class NamedTypeDelegator : TypeDelegator
 {
     /// <summary>
-    /// 名称
+    /// 命名
     /// </summary>
     internal readonly string name;
 
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="name">名称</param>
+    /// <param name="name">命名</param>
     /// <param name="delegatingType">委托类型</param>
     internal NamedTypeDelegator(string name, [DynamicallyAccessedMembers((DynamicallyAccessedMemberTypes)(-1))] Type delegatingType)
         : base(delegatingType)
