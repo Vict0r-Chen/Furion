@@ -14,9 +14,6 @@
 
 namespace Furion.DependencyInjection.Tests;
 
-public class TypeActivatorCacheModels
+public class TypeActivatorClass
 {
-    public class TypeActivatorClass
-    {
-    }
 }

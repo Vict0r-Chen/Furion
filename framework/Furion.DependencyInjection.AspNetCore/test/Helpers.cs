@@ -36,4 +36,18 @@ public class Helpers
         };
         return context;
     }
+
+    public static int GetIdlePort()
+    {
+        var fromPort = 10000;
+        var toPort = 65535;
+        var randomPort = RandomNumberGenerator.GetInt32(fromPort, toPort);
+
+        while (IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners().Any(p => p.Port == randomPort))
+        {
+            randomPort = RandomNumberGenerator.GetInt32(fromPort, toPort);
+        }
+
+        return randomPort;
+    }
 }

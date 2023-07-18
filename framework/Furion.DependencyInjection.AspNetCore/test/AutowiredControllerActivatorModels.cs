@@ -14,32 +14,37 @@
 
 namespace Furion.DependencyInjection.AspNetCore.Tests;
 
-public class AutowiredControllerActivatorModels
+[ApiController]
+[Route("[controller]/[action]")]
+public class AutowiredController : ControllerBase, IDisposable, IAsyncDisposable
 {
-    public class AutowiredController : Controller, IDisposable, IAsyncDisposable
+    internal readonly IServiceProvider _serviceProvider;
+
+    public AutowiredController(IServiceProvider serviceProvider)
     {
-        internal readonly IServiceProvider _serviceProvider;
+        _serviceProvider = serviceProvider;
+    }
 
-        public AutowiredController(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
+    [AutowiredService, MaybeNull]
+    public IServiceProvider Services { get; set; }
 
-        [AutowiredService, MaybeNull]
-        public IServiceProvider Services { get; set; }
+    public string? DisposeString { get; set; } = "HasData";
 
-        public string? DisposeString { get; set; } = "HasData";
+    [HttpGet]
+    public bool Autowired()
+    {
+        return Services is not null
+            && _serviceProvider is not null;
+    }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            DisposeString = null;
-        }
+    public void Dispose()
+    {
+        DisposeString = null;
+    }
 
-        public ValueTask DisposeAsync()
-        {
-            DisposeString = null;
-            return ValueTask.CompletedTask;
-        }
+    public ValueTask DisposeAsync()
+    {
+        DisposeString = null;
+        return ValueTask.CompletedTask;
     }
 }

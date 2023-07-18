@@ -15,5 +15,3 @@
 global using System.Diagnostics.CodeAnalysis;
 global using System.Reflection;
 global using Xunit;
-global using static Furion.DependencyInjection.Tests.AutowiredMemberActivatorModels;
-global using static Furion.DependencyInjection.Tests.TypeActivatorCacheModels;

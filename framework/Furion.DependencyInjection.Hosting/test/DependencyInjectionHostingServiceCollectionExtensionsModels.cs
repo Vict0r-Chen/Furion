@@ -14,16 +14,13 @@
 
 namespace Furion.DependencyInjection.Hosting.Tests;
 
-public class DependencyInjectionHostingServiceCollectionExtensionsModels
+public class TestWorker : BackgroundService
 {
-    public class TestWorker : BackgroundService
-    {
-        [AutowiredService, MaybeNull]
-        public IConfiguration Configuration { get; set; }
+    [AutowiredService, MaybeNull]
+    public IConfiguration Configuration { get; set; }
 
-        [AutowiredService, MaybeNull]
-        public IServiceProvider _services;
+    [AutowiredService, MaybeNull]
+    public IServiceProvider _services;
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken) => throw new NotImplementedException();
-    }
+    protected override Task ExecuteAsync(CancellationToken stoppingToken) => throw new NotImplementedException();
 }

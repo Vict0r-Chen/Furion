@@ -15,6 +15,7 @@
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Controllers;
 global using System.Diagnostics.CodeAnalysis;
+global using System.Net.NetworkInformation;
 global using System.Reflection;
+global using System.Security.Cryptography;
 global using Xunit;
-global using static Furion.DependencyInjection.AspNetCore.Tests.AutowiredControllerActivatorModels;

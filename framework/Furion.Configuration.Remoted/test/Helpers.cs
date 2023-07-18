@@ -16,10 +16,6 @@ namespace Furion.Configuration.Remoted.Tests;
 
 public class Helpers
 {
-    /// <summary>
-    /// 获取一个空闲端口
-    /// </summary>
-    /// <returns></returns>
     public static int GetIdlePort()
     {
         var fromPort = 10000;

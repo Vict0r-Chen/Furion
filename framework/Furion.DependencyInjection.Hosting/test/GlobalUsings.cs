@@ -14,4 +14,3 @@
 
 global using System.Diagnostics.CodeAnalysis;
 global using Xunit;
-global using static Furion.DependencyInjection.Hosting.Tests.DependencyInjectionHostingServiceCollectionExtensionsModels;

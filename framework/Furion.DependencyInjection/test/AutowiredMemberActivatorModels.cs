@@ -16,53 +16,50 @@
 
 namespace Furion.DependencyInjection.Tests;
 
-public class AutowiredMemberActivatorModels
+public class AutowiredServiceBase
 {
-    public class AutowiredServiceBase
-    {
-        [AutowiredService, MaybeNull]
-        public IServiceProvider _baseServices;
+    [AutowiredService, MaybeNull]
+    public IServiceProvider _baseServices;
 
-        [AutowiredService, MaybeNull]
-        public IConfiguration BaseConfiguration { get; set; }
-    }
+    [AutowiredService, MaybeNull]
+    public IConfiguration BaseConfiguration { get; set; }
+}
 
-    public class AutowiredService : AutowiredServiceBase
-    {
-        [AutowiredService, MaybeNull]
-        internal IServiceProvider _notPublicServices;
+public class AutowiredService : AutowiredServiceBase
+{
+    [AutowiredService, MaybeNull]
+    internal IServiceProvider _notPublicServices;
 
-        [AutowiredService, MaybeNull]
-        public IServiceProvider _services;
+    [AutowiredService, MaybeNull]
+    public IServiceProvider _services;
 
-        [AutowiredService, MaybeNull]
-        public IConfiguration Configuration { get; set; }
+    [AutowiredService, MaybeNull]
+    public IConfiguration Configuration { get; set; }
 
-        [AutowiredService, MaybeNull]
-        internal IConfiguration NotPublicConfiguration { get; set; }
-    }
+    [AutowiredService, MaybeNull]
+    internal IConfiguration NotPublicConfiguration { get; set; }
+}
 
-    public class ReadonlyFiedAutowiredService
-    {
-        [AutowiredService, MaybeNull]
-        public readonly IServiceProvider _services;
-    }
+public class ReadonlyFiedAutowiredService
+{
+    [AutowiredService, MaybeNull]
+    public readonly IServiceProvider _services;
+}
 
-    public class ReadonlyPropertyAutowiredService
-    {
-        [AutowiredService, MaybeNull]
-        public IConfiguration Configuration { get; }
-    }
+public class ReadonlyPropertyAutowiredService
+{
+    [AutowiredService, MaybeNull]
+    public IConfiguration Configuration { get; }
+}
 
-    public class NotRegisterAutowiredService
-    {
-        [AutowiredService, MaybeNull]
-        public IConfiguration Configuration { get; set; }
-    }
+public class NotRegisterAutowiredService
+{
+    [AutowiredService, MaybeNull]
+    public IConfiguration Configuration { get; set; }
+}
 
-    public class AllowNotRegisterAutowiredService
-    {
-        [AutowiredService(CanBeNull = true), MaybeNull]
-        public IConfiguration Configuration { get; set; }
-    }
+public class AllowNotRegisterAutowiredService
+{
+    [AutowiredService(CanBeNull = true), MaybeNull]
+    public IConfiguration Configuration { get; set; }
 }

@@ -16,5 +16,3 @@ global using Microsoft.Extensions.Configuration.Ini;
 global using Microsoft.Extensions.Configuration.Json;
 global using Microsoft.Extensions.Configuration.Xml;
 global using Xunit;
-global using static Furion.Configuration.Tests.ConfigurationBuilderBaseModels;
-global using static Furion.Configuration.Tests.IConfigurationExtensionModels;

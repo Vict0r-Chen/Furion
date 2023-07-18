@@ -14,54 +14,51 @@
 
 namespace Furion.Configuration.Tests;
 
-public class IConfigurationExtensionModels
+public class FurionModel
 {
-    public class FurionModel
+    public string? Name { get; set; }
+    public Version? Version { get; set; }
+    public Uri? Homepage { get; set; }
+    public int Age { get; set; }
+    public decimal Price { get; set; }
+    public bool IsMIT { get; set; }
+
+    public string[]? Tags { get; set; }
+    public Dictionary<string, object?>? Properties { get; set; }
+
+    public FurionAuthor? Author { get; set; }
+
+    internal string? NotPublic { get; set; }
+}
+
+public class FurionAuthor
+{
+    public string? Name { get; set; }
+    public int Age { get; set; }
+}
+
+public class ReloadConfigurationSource : IConfigurationSource
+{
+    public IConfigurationProvider Build(IConfigurationBuilder configurationBuilder)
     {
-        public string? Name { get; set; }
-        public Version? Version { get; set; }
-        public Uri? Homepage { get; set; }
-        public int Age { get; set; }
-        public decimal Price { get; set; }
-        public bool IsMIT { get; set; }
-
-        public string[]? Tags { get; set; }
-        public Dictionary<string, object?>? Properties { get; set; }
-
-        public FurionAuthor? Author { get; set; }
-
-        internal string? NotPublic { get; set; }
+        return new ReloadConfigurationProvider();
     }
+}
 
-    public class FurionAuthor
+public class ReloadConfigurationProvider : ConfigurationProvider
+{
+    public int Count { get; set; }
+
+    public override void Load()
     {
-        public string? Name { get; set; }
-        public int Age { get; set; }
-    }
-
-    public class ReloadConfigurationSource : IConfigurationSource
-    {
-        public IConfigurationProvider Build(IConfigurationBuilder configurationBuilder)
-        {
-            return new ReloadConfigurationProvider();
-        }
-    }
-
-    public class ReloadConfigurationProvider : ConfigurationProvider
-    {
-        public int Count { get; set; }
-
-        public override void Load()
-        {
-            Count++;
-            Data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase)
+        Count++;
+        Data = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase)
             {
                 {nameof(Count), $"{Count}"}
             };
-        }
     }
+}
 
-    public class UnknownConfigurationSource
-    {
-    }
+public class UnknownConfigurationSource
+{
 }

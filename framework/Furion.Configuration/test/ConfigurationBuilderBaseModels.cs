@@ -14,9 +14,6 @@
 
 namespace Furion.Configuration.Tests;
 
-public class ConfigurationBuilderBaseModels
+public class TestConfigurationBuilder : ConfigurationBuilderBase
 {
-    public class TestConfigurationBuilder : ConfigurationBuilderBase
-    {
-    }
 }
