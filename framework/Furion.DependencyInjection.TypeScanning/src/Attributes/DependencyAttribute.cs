@@ -38,27 +38,27 @@ public sealed class DependencyAttribute : Attribute
     }
 
     /// <inheritdoc cref="ServiceAddition"/>
-    public ServiceAddition Addition { get; init; }
+    public ServiceAddition Addition { get; set; }
 
     /// <summary>
     /// 忽略注册
     /// </summary>
     /// <remarks>若设置为 true 则跳过配置类型扫描</remarks>
-    public bool Ignore { get; init; }
+    public bool Ignore { get; set; }
 
     /// <summary>
     /// 排序
     /// </summary>
     /// <remarks>值越大则越后注册</remarks>
-    public int Order { get; init; }
+    public int Order { get; set; }
 
     /// <summary>
     /// 注册自身
     /// </summary>
-    public bool IncludeSelf { get; init; }
+    public bool IncludeSelf { get; set; }
 
     /// <summary>
     /// 注册基类
     /// </summary>
-    public bool IncludeBase { get; init; }
+    public bool IncludeBase { get; set; }
 }

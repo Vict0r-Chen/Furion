@@ -46,7 +46,7 @@ public class ExposeServicesAttribute : Attribute
     /// <summary>
     /// 类型集合
     /// </summary>
-    public Type[] ServiceTypes { get; init; }
+    public Type[] ServiceTypes { get; set; }
 }
 
 /// <summary>

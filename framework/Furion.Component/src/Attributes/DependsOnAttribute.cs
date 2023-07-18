@@ -44,7 +44,7 @@ public class DependsOnAttribute : Attribute
     /// <summary>
     /// 依赖类型集合
     /// </summary>
-    public Type[] DependedTypes { get; init; }
+    public Type[] DependedTypes { get; set; }
 }
 
 /// <summary>
