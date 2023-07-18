@@ -33,18 +33,18 @@ public class AutowiredServiceAttributeTests
         var autowiredServiceAttribute = new AutowiredServiceAttribute();
 
         Assert.NotNull(autowiredServiceAttribute);
-        Assert.False(autowiredServiceAttribute.AllowNullValue);
+        Assert.False(autowiredServiceAttribute.CanBeNull);
     }
 
     [Fact]
-    public void New_SetAllowNullValue()
+    public void New_SetCanBeNull()
     {
         var autowiredServiceAttribute = new AutowiredServiceAttribute
         {
-            AllowNullValue = true
+            CanBeNull = true
         };
 
         Assert.NotNull(autowiredServiceAttribute);
-        Assert.True(autowiredServiceAttribute.AllowNullValue);
+        Assert.True(autowiredServiceAttribute.CanBeNull);
     }
 }

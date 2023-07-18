@@ -97,7 +97,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
             ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
 
             // 解析属性值
-            var value = autowiredServiceAttribute.AllowNullValue
+            var value = autowiredServiceAttribute.CanBeNull
                 ? serviceProvider.GetService(property.PropertyType)
                 : serviceProvider.GetRequiredService(property.PropertyType);
 
@@ -150,7 +150,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
             ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
 
             // 解析字段值
-            var value = autowiredServiceAttribute.AllowNullValue
+            var value = autowiredServiceAttribute.CanBeNull
                 ? serviceProvider.GetService(field.FieldType)
                 : serviceProvider.GetRequiredService(field.FieldType);
 

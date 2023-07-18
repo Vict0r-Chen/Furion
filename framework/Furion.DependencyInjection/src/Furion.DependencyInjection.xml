@@ -81,7 +81,7 @@
             构造函数
             </summary>
         </member>
-        <member name="P:Furion.DependencyInjection.AutowiredServiceAttribute.AllowNullValue">
+        <member name="P:Furion.DependencyInjection.AutowiredServiceAttribute.CanBeNull">
             <summary>
             允许空值
             </summary>

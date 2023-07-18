@@ -53,4 +53,16 @@ public class AutowiredMemberActivatorModels
         [AutowiredService, MaybeNull]
         public IConfiguration Configuration { get; }
     }
+
+    public class NotRegisterAutowiredService
+    {
+        [AutowiredService, MaybeNull]
+        public IConfiguration Configuration { get; set; }
+    }
+
+    public class AllowNotRegisterAutowiredService
+    {
+        [AutowiredService(CanBeNull = true), MaybeNull]
+        public IConfiguration Configuration { get; set; }
+    }
 }

@@ -182,4 +182,33 @@ public class AutowiredMemberActivatorTests
         Assert.NotEmpty(autowiredMemberActivator._typePropertiesCache);
         Assert.NotEmpty(autowiredMemberActivator._typeFieldsCache);
     }
+
+    [Fact]
+    public void AutowiredMembers_CanBeNull_IsFalse()
+    {
+        var services = new ServiceCollection();
+        var serviceProvider = services.BuildServiceProvider();
+
+        var autowiredMemberActivator = new AutowiredMemberActivator();
+        var autowiredService = new NotRegisterAutowiredService();
+
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            autowiredMemberActivator.AutowiredMembers(autowiredService, serviceProvider);
+        });
+    }
+
+    [Fact]
+    public void AutowiredMembers_CanBeNull_IsTrue()
+    {
+        var services = new ServiceCollection();
+        var serviceProvider = services.BuildServiceProvider();
+
+        var autowiredMemberActivator = new AutowiredMemberActivator();
+        var autowiredService = new AllowNotRegisterAutowiredService();
+
+        autowiredMemberActivator.AutowiredMembers(autowiredService, serviceProvider);
+
+        Assert.Null(autowiredService.Configuration);
+    }
 }
