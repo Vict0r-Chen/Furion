@@ -33,7 +33,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ServiceBasedAutowiredControllerActivator">
             <summary>
-            自动装配控制器激活器
+            自动装配服务控制器激活器
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.ServiceBasedAutowiredControllerActivator._autowiredMemberActivator">

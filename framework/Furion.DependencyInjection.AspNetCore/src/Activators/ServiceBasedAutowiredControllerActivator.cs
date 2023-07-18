@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 自动装配控制器激活器
+/// 自动装配服务控制器激活器
 /// </summary>
 public class ServiceBasedAutowiredControllerActivator : IControllerActivator
 {

@@ -12,10 +12,34 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-// 配置框架友元程序集
-[assembly: InternalsVisibleTo("Furion.DependencyInjection.AspNetCore")]
-[assembly: InternalsVisibleTo("Furion.DependencyInjection.Hosting")]
+namespace Furion.DependencyInjection.AspNetCore.Tests;
 
-// 配置测试友元程序集
-[assembly: InternalsVisibleTo("Furion.DependencyInjection.Tests")]
-[assembly: InternalsVisibleTo("Furion.DependencyInjection.AspNetCore.Tests")]
+public class AutowiredControllerActivatorModels
+{
+    public class AutowiredController : Controller, IDisposable, IAsyncDisposable
+    {
+        internal readonly IServiceProvider _serviceProvider;
+
+        public AutowiredController(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        [AutowiredService, MaybeNull]
+        public IServiceProvider Services { get; set; }
+
+        public string? DisposeString { get; set; } = "HasData";
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            DisposeString = null;
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            DisposeString = null;
+            return ValueTask.CompletedTask;
+        }
+    }
+}
