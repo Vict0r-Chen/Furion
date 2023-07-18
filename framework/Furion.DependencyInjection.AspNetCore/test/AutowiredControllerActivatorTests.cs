@@ -74,7 +74,6 @@ public class AutowiredControllerActivatorTests
         var controller = autowiredControllerActivator.Create(context) as AutowiredController;
 
         Assert.NotNull(controller);
-        Assert.True(controller is AutowiredController);
         Assert.NotNull(controller._serviceProvider);
         Assert.NotNull(controller.Services);
     }

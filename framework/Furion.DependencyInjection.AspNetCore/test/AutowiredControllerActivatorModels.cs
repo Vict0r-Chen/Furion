@@ -39,11 +39,13 @@ public class AutowiredController : ControllerBase, IDisposable, IAsyncDisposable
 
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
         DisposeString = null;
     }
 
     public ValueTask DisposeAsync()
     {
+        GC.SuppressFinalize(this);
         DisposeString = null;
         return ValueTask.CompletedTask;
     }
