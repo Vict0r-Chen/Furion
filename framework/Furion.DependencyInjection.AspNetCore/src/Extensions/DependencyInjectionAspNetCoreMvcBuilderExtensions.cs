@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
 {
     /// <summary>
-    /// 添加依赖注入 Web 模块服务
+    /// 添加控制器自动装载成员服务
     /// </summary>
     /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
     /// <returns><see cref="IMvcBuilder"/></returns>
@@ -30,7 +30,7 @@ public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
     }
 
     /// <summary>
-    /// 添加依赖注入 Web 模块服务
+    /// 添加服务控制器自动装载成员服务
     /// </summary>
     /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
     /// <returns><see cref="IMvcBuilder"/></returns>
@@ -43,9 +43,9 @@ public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
     /// 替换默认控制器激活器
     /// </summary>
     /// <typeparam name="TControllerActivator"><see cref="IControllerActivator"/></typeparam>
-    /// <param name="mvcBuilder"><see cref="IMvcCoreBuilder"/></param>
-    /// <returns><see cref="IMvcCoreBuilder"/></returns>
-    internal static IMvcBuilder ReplaceControllerActivator<TControllerActivator>(this IMvcBuilder mvcBuilder)
+    /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
+    /// <returns><see cref="IMvcBuilder"/></returns>
+    internal static IMvcBuilder ReplaceControllerActivator<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TControllerActivator>(this IMvcBuilder mvcBuilder)
         where TControllerActivator : class, IControllerActivator
     {
         var services = mvcBuilder.Services;

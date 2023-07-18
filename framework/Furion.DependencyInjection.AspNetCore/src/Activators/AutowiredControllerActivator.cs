@@ -26,7 +26,7 @@ internal sealed class AutowiredControllerActivator : IControllerActivator
     internal readonly IAutowiredMemberActivator _autowiredMemberActivator;
 
     /// <summary>
-    /// 控制器
+    /// 构造函数
     /// </summary>
     /// <param name="typeActivatorCache"><see cref="ITypeActivatorCache"/></param>
     /// <param name="autowiredMemberActivator"><see cref="IAutowiredMemberActivator"/></param>

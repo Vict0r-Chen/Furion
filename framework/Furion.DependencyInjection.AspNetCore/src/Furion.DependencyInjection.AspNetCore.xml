@@ -17,7 +17,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredControllerActivator.#ctor(Furion.DependencyInjection.ITypeActivatorCache,Furion.DependencyInjection.IAutowiredMemberActivator)">
             <summary>
-            控制器
+            构造函数
             </summary>
             <param name="typeActivatorCache"><see cref="T:Furion.DependencyInjection.ITypeActivatorCache"/></param>
             <param name="autowiredMemberActivator"><see cref="T:Furion.DependencyInjection.IAutowiredMemberActivator"/></param>
@@ -41,7 +41,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ServiceBasedAutowiredControllerActivator.#ctor(Furion.DependencyInjection.IAutowiredMemberActivator)">
             <summary>
-            控制器
+            构造函数
             </summary>
             <param name="autowiredMemberActivator"><see cref="T:Furion.DependencyInjection.IAutowiredMemberActivator"/></param>
         </member>
@@ -63,14 +63,14 @@
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionAspNetCoreMvcBuilderExtensions.AddControllersWithAutowired(Microsoft.Extensions.DependencyInjection.IMvcBuilder)">
             <summary>
-            添加依赖注入 Web 模块服务
+            添加控制器自动装载成员服务
             </summary>
             <param name="mvcBuilder"><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionAspNetCoreMvcBuilderExtensions.AddControllersAsServicesWithAutowired(Microsoft.Extensions.DependencyInjection.IMvcBuilder)">
             <summary>
-            添加依赖注入 Web 模块服务
+            添加服务控制器自动装载成员服务
             </summary>
             <param name="mvcBuilder"><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></returns>
@@ -80,8 +80,8 @@
             替换默认控制器激活器
             </summary>
             <typeparam name="TControllerActivator"><see cref="T:Microsoft.AspNetCore.Mvc.Controllers.IControllerActivator"/></typeparam>
-            <param name="mvcBuilder"><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder"/></returns>
+            <param name="mvcBuilder"><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IMvcBuilder"/></returns>
         </member>
     </members>
 </doc>
