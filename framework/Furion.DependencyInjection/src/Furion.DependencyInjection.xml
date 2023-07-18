@@ -55,21 +55,21 @@
             自动装配成员值
             </summary>
             <param name="instance">对象实例</param>
-            <param name="services"><see cref="T:System.IServiceProvider"/></param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowriedProperties(System.Object,System.IServiceProvider)">
             <summary>
             自动装配属性值
             </summary>
             <param name="instance">对象实例</param>
-            <param name="services"><see cref="T:System.IServiceProvider"/></param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.AutowriedFields(System.Object,System.IServiceProvider)">
             <summary>
             自动装配字段值
             </summary>
             <param name="instance">对象实例</param>
-            <param name="services"><see cref="T:System.IServiceProvider"/></param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="T:Furion.DependencyInjection.AutowiredServiceAttribute">
             <summary>

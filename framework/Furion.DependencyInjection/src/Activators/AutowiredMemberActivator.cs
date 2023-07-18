@@ -50,25 +50,25 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
     }
 
     /// <inheritdoc />
-    public void AutowiredMembers(object instance, IServiceProvider services)
+    public void AutowiredMembers(object instance, IServiceProvider serviceProvider)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(serviceProvider);
 
         // 自动装配属性值
-        AutowriedProperties(instance, services);
+        AutowriedProperties(instance, serviceProvider);
 
         // 自动装配字段值
-        AutowriedFields(instance, services);
+        AutowriedFields(instance, serviceProvider);
     }
 
     /// <inheritdoc />
-    public void AutowriedProperties(object instance, IServiceProvider services)
+    public void AutowriedProperties(object instance, IServiceProvider serviceProvider)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(serviceProvider);
 
         // 对象类型
         var instanceType = instance.GetType();
@@ -98,8 +98,8 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 
             // 解析属性值
             var value = autowiredServiceAttribute.AllowNullValue
-                ? services.GetService(property.PropertyType)
-                : services.GetRequiredService(property.PropertyType);
+                ? serviceProvider.GetService(property.PropertyType)
+                : serviceProvider.GetRequiredService(property.PropertyType);
 
             // 设置属性值
             property.SetValue(instance, value);
@@ -117,11 +117,11 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
     }
 
     /// <inheritdoc />
-    public void AutowriedFields(object instance, IServiceProvider services)
+    public void AutowriedFields(object instance, IServiceProvider serviceProvider)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(serviceProvider);
 
         // 对象类型
         var instanceType = instance.GetType();
@@ -151,8 +151,8 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 
             // 解析字段值
             var value = autowiredServiceAttribute.AllowNullValue
-                ? services.GetService(field.FieldType)
-                : services.GetRequiredService(field.FieldType);
+                ? serviceProvider.GetService(field.FieldType)
+                : serviceProvider.GetRequiredService(field.FieldType);
 
             // 设置字段值
             field.SetValue(instance, value);

@@ -17,7 +17,7 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 自动装配成员激活器
 /// </summary>
-internal interface IAutowiredMemberActivator
+public interface IAutowiredMemberActivator
 {
     /// <summary>
     /// 获取反射搜索成员方式
@@ -29,20 +29,20 @@ internal interface IAutowiredMemberActivator
     /// 自动装配成员值
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="services"><see cref="IServiceProvider"/></param>
-    void AutowiredMembers(object instance, IServiceProvider services);
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    void AutowiredMembers(object instance, IServiceProvider serviceProvider);
 
     /// <summary>
     /// 自动装配属性值
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="services"><see cref="IServiceProvider"/></param>
-    void AutowriedProperties(object instance, IServiceProvider services);
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    void AutowriedProperties(object instance, IServiceProvider serviceProvider);
 
     /// <summary>
     /// 自动装配字段值
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="services"><see cref="IServiceProvider"/></param>
-    void AutowriedFields(object instance, IServiceProvider services);
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    void AutowriedFields(object instance, IServiceProvider serviceProvider);
 }

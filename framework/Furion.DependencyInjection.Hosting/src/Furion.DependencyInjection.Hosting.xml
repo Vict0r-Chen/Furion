@@ -4,5 +4,27 @@
         <name>Furion.DependencyInjection.Hosting</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionHostingServiceCollectionExtensions">
+            <summary>
+            依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionHostingServiceCollectionExtensions.AddAutowiredHostedService``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加自动装配成员激活器的主机服务
+            </summary>
+            <typeparam name="THostedService"><see cref="T:Microsoft.Extensions.Hosting.IHostedService"/></typeparam>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionHostingServiceCollectionExtensions.AddAutowiredHostedService``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.IServiceProvider,``0})">
+            <summary>
+            添加自动装配成员激活器的主机服务
+            </summary>
+            <typeparam name="THostedService"><see cref="T:Microsoft.Extensions.Hosting.IHostedService"/></typeparam>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="implementationFactory">实现类服务工厂</param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
     </members>
 </doc>
