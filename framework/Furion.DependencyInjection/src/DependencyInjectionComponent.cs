@@ -19,4 +19,9 @@ namespace Furion.Component;
 /// </summary>
 public sealed class DependencyInjectionComponent : ComponentBase
 {
+    /// <inheritdoc />
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        context.Services.AddAutowiredMemberActivator();
+    }
 }

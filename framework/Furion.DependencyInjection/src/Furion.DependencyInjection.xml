@@ -91,6 +91,9 @@
             依赖注入模块服务组件
             </summary>
         </member>
+        <member name="M:Furion.Component.DependencyInjectionComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+            <inheritdoc />
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionServiceCollectionExtensions">
             <summary>
             依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
