@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 自动装配成员激活器
+/// 自动装配成员激活器服务
 /// </summary>
 public interface IAutowiredMemberActivator
 {

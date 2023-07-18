@@ -7,19 +7,24 @@
         <member name="T:Furion.DependencyInjection.AutowiredMemberActivator">
             <inheritdoc />
         </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typePropertiesCache">
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._getAutowiredPropertiesFactory">
+            <summary>
+            可自动装配的类型属性集合工厂委托
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._getAutowiredFieldsFactory">
+            <summary>
+            可自动装配的类型字段集合工厂委托
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeAutowiredPropertiesCache">
             <summary>
             可自动装配的类型属性缓存集合
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeFieldsCache">
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeAutowiredFieldsCache">
             <summary>
             可自动装配的类型字段缓存集合
-            </summary>
-        </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._autowiredServiceAttributeType">
-            <summary>
-            <see cref="T:Furion.DependencyInjection.AutowiredServiceAttribute"/> 类型
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.#ctor">
@@ -41,7 +46,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.IAutowiredMemberActivator">
             <summary>
-            自动装配成员激活器
+            自动装配成员激活器服务
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.IAutowiredMemberActivator.GetBindingFlags">
@@ -85,6 +90,41 @@
             <summary>
             允许空值
             </summary>
+        </member>
+        <member name="T:Furion.DependencyInjection.ITypeActivatorCache">
+            <summary>
+            类型激活器缓存服务
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.ITypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
+            <summary>
+            创建类型实例
+            </summary>
+            <typeparam name="TInstance">返回值类型</typeparam>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="implementationType">实例类型</param>
+            <returns><typeparamref name="TInstance"/></returns>
+        </member>
+        <member name="T:Furion.DependencyInjection.TypeActivatorCache">
+            <inheritdoc />
+        </member>
+        <member name="F:Furion.DependencyInjection.TypeActivatorCache._createFactory">
+            <summary>
+            对象创建工厂委托
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.TypeActivatorCache._typeActivatorCache">
+            <summary>
+            类型激活器缓存集合
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.TypeActivatorCache.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Furion.DependencyInjection.TypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">
+            <inheritdoc/>
         </member>
         <member name="T:Furion.Component.DependencyInjectionComponent">
             <summary>

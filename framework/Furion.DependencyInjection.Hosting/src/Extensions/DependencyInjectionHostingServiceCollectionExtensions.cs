@@ -32,7 +32,8 @@ public static class DependencyInjectionHostingServiceCollectionExtensions
         {
             // 解析或初始化主机服务
             var hostedService = serviceProvider.GetService<THostedService>()
-                ?? (THostedService)ActivatorUtilities.CreateInstance(serviceProvider, typeof(THostedService));
+                ?? serviceProvider.GetRequiredService<ITypeActivatorCache>()
+                    .CreateInstance<THostedService>(serviceProvider, typeof(THostedService));
 
             return hostedService;
         });

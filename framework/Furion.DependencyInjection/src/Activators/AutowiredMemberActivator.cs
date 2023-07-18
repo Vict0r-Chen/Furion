@@ -18,29 +18,46 @@ namespace Furion.DependencyInjection;
 internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 {
     /// <summary>
+    /// 可自动装配的类型属性集合工厂委托
+    /// </summary>
+    internal readonly Func<Type, List<PropertyInfo>> _getAutowiredPropertiesFactory;
+
+    /// <summary>
+    /// 可自动装配的类型字段集合工厂委托
+    /// </summary>
+    internal readonly Func<Type, List<FieldInfo>> _getAutowiredFieldsFactory;
+
+    /// <summary>
     /// 可自动装配的类型属性缓存集合
     /// </summary>
-    internal readonly ConcurrentDictionary<Type, List<PropertyInfo>> _typePropertiesCache;
+    internal readonly ConcurrentDictionary<Type, List<PropertyInfo>> _typeAutowiredPropertiesCache;
 
     /// <summary>
     /// 可自动装配的类型字段缓存集合
     /// </summary>
-    internal readonly ConcurrentDictionary<Type, List<FieldInfo>> _typeFieldsCache;
-
-    /// <summary>
-    /// <see cref="AutowiredServiceAttribute"/> 类型
-    /// </summary>
-    internal readonly Type _autowiredServiceAttributeType;
+    internal readonly ConcurrentDictionary<Type, List<FieldInfo>> _typeAutowiredFieldsCache;
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public AutowiredMemberActivator()
     {
-        _typePropertiesCache = new();
-        _typeFieldsCache = new();
+        _typeAutowiredPropertiesCache = new();
+        _typeAutowiredFieldsCache = new();
 
-        _autowiredServiceAttributeType = typeof(AutowiredServiceAttribute);
+        _getAutowiredPropertiesFactory = type =>
+        {
+            return type.GetProperties(GetBindingFlags())
+                .Where(property => property.IsDefined(typeof(AutowiredServiceAttribute), false))
+                .ToList();
+        };
+
+        _getAutowiredFieldsFactory = type =>
+        {
+            return type.GetFields(GetBindingFlags())
+                .Where(field => field.IsDefined(typeof(AutowiredServiceAttribute), false))
+                .ToList();
+        };
     }
 
     /// <inheritdoc />
@@ -73,16 +90,11 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
         // 对象类型
         var instanceType = instance.GetType();
 
-        // 查找所有符合反射搜索成员方式的属性集合
-        var declaredProperties = _typePropertiesCache.GetOrAdd(instanceType, type =>
-        {
-            return type.GetProperties(GetBindingFlags())
-                .Where(property => property.IsDefined(_autowiredServiceAttributeType, false))
-                .ToList();
-        });
+        // 获取可自动装配的类型属性集合
+        var matchProperties = _typeAutowiredPropertiesCache.GetOrAdd(instanceType, _getAutowiredPropertiesFactory);
 
-        // 遍历属性并初始化值
-        foreach (var property in declaredProperties)
+        // 遍历属性并设置值
+        foreach (var property in matchProperties)
         {
             // 检查属性是否可写
             if (!property.CanWrite)
@@ -126,16 +138,11 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
         // 对象类型
         var instanceType = instance.GetType();
 
-        // 查找所有符合反射搜索成员方式的字段集合
-        var declaredFields = _typeFieldsCache.GetOrAdd(instanceType, type =>
-        {
-            return type.GetFields(GetBindingFlags())
-                .Where(field => field.IsDefined(_autowiredServiceAttributeType, false))
-                .ToList();
-        });
+        // 获取可自动装配的类型字段集合
+        var matchFields = _typeAutowiredFieldsCache.GetOrAdd(instanceType, _getAutowiredFieldsFactory);
 
-        // 遍历字段并初始化值
-        foreach (var field in declaredFields)
+        // 遍历字段并设置值
+        foreach (var field in matchFields)
         {
             // 检查字段是否可写
             if (field.IsInitOnly)

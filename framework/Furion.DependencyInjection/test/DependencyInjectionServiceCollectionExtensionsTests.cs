@@ -22,10 +22,15 @@ public class DependencyInjectionServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         services.AddAutowiredMemberActivator();
 
-        Assert.Single(services);
-        Assert.Equal(typeof(IAutowiredMemberActivator), services.Single().ServiceType);
-        Assert.Equal(typeof(AutowiredMemberActivator), services.Single().ImplementationType);
-        Assert.Equal(ServiceLifetime.Singleton, services.Single().Lifetime);
+        Assert.Equal(2, services.Count);
+
+        Assert.Equal(typeof(ITypeActivatorCache), services.First().ServiceType);
+        Assert.Equal(typeof(TypeActivatorCache), services.First().ImplementationType);
+        Assert.Equal(ServiceLifetime.Singleton, services.First().Lifetime);
+
+        Assert.Equal(typeof(IAutowiredMemberActivator), services.Last().ServiceType);
+        Assert.Equal(typeof(AutowiredMemberActivator), services.Last().ImplementationType);
+        Assert.Equal(ServiceLifetime.Singleton, services.Last().Lifetime);
     }
 
     [Fact]
@@ -34,5 +39,7 @@ public class DependencyInjectionServiceCollectionExtensionsTests
         var services = new ServiceCollection();
         services.AddAutowiredMemberActivator();
         services.AddAutowiredMemberActivator();
+
+        Assert.Equal(2, services.Count);
     }
 }

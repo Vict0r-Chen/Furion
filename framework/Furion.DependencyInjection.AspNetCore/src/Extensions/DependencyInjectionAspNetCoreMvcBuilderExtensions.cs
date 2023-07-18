@@ -12,35 +12,23 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.DependencyInjection.AspNetCore;
+namespace Microsoft.Extensions.DependencyInjection;
 
-/// <inheritdoc />
-internal sealed class TypeActivatorCache : ITypeActivatorCache
+/// <summary>
+/// 依赖注入 Web 模块 <see cref="IMvcBuilder"/> 拓展类
+/// </summary>
+/// <remarks>包含控制器自动注入属性或字段服务</remarks>
+public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
 {
     /// <summary>
-    /// 实例工厂
+    /// 添加依赖注入 Web 模块服务
     /// </summary>
-    internal readonly Func<Type, ObjectFactory> _createFactory;
-
-    /// <summary>
-    /// 实例工厂集合
-    /// </summary>
-    internal readonly ConcurrentDictionary<Type, ObjectFactory> _typeActivatorCache;
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public TypeActivatorCache()
+    /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
+    /// <returns><see cref="IMvcBuilder"/></returns>
+    public static IMvcBuilder AddAutowiredControllerActivator(this IMvcBuilder mvcBuilder)
     {
-        _createFactory = (type) => ActivatorUtilities.CreateFactory(type, Type.EmptyTypes);
-        _typeActivatorCache = new();
-    }
+        mvcBuilder.Services.AddAutowiredControllerActivator();
 
-    /// <inheritdoc/>
-    public TInstance CreateInstance<TInstance>(IServiceProvider serviceProvider, Type implementationType)
-    {
-        // 创建实例
-        var createFactory = _typeActivatorCache.GetOrAdd(implementationType, _createFactory);
-        return (TInstance)createFactory(serviceProvider, null);
+        return mvcBuilder;
     }
 }

@@ -36,7 +36,7 @@ public class DependencyInjectionHostingServiceCollectionExtensionsTests
         services.AddAutowiredHostedService(s => new TestWorker());
         services.AddAutowiredHostedService(s => new TestWorker());
 
-        Assert.Equal(2, services.Count);
+        Assert.Equal(3, services.Count);
     }
 
     [Fact]

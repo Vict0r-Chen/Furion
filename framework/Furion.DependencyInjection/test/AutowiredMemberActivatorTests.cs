@@ -22,12 +22,12 @@ public class AutowiredMemberActivatorTests
         var autowiredMemberActivator = new AutowiredMemberActivator();
 
         Assert.NotNull(autowiredMemberActivator);
-        Assert.NotNull(autowiredMemberActivator._typePropertiesCache);
-        Assert.Empty(autowiredMemberActivator._typePropertiesCache);
-        Assert.NotNull(autowiredMemberActivator._typeFieldsCache);
-        Assert.Empty(autowiredMemberActivator._typeFieldsCache);
-        Assert.NotNull(autowiredMemberActivator._autowiredServiceAttributeType);
-        Assert.Equal(typeof(AutowiredServiceAttribute), autowiredMemberActivator._autowiredServiceAttributeType);
+        Assert.NotNull(autowiredMemberActivator._typeAutowiredPropertiesCache);
+        Assert.Empty(autowiredMemberActivator._typeAutowiredPropertiesCache);
+        Assert.NotNull(autowiredMemberActivator._typeAutowiredFieldsCache);
+        Assert.Empty(autowiredMemberActivator._typeAutowiredFieldsCache);
+        Assert.NotNull(autowiredMemberActivator._getAutowiredPropertiesFactory);
+        Assert.NotNull(autowiredMemberActivator._getAutowiredFieldsFactory);
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class AutowiredMemberActivatorTests
         Assert.NotNull(autowiredService.NotPublicConfiguration);
         Assert.Null(autowiredService.BaseConfiguration);
 
-        Assert.NotEmpty(autowiredMemberActivator._typePropertiesCache);
+        Assert.NotEmpty(autowiredMemberActivator._typeAutowiredPropertiesCache);
     }
 
     [Theory]
@@ -123,7 +123,7 @@ public class AutowiredMemberActivatorTests
         Assert.NotNull(autowiredService._notPublicServices);
         Assert.Null(autowiredService._baseServices);
 
-        Assert.NotEmpty(autowiredMemberActivator._typeFieldsCache);
+        Assert.NotEmpty(autowiredMemberActivator._typeAutowiredFieldsCache);
     }
 
     [Theory]
@@ -179,8 +179,8 @@ public class AutowiredMemberActivatorTests
         Assert.Null(autowiredService.BaseConfiguration);
         Assert.Null(autowiredService._baseServices);
 
-        Assert.NotEmpty(autowiredMemberActivator._typePropertiesCache);
-        Assert.NotEmpty(autowiredMemberActivator._typeFieldsCache);
+        Assert.NotEmpty(autowiredMemberActivator._typeAutowiredPropertiesCache);
+        Assert.NotEmpty(autowiredMemberActivator._typeAutowiredFieldsCache);
     }
 
     [Fact]

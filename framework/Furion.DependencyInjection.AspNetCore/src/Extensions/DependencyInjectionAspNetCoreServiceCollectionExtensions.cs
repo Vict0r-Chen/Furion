@@ -15,20 +15,29 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 依赖注入 Web 模块 <see cref="IMvcBuilder"/> 拓展类
+/// 依赖注入 Web 模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-/// <remarks>包含控制器自动注入属性或字段服务</remarks>
-public static class AutowiredControllerActivatorMvcBuilderExtensions
+public static class DependencyInjectionAspNetCoreServiceCollectionExtensions
 {
     /// <summary>
     /// 添加依赖注入 Web 模块服务
     /// </summary>
-    /// <param name="mvcBuilder"><see cref="IMvcBuilder"/></param>
-    /// <returns><see cref="IMvcBuilder"/></returns>
-    public static IMvcBuilder AddAutowiredControllerActivator(this IMvcBuilder mvcBuilder)
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddAutowiredControllerActivator(this IServiceCollection services)
     {
-        mvcBuilder.Services.AddAutowiredControllerActivator();
+        // 控制器服务检查
+        if (!services.Any(descriptor => descriptor.ServiceType == typeof(IControllerActivator)))
+        {
+            throw new InvalidOperationException("Please make sure that this service is registered after `services.AddControllers()`.");
+        }
 
-        return mvcBuilder;
+        // 注册自动装配成员激活器服务
+        services.AddAutowiredMemberActivator();
+
+        // 替换默认控制器初始化器
+        services.Replace(ServiceDescriptor.Transient<IControllerActivator, AutowiredControllerActivator>());
+
+        return services;
     }
 }

@@ -12,20 +12,19 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.DependencyInjection.AspNetCore;
+namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 类型初始化器缓存服务
+/// 类型激活器缓存服务
 /// </summary>
-/// <remarks>作用于缓存控制器实例工厂</remarks>
-internal interface ITypeActivatorCache
+public interface ITypeActivatorCache
 {
     /// <summary>
-    /// 创建实例
+    /// 创建类型实例
     /// </summary>
-    /// <typeparam name="TInstance">实例类型</typeparam>
+    /// <typeparam name="TInstance">返回值类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="implementationType">实现类型</param>
+    /// <param name="implementationType">实例类型</param>
     /// <returns><typeparamref name="TInstance"/></returns>
     TInstance CreateInstance<TInstance>(IServiceProvider serviceProvider, Type implementationType);
 }

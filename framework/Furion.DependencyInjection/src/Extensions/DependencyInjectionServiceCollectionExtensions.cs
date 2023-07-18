@@ -26,6 +26,9 @@ public static class DependencyInjectionServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddAutowiredMemberActivator(this IServiceCollection services)
     {
+        // 注册类型激活器缓存服务
+        services.TryAddSingleton<ITypeActivatorCache, TypeActivatorCache>();
+
         // 注册自动装配成员激活器服务
         services.TryAddSingleton<IAutowiredMemberActivator, AutowiredMemberActivator>();
 
