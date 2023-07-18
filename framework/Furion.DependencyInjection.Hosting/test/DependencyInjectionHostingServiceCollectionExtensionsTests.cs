@@ -28,6 +28,18 @@ public class DependencyInjectionHostingServiceCollectionExtensionsTests
     }
 
     [Fact]
+    public void AddAutowiredHostedService_Duplicate()
+    {
+        var services = new ServiceCollection();
+        services.AddAutowiredHostedService<TestWorker>();
+        services.AddAutowiredHostedService<TestWorker>();
+        services.AddAutowiredHostedService(s => new TestWorker());
+        services.AddAutowiredHostedService(s => new TestWorker());
+
+        Assert.Equal(2, services.Count);
+    }
+
+    [Fact]
     public void AddAutowiredHostedService_ReturnOK()
     {
         var builder = Host.CreateApplicationBuilder();

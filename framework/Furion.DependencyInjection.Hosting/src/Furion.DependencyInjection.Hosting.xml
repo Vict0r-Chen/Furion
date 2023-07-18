@@ -4,6 +4,11 @@
         <name>Furion.DependencyInjection.Hosting</name>
     </assembly>
     <members>
+        <member name="T:Furion.Component.DependencyInjectionHostingComponent">
+            <summary>
+            依赖注入主机模块服务组件
+            </summary>
+        </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionHostingServiceCollectionExtensions">
             <summary>
             依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类

@@ -54,8 +54,8 @@ public static class DependencyInjectionHostingServiceCollectionExtensions
         // 注册自动装配成员激活器服务
         services.AddAutowiredMemberActivator();
 
-        // 创建主机服务描述器
-        var descriptor = ServiceDescriptor.Singleton<IHostedService, THostedService>(serviceProvider =>
+        // 注册主机服务
+        services.AddHostedService(serviceProvider =>
         {
             // 创建主机服务
             var hostedService = implementationFactory(serviceProvider);
@@ -68,9 +68,6 @@ public static class DependencyInjectionHostingServiceCollectionExtensions
 
             return hostedService;
         });
-
-        // 注册主机服务
-        services.TryAddEnumerable(descriptor);
 
         return services;
     }
