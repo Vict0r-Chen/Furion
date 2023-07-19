@@ -21,3 +21,11 @@ public interface ITestNamedService
 public class TestNamedService : ITestNamedService
 {
 }
+
+public class TestOtherNamedService : ITestNamedService
+{
+}
+
+public interface INotRegisterNamedService
+{
+}

@@ -536,15 +536,6 @@
             <returns><typeparamref name="TService"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
-            <summary>
-            获取命名服务集合
-            </summary>
-            <typeparam name="TService">服务类型</typeparam>
-            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
-            <param name="name">命名</param>
-            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
-        </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceProviderExtensions.GetNamedServices(System.IServiceProvider,System.String,System.Type)">
             <summary>
             获取命名服务集合
@@ -552,6 +543,15 @@
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
             <param name="name">命名</param>
             <param name="serviceType">服务类型</param>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
+            <summary>
+            获取命名服务集合
+            </summary>
+            <typeparam name="TService">服务类型</typeparam>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
+            <param name="name">命名</param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
     </members>

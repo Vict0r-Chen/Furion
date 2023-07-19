@@ -45,12 +45,11 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
-        where TService : class
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
 
-        return serviceProvider.GetNamedService(name, typeof(TService)) as TService;
+        return (TService?)serviceProvider.GetNamedService(name, typeof(TService));
     }
 
     /// <summary>
@@ -81,29 +80,12 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// <returns><typeparamref name="TService"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
     public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
-        where TService : class
+        where TService : notnull
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
 
         return (TService)serviceProvider.GetRequiredNamedService(name, typeof(TService));
-    }
-
-    /// <summary>
-    /// 获取命名服务集合
-    /// </summary>
-    /// <typeparam name="TService">服务类型</typeparam>
-    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">命名</param>
-    /// <returns><see cref="IEnumerable{T}"/></returns>
-    public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider serviceProvider, string name)
-         where TService : class
-    {
-        // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-
-        return serviceProvider.GetServices(new NamedTypeDelegator(name, typeof(TService)))
-            .OfType<TService>();
     }
 
     /// <summary>
@@ -123,5 +105,21 @@ public static class DependencyInjectionNamedServiceProviderExtensions
 
         return serviceProvider.GetServices(new NamedTypeDelegator(name, serviceType))
             .Where(serviceType.IsInstanceOfType);
+    }
+
+    /// <summary>
+    /// 获取命名服务集合
+    /// </summary>
+    /// <typeparam name="TService">服务类型</typeparam>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
+    /// <param name="name">命名</param>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider serviceProvider, string name)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
+        return serviceProvider.GetServices(new NamedTypeDelegator(name, typeof(TService)))
+            .OfType<TService>();
     }
 }
