@@ -24,7 +24,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class UserNameAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="UserNameAttribute"/>
     /// </summary>
     public UserNameAttribute()
         : base(() => Strings.UserNameValidator_Invalid)

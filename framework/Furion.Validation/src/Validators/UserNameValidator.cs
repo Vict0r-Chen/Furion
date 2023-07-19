@@ -23,7 +23,7 @@ namespace Furion.Validation;
 public partial class UserNameValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="UserNameValidator"/>
     /// </summary>
     public UserNameValidator()
         : base(() => Strings.UserNameValidator_Invalid)

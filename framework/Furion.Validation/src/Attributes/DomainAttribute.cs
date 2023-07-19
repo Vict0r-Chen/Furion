@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class DomainAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DomainAttribute"/>
     /// </summary>
     public DomainAttribute()
         : base(() => Strings.DomainValidator_Invalid)

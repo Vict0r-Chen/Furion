@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class StartsWithValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StartsWithValidator"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StartsWithValidator(char value)
@@ -29,7 +29,7 @@ public partial class StartsWithValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StartsWithValidator"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StartsWithValidator(string value)

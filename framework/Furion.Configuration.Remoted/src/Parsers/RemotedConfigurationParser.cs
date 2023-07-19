@@ -28,7 +28,7 @@ internal sealed class RemotedConfigurationParser
     internal readonly FileConfigurationParser _fileConfigurationParser;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="RemotedConfigurationParser"/>
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
     /// <param name="mediaTypeMappings">媒体类型和文件拓展名映射集合</param>

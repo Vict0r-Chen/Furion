@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class NotEmptyValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="NotEmptyValidator"/>
     /// </summary>
     public NotEmptyValidator()
         : base(() => Strings.NotEmptyValidator_Invalid)

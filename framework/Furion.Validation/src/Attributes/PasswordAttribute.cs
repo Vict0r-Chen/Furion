@@ -24,7 +24,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class PasswordAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PasswordAttribute"/>
     /// </summary>
     public PasswordAttribute()
         : base(() => Strings.PasswordValidator_Invalid)

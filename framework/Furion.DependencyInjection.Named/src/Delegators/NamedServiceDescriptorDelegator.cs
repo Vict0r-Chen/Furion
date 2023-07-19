@@ -28,7 +28,7 @@ internal sealed class NamedServiceDescriptorDelegator
     internal readonly ServiceDescriptor _serviceDescriptor;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="NamedServiceDescriptorDelegator"/>
     /// </summary>
     /// <param name="name">命名</param>
     /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>

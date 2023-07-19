@@ -17,7 +17,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredControllerActivator.#ctor(Furion.DependencyInjection.ITypeActivatorCache,Furion.DependencyInjection.IAutowiredMemberActivator)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.AutowiredControllerActivator"/>
             </summary>
             <param name="typeActivatorCache"><see cref="T:Furion.DependencyInjection.ITypeActivatorCache"/></param>
             <param name="autowiredMemberActivator"><see cref="T:Furion.DependencyInjection.IAutowiredMemberActivator"/></param>
@@ -41,7 +41,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ServiceBasedAutowiredControllerActivator.#ctor(Furion.DependencyInjection.IAutowiredMemberActivator)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ServiceBasedAutowiredControllerActivator"/>
             </summary>
             <param name="autowiredMemberActivator"><see cref="T:Furion.DependencyInjection.IAutowiredMemberActivator"/></param>
         </member>

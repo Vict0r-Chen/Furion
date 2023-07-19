@@ -19,7 +19,6 @@ namespace Furion.DependencyInjection;
 /// </summary>
 /// <typeparam name="TService">服务类型</typeparam>
 public interface INamedService<TService>
-    where TService : class
 {
     /// <summary>
     /// 获取服务

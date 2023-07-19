@@ -20,7 +20,7 @@ namespace Furion.Component;
 public sealed class ApplicationComponentContext : ComponentContext
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ApplicationComponentContext"/>
     /// </summary>
     /// <param name="application"><see cref="WebApplication"/></param>
     internal ApplicationComponentContext(WebApplication application)

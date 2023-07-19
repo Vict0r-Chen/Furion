@@ -22,7 +22,7 @@ namespace Furion.DependencyInjection;
 public sealed class DependencyAttribute : Attribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependencyAttribute"/>
     /// </summary>
     public DependencyAttribute()
     {

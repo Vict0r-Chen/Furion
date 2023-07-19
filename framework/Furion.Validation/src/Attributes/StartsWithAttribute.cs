@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class StartsWithAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StartsWithAttribute"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StartsWithAttribute(char value)
@@ -30,7 +30,7 @@ public class StartsWithAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StartsWithAttribute"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StartsWithAttribute(string value)

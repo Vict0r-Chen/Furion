@@ -21,7 +21,7 @@ namespace Furion.DependencyInjection;
 public sealed class ServiceDescriptorModel
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ServiceDescriptorModel"/>
     /// </summary>
     /// <param name="serviceType">服务类型</param>
     /// <param name="implementationType">实现类类型</param>

@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public abstract class ComparableValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ComparableValidator"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>

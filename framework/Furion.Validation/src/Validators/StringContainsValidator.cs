@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class StringContainsValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StringContainsValidator"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StringContainsValidator(char value)
@@ -29,7 +29,7 @@ public partial class StringContainsValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StringContainsValidator"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StringContainsValidator(string value)

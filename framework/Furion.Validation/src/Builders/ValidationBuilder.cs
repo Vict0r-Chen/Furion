@@ -25,7 +25,7 @@ public sealed class ValidationBuilder
     internal readonly Dictionary<Type, Type> _validators;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValidationBuilder"/>
     /// </summary>
     public ValidationBuilder()
     {

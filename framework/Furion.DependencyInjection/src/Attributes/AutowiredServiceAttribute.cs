@@ -21,7 +21,7 @@ namespace Furion.DependencyInjection;
 public sealed class AutowiredServiceAttribute : Attribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="AutowiredServiceAttribute"/>
     /// </summary>
     public AutowiredServiceAttribute()
     {

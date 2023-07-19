@@ -31,7 +31,7 @@
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationBuilder.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/>
             </summary>
         </member>
         <member name="P:Furion.Configuration.FileScanningConfigurationBuilder.MaxScanDepth">
@@ -125,7 +125,7 @@
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationModel.#ctor(System.String,System.Boolean)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.FileScanningConfigurationModel"/>
             </summary>
             <param name="filePath">文件路径</param>
             <param name="environmentFlag">环境标识</param>
@@ -218,7 +218,7 @@
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationScanner.#ctor(Microsoft.Extensions.Configuration.IConfigurationBuilder,Furion.Configuration.FileScanningConfigurationBuilder)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.FileScanningConfigurationScanner"/>
             </summary>
             <param name="configurationBuilder"><see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/></param>
             <param name="fileScanningConfigurationBuilder"><see cref="T:Furion.Configuration.FileScanningConfigurationBuilder"/></param>

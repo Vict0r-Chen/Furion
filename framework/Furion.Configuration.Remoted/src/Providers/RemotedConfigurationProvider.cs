@@ -28,7 +28,7 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
     internal readonly RemotedConfigurationParser _remotedConfigurationParser;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="RemotedConfigurationProvider"/>
     /// </summary>
     /// <param name="remotedConfigurationModels"><see cref="RemotedConfigurationModel"/> 集合</param>
     /// <param name="remotedConfigurationParser"><see cref="RemotedConfigurationParser"/></param>

@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class CompositeValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="CompositeValidator"/>
     /// </summary>
     /// <param name="validators">验证器集合</param>
     public CompositeValidator(params ValidatorBase[] validators)
@@ -29,7 +29,7 @@ public partial class CompositeValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="CompositeValidator"/>
     /// </summary>
     /// <param name="validators">验证器集合</param>
     public CompositeValidator(IList<ValidatorBase> validators)

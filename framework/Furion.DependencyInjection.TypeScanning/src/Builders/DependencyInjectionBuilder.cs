@@ -41,7 +41,7 @@ public sealed class DependencyInjectionBuilder
     internal Func<ServiceDescriptorModel, bool>? _filterConfigure;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependencyInjectionBuilder"/>
     /// </summary>
     public DependencyInjectionBuilder()
     {

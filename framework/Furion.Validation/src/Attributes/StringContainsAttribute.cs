@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class StringContainsAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StringContainsAttribute"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StringContainsAttribute(char value)
@@ -30,7 +30,7 @@ public class StringContainsAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StringContainsAttribute"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public StringContainsAttribute(string value)

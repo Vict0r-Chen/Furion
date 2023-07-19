@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class LessThanOrEqualToAttribute : ComparableAttribute<LessThanOrEqualToValidator>
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="LessThanOrEqualToAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public LessThanOrEqualToAttribute(int value)
@@ -30,7 +30,7 @@ public class LessThanOrEqualToAttribute : ComparableAttribute<LessThanOrEqualToV
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="LessThanOrEqualToAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public LessThanOrEqualToAttribute(double value)
@@ -39,7 +39,7 @@ public class LessThanOrEqualToAttribute : ComparableAttribute<LessThanOrEqualToV
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="LessThanOrEqualToAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public LessThanOrEqualToAttribute(object? value)

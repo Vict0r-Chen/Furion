@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class ValueAnnotationValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValueAnnotationValidator"/>
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
@@ -29,7 +29,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValueAnnotationValidator"/>
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     public ValueAnnotationValidator(IList<ValidationAttribute> validationAttributes)

@@ -25,7 +25,7 @@ internal sealed class CoreOptions
     internal readonly ConcurrentDictionary<Type, object> _optionsInstances;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="CoreOptions"/>
     /// </summary>
     internal CoreOptions()
     {

@@ -22,7 +22,7 @@ namespace Furion.Component;
 public class DependsOnAttribute : Attribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute"/>
     /// </summary>
     public DependsOnAttribute()
     {
@@ -30,7 +30,7 @@ public class DependsOnAttribute : Attribute
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute"/>
     /// </summary>
     /// <param name="dependedTypes">依赖类型集合</param>
     public DependsOnAttribute(params Type[] dependedTypes)
@@ -55,7 +55,7 @@ public sealed class DependsOnAttribute<TComponent> : DependsOnAttribute
     where TComponent : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent))
@@ -74,7 +74,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent2 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -97,7 +97,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent3 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -124,7 +124,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent4 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -155,7 +155,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent5 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -190,7 +190,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent6 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -229,7 +229,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent7 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -272,7 +272,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent8 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -319,7 +319,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent9 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -370,7 +370,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent10 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -425,7 +425,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent11 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -484,7 +484,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent12 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -547,7 +547,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent13 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -614,7 +614,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent14 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -685,7 +685,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent15 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -760,7 +760,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent16 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -839,7 +839,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent17 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -922,7 +922,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent18 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -1009,7 +1009,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent19 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -1100,7 +1100,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent20 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -1195,7 +1195,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent21 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -1294,7 +1294,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent22 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21, TComponent22}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -1397,7 +1397,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent23 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21, TComponent22, TComponent23}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)
@@ -1504,7 +1504,7 @@ public sealed class DependsOnAttribute<TComponent1
     where TComponent24 : ComponentBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependsOnAttribute{TComponent1, TComponent2, TComponent3, TComponent4, TComponent5, TComponent6, TComponent7, TComponent8, TComponent9, TComponent10, TComponent11, TComponent12, TComponent13, TComponent14, TComponent15, TComponent16, TComponent17, TComponent18, TComponent19, TComponent20, TComponent21, TComponent22, TComponent23, TComponent24}"/>
     /// </summary>
     public DependsOnAttribute()
         : base(typeof(TComponent1)

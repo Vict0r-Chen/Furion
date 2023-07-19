@@ -40,7 +40,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     internal Func<ManifestResourceConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ManifestResourceConfigurationBuilder"/>
     /// </summary>
     public ManifestResourceConfigurationBuilder()
     {

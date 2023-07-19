@@ -33,7 +33,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal readonly PropertyAnnotationValidator _propertyAnnotationValidator;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PropertyValidator{T, TProperty}"/>
     /// </summary>
     /// <param name="objectValidator"><see cref="ObjectValidator{T}"/></param>
     /// <param name="propertyExpression">属性选择器</param>
@@ -356,7 +356,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         internal readonly Func<T, string?[]>? _formatArgsAccessor;
 
         /// <summary>
-        /// 构造函数
+        /// <inheritdoc cref="CustomValidator"/>
         /// </summary>
         /// <param name="predicate">委托对象</param>
         /// <param name="defaultErrorMessage">默认错误消息</param>

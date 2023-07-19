@@ -21,7 +21,7 @@ namespace Furion.Reflection;
 public abstract class DispatchProxyDecorator : DispatchProxy
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DispatchProxyDecorator"/>
     /// </summary>
     public DispatchProxyDecorator()
         : base()

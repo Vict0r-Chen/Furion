@@ -21,7 +21,7 @@ namespace Furion.Validation;
 public partial class DomainValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DomainValidator"/>
     /// </summary>
     public DomainValidator()
         : base(() => Strings.DomainValidator_Invalid)

@@ -25,7 +25,7 @@ public sealed class ComponentBuilder
     internal readonly Dictionary<Type, List<Delegate>> _propsActions;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ComponentBuilder"/>
     /// </summary>
     public ComponentBuilder()
     {

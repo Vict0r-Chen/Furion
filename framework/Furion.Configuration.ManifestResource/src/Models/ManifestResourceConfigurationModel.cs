@@ -20,7 +20,7 @@ namespace Furion.Configuration;
 public sealed class ManifestResourceConfigurationModel
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ManifestResourceConfigurationModel"/>
     /// </summary>
     /// <param name="assembly">程序集</param>
     /// <param name="resourceName">嵌入资源名称</param>

@@ -27,7 +27,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     internal readonly ObjectValidator<T> _objectValidator;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="AbstractValidator{T}"/>
     /// </summary>
     public AbstractValidator()
     {

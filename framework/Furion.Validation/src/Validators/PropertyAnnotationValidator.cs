@@ -22,7 +22,7 @@ public partial class PropertyAnnotationValidator<T> : PropertyAnnotationValidato
     where T : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
     /// <param name="propertyExpression">属性表达式</param>
     public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
@@ -37,7 +37,7 @@ public partial class PropertyAnnotationValidator<T> : PropertyAnnotationValidato
 public partial class PropertyAnnotationValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PropertyAnnotationValidator"/>
     /// </summary>
     /// <param name="propertyName">属性名称</param>
     public PropertyAnnotationValidator(string propertyName)

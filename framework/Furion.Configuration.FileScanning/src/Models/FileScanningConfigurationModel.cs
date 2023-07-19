@@ -20,7 +20,7 @@ namespace Furion.Configuration;
 public sealed class FileScanningConfigurationModel
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="FileScanningConfigurationModel"/>
     /// </summary>
     /// <param name="filePath">文件路径</param>
     /// <param name="environmentFlag">环境标识</param>

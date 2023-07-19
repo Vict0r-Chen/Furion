@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class NotEqualValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="NotEqualValidator"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public NotEqualValidator(object? value)

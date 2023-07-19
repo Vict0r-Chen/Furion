@@ -25,7 +25,7 @@ internal sealed class ComponentOptions
     internal readonly MethodInfo _GetPropsActionMethod;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ComponentOptions"/>
     /// </summary>
     /// <remarks>此构造函数只会初始化一次</remarks>
     public ComponentOptions()

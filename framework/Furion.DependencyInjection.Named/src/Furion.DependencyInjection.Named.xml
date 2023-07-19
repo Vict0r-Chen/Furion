@@ -19,7 +19,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.NamedServiceDescriptorDelegator.#ctor(System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.NamedServiceDescriptorDelegator"/>
             </summary>
             <param name="name">命名</param>
             <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
@@ -46,7 +46,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.NamedTypeDelegator.#ctor(System.String,System.Type)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.NamedTypeDelegator"/>
             </summary>
             <param name="name">命名</param>
             <param name="delegatingType">委托类型</param>
@@ -95,9 +95,9 @@
         </member>
         <member name="M:Furion.DependencyInjection.NamedService`1.#ctor(System.IServiceProvider)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.INamedService`1"/>
             </summary>
-            <param name="serviceProvider">服务提供器</param>
+            <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
         </member>
         <member name="P:Furion.DependencyInjection.NamedService`1.Item(System.String)">
             <inheritdoc />

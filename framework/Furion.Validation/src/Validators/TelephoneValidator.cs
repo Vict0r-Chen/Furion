@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class TelephoneValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="TelephoneValidator"/>
     /// </summary>
     public TelephoneValidator()
         : base(() => Strings.TelephoneValidator_Invalid)

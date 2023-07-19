@@ -29,7 +29,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.AutowiredMemberActivator"/>
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.GetBindingFlags">
@@ -83,7 +83,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredServiceAttribute.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.AutowiredServiceAttribute"/>
             </summary>
         </member>
         <member name="P:Furion.DependencyInjection.AutowiredServiceAttribute.CanBeNull">
@@ -120,7 +120,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.TypeActivatorCache.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.TypeActivatorCache"/>
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.TypeActivatorCache.CreateInstance``1(System.IServiceProvider,System.Type)">

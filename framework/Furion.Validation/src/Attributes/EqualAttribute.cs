@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class EqualAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValidationAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public EqualAttribute(object? value)

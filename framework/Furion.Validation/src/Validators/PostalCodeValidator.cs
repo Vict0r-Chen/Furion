@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class PostalCodeValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PostalCodeValidator"/>
     /// </summary>
     public PostalCodeValidator()
         : base(() => Strings.PostalCodeValidator_Invalid)

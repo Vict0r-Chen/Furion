@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class ChineseValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ChineseValidator"/>
     /// </summary>
     public ChineseValidator()
         : base(() => Strings.ChineseValidator_Invalid)

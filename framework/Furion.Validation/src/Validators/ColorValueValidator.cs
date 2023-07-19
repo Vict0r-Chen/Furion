@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class ColorValueValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ColorValueValidator"/>
     /// </summary>
     /// <param name="fullMode">全面模式</param>
     public ColorValueValidator(bool fullMode = true)

@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class GreaterThanAttribute : ComparableAttribute<GreaterThanValidator>
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="GreaterThanAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public GreaterThanAttribute(int value)
@@ -30,7 +30,7 @@ public class GreaterThanAttribute : ComparableAttribute<GreaterThanValidator>
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="GreaterThanAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public GreaterThanAttribute(double value)
@@ -39,7 +39,7 @@ public class GreaterThanAttribute : ComparableAttribute<GreaterThanValidator>
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="GreaterThanAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public GreaterThanAttribute(object? value)

@@ -26,7 +26,7 @@ internal sealed class FileScanningConfigurationScanner
     internal readonly FileScanningConfigurationBuilder _fileScanningConfigurationBuilder;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="FileScanningConfigurationScanner"/>
     /// </summary>
     /// <param name="configurationBuilder"><see cref="IConfigurationBuilder"/></param>
     /// <param name="fileScanningConfigurationBuilder"><see cref="FileScanningConfigurationBuilder"/></param>

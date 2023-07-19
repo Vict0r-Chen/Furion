@@ -12,7 +12,7 @@
         </member>
         <member name="M:Furion.Reflection.DispatchProxyDecorator.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Reflection.DispatchProxyDecorator"/>
             </summary>
         </member>
         <member name="P:Furion.Reflection.DispatchProxyDecorator.Target">
@@ -95,7 +95,7 @@
         </member>
         <member name="M:Furion.Reflection.Invocation.#ctor(System.Reflection.MethodInfo,System.Object[],System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Reflection.Invocation"/>
             </summary>
             <param name="targetMethod">接口方法</param>
             <param name="args">调用参数</param>

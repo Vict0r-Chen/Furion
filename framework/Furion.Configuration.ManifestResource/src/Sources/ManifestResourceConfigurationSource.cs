@@ -28,7 +28,7 @@ internal sealed class ManifestResourceConfigurationSource : IConfigurationSource
     internal readonly ManifestResourceConfigurationParser _manifestResourceConfigurationParser;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ManifestResourceConfigurationSource"/>
     /// </summary>
     /// <param name="manifestResourceConfigurationModels"><see cref="ManifestResourceConfigurationModel"/> 集合</param>
     /// <param name="manifestResourceConfigurationParser"><see cref="ManifestResourceConfigurationParser"/></param>

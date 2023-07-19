@@ -20,7 +20,7 @@ namespace Furion.Component;
 public abstract class ComponentContext
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ComponentContext"/>
     /// </summary>
     /// <param name="options"><see cref="ComponentOptions"/></param>
     internal ComponentContext(ComponentOptions options)

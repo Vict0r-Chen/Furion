@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class AgeAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="AgeAttribute"/>
     /// </summary>
     public AgeAttribute()
         : base(() => Strings.AgeValidator_Invalid)

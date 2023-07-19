@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class SingleAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="SingleAttribute"/>
     /// </summary>
     public SingleAttribute()
         : base(() => Strings.SingleValidator_Invalid)

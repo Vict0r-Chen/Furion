@@ -32,7 +32,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     internal readonly ObjectAnnotationValidator _objectAnnotationValidator;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ObjectValidator{T}"/>
     /// </summary>
     /// <exception cref="InvalidOperationException"></exception>
     public ObjectValidator()

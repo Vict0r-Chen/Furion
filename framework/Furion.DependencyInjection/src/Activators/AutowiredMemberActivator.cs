@@ -38,7 +38,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
     internal readonly ConcurrentDictionary<Type, List<FieldInfo>> _typeAutowiredFieldsCache;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="AutowiredMemberActivator"/>
     /// </summary>
     public AutowiredMemberActivator()
     {

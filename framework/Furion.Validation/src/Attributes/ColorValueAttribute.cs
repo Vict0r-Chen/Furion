@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class ColorValueAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ColorValueAttribute"/>
     /// </summary>
     public ColorValueAttribute()
         : base(() => Strings.ColorValueValidator_Invalid)

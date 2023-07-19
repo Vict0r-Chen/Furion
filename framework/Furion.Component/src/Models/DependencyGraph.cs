@@ -35,7 +35,7 @@ internal sealed class DependencyGraph
     internal readonly Dictionary<Type, List<Type>> _descendantsNodes;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="DependencyGraph"/>
     /// </summary>
     /// <param name="dependencies">依赖关系集合</param>
     internal DependencyGraph(Dictionary<Type, Type[]> dependencies)

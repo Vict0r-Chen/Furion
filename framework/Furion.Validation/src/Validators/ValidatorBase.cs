@@ -25,7 +25,7 @@ public abstract partial class ValidatorBase
     internal readonly Func<string> _errorMessageResourceAccessor;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValidatorBase"/>
     /// </summary>
     protected ValidatorBase()
         : this(() => Strings.ValidatorBase_Invalid)
@@ -33,7 +33,7 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValidatorBase"/>
     /// </summary>
     /// <param name="defaultErrorMessage">默认错误消息</param>
     protected ValidatorBase(string? defaultErrorMessage)
@@ -42,7 +42,7 @@ public abstract partial class ValidatorBase
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ValidatorBase"/>
     /// </summary>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
     protected ValidatorBase(Func<string> errorMessageAccessor)

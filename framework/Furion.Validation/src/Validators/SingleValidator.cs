@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class SingleValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="SingleValidator"/>
     /// </summary>
     public SingleValidator()
         : base(() => Strings.SingleValidator_Invalid)

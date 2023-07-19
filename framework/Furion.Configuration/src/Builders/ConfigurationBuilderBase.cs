@@ -30,7 +30,7 @@ public abstract class ConfigurationBuilderBase
     internal readonly IDictionary<string, Type> _sourceTypes;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ConfigurationBuilderBase"/>
     /// </summary>
     internal ConfigurationBuilderBase()
     {

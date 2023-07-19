@@ -40,7 +40,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     internal Func<FileScanningConfigurationModel, bool>? _filterConfigure;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="FileScanningConfigurationBuilder"/>
     /// </summary>
     public FileScanningConfigurationBuilder()
     {

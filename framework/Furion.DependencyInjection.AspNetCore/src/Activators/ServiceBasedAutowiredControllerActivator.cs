@@ -23,7 +23,7 @@ public class ServiceBasedAutowiredControllerActivator : IControllerActivator
     internal readonly IAutowiredMemberActivator _autowiredMemberActivator;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ServiceBasedAutowiredControllerActivator"/>
     /// </summary>
     /// <param name="autowiredMemberActivator"><see cref="IAutowiredMemberActivator"/></param>
     public ServiceBasedAutowiredControllerActivator(IAutowiredMemberActivator autowiredMemberActivator)

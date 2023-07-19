@@ -31,7 +31,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationBuilder.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.RemotedConfigurationBuilder"/>
             </summary>
         </member>
         <member name="P:Furion.Configuration.RemotedConfigurationBuilder.DefaultHttpMethod">
@@ -121,7 +121,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationModel.#ctor(System.String,System.Net.Http.HttpMethod)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.RemotedConfigurationModel"/>
             </summary>
             <param name="urlAddress">Url 地址</param>
             <param name="httpMethod"><see cref="P:Furion.Configuration.RemotedConfigurationModel.HttpMethod"/></param>
@@ -186,7 +186,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationParser.#ctor(Furion.Configuration.FileConfigurationParser,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.RemotedConfigurationParser"/>
             </summary>
             <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
             <param name="mediaTypeMappings">媒体类型和文件拓展名映射集合</param>
@@ -223,7 +223,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel},Furion.Configuration.RemotedConfigurationParser)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.RemotedConfigurationProvider"/>
             </summary>
             <param name="remotedConfigurationModels"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</param>
             <param name="remotedConfigurationParser"><see cref="T:Furion.Configuration.RemotedConfigurationParser"/></param>
@@ -246,7 +246,7 @@
         </member>
         <member name="M:Furion.Configuration.RemotedConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.RemotedConfigurationModel},Furion.Configuration.RemotedConfigurationParser)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.RemotedConfigurationSource"/>
             </summary>
             <param name="remotedConfigurationModels"><see cref="T:Furion.Configuration.RemotedConfigurationModel"/> 集合</param>
             <param name="remotedConfigurationParser"><see cref="T:Furion.Configuration.RemotedConfigurationParser"/></param>

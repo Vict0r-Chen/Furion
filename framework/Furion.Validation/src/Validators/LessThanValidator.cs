@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class LessThanValidator : ComparableValidator
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="LessThanValidator"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public LessThanValidator(int value)
@@ -29,7 +29,7 @@ public partial class LessThanValidator : ComparableValidator
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="LessThanValidator"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public LessThanValidator(double value)
@@ -38,7 +38,7 @@ public partial class LessThanValidator : ComparableValidator
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="LessThanValidator"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public LessThanValidator(object? value)

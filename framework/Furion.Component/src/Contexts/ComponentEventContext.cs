@@ -20,7 +20,7 @@ namespace Furion.Component;
 public sealed class ComponentEventContext
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ComponentEventContext"/>
     /// </summary>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="Component.ComponentContext"/></param>

@@ -20,7 +20,7 @@ namespace Furion.Configuration;
 public sealed class RemotedConfigurationModel
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="RemotedConfigurationModel"/>
     /// </summary>
     /// <param name="urlAddress">Url 地址</param>
     /// <param name="httpMethod"><see cref="HttpMethod"/></param>

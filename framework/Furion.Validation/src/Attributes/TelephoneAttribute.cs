@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class TelephoneAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="TelephoneAttribute"/>
     /// </summary>
     public TelephoneAttribute()
         : base(() => Strings.TelephoneValidator_Invalid)

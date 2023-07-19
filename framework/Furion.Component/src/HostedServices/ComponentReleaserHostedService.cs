@@ -24,7 +24,7 @@ internal sealed class ComponentReleaserHostedService : IHostedService
     private readonly CoreOptions _coreOptions;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ComponentReleaserHostedService"/>
     /// </summary>
     /// <param name="coreOptions"><see cref="CoreOptions"/></param>
     public ComponentReleaserHostedService(CoreOptions coreOptions)

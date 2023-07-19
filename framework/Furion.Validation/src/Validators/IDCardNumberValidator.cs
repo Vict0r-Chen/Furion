@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class IDCardNumberValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="IDCardNumberValidator"/>
     /// </summary>
     public IDCardNumberValidator()
         : base(() => Strings.IDCardNumberValidator_invalid)

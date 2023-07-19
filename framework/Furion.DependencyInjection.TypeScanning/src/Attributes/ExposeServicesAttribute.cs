@@ -24,7 +24,7 @@ namespace Furion.DependencyInjection;
 public class ExposeServicesAttribute : Attribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute"/>
     /// </summary>
     public ExposeServicesAttribute()
     {
@@ -32,7 +32,7 @@ public class ExposeServicesAttribute : Attribute
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute"/>
     /// </summary>
     /// <param name="serviceTypes"><see cref="ServiceTypes"/></param>
     public ExposeServicesAttribute(params Type[] serviceTypes)
@@ -57,7 +57,7 @@ public sealed class ExposeServicesAttribute<TService> : ExposeServicesAttribute
     where TService : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService))
@@ -75,7 +75,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2> : ExposeServic
     where TService2 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)
@@ -96,7 +96,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3> : E
     where TService3 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2, TService3}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)
@@ -120,7 +120,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     where TService4 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2, TService3, TService4}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)
@@ -147,7 +147,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     where TService5 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2, TService3, TService4, TService5}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)
@@ -177,7 +177,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     where TService6 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2, TService3, TService4, TService5, TService6}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)
@@ -210,7 +210,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     where TService7 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2, TService3, TService4, TService5, TService6, TService7}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)
@@ -246,7 +246,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
     where TService8 : class
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ExposeServicesAttribute{TService1, TService2, TService3, TService4, TService5, TService6, TService7, TService8}"/>
     /// </summary>
     public ExposeServicesAttribute()
         : base(typeof(TService1)

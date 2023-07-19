@@ -21,7 +21,7 @@ namespace Furion.Validation;
 public partial class PredicateValidator<T> : PredicateValidator
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PredicateValidator{T}"/>
     /// </summary>
     /// <param name="predicate">委托对象</param>
     public PredicateValidator(Func<T?, bool> predicate)
@@ -38,7 +38,7 @@ public partial class PredicateValidator<T> : PredicateValidator
 public partial class PredicateValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PredicateValidator"/>
     /// </summary>
     /// <param name="predicate">委托对象</param>
     public PredicateValidator(Func<object?, bool> predicate)

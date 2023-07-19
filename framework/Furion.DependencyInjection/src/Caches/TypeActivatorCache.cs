@@ -28,7 +28,7 @@ internal sealed class TypeActivatorCache : ITypeActivatorCache
     internal readonly ConcurrentDictionary<Type, ObjectFactory> _typeActivatorCache;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="TypeActivatorCache"/>
     /// </summary>
     public TypeActivatorCache()
     {

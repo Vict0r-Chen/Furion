@@ -40,7 +40,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     internal Action<HttpClient>? _defaultClientConfigurator;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="RemotedConfigurationBuilder"/>
     /// </summary>
     public RemotedConfigurationBuilder()
     {

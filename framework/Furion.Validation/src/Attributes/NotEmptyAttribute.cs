@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class NotEmptyAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="NotEmptyAttribute"/>
     /// </summary>
     public NotEmptyAttribute()
         : base(() => Strings.NotEmptyValidator_Invalid)

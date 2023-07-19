@@ -21,7 +21,7 @@
         </member>
         <member name="M:Furion.Configuration.ConfigurationBuilderBase.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.ConfigurationBuilderBase"/>
             </summary>
         </member>
         <member name="M:Furion.Configuration.ConfigurationBuilderBase.AddParser(System.String,System.Func{System.IO.Stream,System.Collections.Generic.IDictionary{System.String,System.String}})">
@@ -67,7 +67,7 @@
         </member>
         <member name="M:Furion.Configuration.FileConfigurationParser.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.FileConfigurationParser"/>
             </summary>
         </member>
         <member name="M:Furion.Configuration.FileConfigurationParser.AddParser(System.String,System.Func{System.IO.Stream,System.Collections.Generic.IDictionary{System.String,System.String}})">

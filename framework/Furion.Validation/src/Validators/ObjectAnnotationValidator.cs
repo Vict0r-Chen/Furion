@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class ObjectAnnotationValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ObjectAnnotationValidator"/>
     /// </summary>
     public ObjectAnnotationValidator()
         : base()

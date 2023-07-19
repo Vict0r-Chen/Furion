@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class ChineseNameAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ChineseNameAttribute"/>
     /// </summary>
     public ChineseNameAttribute()
         : base(() => Strings.ChineseNameValidator_Invalid)

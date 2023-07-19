@@ -24,12 +24,12 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute"/>
             </summary>
         </member>
         <member name="M:Furion.Component.DependsOnAttribute.#ctor(System.Type[])">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute"/>
             </summary>
             <param name="dependedTypes">依赖类型集合</param>
         </member>
@@ -46,7 +46,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`1.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`1"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`2">
@@ -58,7 +58,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`2.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`2"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`3">
@@ -71,7 +71,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`3.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`3"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`4">
@@ -85,7 +85,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`4.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`4"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`5">
@@ -100,7 +100,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`5.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`5"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`6">
@@ -116,7 +116,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`6.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`6"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`7">
@@ -133,7 +133,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`7.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`7"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`8">
@@ -151,7 +151,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`8.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`8"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`9">
@@ -170,7 +170,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`9.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`9"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`10">
@@ -190,7 +190,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`10.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`10"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`11">
@@ -211,7 +211,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`11.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`11"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`12">
@@ -233,7 +233,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`12.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`12"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`13">
@@ -256,7 +256,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`13.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`13"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`14">
@@ -280,7 +280,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`14.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`14"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`15">
@@ -305,7 +305,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`15.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`15"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`16">
@@ -331,7 +331,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`16.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`16"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`17">
@@ -358,7 +358,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`17.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`17"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`18">
@@ -386,7 +386,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`18.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`18"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`19">
@@ -415,7 +415,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`19.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`19"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`20">
@@ -445,7 +445,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`20.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`20"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`21">
@@ -476,7 +476,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`21.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`21"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`22">
@@ -508,7 +508,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`22.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`22"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`23">
@@ -541,7 +541,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`23.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`23"/>
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`24">
@@ -575,7 +575,7 @@
         </member>
         <member name="M:Furion.Component.DependsOnAttribute`24.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependsOnAttribute`24"/>
             </summary>
         </member>
         <member name="T:Furion.Component.ComponentBuilder">
@@ -590,7 +590,7 @@
         </member>
         <member name="M:Furion.Component.ComponentBuilder.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.ComponentBuilder"/>
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentBuilder.Props``1(System.Action{``0})">
@@ -630,7 +630,7 @@
         </member>
         <member name="M:Furion.Component.ComponentContext.#ctor(Furion.Component.ComponentOptions)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.ComponentContext"/>
             </summary>
             <param name="options"><see cref="T:Furion.Component.ComponentOptions"/></param>
         </member>
@@ -685,7 +685,7 @@
         </member>
         <member name="M:Furion.Component.ComponentEventContext.#ctor(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.ComponentEventContext"/>
             </summary>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
@@ -712,7 +712,7 @@
         </member>
         <member name="M:Furion.Component.ServiceComponentContext.#ctor(Microsoft.Extensions.Hosting.IHostApplicationBuilder)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.ServiceComponentContext"/>
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
         </member>
@@ -886,7 +886,7 @@
         </member>
         <member name="M:Furion.Component.ComponentReleaserHostedService.#ctor(Furion.CoreOptions)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.ComponentReleaserHostedService"/>
             </summary>
             <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
         </member>
@@ -918,7 +918,7 @@
         </member>
         <member name="M:Furion.Component.DependencyGraph.#ctor(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.DependencyGraph"/>
             </summary>
             <param name="dependencies">依赖关系集合</param>
         </member>
@@ -1024,7 +1024,7 @@
         </member>
         <member name="M:Furion.Component.ComponentOptions.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
             </summary>
             <remarks>此构造函数只会初始化一次</remarks>
         </member>

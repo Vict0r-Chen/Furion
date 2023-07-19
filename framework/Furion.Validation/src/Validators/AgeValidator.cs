@@ -20,7 +20,7 @@ namespace Furion.Validation;
 public partial class AgeValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="AgeValidator"/>
     /// </summary>
     public AgeValidator()
         : base(() => Strings.AgeValidator_Invalid)

@@ -465,7 +465,7 @@
         </member>
         <member name="M:Furion.CoreOptions.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.CoreOptions"/>
             </summary>
         </member>
         <member name="M:Furion.CoreOptions.Get``1">

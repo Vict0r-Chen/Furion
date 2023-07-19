@@ -31,7 +31,7 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationBuilder.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationBuilder"/>
             </summary>
         </member>
         <member name="P:Furion.Configuration.ManifestResourceConfigurationBuilder.DefaultPrefix">
@@ -107,7 +107,7 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationModel.#ctor(System.Reflection.Assembly,System.String)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/>
             </summary>
             <param name="assembly">程序集</param>
             <param name="resourceName">嵌入资源名称</param>
@@ -151,7 +151,7 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationParser.#ctor(Furion.Configuration.FileConfigurationParser)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationParser"/>
             </summary>
             <param name="fileConfigurationParser"><see cref="T:Furion.Configuration.FileConfigurationParser"/></param>
         </member>
@@ -178,7 +178,7 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel},Furion.Configuration.ManifestResourceConfigurationParser)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationProvider"/>
             </summary>
             <param name="manifestResourceConfigurationModels"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
             <param name="manifestResourceConfigurationParser"><see cref="T:Furion.Configuration.ManifestResourceConfigurationParser"/></param>
@@ -201,7 +201,7 @@
         </member>
         <member name="M:Furion.Configuration.ManifestResourceConfigurationSource.#ctor(System.Collections.Generic.List{Furion.Configuration.ManifestResourceConfigurationModel},Furion.Configuration.ManifestResourceConfigurationParser)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.Configuration.ManifestResourceConfigurationSource"/>
             </summary>
             <param name="manifestResourceConfigurationModels"><see cref="T:Furion.Configuration.ManifestResourceConfigurationModel"/> 集合</param>
             <param name="manifestResourceConfigurationParser"><see cref="T:Furion.Configuration.ManifestResourceConfigurationParser"/></param>

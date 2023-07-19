@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class NotEqualAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="NotEqualAttribute"/>
     /// </summary>
     /// <param name="value">比较的值</param>
     public NotEqualAttribute(object? value)

@@ -23,7 +23,7 @@ namespace Furion.Validation;
 public partial class PasswordValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PasswordValidator"/>
     /// </summary>
     public PasswordValidator()
         : base(() => Strings.PasswordValidator_Invalid)

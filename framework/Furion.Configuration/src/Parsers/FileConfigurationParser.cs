@@ -35,7 +35,7 @@ internal sealed partial class FileConfigurationParser
     internal static Func<Stream, IDictionary<string, string?>>? _jsonParser;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="FileConfigurationParser"/>
     /// </summary>
     internal FileConfigurationParser()
     {

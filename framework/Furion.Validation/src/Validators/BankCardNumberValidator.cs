@@ -23,7 +23,7 @@ namespace Furion.Validation;
 public partial class BankCardNumberValidator : ValidatorBase
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="BankCardNumberValidator"/>
     /// </summary>
     public BankCardNumberValidator()
         : base(() => Strings.BankCardNumberValidator_Invalid)

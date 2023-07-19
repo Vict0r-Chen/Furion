@@ -20,7 +20,7 @@ namespace Furion.Component;
 public sealed class ServiceComponentContext : ComponentContext
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ServiceComponentContext"/>
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
     internal ServiceComponentContext(IHostApplicationBuilder hostApplicationBuilder)

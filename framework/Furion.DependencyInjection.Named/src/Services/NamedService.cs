@@ -16,22 +16,21 @@ namespace Furion.DependencyInjection;
 
 /// <inheritdoc cref="INamedService{TService}"/>
 internal sealed class NamedService<TService> : INamedService<TService>
-    where TService : class
 {
     /// <inheritdoc cref="IServiceProvider"/>
-    private readonly IServiceProvider _serviceProvider;
+    internal readonly IServiceProvider _serviceProvider;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="INamedService{TService}"/>
     /// </summary>
-    /// <param name="serviceProvider">服务提供器</param>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
     public NamedService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
 
     /// <inheritdoc />
-    public TService this[string name] => _serviceProvider.GetRequiredNamedService<TService>(name);
+    public TService this[string name] => (TService)_serviceProvider.GetRequiredNamedService(name, typeof(TService));
 
     /// <inheritdoc />
     public TService? Get(string name)

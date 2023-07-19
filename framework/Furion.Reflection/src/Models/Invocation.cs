@@ -21,7 +21,7 @@ namespace Furion.Reflection;
 public sealed class Invocation
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="Invocation"/>
     /// </summary>
     /// <param name="targetMethod">接口方法</param>
     /// <param name="args">调用参数</param>

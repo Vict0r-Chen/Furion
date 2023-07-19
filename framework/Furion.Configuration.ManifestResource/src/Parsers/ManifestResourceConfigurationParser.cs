@@ -23,7 +23,7 @@ internal sealed class ManifestResourceConfigurationParser
     internal readonly FileConfigurationParser _fileConfigurationParser;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="ManifestResourceConfigurationParser"/>
     /// </summary>
     /// <param name="fileConfigurationParser"><see cref="FileConfigurationParser"/></param>
     internal ManifestResourceConfigurationParser(FileConfigurationParser fileConfigurationParser)

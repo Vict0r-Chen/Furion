@@ -12,7 +12,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.DependencyAttribute"/>
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.ServiceAddition)">
@@ -56,12 +56,12 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute"/>
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor(System.Type[])">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute"/>
             </summary>
             <param name="serviceTypes"><see cref="P:Furion.DependencyInjection.ExposeServicesAttribute.ServiceTypes"/></param>
         </member>
@@ -78,7 +78,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`1.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`1"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`2">
@@ -90,7 +90,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`2.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`2"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`3">
@@ -103,7 +103,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`3.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`3"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`4">
@@ -117,7 +117,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`4.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`4"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`5">
@@ -132,7 +132,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`5.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`5"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`6">
@@ -148,7 +148,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`6.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`6"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`7">
@@ -165,7 +165,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`7.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`7"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`8">
@@ -183,7 +183,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute`8.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute`8"/>
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.DependencyInjectionBuilder">
@@ -214,7 +214,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.DependencyInjectionBuilder.#ctor">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.DependencyInjectionBuilder"/>
             </summary>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyInjectionBuilder.SuppressAssemblyScanning">
@@ -374,7 +374,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.ServiceDescriptorModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,Furion.DependencyInjection.ServiceAddition)">
             <summary>
-            构造函数
+            <inheritdoc cref="T:Furion.DependencyInjection.ServiceDescriptorModel"/>
             </summary>
             <param name="serviceType">服务类型</param>
             <param name="implementationType">实现类类型</param>

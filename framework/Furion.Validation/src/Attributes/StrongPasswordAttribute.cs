@@ -24,7 +24,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class StrongPasswordAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="StrongPasswordAttribute"/>
     /// </summary>
     public StrongPasswordAttribute()
         : base(() => Strings.StrongPasswordValidator_Invalid)

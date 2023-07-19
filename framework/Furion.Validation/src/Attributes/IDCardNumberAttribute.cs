@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class IDCardNumberAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="IDCardNumberAttribute"/>
     /// </summary>
     public IDCardNumberAttribute()
         : base(() => Strings.IDCardNumberValidator_invalid)

@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class PostalCodeAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="PostalCodeAttribute"/>
     /// </summary>
     public PostalCodeAttribute()
         : base(() => Strings.PostalCodeValidator_Invalid)

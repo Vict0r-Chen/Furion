@@ -21,7 +21,7 @@ namespace System.ComponentModel.DataAnnotations;
 public class EndsWithAttribute : ValidationAttribute
 {
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="EndsWithAttribute"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public EndsWithAttribute(char value)
@@ -30,7 +30,7 @@ public class EndsWithAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="EndsWithAttribute"/>
     /// </summary>
     /// <param name="value">检索的值</param>
     public EndsWithAttribute(string value)

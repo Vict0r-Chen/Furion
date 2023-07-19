@@ -25,7 +25,7 @@ internal sealed class NamedTypeDelegator : TypeDelegator
     internal readonly string name;
 
     /// <summary>
-    /// 构造函数
+    /// <inheritdoc cref="NamedTypeDelegator"/>
     /// </summary>
     /// <param name="name">命名</param>
     /// <param name="delegatingType">委托类型</param>
