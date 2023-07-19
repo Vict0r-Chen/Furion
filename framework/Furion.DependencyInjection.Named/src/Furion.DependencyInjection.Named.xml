@@ -521,6 +521,7 @@
             <param name="name">命名</param>
             <param name="serviceType">服务类型</param>
             <returns><see cref="T:System.Object"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceProviderExtensions.GetRequiredNamedService``1(System.IServiceProvider,System.String)">
             <summary>
@@ -530,6 +531,7 @@
             <param name="serviceProvider"><see cref="T:System.IServiceProvider"/></param>
             <param name="name">命名</param>
             <returns><typeparamref name="TService"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceProviderExtensions.GetNamedServices``1(System.IServiceProvider,System.String)">
             <summary>

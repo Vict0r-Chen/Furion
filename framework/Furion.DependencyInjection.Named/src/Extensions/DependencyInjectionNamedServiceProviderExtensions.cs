@@ -60,6 +60,7 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
     /// <returns><see cref="object"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static object GetRequiredNamedService(this IServiceProvider serviceProvider
         , string name
         , Type serviceType)
@@ -78,6 +79,7 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
     /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
     {
