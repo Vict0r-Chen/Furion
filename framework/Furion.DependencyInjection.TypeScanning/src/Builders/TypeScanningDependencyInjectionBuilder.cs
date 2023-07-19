@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 依赖注入模块构建器
+/// 类型扫描依赖注入构建器
 /// </summary>
 public sealed class TypeScanningDependencyInjectionBuilder
 {
@@ -91,7 +91,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
     public void AddFilter(Func<TypeScanningDependencyInjectionModel, bool> configure)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+        ArgumentNullException.ThrowIfNull(configure);
 
         _filterConfigure = configure;
     }
@@ -104,7 +104,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
     public TypeScanningDependencyInjectionBuilder AddAssemblies(params Assembly[] assemblies)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(assemblies, nameof(assemblies));
+        ArgumentNullException.ThrowIfNull(assemblies);
 
         Array.ForEach(assemblies, assembly =>
         {
@@ -143,9 +143,6 @@ public sealed class TypeScanningDependencyInjectionBuilder
                 AddingToServices(services, serviceDescriptorModel);
             }
         }
-
-        // 释放对象
-        Release();
     }
 
     /// <summary>
@@ -295,16 +292,6 @@ public sealed class TypeScanningDependencyInjectionBuilder
     }
 
     /// <summary>
-    /// 释放对象
-    /// </summary>
-    internal void Release()
-    {
-        _assemblies.Clear();
-        _serviceTypeBlacklist.Clear();
-        _filterConfigure = null;
-    }
-
-    /// <summary>
     /// 根据依赖类型获取对应的 <see cref="ServiceLifetime"/>
     /// </summary>
     /// <param name="dependencyType"><see cref="Type"/></param>
@@ -321,10 +308,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
             var value when value == typeof(IScopedDependency) => ServiceLifetime.Scoped,
             // Singleton
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
-            // 无效类型
-            _ => validateLifetime
-                ? throw new ArgumentOutOfRangeException(nameof(dependencyType), $"`{dependencyType ?? typeof(IDependency)}` type is not a valid service lifetime type.")
-                : null
+            _ => throw new NotSupportedException()
         };
     }
 
@@ -339,7 +323,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
         var serviceDescriptor = serviceDescriptorModel.Descriptor;
 
         // 穷举服务注册方式
-        switch (serviceDescriptorModel.Addition)
+        switch (serviceDescriptorModel.Registration)
         {
             // Add
             case RegistrationType.Add:
@@ -357,6 +341,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
             case RegistrationType.Replace:
                 services.Replace(serviceDescriptor);
                 break;
+
             default: throw new NotSupportedException();
         }
     }

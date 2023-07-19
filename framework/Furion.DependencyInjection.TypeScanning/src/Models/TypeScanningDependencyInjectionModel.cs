@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// <see cref="ServiceDescriptor"/> 模型
+/// 类型扫描依赖注入模型
 /// </summary>
 public sealed class TypeScanningDependencyInjectionModel
 {
@@ -25,21 +25,21 @@ public sealed class TypeScanningDependencyInjectionModel
     /// <param name="serviceType">服务类型</param>
     /// <param name="implementationType">实现类类型</param>
     /// <param name="serviceLifetime"><see cref="ServiceLifetime"/></param>
-    /// <param name="serviceAddition"><see cref="RegistrationType"/></param>
+    /// <param name="registration"><see cref="RegistrationType"/></param>
     internal TypeScanningDependencyInjectionModel(Type serviceType
         , Type implementationType
         , ServiceLifetime serviceLifetime
-        , RegistrationType serviceAddition)
+        , RegistrationType registration)
     {
         Descriptor = ServiceDescriptor.Describe(serviceType, implementationType, serviceLifetime);
-        Addition = serviceAddition;
+        Registration = registration;
     }
 
     /// <inheritdoc cref="ServiceDescriptor"/>
     public ServiceDescriptor Descriptor { get; init; }
 
     /// <inheritdoc cref="RegistrationType"/>
-    public RegistrationType Addition { get; set; }
+    public RegistrationType Registration { get; set; }
 
     /// <inheritdoc cref="DependencyAttribute.Order"/>
     public int Order { get; set; }
@@ -47,6 +47,6 @@ public sealed class TypeScanningDependencyInjectionModel
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"Addition = {Addition}, Order = {Order}, Descriptor = {Descriptor}";
+        return $"Registration = {Registration}, Order = {Order}, Descriptor = {Descriptor}";
     }
 }

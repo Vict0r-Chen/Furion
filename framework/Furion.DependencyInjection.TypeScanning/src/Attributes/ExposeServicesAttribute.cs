@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public class ExposeServicesAttribute : Attribute
@@ -35,19 +35,19 @@ public class ExposeServicesAttribute : Attribute
     public ExposeServicesAttribute(params Type[] serviceTypes)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(serviceTypes, nameof(serviceTypes));
+        ArgumentNullException.ThrowIfNull(serviceTypes);
 
         ServiceTypes = serviceTypes;
     }
 
     /// <summary>
-    /// 类型集合
+    /// 类型服务集合
     /// </summary>
-    public Type[] ServiceTypes { get; set; }
+    public Type[] ServiceTypes { get; init; }
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService">服务类型</typeparam>
 public sealed class ExposeServicesAttribute<TService> : ExposeServicesAttribute
@@ -63,7 +63,7 @@ public sealed class ExposeServicesAttribute<TService> : ExposeServicesAttribute
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>
@@ -82,7 +82,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2> : ExposeServic
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>
@@ -104,7 +104,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3> : E
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>
@@ -129,7 +129,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>
@@ -157,7 +157,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>
@@ -188,7 +188,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>
@@ -222,7 +222,7 @@ public sealed class ExposeServicesAttribute<TService1, TService2, TService3, TSe
 }
 
 /// <summary>
-/// 服务导出配置
+/// 服务导出配置特性
 /// </summary>
 /// <typeparam name="TService1">服务类型</typeparam>
 /// <typeparam name="TService2">服务类型</typeparam>

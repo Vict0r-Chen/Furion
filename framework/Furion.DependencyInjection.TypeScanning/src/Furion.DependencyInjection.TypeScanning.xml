@@ -46,7 +46,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor">
@@ -62,12 +62,12 @@
         </member>
         <member name="P:Furion.DependencyInjection.ExposeServicesAttribute.ServiceTypes">
             <summary>
-            类型集合
+            类型服务集合
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`1">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService">服务类型</typeparam>
         </member>
@@ -78,7 +78,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`2">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -90,7 +90,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`3">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -103,7 +103,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`4">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -117,7 +117,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`5">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -132,7 +132,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`6">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -148,7 +148,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`7">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -165,7 +165,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute`8">
             <summary>
-            服务导出配置
+            服务导出配置特性
             </summary>
             <typeparam name="TService1">服务类型</typeparam>
             <typeparam name="TService2">服务类型</typeparam>
@@ -183,7 +183,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.TypeScanningDependencyInjectionBuilder">
             <summary>
-            依赖注入模块构建器
+            类型扫描依赖注入构建器
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.TypeScanningDependencyInjectionBuilder._dependencyType">
@@ -282,11 +282,6 @@
             <param name="dependencyType"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
-        <member name="M:Furion.DependencyInjection.TypeScanningDependencyInjectionBuilder.Release">
-            <summary>
-            释放对象
-            </summary>
-        </member>
         <member name="M:Furion.DependencyInjection.TypeScanningDependencyInjectionBuilder.GetServiceLifetime(System.Type,System.Boolean)">
             <summary>
             根据依赖类型获取对应的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/>
@@ -350,7 +345,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.TypeScanningDependencyInjectionModel">
             <summary>
-            <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/> 模型
+            类型扫描依赖注入模型
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,Furion.DependencyInjection.RegistrationType)">
@@ -360,12 +355,12 @@
             <param name="serviceType">服务类型</param>
             <param name="implementationType">实现类类型</param>
             <param name="serviceLifetime"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></param>
-            <param name="serviceAddition"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
+            <param name="registration"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
         </member>
         <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Descriptor">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
         </member>
-        <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Addition">
+        <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Registration">
             <inheritdoc cref="T:Furion.DependencyInjection.RegistrationType"/>
         </member>
         <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Order">
