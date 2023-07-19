@@ -26,21 +26,39 @@ internal sealed class NamedService<TService> : INamedService<TService>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
     public NamedService(IServiceProvider serviceProvider)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(serviceProvider);
+
         _serviceProvider = serviceProvider;
     }
 
     /// <inheritdoc />
-    public TService this[string name] => (TService)_serviceProvider.GetRequiredNamedService(name, typeof(TService));
+    public TService this[string name]
+    {
+        get
+        {
+            // 空检查
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
+            return (TService)_serviceProvider.GetRequiredNamedService(name, typeof(TService));
+        }
+    }
 
     /// <inheritdoc />
     public TService? Get(string name)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
         return _serviceProvider.GetNamedService<TService>(name);
     }
 
     /// <inheritdoc />
     public IEnumerable<TService> GetEnumerator(string name)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
         return _serviceProvider.GetNamedServices<TService>(name);
     }
 }

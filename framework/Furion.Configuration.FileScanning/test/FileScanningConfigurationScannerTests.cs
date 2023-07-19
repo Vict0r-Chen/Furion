@@ -14,6 +14,8 @@
 
 namespace Furion.Configuration.FileScanning.Tests;
 
+#pragma warning disable
+
 public class FileScanningConfigurationScannerTests
 {
     [Fact]
