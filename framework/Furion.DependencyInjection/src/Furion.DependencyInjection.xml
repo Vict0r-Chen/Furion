@@ -5,7 +5,7 @@
     </assembly>
     <members>
         <member name="T:Furion.DependencyInjection.AutowiredMemberActivator">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.DependencyInjection.IAutowiredMemberActivator" />
         </member>
         <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._getAutowiredPropertiesFactory">
             <summary>
@@ -106,7 +106,7 @@
             <returns><typeparamref name="TInstance"/></returns>
         </member>
         <member name="T:Furion.DependencyInjection.TypeActivatorCache">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.DependencyInjection.ITypeActivatorCache" />
         </member>
         <member name="F:Furion.DependencyInjection.TypeActivatorCache._createFactory">
             <summary>

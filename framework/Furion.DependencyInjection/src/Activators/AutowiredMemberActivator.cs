@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection;
 
-/// <inheritdoc />
+/// <inheritdoc cref="IAutowiredMemberActivator" />
 internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 {
     /// <summary>

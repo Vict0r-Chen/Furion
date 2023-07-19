@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection;
 
-/// <inheritdoc />
+/// <inheritdoc cref="ITypeActivatorCache" />
 internal sealed class TypeActivatorCache : ITypeActivatorCache
 {
     /// <summary>
