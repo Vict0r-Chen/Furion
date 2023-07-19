@@ -249,7 +249,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
             var serviceDescriptorModel = new TypeScanningDependencyInjectionModel(serviceType
                 , implementationType
                 , serviceLifetime.Value
-                , dependencyAttribute.Addition)
+                , dependencyAttribute.Registration)
             {
                 Order = dependencyAttribute.Order
             };
@@ -342,24 +342,22 @@ public sealed class TypeScanningDependencyInjectionBuilder
         switch (serviceDescriptorModel.Addition)
         {
             // Add
-            case ServiceAddition.Add:
+            case RegistrationType.Add:
                 services.Add(serviceDescriptor);
                 break;
             // TryAdd
-            case ServiceAddition.TryAdd:
+            case RegistrationType.TryAdd:
                 services.TryAdd(serviceDescriptor);
                 break;
             // TryAddEnumerable
-            case ServiceAddition.TryAddEnumerable:
+            case RegistrationType.TryAddEnumerable:
                 services.TryAddEnumerable(serviceDescriptor);
                 break;
             // Replace
-            case ServiceAddition.Replace:
+            case RegistrationType.Replace:
                 services.Replace(serviceDescriptor);
                 break;
-            // 无效操作
-            default:
-                throw new InvalidOperationException($"`{serviceDescriptorModel.Addition}` not supported.");
+            default: throw new NotSupportedException();
         }
     }
 }

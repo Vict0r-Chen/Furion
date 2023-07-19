@@ -24,21 +24,21 @@ public sealed class DependencyAttribute : Attribute
     /// <inheritdoc cref="DependencyAttribute"/>
     /// </summary>
     public DependencyAttribute()
-        : this(ServiceAddition.Add)
+        : this(RegistrationType.Add)
     {
     }
 
     /// <summary>
     /// <inheritdoc cref="DependencyAttribute"/>
     /// </summary>
-    /// <param name="addition"><see cref="ServiceAddition"/></param>
-    public DependencyAttribute(ServiceAddition addition)
+    /// <param name="addition"><see cref="RegistrationType"/></param>
+    public DependencyAttribute(RegistrationType addition)
     {
-        Addition = addition;
+        Registration = addition;
     }
 
-    /// <inheritdoc cref="ServiceAddition"/>
-    public ServiceAddition Addition { get; init; }
+    /// <inheritdoc cref="RegistrationType"/>
+    public RegistrationType Registration { get; init; }
 
     /// <summary>
     /// 忽略注册

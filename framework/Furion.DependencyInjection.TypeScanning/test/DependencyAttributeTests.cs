@@ -33,7 +33,7 @@ public class DependencyAttributeTests
         var dependencyAttribute = new DependencyAttribute();
 
         Assert.NotNull(dependencyAttribute);
-        Assert.Equal(ServiceAddition.Add, dependencyAttribute.Addition);
+        Assert.Equal(RegistrationType.Add, dependencyAttribute.Registration);
         Assert.False(dependencyAttribute.Ignore);
         Assert.Equal(0, dependencyAttribute.Order);
         Assert.False(dependencyAttribute.IncludeSelf);
@@ -41,9 +41,9 @@ public class DependencyAttributeTests
     }
 
     [Fact]
-    public void New_With_Addtion_ReturnOK()
+    public void New_With_Registration_ReturnOK()
     {
-        var dependencyAttribute = new DependencyAttribute(ServiceAddition.TryAdd);
-        Assert.Equal(ServiceAddition.TryAdd, dependencyAttribute.Addition);
+        var dependencyAttribute = new DependencyAttribute(RegistrationType.TryAdd);
+        Assert.Equal(RegistrationType.TryAdd, dependencyAttribute.Registration);
     }
 }

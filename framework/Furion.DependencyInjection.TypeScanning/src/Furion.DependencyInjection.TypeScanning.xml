@@ -14,14 +14,14 @@
             <inheritdoc cref="T:Furion.DependencyInjection.DependencyAttribute"/>
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.ServiceAddition)">
+        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.RegistrationType)">
             <summary>
             <inheritdoc cref="T:Furion.DependencyInjection.DependencyAttribute"/>
             </summary>
-            <param name="addition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
+            <param name="addition"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
         </member>
-        <member name="P:Furion.DependencyInjection.DependencyAttribute.Addition">
-            <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
+        <member name="P:Furion.DependencyInjection.DependencyAttribute.Registration">
+            <inheritdoc cref="T:Furion.DependencyInjection.RegistrationType"/>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyAttribute.Ignore">
             <summary>
@@ -303,29 +303,29 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="serviceDescriptorModel"><see cref="T:Furion.DependencyInjection.TypeScanningDependencyInjectionModel"/></param>
         </member>
-        <member name="T:Furion.DependencyInjection.ServiceAddition">
+        <member name="T:Furion.DependencyInjection.RegistrationType">
             <summary>
-            服务注册方式
+            服务注册类型
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.ServiceAddition.Add">
+        <member name="F:Furion.DependencyInjection.RegistrationType.Add">
             <summary>
-            添加
+            添加服务
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.ServiceAddition.TryAdd">
+        <member name="F:Furion.DependencyInjection.RegistrationType.TryAdd">
             <summary>
-            尝试添加
+            尝试添加服务
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.ServiceAddition.TryAddEnumerable">
+        <member name="F:Furion.DependencyInjection.RegistrationType.TryAddEnumerable">
             <summary>
-            尝试添加
+            尝试添加服务集合
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.ServiceAddition.Replace">
+        <member name="F:Furion.DependencyInjection.RegistrationType.Replace">
             <summary>
-            替换
+            替换服务
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.IDependency">
@@ -353,20 +353,20 @@
             <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/> 模型
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,Furion.DependencyInjection.ServiceAddition)">
+        <member name="M:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.#ctor(System.Type,System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime,Furion.DependencyInjection.RegistrationType)">
             <summary>
             <inheritdoc cref="T:Furion.DependencyInjection.TypeScanningDependencyInjectionModel"/>
             </summary>
             <param name="serviceType">服务类型</param>
             <param name="implementationType">实现类类型</param>
             <param name="serviceLifetime"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceLifetime"/></param>
-            <param name="serviceAddition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
+            <param name="serviceAddition"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
         </member>
         <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Descriptor">
             <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
         </member>
         <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Addition">
-            <inheritdoc cref="T:Furion.DependencyInjection.ServiceAddition"/>
+            <inheritdoc cref="T:Furion.DependencyInjection.RegistrationType"/>
         </member>
         <member name="P:Furion.DependencyInjection.TypeScanningDependencyInjectionModel.Order">
             <inheritdoc cref="P:Furion.DependencyInjection.DependencyAttribute.Order"/>

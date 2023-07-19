@@ -25,11 +25,11 @@ public sealed class TypeScanningDependencyInjectionModel
     /// <param name="serviceType">服务类型</param>
     /// <param name="implementationType">实现类类型</param>
     /// <param name="serviceLifetime"><see cref="ServiceLifetime"/></param>
-    /// <param name="serviceAddition"><see cref="ServiceAddition"/></param>
+    /// <param name="serviceAddition"><see cref="RegistrationType"/></param>
     internal TypeScanningDependencyInjectionModel(Type serviceType
         , Type implementationType
         , ServiceLifetime serviceLifetime
-        , ServiceAddition serviceAddition)
+        , RegistrationType serviceAddition)
     {
         Descriptor = ServiceDescriptor.Describe(serviceType, implementationType, serviceLifetime);
         Addition = serviceAddition;
@@ -38,8 +38,8 @@ public sealed class TypeScanningDependencyInjectionModel
     /// <inheritdoc cref="ServiceDescriptor"/>
     public ServiceDescriptor Descriptor { get; init; }
 
-    /// <inheritdoc cref="ServiceAddition"/>
-    public ServiceAddition Addition { get; set; }
+    /// <inheritdoc cref="RegistrationType"/>
+    public RegistrationType Addition { get; set; }
 
     /// <inheritdoc cref="DependencyAttribute.Order"/>
     public int Order { get; set; }

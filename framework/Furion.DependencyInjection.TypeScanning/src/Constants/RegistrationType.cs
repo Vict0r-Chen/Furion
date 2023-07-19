@@ -15,27 +15,27 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 服务注册方式
+/// 服务注册类型
 /// </summary>
-public enum ServiceAddition : byte
+public enum RegistrationType
 {
     /// <summary>
-    /// 添加
+    /// 添加服务
     /// </summary>
     Add = 0,
 
     /// <summary>
-    /// 尝试添加
+    /// 尝试添加服务
     /// </summary>
     TryAdd,
 
     /// <summary>
-    /// 尝试添加
+    /// 尝试添加服务集合
     /// </summary>
     TryAddEnumerable,
 
     /// <summary>
-    /// 替换
+    /// 替换服务
     /// </summary>
     Replace
 }

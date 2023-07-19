@@ -19,7 +19,7 @@ public class ValidatorRelationshipTests
     [Fact]
     public void IsByte_ReturnTrue()
     {
-        Assert.Equal(typeof(byte), Enum.GetUnderlyingType(typeof(ValidatorRelationship)));
+        Assert.Equal(typeof(int), Enum.GetUnderlyingType(typeof(ValidatorRelationship)));
     }
 
     [Theory]
@@ -28,6 +28,6 @@ public class ValidatorRelationshipTests
     [InlineData(ValidatorRelationship.Or, 2)]
     public void Item_Value(ValidatorRelationship relationship, byte value)
     {
-        Assert.Equal((byte)relationship, value);
+        Assert.Equal((int)relationship, value);
     }
 }

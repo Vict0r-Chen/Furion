@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器关系
 /// </summary>
-public enum ValidatorRelationship : byte
+public enum ValidatorRelationship
 {
     /// <summary>
     /// 缺省值
