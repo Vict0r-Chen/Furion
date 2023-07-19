@@ -38,7 +38,6 @@ public class NamedServiceDescriptorDelegatorTests
         {
             var namedServiceDescriptorDelegator = new NamedServiceDescriptorDelegator("named", null!);
         });
-
     }
 
     [Fact]
