@@ -51,6 +51,7 @@ public static class DependencyInjectionNamedServiceCollectionExtensions
         // 创建命名服务描述器委托器
         var namedServiceDescriptorDelegator = new NamedServiceDescriptorDelegator(name, serviceDescriptor);
 
+        // 注册命名服务和服务描述器委托
         services.AddNamedService()
             .Add(namedServiceDescriptorDelegator.GetDescriptor());
 
@@ -75,6 +76,7 @@ public static class DependencyInjectionNamedServiceCollectionExtensions
         // 创建命名服务描述器委托器
         var namedServiceDescriptorDelegator = new NamedServiceDescriptorDelegator(name, serviceDescriptor);
 
+        // 注册命名服务和服务描述器委托
         services.AddNamedService()
             .TryAdd(namedServiceDescriptorDelegator.GetDescriptor());
 
