@@ -24,21 +24,21 @@ public interface INamedService<TService>
     /// <summary>
     /// 获取服务
     /// </summary>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     TService this[string name] { get; }
 
     /// <summary>
     /// 获取服务
     /// </summary>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     TService? Get(string name);
 
     /// <summary>
     /// 获取服务集合
     /// </summary>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
     IEnumerable<TService> GetEnumerator(string name);
 }

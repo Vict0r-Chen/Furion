@@ -15,9 +15,9 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// <see cref="ServiceDescriptor"/> 委托器
+/// 命名 <see cref="ServiceDescriptor"/> 委托器
 /// </summary>
-internal sealed class ServiceDescriptorDelegator
+internal sealed class NamedServiceDescriptorDelegator
 {
     /// <summary>
     /// 命名
@@ -32,7 +32,7 @@ internal sealed class ServiceDescriptorDelegator
     /// </summary>
     /// <param name="name">命名</param>
     /// <param name="serviceDescriptor"><see cref="ServiceDescriptor"/></param>
-    internal ServiceDescriptorDelegator(string name, ServiceDescriptor serviceDescriptor)
+    internal NamedServiceDescriptorDelegator(string name, ServiceDescriptor serviceDescriptor)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(name);

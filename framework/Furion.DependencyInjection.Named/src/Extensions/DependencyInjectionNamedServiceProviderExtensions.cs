@@ -23,14 +23,16 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// 获取命名服务
     /// </summary>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
     /// <returns><see cref="object"/></returns>
-    public static object? GetNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
+    public static object? GetNamedService(this IServiceProvider serviceProvider
+        , string name
+        , Type serviceType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
-        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(serviceType);
 
         return serviceProvider.GetService(new NamedTypeDelegator(name, serviceType));
     }
@@ -40,11 +42,14 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     public static TService? GetNamedService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
         return serviceProvider.GetNamedService(name, typeof(TService)) as TService;
     }
 
@@ -52,14 +57,16 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// 获取命名服务
     /// </summary>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
     /// <returns><see cref="object"/></returns>
-    public static object GetRequiredNamedService(this IServiceProvider serviceProvider, string name, Type serviceType)
+    public static object GetRequiredNamedService(this IServiceProvider serviceProvider
+        , string name
+        , Type serviceType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
-        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(serviceType);
 
         return serviceProvider.GetRequiredService(new NamedTypeDelegator(name, serviceType));
     }
@@ -69,11 +76,14 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     public static TService GetRequiredNamedService<TService>(this IServiceProvider serviceProvider, string name)
         where TService : class
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
         return (TService)serviceProvider.GetRequiredNamedService(name, typeof(TService));
     }
 
@@ -82,32 +92,34 @@ public static class DependencyInjectionNamedServiceProviderExtensions
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
     public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider serviceProvider, string name)
          where TService : class
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
 
         return serviceProvider.GetServices(new NamedTypeDelegator(name, typeof(TService)))
-                              .OfType<TService>();
+            .OfType<TService>();
     }
 
     /// <summary>
     /// 获取命名服务集合
     /// </summary>
     /// <param name="serviceProvider"><see cref="IServiceProvider"/></param>
-    /// <param name="name">服务名称</param>
+    /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    public static IEnumerable<object?> GetNamedServices(this IServiceProvider serviceProvider, string name, Type serviceType)
+    public static IEnumerable<object?> GetNamedServices(this IServiceProvider serviceProvider
+        , string name
+        , Type serviceType)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
-        ArgumentNullException.ThrowIfNull(serviceType, nameof(serviceType));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(serviceType);
 
         return serviceProvider.GetServices(new NamedTypeDelegator(name, serviceType))
-                              .Where(serviceType.IsInstanceOfType);
+            .Where(serviceType.IsInstanceOfType);
     }
 }
