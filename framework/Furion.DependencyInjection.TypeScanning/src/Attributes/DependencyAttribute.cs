@@ -24,6 +24,7 @@ public sealed class DependencyAttribute : Attribute
     /// <inheritdoc cref="DependencyAttribute"/>
     /// </summary>
     public DependencyAttribute()
+        : this(ServiceAddition.Add)
     {
     }
 

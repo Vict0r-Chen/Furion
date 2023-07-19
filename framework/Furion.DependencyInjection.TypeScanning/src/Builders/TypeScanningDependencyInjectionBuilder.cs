@@ -343,7 +343,6 @@ public sealed class TypeScanningDependencyInjectionBuilder
         {
             // Add
             case ServiceAddition.Add:
-            case ServiceAddition.Default:
                 services.Add(serviceDescriptor);
                 break;
             // TryAdd

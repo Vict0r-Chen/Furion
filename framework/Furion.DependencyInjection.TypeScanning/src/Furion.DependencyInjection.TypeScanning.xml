@@ -308,11 +308,6 @@
             服务注册方式
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.ServiceAddition.Default">
-            <summary>
-            缺省值
-            </summary>
-        </member>
         <member name="F:Furion.DependencyInjection.ServiceAddition.Add">
             <summary>
             添加

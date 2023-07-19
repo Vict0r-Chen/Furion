@@ -20,14 +20,9 @@ namespace Furion.DependencyInjection;
 public enum ServiceAddition : byte
 {
     /// <summary>
-    /// 缺省值
-    /// </summary>
-    Default = 0,
-
-    /// <summary>
     /// 添加
     /// </summary>
-    Add,
+    Add = 0,
 
     /// <summary>
     /// 尝试添加
