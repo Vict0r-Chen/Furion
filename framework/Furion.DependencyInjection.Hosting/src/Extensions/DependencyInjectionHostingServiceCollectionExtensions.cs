@@ -30,7 +30,7 @@ public static class DependencyInjectionHostingServiceCollectionExtensions
     {
         return services.AddAutowiredHostedService(serviceProvider =>
         {
-            // 解析或初始化主机服务
+            // 解析或初始化主机服务对象
             var hostedService = serviceProvider.GetService<THostedService>()
                 ?? serviceProvider.GetRequiredService<ITypeActivatorCache>()
                     .CreateInstance<THostedService>(serviceProvider, typeof(THostedService));
@@ -58,7 +58,7 @@ public static class DependencyInjectionHostingServiceCollectionExtensions
         // 注册主机服务
         services.AddHostedService(serviceProvider =>
         {
-            // 创建主机服务
+            // 调用主机服务工厂返回主机服务对象
             var hostedService = implementationFactory(serviceProvider);
 
             // 解析自动装配成员激活器服务
