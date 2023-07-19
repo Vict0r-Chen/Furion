@@ -58,7 +58,7 @@ public static class DependencyInjectionHostingServiceCollectionExtensions
         // 注册主机服务
         services.AddHostedService(serviceProvider =>
         {
-            // 调用主机服务工厂返回主机服务对象
+            // 调用主机服务工厂创建主机服务对象
             var hostedService = implementationFactory(serviceProvider);
 
             // 解析自动装配成员激活器服务

@@ -64,21 +64,17 @@ internal sealed class ManifestResourceConfigurationParser
         var keyValues = _fileConfigurationParser.Parse(manifestResourceConfigurationModel.Extension, stream);
 
         // 调试事件消息
-        string debugMessage;
+        var debugMessage = "The embed resource `{0}` has been successfully loaded into the configuration.";
 
         // 检查是否设置了前缀
-        if (string.IsNullOrWhiteSpace(manifestResourceConfigurationModel.Prefix))
-        {
-            debugMessage = "The embed resource `{0}` has been successfully loaded into the configuration.";
-        }
-        else
+        if (!string.IsNullOrWhiteSpace(manifestResourceConfigurationModel.Prefix))
         {
             // 遍历字典集合并包装 Key
             keyValues = keyValues.ToDictionary(u => $"{manifestResourceConfigurationModel.Prefix.TrimEnd(':')}:{u.Key}"
                 , u => u.Value
                 , StringComparer.OrdinalIgnoreCase);
 
-            debugMessage = "The embed resource `{0}` has been successfully loaded into the configuration with the prefix `{1}`.";
+            debugMessage += " (Prefix is `{1}`)";
         }
 
         // 输出调试事件

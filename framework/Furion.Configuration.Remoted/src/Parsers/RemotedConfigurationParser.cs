@@ -80,21 +80,17 @@ internal sealed class RemotedConfigurationParser
         var keyValues = _fileConfigurationParser.Parse(extension!, stream);
 
         // 调试事件消息
-        string debugMessage;
+        var debugMessage = "The remote address `{0}` has been successfully loaded into the configuration.";
 
         // 检查是否设置了前缀
-        if (string.IsNullOrWhiteSpace(remotedConfigurationModel.Prefix))
-        {
-            debugMessage = "The remote address `{0}` has been successfully loaded into the configuration.";
-        }
-        else
+        if (!string.IsNullOrWhiteSpace(remotedConfigurationModel.Prefix))
         {
             // 遍历字典集合并包装 Key
             keyValues = keyValues.ToDictionary(u => $"{remotedConfigurationModel.Prefix.TrimEnd(':')}:{u.Key}"
                 , u => u.Value
                 , StringComparer.OrdinalIgnoreCase);
 
-            debugMessage = "The remote address `{0}` has been successfully loaded into the configuration with the prefix `{1}`.";
+            debugMessage += " (Prefix is `{1}`)";
         }
 
         // 输出调试事件
