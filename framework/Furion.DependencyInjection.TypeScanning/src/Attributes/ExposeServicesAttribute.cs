@@ -17,9 +17,6 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 服务导出配置
 /// </summary>
-/// <remarks>
-/// <para>作用于程序集扫描，若类型配置了该特性则将指定的类型作为服务。</para>
-/// </remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public class ExposeServicesAttribute : Attribute
 {

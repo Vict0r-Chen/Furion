@@ -17,7 +17,6 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 服务注册配置
 /// </summary>
-/// <remarks>作用于程序集扫描</remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public sealed class DependencyAttribute : Attribute
 {

@@ -22,7 +22,6 @@ public enum ServiceAddition : byte
     /// <summary>
     /// 缺省值
     /// </summary>
-    /// <remarks><seealso cref="Add"/></remarks>
     Default = 0,
 
     /// <summary>
@@ -33,18 +32,15 @@ public enum ServiceAddition : byte
     /// <summary>
     /// 尝试添加
     /// </summary>
-    /// <remarks>若服务存在则跳过</remarks>
     TryAdd,
 
     /// <summary>
     /// 尝试添加
     /// </summary>
-    /// <remarks>若服务和实现类型同时存在则跳过</remarks>
     TryAddEnumerable,
 
     /// <summary>
     /// 替换
     /// </summary>
-    /// <remarks>若服务存在则替换</remarks>
     Replace
 }

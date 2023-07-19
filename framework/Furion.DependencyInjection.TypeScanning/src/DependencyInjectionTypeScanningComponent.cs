@@ -23,11 +23,11 @@ public sealed class DependencyInjectionTypeScanningComponent : ComponentBase
     /// 组件配置
     /// </summary>
     [ComponentProps]
-    public Action<DependencyInjectionBuilder>? Props { get; set; }
+    public Action<TypeScanningDependencyInjectionBuilder>? Props { get; set; }
 
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Services.AddDependencyInjectionTypeScanning(Props);
+        context.Services.AddTypeScanning(Props);
     }
 }

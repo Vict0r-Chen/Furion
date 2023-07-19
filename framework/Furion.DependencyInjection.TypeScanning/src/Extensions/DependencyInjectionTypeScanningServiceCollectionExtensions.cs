@@ -25,30 +25,30 @@ public static class DependencyInjectionTypeScanningServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddDependencyInjectionTypeScanning(this IServiceCollection services, Action<DependencyInjectionBuilder>? configure = null)
+    public static IServiceCollection AddTypeScanning(this IServiceCollection services, Action<TypeScanningDependencyInjectionBuilder>? configure = null)
     {
         // 初始化依赖注入模块构建器
-        var dependencyInjectionBuilder = new DependencyInjectionBuilder();
+        var typeScanningDependencyInjectionBuilder = new TypeScanningDependencyInjectionBuilder();
 
         // 调用自定义配置委托
-        configure?.Invoke(dependencyInjectionBuilder);
+        configure?.Invoke(typeScanningDependencyInjectionBuilder);
 
-        return services.AddDependencyInjectionTypeScanning(dependencyInjectionBuilder);
+        return services.AddTypeScanning(typeScanningDependencyInjectionBuilder);
     }
 
     /// <summary>
     /// 添加依赖注入模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="dependencyInjectionBuilder"><see cref="DependencyInjectionBuilder"/></param>
+    /// <param name="typeScanningDependencyInjectionBuilder"><see cref="TypeScanningDependencyInjectionBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddDependencyInjectionTypeScanning(this IServiceCollection services, DependencyInjectionBuilder dependencyInjectionBuilder)
+    public static IServiceCollection AddTypeScanning(this IServiceCollection services, TypeScanningDependencyInjectionBuilder typeScanningDependencyInjectionBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(dependencyInjectionBuilder, nameof(dependencyInjectionBuilder));
+        ArgumentNullException.ThrowIfNull(typeScanningDependencyInjectionBuilder);
 
         // 构建模块服务
-        dependencyInjectionBuilder.Build(services);
+        typeScanningDependencyInjectionBuilder.Build(services);
 
         return services;
     }
