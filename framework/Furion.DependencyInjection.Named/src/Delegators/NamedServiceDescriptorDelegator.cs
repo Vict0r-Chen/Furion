@@ -46,7 +46,7 @@ internal sealed class NamedServiceDescriptorDelegator
     /// 获取包装后的 <see cref="ServiceDescriptor"/>
     /// </summary>
     /// <returns><see cref="ServiceDescriptor"/></returns>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="NotSupportedException"></exception>
     internal ServiceDescriptor GetDescriptor()
     {
         // 创建命名类型委托器
@@ -58,7 +58,13 @@ internal sealed class NamedServiceDescriptorDelegator
             { ImplementationType: not null } => new(namedTypeDelegator, _serviceDescriptor.ImplementationType, _serviceDescriptor.Lifetime),
             { ImplementationInstance: not null } => new(namedTypeDelegator, _serviceDescriptor.ImplementationInstance),
             { ImplementationFactory: not null } => new(namedTypeDelegator, _serviceDescriptor.ImplementationFactory, _serviceDescriptor.Lifetime),
-            _ => throw new InvalidOperationException("Invalid service descriptor object.")
+            _ => throw new NotSupportedException()
         };
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return _serviceDescriptor.ToString();
     }
 }

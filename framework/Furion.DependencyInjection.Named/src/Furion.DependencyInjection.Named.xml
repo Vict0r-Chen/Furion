@@ -29,7 +29,10 @@
             获取包装后的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
             </summary>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
-            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:Furion.DependencyInjection.NamedServiceDescriptorDelegator.ToString">
+            <inheritdoc />
         </member>
         <member name="T:Furion.DependencyInjection.NamedTypeDelegator">
             <summary>
