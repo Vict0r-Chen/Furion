@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 服务注册配置
+/// 依赖关系配置特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public sealed class DependencyAttribute : Attribute
@@ -28,7 +28,7 @@ public sealed class DependencyAttribute : Attribute
     }
 
     /// <summary>
-    /// 注册方式
+    /// <inheritdoc cref="DependencyAttribute"/>
     /// </summary>
     /// <param name="addition"><see cref="ServiceAddition"/></param>
     public DependencyAttribute(ServiceAddition addition)
@@ -37,27 +37,26 @@ public sealed class DependencyAttribute : Attribute
     }
 
     /// <inheritdoc cref="ServiceAddition"/>
-    public ServiceAddition Addition { get; set; }
+    public ServiceAddition Addition { get; init; }
 
     /// <summary>
     /// 忽略注册
     /// </summary>
-    /// <remarks>若设置为 true 则跳过配置类型扫描</remarks>
-    public bool Ignore { get; set; }
+    public bool Ignore { get; init; }
 
     /// <summary>
     /// 排序
     /// </summary>
-    /// <remarks>值越大则越后注册</remarks>
-    public int Order { get; set; }
+    /// <remarks>值越大则注册越晚</remarks>
+    public int Order { get; init; }
 
     /// <summary>
-    /// 注册自身
+    /// 包含自身服务
     /// </summary>
-    public bool IncludeSelf { get; set; }
+    public bool IncludeSelf { get; init; }
 
     /// <summary>
-    /// 注册基类
+    /// 包含基类服务
     /// </summary>
-    public bool IncludeBase { get; set; }
+    public bool IncludeBase { get; init; }
 }

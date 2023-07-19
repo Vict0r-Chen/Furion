@@ -21,21 +21,21 @@ namespace Furion.DependencyInjection;
 public interface INamedService<TService>
 {
     /// <summary>
-    /// 获取服务
+    /// 获取命名服务
     /// </summary>
     /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     TService this[string name] { get; }
 
     /// <summary>
-    /// 获取服务
+    /// 获取命名服务
     /// </summary>
     /// <param name="name">命名</param>
     /// <returns><typeparamref name="TService"/></returns>
     TService? Get(string name);
 
     /// <summary>
-    /// 获取服务集合
+    /// 获取命名服务集合
     /// </summary>
     /// <param name="name">命名</param>
     /// <returns><see cref="IEnumerable{T}"/></returns>

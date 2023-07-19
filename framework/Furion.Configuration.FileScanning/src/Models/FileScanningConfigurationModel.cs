@@ -82,7 +82,7 @@ public sealed class FileScanningConfigurationModel
     /// <summary>
     /// 排序
     /// </summary>
-    /// <remarks>值越大则越后添加</remarks>
+    /// <remarks>值越大则注册越晚</remarks>
     public int Order { get; set; }
 
     /// <summary>

@@ -6,7 +6,7 @@
     <members>
         <member name="T:Furion.DependencyInjection.DependencyAttribute">
             <summary>
-            服务注册配置
+            依赖关系配置特性
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor">
@@ -16,7 +16,7 @@
         </member>
         <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.ServiceAddition)">
             <summary>
-            注册方式
+            <inheritdoc cref="T:Furion.DependencyInjection.DependencyAttribute"/>
             </summary>
             <param name="addition"><see cref="T:Furion.DependencyInjection.ServiceAddition"/></param>
         </member>
@@ -27,22 +27,21 @@
             <summary>
             忽略注册
             </summary>
-            <remarks>若设置为 true 则跳过配置类型扫描</remarks>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyAttribute.Order">
             <summary>
             排序
             </summary>
-            <remarks>值越大则越后注册</remarks>
+            <remarks>值越大则注册越晚</remarks>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyAttribute.IncludeSelf">
             <summary>
-            注册自身
+            包含自身服务
             </summary>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyAttribute.IncludeBase">
             <summary>
-            注册基类
+            包含基类服务
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ExposeServicesAttribute">

@@ -68,21 +68,21 @@
         </member>
         <member name="P:Furion.DependencyInjection.INamedService`1.Item(System.String)">
             <summary>
-            获取服务
+            获取命名服务
             </summary>
             <param name="name">命名</param>
             <returns><typeparamref name="TService"/></returns>
         </member>
         <member name="M:Furion.DependencyInjection.INamedService`1.Get(System.String)">
             <summary>
-            获取服务
+            获取命名服务
             </summary>
             <param name="name">命名</param>
             <returns><typeparamref name="TService"/></returns>
         </member>
         <member name="M:Furion.DependencyInjection.INamedService`1.GetEnumerator(System.String)">
             <summary>
-            获取服务集合
+            获取命名服务集合
             </summary>
             <param name="name">命名</param>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
