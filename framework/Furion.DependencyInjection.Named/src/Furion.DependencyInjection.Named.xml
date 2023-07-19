@@ -4,14 +4,6 @@
         <name>Furion.DependencyInjection.Named</name>
     </assembly>
     <members>
-        <member name="T:Furion.Component.DependencyInjectionNamedComponent">
-            <summary>
-            依赖注入命名模块服务组件
-            </summary>
-        </member>
-        <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.DependencyInjection.NamedTypeDelegator">
             <summary>
             命名类型委托器
@@ -37,6 +29,33 @@
         </member>
         <member name="M:Furion.DependencyInjection.NamedTypeDelegator.Equals(System.Type)">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.DependencyInjection.ServiceDescriptorDelegator">
+            <summary>
+            <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/> 委托器
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceDescriptorDelegator._name">
+            <summary>
+            命名
+            </summary>
+        </member>
+        <member name="F:Furion.DependencyInjection.ServiceDescriptorDelegator._serviceDescriptor">
+            <inheritdoc cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
+        </member>
+        <member name="M:Furion.DependencyInjection.ServiceDescriptorDelegator.#ctor(System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="name">命名</param>
+            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.ServiceDescriptorDelegator.GetDescriptor">
+            <summary>
+            获取包装后的 <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/>
+            </summary>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.DependencyInjection.INamedService`1">
             <summary>
@@ -84,6 +103,14 @@
             <inheritdoc />
         </member>
         <member name="M:Furion.DependencyInjection.NamedService`1.GetEnumerator(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Component.DependencyInjectionNamedComponent">
+            <summary>
+            依赖注入命名模块服务组件
+            </summary>
+        </member>
+        <member name="M:Furion.Component.DependencyInjectionNamedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceCollectionExtensions">
@@ -462,15 +489,6 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="name">服务名称</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceCollectionExtensions.CreateDelegator(System.String,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
-            <summary>
-            创建代理服务描述器
-            </summary>
-            <param name="name">服务命名</param>
-            <param name="serviceDescriptor"><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.ServiceDescriptor"/></returns>
-            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionNamedServiceProviderExtensions">
             <summary>

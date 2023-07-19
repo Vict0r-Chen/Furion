@@ -19,6 +19,3 @@ public class OneType
 
 public class TwoType
 { }
-
-public class SomeType
-{ }
