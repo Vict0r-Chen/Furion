@@ -3,7 +3,7 @@
 )
 
 cd .\framework\nupkgs;
-$framework_nupkgs = Get-ChildItem -Filter **/**.nupkg;
+$framework_nupkgs = Get-ChildItem -Recurse -Filter "*.nupkg";
 
 for ($i = 0; $i -le $framework_nupkgs.Length - 1; $i++){
     $item = $framework_nupkgs[$i];
