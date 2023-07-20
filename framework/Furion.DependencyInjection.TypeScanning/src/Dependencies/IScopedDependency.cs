@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 范围服务依赖接口
+/// 范围依赖关系接口
 /// </summary>
 public interface IScopedDependency : IDependency
 {

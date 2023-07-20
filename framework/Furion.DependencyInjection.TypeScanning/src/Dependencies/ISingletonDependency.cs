@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 单例服务依赖接口
+/// 单例依赖关系接口
 /// </summary>
 public interface ISingletonDependency : IDependency
 {

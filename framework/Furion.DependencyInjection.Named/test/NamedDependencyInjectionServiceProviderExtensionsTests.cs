@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection.Named.Tests;
 
-public class DependencyInjectionNamedServiceProviderExtensionsTests
+public class NamedDependencyInjectionServiceProviderExtensionsTests
 {
     [Fact]
     public void GetNamedService_Invalid_Parameters()

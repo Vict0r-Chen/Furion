@@ -15,13 +15,19 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 依赖注入命名模块服务组件
+/// 嵌入资源配置模块服务组件
 /// </summary>
-public sealed class DependencyInjectionNamedComponent : ComponentBase
+public sealed class ManifestResourceConfigurationComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    [ComponentProps]
+    public Action<ManifestResourceConfigurationBuilder>? Props { get; set; }
+
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Services.AddNamedService();
+        context.Configuration.AddManifestResource(Props);
     }
 }

@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection.Named.Tests;
 
-public class DependencyInjectionNamedServiceCollectionExtensionsTests
+public class NamedDependencyInjectionServiceCollectionExtensionsTests
 {
     [Fact]
     public void AddNamedService_ReturnOK()

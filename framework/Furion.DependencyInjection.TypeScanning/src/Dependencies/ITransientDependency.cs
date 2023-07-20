@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 瞬时服务依赖接口
+/// 瞬时依赖关系接口
 /// </summary>
 public interface ITransientDependency : IDependency
 {

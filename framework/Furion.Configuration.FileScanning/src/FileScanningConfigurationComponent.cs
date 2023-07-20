@@ -15,19 +15,19 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 嵌入资源配置模块服务组件
+/// 配置模块服务组件
 /// </summary>
-public sealed class ConfigurationManifestResourceComponent : ComponentBase
+public sealed class FileScanningConfigurationComponent : ComponentBase
 {
     /// <summary>
     /// 组件配置
     /// </summary>
     [ComponentProps]
-    public Action<ManifestResourceConfigurationBuilder>? Props { get; set; }
+    public Action<FileScanningConfigurationBuilder>? Props { get; set; }
 
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Configuration.AddManifestResource(Props);
+        context.Configuration.AddFileScanning(Props);
     }
 }

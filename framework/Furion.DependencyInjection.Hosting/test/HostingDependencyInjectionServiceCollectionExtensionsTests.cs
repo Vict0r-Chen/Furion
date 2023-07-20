@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection.Hosting.Tests;
 
-public class DependencyInjectionHostingServiceCollectionExtensionsTests
+public class HostingDependencyInjectionServiceCollectionExtensionsTests
 {
     [Fact]
     public void AddAutowiredHostedService_Invalid_Parameters()

@@ -254,17 +254,17 @@
         <member name="M:Furion.Configuration.RemotedConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Component.ConfigurationRemotedComponent">
+        <member name="T:Furion.Component.RemotedConfigurationComponent">
             <summary>
             远程配置模块服务组件
             </summary>
         </member>
-        <member name="P:Furion.Component.ConfigurationRemotedComponent.Props">
+        <member name="P:Furion.Component.RemotedConfigurationComponent.Props">
             <summary>
             组件配置
             </summary>
         </member>
-        <member name="M:Furion.Component.ConfigurationRemotedComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+        <member name="M:Furion.Component.RemotedConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.Configuration.RemotedConfigurationBuilderExtensions">

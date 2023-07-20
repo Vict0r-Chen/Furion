@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入命名模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public static class DependencyInjectionNamedServiceCollectionExtensions
+public static class NamedDependencyInjectionServiceCollectionExtensions
 {
     /// <summary>
     /// 添加命名服务

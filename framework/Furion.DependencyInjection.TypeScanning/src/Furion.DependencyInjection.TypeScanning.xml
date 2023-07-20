@@ -299,7 +299,7 @@
         </member>
         <member name="T:Furion.DependencyInjection.RegistrationType">
             <summary>
-            服务注册类型
+            服务注册方式
             </summary>
         </member>
         <member name="F:Furion.DependencyInjection.RegistrationType.Add">
@@ -324,22 +324,22 @@
         </member>
         <member name="T:Furion.DependencyInjection.IDependency">
             <summary>
-            服务依赖接口
+            依赖关系接口
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.IScopedDependency">
             <summary>
-            范围服务依赖接口
+            范围依赖关系接口
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ISingletonDependency">
             <summary>
-            单例服务依赖接口
+            单例依赖关系接口
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.ITransientDependency">
             <summary>
-            瞬时服务依赖接口
+            瞬时依赖关系接口
             </summary>
         </member>
         <member name="T:Furion.DependencyInjection.TypeScanningDependencyModel">
@@ -376,38 +376,38 @@
             类型扫描依赖关系扫描器
             </summary>
         </member>
-        <member name="T:Furion.Component.DependencyInjectionTypeScanningComponent">
+        <member name="T:Furion.Component.TypeScanningDependencyInjectionComponent">
             <summary>
-            依赖注入模块服务组件
+            依赖注入类型扫描模块服务组件
             </summary>
         </member>
-        <member name="P:Furion.Component.DependencyInjectionTypeScanningComponent.Props">
+        <member name="P:Furion.Component.TypeScanningDependencyInjectionComponent.Props">
             <summary>
             组件配置
             </summary>
         </member>
-        <member name="M:Furion.Component.DependencyInjectionTypeScanningComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+        <member name="M:Furion.Component.TypeScanningDependencyInjectionComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.DependencyInjectionTypeScanningServiceCollectionExtensions">
+        <member name="T:Microsoft.Extensions.DependencyInjection.TypeScanningDependencyInjectionServiceCollectionExtensions">
             <summary>
             依赖注入模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionTypeScanningServiceCollectionExtensions.AddTypeScanning(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.DependencyInjection.TypeScanningDependencyBuilder})">
+        <member name="M:Microsoft.Extensions.DependencyInjection.TypeScanningDependencyInjectionServiceCollectionExtensions.AddTypeScanning(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.DependencyInjection.TypeScanningDependencyBuilder})">
             <summary>
-            添加依赖注入模块服务
+            添加类型扫描依赖关系服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.DependencyInjectionTypeScanningServiceCollectionExtensions.AddTypeScanning(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.TypeScanningDependencyBuilder)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.TypeScanningDependencyInjectionServiceCollectionExtensions.AddTypeScanning(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.DependencyInjection.TypeScanningDependencyBuilder)">
             <summary>
-            添加依赖注入模块服务
+            添加类型扫描依赖关系服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <param name="typeScanningDependencyInjectionBuilder"><see cref="T:Furion.DependencyInjection.TypeScanningDependencyBuilder"/></param>
+            <param name="typeScanningDependencyBuilder"><see cref="T:Furion.DependencyInjection.TypeScanningDependencyBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
     </members>

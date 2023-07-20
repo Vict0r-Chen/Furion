@@ -15,7 +15,7 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 服务注册类型
+/// 服务注册方式
 /// </summary>
 public enum RegistrationType
 {

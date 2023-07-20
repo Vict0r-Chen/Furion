@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入 Web 模块 <see cref="IMvcBuilder"/> 拓展类
 /// </summary>
-public static class DependencyInjectionAspNetCoreMvcBuilderExtensions
+public static class AspNetCoreDependencyInjectionMvcBuilderExtensions
 {
     /// <summary>
     /// 添加控制器自动装载成员服务

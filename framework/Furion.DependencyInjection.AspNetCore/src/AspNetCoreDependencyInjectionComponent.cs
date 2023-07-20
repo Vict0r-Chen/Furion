@@ -15,19 +15,8 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 依赖注入模块服务组件
+/// 依赖注入 Web 模块服务组件
 /// </summary>
-public sealed class DependencyInjectionTypeScanningComponent : ComponentBase
+public sealed class AspNetCoreDependencyInjectionComponent : ComponentBase
 {
-    /// <summary>
-    /// 组件配置
-    /// </summary>
-    [ComponentProps]
-    public Action<TypeScanningDependencyBuilder>? Props { get; set; }
-
-    /// <inheritdoc />
-    public override void ConfigureServices(ServiceComponentContext context)
-    {
-        context.Services.AddTypeScanning(Props);
-    }
 }

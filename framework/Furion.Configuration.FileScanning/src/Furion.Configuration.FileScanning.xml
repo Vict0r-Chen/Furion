@@ -301,17 +301,17 @@
             <param name="directory">目录</param>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="T:Furion.Component.ConfigurationFileScanningComponent">
+        <member name="T:Furion.Component.FileScanningConfigurationComponent">
             <summary>
             配置模块服务组件
             </summary>
         </member>
-        <member name="P:Furion.Component.ConfigurationFileScanningComponent.Props">
+        <member name="P:Furion.Component.FileScanningConfigurationComponent.Props">
             <summary>
             组件配置
             </summary>
         </member>
-        <member name="M:Furion.Component.ConfigurationFileScanningComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+        <member name="M:Furion.Component.FileScanningConfigurationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.Configuration.FileScanningConfigurationBuilderExtensions">

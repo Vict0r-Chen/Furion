@@ -14,11 +14,11 @@
 
 namespace Furion.Tests;
 
-[DependsOn<ConfigurationFileScanningComponent
-    , ConfigurationManifestResourceComponent
-    , ConfigurationRemotedComponent
-    , DependencyInjectionTypeScanningComponent
-    , DependencyInjectionNamedComponent
+[DependsOn<FileScanningConfigurationComponent
+    , ManifestResourceConfigurationComponent
+    , RemotedConfigurationComponent
+    , TypeScanningDependencyInjectionComponent
+    , NamedDependencyInjectionComponent
     , ValidationComponent>]
 public class ServiceComponent : ComponentBase
 {
@@ -39,7 +39,7 @@ public class ServiceComponent : ComponentBase
     public override void ConfigureServices(ServiceComponentContext context)
     {
         context.Services.AddControllers()
-                        .AddControllersWithAutowired();
+            .AddControllersWithAutowired();
         context.Services.AddEndpointsApiExplorer();
         context.Services.AddSwaggerGen();
     }

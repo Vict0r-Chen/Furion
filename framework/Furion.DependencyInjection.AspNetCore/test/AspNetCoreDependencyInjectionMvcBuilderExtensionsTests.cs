@@ -14,7 +14,7 @@
 
 namespace Furion.DependencyInjection.AspNetCore.Tests;
 
-public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
+public class AspNetCoreDependencyInjectionMvcBuilderExtensionsTests
 {
     [Fact]
     public async Task ReplaceControllerActivator_ReturnOK()
@@ -24,7 +24,7 @@ public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
         var builder = WebApplication.CreateBuilder(urls);
 
         builder.Services.AddControllers()
-            .AddApplicationPart(typeof(DependencyInjectionAspNetCoreMvcBuilderExtensionsTests).Assembly)
+            .AddApplicationPart(typeof(AspNetCoreDependencyInjectionMvcBuilderExtensionsTests).Assembly)
             .ReplaceControllerActivator<AutowiredControllerActivator>();
 
         await using var app = builder.Build();
@@ -34,7 +34,7 @@ public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
         await app.StartAsync();
 
         using var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(DependencyInjectionAspNetCoreMvcBuilderExtensionsTests));
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(AspNetCoreDependencyInjectionMvcBuilderExtensionsTests));
 
         var httpResponseMessage = await httpClient.GetStringAsync($"http://localhost:{port}/Autowired/Autowired");
 
@@ -50,7 +50,7 @@ public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
         var builder = WebApplication.CreateBuilder(urls);
 
         builder.Services.AddControllers()
-            .AddApplicationPart(typeof(DependencyInjectionAspNetCoreMvcBuilderExtensionsTests).Assembly)
+            .AddApplicationPart(typeof(AspNetCoreDependencyInjectionMvcBuilderExtensionsTests).Assembly)
             .AddControllersWithAutowired();
 
         await using var app = builder.Build();
@@ -60,7 +60,7 @@ public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
         await app.StartAsync();
 
         using var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(DependencyInjectionAspNetCoreMvcBuilderExtensionsTests));
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(AspNetCoreDependencyInjectionMvcBuilderExtensionsTests));
 
         var httpResponseMessage = await httpClient.GetStringAsync($"http://localhost:{port}/Autowired/Autowired");
 
@@ -76,7 +76,7 @@ public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
         var builder = WebApplication.CreateBuilder(urls);
 
         builder.Services.AddControllers()
-            .AddApplicationPart(typeof(DependencyInjectionAspNetCoreMvcBuilderExtensionsTests).Assembly)
+            .AddApplicationPart(typeof(AspNetCoreDependencyInjectionMvcBuilderExtensionsTests).Assembly)
             .AddControllersAsServices()
             .AddControllersAsServicesWithAutowired();
 
@@ -87,7 +87,7 @@ public class DependencyInjectionAspNetCoreMvcBuilderExtensionsTests
         await app.StartAsync();
 
         using var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(DependencyInjectionAspNetCoreMvcBuilderExtensionsTests));
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(AspNetCoreDependencyInjectionMvcBuilderExtensionsTests));
 
         var httpResponseMessage = await httpClient.GetStringAsync($"http://localhost:{port}/Autowired/Autowired");
 

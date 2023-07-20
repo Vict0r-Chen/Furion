@@ -15,19 +15,19 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 远程配置模块服务组件
+/// 依赖注入类型扫描模块服务组件
 /// </summary>
-public sealed class ConfigurationRemotedComponent : ComponentBase
+public sealed class TypeScanningDependencyInjectionComponent : ComponentBase
 {
     /// <summary>
     /// 组件配置
     /// </summary>
     [ComponentProps]
-    public Action<RemotedConfigurationBuilder>? Props { get; set; }
+    public Action<TypeScanningDependencyBuilder>? Props { get; set; }
 
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Configuration.AddRemoted(Props);
+        context.Services.AddTypeScanning(Props);
     }
 }

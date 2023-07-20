@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 依赖注入模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public static class DependencyInjectionHostingServiceCollectionExtensions
+public static class HostingDependencyInjectionServiceCollectionExtensions
 {
     /// <summary>
     /// 添加自动装配成员激活器的主机服务

@@ -17,6 +17,6 @@ namespace Furion.Component;
 /// <summary>
 /// 依赖注入主机模块服务组件
 /// </summary>
-public sealed class DependencyInjectionHostingComponent : ComponentBase
+public sealed class HostingDependencyInjectionComponent : ComponentBase
 {
 }

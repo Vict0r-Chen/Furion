@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Configuration;
 /// <summary>
 /// <see cref="IConfiguration"/> 拓展类
 /// </summary>
-public static class IConfigurationExtensions
+public static class ConfigurationExtensions
 {
     /// <summary>
     /// 判断配置节点是否存在

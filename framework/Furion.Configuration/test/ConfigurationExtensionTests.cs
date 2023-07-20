@@ -14,7 +14,7 @@
 
 namespace Furion.Configuration.Tests;
 
-public class IConfigurationExtensionTests
+public class ConfigurationExtensionTests
 {
     [Fact]
     public void Exists_Invalid_Parameters()
