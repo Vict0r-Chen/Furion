@@ -52,26 +52,28 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 是否可实例化
+    /// 检查类型是否可实例化
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
     internal static bool IsInstantiable(this Type type)
     {
         return type.IsClass
-                && !type.IsAbstract
-                && !type.IsStatic();
+            && !type.IsAbstract
+            && !type.IsStatic();
     }
 
     /// <summary>
-    /// 是否派生自特定类型
+    /// 检查类型是否派生自指定类型
     /// </summary>
-    /// <remarks>排除特定类型本身</remarks>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="fromType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
     internal static bool IsAlienAssignableTo(this Type type, Type fromType)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fromType);
+
         return fromType != type
             && fromType.IsAssignableFrom(type);
     }
@@ -126,7 +128,8 @@ internal static class TypeExtensions
     internal static TAttribute GetDefinedCustomAttributeOrNew<TAttribute>(this Type type, bool inherit = false)
         where TAttribute : Attribute, new()
     {
-        return type.GetDefinedCustomAttribute<TAttribute>(inherit) ?? new();
+        return type.GetDefinedCustomAttribute<TAttribute>(inherit)
+            ?? new();
     }
 
     /// <summary>
@@ -142,38 +145,41 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 类型定义是否相等
+    /// 检查类型和指定类型定义是否相等
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="compareType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsEqualTypeDefinition(this Type type, Type compareType)
+    internal static bool IsTypeDefinitionEqual(this Type type, Type compareType)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(compareType);
+
         return type == compareType
-                || (type.IsGenericType
-                    && compareType.IsGenericType
-                    && type.IsGenericTypeDefinition
-                    && type == compareType.GetGenericTypeDefinition());
+            || (type.IsGenericType
+                && compareType.IsGenericType
+                && type.IsGenericTypeDefinition // 💡
+                && type == compareType.GetGenericTypeDefinition());
     }
 
     /// <summary>
-    /// 类型是否兼容
+    /// 检查类型和指定继承类型是否兼容
     /// </summary>
-    /// <remarks>检查泛型定义参数</remarks>
     /// <param name="type"><see cref="Type"/></param>
-    /// <param name="baseType"><see cref="Type"/></param>
+    /// <param name="inheritType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsTypeCompatibilityTo(this Type type, Type? baseType)
+    internal static bool IsTypeCompatibilityTo(this Type type, Type inheritType)
     {
-        return baseType is not null && baseType != typeof(object)
-                && baseType.IsAssignableFrom(type)
-                && (
-                    !type.IsGenericType
-                    || (type.IsGenericType
-                        && baseType.IsGenericType
-                        && type.GetTypeInfo().GenericTypeParameters.SequenceEqual(baseType.GenericTypeArguments)
-                       )
-                   );
+        // 空检查
+        ArgumentNullException.ThrowIfNull(inheritType);
+
+        return inheritType is not null
+            && inheritType != typeof(object)
+            && inheritType.IsAssignableFrom(type)
+            && (!type.IsGenericType
+                || (type.IsGenericType
+                    && inheritType.IsGenericType
+                    && type.GetTypeInfo().GenericTypeParameters.SequenceEqual(inheritType.GenericTypeArguments)));
     }
 
     /// <summary>

@@ -23,7 +23,7 @@ public sealed class TypeScanningDependencyModel
     /// <inheritdoc cref="TypeScanningDependencyModel"/>
     /// </summary>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <param name="serviceLifetime"><see cref="ServiceLifetime"/></param>
     /// <param name="registration"><see cref="RegistrationType"/></param>
     internal TypeScanningDependencyModel(Type serviceType

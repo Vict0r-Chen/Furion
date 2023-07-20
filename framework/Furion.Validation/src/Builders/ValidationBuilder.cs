@@ -55,7 +55,7 @@ public sealed class ValidationBuilder
 
         // 是否继承 AbstractValidator<> 泛型类型
         var baseType = validatorType.BaseType;
-        if (!(baseType is not null && typeof(AbstractValidator<>).IsEqualTypeDefinition(baseType)))
+        if (!(baseType is not null && typeof(AbstractValidator<>).IsTypeDefinitionEqual(baseType)))
         {
             throw new ArgumentException($"`{validatorType.Name}` validator type is not assignable from `AbstractValidator<>`.");
         }

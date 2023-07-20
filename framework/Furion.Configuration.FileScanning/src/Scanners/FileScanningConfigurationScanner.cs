@@ -147,7 +147,8 @@ internal sealed class FileScanningConfigurationScanner
         matcher.AddExcludePatterns(_fileScanningConfigurationBuilder._blacklistFileGlobbing);
 
         // 扫描所有目录文件
-        var files = _fileScanningConfigurationBuilder._directories.SelectMany(directory => ScanDirectory(directory, matcher, _fileScanningConfigurationBuilder.MaxScanDepth))
+        var files = _fileScanningConfigurationBuilder._directories
+            .SelectMany(directory => ScanDirectory(directory, matcher, _fileScanningConfigurationBuilder.MaxScanDepth))
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .Except(GetAddedFiles(), StringComparer.OrdinalIgnoreCase);
 
@@ -173,7 +174,8 @@ internal sealed class FileScanningConfigurationScanner
             }
 
             // 调用文件扫描配置模型过滤器
-            if (_fileScanningConfigurationBuilder._filterConfigure is null || _fileScanningConfigurationBuilder._filterConfigure.Invoke(fileScanningConfigurationModel))
+            if (_fileScanningConfigurationBuilder._filterConfigure is null
+                || _fileScanningConfigurationBuilder._filterConfigure.Invoke(fileScanningConfigurationModel))
             {
                 yield return fileScanningConfigurationModel;
             }
@@ -273,7 +275,8 @@ internal sealed class FileScanningConfigurationScanner
     internal HashSet<string> GetAddedFiles()
     {
         // 查找所有实现 FileConfigurationSource 的配置
-        var addedFiles = _configurationBuilder.Sources.OfType<FileConfigurationSource>()
+        var addedFiles = _configurationBuilder.Sources
+            .OfType<FileConfigurationSource>()
             .Select(s => (s.Path, s.FileProvider as PhysicalFileProvider))
             .OfType<(string Path, PhysicalFileProvider Provider)>()
             .SelectMany(t => ResolvePublicationFile(Path.Combine(t.Provider.Root, t.Path)))

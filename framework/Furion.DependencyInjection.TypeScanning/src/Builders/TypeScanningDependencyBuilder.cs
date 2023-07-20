@@ -25,7 +25,7 @@ public sealed class TypeScanningDependencyBuilder
     internal readonly HashSet<Assembly> _assemblies;
 
     /// <summary>
-    /// 黑名单服务类型集合
+    /// 黑名单类型服务集合
     /// </summary>
     internal readonly HashSet<Type> _blacklistServiceTypes;
 
@@ -63,18 +63,6 @@ public sealed class TypeScanningDependencyBuilder
     /// 禁用非公开类型
     /// </summary>
     public bool SuppressNonPublicType { get; set; }
-
-    /// <summary>
-    /// 验证服务生存期合法化
-    /// </summary>
-    /// <remarks>设置 false 将跳过合法验证</remarks>
-    public bool ValidateLifetime { get; set; } = true;
-
-    /// <summary>
-    /// 验证服务导出配置合法化
-    /// </summary>
-    /// <remarks>设置 false 将跳过合法验证</remarks>
-    public bool ValidateExposeService { get; set; } = true;
 
     /// <summary>
     /// 添加类型扫描依赖关系模型过滤器

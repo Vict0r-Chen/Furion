@@ -89,7 +89,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedTransient(this IServiceCollection services
         , string name
@@ -105,7 +105,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedTransient(this IServiceCollection services
         , string name
@@ -121,7 +121,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedTransient<TService>(this IServiceCollection services
         , string name
@@ -135,7 +135,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <returns><see cref="IServiceCollection"/></returns>
@@ -150,10 +150,10 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedTransient<TService, TImplementation>(this IServiceCollection services
         , string name
@@ -168,7 +168,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加范围命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <returns><see cref="IServiceCollection"/></returns>
@@ -183,10 +183,10 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加范围命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedScoped<TService, TImplementation>(this IServiceCollection services
         , string name
@@ -203,7 +203,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedScoped(this IServiceCollection services
         , string name
@@ -219,7 +219,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedScoped(this IServiceCollection services
         , string name
@@ -235,7 +235,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedScoped<TService>(this IServiceCollection services
         , string name
@@ -249,10 +249,10 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加单例命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedSingleton<TService, TImplementation>(this IServiceCollection services
         , string name
@@ -269,7 +269,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services
         , string name
@@ -301,7 +301,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedSingleton(this IServiceCollection services
         , string name
@@ -333,7 +333,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddNamedSingleton(this IServiceCollection services
         , string name
@@ -347,7 +347,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加单例命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <returns><see cref="IServiceCollection"/></returns>
@@ -364,7 +364,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedTransient(this IServiceCollection services
         , string name
@@ -380,7 +380,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedTransient(this IServiceCollection services
         , string name
@@ -396,7 +396,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedTransient<TService>(this IServiceCollection services
         , string name
@@ -410,7 +410,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <returns><see cref="IServiceCollection"/></returns>
@@ -425,10 +425,10 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加瞬时命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedTransient<TService, TImplementation>(this IServiceCollection services
         , string name
@@ -443,7 +443,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加范围命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <returns><see cref="IServiceCollection"/></returns>
@@ -458,10 +458,10 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加范围命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedScoped<TService, TImplementation>(this IServiceCollection services
         , string name
@@ -478,7 +478,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedScoped(this IServiceCollection services
         , string name
@@ -494,7 +494,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedScoped(this IServiceCollection services
         , string name
@@ -510,7 +510,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedScoped<TService>(this IServiceCollection services
         , string name
@@ -524,10 +524,10 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加单例命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedSingleton<TService, TImplementation>(this IServiceCollection services
         , string name
@@ -544,7 +544,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <typeparam name="TService">服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedSingleton<TService>(this IServiceCollection services
         , string name
@@ -576,7 +576,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationType">服务实现类型</param>
+    /// <param name="implementationType">实现服务类型</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedSingleton(this IServiceCollection services
         , string name
@@ -608,7 +608,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <param name="serviceType">服务类型</param>
-    /// <param name="implementationFactory">实现类工厂</param>
+    /// <param name="implementationFactory">实现服务工厂委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection TryAddNamedSingleton(this IServiceCollection services
         , string name
@@ -622,7 +622,7 @@ public static class NamedDependencyInjectionServiceCollectionExtensions
     /// 添加单例命名服务
     /// </summary>
     /// <typeparam name="TService">服务类型</typeparam>
-    /// <typeparam name="TImplementation">服务实现类型</typeparam>
+    /// <typeparam name="TImplementation">实现服务类型</typeparam>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="name">命名</param>
     /// <returns><see cref="IServiceCollection"/></returns>
