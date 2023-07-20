@@ -44,7 +44,7 @@ public class ExposeServicesAttributeTests
         Assert.NotNull(exposeServicesAttribute.ServiceTypes);
         Assert.Empty(exposeServicesAttribute.ServiceTypes);
 
-        var exposeServicesAttribute1 = new ExposeServicesAttribute(GetType());
+        var exposeServicesAttribute1 = new ExposeServicesAttribute(typeof(ExportService1));
 
         Assert.NotNull(exposeServicesAttribute1);
         Assert.NotNull(exposeServicesAttribute1.ServiceTypes);
