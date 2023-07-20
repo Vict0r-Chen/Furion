@@ -139,7 +139,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
     protected override sealed object? Invoke(MethodInfo? targetMethod, object?[]? args)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(targetMethod, nameof(targetMethod));
+        ArgumentNullException.ThrowIfNull(targetMethod);
 
         // 创建代理方法调用器
         var invocation = new Invocation(targetMethod, args, Target, Properties);
@@ -156,7 +156,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
         else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
         {
             // 空检查
-            ArgumentNullException.ThrowIfNull(_invokeAsyncOfTMethod, nameof(_invokeAsyncOfTMethod));
+            ArgumentNullException.ThrowIfNull(_invokeAsyncOfTMethod);
 
             return _invokeAsyncOfTMethod.MakeGenericMethod(returnType.GenericTypeArguments)
                                         .Invoke(this, new[] { invocation });

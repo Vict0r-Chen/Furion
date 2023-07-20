@@ -103,8 +103,8 @@ public static class ComponentHostApplicationBuilderExtensions
     public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, ComponentBuilder componentBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
-        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+        ArgumentNullException.ThrowIfNull(dependencies);
+        ArgumentNullException.ThrowIfNull(componentBuilder);
 
         // 构建模块服务
         componentBuilder.Build(hostApplicationBuilder);

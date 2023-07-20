@@ -38,8 +38,8 @@ internal static class ObjectMapper
         var destinationProperties = typeof(TDestination).GetProperties(bindingFlags);
 
         // 创建源对象参数和目标对象参数的表达式参数
-        var sourceParameter = Expression.Parameter(typeof(TSource), nameof(source));
-        var destinationParameter = Expression.Parameter(typeof(TDestination), nameof(destination));
+        var sourceParameter = Expression.Parameter(typeof(TSource));
+        var destinationParameter = Expression.Parameter(typeof(TDestination));
 
         // 遍历源对象的属性集合
         foreach (var sourceProperty in sourceProperties)

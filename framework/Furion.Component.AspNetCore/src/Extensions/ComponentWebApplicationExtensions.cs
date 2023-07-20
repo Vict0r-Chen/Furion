@@ -54,7 +54,7 @@ public static class ComponentWebApplicationExtensions
     public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies, nameof(dependencies));
+        ArgumentNullException.ThrowIfNull(dependencies);
 
         // 根据组件依赖关系依次调用
         ComponentBase.InvokeComponents(dependencies

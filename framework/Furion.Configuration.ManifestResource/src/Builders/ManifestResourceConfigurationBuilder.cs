@@ -32,7 +32,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     /// <summary>
     /// 黑名单文件通配符
     /// </summary>
-    internal readonly HashSet<string> _fileBlacklistGlobbing;
+    internal readonly HashSet<string> _blacklistFileGlobbing;
 
     /// <summary>
     /// 嵌入资源配置模型过滤器
@@ -51,7 +51,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
             "*.json"
         };
 
-        _fileBlacklistGlobbing = new(StringComparer.OrdinalIgnoreCase);
+        _blacklistFileGlobbing = new(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     public void AddFilter(Func<ManifestResourceConfigurationModel, bool> configure)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+        ArgumentNullException.ThrowIfNull(configure);
 
         _filterConfigure = configure;
     }
@@ -79,7 +79,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     public ManifestResourceConfigurationBuilder AddAssemblies(params Assembly[] assemblies)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(assemblies, nameof(assemblies));
+        ArgumentNullException.ThrowIfNull(assemblies);
 
         Array.ForEach(assemblies, assembly =>
         {
@@ -110,7 +110,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     public ManifestResourceConfigurationBuilder AddGlobbings(params string[] globbings)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
+        ArgumentNullException.ThrowIfNull(globbings);
 
         // 逐条添加文件通配符到集合中
         Array.ForEach(globbings, globbing =>
@@ -142,7 +142,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     public ManifestResourceConfigurationBuilder AddBlacklistGlobbings(params string[] globbings)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
+        ArgumentNullException.ThrowIfNull(globbings);
 
         // 逐条添加黑名单文件通配符到集合中
         Array.ForEach(globbings, globbing =>
@@ -150,7 +150,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
             // 空检查
             ArgumentException.ThrowIfNullOrWhiteSpace(globbing);
 
-            _fileBlacklistGlobbing.Add(globbing);
+            _blacklistFileGlobbing.Add(globbing);
         });
 
         return this;
@@ -195,7 +195,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
         // 初始化文件通配符匹配对象
         var matcher = new Matcher();
         matcher.AddIncludePatterns(_fileGlobbing);
-        matcher.AddExcludePatterns(_fileBlacklistGlobbing);
+        matcher.AddExcludePatterns(_blacklistFileGlobbing);
 
         // 扫描程序集并创建嵌入资源配置模型集合
         var manifestResourceConfigurationModels = _assemblies

@@ -46,7 +46,7 @@ public abstract class ComponentContext
         where TProps : class, new()
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configure, nameof(configure));
+        ArgumentNullException.ThrowIfNull(configure);
 
         Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
     }
@@ -60,7 +60,7 @@ public abstract class ComponentContext
         where TProps : class, new()
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+        ArgumentNullException.ThrowIfNull(configuration);
 
         // 获取配置实例
         var props = configuration.Get<TProps>();

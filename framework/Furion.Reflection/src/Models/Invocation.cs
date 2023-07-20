@@ -72,7 +72,7 @@ public sealed class Invocation
     public object? Proceed()
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(Target, nameof(Target));
+        ArgumentNullException.ThrowIfNull(Target);
 
         //方法返回值
         var returnType = Method.ReturnType;

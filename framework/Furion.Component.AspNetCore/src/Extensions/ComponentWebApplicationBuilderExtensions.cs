@@ -77,7 +77,7 @@ public static class ComponentWebApplicationBuilderExtensions
         where TWebComponent : WebComponent
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+        ArgumentNullException.ThrowIfNull(componentBuilder);
 
         // 添加根组件
         webApplicationBuilder.AddComponent<TComponent>(componentBuilder);

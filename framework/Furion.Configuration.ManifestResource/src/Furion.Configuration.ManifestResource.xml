@@ -19,7 +19,7 @@
             文件通配符
             </summary>
         </member>
-        <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._fileBlacklistGlobbing">
+        <member name="F:Furion.Configuration.ManifestResourceConfigurationBuilder._blacklistFileGlobbing">
             <summary>
             黑名单文件通配符
             </summary>

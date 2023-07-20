@@ -36,7 +36,7 @@ public class DependsOnAttribute : Attribute
     public DependsOnAttribute(params Type[] dependedTypes)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(dependedTypes, nameof(dependedTypes));
+        ArgumentNullException.ThrowIfNull(dependedTypes);
 
         DependedTypes = dependedTypes;
     }

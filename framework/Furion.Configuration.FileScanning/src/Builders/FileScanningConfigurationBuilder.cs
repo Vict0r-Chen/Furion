@@ -32,7 +32,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     /// <summary>
     /// 黑名单文件通配符
     /// </summary>
-    internal readonly HashSet<string> _fileBlacklistGlobbing;
+    internal readonly HashSet<string> _blacklistFileGlobbing;
 
     /// <summary>
     /// 文件扫描配置模型过滤器
@@ -51,7 +51,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
             "**/**.json"
         };
 
-        _fileBlacklistGlobbing = new(StringComparer.OrdinalIgnoreCase)
+        _blacklistFileGlobbing = new(StringComparer.OrdinalIgnoreCase)
         {
             "**/**.runtimeconfig.json",
             "**/**.runtimeconfig.*.json",
@@ -145,7 +145,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     public FileScanningConfigurationBuilder AddGlobbings(params string[] globbings)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
+        ArgumentNullException.ThrowIfNull(globbings);
 
         // 逐条添加文件通配符到集合中
         Array.ForEach(globbings, globbing =>
@@ -177,7 +177,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     public FileScanningConfigurationBuilder AddBlacklistGlobbings(params string[] globbings)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(globbings, nameof(globbings));
+        ArgumentNullException.ThrowIfNull(globbings);
 
         // 逐条添加黑名单文件通配符到集合中
         Array.ForEach(globbings, globbing =>
@@ -185,7 +185,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
             // 空检查
             ArgumentException.ThrowIfNullOrWhiteSpace(globbing);
 
-            _fileBlacklistGlobbing.Add(globbing);
+            _blacklistFileGlobbing.Add(globbing);
         });
 
         return this;

@@ -29,8 +29,8 @@ public class ManifestResourceConfigurationBuilderTests
         Assert.NotNull(manifestResourceConfigurationBuilder._fileGlobbing);
         Assert.Single(manifestResourceConfigurationBuilder._fileGlobbing);
         Assert.Equal("*.json", manifestResourceConfigurationBuilder._fileGlobbing.First());
-        Assert.NotNull(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Empty(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
+        Assert.NotNull(manifestResourceConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Empty(manifestResourceConfigurationBuilder._blacklistFileGlobbing);
         Assert.Null(manifestResourceConfigurationBuilder._filterConfigure);
 
         Assert.Null(manifestResourceConfigurationBuilder.DefaultPrefix);
@@ -194,9 +194,9 @@ public class ManifestResourceConfigurationBuilderTests
         manifestResourceConfigurationBuilder.AddBlacklistGlobbings("*.xml");
         manifestResourceConfigurationBuilder.AddBlacklistGlobbings("*.xml");
 
-        Assert.NotEmpty(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Single(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Equal("*.xml", manifestResourceConfigurationBuilder._fileBlacklistGlobbing.ElementAt(0));
+        Assert.NotEmpty(manifestResourceConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Single(manifestResourceConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Equal("*.xml", manifestResourceConfigurationBuilder._blacklistFileGlobbing.ElementAt(0));
     }
 
     [Fact]
@@ -206,9 +206,9 @@ public class ManifestResourceConfigurationBuilderTests
         manifestResourceConfigurationBuilder.AddBlacklistGlobbings(new List<string> { "*.xml" });
         manifestResourceConfigurationBuilder.AddBlacklistGlobbings(new List<string> { "*.xml" });
 
-        Assert.NotEmpty(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Single(manifestResourceConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Equal("*.xml", manifestResourceConfigurationBuilder._fileBlacklistGlobbing.ElementAt(0));
+        Assert.NotEmpty(manifestResourceConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Single(manifestResourceConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Equal("*.xml", manifestResourceConfigurationBuilder._blacklistFileGlobbing.ElementAt(0));
     }
 
     [Fact]

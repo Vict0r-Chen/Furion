@@ -144,7 +144,7 @@ internal sealed class FileScanningConfigurationScanner
         // 初始化文件通配符匹配对象
         var matcher = new Matcher();
         matcher.AddIncludePatterns(_fileScanningConfigurationBuilder._fileGlobbing);
-        matcher.AddExcludePatterns(_fileScanningConfigurationBuilder._fileBlacklistGlobbing);
+        matcher.AddExcludePatterns(_fileScanningConfigurationBuilder._blacklistFileGlobbing);
 
         // 扫描所有目录文件
         var files = _fileScanningConfigurationBuilder._directories.SelectMany(directory => ScanDirectory(directory, matcher, _fileScanningConfigurationBuilder.MaxScanDepth))

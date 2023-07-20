@@ -34,7 +34,7 @@ public class FileScanningConfigurationBuilderTests
         };
         Assert.Equal(fileGlobbing, fileScanningConfigurationBuilder._fileGlobbing);
 
-        Assert.NotNull(fileScanningConfigurationBuilder._fileBlacklistGlobbing);
+        Assert.NotNull(fileScanningConfigurationBuilder._blacklistFileGlobbing);
 
         var fileBlacklistGlobbing = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -46,7 +46,7 @@ public class FileScanningConfigurationBuilderTests
             "**/project.assets.json",
             "**/MvcTestingAppManifest.json"
         };
-        Assert.Equal(fileBlacklistGlobbing, fileScanningConfigurationBuilder._fileBlacklistGlobbing);
+        Assert.Equal(fileBlacklistGlobbing, fileScanningConfigurationBuilder._blacklistFileGlobbing);
 
         Assert.Equal(typeof(uint), fileScanningConfigurationBuilder.MaxScanDepth.GetType());
         Assert.Equal((uint)0, fileScanningConfigurationBuilder.MaxScanDepth);
@@ -227,9 +227,9 @@ public class FileScanningConfigurationBuilderTests
         fileScanningConfigurationBuilder.AddBlacklistGlobbings("**/**.unknown");
         fileScanningConfigurationBuilder.AddBlacklistGlobbings("**/**.unknown");
 
-        Assert.NotEmpty(fileScanningConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Equal(8, fileScanningConfigurationBuilder._fileBlacklistGlobbing.Count);
-        Assert.Equal("**/**.unknown", fileScanningConfigurationBuilder._fileBlacklistGlobbing.Last());
+        Assert.NotEmpty(fileScanningConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Equal(8, fileScanningConfigurationBuilder._blacklistFileGlobbing.Count);
+        Assert.Equal("**/**.unknown", fileScanningConfigurationBuilder._blacklistFileGlobbing.Last());
     }
 
     [Fact]
@@ -239,9 +239,9 @@ public class FileScanningConfigurationBuilderTests
         fileScanningConfigurationBuilder.AddBlacklistGlobbings(new List<string> { "**/**.unknown" });
         fileScanningConfigurationBuilder.AddBlacklistGlobbings(new List<string> { "**/**.unknown" });
 
-        Assert.NotEmpty(fileScanningConfigurationBuilder._fileBlacklistGlobbing);
-        Assert.Equal(8, fileScanningConfigurationBuilder._fileBlacklistGlobbing.Count);
-        Assert.Equal("**/**.unknown", fileScanningConfigurationBuilder._fileBlacklistGlobbing.Last());
+        Assert.NotEmpty(fileScanningConfigurationBuilder._blacklistFileGlobbing);
+        Assert.Equal(8, fileScanningConfigurationBuilder._blacklistFileGlobbing.Count);
+        Assert.Equal("**/**.unknown", fileScanningConfigurationBuilder._blacklistFileGlobbing.Last());
     }
 
     [Fact]

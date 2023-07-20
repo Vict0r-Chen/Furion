@@ -46,7 +46,7 @@ public static class ComponentHostApplicationBuilderExtensions
         where TComponent : ComponentBase
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(componentBuilder, nameof(componentBuilder));
+        ArgumentNullException.ThrowIfNull(componentBuilder);
 
         // 添加根组件
         hostApplicationBuilder.AddComponent<TComponent>(componentBuilder);
