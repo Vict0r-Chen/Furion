@@ -15,9 +15,9 @@
 namespace Furion.DependencyInjection;
 
 /// <summary>
-/// 类型扫描依赖注入构建器
+/// 类型扫描依赖关系构建器
 /// </summary>
-public sealed class TypeScanningDependencyInjectionBuilder
+public sealed class TypeScanningDependencyBuilder
 {
     /// <summary>
     /// 服务依赖注入接口类型
@@ -32,18 +32,17 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// <summary>
     /// 服务类型黑名单
     /// </summary>
-    /// <remarks>禁止已扫描的服务类型作为服务注册</remarks>
     internal readonly HashSet<Type> _serviceTypeBlacklist;
 
     /// <summary>
     /// 服务描述器过滤器
     /// </summary>
-    internal Func<TypeScanningDependencyInjectionModel, bool>? _filterConfigure;
+    internal Func<TypeScanningDependencyModel, bool>? _filterConfigure;
 
     /// <summary>
-    /// <inheritdoc cref="TypeScanningDependencyInjectionBuilder"/>
+    /// <inheritdoc cref="TypeScanningDependencyBuilder"/>
     /// </summary>
-    public TypeScanningDependencyInjectionBuilder()
+    public TypeScanningDependencyBuilder()
     {
         _dependencyType = typeof(IDependency);
 
@@ -88,7 +87,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// 添加服务描述器过滤器
     /// </summary>
     /// <param name="configure"><see cref="Func{T, TResult}"/></param>
-    public void AddFilter(Func<TypeScanningDependencyInjectionModel, bool> configure)
+    public void AddFilter(Func<TypeScanningDependencyModel, bool> configure)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure);
@@ -100,8 +99,8 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// 添加待扫描的程序集
     /// </summary>
     /// <param name="assemblies"><see cref="Assembly"/>[]</param>
-    /// <returns><see cref="TypeScanningDependencyInjectionBuilder"/></returns>
-    public TypeScanningDependencyInjectionBuilder AddAssemblies(params Assembly[] assemblies)
+    /// <returns><see cref="TypeScanningDependencyBuilder"/></returns>
+    public TypeScanningDependencyBuilder AddAssemblies(params Assembly[] assemblies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(assemblies);
@@ -121,8 +120,8 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// 添加待扫描的程序集
     /// </summary>
     /// <param name="assemblies"><see cref="IEnumerable{T}"/></param>
-    /// <returns><see cref="TypeScanningDependencyInjectionBuilder"/></returns>
-    public TypeScanningDependencyInjectionBuilder AddAssemblies(IEnumerable<Assembly> assemblies)
+    /// <returns><see cref="TypeScanningDependencyBuilder"/></returns>
+    public TypeScanningDependencyBuilder AddAssemblies(IEnumerable<Assembly> assemblies)
     {
         return AddAssemblies(assemblies.ToArray());
     }
@@ -149,14 +148,14 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// 扫描程序集并创建服务描述器模型集合
     /// </summary>
     /// <returns><see cref="List{T}"/></returns>
-    internal IEnumerable<TypeScanningDependencyInjectionModel> ScanAssemblies()
+    internal IEnumerable<TypeScanningDependencyModel> ScanAssemblies()
     {
         // 是否禁用程序集扫描
         if (SuppressAssemblyScanning)
         {
             // 输出事件消息
             Debugging.Warn("Dependency Injection module assembly scanning has been disabled.");
-            return Enumerable.Empty<TypeScanningDependencyInjectionModel>();
+            return Enumerable.Empty<TypeScanningDependencyModel>();
         }
 
         // 扫描程序集查找所有符合规则的类型
@@ -167,7 +166,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
         // 空检查
         if (!effectiveTypes.Any())
         {
-            return Enumerable.Empty<TypeScanningDependencyInjectionModel>();
+            return Enumerable.Empty<TypeScanningDependencyModel>();
         }
 
         // 返回扫描后的服务描述器集合
@@ -181,7 +180,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="List{T}"/></returns>
-    internal IEnumerable<TypeScanningDependencyInjectionModel> CreateServiceDescriptors(Type type)
+    internal IEnumerable<TypeScanningDependencyModel> CreateServiceDescriptors(Type type)
     {
         // 获取 [dependency] 特性
         var dependencyAttribute = type.GetDefinedCustomAttributeOrNew<DependencyAttribute>(true);
@@ -227,7 +226,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
                 : baseType.GetGenericTypeDefinition());
         }
 
-        // 获取实现类类型
+        // 获取服务实现类型
         var implementationType = !type.IsGenericType
             ? type
             : type.GetGenericTypeDefinition();
@@ -243,7 +242,7 @@ public sealed class TypeScanningDependencyInjectionBuilder
         foreach (var serviceType in serviceTypes)
         {
             // 创建服务描述器模型
-            var serviceDescriptorModel = new TypeScanningDependencyInjectionModel(serviceType
+            var serviceDescriptorModel = new TypeScanningDependencyModel(serviceType
                 , implementationType
                 , serviceLifetime.Value
                 , dependencyAttribute.Registration)
@@ -316,8 +315,8 @@ public sealed class TypeScanningDependencyInjectionBuilder
     /// 将服务描述器添加到 <see cref="IServiceCollection"/> 中
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="serviceDescriptorModel"><see cref="TypeScanningDependencyInjectionModel"/></param>
-    internal static void AddingToServices(IServiceCollection services, TypeScanningDependencyInjectionModel serviceDescriptorModel)
+    /// <param name="serviceDescriptorModel"><see cref="TypeScanningDependencyModel"/></param>
+    internal static void AddingToServices(IServiceCollection services, TypeScanningDependencyModel serviceDescriptorModel)
     {
         // 获取服务描述器
         var serviceDescriptor = serviceDescriptorModel.Descriptor;

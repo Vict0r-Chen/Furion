@@ -25,10 +25,10 @@ public static class DependencyInjectionTypeScanningServiceCollectionExtensions
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddTypeScanning(this IServiceCollection services, Action<TypeScanningDependencyInjectionBuilder>? configure = null)
+    public static IServiceCollection AddTypeScanning(this IServiceCollection services, Action<TypeScanningDependencyBuilder>? configure = null)
     {
         // 初始化依赖注入模块构建器
-        var typeScanningDependencyInjectionBuilder = new TypeScanningDependencyInjectionBuilder();
+        var typeScanningDependencyInjectionBuilder = new TypeScanningDependencyBuilder();
 
         // 调用自定义配置委托
         configure?.Invoke(typeScanningDependencyInjectionBuilder);
@@ -40,9 +40,9 @@ public static class DependencyInjectionTypeScanningServiceCollectionExtensions
     /// 添加依赖注入模块服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="typeScanningDependencyInjectionBuilder"><see cref="TypeScanningDependencyInjectionBuilder"/></param>
+    /// <param name="typeScanningDependencyInjectionBuilder"><see cref="TypeScanningDependencyBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddTypeScanning(this IServiceCollection services, TypeScanningDependencyInjectionBuilder typeScanningDependencyInjectionBuilder)
+    public static IServiceCollection AddTypeScanning(this IServiceCollection services, TypeScanningDependencyBuilder typeScanningDependencyInjectionBuilder)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(typeScanningDependencyInjectionBuilder);
