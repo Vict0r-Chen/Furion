@@ -14,15 +14,15 @@
 
 namespace Furion.DependencyInjection.TypeScanning.Tests;
 
-public class RegistrationTypeTests
+public class IDependencyTests
 {
-    [Fact]
-    public void Definition()
+    [Theory]
+    [InlineData(typeof(ITransientDependency))]
+    [InlineData(typeof(IScopedDependency))]
+    [InlineData(typeof(ISingletonDependency))]
+    [InlineData(typeof(IDependency))]
+    public void IsAssignableFrom(Type lifetimeDependency)
     {
-        var names = Enum.GetNames(typeof(RegistrationType));
-        Assert.Equal(4, names.Length);
-
-        var strings = new[] { nameof(RegistrationType.Add), nameof(RegistrationType.TryAdd), nameof(RegistrationType.TryAddEnumerable), nameof(RegistrationType.Replace) };
-        Assert.True(strings.SequenceEqual(names));
+        Assert.True(typeof(IDependency).IsAssignableFrom(lifetimeDependency));
     }
 }
