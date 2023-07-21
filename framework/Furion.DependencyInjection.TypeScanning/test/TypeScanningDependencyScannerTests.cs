@@ -50,6 +50,179 @@ public class TypeScanningDependencyScannerTests
     }
 
     [Fact]
+    public void ScanToAddServices()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        typeScanningDependencyScanner.ScanToAddServices();
+        Assert.NotNull(services);
+        Assert.NotEmpty(services);
+    }
+
+    [Fact]
+    public void ScanToAddServices_SuppressAssemblyScanning()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder
+        {
+            SuppressAssemblyScanning = true
+        };
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        typeScanningDependencyScanner.ScanToAddServices();
+        Assert.NotNull(services);
+        Assert.Empty(services);
+    }
+
+    [Fact]
+    public void ScanToAddServices_Order()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddFilter(model =>
+        {
+            if (model.Descriptor.ImplementationType == typeof(DependencyClass))
+            {
+                model.Order = 1;
+            }
+
+            return true;
+        });
+
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        typeScanningDependencyScanner.ScanToAddServices();
+        Assert.NotNull(services);
+        Assert.NotEmpty(services);
+        Assert.Equal(typeof(DependencyClass), services.Last().ImplementationType);
+    }
+
+    [Theory]
+    [InlineData(0, typeof(DependencyClass), typeof(AbstractDependencyService), typeof(IDependencyService), typeof(IDependencyService<string>), typeof(IDependencyService<string, int>))]
+    [InlineData(1, typeof(GenericDependencyClass<>))]
+    [InlineData(2, typeof(IDependencyService<>))]
+    [InlineData(3, typeof(IDependencyService<,>))]
+    [InlineData(4, typeof(GenericDependencyClass2<,>))]
+    [InlineData(5, typeof(IDependencyService), typeof(IDependencyService<string, int>))]
+    [InlineData(6, typeof(AbstractDependencyService))]
+    [InlineData(7, typeof(DependencyClass5))]
+    public void CreateModels(int index, params Type[] serviceTypes)
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        var models = typeScanningDependencyScanner.CreateModels().ToList();
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+
+        var groups = models.GroupBy(u => u.Descriptor.ImplementationType).ToList();
+        var groupServiceTypes = groups.ElementAt(index).Select(c => c.Descriptor.ServiceType).ToArray();
+        Assert.NotNull(groupServiceTypes);
+        Assert.Equal(serviceTypes, groupServiceTypes);
+    }
+
+    [Fact]
+    public void CreateModels_SuppressNonPublicType()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder
+        {
+            SuppressNonPublicType = true
+        };
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        var models = typeScanningDependencyScanner.CreateModels().ToList();
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+
+        Assert.DoesNotContain(models, m => m.Descriptor.ImplementationType == typeof(DependencyClass5));
+    }
+
+    [Fact]
+    public void CreateModels_AddTypeFilter()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddTypeFilter(t => t != typeof(DependencyClass));
+
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        var models = typeScanningDependencyScanner.CreateModels().ToList();
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+
+        Assert.DoesNotContain(models, m => m.Descriptor.ImplementationType == typeof(DependencyClass));
+    }
+
+    [Fact]
+    public void CreateModels_AddFilter()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddFilter(model => model.Descriptor.ImplementationType != typeof(DependencyClass));
+
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        var models = typeScanningDependencyScanner.CreateModels().ToList();
+        Assert.NotNull(models);
+        Assert.NotEmpty(models);
+
+        Assert.DoesNotContain(models, m => m.Descriptor.ImplementationType == typeof(DependencyClass));
+    }
+
+    [Fact]
+    public void GetServiceTypes_Invalid_Parameters()
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeScanningDependencyScanner.GetServiceTypes(null!, out _);
+        });
+    }
+
+    [Theory]
+    [InlineData(0, ServiceLifetime.Transient, typeof(IDependencyService), typeof(IDependencyService<string>), typeof(IDependencyService<string, int>))]
+    [InlineData(1, ServiceLifetime.Transient)]
+    [InlineData(2, ServiceLifetime.Transient, typeof(IDependencyService<>))]
+    [InlineData(3, ServiceLifetime.Transient, typeof(IDependencyService<,>))]
+    [InlineData(4, ServiceLifetime.Transient)]
+    [InlineData(5, ServiceLifetime.Transient, typeof(IDependencyService), typeof(IDependencyService<string, int>))]
+    [InlineData(6, ServiceLifetime.Transient)]
+    [InlineData(7, ServiceLifetime.Transient)]
+    [InlineData(8, ServiceLifetime.Transient)]
+    public void GetServiceTypes_ReturnOK(int index, ServiceLifetime lifetime, params Type[] serviceTypes)
+    {
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, typeScanningDependencyBuilder);
+
+        var types = GetType().Assembly.GetTypes().Where(type => type.IsClass && !type.IsAbstract && typeof(IDependency).IsAssignableFrom(type)).ToList();
+
+        Assert.NotNull(types);
+        Assert.NotEmpty(types);
+
+        var type = types.ElementAt(index);
+        Assert.NotNull(type);
+        var typeServiceTypes = typeScanningDependencyScanner.GetServiceTypes(type, out var serviceLifetime);
+        Assert.NotNull(typeServiceTypes);
+        Assert.Equal(lifetime, serviceLifetime);
+        Assert.Equal(serviceTypes, typeServiceTypes.ToArray());
+    }
+
+    [Fact]
     public void AddService_Invalid_Parameters()
     {
         var services = new ServiceCollection();
@@ -78,6 +251,22 @@ public class TypeScanningDependencyScannerTests
         Assert.Equal(typeof(IDependencyService), descriptor.ServiceType);
         Assert.Equal(typeof(DependencyClass), descriptor.ImplementationType);
         Assert.Equal(ServiceLifetime.Transient, descriptor.Lifetime);
+
+        var typeScanningDependencyModel2 = new TypeScanningDependencyModel(typeof(IDependencyService), typeof(DependencyClass), ServiceLifetime.Transient, RegistrationType.Add);
+        typeScanningDependencyScanner.AddService(typeScanningDependencyModel2);
+        Assert.Equal(2, typeScanningDependencyScanner._services.Count);
+
+        var typeScanningDependencyModel3 = new TypeScanningDependencyModel(typeof(IDependencyService), typeof(DependencyClass2), ServiceLifetime.Transient, RegistrationType.TryAdd);
+        typeScanningDependencyScanner.AddService(typeScanningDependencyModel3);
+        Assert.Equal(2, typeScanningDependencyScanner._services.Count);
+
+        var typeScanningDependencyModel4 = new TypeScanningDependencyModel(typeof(IDependencyService), typeof(DependencyClass2), ServiceLifetime.Transient, RegistrationType.TryAddEnumerable);
+        typeScanningDependencyScanner.AddService(typeScanningDependencyModel4);
+        Assert.Equal(3, typeScanningDependencyScanner._services.Count);
+
+        var typeScanningDependencyModel5 = new TypeScanningDependencyModel(typeof(IDependencyService), typeof(DependencyClass3), ServiceLifetime.Transient, RegistrationType.Replace);
+        typeScanningDependencyScanner.AddService(typeScanningDependencyModel5);
+        Assert.Equal(3, typeScanningDependencyScanner._services.Count);
     }
 
     [Fact]

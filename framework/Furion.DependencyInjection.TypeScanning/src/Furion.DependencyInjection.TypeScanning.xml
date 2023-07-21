@@ -196,6 +196,11 @@
             类型扫描依赖关系模型过滤器
             </summary>
         </member>
+        <member name="F:Furion.DependencyInjection.TypeScanningDependencyBuilder._typeFilterConfigure">
+            <summary>
+            类型扫描过滤器
+            </summary>
+        </member>
         <member name="M:Furion.DependencyInjection.TypeScanningDependencyBuilder.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.DependencyInjection.TypeScanningDependencyBuilder"/>
@@ -214,6 +219,12 @@
         <member name="M:Furion.DependencyInjection.TypeScanningDependencyBuilder.AddFilter(System.Func{Furion.DependencyInjection.TypeScanningDependencyModel,System.Boolean})">
             <summary>
             添加类型扫描依赖关系模型过滤器
+            </summary>
+            <param name="configure">自定义配置委托</param>
+        </member>
+        <member name="M:Furion.DependencyInjection.TypeScanningDependencyBuilder.AddTypeFilter(System.Func{System.Type,System.Boolean})">
+            <summary>
+            添加类型扫描过滤器
             </summary>
             <param name="configure">自定义配置委托</param>
         </member>

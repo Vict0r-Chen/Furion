@@ -35,6 +35,11 @@ public sealed class TypeScanningDependencyBuilder
     internal Func<TypeScanningDependencyModel, bool>? _filterConfigure;
 
     /// <summary>
+    /// 类型扫描过滤器
+    /// </summary>
+    internal Func<Type, bool>? _typeFilterConfigure;
+
+    /// <summary>
     /// <inheritdoc cref="TypeScanningDependencyBuilder"/>
     /// </summary>
     public TypeScanningDependencyBuilder()
@@ -71,6 +76,18 @@ public sealed class TypeScanningDependencyBuilder
         ArgumentNullException.ThrowIfNull(configure);
 
         _filterConfigure = configure;
+    }
+
+    /// <summary>
+    /// 添加类型扫描过滤器
+    /// </summary>
+    /// <param name="configure">自定义配置委托</param>
+    public void AddTypeFilter(Func<Type, bool> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        _typeFilterConfigure = configure;
     }
 
     /// <summary>

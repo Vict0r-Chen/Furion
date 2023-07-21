@@ -69,8 +69,7 @@ internal sealed class TypeScanningDependencyScanner
 
         // 创建类型扫描依赖关系模型集合并排序
         var typeScanningDependencyModels = CreateModels()
-            .OrderBy(model => model.Descriptor.ServiceType.Name)
-            .ThenBy(model => model.Order);
+            .OrderBy(model => model.Order);
 
         // 逐条添加服务
         foreach (var typeScanningDependencyModel in typeScanningDependencyModels)
@@ -88,7 +87,8 @@ internal sealed class TypeScanningDependencyScanner
         // 扫描所有程序集类型
         var types = _typeScanningDependencyBuilder._assemblies
             .SelectMany(assembly => assembly.GetTypes(_typeScanningDependencyBuilder.SuppressNonPublicType))
-            .Where(type => typeof(IDependency).IsAssignableFrom(type) && type.IsInstantiable());
+            .Where(type => typeof(IDependency).IsAssignableFrom(type) && type.IsInstantiable())
+            .Where(type => _typeScanningDependencyBuilder._typeFilterConfigure is null || _typeScanningDependencyBuilder._typeFilterConfigure.Invoke(type));
 
         // 遍历所有类型创建类型扫描依赖关系模型集合
         foreach (var type in types)
@@ -99,7 +99,7 @@ internal sealed class TypeScanningDependencyScanner
             // 检查 Ignore 属性
             if (dependencyAttribute is { Ignore: true })
             {
-                yield break;
+                continue;
             }
 
             // 获取类型服务集合
@@ -126,7 +126,7 @@ internal sealed class TypeScanningDependencyScanner
             if (dependencyAttribute is { IncludeSelf: true }
                 || serviceTypes.Count == 0)
             {
-                serviceTypes.Add(implementationType);
+                serviceTypes.Insert(0, implementationType);
             }
 
             // 遍历所有服务类型创建类型扫描依赖关系模型集合

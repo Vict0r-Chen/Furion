@@ -17,8 +17,43 @@ namespace Furion.DependencyInjection.TypeScanning.Tests;
 public interface IDependencyService
 { }
 
-public class DependencyClass : IDependencyService
+public interface IDependencyService<T>
 { }
 
-public class GenericDependencyClass<T> : IDependencyService
+public interface IDependencyService<T, U>
 { }
+
+public abstract class AbstractDependencyService
+{ }
+
+[Dependency(IncludeSelf = true, IncludeBase = true)]
+public class DependencyClass : AbstractDependencyService, IDependencyService, ITransientDependency, IDependencyService<string>, IDependencyService<string, int>
+{ }
+
+public class GenericDependencyClass<T> : IDependencyService, ITransientDependency, IDependencyService<string>, IDependencyService<T, string>
+{ }
+
+public class GenericDependencyClass2<T> : IDependencyService, ITransientDependency, IDependencyService<T>
+{ }
+
+public class GenericDependencyClass<T, U> : IDependencyService, ITransientDependency, IDependencyService<string>, IDependencyService<T, U>
+{ }
+
+public class GenericDependencyClass2<T, U> : IDependencyService, ITransientDependency, IDependencyService<T>, IDependencyService<string, int>
+{ }
+
+[ExposeServices(typeof(IDependencyService), typeof(IDependencyService<,>))]
+public class DependencyClass2 : IDependencyService, ITransientDependency, IDependencyService<string>, IDependencyService<string, int>
+{ }
+
+[Dependency(Ignore = true)]
+public class DependencyClass3 : ITransientDependency
+{ }
+
+[Dependency(IncludeBase = true)]
+public class DependencyClass4 : AbstractDependencyService, ITransientDependency
+{ }
+
+internal class DependencyClass5 : ITransientDependency
+{
+}

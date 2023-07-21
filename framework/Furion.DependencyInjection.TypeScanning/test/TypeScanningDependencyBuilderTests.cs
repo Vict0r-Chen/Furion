@@ -37,6 +37,7 @@ public class TypeScanningDependencyBuilderTests
 
         Assert.Equal(hashSet, typeScanningDependencyBuilder._blacklistServiceTypes);
         Assert.Null(typeScanningDependencyBuilder._filterConfigure);
+        Assert.Null(typeScanningDependencyBuilder._typeFilterConfigure);
         Assert.False(typeScanningDependencyBuilder.SuppressAssemblyScanning);
         Assert.False(typeScanningDependencyBuilder.SuppressNonPublicType);
     }
@@ -59,6 +60,26 @@ public class TypeScanningDependencyBuilderTests
         typeScanningDependencyBuilder.AddFilter(model => true);
 
         Assert.NotNull(typeScanningDependencyBuilder._filterConfigure);
+    }
+
+    [Fact]
+    public void AddTypeFilter_Invalid_Parameters()
+    {
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeScanningDependencyBuilder.AddTypeFilter(null!);
+        });
+    }
+
+    [Fact]
+    public void AddTypeFilter_ReturnOK()
+    {
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddTypeFilter(model => true);
+
+        Assert.NotNull(typeScanningDependencyBuilder._typeFilterConfigure);
     }
 
     [Fact]
@@ -154,6 +175,14 @@ public class TypeScanningDependencyBuilderTests
     [Fact]
     public void Build()
     {
-        // TODO!
+        var services = new ServiceCollection();
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+        typeScanningDependencyBuilder.AddAssemblies(GetType().Assembly);
+
+        typeScanningDependencyBuilder.Build(services);
+
+        Assert.NotEmpty(services);
+
+        _ = services.BuildServiceProvider();
     }
 }
