@@ -33,6 +33,10 @@ internal sealed class TypeScanningDependencyScanner
     internal TypeScanningDependencyScanner(IServiceCollection services
         , TypeScanningDependencyBuilder typeScanningDependencyBuilder)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(typeScanningDependencyBuilder);
+
         _services = services;
         _typeScanningDependencyBuilder = typeScanningDependencyBuilder;
 
