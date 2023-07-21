@@ -39,10 +39,7 @@ public sealed class TypeScanningDependencyBuilder
     /// </summary>
     public TypeScanningDependencyBuilder()
     {
-        _assemblies = new()
-        {
-            Assembly.GetEntryAssembly()!
-        };
+        _assemblies = new();
 
         _blacklistServiceTypes = new()
         {

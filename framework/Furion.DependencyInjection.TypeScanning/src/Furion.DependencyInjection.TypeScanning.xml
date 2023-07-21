@@ -348,6 +348,11 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="typeScanningDependencyBuilder"><see cref="T:Furion.DependencyInjection.TypeScanningDependencyBuilder"/></param>
         </member>
+        <member name="M:Furion.DependencyInjection.TypeScanningDependencyScanner.Initialize">
+            <summary>
+            初始化
+            </summary>
+        </member>
         <member name="M:Furion.DependencyInjection.TypeScanningDependencyScanner.ScanToAddServices">
             <summary>
             扫描并添加服务

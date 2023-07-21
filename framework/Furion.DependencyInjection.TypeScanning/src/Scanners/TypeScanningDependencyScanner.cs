@@ -35,6 +35,18 @@ internal sealed class TypeScanningDependencyScanner
     {
         _services = services;
         _typeScanningDependencyBuilder = typeScanningDependencyBuilder;
+
+        // 初始化
+        Initialize();
+    }
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    internal void Initialize()
+    {
+        // 默认添加启动程序集作为扫描
+        _typeScanningDependencyBuilder.AddAssemblies(Assembly.GetEntryAssembly()!);
     }
 
     /// <summary>
@@ -158,7 +170,7 @@ internal sealed class TypeScanningDependencyScanner
         var blacklistServiceTypes = _typeScanningDependencyBuilder._blacklistServiceTypes;
 
         // 服务类型过滤器
-        bool FilterType(Type serviceType)
+        bool TypeFilter(Type serviceType)
         {
             // 检查服务类型是否在黑名单类型服务集合中
             if (blacklistServiceTypes.Count > 0
@@ -190,7 +202,7 @@ internal sealed class TypeScanningDependencyScanner
         }
 
         // 获取类型服务集合
-        var serviceTypes = interfaces.Where(FilterType)
+        var serviceTypes = interfaces.Where(TypeFilter)
             .Select(serviceType => GetTypeDefinition(type, serviceType))
             .ToList();
 
