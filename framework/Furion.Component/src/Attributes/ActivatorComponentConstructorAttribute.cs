@@ -15,9 +15,8 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 标记组件实例化选择的构造函数配置
+/// 标记组件实例化时使用的构造函数配置特性
 /// </summary>
-/// <remarks>作用于组件初始化时选择哪个构造函数</remarks>
 [AttributeUsage(AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
 public sealed class ActivatorComponentConstructorAttribute : Attribute
 {

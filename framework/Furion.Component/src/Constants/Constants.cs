@@ -15,12 +15,12 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 常量配置
+/// 组件模块常量配置
 /// </summary>
 internal static class Constants
 {
     /// <summary>
-    /// WebComponent 类型限定名
+    /// Web 组件类型限定名
     /// </summary>
     internal const string WEBCOMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
 }

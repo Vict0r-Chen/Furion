@@ -15,24 +15,15 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
-/// <remarks>作用域派生自 <see cref="ComponentBase"/> 的类型</remarks>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public class DependsOnAttribute : Attribute
 {
     /// <summary>
     /// <inheritdoc cref="DependsOnAttribute"/>
     /// </summary>
-    public DependsOnAttribute()
-    {
-        DependedTypes = Array.Empty<Type>();
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="DependsOnAttribute"/>
-    /// </summary>
-    /// <param name="dependedTypes">依赖类型集合</param>
+    /// <param name="dependedTypes">类型组件集合</param>
     public DependsOnAttribute(params Type[] dependedTypes)
     {
         // 空检查
@@ -42,13 +33,13 @@ public class DependsOnAttribute : Attribute
     }
 
     /// <summary>
-    /// 依赖类型集合
+    /// 类型组件集合
     /// </summary>
-    public Type[] DependedTypes { get; set; }
+    public Type[] DependedTypes { get; init; }
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
 public sealed class DependsOnAttribute<TComponent> : DependsOnAttribute
@@ -64,7 +55,7 @@ public sealed class DependsOnAttribute<TComponent> : DependsOnAttribute
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -84,7 +75,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -108,7 +99,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -136,7 +127,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -168,7 +159,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -204,7 +195,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -244,7 +235,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -288,7 +279,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -336,7 +327,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -388,7 +379,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -444,7 +435,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -504,7 +495,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -568,7 +559,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -636,7 +627,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -708,7 +699,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -784,7 +775,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -864,7 +855,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -948,7 +939,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -1036,7 +1027,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -1128,7 +1119,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -1224,7 +1215,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -1324,7 +1315,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>
@@ -1428,7 +1419,7 @@ public sealed class DependsOnAttribute<TComponent1
 }
 
 /// <summary>
-/// 组件依赖配置
+/// 组件依赖关系配置特性
 /// </summary>
 /// <typeparam name="TComponent1"><see cref="ComponentBase"/></typeparam>
 /// <typeparam name="TComponent2"><see cref="ComponentBase"/></typeparam>

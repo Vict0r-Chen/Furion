@@ -6,41 +6,33 @@
     <members>
         <member name="T:Furion.Component.ActivatorComponentConstructorAttribute">
             <summary>
-            标记组件实例化选择的构造函数配置
+            标记组件实例化时使用的构造函数配置特性
             </summary>
-            <remarks>作用于组件初始化时选择哪个构造函数</remarks>
         </member>
         <member name="T:Furion.Component.ComponentPropsAttribute">
             <summary>
-            标记组件属性作为组件配置
+            标记作为组件配置的配置特性
             </summary>
-            <remarks>作用于组件初始化时设置指定属性值</remarks>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute">
             <summary>
-            组件依赖配置
-            </summary>
-            <remarks>作用域派生自 <see cref="T:Furion.Component.ComponentBase"/> 的类型</remarks>
-        </member>
-        <member name="M:Furion.Component.DependsOnAttribute.#ctor">
-            <summary>
-            <inheritdoc cref="T:Furion.Component.DependsOnAttribute"/>
+            组件依赖关系配置特性
             </summary>
         </member>
         <member name="M:Furion.Component.DependsOnAttribute.#ctor(System.Type[])">
             <summary>
             <inheritdoc cref="T:Furion.Component.DependsOnAttribute"/>
             </summary>
-            <param name="dependedTypes">依赖类型集合</param>
+            <param name="dependedTypes">类型组件集合</param>
         </member>
         <member name="P:Furion.Component.DependsOnAttribute.DependedTypes">
             <summary>
-            依赖类型集合
+            类型组件集合
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`1">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
         </member>
@@ -51,7 +43,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`2">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -63,7 +55,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`3">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -76,7 +68,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`4">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -90,7 +82,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`5">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -105,7 +97,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`6">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -121,7 +113,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`7">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -138,7 +130,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`8">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -156,7 +148,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`9">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -175,7 +167,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`10">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -195,7 +187,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`11">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -216,7 +208,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`12">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -238,7 +230,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`13">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -261,7 +253,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`14">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -285,7 +277,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`15">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -310,7 +302,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`16">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -336,7 +328,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`17">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -363,7 +355,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`18">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -391,7 +383,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`19">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -420,7 +412,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`20">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -450,7 +442,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`21">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -481,7 +473,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`22">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -513,7 +505,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`23">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -546,7 +538,7 @@
         </member>
         <member name="T:Furion.Component.DependsOnAttribute`24">
             <summary>
-            组件依赖配置
+            组件依赖关系配置特性
             </summary>
             <typeparam name="TComponent1"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <typeparam name="TComponent2"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
@@ -615,12 +607,12 @@
         </member>
         <member name="T:Furion.Component.Constants">
             <summary>
-            常量配置
+            组件模块常量配置
             </summary>
         </member>
         <member name="F:Furion.Component.Constants.WEBCOMPONENT_TYPE_FULLNAME">
             <summary>
-            WebComponent 类型限定名
+            Web 组件类型限定名
             </summary>
         </member>
         <member name="T:Furion.Component.ComponentContext">
@@ -776,6 +768,11 @@
             调用事件监听
             </summary>
             <param name="context"><see cref="T:Furion.Component.ComponentEventContext"/></param>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.ReloadProps">
+            <summary>
+            重载组件配置
+            </summary>
         </member>
         <member name="M:Furion.Component.ComponentBase.CreateTopologicalGraph(System.Type,System.Func{System.Type,System.Boolean})">
             <summary>

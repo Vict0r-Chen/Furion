@@ -98,6 +98,14 @@ public abstract class ComponentBase
     { }
 
     /// <summary>
+    /// 重载组件配置
+    /// </summary>
+    public virtual void ReloadProps()
+    {
+        // TODO!
+    }
+
+    /// <summary>
     /// 创建组件拓扑图排序集合
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
@@ -159,7 +167,8 @@ public abstract class ComponentBase
             }
 
             // 查找 [DependsOn] 特性配置，禁止继承查找
-            var dependedTypes = currentType.GetDefinedCustomAttributeOrNew<DependsOnAttribute>(false).DependedTypes;
+            var dependedTypes = currentType.GetDefinedCustomAttribute<DependsOnAttribute>(false)?.DependedTypes
+                ?? Array.Empty<Type>();
             dependencies.Add(currentType, dependedTypes);
 
             // 将依赖类型集合加入下一次待访问集合中
@@ -305,7 +314,7 @@ public abstract class ComponentBase
         // 组件模块配置选项
         component.Options = componentOptions;
 
-        // 查找贴有 [ComponentProps] 特性的组件配置属性
+        // 查找贴有 [ComponentProps] 特性的组件配置属性（这里也考虑一下字段）
         var properties = componentType.GetProperties(bindingFlags)
                                                             .Where(p => p.IsDefined(typeof(ComponentPropsAttribute), false));
 
