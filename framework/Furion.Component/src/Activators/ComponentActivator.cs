@@ -15,12 +15,8 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块常量配置
+/// 组件激活器
 /// </summary>
-internal static class Constants
+internal sealed class ComponentActivator
 {
-    /// <summary>
-    /// Web 组件类型限定名
-    /// </summary>
-    internal const string WEB_COMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
 }

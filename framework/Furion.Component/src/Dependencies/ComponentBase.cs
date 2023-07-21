@@ -222,7 +222,7 @@ public abstract class ComponentBase
 
         return typeof(ComponentBase).IsAssignableFrom(componentType)
             && baseType is not null
-            && baseType.FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME
+            && baseType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME
             && componentType.IsInstantiable();
     }
 
@@ -241,14 +241,14 @@ public abstract class ComponentBase
         }
 
         // 类型不能是 ComponentBase 或 WebComponent
-        if (componentType == componentBaseType || componentType.FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME)
+        if (componentType == componentBaseType || componentType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME)
         {
             throw new InvalidOperationException($"Component type cannot be a `{componentBaseType.Name}` or `WebComponent`.");
         }
 
         // 类型基类只能是 ComponentBase 或 WebComponent
         var baseType = componentType.BaseType!;
-        if (!(baseType == componentBaseType || baseType.FullName == Constants.WEBCOMPONENT_TYPE_FULLNAME))
+        if (!(baseType == componentBaseType || baseType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME))
         {
             throw new InvalidOperationException($"`{componentType.Name}` component type cannot inherit from other component types.");
         }

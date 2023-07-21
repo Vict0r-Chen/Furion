@@ -4,6 +4,11 @@
         <name>Furion.Component</name>
     </assembly>
     <members>
+        <member name="T:Furion.Component.ComponentActivator">
+            <summary>
+            组件激活器
+            </summary>
+        </member>
         <member name="T:Furion.Component.ActivatorComponentConstructorAttribute">
             <summary>
             标记组件实例化时使用的构造函数配置特性
@@ -610,7 +615,7 @@
             组件模块常量配置
             </summary>
         </member>
-        <member name="F:Furion.Component.Constants.WEBCOMPONENT_TYPE_FULLNAME">
+        <member name="F:Furion.Component.Constants.WEB_COMPONENT_TYPE_FULLNAME">
             <summary>
             Web 组件类型限定名
             </summary>
