@@ -49,11 +49,6 @@
             服务导出配置特性
             </summary>
         </member>
-        <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor">
-            <summary>
-            <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute"/>
-            </summary>
-        </member>
         <member name="M:Furion.DependencyInjection.ExposeServicesAttribute.#ctor(System.Type[])">
             <summary>
             <inheritdoc cref="T:Furion.DependencyInjection.ExposeServicesAttribute"/>

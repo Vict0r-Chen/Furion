@@ -39,11 +39,6 @@ public class ExposeServicesAttributeTests
     [Fact]
     public void New_ReturnOK()
     {
-        var exposeServicesAttribute = new ExposeServicesAttribute();
-        Assert.NotNull(exposeServicesAttribute);
-        Assert.NotNull(exposeServicesAttribute.ServiceTypes);
-        Assert.Empty(exposeServicesAttribute.ServiceTypes);
-
         var exposeServicesAttribute1 = new ExposeServicesAttribute(typeof(ExportService1));
 
         Assert.NotNull(exposeServicesAttribute1);

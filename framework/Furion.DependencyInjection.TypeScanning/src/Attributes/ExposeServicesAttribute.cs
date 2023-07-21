@@ -23,14 +23,6 @@ public class ExposeServicesAttribute : Attribute
     /// <summary>
     /// <inheritdoc cref="ExposeServicesAttribute"/>
     /// </summary>
-    public ExposeServicesAttribute()
-    {
-        ServiceTypes = Type.EmptyTypes;
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="ExposeServicesAttribute"/>
-    /// </summary>
     /// <param name="serviceTypes"><see cref="ServiceTypes"/></param>
     public ExposeServicesAttribute(params Type[] serviceTypes)
     {
