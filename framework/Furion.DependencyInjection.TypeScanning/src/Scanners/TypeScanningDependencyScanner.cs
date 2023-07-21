@@ -90,7 +90,7 @@ internal sealed class TypeScanningDependencyScanner
         foreach (var type in types)
         {
             // 获取 [Dependency] 特性对象
-            var dependencyAttribute = type.GetDefinedCustomAttributeOrNew<DependencyAttribute>(true);
+            var dependencyAttribute = type.GetDefinedCustomAttribute<DependencyAttribute>(true);
 
             // 检查 Ignore 属性
             if (dependencyAttribute is { Ignore: true })
@@ -132,9 +132,9 @@ internal sealed class TypeScanningDependencyScanner
                 var typeScanningDependencyModel = new TypeScanningDependencyModel(serviceType
                     , implementationType
                     , serviceLifetime
-                    , dependencyAttribute.Registration)
+                    , dependencyAttribute?.Registration ?? RegistrationType.Add)
                 {
-                    Order = dependencyAttribute.Order
+                    Order = dependencyAttribute?.Order ?? 0
                 };
 
                 // 调用类型扫描依赖关系模型过滤器
