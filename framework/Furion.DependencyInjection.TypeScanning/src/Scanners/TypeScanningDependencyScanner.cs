@@ -155,6 +155,9 @@ internal sealed class TypeScanningDependencyScanner
     /// <returns><see cref="List{T}"/></returns>
     internal List<Type> GetServiceTypes(Type type, out ServiceLifetime serviceLifetime)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(type);
+
         // 获取类型接口集合
         var interfaces = type.GetInterfaces();
 
@@ -257,13 +260,16 @@ internal sealed class TypeScanningDependencyScanner
     /// <exception cref="NotSupportedException"></exception>
     internal static ServiceLifetime GetServiceLifetime(Type dependencyType)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencyType);
+
         return dependencyType switch
         {
-            // 瞬时生存期
+            // 瞬时服务生存期
             var value when value == typeof(ITransientDependency) => ServiceLifetime.Transient,
-            // 范围生存期
+            // 范围服务生存期
             var value when value == typeof(IScopedDependency) => ServiceLifetime.Scoped,
-            // 单例生存期
+            // 单例服务生存期
             var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
 
             _ => throw new NotSupportedException()
@@ -278,6 +284,10 @@ internal sealed class TypeScanningDependencyScanner
     /// <returns><see cref="Type"/></returns>
     internal static Type GetTypeDefinition(Type type, Type serviceType)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(type);
+        ArgumentNullException.ThrowIfNull(serviceType);
+        
         return !type.IsGenericType
             ? serviceType
             : serviceType.GetGenericTypeDefinition();
