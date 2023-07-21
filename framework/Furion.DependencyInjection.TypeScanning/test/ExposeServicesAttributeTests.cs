@@ -39,11 +39,11 @@ public class ExposeServicesAttributeTests
     [Fact]
     public void New_ReturnOK()
     {
-        var exposeServicesAttribute1 = new ExposeServicesAttribute(typeof(ExportService1));
+        var exposeServicesAttribute = new ExposeServicesAttribute(typeof(ExportService1));
 
-        Assert.NotNull(exposeServicesAttribute1);
-        Assert.NotNull(exposeServicesAttribute1.ServiceTypes);
-        Assert.NotEmpty(exposeServicesAttribute1.ServiceTypes);
+        Assert.NotNull(exposeServicesAttribute);
+        Assert.NotNull(exposeServicesAttribute.ServiceTypes);
+        Assert.NotEmpty(exposeServicesAttribute.ServiceTypes);
     }
 
     [Fact]

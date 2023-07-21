@@ -114,7 +114,7 @@ public sealed class TypeScanningDependencyBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(types);
 
-        // 逐条添加黑名单文件通配符到集合中
+        // 逐条添加黑名单服务类型到集合中
         Array.ForEach(types, type =>
         {
             // 空检查
