@@ -166,8 +166,8 @@ internal sealed class TypeScanningDependencyScanner
             interfaces.Last(i => i.IsAlienAssignableTo(typeof(IDependency))));
 
         // 获取导出的类型服务集合
-        var limitServiceTypes = type.GetDefinedCustomAttributeOrNew<ExposeServicesAttribute>(true)
-            .ServiceTypes;
+        var limitServiceTypes = type.GetDefinedCustomAttribute<ExposeServicesAttribute>(true)
+            ?.ServiceTypes;
 
         // 获取黑名单类型服务集合
         var blacklistServiceTypes = _typeScanningDependencyBuilder._blacklistServiceTypes;
@@ -176,14 +176,13 @@ internal sealed class TypeScanningDependencyScanner
         bool TypeFilter(Type serviceType)
         {
             // 检查服务类型是否在黑名单类型服务集合中
-            if (blacklistServiceTypes.Count > 0
-                && blacklistServiceTypes.Any(type => type.IsTypeDefinitionEqual(serviceType)))
+            if (blacklistServiceTypes.Any(type => type.IsTypeDefinitionEqual(serviceType)))
             {
                 return false;
             }
 
             // 检查服务类型是否在导出的类型服务集合中
-            if (limitServiceTypes.Length > 0
+            if (limitServiceTypes is not null
                 && !limitServiceTypes.Any(type => type.IsTypeDefinitionEqual(serviceType)))
             {
                 return false;
@@ -266,11 +265,11 @@ internal sealed class TypeScanningDependencyScanner
         return dependencyType switch
         {
             // 瞬时服务生存期
-            var value when value == typeof(ITransientDependency) => ServiceLifetime.Transient,
+            _ when dependencyType == typeof(ITransientDependency) => ServiceLifetime.Transient,
             // 范围服务生存期
-            var value when value == typeof(IScopedDependency) => ServiceLifetime.Scoped,
+            _ when dependencyType == typeof(IScopedDependency) => ServiceLifetime.Scoped,
             // 单例服务生存期
-            var value when value == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
+            _ when dependencyType == typeof(ISingletonDependency) => ServiceLifetime.Singleton,
 
             _ => throw new NotSupportedException()
         };
@@ -287,7 +286,7 @@ internal sealed class TypeScanningDependencyScanner
         // 空检查
         ArgumentNullException.ThrowIfNull(type);
         ArgumentNullException.ThrowIfNull(serviceType);
-        
+
         return !type.IsGenericType
             ? serviceType
             : serviceType.GetGenericTypeDefinition();
