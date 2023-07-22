@@ -15,19 +15,18 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块对象释放器主机服务
+/// 组件释放器服务
 /// </summary>
-/// <remarks>作用于主机启动后移除组件模块的内存占用</remarks>
-internal sealed class ComponentReleaserHostedService : IHostedService
+internal sealed class ComponentReleaser : IHostedService
 {
     /// <inheritdoc cref="CoreOptions"/>
     private readonly CoreOptions _coreOptions;
 
     /// <summary>
-    /// <inheritdoc cref="ComponentReleaserHostedService"/>
+    /// <inheritdoc cref="ComponentReleaser"/>
     /// </summary>
     /// <param name="coreOptions"><see cref="CoreOptions"/></param>
-    public ComponentReleaserHostedService(CoreOptions coreOptions)
+    public ComponentReleaser(CoreOptions coreOptions)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(coreOptions);
@@ -38,7 +37,7 @@ internal sealed class ComponentReleaserHostedService : IHostedService
     /// <inheritdoc />
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        // 移除组件选项对象内存占用
+        // 将组件选项从核心选项中移除
         _coreOptions.Remove<ComponentOptions>();
 
         return Task.CompletedTask;

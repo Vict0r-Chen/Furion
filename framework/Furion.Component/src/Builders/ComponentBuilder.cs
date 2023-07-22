@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块构建器
+/// 组件构建器
 /// </summary>
 public sealed class ComponentBuilder
 {
@@ -36,13 +36,14 @@ public sealed class ComponentBuilder
     /// 添加组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
-    /// <param name="configure">自定义组件配置委托</param>
+    /// <param name="configure">组件配置委托</param>
     public void Props<TProps>(Action<TProps> configure)
         where TProps : class, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure);
 
+        // 添加或更新组件配置
         _propsActions.AddOrUpdate(typeof(TProps), configure);
     }
 
@@ -57,20 +58,18 @@ public sealed class ComponentBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(configuration);
 
-        // 获取配置实例
+        // 将配置绑定到组件配置类型对象中
         var props = configuration.Get<TProps>();
 
         // 空检查
         ArgumentNullException.ThrowIfNull(props);
 
-        // 创建组件配置委托
-        var configure = new Action<TProps>(destination =>
-        {
-            ObjectMapper.Map(props, destination);
-        });
-
         // 添加组件配置
-        Props(configure);
+        Props(new Action<TProps>(draft =>
+        {
+            // 将组件配置类型对象映射到新的上下文组件配置中
+            ObjectMapper.Map(props, draft);
+        }));
     }
 
     /// <summary>
@@ -79,16 +78,14 @@ public sealed class ComponentBuilder
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
     internal void Build(IHostApplicationBuilder hostApplicationBuilder)
     {
-        // 添加核心模块选项服务
+        // 添加核心选项服务
         hostApplicationBuilder.Services.AddCoreOptions();
 
-        // 添加组件模块对象释放器主机服务
-        hostApplicationBuilder.Services.AddHostedService<ComponentReleaserHostedService>();
+        // 添加组件释放器服务
+        hostApplicationBuilder.Services.AddHostedService<ComponentReleaser>();
 
         // 添加组件配置
-        var componentOptions = hostApplicationBuilder.GetComponentOptions();
-        componentOptions.PropsActions.AddOrUpdate(_propsActions);
-
-        _propsActions.Clear();
+        hostApplicationBuilder.GetComponentOptions()
+            .PropsActions.AddOrUpdate(_propsActions);
     }
 }

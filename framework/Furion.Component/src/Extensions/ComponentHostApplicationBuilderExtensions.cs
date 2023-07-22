@@ -124,6 +124,7 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <returns><see cref="ComponentOptions"/></returns>
     internal static ComponentOptions GetComponentOptions(this IHostApplicationBuilder hostApplicationBuilder)
     {
-        return hostApplicationBuilder.Services.GetCoreOptions().Get<ComponentOptions>();
+        return hostApplicationBuilder.Services.GetCoreOptions()
+            .Get<ComponentOptions>();
     }
 }

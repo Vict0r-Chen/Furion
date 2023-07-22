@@ -587,7 +587,7 @@
         </member>
         <member name="T:Furion.Component.ComponentBuilder">
             <summary>
-            组件模块构建器
+            组件构建器
             </summary>
         </member>
         <member name="F:Furion.Component.ComponentBuilder._propsActions">
@@ -605,7 +605,7 @@
             添加组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
-            <param name="configure">自定义组件配置委托</param>
+            <param name="configure">组件配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentBuilder.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
@@ -887,27 +887,6 @@
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
             <param name="event">事件</param>
         </member>
-        <member name="T:Furion.Component.ComponentReleaserHostedService">
-            <summary>
-            组件模块对象释放器主机服务
-            </summary>
-            <remarks>作用于主机启动后移除组件模块的内存占用</remarks>
-        </member>
-        <member name="F:Furion.Component.ComponentReleaserHostedService._coreOptions">
-            <inheritdoc cref="T:Furion.CoreOptions"/>
-        </member>
-        <member name="M:Furion.Component.ComponentReleaserHostedService.#ctor(Furion.CoreOptions)">
-            <summary>
-            <inheritdoc cref="T:Furion.Component.ComponentReleaserHostedService"/>
-            </summary>
-            <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
-        </member>
-        <member name="M:Furion.Component.ComponentReleaserHostedService.StartAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Component.ComponentReleaserHostedService.StopAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.Component.DependencyGraph">
             <summary>
             依赖关系图算法
@@ -1062,6 +1041,26 @@
             </summary>
             <param name="propsType">组件配置类型</param>
             <returns><see cref="T:System.Delegate"/></returns>
+        </member>
+        <member name="T:Furion.Component.ComponentReleaser">
+            <summary>
+            组件释放器服务
+            </summary>
+        </member>
+        <member name="F:Furion.Component.ComponentReleaser._coreOptions">
+            <inheritdoc cref="T:Furion.CoreOptions"/>
+        </member>
+        <member name="M:Furion.Component.ComponentReleaser.#ctor(Furion.CoreOptions)">
+            <summary>
+            <inheritdoc cref="T:Furion.Component.ComponentReleaser"/>
+            </summary>
+            <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
+        </member>
+        <member name="M:Furion.Component.ComponentReleaser.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Component.ComponentReleaser.StopAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
         </member>
         <member name="T:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions">
             <summary>
