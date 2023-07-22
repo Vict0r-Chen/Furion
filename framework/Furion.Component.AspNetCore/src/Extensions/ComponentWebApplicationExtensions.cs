@@ -72,6 +72,6 @@ public static class ComponentWebApplicationExtensions
     /// <returns><see cref="ComponentOptions"/></returns>
     internal static ComponentOptions GetComponentOptions(this WebApplication webApplication)
     {
-        return webApplication.Services.GetRequiredService<CoreOptions>().Get<ComponentOptions>();
+        return webApplication.Services.GetRequiredService<CoreOptions>().GetOrAdd<ComponentOptions>();
     }
 }

@@ -20,7 +20,7 @@ namespace Furion.Component;
 internal sealed class ComponentReleaser : IHostedService
 {
     /// <inheritdoc cref="CoreOptions"/>
-    private readonly CoreOptions _coreOptions;
+    internal readonly CoreOptions _coreOptions;
 
     /// <summary>
     /// <inheritdoc cref="ComponentReleaser"/>

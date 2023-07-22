@@ -17,24 +17,24 @@ namespace Furion.Core.Tests;
 public class CoreOptionsTests
 {
     [Fact]
-    public void Get_NotExists_WithAdd()
+    public void GetOrAdd_NotExists_WithAdd()
     {
         var coreOptions = new CoreOptions();
-        var childOptions = coreOptions.Get<ChildOptions>();
+        var childOptions = coreOptions.GetOrAdd<ChildOptions>();
 
         Assert.NotNull(childOptions);
         Assert.Single(coreOptions._optionsInstances);
     }
 
     [Fact]
-    public void Get_Exists_WithNotAdd()
+    public void GetOrAdd_Exists_WithNotAdd()
     {
         var coreOptions = new CoreOptions();
         var isAdded = coreOptions._optionsInstances.TryAdd(typeof(ChildOptions), new ChildOptions());
 
         Assert.True(isAdded);
 
-        var childOptions = coreOptions.Get<ChildOptions>();
+        var childOptions = coreOptions.GetOrAdd<ChildOptions>();
 
         Assert.NotNull(childOptions);
         Assert.Single(coreOptions._optionsInstances);
@@ -68,7 +68,7 @@ public class CoreOptionsTests
     public void Remove_Exists_WithNotAdd()
     {
         var coreOptions = new CoreOptions();
-        var childOptions = coreOptions.Get<ChildOptions>();
+        var childOptions = coreOptions.GetOrAdd<ChildOptions>();
 
         Assert.NotNull(childOptions);
         Assert.Single(coreOptions._optionsInstances);

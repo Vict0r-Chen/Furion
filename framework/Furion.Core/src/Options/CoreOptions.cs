@@ -38,7 +38,7 @@ internal sealed class CoreOptions
     /// <remarks>若子选项实例不存在则添加</remarks>
     /// <typeparam name="TOptions">选项类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
-    internal TOptions Get<TOptions>()
+    internal TOptions GetOrAdd<TOptions>()
         where TOptions : class, new()
     {
         var optionsType = typeof(TOptions);

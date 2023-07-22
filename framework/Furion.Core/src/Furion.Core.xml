@@ -466,7 +466,7 @@
             <inheritdoc cref="T:Furion.CoreOptions"/>
             </summary>
         </member>
-        <member name="M:Furion.CoreOptions.Get``1">
+        <member name="M:Furion.CoreOptions.GetOrAdd``1">
             <summary>
             获取子选项实例
             </summary>
