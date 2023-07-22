@@ -24,7 +24,7 @@ public sealed class ApplicationComponentContext : ComponentContext
     /// </summary>
     /// <param name="application"><see cref="WebApplication"/></param>
     internal ApplicationComponentContext(WebApplication application)
-        : base(application.GetComponentOptions())
+        : base((application ?? throw new ArgumentNullException(nameof(application))).GetComponentOptions())
     {
         Application = application;
         Services = application.Services;

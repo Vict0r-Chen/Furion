@@ -107,7 +107,7 @@ public abstract class ComponentContext
     }
 
     /// <summary>
-    /// 获取组件配置
+    /// 获取或创建组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><typeparamref name="TProps"/></returns>

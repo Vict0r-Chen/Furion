@@ -24,7 +24,7 @@ public sealed class ServiceComponentContext : ComponentContext
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
     internal ServiceComponentContext(IHostApplicationBuilder hostApplicationBuilder)
-        : base(hostApplicationBuilder.GetComponentOptions())
+        : base((hostApplicationBuilder ?? throw new ArgumentNullException(nameof(hostApplicationBuilder))).GetComponentOptions())
     {
         Services = hostApplicationBuilder.Services;
         Configuration = hostApplicationBuilder.Configuration;
