@@ -64,7 +64,7 @@ internal sealed class ComponentOptions
             return null;
         }
 
-        // 生成级联组件配置委托
+        // 生成组件配置级联委托
         var cascadeAction = values.Cast<Action<TProps>>()
             .Aggregate((previous, current) => (props) =>
             {

@@ -632,7 +632,7 @@
         </member>
         <member name="T:Furion.Component.ComponentContext">
             <summary>
-            组件上下文基类
+            组件上下文抽象基类
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentContext.#ctor(Furion.Component.ComponentOptions)">
@@ -654,7 +654,7 @@
             添加组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
-            <param name="configure">自定义组件配置委托</param>
+            <param name="configure">组件配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentContext.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
@@ -674,13 +674,12 @@
             <summary>
             获取组件配置
             </summary>
-            <remarks>若组件配置不存在返回默认实例</remarks>
             <typeparam name="TProps">组件配置类型</typeparam>
             <returns><typeparamref name="TProps"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentContext.GetPropsAction``1">
             <summary>
-            获取组件配置委托
+            获取组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>

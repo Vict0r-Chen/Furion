@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件上下文基类
+/// 组件上下文抽象基类
 /// </summary>
 public abstract class ComponentContext
 {
@@ -41,13 +41,14 @@ public abstract class ComponentContext
     /// 添加组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
-    /// <param name="configure">自定义组件配置委托</param>
+    /// <param name="configure">组件配置委托</param>
     public void Props<TProps>(Action<TProps> configure)
         where TProps : class, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configure);
 
+        // 添加或更新组件配置
         Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
     }
 
@@ -62,20 +63,18 @@ public abstract class ComponentContext
         // 空检查
         ArgumentNullException.ThrowIfNull(configuration);
 
-        // 获取配置实例
+        // 将配置绑定到组件配置类型对象中
         var props = configuration.Get<TProps>();
 
         // 空检查
         ArgumentNullException.ThrowIfNull(props);
 
-        // 创建组件配置委托
-        var configure = new Action<TProps>(destination =>
-        {
-            ObjectMapper.Map(props, destination);
-        });
-
         // 添加组件配置
-        Props(configure);
+        Props(new Action<TProps>(destination =>
+        {
+            // 将组件配置类型对象映射到新的上下文组件配置中
+            ObjectMapper.Map(props, destination);
+        }));
     }
 
     /// <summary>
@@ -86,16 +85,19 @@ public abstract class ComponentContext
     public TProps? GetProps<TProps>()
         where TProps : class, new()
     {
-        // 获取组件配置委托
+        // 获取组件配置级联委托
         var cascadeAction = GetPropsAction<TProps>();
 
+        // 空检查
         if (cascadeAction is null)
         {
             return null;
         }
 
-        // 初始化组件配置实例并调用配置委托
-        var props = Activator.CreateInstance<TProps>();
+        // 初始化组件配置实例
+        var props = new TProps();
+
+        // 调用组件配置级联委托
         cascadeAction(props);
 
         return props;
@@ -104,17 +106,16 @@ public abstract class ComponentContext
     /// <summary>
     /// 获取组件配置
     /// </summary>
-    /// <remarks>若组件配置不存在返回默认实例</remarks>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><typeparamref name="TProps"/></returns>
     public TProps GetPropsOrNew<TProps>()
         where TProps : class, new()
     {
-        return GetProps<TProps>() ?? Activator.CreateInstance<TProps>();
+        return GetProps<TProps>() ?? new();
     }
 
     /// <summary>
-    /// 获取组件配置委托
+    /// 获取组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><see cref="Action{T}"/></returns>

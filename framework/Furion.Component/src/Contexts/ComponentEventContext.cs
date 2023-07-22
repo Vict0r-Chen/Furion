@@ -41,7 +41,7 @@ public sealed class ComponentEventContext
     /// <summary>
     /// 事件
     /// </summary>
-    public string Event { get; }
+    public string Event { get; init; }
 
     /// <inheritdoc />
     public override string ToString()

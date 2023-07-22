@@ -42,7 +42,7 @@ internal sealed class CoreOptions
         where TOptions : class, new()
     {
         var optionsType = typeof(TOptions);
-        _ = _optionsInstances.TryAdd(optionsType, Activator.CreateInstance<TOptions>());
+        _ = _optionsInstances.TryAdd(optionsType, new());
 
         return (TOptions)_optionsInstances[optionsType];
     }
