@@ -25,6 +25,9 @@ public abstract class ComponentContext
     /// <param name="options"><see cref="ComponentOptions"/></param>
     internal ComponentContext(ComponentOptions options)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(options);
+
         Options = options;
         Properties = new Dictionary<object, object?>();
     }

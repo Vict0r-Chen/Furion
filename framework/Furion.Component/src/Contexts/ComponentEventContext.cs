@@ -24,12 +24,19 @@ public sealed class ComponentEventContext
     /// </summary>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="Component.ComponentContext"/></param>
-    /// <param name="event">事件</param>
-    internal ComponentEventContext(ComponentBase component, ComponentContext componentContext, string @event)
+    /// <param name="eventName">事件名</param>
+    internal ComponentEventContext(ComponentBase component
+        , ComponentContext componentContext
+        , string eventName)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(component);
+        ArgumentNullException.ThrowIfNull(componentContext);
+        ArgumentException.ThrowIfNullOrWhiteSpace(eventName);
+
         Component = component;
         ComponentContext = componentContext;
-        Event = @event;
+        EventName = eventName;
     }
 
     /// <inheritdoc cref="ComponentBase" />
@@ -39,13 +46,13 @@ public sealed class ComponentEventContext
     public ComponentContext ComponentContext { get; init; }
 
     /// <summary>
-    /// 事件
+    /// 事件名
     /// </summary>
-    public string Event { get; init; }
+    public string EventName { get; init; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{Component.GetType().FullName}.{Event}";
+        return $"{Component.GetType().FullName}.{EventName}";
     }
 }

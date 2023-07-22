@@ -695,7 +695,7 @@
             </summary>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="event">事件</param>
+            <param name="eventName">事件名</param>
         </member>
         <member name="P:Furion.Component.ComponentEventContext.Component">
             <inheritdoc cref="T:Furion.Component.ComponentBase" />
@@ -703,9 +703,9 @@
         <member name="P:Furion.Component.ComponentEventContext.ComponentContext">
             <inheritdoc cref="T:Furion.Component.ComponentContext" />
         </member>
-        <member name="P:Furion.Component.ComponentEventContext.Event">
+        <member name="P:Furion.Component.ComponentEventContext.EventName">
             <summary>
-            事件
+            事件名
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentEventContext.ToString">
