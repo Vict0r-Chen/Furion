@@ -950,20 +950,6 @@
             释放对象
             </summary>
         </member>
-        <member name="T:Furion.Component.ObjectMapper">
-            <summary>
-            简单对象映射
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ObjectMapper.Map``2(``0,``1)">
-            <summary>
-            映射对象
-            </summary>
-            <typeparam name="TSource">源对象类型</typeparam>
-            <typeparam name="TDestination">目标对象类型</typeparam>
-            <param name="source"><typeparamref name="TSource"/></param>
-            <param name="destination"><typeparamref name="TSource"/></param>
-        </member>
         <member name="T:Furion.Component.TopologicalGraph">
             <summary>
             拓扑图算法
@@ -1001,6 +987,20 @@
             <param name="visited">已访问过的节点</param>
             <param name="currentPath">当前遍历路径上的节点</param>
             <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="T:Furion.Component.ObjectMapper">
+            <summary>
+            简单对象映射
+            </summary>
+        </member>
+        <member name="M:Furion.Component.ObjectMapper.Map``2(``0,``1)">
+            <summary>
+            映射对象
+            </summary>
+            <typeparam name="TSource">源对象类型</typeparam>
+            <typeparam name="TDestination">目标对象类型</typeparam>
+            <param name="source"><typeparamref name="TSource"/></param>
+            <param name="destination"><typeparamref name="TSource"/></param>
         </member>
         <member name="T:Furion.Component.ComponentOptions">
             <summary>
