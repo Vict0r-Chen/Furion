@@ -605,7 +605,7 @@
             添加组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
-            <param name="configure">组件配置委托</param>
+            <param name="configure">自定义配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentBuilder.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
@@ -654,7 +654,7 @@
             添加组件配置
             </summary>
             <typeparam name="TProps">组件配置类型</typeparam>
-            <param name="configure">组件配置委托</param>
+            <param name="configure">自定义配置委托</param>
         </member>
         <member name="M:Furion.Component.ComponentContext.Props``1(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>

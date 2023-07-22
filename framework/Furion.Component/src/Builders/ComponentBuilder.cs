@@ -36,7 +36,7 @@ public sealed class ComponentBuilder
     /// 添加组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
-    /// <param name="configure">组件配置委托</param>
+    /// <param name="configure">自定义配置委托</param>
     public void Props<TProps>(Action<TProps> configure)
         where TProps : class, new()
     {
