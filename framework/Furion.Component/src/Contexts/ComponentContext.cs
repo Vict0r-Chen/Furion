@@ -51,8 +51,8 @@ public abstract class ComponentContext
         // 空检查
         ArgumentNullException.ThrowIfNull(configure);
 
-        // 添加或更新组件配置
-        Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
+        // 添加组件配置
+        Options.Props(configure);
     }
 
     /// <summary>
@@ -66,18 +66,8 @@ public abstract class ComponentContext
         // 空检查
         ArgumentNullException.ThrowIfNull(configuration);
 
-        // 将配置绑定到组件配置类型对象中
-        var props = configuration.Get<TProps>();
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(props);
-
         // 添加组件配置
-        Props(new Action<TProps>(destination =>
-        {
-            // 将组件配置类型对象映射到新的上下文组件配置中
-            ObjectMapper.Map(props, destination);
-        }));
+        Options.Props<TProps>(configuration);
     }
 
     /// <summary>

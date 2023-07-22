@@ -30,6 +30,70 @@ public class ComponentOptionsTests
     }
 
     [Fact]
+    public void Props_Invalid_Parameters()
+    {
+        var componentOptions = new ComponentOptions();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            componentOptions.Props((Action<ComponentOptionsClass1>)null!);
+        });
+    }
+
+    [Fact]
+    public void Props_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+
+        componentOptions.Props<ComponentOptionsClass1>(props => { });
+        Assert.Single(componentOptions.PropsActions);
+
+        componentOptions.Props<ComponentOptionsClass1>(props => { });
+        Assert.Single(componentOptions.PropsActions);
+        Assert.Equal(2, componentOptions.PropsActions[typeof(ComponentOptionsClass1)].Count);
+    }
+
+    [Fact]
+    public void PropsConfiguration_Invalid_Parameters()
+    {
+        var componentOptions = new ComponentOptions();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            componentOptions.Props<ComponentOptionsClass1>((IConfiguration)null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            componentOptions.Props<ComponentOptionsClass1>(new ConfigurationManager());
+        });
+    }
+
+    [Fact]
+    public void PropsConfiguration_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+        var configurationManager = new ConfigurationManager();
+        configurationManager.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            {"Data:Items:0", "action1"},
+            {"Data:Items:1", "action2"}
+        });
+
+        componentOptions.Props<ComponentOptionsClass1>(configurationManager.GetSection("Data"));
+        Assert.Single(componentOptions.PropsActions);
+
+        var propsAction = componentOptions.PropsActions[typeof(ComponentOptionsClass1)].First() as Action<ComponentOptionsClass1>;
+        Assert.NotNull(propsAction);
+
+        var componentOptionsClass1 = new ComponentOptionsClass1();
+        propsAction(componentOptionsClass1);
+
+        Assert.NotNull(componentOptionsClass1.Items);
+        Assert.Equal(2, componentOptionsClass1.Items.Count);
+    }
+
+    [Fact]
     public void GetPropsActionGeneric_ReturnOK()
     {
         var componentOptions = new ComponentOptions();

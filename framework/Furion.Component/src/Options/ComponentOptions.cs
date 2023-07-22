@@ -51,6 +51,48 @@ internal sealed class ComponentOptions
     internal ConcurrentDictionary<Type, ComponentBase> Components { get; init; }
 
     /// <summary>
+    /// 添加组件配置
+    /// </summary>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configure">自定义配置委托</param>
+    internal void Props<TProps>(Action<TProps> configure)
+        where TProps : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        // 添加或更新组件配置
+        PropsActions.AddOrUpdate(typeof(TProps), configure);
+    }
+
+    /// <summary>
+    /// 添加组件配置
+    /// </summary>
+    /// <typeparam name="TProps">组件配置类型</typeparam>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    internal void Props<TProps>(IConfiguration configuration)
+        where TProps : class, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configuration);
+
+        // 获取配置实例
+        var props = configuration.Get<TProps>();
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(props);
+
+        // 创建组件配置委托
+        var configure = new Action<TProps>(destination =>
+        {
+            ObjectMapper.Map(props, destination);
+        });
+
+        // 添加组件配置
+        Props(configure);
+    }
+
+    /// <summary>
     /// 获取组件配置委托
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>

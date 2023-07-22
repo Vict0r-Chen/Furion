@@ -26,7 +26,7 @@ public abstract class ComponentBase
     /// 添加组件配置
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
-    /// <param name="configure">自定义组件配置委托</param>
+    /// <param name="configure">自定义配置委托</param>
     public void Props<TProps>(Action<TProps> configure)
         where TProps : class, new()
     {
@@ -34,7 +34,8 @@ public abstract class ComponentBase
         ArgumentNullException.ThrowIfNull(configure);
         ArgumentNullException.ThrowIfNull(Options);
 
-        Options.PropsActions.AddOrUpdate(typeof(TProps), configure);
+        // 添加组件配置
+        Options.Props(configure);
     }
 
     /// <summary>
@@ -47,21 +48,10 @@ public abstract class ComponentBase
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(configuration);
-
-        // 获取配置实例
-        var props = configuration.Get<TProps>();
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(props);
-
-        // 创建组件配置委托
-        var configure = new Action<TProps>(destination =>
-        {
-            ObjectMapper.Map(props, destination);
-        });
+        ArgumentNullException.ThrowIfNull(Options);
 
         // 添加组件配置
-        Props(configure);
+        Options.Props<TProps>(configuration);
     }
 
     /// <summary>
