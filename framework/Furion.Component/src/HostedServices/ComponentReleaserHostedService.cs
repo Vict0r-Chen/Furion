@@ -29,14 +29,16 @@ internal sealed class ComponentReleaserHostedService : IHostedService
     /// <param name="coreOptions"><see cref="CoreOptions"/></param>
     public ComponentReleaserHostedService(CoreOptions coreOptions)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(coreOptions);
+
         _coreOptions = coreOptions;
     }
 
     /// <inheritdoc />
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        // 释放组件配置选项内存占用
-        _coreOptions.Get<ComponentOptions>().Release();
+        // 移除组件选项对象内存占用
         _coreOptions.Remove<ComponentOptions>();
 
         return Task.CompletedTask;

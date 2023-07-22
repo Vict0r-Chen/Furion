@@ -33,14 +33,14 @@ public sealed class ServiceComponentContext : ComponentContext
     }
 
     /// <inheritdoc cref="IServiceCollection"/>
-    public IServiceCollection Services { get; }
+    public IServiceCollection Services { get; init; }
 
     /// <inheritdoc cref="IConfigurationBuilder"/>
-    public IConfigurationBuilder Configuration { get; }
+    public IConfigurationBuilder Configuration { get; init; }
 
     /// <inheritdoc cref="IHostEnvironment"/>
-    public IHostEnvironment Environment { get; }
+    public IHostEnvironment Environment { get; init; }
 
     /// <inheritdoc cref="ILoggingBuilder"/>
-    public ILoggingBuilder Logging { get; }
+    public ILoggingBuilder Logging { get; init; }
 }

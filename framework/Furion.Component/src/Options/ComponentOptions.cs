@@ -15,23 +15,22 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件模块配置选项
+/// 组件模块选项
 /// </summary>
 internal sealed class ComponentOptions
 {
     /// <summary>
-    /// 获取 <see cref="GetPropsAction{TProps}()"/> 方法类型
+    /// <see cref="GetPropsAction{TProps}()"/> 方法对象
     /// </summary>
     internal readonly MethodInfo _GetPropsActionMethod;
 
     /// <summary>
     /// <inheritdoc cref="ComponentOptions"/>
     /// </summary>
-    /// <remarks>此构造函数只会初始化一次</remarks>
     public ComponentOptions()
     {
-        PropsActions ??= new();
-        Components ??= new();
+        PropsActions = new();
+        Components = new();
 
         _GetPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
             , 1
@@ -44,12 +43,12 @@ internal sealed class ComponentOptions
     /// <summary>
     /// 组件配置委托集合
     /// </summary>
-    internal Dictionary<Type, List<Delegate>> PropsActions { get; }
+    internal Dictionary<Type, List<Delegate>> PropsActions { get; init; }
 
     /// <summary>
-    /// 组件对象列表
+    /// 组件对象集合
     /// </summary>
-    internal ConcurrentDictionary<Type, ComponentBase> Components { get; }
+    internal ConcurrentDictionary<Type, ComponentBase> Components { get; init; }
 
     /// <summary>
     /// 获取组件配置委托
@@ -59,19 +58,20 @@ internal sealed class ComponentOptions
     internal Action<TProps>? GetPropsAction<TProps>()
         where TProps : class, new()
     {
-        // 如果未找到组件类型参数则返回空
+        // 检查组件配置是否存在
         if (!PropsActions.TryGetValue(typeof(TProps), out var values))
         {
             return null;
         }
 
-        // 生成级联调用委托
+        // 生成级联组件配置委托
         var cascadeAction = values.Cast<Action<TProps>>()
-                                               .Aggregate((previous, current) => (t) =>
-                                               {
-                                                   previous(t);
-                                                   current(t);
-                                               });
+            .Aggregate((previous, current) => (props) =>
+            {
+                previous(props);
+                current(props);
+            });
+
         return cascadeAction;
     }
 
@@ -82,16 +82,13 @@ internal sealed class ComponentOptions
     /// <returns><see cref="Delegate"/></returns>
     internal Delegate? GetPropsAction(Type propsType)
     {
-        return _GetPropsActionMethod.MakeGenericMethod(propsType)
-                                    .Invoke(this, null) as Delegate;
-    }
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propsType);
 
-    /// <summary>
-    /// 释放对象
-    /// </summary>
-    internal void Release()
-    {
-        PropsActions.Clear();
-        Components.Clear();
+        // 反射调用方法并将结果转换为委托对象
+        var @delegate = _GetPropsActionMethod.MakeGenericMethod(propsType)
+            .Invoke(this, null) as Delegate;
+
+        return @delegate;
     }
 }

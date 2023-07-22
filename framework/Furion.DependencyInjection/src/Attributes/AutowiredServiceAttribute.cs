@@ -30,5 +30,5 @@ public sealed class AutowiredServiceAttribute : Attribute
     /// <summary>
     /// 允许空值
     /// </summary>
-    public bool CanBeNull { get; set; }
+    public bool CanBeNull { get; init; }
 }

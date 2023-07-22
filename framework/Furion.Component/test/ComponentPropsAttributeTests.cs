@@ -33,5 +33,18 @@ public class ComponentPropsAttributeTests
         var componentPropsAttribute = new ComponentPropsAttribute();
 
         Assert.NotNull(componentPropsAttribute);
+        Assert.False(componentPropsAttribute.NewIfNull);
+    }
+
+    [Fact]
+    public void New_SetNewIfNull()
+    {
+        var autowiredServiceAttribute = new ComponentPropsAttribute
+        {
+            NewIfNull = true
+        };
+
+        Assert.NotNull(autowiredServiceAttribute);
+        Assert.True(autowiredServiceAttribute.NewIfNull);
     }
 }

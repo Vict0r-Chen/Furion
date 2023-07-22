@@ -19,6 +19,16 @@
             标记作为组件配置的配置特性
             </summary>
         </member>
+        <member name="M:Furion.Component.ComponentPropsAttribute.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Component.ComponentPropsAttribute" />
+            </summary>
+        </member>
+        <member name="P:Furion.Component.ComponentPropsAttribute.NewIfNull">
+            <summary>
+            组件配置为空值则创建
+            </summary>
+        </member>
         <member name="T:Furion.Component.DependsOnAttribute">
             <summary>
             组件依赖关系配置特性
@@ -1016,19 +1026,18 @@
         </member>
         <member name="T:Furion.Component.ComponentOptions">
             <summary>
-            组件模块配置选项
+            组件模块选项
             </summary>
         </member>
         <member name="F:Furion.Component.ComponentOptions._GetPropsActionMethod">
             <summary>
-            获取 <see cref="M:Furion.Component.ComponentOptions.GetPropsAction``1"/> 方法类型
+            <see cref="M:Furion.Component.ComponentOptions.GetPropsAction``1"/> 方法对象
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentOptions.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.Component.ComponentOptions"/>
             </summary>
-            <remarks>此构造函数只会初始化一次</remarks>
         </member>
         <member name="P:Furion.Component.ComponentOptions.PropsActions">
             <summary>
@@ -1037,7 +1046,7 @@
         </member>
         <member name="P:Furion.Component.ComponentOptions.Components">
             <summary>
-            组件对象列表
+            组件对象集合
             </summary>
         </member>
         <member name="M:Furion.Component.ComponentOptions.GetPropsAction``1">
@@ -1053,11 +1062,6 @@
             </summary>
             <param name="propsType">组件配置类型</param>
             <returns><see cref="T:System.Delegate"/></returns>
-        </member>
-        <member name="M:Furion.Component.ComponentOptions.Release">
-            <summary>
-            释放对象
-            </summary>
         </member>
         <member name="T:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions">
             <summary>

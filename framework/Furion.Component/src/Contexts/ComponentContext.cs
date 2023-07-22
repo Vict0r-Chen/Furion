@@ -32,10 +32,10 @@ public abstract class ComponentContext
     /// <summary>
     /// 附加属性
     /// </summary>
-    public IDictionary<object, object?> Properties { get; }
+    public IDictionary<object, object?> Properties { get; init; }
 
     /// <inheritdoc cref="ComponentOptions"/>
-    internal ComponentOptions Options { get; }
+    internal ComponentOptions Options { get; init; }
 
     /// <summary>
     /// 添加组件配置

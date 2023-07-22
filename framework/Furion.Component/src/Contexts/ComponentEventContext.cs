@@ -33,10 +33,10 @@ public sealed class ComponentEventContext
     }
 
     /// <inheritdoc cref="ComponentBase" />
-    public ComponentBase Component { get; }
+    public ComponentBase Component { get; init; }
 
     /// <inheritdoc cref="Component.ComponentContext" />
-    public ComponentContext ComponentContext { get; }
+    public ComponentContext ComponentContext { get; init; }
 
     /// <summary>
     /// 事件
