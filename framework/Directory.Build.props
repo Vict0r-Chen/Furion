@@ -16,7 +16,7 @@
 		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul</PackageTags>
 		<Company>百签科技（广东）有限公司</Company>
 		<Product>Furion</Product>
-		<Copyright>版权所有 (c) 2020-2023 百小僧，百签科技（广东）有限公司</Copyright>
+		<Copyright>版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司</Copyright>
 		<PackageProjectUrl>https://furion.net</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

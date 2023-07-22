@@ -125,7 +125,7 @@ const config = {
             ],
           },
         ],
-        copyright: `版权所有 (c) 2020-2023 百小僧，百签科技（广东）有限公司`,
+        copyright: `版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司`,
       },
       prism: {
         theme: lightCodeTheme,
