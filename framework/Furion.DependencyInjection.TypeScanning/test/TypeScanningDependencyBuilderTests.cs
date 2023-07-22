@@ -173,6 +173,17 @@ public class TypeScanningDependencyBuilderTests
     }
 
     [Fact]
+    public void Build_Invalid_Parameters()
+    {
+        var typeScanningDependencyBuilder = new TypeScanningDependencyBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeScanningDependencyBuilder.Build(null!);
+        });
+    }
+
+    [Fact]
     public void Build()
     {
         var services = new ServiceCollection();

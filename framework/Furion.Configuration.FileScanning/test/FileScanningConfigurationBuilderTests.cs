@@ -245,6 +245,17 @@ public class FileScanningConfigurationBuilderTests
     }
 
     [Fact]
+    public void Build_Invalid_Parameters()
+    {
+        var fileScanningConfigurationBuilder = new FileScanningConfigurationBuilder();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            fileScanningConfigurationBuilder.Build(null!);
+        });
+    }
+
+    [Fact]
     public void Build()
     {
         var configurationBuilder = new ConfigurationBuilder();

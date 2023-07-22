@@ -207,6 +207,9 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
     /// <param name="configurationBuilder"><see cref="IConfigurationBuilder"/></param>
     internal void Build(IConfigurationBuilder configurationBuilder)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configurationBuilder);
+
         // 创建文件扫描配置扫描器对象
         var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, this);
 

@@ -159,6 +159,9 @@ public sealed class TypeScanningDependencyBuilder
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(services);
+        
         // 创建类型扫描依赖关系扫描器对象
         var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, this);
 

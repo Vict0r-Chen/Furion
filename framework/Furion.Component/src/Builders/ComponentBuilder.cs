@@ -78,6 +78,9 @@ public sealed class ComponentBuilder
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
     internal void Build(IHostApplicationBuilder hostApplicationBuilder)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(hostApplicationBuilder);
+
         // 添加核心选项服务
         hostApplicationBuilder.Services.AddCoreOptions();
 
