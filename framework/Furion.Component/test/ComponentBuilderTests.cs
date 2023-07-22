@@ -33,7 +33,7 @@ public class ComponentBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            componentBuilder.Props<ComponentOptionsClass1>((Action<ComponentOptionsClass1>)null!);
+            componentBuilder.Props((Action<ComponentOptionsClass1>)null!);
         });
     }
 

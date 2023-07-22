@@ -93,8 +93,8 @@ public abstract class ComponentBase
     /// <summary>
     /// 调用事件监听
     /// </summary>
-    /// <param name="context"><see cref="ComponentEventContext"/></param>
-    public virtual void InvokeEvents(ComponentEventContext context)
+    /// <param name="context"><see cref="ComponentInvokeContext"/></param>
+    public virtual void InvokeEvents(ComponentInvokeContext context)
     { }
 
     /// <summary>
@@ -485,7 +485,7 @@ public abstract class ComponentBase
         ancestors.Insert(0, componentType);
 
         // 创建组件事件上下文
-        var componentEventContext = new ComponentEventContext(component, componentContext, @event);
+        var componentEventContext = new ComponentInvokeContext(component, componentContext, @event);
 
         // 循环调用所有组件组件（含自己）的监听方法
         ancestors.Where(componentType => componentType.IsDeclareOnlyMethod(nameof(InvokeEvents), BindingFlags.Public, out _))

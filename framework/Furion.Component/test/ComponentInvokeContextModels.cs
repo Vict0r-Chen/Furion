@@ -12,13 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Component;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Hosting;
-global using Microsoft.Extensions.Logging;
-global using System.Collections.Concurrent;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Linq.Expressions;
-global using System.Reflection;
-global using System.Runtime.CompilerServices;
+namespace Furion.Component.Tests;
+
+public class InvokeComponentClass1 : ComponentBase
+{
+}

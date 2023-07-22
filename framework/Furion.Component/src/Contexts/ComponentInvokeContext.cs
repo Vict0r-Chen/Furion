@@ -15,28 +15,28 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件事件上下文
+/// 组件执行上下文
 /// </summary>
-public sealed class ComponentEventContext
+public sealed class ComponentInvokeContext
 {
     /// <summary>
-    /// <inheritdoc cref="ComponentEventContext"/>
+    /// <inheritdoc cref="ComponentInvokeContext"/>
     /// </summary>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="Component.ComponentContext"/></param>
-    /// <param name="eventName">事件名</param>
-    internal ComponentEventContext(ComponentBase component
+    /// <param name="invokeName">执行方法名</param>
+    internal ComponentInvokeContext(ComponentBase component
         , ComponentContext componentContext
-        , string eventName)
+        , string invokeName)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(component);
         ArgumentNullException.ThrowIfNull(componentContext);
-        ArgumentException.ThrowIfNullOrWhiteSpace(eventName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(invokeName);
 
         Component = component;
         ComponentContext = componentContext;
-        EventName = eventName;
+        InvokeName = invokeName;
     }
 
     /// <inheritdoc cref="ComponentBase" />
@@ -46,13 +46,13 @@ public sealed class ComponentEventContext
     public ComponentContext ComponentContext { get; init; }
 
     /// <summary>
-    /// 事件名
+    /// 执行方法名
     /// </summary>
-    public string EventName { get; init; }
+    public string InvokeName { get; init; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{Component.GetType().FullName}.{EventName}";
+        return $"{Component.GetType().FullName}.{InvokeName}";
     }
 }

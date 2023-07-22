@@ -684,31 +684,31 @@
             <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
-        <member name="T:Furion.Component.ComponentEventContext">
+        <member name="T:Furion.Component.ComponentInvokeContext">
             <summary>
-            组件事件上下文
+            组件执行上下文
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentEventContext.#ctor(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+        <member name="M:Furion.Component.ComponentInvokeContext.#ctor(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
-            <inheritdoc cref="T:Furion.Component.ComponentEventContext"/>
+            <inheritdoc cref="T:Furion.Component.ComponentInvokeContext"/>
             </summary>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="eventName">事件名</param>
+            <param name="invokeName">执行方法名</param>
         </member>
-        <member name="P:Furion.Component.ComponentEventContext.Component">
+        <member name="P:Furion.Component.ComponentInvokeContext.Component">
             <inheritdoc cref="T:Furion.Component.ComponentBase" />
         </member>
-        <member name="P:Furion.Component.ComponentEventContext.ComponentContext">
+        <member name="P:Furion.Component.ComponentInvokeContext.ComponentContext">
             <inheritdoc cref="T:Furion.Component.ComponentContext" />
         </member>
-        <member name="P:Furion.Component.ComponentEventContext.EventName">
+        <member name="P:Furion.Component.ComponentInvokeContext.InvokeName">
             <summary>
-            事件名
+            执行方法名
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentEventContext.ToString">
+        <member name="M:Furion.Component.ComponentInvokeContext.ToString">
             <inheritdoc />
         </member>
         <member name="T:Furion.Component.ServiceComponentContext">
@@ -777,11 +777,11 @@
             <remarks>根据组件依赖关系顺序调用，被依赖的组件优先调用</remarks>
             <param name="context"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.ComponentEventContext)">
+        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.ComponentInvokeContext)">
             <summary>
             调用事件监听
             </summary>
-            <param name="context"><see cref="T:Furion.Component.ComponentEventContext"/></param>
+            <param name="context"><see cref="T:Furion.Component.ComponentInvokeContext"/></param>
         </member>
         <member name="M:Furion.Component.ComponentBase.ReloadProps">
             <summary>
