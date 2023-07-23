@@ -52,8 +52,13 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Type componentType, Action<ComponentBuilder>? configure = null)
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
+        , Type componentType
+        , Action<ComponentBuilder>? configure = null)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentType);
+
         // 创建组件依赖关系集合
         var dependencies = ComponentBase.CreateDependencies(componentType);
 
@@ -67,8 +72,14 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Type componentType, ComponentBuilder componentBuilder)
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
+        , Type componentType
+        , ComponentBuilder componentBuilder)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentType);
+        ArgumentNullException.ThrowIfNull(componentBuilder);
+
         // 创建组件依赖关系集合
         var dependencies = ComponentBase.CreateDependencies(componentType);
 
@@ -82,8 +93,13 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, Action<ComponentBuilder>? configure = null)
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
+        , Dictionary<Type, Type[]> dependencies
+        , Action<ComponentBuilder>? configure = null)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencies);
+
         // 初始化组件模块构建器
         var componentBuilder = new ComponentBuilder();
 
@@ -100,7 +116,9 @@ public static class ComponentHostApplicationBuilderExtensions
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder, Dictionary<Type, Type[]> dependencies, ComponentBuilder componentBuilder)
+    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
+        , Dictionary<Type, Type[]> dependencies
+        , ComponentBuilder componentBuilder)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(dependencies);
