@@ -154,7 +154,7 @@ internal sealed class TopologicalGraph
                     || (!visitedNodes.Contains(currentNode) && VisitNodeForCycle(currentNode, visitedNodes, pathNodes)))
                 {
                     // 输出调试事件
-                    Debugging.Error("The type `{0}` has circular dependencies.", nodeType.Name);
+                    Debugging.Error("The node type `{0}` has circular dependencies.", nodeType);
 
                     return true;
                 }
