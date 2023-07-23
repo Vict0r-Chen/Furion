@@ -14,6 +14,8 @@
 
 namespace Furion.Component.Tests;
 
+#pragma warning disable
+
 public class NotComponentClass
 { }
 
@@ -79,4 +81,27 @@ public class ComponentWithAutowiredProps : ComponentBase
 
     [ComponentProps]
     internal ComponentOptionsClass1? _componentProps2;
+}
+
+public class ComponentWithMultipleConstructor : ComponentBase
+{
+    public ComponentWithMultipleConstructor(Action<ComponentOptionsClass1> action1)
+    {
+    }
+
+    public ComponentWithMultipleConstructor(Action<ComponentOptionsClass1> action1, ComponentOptionsClass1 props1)
+    {
+    }
+}
+
+public class ComponentWithActivatorComponentConstructor : ComponentBase
+{
+    [ActivatorComponentConstructor]
+    public ComponentWithActivatorComponentConstructor(Action<ComponentOptionsClass1> action1)
+    {
+    }
+
+    public ComponentWithActivatorComponentConstructor(Action<ComponentOptionsClass1> action1, ComponentOptionsClass1 props1)
+    {
+    }
 }

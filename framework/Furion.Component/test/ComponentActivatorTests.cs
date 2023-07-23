@@ -72,6 +72,57 @@ public class ComponentActivatorTests
     }
 
     [Fact]
+    public void GetNewConstructor_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+        componentOptions.Props<ComponentOptionsClass1>(p => { });
+        var componentActivator = new ComponentActivator(typeof(ComponentWithPropsDefinition), componentOptions);
+
+        componentActivator.GetNewConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, out var newConstructor, out var args);
+
+        Assert.NotNull(newConstructor);
+        Assert.NotNull(args);
+
+        var component = newConstructor.Invoke(args) as ComponentBase;
+
+        Assert.NotNull(component);
+    }
+
+    [Fact]
+    public void GetNewConstructor_WithMultipleConstructor_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+        componentOptions.Props<ComponentOptionsClass1>(p => { });
+        var componentActivator = new ComponentActivator(typeof(ComponentWithMultipleConstructor), componentOptions);
+
+        componentActivator.GetNewConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, out var newConstructor, out var args);
+
+        Assert.NotNull(newConstructor);
+        Assert.NotNull(args);
+        Assert.Equal(2, args.Length);
+
+        var component = newConstructor.Invoke(args) as ComponentBase;
+        Assert.NotNull(component);
+    }
+
+    [Fact]
+    public void GetNewConstructor_WithActivatorComponentConstructor_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+        componentOptions.Props<ComponentOptionsClass1>(p => { });
+        var componentActivator = new ComponentActivator(typeof(ComponentWithActivatorComponentConstructor), componentOptions);
+
+        componentActivator.GetNewConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, out var newConstructor, out var args);
+
+        Assert.NotNull(newConstructor);
+        Assert.NotNull(args);
+        Assert.Single(args);
+
+        var component = newConstructor.Invoke(args) as ComponentBase;
+        Assert.NotNull(component);
+    }
+
+    [Fact]
     public void AutowiredProps_Invalid_Parameters()
     {
         var componentActivator = new ComponentActivator(typeof(ComponentWithAutowiredProps), new());

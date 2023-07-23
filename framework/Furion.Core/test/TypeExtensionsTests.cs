@@ -35,16 +35,16 @@ public class TypeExtensionsTests
     }
 
     [Fact]
-    public void IsAnonymousType()
+    public void IsAnonymous()
     {
-        Assert.False(typeof(InstanceType).IsAnonymousType());
-        Assert.False(typeof(StaticType).IsAnonymousType());
-        Assert.False(typeof(SealedType).IsAnonymousType());
-        Assert.False(typeof(AbstractType).IsAnonymousType());
-        Assert.False(typeof(EnumType).IsAnonymousType());
-        Assert.False(typeof(RecordType).IsAnonymousType());
-        Assert.False(typeof(StructType).IsAnonymousType());
-        Assert.False(typeof(object).IsAnonymousType());
+        Assert.False(typeof(InstanceType).IsAnonymous());
+        Assert.False(typeof(StaticType).IsAnonymous());
+        Assert.False(typeof(SealedType).IsAnonymous());
+        Assert.False(typeof(AbstractType).IsAnonymous());
+        Assert.False(typeof(EnumType).IsAnonymous());
+        Assert.False(typeof(RecordType).IsAnonymous());
+        Assert.False(typeof(StructType).IsAnonymous());
+        Assert.False(typeof(object).IsAnonymous());
 
         var anonymouse1 = new
         {
@@ -57,9 +57,9 @@ public class TypeExtensionsTests
             Age = DateTime.Now.Year - DateTime.Parse("2020/06/22").Year
         };
 
-        Assert.True(anonymouse1.GetType().IsAnonymousType());
-        Assert.True(anonymouse2.GetType().IsAnonymousType());
-        Assert.True(anonymouse3.GetType().IsAnonymousType());
+        Assert.True(anonymouse1.GetType().IsAnonymous());
+        Assert.True(anonymouse2.GetType().IsAnonymous());
+        Assert.True(anonymouse3.GetType().IsAnonymous());
     }
 
     [Theory]
@@ -138,9 +138,9 @@ public class TypeExtensionsTests
     [InlineData(typeof(IGenericType<,>), typeof(GenericType<,>), false)]
     [InlineData(typeof(InstanceType), typeof(InstanceType), true)]
     [InlineData(typeof(InstanceType), typeof(SealedType), false)]
-    public void IsTypeDefinitionEqual(Type type, Type compareType, bool result)
+    public void IsDefinitionEqual(Type type, Type compareType, bool result)
     {
-        Assert.Equal(result, type.IsTypeDefinitionEqual(compareType));
+        Assert.Equal(result, type.IsDefinitionEqual(compareType));
     }
 
     [Theory]
@@ -149,10 +149,10 @@ public class TypeExtensionsTests
     [InlineData(typeof(ImplementationType2), typeof(BaseServiceType), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
     [InlineData(typeof(ImplementationType3), typeof(BaseServiceType<string>), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
     [InlineData(typeof(ImplementationType4), typeof(BaseServiceType<string, int>), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
-    public void IsTypeCompatibilityTo_NonGenericType_ReturnOK(Type type, params Type[] types)
+    public void IsCompatibilityTo_NonGenericType_ReturnOK(Type type, params Type[] types)
     {
         var baseTypes = new[] { type.BaseType }.Concat(type.GetInterfaces());
-        var serviceTypes = baseTypes.Where(t => type.IsTypeCompatibilityTo(t)).ToArray();
+        var serviceTypes = baseTypes.Where(t => type.IsCompatibilityTo(t)).ToArray();
         var isEqual = types.SequenceEqual(serviceTypes);
         Assert.True(isEqual);
     }
@@ -169,11 +169,11 @@ public class TypeExtensionsTests
     [InlineData(typeof(MultiGenericImplementationType3<,>), typeof(BaseServiceType<,>), typeof(IGenericServiceType<,>), typeof(ISecondGenericServiceType<,>))]
     [InlineData(typeof(MultiGenericImplementationType4<,>), typeof(IGenericServiceType<,>))]
     [InlineData(typeof(MultiGenericImplementationType5<,>))]
-    public void IsTypeCompatibilityTo_GenericType_ReturnOK(Type genericType, params Type[] types)
+    public void IsCompatibilityTo_GenericType_ReturnOK(Type genericType, params Type[] types)
     {
         var type = GetType().Assembly.GetTypes().Single(t => t.IsGenericType && t.GetGenericTypeDefinition() == genericType);
         var baseTypes = new[] { type.BaseType }.Concat(type.GetInterfaces());
-        var serviceTypes = baseTypes.Where(t => type.IsTypeCompatibilityTo(t)).Select(t => t!.GetGenericTypeDefinition()).ToArray();
+        var serviceTypes = baseTypes.Where(t => type.IsCompatibilityTo(t)).Select(t => t!.GetGenericTypeDefinition()).ToArray();
         var isEqual = types.SequenceEqual(serviceTypes);
         Assert.True(isEqual);
     }
@@ -182,9 +182,9 @@ public class TypeExtensionsTests
     [InlineData(typeof(DelaryMethodClass), true)]
     [InlineData(typeof(NotDelaryMethodClass), false)]
     [InlineData(typeof(OverrideDelaryMethodClass), true)]
-    public void IsDeclareOnlyMethod(Type type, bool isMultiple)
+    public void IsDeclarationMethod(Type type, bool isMultiple)
     {
-        var result = type.IsDeclareOnlyMethod("Test", BindingFlags.Public, out _);
+        var result = type.IsDeclarationMethod("Test", BindingFlags.Public, out _);
         Assert.Equal(isMultiple, result);
     }
 

@@ -251,9 +251,6 @@ public abstract class ComponentBase
         // 组件依赖关系对象集合
         var components = new List<ComponentBase>();
 
-        // 获取组件模块配置选项
-        var componentOptions = componentContext.Options;
-
         // 存储未激活的且只有自身依赖的组件类型
         var inactiveComponents = new List<Type>();
 
@@ -269,7 +266,7 @@ public abstract class ComponentBase
             }
 
             // 创建组件实例
-            var component = GetOrCreateComponent(componentType, componentOptions);
+            var component = GetOrCreateComponent(componentType, componentContext.Options);
 
             // 检查组件是否激活
             if (!component.CanActivate(componentContext))
@@ -305,7 +302,7 @@ public abstract class ComponentBase
         , string invokeMethod)
     {
         // 若方法未定义则跳过
-        if (!component.GetType().IsDeclareOnlyMethod(invokeMethod, BindingFlags.Public, out var methodInfo))
+        if (!component.GetType().IsDeclarationMethod(invokeMethod, BindingFlags.Public, out var methodInfo))
         {
             return;
         }
@@ -329,11 +326,11 @@ public abstract class ComponentBase
     /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
-    /// <param name="event">事件</param>
+    /// <param name="invokeName">执行方法名</param>
     internal static void InvokeEvents(DependencyGraph dependencyGraph
         , ComponentBase component
         , ComponentContext componentContext
-        , string @event)
+        , string invokeName)
     {
         // 查找组件依赖关系集合中匹配的祖先组件类型集合
         var componentType = component.GetType();
@@ -343,10 +340,10 @@ public abstract class ComponentBase
         ancestors.Insert(0, componentType);
 
         // 创建组件事件上下文
-        var componentEventContext = new ComponentInvokeContext(component, componentContext, @event);
+        var componentEventContext = new ComponentInvokeContext(component, componentContext, invokeName);
 
         // 循环调用所有组件组件（含自己）的监听方法
-        ancestors.Where(componentType => componentType.IsDeclareOnlyMethod(nameof(InvokeEvents), BindingFlags.Public, out _))
+        ancestors.Where(componentType => componentType.IsDeclarationMethod(nameof(InvokeEvents), BindingFlags.Public, out _))
             .Select(componentType => GetOrCreateComponent(componentType, componentContext.Options))
             .ToList()
             .ForEach(cmp => cmp.InvokeEvents(componentEventContext));

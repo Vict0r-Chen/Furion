@@ -113,7 +113,7 @@ internal sealed class TypeScanningDependencyScanner
 
                 // 检查基类型是否和类型相兼容
                 if (baseType is not null
-                    && type.IsTypeCompatibilityTo(baseType))
+                    && type.IsCompatibilityTo(baseType))
                 {
                     serviceTypes.Insert(0, GetTypeDefinition(type, baseType));
                 }
@@ -180,14 +180,14 @@ internal sealed class TypeScanningDependencyScanner
         bool TypeFilter(Type serviceType)
         {
             // 检查服务类型是否在黑名单类型服务集合中
-            if (blacklistServiceTypes.Any(type => type.IsTypeDefinitionEqual(serviceType)))
+            if (blacklistServiceTypes.Any(type => type.IsDefinitionEqual(serviceType)))
             {
                 return false;
             }
 
             // 检查服务类型是否在导出的类型服务集合中
             if (limitServiceTypes is not null
-                && !limitServiceTypes.Any(type => type.IsTypeDefinitionEqual(serviceType)))
+                && !limitServiceTypes.Any(type => type.IsDefinitionEqual(serviceType)))
             {
                 return false;
             }
@@ -199,7 +199,7 @@ internal sealed class TypeScanningDependencyScanner
             }
 
             // 检查服务类型是否和类型相兼容
-            if (!type.IsTypeCompatibilityTo(serviceType))
+            if (!type.IsCompatibilityTo(serviceType))
             {
                 return false;
             }

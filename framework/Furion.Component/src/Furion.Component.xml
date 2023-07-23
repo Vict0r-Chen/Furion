@@ -30,6 +30,14 @@
             </summary>
             <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
         </member>
+        <member name="M:Furion.Component.ComponentActivator.GetNewConstructor(System.Reflection.BindingFlags,System.Reflection.ConstructorInfo@,System.Object[]@)">
+            <summary>
+            获取组件初始化构造函数
+            </summary>
+            <param name="bindingFlags">反射搜索成员方式</param>
+            <param name="newConstructor">构造函数</param>
+            <param name="args">构造函数参数集合</param>
+        </member>
         <member name="M:Furion.Component.ComponentActivator.AutowiredProps(Furion.Component.ComponentBase,System.Reflection.BindingFlags)">
             <summary>
             自动装配组件配置属性和配置字段
@@ -877,7 +885,7 @@
             <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="event">事件</param>
+            <param name="invokeName">执行方法名</param>
         </member>
         <member name="T:Furion.Component.DependencyGraph">
             <summary>

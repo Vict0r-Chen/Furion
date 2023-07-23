@@ -35,7 +35,7 @@ internal static class TypeExtensions
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsAnonymousType(this Type type)
+    internal static bool IsAnonymous(this Type type)
     {
         // 检查是否贴有 [CompilerGenerated] 特性
         if (type.IsDefined(typeof(CompilerGeneratedAttribute), false))
@@ -117,7 +117,7 @@ internal static class TypeExtensions
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="compareType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsTypeDefinitionEqual(this Type type, Type compareType)
+    internal static bool IsDefinitionEqual(this Type type, Type compareType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(compareType);
@@ -135,7 +135,7 @@ internal static class TypeExtensions
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="inheritType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsTypeCompatibilityTo(this Type type, Type inheritType)
+    internal static bool IsCompatibilityTo(this Type type, Type inheritType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(inheritType);
@@ -157,7 +157,7 @@ internal static class TypeExtensions
     /// <param name="accessibilityBindingFlags">可访问性成员绑定标记</param>
     /// <param name="methodInfo"><see cref="MethodInfo"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsDeclareOnlyMethod(this Type type
+    internal static bool IsDeclarationMethod(this Type type
         , string name
         , BindingFlags accessibilityBindingFlags
         , out MethodInfo? methodInfo)

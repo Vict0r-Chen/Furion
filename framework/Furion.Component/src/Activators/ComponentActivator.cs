@@ -53,22 +53,8 @@ internal sealed class ComponentActivator
         // 初始化反射搜索成员方式
         var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
 
-        // 获取组件构造函数集合
-        var constructors = _componentType.GetConstructors(bindingFlags);
-
-        // 查找贴有 [ActivatorComponentConstructor] 特性的构造函数，若没找到则选择构造函数参数最多的一个
-        var newConstructor = constructors.FirstOrDefault(ctor => ctor.IsDefined(typeof(ActivatorComponentConstructorAttribute), false))
-            ?? constructors.OrderBy(c => c.GetParameters().Length).Last();
-
-        // 获取构造函数参数
-        var parameters = newConstructor.GetParameters();
-
-        // 遍历构造函数参数并初始化
-        var args = new object?[parameters.Length];
-        for (var i = 0; i < parameters.Length; i++)
-        {
-            args[i] = _componentOptions.GetProps(parameters[i].ParameterType);
-        }
+        // 获取组件初始化构造函数
+        GetNewConstructor(bindingFlags, out var newConstructor, out var args);
 
         // 调用构造函数并创建组件实例
         var component = newConstructor.Invoke(args) as ComponentBase;
@@ -83,6 +69,34 @@ internal sealed class ComponentActivator
         AutowiredProps(component, bindingFlags);
 
         return component;
+    }
+
+    /// <summary>
+    /// 获取组件初始化构造函数
+    /// </summary>
+    /// <param name="bindingFlags">反射搜索成员方式</param>
+    /// <param name="newConstructor">构造函数</param>
+    /// <param name="args">构造函数参数集合</param>
+    internal void GetNewConstructor(BindingFlags bindingFlags
+        , out ConstructorInfo newConstructor
+        , out object?[] args)
+    {
+        // 获取组件构造函数集合
+        var constructors = _componentType.GetConstructors(bindingFlags);
+
+        // 查找贴有 [ActivatorComponentConstructor] 特性的构造函数，若没找到则选择构造函数参数最多的一个
+        newConstructor = constructors.FirstOrDefault(ctor => ctor.IsDefined(typeof(ActivatorComponentConstructorAttribute), false))
+            ?? constructors.OrderBy(c => c.GetParameters().Length).Last();
+
+        // 获取构造函数参数
+        var parameters = newConstructor.GetParameters();
+
+        // 遍历构造函数参数并初始化
+        args = new object?[parameters.Length];
+        for (var i = 0; i < parameters.Length; i++)
+        {
+            args[i] = _componentOptions.GetProps(parameters[i].ParameterType);
+        }
     }
 
     /// <summary>

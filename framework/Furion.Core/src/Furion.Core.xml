@@ -318,7 +318,7 @@
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsAnonymousType(System.Type)">
+        <member name="M:System.TypeExtensions.IsAnonymous(System.Type)">
             <summary>
             检查类型是否是匿名类型
             </summary>
@@ -358,7 +358,7 @@
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsTypeDefinitionEqual(System.Type,System.Type)">
+        <member name="M:System.TypeExtensions.IsDefinitionEqual(System.Type,System.Type)">
             <summary>
             检查类型和指定类型定义是否相等
             </summary>
@@ -366,7 +366,7 @@
             <param name="compareType"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsTypeCompatibilityTo(System.Type,System.Type)">
+        <member name="M:System.TypeExtensions.IsCompatibilityTo(System.Type,System.Type)">
             <summary>
             检查类型和指定继承类型是否兼容
             </summary>
@@ -374,7 +374,7 @@
             <param name="inheritType"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.IsDeclareOnlyMethod(System.Type,System.String,System.Reflection.BindingFlags,System.Reflection.MethodInfo@)">
+        <member name="M:System.TypeExtensions.IsDeclarationMethod(System.Type,System.String,System.Reflection.BindingFlags,System.Reflection.MethodInfo@)">
             <summary>
             检查类型是否定义了指定方法
             </summary>
