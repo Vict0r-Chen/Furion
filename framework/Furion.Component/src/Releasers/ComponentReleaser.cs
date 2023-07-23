@@ -37,7 +37,7 @@ internal sealed class ComponentReleaser : IHostedService
     /// <inheritdoc />
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        // 将组件选项从核心选项中移除
+        // 将组件选项从核心模块选项中移除
         _coreOptions.Remove<ComponentOptions>();
 
         return Task.CompletedTask;

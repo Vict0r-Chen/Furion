@@ -28,19 +28,7 @@ internal static class AssemblyExtensions
     internal static Type[] GetTypes(this Assembly assembly, bool exported)
     {
         return exported
-                ? assembly.GetExportedTypes()
-                : assembly.GetTypes();
-    }
-
-    /// <summary>
-    /// 获取所有可实例化类型
-    /// </summary>
-    /// <param name="assembly"><see cref="Assembly"/></param>
-    /// <param name="exported">类型导出设置</param>
-    /// <returns><see cref="Type"/>[]</returns>
-    internal static IEnumerable<Type> GetInstantiableTypes(this Assembly assembly, bool exported)
-    {
-        return assembly.GetTypes(exported)
-                       .Where(t => t.IsInstantiable());
+            ? assembly.GetExportedTypes()
+            : assembly.GetTypes();
     }
 }

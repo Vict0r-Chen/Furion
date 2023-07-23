@@ -101,17 +101,6 @@ public class TypeExtensionsTests
     }
 
     [Theory]
-    [InlineData(typeof(WithAttributeClass), true, false)]
-    [InlineData(typeof(WithAttributeClass), true, true)]
-    [InlineData(typeof(InheritWithAttributeClass), true, false)]
-    [InlineData(typeof(InheritWithAttributeClass), true, true)]
-    public void GetDefinedCustomAttributeOrNew(Type type, bool notNull, bool inherit)
-    {
-        var customAttribute = type.GetDefinedCustomAttributeOrNew<CustomAttribute>(inherit);
-        Assert.Equal(notNull, customAttribute is not null);
-    }
-
-    [Theory]
     [InlineData(typeof(InstanceType), true)]
     [InlineData(typeof(StaticType), false)]
     [InlineData(typeof(SealedType), true)]
@@ -187,18 +176,6 @@ public class TypeExtensionsTests
         var serviceTypes = baseTypes.Where(t => type.IsTypeCompatibilityTo(t)).Select(t => t!.GetGenericTypeDefinition()).ToArray();
         var isEqual = types.SequenceEqual(serviceTypes);
         Assert.True(isEqual);
-    }
-
-    [Theory]
-    [InlineData(typeof(OneAttributeClass), false)]
-    [InlineData(typeof(InheritAttributeClass), false)]
-    [InlineData(typeof(MultipleAttributeClass), true)]
-    [InlineData(typeof(MultipleAndInheritAttributeClass), true)]
-    [InlineData(typeof(InheritMultipleAttributeClass), false)]
-    public void IsMultipleSameDefined(Type type, bool isMultiple)
-    {
-        var result = type.IsMultipleSameDefined(typeof(CheckAttribute), true);
-        Assert.Equal(isMultiple, result);
     }
 
     [Theory]

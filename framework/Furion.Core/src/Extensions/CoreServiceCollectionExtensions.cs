@@ -27,6 +27,7 @@ public static class CoreServiceCollectionExtensions
     public static IServiceCollection AddCoreOptions(this IServiceCollection services)
     {
         services.TryAddSingleton(new CoreOptions());
+
         return services;
     }
 
@@ -42,7 +43,7 @@ public static class CoreServiceCollectionExtensions
 
         // 获取核心模块选项实例
         var coreOptions = services.Single(s => s.ServiceType == typeof(CoreOptions) && s.ImplementationInstance is not null)
-                                            .ImplementationInstance as CoreOptions;
+            .ImplementationInstance as CoreOptions;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(coreOptions);

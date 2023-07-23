@@ -232,14 +232,6 @@
             <param name="exported">类型导出设置</param>
             <returns><see cref="T:System.Type"/>[]</returns>
         </member>
-        <member name="M:System.Reflection.AssemblyExtensions.GetInstantiableTypes(System.Reflection.Assembly,System.Boolean)">
-            <summary>
-            获取所有可实例化类型
-            </summary>
-            <param name="assembly"><see cref="T:System.Reflection.Assembly"/></param>
-            <param name="exported">类型导出设置</param>
-            <returns><see cref="T:System.Type"/>[]</returns>
-        </member>
         <member name="T:System.Linq.Expressions.ExpressionExtensions">
             <summary>
             <see cref="T:System.Linq.Expressions.Expression"/> 拓展类
@@ -321,14 +313,14 @@
         </member>
         <member name="M:System.TypeExtensions.IsStatic(System.Type)">
             <summary>
-            是否为静态类型
+            检查类型是否是静态类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:System.TypeExtensions.IsAnonymousType(System.Type)">
             <summary>
-            是否为匿名类型
+            检查类型是否是匿名类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
@@ -353,25 +345,6 @@
             获取指定特性实例
             </summary>
             <remarks>若特性不存在则返回 null</remarks>
-            <typeparam name="TAttribute">特性类型</typeparam>
-            <param name="type"><see cref="T:System.Type"/></param>
-            <param name="inherit">是否查找基类型特性</param>
-            <returns><typeparamref name="TAttribute"/></returns>
-        </member>
-        <member name="M:System.TypeExtensions.IsMultipleSameDefined(System.Type,System.Type,System.Boolean)">
-            <summary>
-            是否定义多个相同的特性
-            </summary>
-            <param name="type"><see cref="T:System.Type"/></param>
-            <param name="attributeType"><see cref="T:System.Attribute"/></param>
-            <param name="inherit">是否查找基类型特性</param>
-            <returns><see cref="T:System.Boolean"/></returns>
-        </member>
-        <member name="M:System.TypeExtensions.GetDefinedCustomAttributeOrNew``1(System.Type,System.Boolean)">
-            <summary>
-            获取指定特性实例
-            </summary>
-            <remarks>若特性不存在则返回默认实例</remarks>
             <typeparam name="TAttribute">特性类型</typeparam>
             <param name="type"><see cref="T:System.Type"/></param>
             <param name="inherit">是否查找基类型特性</param>
@@ -403,7 +376,7 @@
         </member>
         <member name="M:System.TypeExtensions.IsDeclareOnlyMethod(System.Type,System.String,System.Reflection.BindingFlags,System.Reflection.MethodInfo@)">
             <summary>
-            是否定义了指定方法
+            检查类型是否定义了指定方法
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <param name="name">方法名称</param>
@@ -413,21 +386,21 @@
         </member>
         <member name="M:System.TypeExtensions.IsInteger(System.Type)">
             <summary>
-            是否为整数类型
+            检查类型是否是整数类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:System.TypeExtensions.IsDecimal(System.Type)">
             <summary>
-            是否为小数类型
+            检查类型是否是小数类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:System.TypeExtensions.IsNumeric(System.Type)">
             <summary>
-            是否为数值类型
+            检查类型是否是数值类型
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:System.Boolean"/></returns>

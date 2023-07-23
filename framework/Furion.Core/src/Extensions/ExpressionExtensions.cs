@@ -52,8 +52,11 @@ internal static class ExpressionExtensions
     /// <param name="memberExpression"><see cref="MemberExpression"/></param>
     /// <returns><see cref="string"/></returns>
     /// <exception cref="ArgumentException"></exception>
-    private static string GetPropertyName<T>(MemberExpression memberExpression)
+    internal static string GetPropertyName<T>(MemberExpression memberExpression)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(memberExpression);
+
         // 获取属性声明类型
         var propertyType = memberExpression.Member.DeclaringType;
 

@@ -81,7 +81,7 @@ public sealed class ComponentBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(hostApplicationBuilder);
 
-        // 添加核心选项服务
+        // 添加核心模块选项服务
         hostApplicationBuilder.Services.AddCoreOptions();
 
         // 添加组件释放器服务

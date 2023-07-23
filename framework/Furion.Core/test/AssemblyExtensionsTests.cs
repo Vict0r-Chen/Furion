@@ -43,32 +43,4 @@ public class AssemblyExtensionsTests
         Assert.Contains(types, t => t == typeof(StaticClass));
         Assert.Contains(types, t => t == typeof(RecordClass));
     }
-
-    [Fact]
-    public void GetInstantiableTypes_Exported_True()
-    {
-        var types = GetType().Assembly.GetInstantiableTypes(true);
-        Assert.Contains(types, t => t == typeof(PublicClass));
-        Assert.Contains(types, t => t == typeof(PublicChildClass));
-        Assert.DoesNotContain(types, t => t == typeof(PrivateChildClass));
-        Assert.DoesNotContain(types, t => t == typeof(InternalClass));
-        Assert.DoesNotContain(types, t => t == typeof(PrivateClass));
-        Assert.DoesNotContain(types, t => t == typeof(AbstractClass));
-        Assert.DoesNotContain(types, t => t == typeof(StaticClass));
-        Assert.Contains(types, t => t == typeof(RecordClass));
-    }
-
-    [Fact]
-    public void GetInstantiableTypes_Exported_False()
-    {
-        var types = GetType().Assembly.GetInstantiableTypes(false);
-        Assert.Contains(types, t => t == typeof(PublicClass));
-        Assert.Contains(types, t => t == typeof(PublicChildClass));
-        Assert.Contains(types, t => t == typeof(PrivateChildClass));
-        Assert.Contains(types, t => t == typeof(InternalClass));
-        Assert.Contains(types, t => t == typeof(PrivateClass));
-        Assert.DoesNotContain(types, t => t == typeof(AbstractClass));
-        Assert.DoesNotContain(types, t => t == typeof(StaticClass));
-        Assert.Contains(types, t => t == typeof(RecordClass));
-    }
 }

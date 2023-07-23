@@ -27,9 +27,14 @@ internal static class IDictionaryExtensions
     /// <param name="dictionary"><see cref="IDictionary{TKey, TValue}"/></param>
     /// <param name="key">字典键</param>
     /// <param name="value">字典值</param>
-    internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue value)
-         where TKey : notnull
+    internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary
+        , TKey key
+        , TValue value)
+        where TKey : notnull
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(value);
+
         // 尝试获取值
         if (!dictionary.TryGetValue(key, out var values))
         {
@@ -50,6 +55,9 @@ internal static class IDictionaryExtensions
     internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, IDictionary<TKey, List<TValue>> concatDictionary)
          where TKey : notnull
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(concatDictionary);
+
         // 逐条遍历合并更新
         foreach (var (key, newValues) in concatDictionary)
         {

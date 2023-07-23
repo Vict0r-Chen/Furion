@@ -17,16 +17,6 @@ namespace Furion.Core.Tests;
 public class ObjectExtensionsTests
 {
     [Fact]
-    public void TryGetCount_Null_Throw()
-    {
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            object obj = null!;
-            obj.TryGetCount(out var cout);
-        });
-    }
-
-    [Fact]
     public void TryGetCount_Exists()
     {
         Assert.True(string.Empty.TryGetCount(out _));

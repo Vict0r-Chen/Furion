@@ -20,23 +20,24 @@ namespace System;
 internal static class TypeExtensions
 {
     /// <summary>
-    /// 是否为静态类型
+    /// 检查类型是否是静态类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
     internal static bool IsStatic(this Type type)
     {
-        return type.IsSealed && type.IsAbstract;
+        return type.IsSealed
+            && type.IsAbstract;
     }
 
     /// <summary>
-    /// 是否为匿名类型
+    /// 检查类型是否是匿名类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
     internal static bool IsAnonymousType(this Type type)
     {
-        // 是否贴有 [CompilerGenerated] 特性
+        // 检查是否贴有 [CompilerGenerated] 特性
         if (type.IsDefined(typeof(CompilerGeneratedAttribute), false))
         {
             // 类型限定名是否以 <> 开头且以 AnonymousType 结尾
@@ -99,40 +100,6 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 是否定义多个相同的特性
-    /// </summary>
-    /// <param name="type"><see cref="Type"/></param>
-    /// <param name="attributeType"><see cref="Attribute"/></param>
-    /// <param name="inherit">是否查找基类型特性</param>
-    /// <returns><see cref="bool"/></returns>
-    internal static bool IsMultipleSameDefined(this Type type, Type attributeType, bool inherit = false)
-    {
-        // 检查是否定义
-        if (!type.IsDefined(attributeType, inherit))
-        {
-            return false;
-        }
-
-        // 只查找当前类型
-        return type.GetCustomAttributes(attributeType, false).Length > 1;
-    }
-
-    /// <summary>
-    /// 获取指定特性实例
-    /// </summary>
-    /// <remarks>若特性不存在则返回默认实例</remarks>
-    /// <typeparam name="TAttribute">特性类型</typeparam>
-    /// <param name="type"><see cref="Type"/></param>
-    /// <param name="inherit">是否查找基类型特性</param>
-    /// <returns><typeparamref name="TAttribute"/></returns>
-    internal static TAttribute GetDefinedCustomAttributeOrNew<TAttribute>(this Type type, bool inherit = false)
-        where TAttribute : Attribute, new()
-    {
-        return type.GetDefinedCustomAttribute<TAttribute>(inherit)
-            ?? new();
-    }
-
-    /// <summary>
     /// 检查类型是否定义了公开无参构造函数
     /// </summary>
     /// <remarks>用于 <see cref="Activator.CreateInstance(Type)"/> 实例化</remarks>
@@ -183,21 +150,28 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 是否定义了指定方法
+    /// 检查类型是否定义了指定方法
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="name">方法名称</param>
     /// <param name="accessibilityBindingFlags">可访问性成员绑定标记</param>
     /// <param name="methodInfo"><see cref="MethodInfo"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsDeclareOnlyMethod(this Type type, string name, BindingFlags accessibilityBindingFlags, out MethodInfo? methodInfo)
+    internal static bool IsDeclareOnlyMethod(this Type type
+        , string name
+        , BindingFlags accessibilityBindingFlags
+        , out MethodInfo? methodInfo)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(type);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
         methodInfo = type.GetMethod(name, accessibilityBindingFlags | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         return methodInfo is not null;
     }
 
     /// <summary>
-    /// 是否为整数类型
+    /// 检查类型是否是整数类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
@@ -222,7 +196,7 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 是否为小数类型
+    /// 检查类型是否是小数类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
@@ -242,7 +216,7 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 是否为数值类型
+    /// 检查类型是否是数值类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
