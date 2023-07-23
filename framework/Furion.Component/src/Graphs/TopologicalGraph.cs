@@ -15,12 +15,12 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 拓扑图算法
+/// 拓扑图
 /// </summary>
 internal static class TopologicalGraph
 {
     /// <summary>
-    /// 拓扑图排序算法
+    /// 拓扑图排序
     /// </summary>
     /// <param name="dependencies">依赖关系集合</param>
     /// <returns><see cref="List{T}"/></returns>
@@ -75,7 +75,7 @@ internal static class TopologicalGraph
     /// <param name="dependencies">依赖关系集合</param>
     /// <param name="visited">已访问过的节点</param>
     /// <param name="sortedNodes">已排序的节点</param>
-    private static void VisitNode(Type node
+    internal static void VisitNode(Type node
         , Dictionary<Type, Type[]> dependencies
         , HashSet<Type> visited
         , List<Type> sortedNodes)
@@ -110,7 +110,7 @@ internal static class TopologicalGraph
     /// <param name="visited">已访问过的节点</param>
     /// <param name="currentPath">当前遍历路径上的节点</param>
     /// <returns><see cref="bool"/></returns>
-    private static bool HasCycleHelper(Type node
+    internal static bool HasCycleHelper(Type node
         , Dictionary<Type, Type[]> dependencies
         , HashSet<Type> visited
         , HashSet<Type> currentPath)

@@ -416,12 +416,6 @@ public abstract class ComponentBase
 
         // 调用后置方法
         components.ForEach(component => InvokeMethod(dependencyGraph, component, componentContext, methods[1]));
-
-        // 释放对象
-        components.Clear();
-        inactiveComponents.Clear();
-        topologicalGraph.Clear();
-        dependencyGraph.Release();
     }
 
     /// <summary>

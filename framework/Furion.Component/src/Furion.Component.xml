@@ -888,7 +888,7 @@
         </member>
         <member name="T:Furion.Component.DependencyGraph">
             <summary>
-            依赖关系图算法
+            依赖关系图
             </summary>
         </member>
         <member name="F:Furion.Component.DependencyGraph._dependencies">
@@ -898,12 +898,12 @@
         </member>
         <member name="F:Furion.Component.DependencyGraph._ancestorsNodes">
             <summary>
-            祖先节点关系集合
+            祖先节点集合
             </summary>
         </member>
         <member name="F:Furion.Component.DependencyGraph._descendantsNodes">
             <summary>
-            后代节点关系集合
+            后代节点集合
             </summary>
         </member>
         <member name="M:Furion.Component.DependencyGraph.#ctor(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
@@ -919,45 +919,40 @@
         </member>
         <member name="M:Furion.Component.DependencyGraph.FindAllAncestors(System.Type)">
             <summary>
-            查找给定节点类型的所有祖先节点（内部方法）
+            查找节点的所有祖先节点
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.DependencyGraph.FindAllDescendants(System.Type)">
             <summary>
-            查找给定节点类型的所有后代节点（内部方法）
+            查找节点的所有后代节点
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.DependencyGraph.FindAncestors(System.Type)">
             <summary>
-            查找指定节点类型的所有祖先节点
+            查找节点的所有祖先节点
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.DependencyGraph.FindDescendants(System.Type)">
             <summary>
-            查找指定节点类型的所有后代节点
+            查找节点的所有后代节点
             </summary>
             <param name="nodeType">节点类型</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.DependencyGraph.Release">
-            <summary>
-            释放对象
-            </summary>
-        </member>
         <member name="T:Furion.Component.TopologicalGraph">
             <summary>
-            拓扑图算法
+            拓扑图
             </summary>
         </member>
         <member name="M:Furion.Component.TopologicalGraph.Sort(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
-            拓扑图排序算法
+            拓扑图排序
             </summary>
             <param name="dependencies">依赖关系集合</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
