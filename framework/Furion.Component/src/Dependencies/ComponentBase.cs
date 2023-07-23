@@ -115,15 +115,18 @@ public abstract class ComponentBase
     internal static List<Type> CreateTopologicalGraph(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
     {
         // 检查组件依赖关系集合有效性
-        CheckDependencies(dependencies);
+        EnsureLegalDependencies(dependencies);
 
-        // 获取拓扑图排序集合
-        var topologicalGraph = TopologicalGraph.Sort(dependencies);
+        // 创建拓扑图对象
+        var topologicalGraph = new TopologicalGraph(dependencies);
+
+        // 获取排序集合
+        var sortedList = topologicalGraph.Sort();
 
         // 筛选集合
         return predicate is null
-            ? topologicalGraph
-            : topologicalGraph.Where(predicate).ToList();
+            ? sortedList
+            : sortedList.Where(predicate).ToList();
     }
 
     /// <summary>
@@ -134,7 +137,7 @@ public abstract class ComponentBase
     internal static Dictionary<Type, Type[]> CreateDependencies(Type componentType)
     {
         // 检查组件类型合法性
-        Check(componentType);
+        EnsureLegalComponent(componentType);
 
         // 组件依赖关系集合
         var dependencies = new Dictionary<Type, Type[]>();
@@ -166,7 +169,7 @@ public abstract class ComponentBase
         }
 
         // 检查组件依赖关系集合有效性
-        CheckDependencies(dependencies);
+        EnsureLegalDependencies(dependencies);
 
         return dependencies;
     }
@@ -176,7 +179,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="dependencies">组件依赖关系集合</param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static void CheckDependencies(Dictionary<Type, Type[]> dependencies)
+    internal static void EnsureLegalDependencies(Dictionary<Type, Type[]> dependencies)
     {
         // 空项检查
         if (dependencies.Count == 0)
@@ -191,11 +194,14 @@ public abstract class ComponentBase
         // 检查所有组件类型合法性
         foreach (var componentType in componentTypes)
         {
-            Check(componentType);
+            EnsureLegalComponent(componentType);
         }
 
+        // 创建拓扑图对象
+        var topologicalGraph = new TopologicalGraph(dependencies);
+
         // 是否存在循环依赖
-        if (TopologicalGraph.HasCycle(dependencies))
+        if (topologicalGraph.HasCycle())
         {
             throw new InvalidOperationException("The dependency relationship has a circular dependency.");
         }
@@ -221,7 +227,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static void Check(Type componentType)
+    internal static void EnsureLegalComponent(Type componentType)
     {
         // 是否派生自 ComponentBase
         var componentBaseType = typeof(ComponentBase);
@@ -274,7 +280,7 @@ public abstract class ComponentBase
     internal static ComponentBase CreateComponent(Type componentType, ComponentOptions componentOptions)
     {
         // 检查组件类型合法性
-        Check(componentType);
+        EnsureLegalComponent(componentType);
 
         // 反射查找成员绑定标记
         var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;

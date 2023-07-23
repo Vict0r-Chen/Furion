@@ -811,7 +811,7 @@
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CheckDependencies(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="M:Furion.Component.ComponentBase.EnsureLegalDependencies(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
             检查组件依赖关系集合有效性
             </summary>
@@ -825,7 +825,7 @@
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.Check(System.Type)">
+        <member name="M:Furion.Component.ComponentBase.EnsureLegalComponent(System.Type)">
             <summary>
             检查组件类型合法性
             </summary>
@@ -950,35 +950,42 @@
             拓扑图
             </summary>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.Sort(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="F:Furion.Component.TopologicalGraph._dependencies">
+            <summary>
+            依赖关系集合
+            </summary>
+        </member>
+        <member name="M:Furion.Component.TopologicalGraph.#ctor(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+            <summary>
+            <inheritdoc cref="T:Furion.Component.TopologicalGraph"/>
+            </summary>
+            <param name="dependencies"></param>
+        </member>
+        <member name="M:Furion.Component.TopologicalGraph.Sort">
             <summary>
             拓扑图排序
             </summary>
-            <param name="dependencies">依赖关系集合</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.HasCycle(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
-            <summary>
-            拓扑图循环依赖检查
-            </summary>
-            <param name="dependencies">依赖关系集合</param>
-            <returns><see cref="T:System.Boolean"/></returns>
-        </member>
-        <member name="M:Furion.Component.TopologicalGraph.VisitNode(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.VisitNode(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
             <summary>
             节点访问记录
             </summary>
             <param name="node">当前节点</param>
-            <param name="dependencies">依赖关系集合</param>
             <param name="visited">已访问过的节点</param>
             <param name="sortedNodes">已排序的节点</param>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.HasCycleHelper(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.HasCycle">
+            <summary>
+            拓扑图循环依赖检查
+            </summary>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:Furion.Component.TopologicalGraph.HasCycleHelper(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
             <summary>
             检查依赖节点是否存在循环依赖
             </summary>
             <param name="node">当前节点</param>
-            <param name="dependencies">依赖关系集合</param>
             <param name="visited">已访问过的节点</param>
             <param name="currentPath">当前遍历路径上的节点</param>
             <returns><see cref="T:System.Boolean"/></returns>
