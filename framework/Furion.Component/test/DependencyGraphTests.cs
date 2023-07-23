@@ -36,5 +36,208 @@ public class DependencyGraphTests
         };
 
         var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.NotNull(dependencyGraph);
+        Assert.NotNull(dependencyGraph._dependencies);
+        Assert.NotEmpty(dependencyGraph._dependencies);
+        Assert.NotNull(dependencyGraph._ancestorsNodes);
+        Assert.NotEmpty(dependencyGraph._ancestorsNodes);
+        Assert.NotNull(dependencyGraph._descendantsNodes);
+        Assert.NotEmpty(dependencyGraph._descendantsNodes);
+    }
+
+    [Fact]
+    public void BuildAncestorsAndDescendantsNodes_ReturnOK()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+        dependencyGraph._ancestorsNodes.Clear();
+        dependencyGraph._descendantsNodes.Clear();
+
+        dependencyGraph.BuildAncestorsAndDescendantsNodes();
+
+        Assert.Equal(5, dependencyGraph._ancestorsNodes.Count);
+        Assert.Equal(typeof(DependencyGraph2), dependencyGraph._ancestorsNodes.Keys.ElementAt(0));
+        Assert.Equal(new[] { typeof(DependencyGraph1) }, dependencyGraph._ancestorsNodes.Values.ElementAt(0));
+
+        Assert.Equal(typeof(DependencyGraph3), dependencyGraph._ancestorsNodes.Keys.ElementAt(1));
+        Assert.Equal(new[] { typeof(DependencyGraph1) }, dependencyGraph._ancestorsNodes.Values.ElementAt(1));
+
+        Assert.Equal(typeof(DependencyGraph4), dependencyGraph._ancestorsNodes.Keys.ElementAt(2));
+        Assert.Equal(new[] { typeof(DependencyGraph2), typeof(DependencyGraph3) }, dependencyGraph._ancestorsNodes.Values.ElementAt(2));
+
+        Assert.Equal(typeof(DependencyGraph5), dependencyGraph._ancestorsNodes.Keys.ElementAt(3));
+        Assert.Equal(new[] { typeof(DependencyGraph2) }, dependencyGraph._ancestorsNodes.Values.ElementAt(3));
+
+        Assert.Equal(typeof(DependencyGraph6), dependencyGraph._ancestorsNodes.Keys.ElementAt(4));
+        Assert.Equal(new[] { typeof(DependencyGraph3) }, dependencyGraph._ancestorsNodes.Values.ElementAt(4));
+
+        Assert.Equal(3, dependencyGraph._descendantsNodes.Count);
+        Assert.Equal(typeof(DependencyGraph1), dependencyGraph._descendantsNodes.Keys.ElementAt(0));
+        Assert.Equal(new[] { typeof(DependencyGraph2), typeof(DependencyGraph3) }, dependencyGraph._descendantsNodes.Values.ElementAt(0));
+
+        Assert.Equal(typeof(DependencyGraph2), dependencyGraph._descendantsNodes.Keys.ElementAt(1));
+        Assert.Equal(new[] { typeof(DependencyGraph4), typeof(DependencyGraph5) }, dependencyGraph._descendantsNodes.Values.ElementAt(1));
+
+        Assert.Equal(typeof(DependencyGraph3), dependencyGraph._descendantsNodes.Keys.ElementAt(2));
+        Assert.Equal(new[] { typeof(DependencyGraph4), typeof(DependencyGraph6) }, dependencyGraph._descendantsNodes.Values.ElementAt(2));
+    }
+
+    [Fact]
+    public void FindAllAncestors_Invalid_Parameters()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            dependencyGraph.FindAllAncestors(null!);
+        });
+    }
+
+    [Fact]
+    public void FindAllAncestors_ReturnOK()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Equal(new List<Type>(), dependencyGraph.FindAllAncestors(typeof(DependencyGraph1)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph2)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph3)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph1), typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph4)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph5)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph3), typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph6)));
+    }
+
+    [Fact]
+    public void FindAllDescendants_Invalid_Parameters()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            dependencyGraph.FindAllDescendants(null!);
+        });
+    }
+
+    [Fact]
+    public void FindAllDescendants_ReturnOK()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph4), typeof(DependencyGraph5), typeof(DependencyGraph4), typeof(DependencyGraph6), }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph1)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph5) }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph2)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph6) }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph3)));
+        Assert.Equal(new List<Type> { }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph4)));
+        Assert.Equal(new List<Type> { }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph5)));
+        Assert.Equal(new List<Type> { }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph6)));
+    }
+
+    [Fact]
+    public void FindAncestors_Invalid_Parameters()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            dependencyGraph.FindAncestors(null!);
+        });
+    }
+
+    [Fact]
+    public void FindAncestors_ReturnOK()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Equal(new List<Type>(), dependencyGraph.FindAncestors(typeof(DependencyGraph1)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph2)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph3)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph4)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph5)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph3), typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph6)));
+    }
+
+    [Fact]
+    public void FindDescendants_Invalid_Parameters()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            dependencyGraph.FindDescendants(null!);
+        });
+    }
+
+    [Fact]
+    public void FindDescendants_ReturnOK()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(DependencyGraph1), new[]{ typeof(DependencyGraph2), typeof(DependencyGraph3) }},
+            {typeof(DependencyGraph2), new[]{ typeof(DependencyGraph4), typeof(DependencyGraph5) }},
+            {typeof(DependencyGraph3), new[]{ typeof(DependencyGraph4),typeof(DependencyGraph6) }}
+        };
+
+        var dependencyGraph = new DependencyGraph(dependencies);
+
+        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph4), typeof(DependencyGraph5), typeof(DependencyGraph6), }, dependencyGraph.FindDescendants(typeof(DependencyGraph1)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph5) }, dependencyGraph.FindDescendants(typeof(DependencyGraph2)));
+        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph6) }, dependencyGraph.FindDescendants(typeof(DependencyGraph3)));
+        Assert.Equal(new List<Type> { }, dependencyGraph.FindDescendants(typeof(DependencyGraph4)));
+        Assert.Equal(new List<Type> { }, dependencyGraph.FindDescendants(typeof(DependencyGraph5)));
+        Assert.Equal(new List<Type> { }, dependencyGraph.FindDescendants(typeof(DependencyGraph6)));
     }
 }
