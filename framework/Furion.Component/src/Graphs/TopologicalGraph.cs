@@ -52,7 +52,7 @@ internal sealed class TopologicalGraph
         foreach (var nodeType in _dependencies.Keys)
         {
             // 节点访问记录
-            VisitNodeForSort(nodeType, visitedNodes, sortedNodes);
+            VisitNode(nodeType, visitedNodes, sortedNodes);
         }
 
         return sortedNodes;
@@ -64,7 +64,7 @@ internal sealed class TopologicalGraph
     /// <param name="nodeType">节点类型</param>
     /// <param name="visitedNodes">已访问过的节点集合</param>
     /// <param name="sortedNodes">已排序的节点集合</param>
-    internal void VisitNodeForSort(Type nodeType
+    internal void VisitNode(Type nodeType
         , HashSet<Type> visitedNodes
         , List<Type> sortedNodes)
     {
@@ -89,7 +89,7 @@ internal sealed class TopologicalGraph
             foreach (var currentNode in dependencies)
             {
                 // 节点访问记录
-                VisitNodeForSort(currentNode, visitedNodes, sortedNodes);
+                VisitNode(currentNode, visitedNodes, sortedNodes);
             }
         }
 
@@ -112,8 +112,8 @@ internal sealed class TopologicalGraph
         // 遍历依赖关系集合中的键进行循环依赖检查
         foreach (var currentNode in _dependencies.Keys)
         {
-            // 节点访问记录
-            if (VisitNodeForCycle(currentNode, visitedNodes, pathNodes))
+            // 循环依赖检查
+            if (HasCycleHelper(currentNode, visitedNodes, pathNodes))
             {
                 return true;
             }
@@ -123,13 +123,13 @@ internal sealed class TopologicalGraph
     }
 
     /// <summary>
-    /// 节点访问记录
+    /// 循环依赖检查（内部方法）
     /// </summary>
     /// <param name="nodeType">节点类型</param>
     /// <param name="visitedNodes">已访问过的节点集合</param>
     /// <param name="pathNodes">已遍历路径的节点集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool VisitNodeForCycle(Type nodeType
+    internal bool HasCycleHelper(Type nodeType
         , HashSet<Type> visitedNodes
         , HashSet<Type> pathNodes)
     {
@@ -151,7 +151,7 @@ internal sealed class TopologicalGraph
                 // 检查当前节点是否在已遍历路径的节点集合中
                 // 检查当前节点不在已访问过的节点集合中并且存在循环依赖
                 if (pathNodes.Contains(currentNode)
-                    || (!visitedNodes.Contains(currentNode) && VisitNodeForCycle(currentNode, visitedNodes, pathNodes)))
+                    || (!visitedNodes.Contains(currentNode) && HasCycleHelper(currentNode, visitedNodes, pathNodes)))
                 {
                     // 输出调试事件
                     Debugging.Error("The node type `{0}` has circular dependencies.", nodeType);

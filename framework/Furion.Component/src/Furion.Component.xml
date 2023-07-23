@@ -967,7 +967,7 @@
             </summary>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.VisitNodeForSort(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.VisitNode(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
             <summary>
             节点访问记录
             </summary>
@@ -981,9 +981,9 @@
             </summary>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.VisitNodeForCycle(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.HasCycleHelper(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
             <summary>
-            节点访问记录
+            循环依赖检查（内部方法）
             </summary>
             <param name="nodeType">节点类型</param>
             <param name="visitedNodes">已访问过的节点集合</param>
