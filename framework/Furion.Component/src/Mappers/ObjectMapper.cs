@@ -20,33 +20,38 @@ namespace Furion.Component;
 internal static class ObjectMapper
 {
     /// <summary>
-    /// 映射对象
+    /// 简单对象映射
     /// </summary>
-    /// <typeparam name="TSource">源对象类型</typeparam>
-    /// <typeparam name="TDestination">目标对象类型</typeparam>
+    /// <typeparam name="TSource">源类型</typeparam>
+    /// <typeparam name="TDestination">目标类型</typeparam>
     /// <param name="source"><typeparamref name="TSource"/></param>
-    /// <param name="destination"><typeparamref name="TSource"/></param>
+    /// <param name="destination"><typeparamref name="TDestination"/></param>
     internal static void Map<TSource, TDestination>(TSource source, TDestination destination)
-        where TSource : class, new()
-        where TDestination : class, new()
+        where TSource : class
+        where TDestination : class
     {
-        // 反射查找成员绑定标记
-        var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(destination);
 
-        // 获取源对象和目标对象的属性集合
+        // 初始化反射搜索成员方式
+        var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+        // 获取源类型属性集合和目标类型属性集合
         var sourceProperties = typeof(TSource).GetProperties(bindingFlags);
         var destinationProperties = typeof(TDestination).GetProperties(bindingFlags);
 
-        // 创建源对象参数和目标对象参数的表达式参数
-        var sourceParameter = Expression.Parameter(typeof(TSource));
-        var destinationParameter = Expression.Parameter(typeof(TDestination));
+        // 创建表达式入参 s, d
+        var sourceParameterExpression = Expression.Parameter(typeof(TSource));
+        var destinationParameterExpression = Expression.Parameter(typeof(TDestination));
 
         // 遍历源对象的属性集合
         foreach (var sourceProperty in sourceProperties)
         {
-            // 在目标对象的属性集合中查找与源对象属性匹配的属性
+            // 查找目标类型匹配的属性
             var destinationProperty = destinationProperties.FirstOrDefault(p => p.Name == sourceProperty.Name
-                                                                                                           && p.PropertyType == sourceProperty.PropertyType);
+                && p.PropertyType == sourceProperty.PropertyType
+                && p.CanWrite);
 
             // 空检查
             if (destinationProperty is null)
@@ -54,27 +59,26 @@ internal static class ObjectMapper
                 continue;
             }
 
-            // 跳过只读属性
-            if (!destinationProperty.CanWrite)
-            {
-                continue;
-            }
+            // 创建表达式 s.Property
+            var sourcePropertyExpression = Expression.Property(sourceParameterExpression, sourceProperty);
 
-            // 创建表达式树的成员访问表达式，表示源对象的属性值
-            var sourceValue = Expression.Property(sourceParameter, sourceProperty);
+            // 创建表达式 d.Property
+            var destinationPropertyExpression = Expression.Property(destinationParameterExpression, destinationProperty);
 
-            // 创建表达式树的成员访问表达式，表示目标对象的属性
-            var destinationValue = Expression.Property(destinationParameter, destinationProperty);
+            // 创建表达式 d.Property = s.Property
+            var assignmentExpression = Expression.Assign(destinationPropertyExpression
+                , Expression.Convert(sourcePropertyExpression, destinationPropertyExpression.Type));
 
-            // 创建表达式树的赋值表达式，将源对象的属性值赋给目标对象的属性
-            var assignment = Expression.Assign(destinationValue, Expression.Convert(sourceValue, destinationValue.Type));
+            // 创建表达式 (s, d) => d.Property = s.Property
+            var lambdaExpression = Expression.Lambda<Action<TSource, TDestination>>(assignmentExpression
+                , sourceParameterExpression
+                , destinationParameterExpression);
 
-            // 创建表达式树的 Lambda 表达式，表示源对象和目标对象的参数以及赋值表达式
-            var lambda = Expression.Lambda<Action<TSource, TDestination>>(assignment, sourceParameter, destinationParameter);
+            // 将表达式转换成委托
+            var lambda = lambdaExpression.Compile();
 
-            // 编译 Lambda 表达式生成委托，并执行委托，实现属性值的映射
-            var compiledLambda = lambda.Compile();
-            compiledLambda(source, destination);
+            // 调用委托
+            lambda(source, destination);
         }
     }
 }

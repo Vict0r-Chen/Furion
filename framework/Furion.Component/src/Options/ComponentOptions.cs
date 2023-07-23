@@ -83,9 +83,9 @@ internal sealed class ComponentOptions
         ArgumentNullException.ThrowIfNull(props);
 
         // 创建组件配置委托
-        var configure = new Action<TProps>(destination =>
+        var configure = new Action<TProps>(draft =>
         {
-            ObjectMapper.Map(props, destination);
+            ObjectMapper.Map(props, draft);
         });
 
         // 添加组件配置

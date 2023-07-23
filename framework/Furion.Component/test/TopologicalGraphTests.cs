@@ -139,7 +139,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -167,7 +167,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
