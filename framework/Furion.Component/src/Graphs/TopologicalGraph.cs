@@ -148,7 +148,8 @@ internal sealed class TopologicalGraph
             // 遍历当前节点的每个依赖节点
             foreach (var currentNode in dependencies)
             {
-                // 循环依赖检查
+                // 检查当前节点是否在已遍历路径的节点集合中
+                // 检查当前节点不在已访问过的节点集合中并且存在循环依赖
                 if (pathNodes.Contains(currentNode)
                     || (!visitedNodes.Contains(currentNode) && VisitNodeForCycle(currentNode, visitedNodes, pathNodes)))
                 {
