@@ -824,7 +824,7 @@
         </member>
         <member name="M:Furion.Component.ComponentBase.OnDependencyInvocation(Furion.Component.ComponentInvocationContext)">
             <summary>
-            依赖关系调用通知
+            监听依赖关系链中的组件执行回调
             </summary>
             <param name="context"><see cref="T:Furion.Component.ComponentInvocationContext"/></param>
         </member>
@@ -861,7 +861,7 @@
         </member>
         <member name="M:Furion.Component.ComponentBase.NotifyInvocation(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
-            调用事件监听
+            通知依赖关系链中的组件执行回调操作
             </summary>
             <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>

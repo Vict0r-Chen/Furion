@@ -81,7 +81,7 @@ public abstract class ComponentBase
     { }
 
     /// <summary>
-    /// 依赖关系调用通知
+    /// 监听依赖关系链中的组件执行回调
     /// </summary>
     /// <param name="context"><see cref="ComponentInvocationContext"/></param>
     public virtual void OnDependencyInvocation(ComponentInvocationContext context)
@@ -187,18 +187,19 @@ public abstract class ComponentBase
         // 初始化依赖关系图
         var dependencyGraph = new DependencyGraph(dependencies);
 
-        // 初始化组件对象集合
+        // 初始化组件实例集合
         var components = new List<ComponentBase>();
 
-        // 存储未激活的且只有自身依赖的组件类型
+        // 初始化无需激活的组件类型集合
         var inactiveComponents = new List<Type>();
 
         // 从尾部依次初始化组件实例
         for (var i = sortedDependencies.Count - 1; i >= 0; i--)
         {
+            // 获取组件类型
             var componentType = sortedDependencies[i];
 
-            // 检查当前组件类型的下游是否未激活
+            // 检查当前组件类型是否已标记为无需激活
             if (inactiveComponents.Contains(componentType))
             {
                 continue;
@@ -207,24 +208,25 @@ public abstract class ComponentBase
             // 获取或创建组件实例
             var component = ComponentActivator.GetOrCreate(componentType, componentContext.Options);
 
-            // 检查组件是否激活
+            // 检查组件是否允许激活
             if (!component.CanActivate(componentContext))
             {
-                // 存储未激活的且只有自身依赖的组件依赖类型
-                inactiveComponents.AddRange(dependencies[componentType].Except(
-                    dependencies.Where(d => d.Key != componentType && !dependencies[componentType].Contains(d.Key))
-                                      .SelectMany(u => u.Value.Concat(new[] { u.Key }))));
+                // 将无需激活的且只有自身依赖的组件类型添加到集合中
+                inactiveComponents.AddRange(dependencies[componentType]
+                    .Except(dependencies.Where(dept => dept.Key != componentType && !dependencies[componentType].Contains(dept.Key))
+                        .SelectMany(u => u.Value.Concat(new[] { u.Key }))));
+
                 continue;
             }
 
-            // 添加到组件对象集合头部
+            // 添加组件实例到集合头部
             components.Insert(0, component);
 
-            // 调用前置方法
+            // 调用组件前置方法
             InvokeMethod(dependencyGraph, component, componentContext, methodNames[0]);
         }
 
-        // 调用后置方法
+        // 调用组件后置方法
         components.ForEach(component => InvokeMethod(dependencyGraph, component, componentContext, methodNames[1]));
     }
 
@@ -261,12 +263,12 @@ public abstract class ComponentBase
         // 输出调试事件
         Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), methodName);
 
-        // 调用事件监听
+        // 通知依赖关系链中的组件执行回调方法
         NotifyInvocation(dependencyGraph, component, componentContext, methodName);
     }
 
     /// <summary>
-    /// 调用事件监听
+    /// 通知依赖关系链中的组件执行回调操作
     /// </summary>
     /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
     /// <param name="component"><see cref="ComponentBase"/></param>
@@ -286,7 +288,7 @@ public abstract class ComponentBase
         // 获取组件类型
         var componentType = component.GetType();
 
-        // 查找组件依赖关系的所有依赖类型集合
+        // 查找组件类型依赖关系链上的类型集合
         var ancestors = dependencyGraph.FindAncestors(componentType);
 
         // 将当前组件类型插入到集合头部
@@ -295,7 +297,7 @@ public abstract class ComponentBase
         // 初始化组件调用上下文
         var componentInvocationContext = new ComponentInvocationContext(component, componentContext, methodName);
 
-        // 循环调用所有组件组件（含自己）的监听方法
+        // 循环调用依赖关系链中的组件回调操作
         ancestors.Where(componentType => componentType.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
             .Select(componentType => ComponentActivator.GetOrCreate(componentType, componentContext.Options))
             .ToList()
@@ -312,7 +314,7 @@ public abstract class ComponentBase
         // 空检查
         ArgumentNullException.ThrowIfNull(componentType);
 
-        // 获取基类型
+        // 获取组件类型继承类型
         var baseType = componentType.BaseType;
 
         return typeof(ComponentBase).IsAssignableFrom(componentType)
