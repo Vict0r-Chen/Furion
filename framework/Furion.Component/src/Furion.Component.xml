@@ -24,6 +24,11 @@
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
         </member>
+        <member name="P:Furion.Component.ComponentActivator.BindingAttr">
+            <summary>
+            反射搜索成员方式
+            </summary>
+        </member>
         <member name="M:Furion.Component.ComponentActivator.GetOrCreate(System.Type,Furion.Component.ComponentOptions)">
             <summary>
             获取或创建组件实例
@@ -38,20 +43,18 @@
             </summary>
             <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentActivator.GetNewConstructor(System.Reflection.BindingFlags,System.Reflection.ConstructorInfo@,System.Object[]@)">
+        <member name="M:Furion.Component.ComponentActivator.GetNewConstructor(System.Reflection.ConstructorInfo@,System.Object[]@)">
             <summary>
             获取组件初始化构造函数
             </summary>
-            <param name="bindingFlags">反射搜索成员方式</param>
             <param name="newConstructor">构造函数</param>
             <param name="args">构造函数参数集合</param>
         </member>
-        <member name="M:Furion.Component.ComponentActivator.AutowiredProps(Furion.Component.ComponentBase,System.Reflection.BindingFlags)">
+        <member name="M:Furion.Component.ComponentActivator.AutowiredProps(Furion.Component.ComponentBase)">
             <summary>
             自动装配组件配置属性和配置字段
             </summary>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="bindingFlags">反射搜索成员方式</param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Furion.Component.ComponentActivator.EnsureLegalComponentType(System.Type)">

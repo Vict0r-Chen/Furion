@@ -39,6 +39,7 @@ public class ComponentActivatorTests
         Assert.NotNull(componentActivator._componentType);
         Assert.Equal(typeof(ComponentClass), componentActivator._componentType);
         Assert.NotNull(componentActivator._componentOptions);
+        Assert.Equal(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, componentActivator.BindingAttr);
     }
 
     [Fact]
@@ -107,7 +108,7 @@ public class ComponentActivatorTests
         componentOptions.Props<ComponentOptionsClass1>(p => { });
         var componentActivator = new ComponentActivator(typeof(ComponentWithPropsDefinition), componentOptions);
 
-        componentActivator.GetNewConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, out var newConstructor, out var args);
+        componentActivator.GetNewConstructor(out var newConstructor, out var args);
 
         Assert.NotNull(newConstructor);
         Assert.NotNull(args);
@@ -124,7 +125,7 @@ public class ComponentActivatorTests
         componentOptions.Props<ComponentOptionsClass1>(p => { });
         var componentActivator = new ComponentActivator(typeof(ComponentWithMultipleConstructor), componentOptions);
 
-        componentActivator.GetNewConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, out var newConstructor, out var args);
+        componentActivator.GetNewConstructor(out var newConstructor, out var args);
 
         Assert.NotNull(newConstructor);
         Assert.NotNull(args);
@@ -141,7 +142,7 @@ public class ComponentActivatorTests
         componentOptions.Props<ComponentOptionsClass1>(p => { });
         var componentActivator = new ComponentActivator(typeof(ComponentWithActivatorComponentConstructor), componentOptions);
 
-        componentActivator.GetNewConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, out var newConstructor, out var args);
+        componentActivator.GetNewConstructor(out var newConstructor, out var args);
 
         Assert.NotNull(newConstructor);
         Assert.NotNull(args);
@@ -158,7 +159,7 @@ public class ComponentActivatorTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            componentActivator.AutowiredProps(null!, BindingFlags.Public);
+            componentActivator.AutowiredProps(null!);
         });
     }
 
@@ -173,7 +174,7 @@ public class ComponentActivatorTests
             Options = componentOptions
         };
 
-        componentActivator.AutowiredProps(component, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+        componentActivator.AutowiredProps(component);
 
         Assert.NotNull(component.ComponentPropsAction2);
         Assert.NotNull(component._componentProps2);

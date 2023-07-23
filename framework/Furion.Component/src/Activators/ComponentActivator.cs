@@ -45,6 +45,11 @@ internal sealed class ComponentActivator
     }
 
     /// <summary>
+    /// 反射搜索成员方式
+    /// </summary>
+    internal BindingFlags BindingAttr { get; set; } = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+    /// <summary>
     /// 获取或创建组件实例
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
@@ -76,11 +81,8 @@ internal sealed class ComponentActivator
     /// <returns><see cref="ComponentBase"/></returns>
     internal ComponentBase Create()
     {
-        // 初始化反射搜索成员方式
-        var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
-
         // 获取组件初始化构造函数
-        GetNewConstructor(bindingFlags, out var newConstructor, out var args);
+        GetNewConstructor(out var newConstructor, out var args);
 
         // 调用构造函数并创建组件实例
         var component = newConstructor.Invoke(args) as ComponentBase;
@@ -92,7 +94,7 @@ internal sealed class ComponentActivator
         component.Options = _componentOptions;
 
         // 自动装配组件配置属性和配置字段
-        AutowiredProps(component, bindingFlags);
+        AutowiredProps(component);
 
         return component;
     }
@@ -100,15 +102,12 @@ internal sealed class ComponentActivator
     /// <summary>
     /// 获取组件初始化构造函数
     /// </summary>
-    /// <param name="bindingFlags">反射搜索成员方式</param>
     /// <param name="newConstructor">构造函数</param>
     /// <param name="args">构造函数参数集合</param>
-    internal void GetNewConstructor(BindingFlags bindingFlags
-        , out ConstructorInfo newConstructor
-        , out object?[] args)
+    internal void GetNewConstructor(out ConstructorInfo newConstructor, out object?[] args)
     {
         // 获取组件构造函数集合
-        var constructors = _componentType.GetConstructors(bindingFlags);
+        var constructors = _componentType.GetConstructors(BindingAttr);
 
         // 查找贴有 [ActivatorComponentConstructor] 特性的构造函数，若没找到则选择构造函数参数最多的一个
         newConstructor = constructors.FirstOrDefault(ctor => ctor.IsDefined(typeof(ActivatorComponentConstructorAttribute), false))
@@ -129,15 +128,14 @@ internal sealed class ComponentActivator
     /// 自动装配组件配置属性和配置字段
     /// </summary>
     /// <param name="component"><see cref="ComponentBase"/></param>
-    /// <param name="bindingFlags">反射搜索成员方式</param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal void AutowiredProps(ComponentBase component, BindingFlags bindingFlags)
+    internal void AutowiredProps(ComponentBase component)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(component);
 
         // 查找贴有 [ComponentProps] 特性的组件配置属性集合
-        var properties = _componentType.GetProperties(bindingFlags)
+        var properties = _componentType.GetProperties(BindingAttr)
             .Where(property => property.IsDefined(typeof(ComponentPropsAttribute), false));
 
         // 遍历组件配置属性集合并初始化
@@ -154,7 +152,7 @@ internal sealed class ComponentActivator
         }
 
         // 查找贴有 [ComponentProps] 特性的组件配置字段集合
-        var fields = _componentType.GetFields(bindingFlags)
+        var fields = _componentType.GetFields(BindingAttr)
             .Where(field => field.IsDefined(typeof(ComponentPropsAttribute), false));
 
         // 遍历组件配置字段集合并初始化

@@ -90,9 +90,16 @@ public abstract class ComponentBase
     /// <summary>
     /// 重载组件配置
     /// </summary>
-    public virtual void ReloadProps()
+    public void ReloadProps()
     {
-        // TODO!
+        // 空检查
+        ArgumentNullException.ThrowIfNull(Options);
+
+        // 初始化组件激活器
+        var componentActivator = new ComponentActivator(GetType(), Options);
+
+        // 自动装配组件配置属性和配置字段
+        componentActivator.AutowiredProps(this);
     }
 
     /// <summary>
