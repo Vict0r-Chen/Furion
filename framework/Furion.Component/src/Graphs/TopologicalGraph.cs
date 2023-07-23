@@ -27,7 +27,7 @@ internal sealed class TopologicalGraph
     /// <summary>
     /// <inheritdoc cref="TopologicalGraph"/>
     /// </summary>
-    /// <param name="dependencies"></param>
+    /// <param name="dependencies">依赖关系集合</param>
     internal TopologicalGraph(Dictionary<Type, Type[]> dependencies)
     {
         // 空检查
@@ -37,130 +37,132 @@ internal sealed class TopologicalGraph
     }
 
     /// <summary>
-    /// 拓扑图排序
+    /// 排序
     /// </summary>
     /// <returns><see cref="List{T}"/></returns>
     internal List<Type> Sort()
     {
-        // 初始化一个空列表来存储已排序的节点
+        // 初始化已排序的节点集合
         var sortedNodes = new List<Type>();
 
-        // 初始化一个 Set 来存储已访问过的节点
-        var visited = new HashSet<Type>();
+        // 初始化已访问过的节点集合
+        var visitedNodes = new HashSet<Type>();
 
-        // 对每个未访问的节点进行深度优先搜索，将搜索到的节点插入到排序列表的尾部
-        foreach (var node in _dependencies.Keys)
+        // 遍历依赖关系集合中的键进行排序操作
+        foreach (var nodeType in _dependencies.Keys)
         {
-            VisitNode(node, visited, sortedNodes);
+            // 节点访问记录
+            VisitNodeForSort(nodeType, visitedNodes, sortedNodes);
         }
 
-        // 返回已排序的节点列表
         return sortedNodes;
     }
 
     /// <summary>
     /// 节点访问记录
     /// </summary>
-    /// <param name="node">当前节点</param>
-    /// <param name="visited">已访问过的节点</param>
-    /// <param name="sortedNodes">已排序的节点</param>
-    internal void VisitNode(Type node
-        , HashSet<Type> visited
+    /// <param name="nodeType">节点类型</param>
+    /// <param name="visitedNodes">已访问过的节点集合</param>
+    /// <param name="sortedNodes">已排序的节点集合</param>
+    internal void VisitNodeForSort(Type nodeType
+        , HashSet<Type> visitedNodes
         , List<Type> sortedNodes)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(node);
-        ArgumentNullException.ThrowIfNull(visited);
+        ArgumentNullException.ThrowIfNull(nodeType);
+        ArgumentNullException.ThrowIfNull(visitedNodes);
         ArgumentNullException.ThrowIfNull(sortedNodes);
 
-        // 如果当前节点已经被访问过，则直接返回
-        if (visited.Contains(node))
+        // 检查当前节点是否已访问过
+        if (visitedNodes.Contains(nodeType))
         {
             return;
         }
 
-        // 将当前节点标记为已访问
-        visited.Add(node);
+        // 将当前节点添加到已访问过的节点集合中
+        visitedNodes.Add(nodeType);
 
-        // 访问当前节点所依赖的所有节点
-        if (_dependencies.TryGetValue(node, out var neighbors))
+        // 查找当前节点依赖节点集合
+        if (_dependencies.TryGetValue(nodeType, out var dependencies))
         {
-            foreach (var neighbor in neighbors)
+            // 遍历当前节点的每个依赖节点
+            foreach (var currentNode in dependencies)
             {
-                VisitNode(neighbor, visited, sortedNodes);
+                // 节点访问记录
+                VisitNodeForSort(currentNode, visitedNodes, sortedNodes);
             }
         }
 
-        // 将当前节点插入到排序列表的尾部
-        sortedNodes.Add(node);
+        // 将当前节点添加到已排序的节点集合中
+        sortedNodes.Add(nodeType);
     }
 
     /// <summary>
-    /// 拓扑图循环依赖检查
+    /// 循环依赖检查
     /// </summary>
     /// <returns><see cref="bool"/></returns>
     internal bool HasCycle()
     {
-        // 初始化一个 Set 来存储已访问过的节点
-        var visited = new HashSet<Type>();
+        // 初始化已遍历路径的节点集合
+        var pathNodes = new HashSet<Type>();
 
-        // 初始化一个 Set 来存储当前遍历路径上的节点
-        var currentPath = new HashSet<Type>();
+        // 初始化已访问过的节点集合
+        var visitedNodes = new HashSet<Type>();
 
-        // 对每个未访问的节点进行深度优先搜索，检查是否存在循环依赖
-        foreach (var node in _dependencies.Keys)
+        // 遍历依赖关系集合中的键进行循环依赖检查
+        foreach (var currentNode in _dependencies.Keys)
         {
-            if (HasCycleHelper(node, visited, currentPath))
+            // 节点访问记录
+            if (VisitNodeForCycle(currentNode, visitedNodes, pathNodes))
             {
                 return true;
             }
         }
 
-        // 如果不存在循环依赖，则返回 false
         return false;
     }
 
     /// <summary>
-    /// 检查依赖节点是否存在循环依赖
+    /// 节点访问记录
     /// </summary>
-    /// <param name="node">当前节点</param>
-    /// <param name="visited">已访问过的节点</param>
-    /// <param name="currentPath">当前遍历路径上的节点</param>
+    /// <param name="nodeType">节点类型</param>
+    /// <param name="visitedNodes">已访问过的节点集合</param>
+    /// <param name="pathNodes">已遍历路径的节点集合</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool HasCycleHelper(Type node
-        , HashSet<Type> visited
-        , HashSet<Type> currentPath)
+    internal bool VisitNodeForCycle(Type nodeType
+        , HashSet<Type> visitedNodes
+        , HashSet<Type> pathNodes)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(node);
-        ArgumentNullException.ThrowIfNull(visited);
-        ArgumentNullException.ThrowIfNull(currentPath);
+        ArgumentNullException.ThrowIfNull(nodeType);
+        ArgumentNullException.ThrowIfNull(visitedNodes);
+        ArgumentNullException.ThrowIfNull(pathNodes);
 
-        // 将当前节点标记为已访问，并将其加入到遍历路径中
-        visited.Add(node);
-        currentPath.Add(node);
+        // 将当前节点添加到已访问过的节点集合和已遍历路径的节点集合中
+        visitedNodes.Add(nodeType);
+        pathNodes.Add(nodeType);
 
-        // 访问当前节点所依赖的所有节点
-        if (_dependencies.TryGetValue(node, out var neighbors))
+        // 查找当前节点依赖节点集合
+        if (_dependencies.TryGetValue(nodeType, out var dependencies))
         {
-            foreach (var neighbor in neighbors)
+            // 遍历当前节点的每个依赖节点
+            foreach (var currentNode in dependencies)
             {
-                // 如果遍历路径上已经包含了该邻居节点，则存在循环依赖，直接返回 true
-                if (currentPath.Contains(neighbor)
-                    || (!visited.Contains(neighbor) && HasCycleHelper(neighbor, visited, currentPath)))
+                // 循环依赖检查
+                if (pathNodes.Contains(currentNode)
+                    || (!visitedNodes.Contains(currentNode) && VisitNodeForCycle(currentNode, visitedNodes, pathNodes)))
                 {
-                    // 打印循环依赖类型
-                    Debugging.Error("The type `{0}` has circular dependencies.", node.Name);
+                    // 输出调试事件
+                    Debugging.Error("The type `{0}` has circular dependencies.", nodeType.Name);
 
                     return true;
                 }
             }
         }
 
-        // 遍历完当前节点的所有邻居节点后，将当前节点从遍历路径中移除
-        currentPath.Remove(node);
+        // 将当前节点从已遍历路径的节点集合中移除
+        pathNodes.Remove(nodeType);
 
-        // 如果不存在循环依赖，则返回 false
         return false;
     }
 }

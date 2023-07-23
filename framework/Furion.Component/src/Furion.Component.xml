@@ -959,35 +959,35 @@
             <summary>
             <inheritdoc cref="T:Furion.Component.TopologicalGraph"/>
             </summary>
-            <param name="dependencies"></param>
+            <param name="dependencies">依赖关系集合</param>
         </member>
         <member name="M:Furion.Component.TopologicalGraph.Sort">
             <summary>
-            拓扑图排序
+            排序
             </summary>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.VisitNode(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.VisitNodeForSort(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
             <summary>
             节点访问记录
             </summary>
-            <param name="node">当前节点</param>
-            <param name="visited">已访问过的节点</param>
-            <param name="sortedNodes">已排序的节点</param>
+            <param name="nodeType">节点类型</param>
+            <param name="visitedNodes">已访问过的节点集合</param>
+            <param name="sortedNodes">已排序的节点集合</param>
         </member>
         <member name="M:Furion.Component.TopologicalGraph.HasCycle">
             <summary>
-            拓扑图循环依赖检查
+            循环依赖检查
             </summary>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.HasCycleHelper(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
+        <member name="M:Furion.Component.TopologicalGraph.VisitNodeForCycle(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.HashSet{System.Type})">
             <summary>
-            检查依赖节点是否存在循环依赖
+            节点访问记录
             </summary>
-            <param name="node">当前节点</param>
-            <param name="visited">已访问过的节点</param>
-            <param name="currentPath">当前遍历路径上的节点</param>
+            <param name="nodeType">节点类型</param>
+            <param name="visitedNodes">已访问过的节点集合</param>
+            <param name="pathNodes">已遍历路径的节点集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Component.ObjectMapper">

@@ -59,7 +59,7 @@ internal sealed class DependencyGraph
         // 遍历依赖关系集合
         foreach (var (nodeType, dependencies) in _dependencies)
         {
-            // 遍历当前节点的每个依赖关系
+            // 遍历当前节点的每个依赖节点
             foreach (var currentNode in dependencies)
             {
                 // 查找当前节点祖先节点集合
