@@ -20,15 +20,4 @@ namespace Furion.Component;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
 public sealed class ComponentPropsAttribute : Attribute
 {
-    /// <summary>
-    /// <inheritdoc cref="ComponentPropsAttribute" />
-    /// </summary>
-    public ComponentPropsAttribute()
-    {
-    }
-
-    /// <summary>
-    /// 组件配置为空值则创建
-    /// </summary>
-    public bool NewIfNull { get; init; }
 }

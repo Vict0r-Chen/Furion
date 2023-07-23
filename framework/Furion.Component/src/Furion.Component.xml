@@ -11,7 +11,7 @@
         </member>
         <member name="F:Furion.Component.ComponentActivator._componentType">
             <summary>
-            组件类型
+            <see cref="T:Furion.Component.ComponentBase"/>
             </summary>
         </member>
         <member name="F:Furion.Component.ComponentActivator._componentOptions">
@@ -21,16 +21,24 @@
             <summary>
             <inheritdoc cref="T:Furion.Component.ComponentActivator" />
             </summary>
-            <param name="componentType">组件类型</param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
         </member>
         <member name="M:Furion.Component.ComponentActivator.Create">
             <summary>
             创建组件实例
             </summary>
-            <returns></returns>
+            <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentActivator.EnsureLegalComponent(System.Type)">
+        <member name="M:Furion.Component.ComponentActivator.AutowiredProps(Furion.Component.ComponentBase,System.Reflection.BindingFlags)">
+            <summary>
+            自动装配组件配置属性和配置字段
+            </summary>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="bindingFlags">反射搜索成员方式</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Furion.Component.ComponentActivator.EnsureLegalComponentType(System.Type)">
             <summary>
             检查组件类型合法性
             </summary>
@@ -45,16 +53,6 @@
         <member name="T:Furion.Component.ComponentPropsAttribute">
             <summary>
             标记作为组件配置的配置特性
-            </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentPropsAttribute.#ctor">
-            <summary>
-            <inheritdoc cref="T:Furion.Component.ComponentPropsAttribute" />
-            </summary>
-        </member>
-        <member name="P:Furion.Component.ComponentPropsAttribute.NewIfNull">
-            <summary>
-            组件配置为空值则创建
             </summary>
         </member>
         <member name="T:Furion.Component.DependsOnAttribute">

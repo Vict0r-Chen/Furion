@@ -126,7 +126,7 @@ public abstract class ComponentBase
     internal static Dictionary<Type, Type[]> CreateDependencies(Type componentType)
     {
         // 检查组件类型合法性
-        ComponentActivator.EnsureLegalComponent(componentType);
+        ComponentActivator.EnsureLegalComponentType(componentType);
 
         // 组件依赖关系集合
         var dependencies = new Dictionary<Type, Type[]>();
@@ -184,7 +184,7 @@ public abstract class ComponentBase
         // 检查所有组件类型合法性
         foreach (var componentType in componentTypes)
         {
-            ComponentActivator.EnsureLegalComponent(componentType);
+            ComponentActivator.EnsureLegalComponentType(componentType);
         }
 
         // 创建拓扑图对象

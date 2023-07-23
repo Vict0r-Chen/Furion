@@ -20,7 +20,7 @@ namespace Furion.Component;
 internal sealed class ComponentActivator
 {
     /// <summary>
-    /// 组件类型
+    /// <see cref="ComponentBase"/>
     /// </summary>
     internal readonly Type _componentType;
 
@@ -30,12 +30,12 @@ internal sealed class ComponentActivator
     /// <summary>
     /// <inheritdoc cref="ComponentActivator" />
     /// </summary>
-    /// <param name="componentType">组件类型</param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
     internal ComponentActivator(Type componentType, ComponentOptions componentOptions)
     {
         // 检查组件类型合法性
-        EnsureLegalComponent(componentType);
+        EnsureLegalComponentType(componentType);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(componentOptions);
@@ -47,51 +47,88 @@ internal sealed class ComponentActivator
     /// <summary>
     /// 创建组件实例
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="ComponentBase"/></returns>
     internal ComponentBase Create()
     {
-        // 反射查找成员绑定标记
+        // 初始化反射搜索成员方式
         var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
 
-        // 获取所有公开的实例构造函数
+        // 获取组件构造函数集合
         var constructors = _componentType.GetConstructors(bindingFlags);
 
-        // 查找是否贴有 [ActivatorComponentConstructor] 特性的构造函数
-        // 若没找到则选择构造函数参数最多的一个
-        var buildingConstructor = constructors.FirstOrDefault(c => c.IsDefined(typeof(ActivatorComponentConstructorAttribute), false))
-            ?? constructors.OrderByDescending(c => c.GetParameters().Length).First();
+        // 查找贴有 [ActivatorComponentConstructor] 特性的构造函数，若没找到则选择构造函数参数最多的一个
+        var newConstructor = constructors.FirstOrDefault(ctor => ctor.IsDefined(typeof(ActivatorComponentConstructorAttribute), false))
+            ?? constructors.OrderBy(c => c.GetParameters().Length).Last();
 
-        // 获取构造函数参数定义
-        var parameters = buildingConstructor.GetParameters();
+        // 获取构造函数参数
+        var parameters = newConstructor.GetParameters();
 
-        // 实例化构造函数参数
+        // 遍历构造函数参数并初始化
         var args = new object?[parameters.Length];
         for (var i = 0; i < parameters.Length; i++)
         {
             args[i] = _componentOptions.GetProps(parameters[i].ParameterType);
         }
 
-        // 调用组件构造函数进行实例化
-        var component = buildingConstructor.Invoke(args) as ComponentBase;
+        // 调用构造函数并创建组件实例
+        var component = newConstructor.Invoke(args) as ComponentBase;
+
+        // 空检查
         ArgumentNullException.ThrowIfNull(component);
 
-        // 组件模块配置选项
+        // 设置组件模块选项
         component.Options = _componentOptions;
 
-        // 查找贴有 [ComponentProps] 特性的组件配置属性（这里也考虑一下字段）
-        var properties = _componentType.GetProperties(bindingFlags)
-            .Where(p => p.IsDefined(typeof(ComponentPropsAttribute), false));
-
-        // 存在组件配置属性
-        if (properties.Any())
-        {
-            foreach (var property in properties)
-            {
-                property.SetValue(component, _componentOptions.GetProps(property.PropertyType));
-            }
-        }
+        // 自动装配组件配置属性和配置字段
+        AutowiredProps(component, bindingFlags);
 
         return component;
+    }
+
+    /// <summary>
+    /// 自动装配组件配置属性和配置字段
+    /// </summary>
+    /// <param name="component"><see cref="ComponentBase"/></param>
+    /// <param name="bindingFlags">反射搜索成员方式</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal void AutowiredProps(ComponentBase component, BindingFlags bindingFlags)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(component);
+
+        // 查找贴有 [ComponentProps] 特性的组件配置属性集合
+        var properties = _componentType.GetProperties(bindingFlags)
+            .Where(property => property.IsDefined(typeof(ComponentPropsAttribute), false));
+
+        // 遍历组件配置属性集合并初始化
+        foreach (var property in properties)
+        {
+            // 检查属性是否可写
+            if (!property.CanWrite)
+            {
+                throw new InvalidOperationException($"Cannot automatically assign read-only property `{property.Name}` of type `{_componentType}`.");
+            }
+
+            // 设置属性值
+            property.SetValue(component, _componentOptions.GetProps(property.PropertyType));
+        }
+
+        // 查找贴有 [ComponentProps] 特性的组件配置字段集合
+        var fields = _componentType.GetFields(bindingFlags)
+            .Where(field => field.IsDefined(typeof(ComponentPropsAttribute), false));
+
+        // 遍历组件配置字段集合并初始化
+        foreach (var field in fields)
+        {
+            // 检查字段是否可写
+            if (field.IsInitOnly)
+            {
+                throw new InvalidOperationException($"Cannot automatically assign read-only field `{field.Name}` of type `{_componentType}`.");
+            }
+
+            // 设置字段值
+            field.SetValue(component, _componentOptions.GetProps(field.FieldType));
+        }
     }
 
     /// <summary>
@@ -99,35 +136,35 @@ internal sealed class ComponentActivator
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static void EnsureLegalComponent(Type componentType)
+    internal static void EnsureLegalComponentType(Type componentType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(componentType);
 
-        // 是否派生自 ComponentBase
+        // 检查组件类型是否派生自 ComponentBase 类型
         var componentBaseType = typeof(ComponentBase);
         if (!componentBaseType.IsAssignableFrom(componentType))
         {
-            throw new InvalidOperationException($"`{componentType.Name}` component type is not assignable from `{componentBaseType.Name}`.");
+            throw new InvalidOperationException($"`{componentType}` type is not assignable from `{componentBaseType}`.");
         }
 
-        // 类型不能是 ComponentBase 或 WebComponent
+        // 检查组件类型是否是 ComponentBase 或 WebComponent 类型
         if (componentType == componentBaseType || componentType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME)
         {
-            throw new InvalidOperationException($"Component type cannot be a `{componentBaseType.Name}` or `WebComponent`.");
+            throw new InvalidOperationException($"Type cannot be a `{componentBaseType}` or `{Constants.WEB_COMPONENT_TYPE_FULLNAME}`.");
         }
 
-        // 类型基类只能是 ComponentBase 或 WebComponent
+        // 检查组件类型是否继承非 ComponentBase 或 WebComponent 类型
         var baseType = componentType.BaseType!;
         if (!(baseType == componentBaseType || baseType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME))
         {
-            throw new InvalidOperationException($"`{componentType.Name}` component type cannot inherit from other component types.");
+            throw new InvalidOperationException($"`{componentType}` type cannot inherit from other component types.");
         }
 
-        // 类型必须可以实例化
+        // 检查组件类型是否可以实例化
         if (!componentType.IsInstantiable())
         {
-            throw new InvalidOperationException($"`{componentType.Name}` component type must be able to be instantiated.");
+            throw new InvalidOperationException($"`{componentType}` type must be able to be instantiated.");
         }
     }
 }
