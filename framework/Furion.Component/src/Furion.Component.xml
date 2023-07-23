@@ -729,31 +729,31 @@
             <typeparam name="TProps">组件配置类型</typeparam>
             <returns><see cref="T:System.Action`1"/></returns>
         </member>
-        <member name="T:Furion.Component.ComponentInvokeContext">
+        <member name="T:Furion.Component.ComponentInvocationContext">
             <summary>
-            组件执行上下文
+            组件调用上下文
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentInvokeContext.#ctor(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+        <member name="M:Furion.Component.ComponentInvocationContext.#ctor(Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
-            <inheritdoc cref="T:Furion.Component.ComponentInvokeContext"/>
+            <inheritdoc cref="T:Furion.Component.ComponentInvocationContext"/>
             </summary>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="invokeName">执行方法名</param>
+            <param name="methodName">调用方法名</param>
         </member>
-        <member name="P:Furion.Component.ComponentInvokeContext.Component">
+        <member name="P:Furion.Component.ComponentInvocationContext.Component">
             <inheritdoc cref="T:Furion.Component.ComponentBase" />
         </member>
-        <member name="P:Furion.Component.ComponentInvokeContext.ComponentContext">
+        <member name="P:Furion.Component.ComponentInvocationContext.ComponentContext">
             <inheritdoc cref="T:Furion.Component.ComponentContext" />
         </member>
-        <member name="P:Furion.Component.ComponentInvokeContext.InvokeName">
+        <member name="P:Furion.Component.ComponentInvocationContext.MethodName">
             <summary>
-            执行方法名
+            调用方法名
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentInvokeContext.ToString">
+        <member name="M:Furion.Component.ComponentInvocationContext.ToString">
             <inheritdoc />
         </member>
         <member name="T:Furion.Component.ServiceComponentContext">
@@ -803,7 +803,7 @@
         </member>
         <member name="M:Furion.Component.ComponentBase.CanActivate(Furion.Component.ComponentContext)">
             <summary>
-            是否激活组件
+            检查组件是否已激活
             </summary>
             <param name="context"><see cref="T:Furion.Component.ComponentContext"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
@@ -822,24 +822,16 @@
             <remarks>根据组件依赖关系顺序调用，被依赖的组件优先调用</remarks>
             <param name="context"><see cref="T:Furion.Component.ServiceComponentContext"/></param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.ComponentInvokeContext)">
+        <member name="M:Furion.Component.ComponentBase.OnDependencyInvocation(Furion.Component.ComponentInvocationContext)">
             <summary>
-            调用事件监听
+            依赖关系调用通知
             </summary>
-            <param name="context"><see cref="T:Furion.Component.ComponentInvokeContext"/></param>
+            <param name="context"><see cref="T:Furion.Component.ComponentInvocationContext"/></param>
         </member>
         <member name="M:Furion.Component.ComponentBase.ReloadProps">
             <summary>
             重载组件配置
             </summary>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.CreateTopologicalGraph(System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Func{System.Type,System.Boolean})">
-            <summary>
-            创建拓扑图排序集合
-            </summary>
-            <param name="dependencies">组件依赖关系集合</param>
-            <param name="predicate">自定义过滤委托</param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBase.CreateDependencies(System.Type)">
             <summary>
@@ -848,29 +840,15 @@
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
         </member>
-        <member name="M:Furion.Component.ComponentBase.EnsureLegalDependencies(System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+        <member name="M:Furion.Component.ComponentBase.CreateEntry(System.Type,Furion.Component.ComponentContext,System.String[],System.Func{System.Type,System.Boolean})">
             <summary>
-            检查组件依赖关系集合合法性
+            创建入口组件
             </summary>
-            <param name="dependencies">组件依赖关系集合</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.IsWebComponent(System.Type)">
-            <summary>
-            是否是 WebComponent
-            </summary>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeComponents(System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentContext,System.String[],System.Func{System.Type,System.Boolean})">
-            <summary>
-            根据组件依赖关系依次调用
-            </summary>
-            <param name="dependencies">组件依赖关系集合</param>
+            <param name="entryComponentType">入口组件类型</param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="methods">调用方法集合</param>
-            <param name="topologicalGraphPredicate">拓扑图排序过滤</param>
-            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+            <param name="methodNames">调用方法集合</param>
+            <param name="predicate">自定义配置委托</param>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="M:Furion.Component.ComponentBase.InvokeMethod(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
@@ -879,16 +857,23 @@
             <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="invokeMethod">方法名称</param>
+            <param name="methodName">方法名称</param>
         </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeEvents(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
+        <member name="M:Furion.Component.ComponentBase.NotifyInvocation(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
             调用事件监听
             </summary>
             <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="invokeName">执行方法名</param>
+            <param name="methodName">方法名称</param>
+        </member>
+        <member name="M:Furion.Component.ComponentBase.IsWebComponent(System.Type)">
+            <summary>
+            检查是否是 Web 组件
+            </summary>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Component.DependencyGraph">
             <summary>
@@ -1117,7 +1102,7 @@
             添加服务组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="entryComponentType">入口组件类型</param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>
@@ -1126,25 +1111,7 @@
             添加服务组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},System.Action{Furion.Component.ComponentBuilder})">
-            <summary>
-            添加服务组件
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="dependencies">组件依赖关系集合</param>
-            <param name="configure">自定义配置委托</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
-        </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.AddComponent(Microsoft.Extensions.Hosting.IHostApplicationBuilder,System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentBuilder)">
-            <summary>
-            添加服务组件
-            </summary>
-            <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="dependencies">组件依赖关系集合</param>
+            <param name="entryComponentType">入口组件类型</param>
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>

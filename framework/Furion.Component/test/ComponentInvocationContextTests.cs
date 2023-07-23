@@ -14,47 +14,47 @@
 
 namespace Furion.Component.Tests;
 
-public class ComponentInvokeContextTests
+public class ComponentInvocationContextTests
 {
     [Fact]
     public void New_Invalid_Parameters()
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var componentInvokeContext = new ComponentInvokeContext(null!, null!, null!);
+            var componentInvokeContext = new ComponentInvocationContext(null!, null!, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var componentInvokeContext = new ComponentInvokeContext(new InvokeComponentClass1(), null!, null!);
+            var componentInvokeContext = new ComponentInvocationContext(new InvokeComponentClass1(), null!, null!);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            var componentInvokeContext = new ComponentInvokeContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), string.Empty);
+            var componentInvokeContext = new ComponentInvocationContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), string.Empty);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            var componentInvokeContext = new ComponentInvokeContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), "");
+            var componentInvokeContext = new ComponentInvocationContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), "");
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var componentInvokeContext = new ComponentInvokeContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), nameof(InvokeComponentClass1.PreConfigureServices));
+        var componentInvokeContext = new ComponentInvocationContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), nameof(InvokeComponentClass1.PreConfigureServices));
 
         Assert.NotNull(componentInvokeContext);
         Assert.NotNull(componentInvokeContext.Component);
         Assert.NotNull(componentInvokeContext.ComponentContext);
-        Assert.Equal(nameof(InvokeComponentClass1.PreConfigureServices), componentInvokeContext.InvokeName);
+        Assert.Equal(nameof(InvokeComponentClass1.PreConfigureServices), componentInvokeContext.MethodName);
     }
 
     [Fact]
     public void ToString_Output()
     {
-        var componentInvokeContext = new ComponentInvokeContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), nameof(InvokeComponentClass1.PreConfigureServices));
+        var componentInvokeContext = new ComponentInvocationContext(new InvokeComponentClass1(), new ServiceComponentContext(Host.CreateApplicationBuilder()), nameof(InvokeComponentClass1.PreConfigureServices));
 
         Assert.Equal("Furion.Component.Tests.InvokeComponentClass1.PreConfigureServices", componentInvokeContext.ToString());
     }

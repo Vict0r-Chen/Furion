@@ -15,28 +15,28 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件执行上下文
+/// 组件调用上下文
 /// </summary>
-public sealed class ComponentInvokeContext
+public sealed class ComponentInvocationContext
 {
     /// <summary>
-    /// <inheritdoc cref="ComponentInvokeContext"/>
+    /// <inheritdoc cref="ComponentInvocationContext"/>
     /// </summary>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="Component.ComponentContext"/></param>
-    /// <param name="invokeName">执行方法名</param>
-    internal ComponentInvokeContext(ComponentBase component
+    /// <param name="methodName">调用方法名</param>
+    internal ComponentInvocationContext(ComponentBase component
         , ComponentContext componentContext
-        , string invokeName)
+        , string methodName)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(component);
         ArgumentNullException.ThrowIfNull(componentContext);
-        ArgumentException.ThrowIfNullOrWhiteSpace(invokeName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(methodName);
 
         Component = component;
         ComponentContext = componentContext;
-        InvokeName = invokeName;
+        MethodName = methodName;
     }
 
     /// <inheritdoc cref="ComponentBase" />
@@ -46,13 +46,13 @@ public sealed class ComponentInvokeContext
     public ComponentContext ComponentContext { get; init; }
 
     /// <summary>
-    /// 执行方法名
+    /// 调用方法名
     /// </summary>
-    public string InvokeName { get; init; }
+    public string MethodName { get; init; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{Component.GetType().FullName}.{InvokeName}";
+        return $"{Component.GetType().FullName}.{MethodName}";
     }
 }

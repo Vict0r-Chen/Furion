@@ -55,7 +55,7 @@ public abstract class ComponentBase
     }
 
     /// <summary>
-    /// 是否激活组件
+    /// 检查组件是否已激活
     /// </summary>
     /// <param name="context"><see cref="ComponentContext"/></param>
     /// <returns><see cref="bool"/></returns>
@@ -81,10 +81,10 @@ public abstract class ComponentBase
     { }
 
     /// <summary>
-    /// 调用事件监听
+    /// 依赖关系调用通知
     /// </summary>
-    /// <param name="context"><see cref="ComponentInvokeContext"/></param>
-    public virtual void InvokeEvents(ComponentInvokeContext context)
+    /// <param name="context"><see cref="ComponentInvocationContext"/></param>
+    public virtual void OnDependencyInvocation(ComponentInvocationContext context)
     { }
 
     /// <summary>
@@ -103,151 +103,100 @@ public abstract class ComponentBase
     }
 
     /// <summary>
-    /// 创建拓扑图排序集合
-    /// </summary>
-    /// <param name="dependencies">组件依赖关系集合</param>
-    /// <param name="predicate">自定义过滤委托</param>
-    /// <returns><see cref="List{T}"/></returns>
-    internal static List<Type> CreateTopologicalGraph(Dictionary<Type, Type[]> dependencies, Func<Type, bool>? predicate = null)
-    {
-        // 检查组件依赖关系集合合法性
-        EnsureLegalDependencies(dependencies);
-
-        // 创建拓扑图对象
-        var topologicalGraph = new TopologicalGraph(dependencies);
-
-        // 获取排序集合
-        var sortedList = topologicalGraph.Sort();
-
-        // 筛选集合
-        return predicate is null
-            ? sortedList
-            : sortedList.Where(predicate).ToList();
-    }
-
-    /// <summary>
     /// 创建组件依赖关系集合
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
     internal static Dictionary<Type, Type[]> CreateDependencies(Type componentType)
     {
-        // 检查组件类型合法性
-        ComponentActivator.EnsureLegalComponentType(componentType);
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentType);
 
-        // 组件依赖关系集合
+        // 初始化组件依赖关系集合
         var dependencies = new Dictionary<Type, Type[]>();
 
-        // 待访问的类型集合
+        // 初始化未访问类型集合
         var toVisit = new List<Type> { componentType };
 
+        // 循环检查未访问的类型集合中的数量直至为 0
         while (toVisit.Count > 0)
         {
-            // 取出列表中的第一个类型
+            // 取出未访问类型集合中的第一项
             var currentType = toVisit[0];
 
-            // 移除已访问的类型
+            // 标记当前取出的项已被访问
             toVisit.RemoveAt(0);
 
-            // 已访问过检查
+            // 检查类型是否已生成依赖关系集合
             if (dependencies.ContainsKey(currentType))
             {
                 continue;
             }
 
-            // 查找 [DependsOn] 特性配置，禁止继承查找
+            // 检查类型是否贴有 [DependsOn] 特性，如果有则取出所有依赖关系集合
             var dependedTypes = currentType.GetDefinedCustomAttribute<DependsOnAttribute>(false)?.DependedTypes
                 ?? Array.Empty<Type>();
+
+            // 将依赖关系集合添加到组件依赖关系集合中
             dependencies.Add(currentType, dependedTypes);
 
-            // 将依赖类型集合加入下一次待访问集合中
+            // 将依赖关系集合配置添加到未访问类型集合中
             toVisit.AddRange(dependedTypes);
         }
-
-        // 检查组件依赖关系集合合法性
-        EnsureLegalDependencies(dependencies);
 
         return dependencies;
     }
 
     /// <summary>
-    /// 检查组件依赖关系集合合法性
+    /// 创建入口组件
     /// </summary>
-    /// <param name="dependencies">组件依赖关系集合</param>
-    /// <exception cref="InvalidOperationException"></exception>
-    internal static void EnsureLegalDependencies(Dictionary<Type, Type[]> dependencies)
+    /// <param name="entryComponentType">入口组件类型</param>
+    /// <param name="componentContext"><see cref="ComponentContext"/></param>
+    /// <param name="methodNames">调用方法集合</param>
+    /// <param name="predicate">自定义配置委托</param>
+    /// <exception cref="ArgumentException"></exception>
+    internal static void CreateEntry(Type entryComponentType
+        , ComponentContext componentContext
+        , string[] methodNames
+        , Func<Type, bool>? predicate = null)
     {
-        // 空项检查
-        if (dependencies.Count == 0)
-        {
-            throw new ArgumentException("The dependency relationship cannot be empty.", nameof(dependencies));
-        }
+        // 空检查
+        ArgumentNullException.ThrowIfNull(entryComponentType);
+        ArgumentNullException.ThrowIfNull(componentContext);
+        ArgumentNullException.ThrowIfNull(methodNames);
 
-        // 查找集合中所有类型
-        var componentTypes = dependencies.Keys
-            .Concat(dependencies.Values.SelectMany(t => t))
-            .Distinct();
+        // 创建组件依赖关系集合
+        var dependencies = CreateDependencies(entryComponentType);
 
-        // 检查所有组件类型合法性
-        foreach (var componentType in componentTypes)
-        {
-            ComponentActivator.EnsureLegalComponentType(componentType);
-        }
-
-        // 创建拓扑图对象
+        // 初始化拓扑图
         var topologicalGraph = new TopologicalGraph(dependencies);
 
-        // 是否存在循环依赖
+        // 循环依赖检查
         if (topologicalGraph.HasCycle())
         {
-            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
+            throw new ArgumentException("The dependency relationship has a circular dependency.");
         }
-    }
 
-    /// <summary>
-    /// 是否是 WebComponent
-    /// </summary>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <returns><see cref="bool"/></returns>
-    internal static bool IsWebComponent(Type componentType)
-    {
-        var baseType = componentType.BaseType;
+        // 获取排序后的依赖关系集合
+        var sortedDependencies = topologicalGraph.Sort();
+        if (predicate is not null)
+        {
+            sortedDependencies = sortedDependencies.Where(predicate).ToList();
+        }
 
-        return typeof(ComponentBase).IsAssignableFrom(componentType)
-            && baseType is not null
-            && baseType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME
-            && componentType.IsInstantiable();
-    }
-
-    /// <summary>
-    /// 根据组件依赖关系依次调用
-    /// </summary>
-    /// <param name="dependencies">组件依赖关系集合</param>
-    /// <param name="componentContext"><see cref="ComponentContext"/></param>
-    /// <param name="methods">调用方法集合</param>
-    /// <param name="topologicalGraphPredicate">拓扑图排序过滤</param>
-    /// <returns><see cref="List{T}"/></returns>
-    internal static void InvokeComponents(Dictionary<Type, Type[]> dependencies
-        , ComponentContext componentContext
-        , string[] methods
-        , Func<Type, bool>? topologicalGraphPredicate = null)
-    {
-        // 创建组件拓扑图排序集合
-        var topologicalGraph = CreateTopologicalGraph(dependencies, topologicalGraphPredicate);
-
-        // 创建依赖关系图
+        // 初始化依赖关系图
         var dependencyGraph = new DependencyGraph(dependencies);
 
-        // 组件依赖关系对象集合
+        // 初始化组件对象集合
         var components = new List<ComponentBase>();
 
         // 存储未激活的且只有自身依赖的组件类型
         var inactiveComponents = new List<Type>();
 
         // 从尾部依次初始化组件实例
-        for (var i = topologicalGraph.Count - 1; i >= 0; i--)
+        for (var i = sortedDependencies.Count - 1; i >= 0; i--)
         {
-            var componentType = topologicalGraph[i];
+            var componentType = sortedDependencies[i];
 
             // 检查当前组件类型的下游是否未激活
             if (inactiveComponents.Contains(componentType))
@@ -255,7 +204,7 @@ public abstract class ComponentBase
                 continue;
             }
 
-            // 创建组件实例
+            // 获取或创建组件实例
             var component = ComponentActivator.GetOrCreate(componentType, componentContext.Options);
 
             // 检查组件是否激活
@@ -268,15 +217,15 @@ public abstract class ComponentBase
                 continue;
             }
 
-            // 添加到组件集合头部
+            // 添加到组件对象集合头部
             components.Insert(0, component);
 
             // 调用前置方法
-            InvokeMethod(dependencyGraph, component, componentContext, methods[0]);
+            InvokeMethod(dependencyGraph, component, componentContext, methodNames[0]);
         }
 
         // 调用后置方法
-        components.ForEach(component => InvokeMethod(dependencyGraph, component, componentContext, methods[1]));
+        components.ForEach(component => InvokeMethod(dependencyGraph, component, componentContext, methodNames[1]));
     }
 
     /// <summary>
@@ -285,14 +234,20 @@ public abstract class ComponentBase
     /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
-    /// <param name="invokeMethod">方法名称</param>
+    /// <param name="methodName">方法名称</param>
     internal static void InvokeMethod(DependencyGraph dependencyGraph
         , ComponentBase component
         , ComponentContext componentContext
-        , string invokeMethod)
+        , string methodName)
     {
-        // 若方法未定义则跳过
-        if (!component.GetType().IsDeclarationMethod(invokeMethod, BindingFlags.Public, out var methodInfo))
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencyGraph);
+        ArgumentNullException.ThrowIfNull(component);
+        ArgumentNullException.ThrowIfNull(componentContext);
+        ArgumentNullException.ThrowIfNull(methodName);
+
+        // 检查方法是否定义
+        if (!component.GetType().IsDeclarationMethod(methodName, BindingFlags.Public, out var methodInfo))
         {
             return;
         }
@@ -304,10 +259,10 @@ public abstract class ComponentBase
         methodInfo.Invoke(component, new object[] { componentContext });
 
         // 输出调试事件
-        Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), invokeMethod);
+        Debugging.Trace("`{0}.{1}` method has been called.", component.GetType(), methodName);
 
         // 调用事件监听
-        InvokeEvents(dependencyGraph, component, componentContext, invokeMethod);
+        NotifyInvocation(dependencyGraph, component, componentContext, methodName);
     }
 
     /// <summary>
@@ -316,26 +271,53 @@ public abstract class ComponentBase
     /// <param name="dependencyGraph"><see cref="DependencyGraph"/></param>
     /// <param name="component"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
-    /// <param name="invokeName">执行方法名</param>
-    internal static void InvokeEvents(DependencyGraph dependencyGraph
+    /// <param name="methodName">方法名称</param>
+    internal static void NotifyInvocation(DependencyGraph dependencyGraph
         , ComponentBase component
         , ComponentContext componentContext
-        , string invokeName)
+        , string methodName)
     {
-        // 查找组件依赖关系集合中匹配的祖先组件类型集合
+        // 空检查
+        ArgumentNullException.ThrowIfNull(dependencyGraph);
+        ArgumentNullException.ThrowIfNull(component);
+        ArgumentNullException.ThrowIfNull(componentContext);
+        ArgumentNullException.ThrowIfNull(methodName);
+
+        // 获取组件类型
         var componentType = component.GetType();
+
+        // 查找组件依赖关系的所有依赖类型集合
         var ancestors = dependencyGraph.FindAncestors(componentType);
 
-        // 将当前组件插入到集合头部
+        // 将当前组件类型插入到集合头部
         ancestors.Insert(0, componentType);
 
-        // 创建组件事件上下文
-        var componentEventContext = new ComponentInvokeContext(component, componentContext, invokeName);
+        // 初始化组件调用上下文
+        var componentInvocationContext = new ComponentInvocationContext(component, componentContext, methodName);
 
         // 循环调用所有组件组件（含自己）的监听方法
-        ancestors.Where(componentType => componentType.IsDeclarationMethod(nameof(InvokeEvents), BindingFlags.Public, out _))
+        ancestors.Where(componentType => componentType.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
             .Select(componentType => ComponentActivator.GetOrCreate(componentType, componentContext.Options))
             .ToList()
-            .ForEach(cmp => cmp.InvokeEvents(componentEventContext));
+            .ForEach(cmp => cmp.OnDependencyInvocation(componentInvocationContext));
+    }
+
+    /// <summary>
+    /// 检查是否是 Web 组件
+    /// </summary>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsWebComponent(Type componentType)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentType);
+
+        // 获取基类型
+        var baseType = componentType.BaseType;
+
+        return typeof(ComponentBase).IsAssignableFrom(componentType)
+            && baseType is not null
+            && baseType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME
+            && componentType.IsInstantiable();
     }
 }

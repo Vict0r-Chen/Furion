@@ -49,56 +49,15 @@ public static class ComponentHostApplicationBuilderExtensions
     /// 添加服务组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <param name="entryComponentType">入口组件类型</param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
     public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
-        , Type componentType
+        , Type entryComponentType
         , Action<ComponentBuilder>? configure = null)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(componentType);
-
-        // 创建组件依赖关系集合
-        var dependencies = ComponentBase.CreateDependencies(componentType);
-
-        return hostApplicationBuilder.AddComponent(dependencies, configure);
-    }
-
-    /// <summary>
-    /// 添加服务组件
-    /// </summary>
-    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
-    /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
-        , Type componentType
-        , ComponentBuilder componentBuilder)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(componentType);
-        ArgumentNullException.ThrowIfNull(componentBuilder);
-
-        // 创建组件依赖关系集合
-        var dependencies = ComponentBase.CreateDependencies(componentType);
-
-        return hostApplicationBuilder.AddComponent(dependencies, componentBuilder);
-    }
-
-    /// <summary>
-    /// 添加服务组件
-    /// </summary>
-    /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="dependencies">组件依赖关系集合</param>
-    /// <param name="configure">自定义配置委托</param>
-    /// <returns><see cref="IHostApplicationBuilder"/></returns>
-    public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
-        , Dictionary<Type, Type[]> dependencies
-        , Action<ComponentBuilder>? configure = null)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies);
+        ArgumentNullException.ThrowIfNull(entryComponentType);
 
         // 初始化组件模块构建器
         var componentBuilder = new ComponentBuilder();
@@ -106,29 +65,29 @@ public static class ComponentHostApplicationBuilderExtensions
         // 调用自定义配置委托
         configure?.Invoke(componentBuilder);
 
-        return hostApplicationBuilder.AddComponent(dependencies, componentBuilder);
+        return hostApplicationBuilder.AddComponent(entryComponentType, componentBuilder);
     }
 
     /// <summary>
     /// 添加服务组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <param name="entryComponentType">入口组件类型</param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
     public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
-        , Dictionary<Type, Type[]> dependencies
+        , Type entryComponentType
         , ComponentBuilder componentBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies);
+        ArgumentNullException.ThrowIfNull(entryComponentType);
         ArgumentNullException.ThrowIfNull(componentBuilder);
 
         // 构建模块服务
         componentBuilder.Build(hostApplicationBuilder);
 
         // 根据组件依赖关系依次调用
-        ComponentBase.InvokeComponents(dependencies
+        ComponentBase.CreateEntry(entryComponentType
             , new ServiceComponentContext(hostApplicationBuilder)
             , new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
 

@@ -35,29 +35,15 @@ public static class ComponentWebApplicationExtensions
     /// 添加应用组件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="componentType"><see cref="WebComponent"/></param>
+    /// <param name="entryComponentType">入口组件类型</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType)
-    {
-        // 生成组件依赖字典
-        var dependencies = ComponentBase.CreateDependencies(componentType);
-
-        return webApplication.UseComponent(dependencies);
-    }
-
-    /// <summary>
-    /// 添加应用组件
-    /// </summary>
-    /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="dependencies">组件依赖关系集合</param>
-    /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Dictionary<Type, Type[]> dependencies)
+    public static WebApplication UseComponent(this WebApplication webApplication, Type entryComponentType)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(dependencies);
+        ArgumentNullException.ThrowIfNull(entryComponentType);
 
         // 根据组件依赖关系依次调用
-        ComponentBase.InvokeComponents(dependencies
+        ComponentBase.CreateEntry(entryComponentType
             , new ApplicationComponentContext(webApplication)
             , new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }
             , ComponentBase.IsWebComponent);
