@@ -133,15 +133,15 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 是否包含公开无参构造函数
+    /// 检查类型是否定义了公开无参构造函数
     /// </summary>
     /// <remarks>用于 <see cref="Activator.CreateInstance(Type)"/> 实例化</remarks>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool HasParameterlessConstructorDefined(this Type type)
+    internal static bool HasDefinePublicParameterlessConstructor(this Type type)
     {
         return type.IsInstantiable()
-                && type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is not null;
+            && type.GetConstructor(BindingFlags.Instance | BindingFlags.Public, Type.EmptyTypes) is not null;
     }
 
     /// <summary>

@@ -118,7 +118,7 @@ public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuil
         // 逐条添加目录到集合中
         Array.ForEach(directories, directory =>
         {
-            // 检查目录有效性
+            // 检查目录合法性
             FileScanningConfigurationScanner.EnsureLegalDirectory(directory);
 
             _directories.Add(Path.GetFullPath(directory));

@@ -65,7 +65,7 @@ internal sealed partial class FileConfigurationParser
     /// <param name="parser"><see cref="Func{T, TResult}"/></param>
     internal void AddParser(string extension, Func<Stream, IDictionary<string, string?>> parser)
     {
-        // 检查文件拓展名有效性
+        // 检查文件拓展名合法性
         EnsureLegalExtension(extension);
 
         // 空检查
@@ -83,7 +83,7 @@ internal sealed partial class FileConfigurationParser
     /// <exception cref="InvalidOperationException"></exception>
     internal void AddSource(string extension, Type sourceType)
     {
-        // 检查文件拓展名有效性
+        // 检查文件拓展名合法性
         EnsureLegalExtension(extension);
 
         // 空检查
@@ -109,7 +109,7 @@ internal sealed partial class FileConfigurationParser
     /// <exception cref="ArgumentException"></exception>
     internal FileConfigurationSource CreateSourceInstance(string extension, Action<FileConfigurationSource> configure)
     {
-        // 检查文件拓展名有效性
+        // 检查文件拓展名合法性
         EnsureLegalExtension(extension);
 
         // 空检查
@@ -145,7 +145,7 @@ internal sealed partial class FileConfigurationParser
     /// <exception cref="ArgumentException"></exception>
     internal IDictionary<string, string?> Parse(string extension, Stream stream)
     {
-        // 检查文件拓展名有效性
+        // 检查文件拓展名合法性
         EnsureLegalExtension(extension);
 
         // 空检查
@@ -164,7 +164,7 @@ internal sealed partial class FileConfigurationParser
     }
 
     /// <summary>
-    /// 检查文件拓展名有效性
+    /// 检查文件拓展名合法性
     /// </summary>
     /// <param name="extension">文件拓展名</param>
     /// <exception cref="ArgumentException"></exception>
@@ -173,7 +173,7 @@ internal sealed partial class FileConfigurationParser
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(extension);
 
-        // 检查文件拓展名有效性
+        // 检查文件拓展名合法性
         if (FileExtensionRegex().IsMatch(extension))
         {
             return;

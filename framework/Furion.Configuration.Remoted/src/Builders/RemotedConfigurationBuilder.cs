@@ -106,7 +106,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 逐条添加 Url 地址到集合中
         Array.ForEach(urlAddresses, urlAddress =>
         {
-            // 检查 Url 地址有效性
+            // 检查 Url 地址合法性
             EnsureLegalUrlAddress(urlAddress);
 
             _urlAddresses.Add(urlAddress);
@@ -224,7 +224,7 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
     }
 
     /// <summary>
-    /// 检查 Url 地址有效性
+    /// 检查 Url 地址合法性
     /// </summary>
     /// <param name="urlAddress">Url 地址</param>
     /// <exception cref="ArgumentException"></exception>

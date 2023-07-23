@@ -196,4 +196,45 @@ public class ComponentOptionsTests
         Assert.Single(componentOptionsClass2.Items);
         Assert.Equal(new List<string> { "action3" }, componentOptionsClass2.Items);
     }
+
+    [Fact]
+    public void GetProps_Invalid_Parameters()
+    {
+        var componentOptions = new ComponentOptions();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var props = componentOptions.GetProps(null!);
+        });
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var props = componentOptions.GetProps(typeof(Action<ComponentOptionsClass3>));
+        });
+        Assert.Equal("Type `System.Action`1[Furion.Component.Tests.ComponentOptionsClass3]` is not a valid component props.", exception.Message);
+
+        var exception2 = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var props = componentOptions.GetProps(typeof(ComponentOptionsClass3));
+        });
+        Assert.Equal("Type `Furion.Component.Tests.ComponentOptionsClass3` is not a valid component props.", exception2.Message);
+    }
+
+    [Fact]
+    public void GetProps_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+
+        var action1 = new Action<ComponentOptionsClass1>(p =>
+        {
+            p.Items.Add("action1");
+        });
+        componentOptions.Props(action1);
+
+        var propsAction = componentOptions.GetProps(typeof(Action<ComponentOptionsClass1>));
+        Assert.NotNull(propsAction);
+
+        var props = componentOptions.GetProps(typeof(ComponentOptionsClass1));
+        Assert.NotNull(props);
+    }
 }

@@ -133,4 +133,50 @@ internal sealed class ComponentOptions
 
         return @delegate;
     }
+
+    /// <summary>
+    /// 获取组件配置
+    /// </summary>
+    /// <param name="propsType">组件配置类型</param>
+    /// <returns><see cref="object"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal object? GetProps(Type propsType)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propsType);
+
+        // 检查类型是否是 Action<TProps> 类型，同时泛型参数 TProps 符合 class, new() 约束
+        if (propsType.IsGenericType
+            && propsType.GetGenericTypeDefinition() == typeof(Action<>)
+            && propsType.GenericTypeArguments[0].IsClass
+            && propsType.GenericTypeArguments[0].HasDefinePublicParameterlessConstructor())
+        {
+            return GetPropsAction(propsType.GenericTypeArguments[0]);
+        }
+
+        // 检查类型是否是非泛型类型，同时类型符合 class, new() 约束
+        if (propsType.IsClass
+            && !propsType.IsGenericType
+            && propsType.HasDefinePublicParameterlessConstructor())
+        {
+            // 获取组件配置委托
+            var propsAction = GetPropsAction(propsType);
+
+            // 空检查
+            if (propsAction is null)
+            {
+                return null;
+            }
+
+            // 初始化组件配置
+            var props = Activator.CreateInstance(propsType);
+
+            // 调用委托
+            propsAction.DynamicInvoke(props);
+
+            return props;
+        }
+
+        throw new InvalidOperationException($"Type `{propsType}` is not a valid component props.");
+    }
 }

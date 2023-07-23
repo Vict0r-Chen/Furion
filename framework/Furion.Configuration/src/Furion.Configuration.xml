@@ -105,7 +105,7 @@
         </member>
         <member name="M:Furion.Configuration.FileConfigurationParser.EnsureLegalExtension(System.String)">
             <summary>
-            检查文件拓展名有效性
+            检查文件拓展名合法性
             </summary>
             <param name="extension">文件拓展名</param>
             <exception cref="T:System.ArgumentException"></exception>

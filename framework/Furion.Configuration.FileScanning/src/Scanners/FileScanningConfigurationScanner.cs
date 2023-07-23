@@ -332,7 +332,7 @@ internal sealed class FileScanningConfigurationScanner
         , Matcher matcher
         , uint maxScanDepth = 0)
     {
-        // 检查目录有效性
+        // 检查目录合法性
         EnsureLegalDirectory(directory);
 
         // 空检查
@@ -374,7 +374,7 @@ internal sealed class FileScanningConfigurationScanner
     }
 
     /// <summary>
-    /// 检查目录有效性
+    /// 检查目录合法性
     /// </summary>
     /// <param name="directory">目录</param>
     /// <exception cref="ArgumentException"></exception>

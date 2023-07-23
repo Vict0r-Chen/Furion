@@ -23,3 +23,10 @@ public class ComponentOptionsClass2
 {
     public List<string> Items { get; set; } = new();
 }
+
+public class ComponentOptionsClass3
+{
+    internal ComponentOptionsClass3()
+    {
+    }
+}

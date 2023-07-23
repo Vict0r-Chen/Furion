@@ -377,9 +377,9 @@
             <param name="inherit">是否查找基类型特性</param>
             <returns><typeparamref name="TAttribute"/></returns>
         </member>
-        <member name="M:System.TypeExtensions.HasParameterlessConstructorDefined(System.Type)">
+        <member name="M:System.TypeExtensions.HasDefinePublicParameterlessConstructor(System.Type)">
             <summary>
-            是否包含公开无参构造函数
+            检查类型是否定义了公开无参构造函数
             </summary>
             <remarks>用于 <see cref="M:System.Activator.CreateInstance(System.Type)"/> 实例化</remarks>
             <param name="type"><see cref="T:System.Type"/></param>

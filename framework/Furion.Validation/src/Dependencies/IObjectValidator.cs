@@ -46,7 +46,7 @@ public interface IObjectValidator<T> : IObjectValidator
     IObjectValidator<T> Reset();
 
     /// <summary>
-    /// 检查值有效性
+    /// 检查值合法性
     /// </summary>
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <returns><see cref="bool"/></returns>

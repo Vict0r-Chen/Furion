@@ -64,7 +64,7 @@ public abstract partial class ValidatorBase
     public string? ErrorMessage { get; set; }
 
     /// <summary>
-    /// 检查值有效性
+    /// 检查值合法性
     /// </summary>
     /// <param name="value">验证的值</param>
     /// <returns><see cref="bool"/></returns>
@@ -78,7 +78,7 @@ public abstract partial class ValidatorBase
     /// <returns><see cref="List{T}"/></returns>
     public virtual List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        // 检查值有效性
+        // 检查值合法性
         if (IsValid(value))
         {
             return null;

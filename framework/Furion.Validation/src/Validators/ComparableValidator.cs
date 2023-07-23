@@ -57,7 +57,7 @@ public abstract class ComparableValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 检查值有效性
+    /// 检查值合法性
     /// </summary>
     /// <param name="value">验证的值</param>
     /// <param name="compareValue">比较的值</param>

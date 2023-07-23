@@ -126,9 +126,9 @@ public class TypeExtensionsTests
     [InlineData(typeof(PrivateConstructClass), false)]
     [InlineData(typeof(WithParameterConstructClass), false)]
     [InlineData(typeof(WithParameterAndParameterlessConstructClass), true)]
-    public void HasParameterlessConstructorDefined(Type type, bool result)
+    public void HasDefinePublicParameterlessConstructor(Type type, bool result)
     {
-        Assert.Equal(result, type.HasParameterlessConstructorDefined());
+        Assert.Equal(result, type.HasDefinePublicParameterlessConstructor());
     }
 
     [Theory]

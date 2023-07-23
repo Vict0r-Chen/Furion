@@ -296,7 +296,7 @@
         </member>
         <member name="M:Furion.Configuration.FileScanningConfigurationScanner.EnsureLegalDirectory(System.String)">
             <summary>
-            检查目录有效性
+            检查目录合法性
             </summary>
             <param name="directory">目录</param>
             <exception cref="T:System.ArgumentException"></exception>

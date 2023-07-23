@@ -1067,7 +1067,7 @@
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.IsValid(`0)">
             <summary>
-            检查值有效性
+            检查值合法性
             </summary>
             <param name="instance"><typeparamref name="T"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
@@ -2286,7 +2286,7 @@
         </member>
         <member name="M:Furion.Validation.ComparableValidator.IsValid(System.IComparable,System.IComparable)">
             <summary>
-            检查值有效性
+            检查值合法性
             </summary>
             <param name="value">验证的值</param>
             <param name="compareValue">比较的值</param>
@@ -3159,7 +3159,7 @@
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
             <summary>
-            检查值有效性
+            检查值合法性
             </summary>
             <param name="value">验证的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
