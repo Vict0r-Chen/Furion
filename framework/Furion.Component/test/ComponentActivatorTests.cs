@@ -26,19 +26,48 @@ public class ComponentActivatorTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var componentActivator = new ComponentActivator(typeof(IsComponentClass), null!);
+            var componentActivator = new ComponentActivator(typeof(ComponentClass), null!);
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var componentActivator = new ComponentActivator(typeof(IsComponentClass), new());
+        var componentActivator = new ComponentActivator(typeof(ComponentClass), new());
 
         Assert.NotNull(componentActivator);
         Assert.NotNull(componentActivator._componentType);
-        Assert.Equal(typeof(IsComponentClass), componentActivator._componentType);
+        Assert.Equal(typeof(ComponentClass), componentActivator._componentType);
         Assert.NotNull(componentActivator._componentOptions);
+    }
+
+    [Fact]
+    public void GetOrCreate_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentActivator.GetOrCreate(null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentActivator.GetOrCreate(typeof(ComponentClass), null!);
+        });
+    }
+
+    [Fact]
+    public void GetOrCreate_ReturnOK()
+    {
+        var componentOptions = new ComponentOptions();
+
+        var component = ComponentActivator.GetOrCreate(typeof(ComponentClass), componentOptions);
+        var component1 = ComponentActivator.GetOrCreate(typeof(ComponentClass), componentOptions);
+
+        Assert.NotNull(component);
+        Assert.NotNull(component1);
+        Assert.Single(componentOptions.Components);
+        Assert.Equal(component, component1);
+        Assert.Equal(component.GetHashCode(), component1.GetHashCode());
     }
 
     [Fact]

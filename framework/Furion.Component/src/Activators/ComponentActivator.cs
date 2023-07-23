@@ -45,6 +45,32 @@ internal sealed class ComponentActivator
     }
 
     /// <summary>
+    /// 获取或创建组件实例
+    /// </summary>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
+    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
+    /// <returns><see cref="ComponentBase"/></returns>
+    internal static ComponentBase GetOrCreate(Type componentType, ComponentOptions componentOptions)
+    {
+        // 检查组件类型合法性
+        EnsureLegalComponentType(componentType);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentOptions);
+
+        // 查找或创建组件实例
+        return componentOptions.Components
+            .GetOrAdd(componentType, type =>
+            {
+                // 初始化组件激活器
+                var componentActivator = new ComponentActivator(type, componentOptions);
+
+                // 创建组件实例
+                return componentActivator.Create();
+            });
+    }
+
+    /// <summary>
     /// 创建组件实例
     /// </summary>
     /// <returns><see cref="ComponentBase"/></returns>

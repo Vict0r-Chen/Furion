@@ -19,10 +19,10 @@ namespace Furion.Component.Tests;
 public class NotComponentClass
 { }
 
-public class IsComponentClass : ComponentBase
+public class ComponentClass : ComponentBase
 { }
 
-public class InheritComponentClass : IsComponentClass
+public class InheritComponentClass : ComponentClass
 { }
 
 public abstract class AbstractComponentClass : ComponentBase

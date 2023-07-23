@@ -213,23 +213,6 @@ public abstract class ComponentBase
     }
 
     /// <summary>
-    /// 获取或创建组件实例
-    /// </summary>
-    /// <param name="componentType"><see cref="ComponentBase"/></param>
-    /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
-    /// <returns><see cref="ComponentBase"/></returns>
-    internal static ComponentBase GetOrCreateComponent(Type componentType, ComponentOptions componentOptions)
-    {
-        return componentOptions.Components.GetOrAdd(componentType, type =>
-        {
-            // 初始化组件激活器
-            var componentActivator = new ComponentActivator(type, componentOptions);
-
-            return componentActivator.Create();
-        });
-    }
-
-    /// <summary>
     /// 根据组件依赖关系依次调用
     /// </summary>
     /// <param name="dependencies">组件依赖关系集合</param>
@@ -266,7 +249,7 @@ public abstract class ComponentBase
             }
 
             // 创建组件实例
-            var component = GetOrCreateComponent(componentType, componentContext.Options);
+            var component = ComponentActivator.GetOrCreate(componentType, componentContext.Options);
 
             // 检查组件是否激活
             if (!component.CanActivate(componentContext))
@@ -344,7 +327,7 @@ public abstract class ComponentBase
 
         // 循环调用所有组件组件（含自己）的监听方法
         ancestors.Where(componentType => componentType.IsDeclarationMethod(nameof(InvokeEvents), BindingFlags.Public, out _))
-            .Select(componentType => GetOrCreateComponent(componentType, componentContext.Options))
+            .Select(componentType => ComponentActivator.GetOrCreate(componentType, componentContext.Options))
             .ToList()
             .ForEach(cmp => cmp.InvokeEvents(componentEventContext));
     }

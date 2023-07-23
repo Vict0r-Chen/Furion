@@ -24,6 +24,14 @@
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
         </member>
+        <member name="M:Furion.Component.ComponentActivator.GetOrCreate(System.Type,Furion.Component.ComponentOptions)">
+            <summary>
+            获取或创建组件实例
+            </summary>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
+            <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
+        </member>
         <member name="M:Furion.Component.ComponentActivator.Create">
             <summary>
             创建组件实例
@@ -850,14 +858,6 @@
             </summary>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.GetOrCreateComponent(System.Type,Furion.Component.ComponentOptions)">
-            <summary>
-            获取或创建组件实例
-            </summary>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentOptions"><see cref="T:Furion.Component.ComponentOptions"/></param>
-            <returns><see cref="T:Furion.Component.ComponentBase"/></returns>
         </member>
         <member name="M:Furion.Component.ComponentBase.InvokeComponents(System.Collections.Generic.Dictionary{System.Type,System.Type[]},Furion.Component.ComponentContext,System.String[],System.Func{System.Type,System.Boolean})">
             <summary>
