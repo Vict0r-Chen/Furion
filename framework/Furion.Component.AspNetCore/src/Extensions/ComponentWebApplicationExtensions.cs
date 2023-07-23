@@ -42,7 +42,7 @@ public static class ComponentWebApplicationExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(entryComponentType);
 
-        // 根据组件依赖关系依次调用
+        // 创建入口组件
         ComponentBase.CreateEntry(entryComponentType
             , new ApplicationComponentContext(webApplication)
             , new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }

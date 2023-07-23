@@ -86,7 +86,7 @@ public static class ComponentHostApplicationBuilderExtensions
         // 构建模块服务
         componentBuilder.Build(hostApplicationBuilder);
 
-        // 根据组件依赖关系依次调用
+        // 创建入口组件
         ComponentBase.CreateEntry(entryComponentType
             , new ServiceComponentContext(hostApplicationBuilder)
             , new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
