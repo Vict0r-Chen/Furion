@@ -32,7 +32,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -49,7 +49,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -61,13 +61,33 @@ public class TopologicalGraphTests
     }
 
     [Fact]
+    public void Sort_EnsureLegal()
+    {
+        var dependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
+            {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph1), typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
+        };
+
+        var topologicalGraph = new TopologicalGraph(dependencies);
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            var sortedList = topologicalGraph.Sort(true);
+        });
+
+        Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
+    }
+
+    [Fact]
     public void VisitNode_Invalid_Parameters()
     {
         var dependencies = new Dictionary<Type, Type[]>
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -95,7 +115,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -115,7 +135,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -125,7 +145,7 @@ public class TopologicalGraphTests
         {
             {typeof(TopologicalGraph1), new[]{ typeof(TopologicalGraph2), typeof(TopologicalGraph3) }},
             {typeof(TopologicalGraph2), new[]{ typeof(TopologicalGraph4), typeof(TopologicalGraph5) }},
-            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph1), typeof(TopologicalGraph4),typeof(TopologicalGraph6) }}
+            {typeof(TopologicalGraph3), new[]{ typeof(TopologicalGraph1), typeof(TopologicalGraph4), typeof(TopologicalGraph6) }}
         };
 
         var topologicalGraph2 = new TopologicalGraph(dependencies2);

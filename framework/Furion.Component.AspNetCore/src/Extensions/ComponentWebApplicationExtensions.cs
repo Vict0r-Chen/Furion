@@ -35,29 +35,28 @@ public static class ComponentWebApplicationExtensions
     /// 添加应用组件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="entryComponentType">入口组件类型</param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseComponent(this WebApplication webApplication, Type entryComponentType)
+    public static WebApplication UseComponent(this WebApplication webApplication, Type componentType)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(entryComponentType);
+        ArgumentNullException.ThrowIfNull(componentType);
 
-        // 创建入口组件
-        ComponentBase.CreateEntry(entryComponentType
-            , new ApplicationComponentContext(webApplication)
-            , new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }
-            , ComponentBase.IsWebComponent);
+        // 初始化入口组件并启动
+        new EntryComponent(componentType, new ApplicationComponentContext(webApplication))
+            .Start();
 
         return webApplication;
     }
 
     /// <summary>
-    /// 获取组件模块配置选项
+    /// 获取组件模块选项
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>
     internal static ComponentOptions GetComponentOptions(this WebApplication webApplication)
     {
-        return webApplication.Services.GetRequiredService<CoreOptions>().GetOrAdd<ComponentOptions>();
+        return webApplication.Services.GetRequiredService<CoreOptions>()
+            .GetOrAdd<ComponentOptions>();
     }
 }

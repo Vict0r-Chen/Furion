@@ -39,9 +39,17 @@ internal sealed class TopologicalGraph
     /// <summary>
     /// 排序
     /// </summary>
+    /// <param name="ensureLegal">是否启用合法性检查</param>
     /// <returns><see cref="List{T}"/></returns>
-    internal List<Type> Sort()
+    /// <exception cref="InvalidOperationException"></exception>
+    internal List<Type> Sort(bool ensureLegal = false)
     {
+        // 循环依赖检查
+        if (ensureLegal && HasCycle())
+        {
+            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
+        }
+
         // 初始化已排序的节点集合
         var sortedNodes = new List<Type>();
 

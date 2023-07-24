@@ -833,47 +833,84 @@
             重载组件配置
             </summary>
         </member>
-        <member name="M:Furion.Component.ComponentBase.CreateDependencies(System.Type)">
-            <summary>
-            创建组件依赖关系集合
-            </summary>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.CreateEntry(System.Type,Furion.Component.ComponentContext,System.String[],System.Func{System.Type,System.Boolean})">
-            <summary>
-            创建入口组件
-            </summary>
-            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="methodNames">调用方法集合</param>
-            <param name="predicate">自定义配置委托</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.InvokeMethod(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
-            <summary>
-            调用组件方法
-            </summary>
-            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
-            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="methodName">方法名称</param>
-        </member>
-        <member name="M:Furion.Component.ComponentBase.NotifyInvocation(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
-            <summary>
-            通知依赖关系链中的组件执行回调操作
-            </summary>
-            <param name="dependencyGraph"><see cref="T:Furion.Component.DependencyGraph"/></param>
-            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
-            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
-            <param name="methodName">方法名称</param>
-        </member>
         <member name="M:Furion.Component.ComponentBase.IsWebComponent(System.Type)">
             <summary>
             检查是否是 Web 组件
             </summary>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="T:Furion.Component.EntryComponent">
+            <summary>
+            入口组件
+            </summary>
+        </member>
+        <member name="F:Furion.Component.EntryComponent._dependencies">
+            <summary>
+            依赖关系集合
+            </summary>
+        </member>
+        <member name="F:Furion.Component.EntryComponent._sortedDependencies">
+            <summary>
+            拓扑排序后的依赖关系集合
+            </summary>
+        </member>
+        <member name="F:Furion.Component.EntryComponent._dependencyGraph">
+            <inheritdoc cref="T:Furion.Component.DependencyGraph"/>
+        </member>
+        <member name="M:Furion.Component.EntryComponent.#ctor(System.Type,Furion.Component.ComponentContext)">
+            <summary>
+            <inheritdoc cref="T:Furion.Component.EntryComponent"/>
+            </summary>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
+        </member>
+        <member name="P:Furion.Component.EntryComponent.ComponentType">
+            <summary>
+            <see cref="T:Furion.Component.ComponentBase"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Component.EntryComponent.ComponentContext">
+            <inheritdoc cref="T:Furion.Component.ComponentContext"/>
+        </member>
+        <member name="M:Furion.Component.EntryComponent.Start">
+            <summary>
+            启动
+            </summary>
+        </member>
+        <member name="M:Furion.Component.EntryComponent.CreateDependencies">
+            <summary>
+            创建依赖关系集合
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
+        </member>
+        <member name="M:Furion.Component.EntryComponent.InvokeMethod(Furion.Component.ComponentBase,System.String)">
+            <summary>
+            调用组件方法
+            </summary>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="methodName">方法名称</param>
+        </member>
+        <member name="M:Furion.Component.EntryComponent.NotifyInvocation(Furion.Component.ComponentBase,System.String)">
+            <summary>
+            通知依赖关系链中的组件执行回调操作
+            </summary>
+            <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
+            <param name="methodName">方法名称</param>
+        </member>
+        <member name="M:Furion.Component.EntryComponent.GetInvokeMethodNames">
+            <summary>
+            获取调用方法名集合
+            </summary>
+            <returns><see cref="T:System.String"/>[]</returns>
+        </member>
+        <member name="T:Furion.Component.LinqExpressionExtensions">
+            <summary>
+            <see cref="T:System.Collections.Generic.IEnumerable`1"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Furion.Component.LinqExpressionExtensions.WhereIF``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.Func{``0,System.Boolean})">
+            <inheritdoc cref="M:System.Linq.Enumerable.Where``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})"/>
         </member>
         <member name="T:Furion.Component.DependencyGraph">
             <summary>
@@ -950,11 +987,13 @@
             </summary>
             <param name="dependencies">依赖关系集合</param>
         </member>
-        <member name="M:Furion.Component.TopologicalGraph.Sort">
+        <member name="M:Furion.Component.TopologicalGraph.Sort(System.Boolean)">
             <summary>
             排序
             </summary>
+            <param name="ensureLegal">是否启用合法性检查</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Furion.Component.TopologicalGraph.VisitNode(System.Type,System.Collections.Generic.HashSet{System.Type},System.Collections.Generic.List{System.Type})">
             <summary>
