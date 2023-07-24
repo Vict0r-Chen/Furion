@@ -211,11 +211,11 @@ public class EntryComponentTests
     }
 
     [Fact]
-    public void GetInvokeMethodNames_ReturnOK()
+    public void GetInitializationMethodNames_ReturnOK()
     {
         var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
         var entryComponent = new EntryComponent(typeof(AComponent), componentContext);
 
-        Assert.Equal(new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) }, entryComponent.GetInvokeMethodNames());
+        Assert.Equal(new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) }, entryComponent.GetInitializationMethodNames());
     }
 }

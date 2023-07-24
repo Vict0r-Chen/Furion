@@ -675,6 +675,16 @@
             Web 组件类型限定名
             </summary>
         </member>
+        <member name="F:Furion.Component.Constants.WEB_COMPONENT_METHOD_PRECONFIGURE">
+            <summary>
+            Web 组件类型 PreConfigure 方法名
+            </summary>
+        </member>
+        <member name="F:Furion.Component.Constants.WEB_COMPONENT_METHOD_CONFIGURE">
+            <summary>
+            Web 组件类型 Configure 方法名
+            </summary>
+        </member>
         <member name="T:Furion.Component.ComponentContext">
             <summary>
             组件上下文抽象基类
@@ -898,9 +908,9 @@
             <param name="component"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="methodName">方法名称</param>
         </member>
-        <member name="M:Furion.Component.EntryComponent.GetInvokeMethodNames">
+        <member name="M:Furion.Component.EntryComponent.GetInitializationMethodNames">
             <summary>
-            获取调用方法名集合
+            获取初始化方法名集合
             </summary>
             <returns><see cref="T:System.String"/>[]</returns>
         </member>

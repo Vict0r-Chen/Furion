@@ -80,8 +80,8 @@ internal sealed class EntryComponent
         // 初始化无需激活的组件类型集合
         var inactiveComponents = new List<Type>();
 
-        // 获取调用方法名集合
-        var methodNames = GetInvokeMethodNames();
+        // 获取初始化方法名集合
+        var methodNames = GetInitializationMethodNames();
 
         // 从尾部依次初始化组件实例
         for (var i = _sortedDependencies.Count - 1; i >= 0; i--)
@@ -222,13 +222,13 @@ internal sealed class EntryComponent
     }
 
     /// <summary>
-    /// 获取调用方法名集合
+    /// 获取初始化方法名集合
     /// </summary>
     /// <returns><see cref="string"/>[]</returns>
-    internal string[] GetInvokeMethodNames()
+    internal string[] GetInitializationMethodNames()
     {
         return ComponentContext is ServiceComponentContext
             ? new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) }
-            : new[] { "PreConfigure", "Configure" };
+            : new[] { Constants.WEB_COMPONENT_METHOD_PRECONFIGURE, Constants.WEB_COMPONENT_METHOD_CONFIGURE };
     }
 }

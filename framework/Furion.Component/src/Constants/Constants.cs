@@ -23,4 +23,14 @@ internal static class Constants
     /// Web 组件类型限定名
     /// </summary>
     internal const string WEB_COMPONENT_TYPE_FULLNAME = "Furion.Component.WebComponent";
+
+    /// <summary>
+    /// Web 组件类型 PreConfigure 方法名
+    /// </summary>
+    internal const string WEB_COMPONENT_METHOD_PRECONFIGURE = "PreConfigure";
+
+    /// <summary>
+    /// Web 组件类型 Configure 方法名
+    /// </summary>
+    internal const string WEB_COMPONENT_METHOD_CONFIGURE = "Configure";
 }

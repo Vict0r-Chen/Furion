@@ -17,12 +17,12 @@ namespace Furion.Component.AspNetCore.Tests;
 public class EntryComponentTests
 {
     [Fact]
-    public void GetInvokeMethodNames_ReturnOK()
+    public void GetInitializationMethodNames_ReturnOK()
     {
         var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
         var entryComponent = new EntryComponent(typeof(AWebComponent), componentContext);
 
-        Assert.Equal(new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) }, entryComponent.GetInvokeMethodNames());
+        Assert.Equal(new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) }, entryComponent.GetInitializationMethodNames());
 
         var builder = WebApplication.CreateBuilder();
         builder.Services.AddCoreOptions();
@@ -30,6 +30,6 @@ public class EntryComponentTests
         var componentContext2 = new ApplicationComponentContext(builder.Build());
         var entryComponent2 = new EntryComponent(typeof(AWebComponent), componentContext2);
 
-        Assert.Equal(new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }, entryComponent2.GetInvokeMethodNames());
+        Assert.Equal(new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }, entryComponent2.GetInitializationMethodNames());
     }
 }

@@ -21,4 +21,16 @@ public class ConstantsTests
     {
         Assert.Equal("Furion.Component.WebComponent", Constants.WEB_COMPONENT_TYPE_FULLNAME);
     }
+
+    [Fact]
+    public void WEB_COMPONENT_METHOD_PRECONFIGURE()
+    {
+        Assert.Equal("PreConfigure", Constants.WEB_COMPONENT_METHOD_PRECONFIGURE);
+    }
+
+    [Fact]
+    public void WEB_COMPONENT_METHOD_CONFIGURE()
+    {
+        Assert.Equal("Configure", Constants.WEB_COMPONENT_METHOD_CONFIGURE);
+    }
 }
