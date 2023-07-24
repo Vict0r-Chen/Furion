@@ -532,7 +532,7 @@ public class ConfigurationExtensionTests
     {
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.Add(new ReloadConfigurationSource());
-        var configuration = configurationBuilder.Build();
+        var configuration = configurationBuilder.Build() as IConfiguration;
 
         Assert.Equal("1", configuration["Count"]);
 

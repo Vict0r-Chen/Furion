@@ -162,10 +162,8 @@ public sealed class TypeScanningDependencyBuilder
         // 空检查
         ArgumentNullException.ThrowIfNull(services);
 
-        // 创建类型扫描依赖关系扫描器对象
-        var typeScanningDependencyScanner = new TypeScanningDependencyScanner(services, this);
-
-        // 扫描并添加服务
-        typeScanningDependencyScanner.ScanToAddServices();
+        // 初始化类型扫描依赖关系扫描器并执行扫描
+        new TypeScanningDependencyScanner(services, this)
+            .ScanToAddServices();
     }
 }

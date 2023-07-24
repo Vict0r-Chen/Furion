@@ -210,10 +210,8 @@ public sealed class FileScanningConfigurationBuilder : ConfigurationBuilderBase
         // 空检查
         ArgumentNullException.ThrowIfNull(configurationBuilder);
 
-        // 创建文件扫描配置扫描器对象
-        var fileScanningConfigurationScanner = new FileScanningConfigurationScanner(configurationBuilder, this);
-
-        // 扫描并添加配置文件
-        fileScanningConfigurationScanner.ScanToAddFiles();
+        // 初始化文件扫描配置扫描器并执行扫描
+        new FileScanningConfigurationScanner(configurationBuilder, this)
+            .ScanToAddFiles();
     }
 }
