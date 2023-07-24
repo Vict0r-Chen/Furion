@@ -105,6 +105,7 @@
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.ComponentWebApplicationExtensions.GetComponentOptions(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>

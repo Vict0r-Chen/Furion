@@ -59,7 +59,7 @@
         </member>
         <member name="M:Furion.Component.ComponentActivator.EnsureLegalComponentType(System.Type)">
             <summary>
-            检查组件类型合法性
+            检查类型合法性
             </summary>
             <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <exception cref="T:System.InvalidOperationException"></exception>

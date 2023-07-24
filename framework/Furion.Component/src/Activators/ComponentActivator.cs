@@ -34,7 +34,7 @@ internal sealed class ComponentActivator
     /// <param name="componentOptions"><see cref="ComponentOptions"/></param>
     internal ComponentActivator(Type componentType, ComponentOptions componentOptions)
     {
-        // 检查组件类型合法性
+        // 检查类型合法性
         EnsureLegalComponentType(componentType);
 
         // 空检查
@@ -57,7 +57,7 @@ internal sealed class ComponentActivator
     /// <returns><see cref="ComponentBase"/></returns>
     internal static ComponentBase GetOrCreate(Type componentType, ComponentOptions componentOptions)
     {
-        // 检查组件类型合法性
+        // 检查类型合法性
         EnsureLegalComponentType(componentType);
 
         // 空检查
@@ -170,7 +170,7 @@ internal sealed class ComponentActivator
     }
 
     /// <summary>
-    /// 检查组件类型合法性
+    /// 检查类型合法性
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <exception cref="InvalidOperationException"></exception>
@@ -179,27 +179,27 @@ internal sealed class ComponentActivator
         // 空检查
         ArgumentNullException.ThrowIfNull(componentType);
 
-        // 检查组件类型是否派生自 ComponentBase 类型
+        // 检查类型是否派生自 ComponentBase 类型
         var componentBaseType = typeof(ComponentBase);
         if (!componentBaseType.IsAssignableFrom(componentType))
         {
             throw new InvalidOperationException($"`{componentType}` type is not assignable from `{componentBaseType}`.");
         }
 
-        // 检查组件类型是否是 ComponentBase 或 WebComponent 类型
+        // 检查类型是否是 ComponentBase 或 WebComponent 类型
         if (componentType == componentBaseType || componentType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME)
         {
             throw new InvalidOperationException($"Type cannot be a `{componentBaseType}` or `{Constants.WEB_COMPONENT_TYPE_FULLNAME}`.");
         }
 
-        // 检查组件类型是否继承非 ComponentBase 或 WebComponent 类型
+        // 检查类型是否继承非 ComponentBase 或 WebComponent 类型
         var baseType = componentType.BaseType!;
         if (!(baseType == componentBaseType || baseType.FullName == Constants.WEB_COMPONENT_TYPE_FULLNAME))
         {
             throw new InvalidOperationException($"`{componentType}` type cannot inherit from other component types.");
         }
 
-        // 检查组件类型是否可以实例化
+        // 检查类型是否可以实例化
         if (!componentType.IsInstantiable())
         {
             throw new InvalidOperationException($"`{componentType}` type must be able to be instantiated.");

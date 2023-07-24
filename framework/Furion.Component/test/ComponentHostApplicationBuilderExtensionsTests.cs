@@ -17,15 +17,6 @@ namespace Furion.Component.Tests;
 public class ComponentHostApplicationBuilderExtensionsTests
 {
     [Fact]
-    public void GetComponentOptions_ReturnOK()
-    {
-        var hostApplicationBuilder = Host.CreateApplicationBuilder();
-        var componentOptions = hostApplicationBuilder.GetComponentOptions();
-
-        Assert.NotNull(componentOptions);
-    }
-
-    [Fact]
     public void AddComponent_Invalid_Parameters()
     {
         var hostApplicationBuilder = Host.CreateApplicationBuilder();
@@ -78,5 +69,14 @@ public class ComponentHostApplicationBuilderExtensionsTests
 
         Assert.Contains(hostApplicationBuilder.Services, s => s.ServiceType == typeof(CoreOptions));
         Assert.Contains(hostApplicationBuilder.Services, s => s.ImplementationType == typeof(ComponentReleaser));
+    }
+
+    [Fact]
+    public void GetComponentOptions_ReturnOK()
+    {
+        var hostApplicationBuilder = Host.CreateApplicationBuilder();
+        var componentOptions = hostApplicationBuilder.GetComponentOptions();
+
+        Assert.NotNull(componentOptions);
     }
 }

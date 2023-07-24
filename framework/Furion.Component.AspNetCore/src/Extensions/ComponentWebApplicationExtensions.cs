@@ -37,10 +37,17 @@ public static class ComponentWebApplicationExtensions
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <returns><see cref="WebApplication"/></returns>
+    /// <exception cref="ArgumentException"></exception>
     public static WebApplication UseComponent(this WebApplication webApplication, Type componentType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(componentType);
+
+        //  检查类型是否派生自 WebComponent 类型
+        if (!typeof(WebComponent).IsAssignableFrom(componentType))
+        {
+            throw new ArgumentException($"`{componentType}` type is not assignable from `{typeof(WebComponent)}`.", nameof(componentType));
+        }
 
         // 初始化并启动入口组件
         new EntryComponent(componentType, new ApplicationComponentContext(webApplication))

@@ -12,4 +12,24 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Xunit;
+namespace Furion.Component.AspNetCore.Tests;
+
+public class EntryComponentTests
+{
+    [Fact]
+    public void GetInvokeMethodNames_ReturnOK()
+    {
+        var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
+        var entryComponent = new EntryComponent(typeof(AWebComponent), componentContext);
+
+        Assert.Equal(new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) }, entryComponent.GetInvokeMethodNames());
+
+        var builder = WebApplication.CreateBuilder();
+        builder.Services.AddCoreOptions();
+
+        var componentContext2 = new ApplicationComponentContext(builder.Build());
+        var entryComponent2 = new EntryComponent(typeof(AWebComponent), componentContext2);
+
+        Assert.Equal(new[] { nameof(WebComponent.PreConfigure), nameof(WebComponent.Configure) }, entryComponent2.GetInvokeMethodNames());
+    }
+}
