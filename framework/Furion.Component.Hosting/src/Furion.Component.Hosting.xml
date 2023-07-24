@@ -11,7 +11,7 @@
         </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
-            添加组件模块入口服务
+            添加入口组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>
@@ -20,7 +20,7 @@
         </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
             <summary>
-            添加组件模块入口服务
+            添加入口组件
             </summary>
             <typeparam name="TComponent"><see cref="T:Furion.Component.ComponentBase"/></typeparam>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/></param>

@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.Hosting;
 public static class ComponentHostApplicationBuilderExtensions
 {
     /// <summary>
-    /// 添加组件模块入口服务
+    /// 添加入口组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
@@ -36,7 +36,7 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件模块入口服务
+    /// 添加入口组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <param name="hostApplicationBuilder"><see cref="HostApplicationBuilder"/></param>
@@ -48,7 +48,7 @@ public static class ComponentHostApplicationBuilderExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(componentBuilder);
 
-        // 添加根组件
+        // 添加入口组件
         hostApplicationBuilder.AddComponent<TComponent>(componentBuilder);
 
         return hostApplicationBuilder.Build();

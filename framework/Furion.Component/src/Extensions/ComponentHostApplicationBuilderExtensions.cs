@@ -86,7 +86,7 @@ public static class ComponentHostApplicationBuilderExtensions
         // 构建模块服务
         componentBuilder.Build(hostApplicationBuilder);
 
-        // 初始化入口组件并启动
+        // 初始化并启动入口组件
         new EntryComponent(componentType, new ServiceComponentContext(hostApplicationBuilder))
             .Start();
 

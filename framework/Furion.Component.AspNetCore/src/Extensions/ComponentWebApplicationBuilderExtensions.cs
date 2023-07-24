@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ComponentWebApplicationBuilderExtensions
 {
     /// <summary>
-    /// 添加组件模块入口服务
+    /// 添加入口组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
@@ -33,7 +33,7 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件模块入口服务
+    /// 添加入口组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="WebComponent"/></typeparam>
     /// <param name="webApplicationBuilder"><see cref="WebApplicationBuilder"/></param>
@@ -46,7 +46,7 @@ public static class ComponentWebApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 添加组件模块入口服务
+    /// 添加入口组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <typeparam name="TWebComponent"><see cref="WebComponent"/></typeparam>
@@ -57,15 +57,16 @@ public static class ComponentWebApplicationBuilderExtensions
         where TComponent : ComponentBase
         where TWebComponent : WebComponent
     {
-        // 添加根组件
+        // 添加入口组件
         webApplicationBuilder.AddComponent<TComponent>(configure);
 
+        // 添加入口组件中间件
         return webApplicationBuilder.Build()
             .UseComponent<TWebComponent>();
     }
 
     /// <summary>
-    /// 添加组件模块入口服务
+    /// 添加入口组件
     /// </summary>
     /// <typeparam name="TComponent"><see cref="ComponentBase"/></typeparam>
     /// <typeparam name="TWebComponent"><see cref="WebComponent"/></typeparam>
@@ -79,9 +80,10 @@ public static class ComponentWebApplicationBuilderExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(componentBuilder);
 
-        // 添加根组件
+        // 添加入口组件
         webApplicationBuilder.AddComponent<TComponent>(componentBuilder);
 
+        // 添加入口组件中间件
         return webApplicationBuilder.Build()
             .UseComponent<TWebComponent>();
     }

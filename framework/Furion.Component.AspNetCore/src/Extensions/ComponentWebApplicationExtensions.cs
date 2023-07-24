@@ -42,7 +42,7 @@ public static class ComponentWebApplicationExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(componentType);
 
-        // 初始化入口组件并启动
+        // 初始化并启动入口组件
         new EntryComponent(componentType, new ApplicationComponentContext(webApplication))
             .Start();
 

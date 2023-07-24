@@ -33,14 +33,14 @@ public sealed class ApplicationComponentContext : ComponentContext
     }
 
     /// <inheritdoc cref="WebApplication"/>
-    public WebApplication Application { get; }
+    public WebApplication Application { get; init; }
 
     /// <inheritdoc cref="IServiceProvider"/>
-    public IServiceProvider Services { get; }
+    public IServiceProvider Services { get; init; }
 
     /// <inheritdoc cref="IConfiguration"/>
-    public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; init; }
 
     /// <inheritdoc cref="IWebHostEnvironment"/>
-    public IWebHostEnvironment Environment { get; }
+    public IWebHostEnvironment Environment { get; init; }
 }
