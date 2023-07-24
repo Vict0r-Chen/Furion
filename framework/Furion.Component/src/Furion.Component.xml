@@ -844,7 +844,7 @@
             <summary>
             创建入口组件
             </summary>
-            <param name="entryComponentType">入口组件类型</param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
             <param name="methodNames">调用方法集合</param>
             <param name="predicate">自定义配置委托</param>

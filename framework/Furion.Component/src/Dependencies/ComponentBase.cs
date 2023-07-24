@@ -150,23 +150,23 @@ public abstract class ComponentBase
     /// <summary>
     /// 创建入口组件
     /// </summary>
-    /// <param name="entryComponentType">入口组件类型</param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
     /// <param name="methodNames">调用方法集合</param>
     /// <param name="predicate">自定义配置委托</param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void CreateEntry(Type entryComponentType
+    internal static void CreateEntry(Type componentType
         , ComponentContext componentContext
         , string[] methodNames
         , Func<Type, bool>? predicate = null)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(entryComponentType);
+        ArgumentNullException.ThrowIfNull(componentType);
         ArgumentNullException.ThrowIfNull(componentContext);
         ArgumentNullException.ThrowIfNull(methodNames);
 
         // 创建组件依赖关系集合
-        var dependencies = CreateDependencies(entryComponentType);
+        var dependencies = CreateDependencies(componentType);
 
         // 初始化拓扑图
         var topologicalGraph = new TopologicalGraph(dependencies);
@@ -196,24 +196,24 @@ public abstract class ComponentBase
         // 从尾部依次初始化组件实例
         for (var i = sortedDependencies.Count - 1; i >= 0; i--)
         {
-            // 获取组件类型
-            var componentType = sortedDependencies[i];
+            // 获取当前组件类型
+            var dependencyType = sortedDependencies[i];
 
             // 检查当前组件类型是否已标记为无需激活
-            if (inactiveComponents.Contains(componentType))
+            if (inactiveComponents.Contains(dependencyType))
             {
                 continue;
             }
 
             // 获取或创建组件实例
-            var component = ComponentActivator.GetOrCreate(componentType, componentContext.Options);
+            var component = ComponentActivator.GetOrCreate(dependencyType, componentContext.Options);
 
             // 检查组件是否允许激活
             if (!component.CanActivate(componentContext))
             {
                 // 将无需激活的且只有自身依赖的组件类型添加到集合中
-                inactiveComponents.AddRange(dependencies[componentType]
-                    .Except(dependencies.Where(dept => dept.Key != componentType && !dependencies[componentType].Contains(dept.Key))
+                inactiveComponents.AddRange(dependencies[dependencyType]
+                    .Except(dependencies.Where(dept => dept.Key != dependencyType && !dependencies[dependencyType].Contains(dept.Key))
                         .SelectMany(u => u.Value.Concat(new[] { u.Key }))));
 
                 continue;
@@ -289,16 +289,16 @@ public abstract class ComponentBase
         var componentType = component.GetType();
 
         // 查找组件类型依赖关系链上的类型集合
-        var ancestors = dependencyGraph.FindAncestors(componentType);
+        var ancestorTypes = dependencyGraph.FindAncestors(componentType);
 
         // 将当前组件类型插入到集合头部
-        ancestors.Insert(0, componentType);
+        ancestorTypes.Insert(0, componentType);
 
         // 初始化组件调用上下文
         var componentInvocationContext = new ComponentInvocationContext(component, componentContext, methodName);
 
         // 循环调用依赖关系链中的组件回调操作
-        ancestors.Where(cmp => cmp.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
+        ancestorTypes.Where(cmp => cmp.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
             .Select(cmp => ComponentActivator.GetOrCreate(cmp, componentContext.Options))
             .ToList()
             .ForEach(cmp => cmp.OnDependencyInvocation(componentInvocationContext));
