@@ -70,14 +70,7 @@ internal sealed class ComponentActivator
 
         // 查找或创建组件实例
         return componentOptions.Components
-            .GetOrAdd(componentType, type =>
-            {
-                // 初始化组件激活器
-                var componentActivator = new ComponentActivator(type, componentOptions);
-
-                // 创建组件实例
-                return componentActivator.Create();
-            });
+            .GetOrAdd(componentType, type => new ComponentActivator(type, componentOptions).Create());
     }
 
     /// <summary>
