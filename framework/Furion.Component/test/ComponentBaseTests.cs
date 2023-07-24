@@ -130,6 +130,19 @@ public class ComponentBaseTests
     }
 
     [Fact]
+    public void OnDependencyInvocation_ReturnOK()
+    {
+        var component = new AComponent
+        {
+            Options = new ComponentOptions()
+        };
+
+        component.OnDependencyInvocation(new ComponentInvocationContext(component, new ServiceComponentContext(Host.CreateApplicationBuilder()), "PreConfigureServices"));
+
+        Assert.Equal("Furion.Component.Tests.AComponent.PreConfigureServices", component.Items.ElementAt(0));
+    }
+
+    [Fact]
     public void ReloadProps_ReturnOK()
     {
         var component = new AComponent
@@ -143,5 +156,231 @@ public class ComponentBaseTests
         component.ReloadProps();
 
         Assert.NotNull(component.CustomProps);
+    }
+
+    [Fact]
+    public void CreateDependencies_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.CreateDependencies(null!);
+        });
+    }
+
+    [Fact]
+    public void CreateDependencies_ReturnOK()
+    {
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+
+        Assert.NotNull(dependencies);
+        Assert.NotEmpty(dependencies);
+
+        var resultDependencies = new Dictionary<Type, Type[]>
+        {
+            {typeof(AComponent), new [] { typeof(BComponent), typeof(CComponent), typeof(DComponent) } },
+            {typeof(BComponent), new [] { typeof(CComponent), typeof(FComponent) } },
+            {typeof(CComponent), new [] { typeof(EComponent), typeof(DComponent) } },
+            {typeof(DComponent), Array.Empty<Type>() },
+            {typeof(EComponent), new [] { typeof(FComponent) } },
+            {typeof(FComponent), Array.Empty<Type>() },
+        };
+
+        Assert.Equal(resultDependencies, dependencies);
+    }
+
+    [Fact]
+    public void CreateEntry_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.CreateEntry(null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.CreateEntry(typeof(AComponent), null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.CreateEntry(typeof(AComponent), new ServiceComponentContext(Host.CreateApplicationBuilder()), null!);
+        });
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            ComponentBase.CreateEntry(typeof(GComponent), new ServiceComponentContext(Host.CreateApplicationBuilder()), new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
+        });
+        Assert.Equal("The dependency relationship has a circular dependency.", exception.Message);
+    }
+
+    [Fact]
+    public void CreateEntry_ReturnOK()
+    {
+        var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
+        ComponentBase.CreateEntry(typeof(AComponent), componentContext, new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
+
+        Assert.Equal(12, componentContext.Properties.Count);
+
+        var properties = new[]
+        {
+            "Furion.Component.Tests.AComponent.PreConfigureServices",
+            "Furion.Component.Tests.BComponent.PreConfigureServices",
+            "Furion.Component.Tests.CComponent.PreConfigureServices",
+            "Furion.Component.Tests.DComponent.PreConfigureServices",
+            "Furion.Component.Tests.EComponent.PreConfigureServices",
+            "Furion.Component.Tests.FComponent.PreConfigureServices",
+            "Furion.Component.Tests.FComponent.ConfigureServices",
+            "Furion.Component.Tests.EComponent.ConfigureServices",
+            "Furion.Component.Tests.DComponent.ConfigureServices",
+            "Furion.Component.Tests.CComponent.ConfigureServices",
+            "Furion.Component.Tests.BComponent.ConfigureServices",
+            "Furion.Component.Tests.AComponent.ConfigureServices",
+        };
+
+        Assert.Equal(properties, componentContext.Properties.Keys.ToArray());
+    }
+
+    [Fact]
+    public void CreateEntry_CanActivate_ReturnOK()
+    {
+        var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
+        ComponentBase.CreateEntry(typeof(A1Component), componentContext, new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
+
+        var properties = new[]
+        {
+            "Furion.Component.Tests.A1Component.PreConfigureServices",
+            "Furion.Component.Tests.D1Component.PreConfigureServices",
+            "Furion.Component.Tests.C1Component.PreConfigureServices",
+            "Furion.Component.Tests.C1Component.ConfigureServices",
+            "Furion.Component.Tests.D1Component.ConfigureServices",
+            "Furion.Component.Tests.A1Component.ConfigureServices"
+        };
+
+        Assert.Equal(properties, componentContext.Properties.Keys.ToArray());
+    }
+
+    [Fact]
+    public void NotifyInvocation_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.NotifyInvocation(null!, null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.NotifyInvocation(new(new()), null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.NotifyInvocation(new(new()), new AComponent(), null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.NotifyInvocation(new(new()), new AComponent(), new ServiceComponentContext(Host.CreateApplicationBuilder()), null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            ComponentBase.NotifyInvocation(new(new()), new AComponent(), new ServiceComponentContext(Host.CreateApplicationBuilder()), string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            ComponentBase.NotifyInvocation(new(new()), new AComponent(), new ServiceComponentContext(Host.CreateApplicationBuilder()), "");
+        });
+    }
+
+    [Fact]
+    public void NotifyInvocation_ReturnOK()
+    {
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+        var dependencyGraph = new DependencyGraph(dependencies);
+        var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
+        var component = new AComponent
+        {
+            Options = componentContext.Options
+        };
+        componentContext.Options.Components.TryAdd(typeof(AComponent), component);
+        var methodName = nameof(AComponent.PreConfigureServices);
+
+        ComponentBase.NotifyInvocation(dependencyGraph, component, componentContext, methodName);
+        Assert.Equal("Furion.Component.Tests.AComponent.PreConfigureServices", component.Items.ElementAt(0));
+
+        var component2 = new BComponent
+        {
+            Options = componentContext.Options
+        };
+        componentContext.Options.Components.TryAdd(typeof(BComponent), component2);
+        ComponentBase.NotifyInvocation(dependencyGraph, component2, componentContext, methodName);
+        Assert.Equal("Furion.Component.Tests.BComponent.PreConfigureServices", component.Items.ElementAt(1));
+    }
+
+    [Fact]
+    public void InvokeMethod_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.InvokeMethod(null!, null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.InvokeMethod(new(new()), null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.InvokeMethod(new(new()), new AComponent(), null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.InvokeMethod(new(new()), new AComponent(), new ServiceComponentContext(Host.CreateApplicationBuilder()), null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            ComponentBase.InvokeMethod(new(new()), new AComponent(), new ServiceComponentContext(Host.CreateApplicationBuilder()), string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            ComponentBase.InvokeMethod(new(new()), new AComponent(), new ServiceComponentContext(Host.CreateApplicationBuilder()), "");
+        });
+    }
+
+    [Fact]
+    public void InvokeMethod_ReturnOK()
+    {
+        var dependencies = ComponentBase.CreateDependencies(typeof(AComponent));
+        var dependencyGraph = new DependencyGraph(dependencies);
+        var componentContext = new ServiceComponentContext(Host.CreateApplicationBuilder());
+        var component = new AComponent
+        {
+            Options = componentContext.Options
+        };
+        componentContext.Options.Components.TryAdd(typeof(AComponent), component);
+        var methodName = nameof(AComponent.PreConfigureServices);
+
+        ComponentBase.InvokeMethod(dependencyGraph, component, componentContext, methodName);
+        Assert.Equal("Furion.Component.Tests.AComponent.PreConfigureServices", component.Items.ElementAt(0));
+    }
+
+    [Fact]
+    public void IsWebComponent_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ComponentBase.IsWebComponent(null!);
+        });
+    }
+
+    [Fact]
+    public void IsWebComponent_ReturnOK()
+    {
+        Assert.False(ComponentBase.IsWebComponent(typeof(AComponent)));
     }
 }

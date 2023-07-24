@@ -154,7 +154,7 @@ public abstract class ComponentBase
     /// <param name="componentContext"><see cref="ComponentContext"/></param>
     /// <param name="methodNames">调用方法集合</param>
     /// <param name="predicate">自定义配置委托</param>
-    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     internal static void CreateEntry(Type componentType
         , ComponentContext componentContext
         , string[] methodNames
@@ -174,7 +174,7 @@ public abstract class ComponentBase
         // 循环依赖检查
         if (topologicalGraph.HasCycle())
         {
-            throw new ArgumentException("The dependency relationship has a circular dependency.");
+            throw new InvalidOperationException("The dependency relationship has a circular dependency.");
         }
 
         // 获取排序后的依赖关系集合
@@ -298,8 +298,8 @@ public abstract class ComponentBase
         var componentInvocationContext = new ComponentInvocationContext(component, componentContext, methodName);
 
         // 循环调用依赖关系链中的组件回调操作
-        ancestorTypes.Where(cmp => cmp.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
-            .Select(cmp => ComponentActivator.GetOrCreate(cmp, componentContext.Options))
+        ancestorTypes.Where(type => type.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
+            .Select(type => ComponentActivator.GetOrCreate(type, componentContext.Options))
             .ToList()
             .ForEach(cmp => cmp.OnDependencyInvocation(componentInvocationContext));
     }

@@ -49,15 +49,15 @@ public static class ComponentHostApplicationBuilderExtensions
     /// 添加服务组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="entryComponentType">入口组件类型</param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
     public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
-        , Type entryComponentType
+        , Type componentType
         , Action<ComponentBuilder>? configure = null)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(entryComponentType);
+        ArgumentNullException.ThrowIfNull(componentType);
 
         // 初始化组件模块构建器
         var componentBuilder = new ComponentBuilder();
@@ -65,29 +65,29 @@ public static class ComponentHostApplicationBuilderExtensions
         // 调用自定义配置委托
         configure?.Invoke(componentBuilder);
 
-        return hostApplicationBuilder.AddComponent(entryComponentType, componentBuilder);
+        return hostApplicationBuilder.AddComponent(componentType, componentBuilder);
     }
 
     /// <summary>
     /// 添加服务组件
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
-    /// <param name="entryComponentType">入口组件类型</param>
+    /// <param name="componentType"><see cref="ComponentBase"/></param>
     /// <param name="componentBuilder"><see cref="ComponentBuilder"/></param>
     /// <returns><see cref="IHostApplicationBuilder"/></returns>
     public static IHostApplicationBuilder AddComponent(this IHostApplicationBuilder hostApplicationBuilder
-        , Type entryComponentType
+        , Type componentType
         , ComponentBuilder componentBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(entryComponentType);
+        ArgumentNullException.ThrowIfNull(componentType);
         ArgumentNullException.ThrowIfNull(componentBuilder);
 
         // 构建模块服务
         componentBuilder.Build(hostApplicationBuilder);
 
         // 创建入口组件
-        ComponentBase.CreateEntry(entryComponentType
+        ComponentBase.CreateEntry(componentType
             , new ServiceComponentContext(hostApplicationBuilder)
             , new[] { nameof(ComponentBase.PreConfigureServices), nameof(ComponentBase.ConfigureServices) });
 
@@ -95,7 +95,7 @@ public static class ComponentHostApplicationBuilderExtensions
     }
 
     /// <summary>
-    /// 获取组件模块配置选项
+    /// 获取组件模块选项
     /// </summary>
     /// <param name="hostApplicationBuilder"><see cref="IHostApplicationBuilder"/></param>
     /// <returns><see cref="ComponentOptions"/></returns>

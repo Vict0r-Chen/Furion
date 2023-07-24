@@ -632,7 +632,7 @@
         </member>
         <member name="T:Furion.Component.ComponentBuilder">
             <summary>
-            组件构建器
+            组件模块构建器
             </summary>
         </member>
         <member name="F:Furion.Component.ComponentBuilder._propsActions">
@@ -848,7 +848,7 @@
             <param name="componentContext"><see cref="T:Furion.Component.ComponentContext"/></param>
             <param name="methodNames">调用方法集合</param>
             <param name="predicate">自定义配置委托</param>
-            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Furion.Component.ComponentBase.InvokeMethod(Furion.Component.DependencyGraph,Furion.Component.ComponentBase,Furion.Component.ComponentContext,System.String)">
             <summary>
@@ -1102,7 +1102,7 @@
             添加服务组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="entryComponentType">入口组件类型</param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>
@@ -1111,13 +1111,13 @@
             添加服务组件
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
-            <param name="entryComponentType">入口组件类型</param>
+            <param name="componentType"><see cref="T:Furion.Component.ComponentBase"/></param>
             <param name="componentBuilder"><see cref="T:Furion.Component.ComponentBuilder"/></param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></returns>
         </member>
         <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.GetComponentOptions(Microsoft.Extensions.Hosting.IHostApplicationBuilder)">
             <summary>
-            获取组件模块配置选项
+            获取组件模块选项
             </summary>
             <param name="hostApplicationBuilder"><see cref="T:Microsoft.Extensions.Hosting.IHostApplicationBuilder"/></param>
             <returns><see cref="T:Furion.Component.ComponentOptions"/></returns>

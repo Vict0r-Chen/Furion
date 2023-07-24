@@ -14,6 +14,7 @@
 
 namespace Furion.Component.Tests;
 
+[DependsOn<BComponent, CComponent, DComponent>]
 public class AComponent : ComponentBase
 {
     public List<string> Items { get; set; } = new();
@@ -23,26 +24,175 @@ public class AComponent : ComponentBase
 
     public override void PreConfigureServices(ServiceComponentContext context)
     {
+        var record = $"{typeof(AComponent)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
         Items.Add($"{typeof(AComponent)}.{nameof(PreConfigureServices)}");
     }
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
+        var record = $"{typeof(AComponent)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
         Items.Add($"{typeof(AComponent)}.{nameof(ConfigureServices)}");
+    }
+
+    public override void OnDependencyInvocation(ComponentInvocationContext context)
+    {
+        Items.Add($"{context.Component.GetType()}.{context.MethodName}");
     }
 }
 
+[DependsOn<CComponent, FComponent>]
 public class BComponent : ComponentBase
-{ }
+{
+    public override void OnDependencyInvocation(ComponentInvocationContext context)
+    {
+    }
 
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(BComponent)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(BComponent)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
+
+[DependsOn<EComponent, DComponent>]
 public class CComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(CComponent)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(CComponent)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
 
 public class DComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(DComponent)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
 
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(DComponent)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
+
+[DependsOn<FComponent>]
 public class EComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(EComponent)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(EComponent)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
 
 public class FComponent : ComponentBase
-{ }
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(FComponent)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(FComponent)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
+
+[DependsOn<FComponent, GComponent>]
+public class GComponent : ComponentBase
+{
+}
+
+[DependsOn<B1Component, C1Component, D1Component>]
+public class A1Component : ComponentBase
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(A1Component)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(A1Component)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
+
+[DependsOn<C1Component>]
+public class B1Component : ComponentBase
+{
+    public override bool CanActivate(ComponentContext context)
+    {
+        return false;
+    }
+
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(B1Component)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(B1Component)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
+
+public class C1Component : ComponentBase
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(C1Component)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(C1Component)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}
+
+[DependsOn<B1Component>]
+public class D1Component : ComponentBase
+{
+    public override void PreConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(D1Component)}.{nameof(PreConfigureServices)}";
+        context.Properties[record] = record;
+    }
+
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        var record = $"{typeof(D1Component)}.{nameof(ConfigureServices)}";
+        context.Properties[record] = record;
+    }
+}

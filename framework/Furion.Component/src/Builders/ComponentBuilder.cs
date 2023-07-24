@@ -15,7 +15,7 @@
 namespace Furion.Component;
 
 /// <summary>
-/// 组件构建器
+/// 组件模块构建器
 /// </summary>
 public sealed class ComponentBuilder
 {
