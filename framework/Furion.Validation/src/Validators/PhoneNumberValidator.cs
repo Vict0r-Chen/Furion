@@ -30,22 +30,12 @@ public partial class PhoneNumberValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
+        return value switch
         {
-            return true;
-        }
-
-        if (value is string text)
-        {
-            return Regex().IsMatch(text);
-        }
-
-        if (value.GetType().IsInteger())
-        {
-            return Regex().IsMatch(value.ToString()!);
-        }
-
-        return false;
+            null => true,
+            string text => Regex().IsMatch(text),
+            _ => value.GetType().IsInteger() && Regex().IsMatch(value.ToString()!)
+        };
     }
 
     /// <summary>

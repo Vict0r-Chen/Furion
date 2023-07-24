@@ -128,8 +128,8 @@ public sealed class FileScanningConfigurationModel
         }
 
         return fileName.StartsWith('(') && fileName.Contains(')')
-            ? fileName[fileName.IndexOf("(")..(fileName.IndexOf(")") + 1)]
-            : fileName[..fileName.IndexOf(".")];
+            ? fileName[fileName.IndexOf("(", StringComparison.Ordinal)..(fileName.IndexOf(")", StringComparison.Ordinal) + 1)]
+            : fileName[..fileName.IndexOf(".", StringComparison.Ordinal)];
     }
 
     /// <inheritdoc />

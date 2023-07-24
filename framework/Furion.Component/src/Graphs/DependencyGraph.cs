@@ -99,16 +99,18 @@ internal sealed class DependencyGraph
         var ancestors = new List<Type>();
 
         // 查找当前节点的祖先节点集合
-        if (_ancestorsNodes.TryGetValue(nodeType, out var ancestorsNode))
+        if (!_ancestorsNodes.TryGetValue(nodeType, out var ancestorsNode))
         {
-            // 将当前节点的祖先节点集合到集合中
-            ancestors.AddRange(ancestorsNode);
+            return ancestors;
+        }
 
-            // 递归查找当前节点的祖先节点集合并添加到集合中
-            foreach (var directParent in ancestorsNode)
-            {
-                ancestors.AddRange(FindAllAncestors(directParent));
-            }
+        // 将当前节点的祖先节点集合到集合中
+        ancestors.AddRange(ancestorsNode);
+
+        // 递归查找当前节点的祖先节点集合并添加到集合中
+        foreach (var directParent in ancestorsNode)
+        {
+            ancestors.AddRange(FindAllAncestors(directParent));
         }
 
         return ancestors;
@@ -128,16 +130,18 @@ internal sealed class DependencyGraph
         var descendants = new List<Type>();
 
         // 查找当前节点的后代节点集合
-        if (_descendantsNodes.TryGetValue(nodeType, out var descendantsNode))
+        if (!_descendantsNodes.TryGetValue(nodeType, out var descendantsNode))
         {
-            // 将当前节点的后代节点集合到集合中
-            descendants.AddRange(descendantsNode);
+            return descendants;
+        }
 
-            // 递归查找当前节点的后代节点集合并添加到集合中
-            foreach (var directChild in descendantsNode)
-            {
-                descendants.AddRange(FindAllDescendants(directChild));
-            }
+        // 将当前节点的后代节点集合到集合中
+        descendants.AddRange(descendantsNode);
+
+        // 递归查找当前节点的后代节点集合并添加到集合中
+        foreach (var directChild in descendantsNode)
+        {
+            descendants.AddRange(FindAllDescendants(directChild));
         }
 
         return descendants;

@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 包含特定字符串的验证器
 /// </summary>
-public partial class StringContainsValidator : ValidatorBase
+public class StringContainsValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="StringContainsValidator"/>
@@ -55,17 +55,12 @@ public partial class StringContainsValidator : ValidatorBase
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
 
-        if (value is null)
+        return value switch
         {
-            return false;
-        }
-
-        if (value is string text)
-        {
-            return text.Contains(Value, Comparison);
-        }
-
-        return false;
+            null => false,
+            string text => text.Contains(Value, Comparison),
+            _ => false
+        };
     }
 
     /// <inheritdoc />

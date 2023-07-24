@@ -109,17 +109,9 @@ internal sealed class TopologicalGraph
         // 初始化已访问过的节点集合
         var visitedNodes = new HashSet<Type>();
 
-        // 遍历依赖关系集合中的键进行循环依赖检查
-        foreach (var currentNode in _dependencies.Keys)
-        {
-            // 循环依赖检查
-            if (HasCycleHelper(currentNode, visitedNodes, pathNodes))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        // 循环依赖检查
+        return _dependencies.Keys
+            .Any(currentNode => HasCycleHelper(currentNode, visitedNodes, pathNodes));
     }
 
     /// <summary>
@@ -145,19 +137,13 @@ internal sealed class TopologicalGraph
         // 查找当前节点依赖节点集合
         if (_dependencies.TryGetValue(nodeType, out var dependencies))
         {
-            // 遍历当前节点的每个依赖节点
-            foreach (var currentNode in dependencies)
+            // 循环依赖检查
+            if (dependencies.Any(currentNode => pathNodes.Contains(currentNode)
+                || (!visitedNodes.Contains(currentNode) && HasCycleHelper(currentNode, visitedNodes, pathNodes))))
             {
-                // 检查当前节点是否在已遍历路径的节点集合中
-                // 检查当前节点不在已访问过的节点集合中并且存在循环依赖
-                if (pathNodes.Contains(currentNode)
-                    || (!visitedNodes.Contains(currentNode) && HasCycleHelper(currentNode, visitedNodes, pathNodes)))
-                {
-                    // 输出调试事件
-                    Debugging.Error("The node type `{0}` has circular dependencies.", nodeType);
+                Debugging.Error("The node type `{0}` has circular dependencies.", nodeType);
 
-                    return true;
-                }
+                return true;
             }
         }
 

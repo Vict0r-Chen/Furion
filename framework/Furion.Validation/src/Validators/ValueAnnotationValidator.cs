@@ -55,18 +55,18 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        if (!TryValidate(value, out var validationResults, name))
+        if (TryValidate(value, out var validationResults, name))
         {
-            // 处理自定义错误消息
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
-            }
-
-            return validationResults;
+            return null;
         }
 
-        return null;
+        // 处理自定义错误消息
+        if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
+        }
+
+        return validationResults;
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public partial class ValueAnnotationValidator : ValidatorBase
 
             validationResults = new List<ValidationResult>()
             {
-                new ValidationResult(errorMessage,new[]{ displayName })
+                new (errorMessage,new[]{ displayName })
             };
 
             return false;

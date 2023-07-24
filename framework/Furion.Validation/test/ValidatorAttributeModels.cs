@@ -34,7 +34,7 @@ public class ValidatorModel
     [EndsWith("ion")]
     public string? EndsWith { get; set; }
 
-    [IDCardNumber]
+    [IdCardNumber]
     public string? IDCardNumber { get; set; }
 
     [NotEmpty]

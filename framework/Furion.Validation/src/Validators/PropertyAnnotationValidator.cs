@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 属性注解（特性）验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public partial class PropertyAnnotationValidator<T> : PropertyAnnotationValidator
+public class PropertyAnnotationValidator<T> : PropertyAnnotationValidator
     where T : class
 {
     /// <summary>
@@ -34,14 +34,13 @@ public partial class PropertyAnnotationValidator<T> : PropertyAnnotationValidato
 /// <summary>
 /// 属性注解（特性）验证器
 /// </summary>
-public partial class PropertyAnnotationValidator : ValidatorBase
+public class PropertyAnnotationValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="PropertyAnnotationValidator"/>
     /// </summary>
     /// <param name="propertyName">属性名称</param>
     public PropertyAnnotationValidator(string propertyName)
-        : base()
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
@@ -63,18 +62,18 @@ public partial class PropertyAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        if (!TryValidate(value, out var validationResults))
+        if (TryValidate(value, out var validationResults))
         {
-            // 处理自定义错误消息
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
-            }
-
-            return validationResults;
+            return null;
         }
 
-        return null;
+        // 处理自定义错误消息
+        if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
+        }
+
+        return validationResults;
     }
 
     /// <summary>

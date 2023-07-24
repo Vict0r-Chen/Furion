@@ -29,7 +29,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     /// <summary>
     /// <inheritdoc cref="AbstractValidator{T}"/>
     /// </summary>
-    public AbstractValidator()
+    protected AbstractValidator()
     {
         _objectValidator = ObjectValidator<T>.Create();
     }
@@ -44,7 +44,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     /// </summary>
     public bool SuppressAnnotations
     {
-        get { return _suppressAnnotations; }
+        get => _suppressAnnotations;
         set
         {
             _suppressAnnotations = value;

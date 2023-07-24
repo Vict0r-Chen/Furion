@@ -29,20 +29,14 @@ internal static class ExpressionExtensions
     /// <exception cref="ArgumentException"></exception>
     internal static string GetPropertyName<T, TProperty>(this Expression<Func<T, TProperty?>> propertySelector)
     {
-        // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
-        if (propertySelector.Body is MemberExpression memberExpression)
+        return propertySelector.Body switch
         {
-            return GetPropertyName<T>(memberExpression);
-        }
-        // 如果主体是 UnaryExpression 类型，则继续解析
-        else if (propertySelector.Body is UnaryExpression unaryExpression
-            && unaryExpression.Operand is MemberExpression nestedMemberExpression)
-        {
-            return GetPropertyName<T>(nestedMemberExpression);
-        }
-
-        // 如果无法解析属性名称，抛出 ArgumentException 异常
-        throw new ArgumentException("Expression is not valid for property selection.");
+            // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
+            MemberExpression memberExpression => GetPropertyName<T>(memberExpression),
+            // 如果主体是 UnaryExpression 类型，则继续解析
+            UnaryExpression { Operand: MemberExpression nestedMemberExpression } => GetPropertyName<T>(nestedMemberExpression),
+            _ => throw new ArgumentException("Expression is not valid for property selection.")
+        };
     }
 
     /// <summary>

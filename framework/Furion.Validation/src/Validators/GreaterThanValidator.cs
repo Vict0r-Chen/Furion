@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 大于验证器
 /// </summary>
-public partial class GreaterThanValidator : ComparableValidator
+public class GreaterThanValidator : ComparableValidator
 {
     /// <summary>
     /// <inheritdoc cref="GreaterThanValidator"/>

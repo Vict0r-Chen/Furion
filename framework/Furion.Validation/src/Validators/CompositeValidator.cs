@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 组合验证器
 /// </summary>
-public partial class CompositeValidator : ValidatorBase
+public class CompositeValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="CompositeValidator"/>

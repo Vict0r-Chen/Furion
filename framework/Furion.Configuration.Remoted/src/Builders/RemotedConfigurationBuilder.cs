@@ -211,16 +211,16 @@ public sealed class RemotedConfigurationBuilder : ConfigurationBuilderBase
         // 复制一个新的委托避免死循环
         var modelClientConfigurator = remotedConfigurationModel.ClientConfigurator is null
             ? null
-            : new Action<HttpClient>(remotedConfigurationModel.ClientConfigurator);
+            : remotedConfigurationModel.ClientConfigurator;
 
         // 创建级联调用委托
-        void clientConfigurator(HttpClient t)
+        void ClientConfigurator(HttpClient client)
         {
-            _defaultClientConfigurator(t);
-            modelClientConfigurator?.Invoke(t);
+            _defaultClientConfigurator(client);
+            modelClientConfigurator?.Invoke(client);
         }
 
-        remotedConfigurationModel.ConfigureClient(clientConfigurator);
+        remotedConfigurationModel.ConfigureClient(ClientConfigurator);
     }
 
     /// <summary>

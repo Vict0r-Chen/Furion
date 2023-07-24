@@ -21,7 +21,6 @@ public sealed class AggregateValidationException : AggregateException
 {
     /// <inheritdoc />
     public AggregateValidationException()
-        : base()
     {
     }
 

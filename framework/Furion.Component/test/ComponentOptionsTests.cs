@@ -26,7 +26,7 @@ public class ComponentOptionsTests
         Assert.Empty(componentOptions.PropsActions);
         Assert.NotNull(componentOptions.Components);
         Assert.Empty(componentOptions.Components);
-        Assert.NotNull(componentOptions._GetPropsActionMethod);
+        Assert.NotNull(componentOptions._getPropsActionMethod);
     }
 
     [Fact]

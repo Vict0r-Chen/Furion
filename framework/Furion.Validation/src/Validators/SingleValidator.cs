@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 单个值验证器
 /// </summary>
-public partial class SingleValidator : ValidatorBase
+public class SingleValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="SingleValidator"/>
@@ -35,12 +35,7 @@ public partial class SingleValidator : ValidatorBase
             return false;
         }
 
-        if (value.TryGetCount(out var count)
-            && count == 1)
-        {
-            return true;
-        }
-
-        return false;
+        return value.TryGetCount(out var count)
+               && count == 1;
     }
 }

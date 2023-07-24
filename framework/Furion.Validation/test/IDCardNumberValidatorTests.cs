@@ -14,7 +14,7 @@
 
 namespace Furion.Validation.Tests;
 
-public class IDCardNumberValidatorTests
+public class IdCardNumberValidatorTests
 {
     [Theory]
     [InlineData(null, true)]
@@ -28,14 +28,14 @@ public class IDCardNumberValidatorTests
     [InlineData("12345619991205131a", false)]
     public void IsValid(object? value, bool result)
     {
-        var validator = new IDCardNumberValidator();
+        var validator = new IdCardNumberValidator();
         Assert.Equal(result, validator.IsValid(value));
     }
 
     [Fact]
     public void Default_ErrorMessage()
     {
-        var validator = new IDCardNumberValidator();
+        var validator = new IdCardNumberValidator();
 
         var failure = validator.GetValidationResult(1234569910101933, "Value");
         Assert.NotNull(failure);
@@ -45,7 +45,7 @@ public class IDCardNumberValidatorTests
     [Fact]
     public void Custom_ErrorMessage()
     {
-        var validator = new IDCardNumberValidator
+        var validator = new IdCardNumberValidator
         {
             ErrorMessage = "不是一个有效的身份证格式"
         };

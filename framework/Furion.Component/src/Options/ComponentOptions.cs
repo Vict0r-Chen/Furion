@@ -22,7 +22,7 @@ internal sealed class ComponentOptions
     /// <summary>
     /// <see cref="GetPropsAction{TProps}()"/> 方法对象
     /// </summary>
-    internal readonly MethodInfo _GetPropsActionMethod;
+    internal readonly MethodInfo _getPropsActionMethod;
 
     /// <summary>
     /// <inheritdoc cref="ComponentOptions"/>
@@ -32,7 +32,7 @@ internal sealed class ComponentOptions
         PropsActions = new();
         Components = new();
 
-        _GetPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
+        _getPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)
             , 1
             , BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly
             , null
@@ -128,7 +128,7 @@ internal sealed class ComponentOptions
         ArgumentNullException.ThrowIfNull(propsType);
 
         // 反射调用方法并将结果转换为委托对象
-        var @delegate = _GetPropsActionMethod.MakeGenericMethod(propsType)
+        var @delegate = _getPropsActionMethod.MakeGenericMethod(propsType)
             .Invoke(this, null) as Delegate;
 
         return @delegate;
@@ -155,8 +155,7 @@ internal sealed class ComponentOptions
         }
 
         // 检查类型是否是非泛型类型，同时类型符合 class, new() 约束
-        if (propsType.IsClass
-            && !propsType.IsGenericType
+        if (propsType is { IsClass: true, IsGenericType: false }
             && propsType.HasDefinePublicParameterlessConstructor())
         {
             // 获取组件配置委托

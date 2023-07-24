@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 小于等于验证器
 /// </summary>
-public partial class LessThanOrEqualToValidator : ComparableValidator
+public class LessThanOrEqualToValidator : ComparableValidator
 {
     /// <summary>
     /// <inheritdoc cref="LessThanOrEqualToValidator"/>

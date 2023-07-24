@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 以特定字符串结尾的验证器
 /// </summary>
-public partial class EndsWithValidator : ValidatorBase
+public class EndsWithValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="EndsWithValidator"/>
@@ -55,17 +55,12 @@ public partial class EndsWithValidator : ValidatorBase
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
 
-        if (value is null)
+        return value switch
         {
-            return false;
-        }
-
-        if (value is string text)
-        {
-            return text.EndsWith(Value, Comparison);
-        }
-
-        return false;
+            null => false,
+            string text => text.EndsWith(Value, Comparison),
+            _ => false
+        };
     }
 
     /// <inheritdoc />

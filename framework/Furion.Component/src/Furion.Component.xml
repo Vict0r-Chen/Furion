@@ -998,7 +998,7 @@
             组件模块选项
             </summary>
         </member>
-        <member name="F:Furion.Component.ComponentOptions._GetPropsActionMethod">
+        <member name="F:Furion.Component.ComponentOptions._getPropsActionMethod">
             <summary>
             <see cref="M:Furion.Component.ComponentOptions.GetPropsAction``1"/> 方法对象
             </summary>

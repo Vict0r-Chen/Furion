@@ -138,7 +138,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(IGenericType<,>), typeof(GenericType<,>), false)]
     [InlineData(typeof(InstanceType), typeof(InstanceType), true)]
     [InlineData(typeof(InstanceType), typeof(SealedType), false)]
-    public void IsDefinitionEqual(Type type, Type compareType, bool result)
+    public void IsDefinitionEqual(Type type, Type? compareType, bool result)
     {
         Assert.Equal(result, type.IsDefinitionEqual(compareType));
     }

@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 相等验证器
 /// </summary>
-public partial class EqualValidator : ValidatorBase
+public class EqualValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="EqualValidator"/>
@@ -37,12 +37,7 @@ public partial class EqualValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
-        {
-            return true;
-        }
-
-        return value.Equals(Value);
+        return value is null || value.Equals(Value);
     }
 
     /// <inheritdoc />

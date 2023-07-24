@@ -17,25 +17,19 @@ namespace Furion.Validation;
 /// <summary>
 /// 对象注解（特性）验证器
 /// </summary>
-public partial class ObjectAnnotationValidator : ValidatorBase
+public class ObjectAnnotationValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="ObjectAnnotationValidator"/>
     /// </summary>
     public ObjectAnnotationValidator()
-        : base()
     {
     }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
-        {
-            return true;
-        }
-
-        return TryValidate(value, out _);
+        return value is null || TryValidate(value, out _);
     }
 
     /// <inheritdoc />
@@ -46,18 +40,18 @@ public partial class ObjectAnnotationValidator : ValidatorBase
             return null;
         }
 
-        if (!TryValidate(value, out var validationResults))
+        if (TryValidate(value, out var validationResults))
         {
-            // 处理自定义错误消息
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
-            }
-
-            return validationResults;
+            return null;
         }
 
-        return null;
+        // 处理自定义错误消息
+        if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
+        }
+
+        return validationResults;
     }
 
     /// <summary>

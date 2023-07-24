@@ -130,23 +130,16 @@ internal sealed class TypeScanningDependencyScanner
             }
 
             // 遍历所有服务类型创建类型扫描依赖关系模型集合
-            foreach (var serviceType in serviceTypes)
+            foreach (var typeScanningDependencyModel in serviceTypes.Select(serviceType => new TypeScanningDependencyModel(serviceType
+                         , implementationType
+                         , serviceLifetime
+                         , dependencyAttribute?.Registration ?? RegistrationType.Add)
             {
-                // 创建类型扫描依赖关系模型
-                var typeScanningDependencyModel = new TypeScanningDependencyModel(serviceType
-                    , implementationType
-                    , serviceLifetime
-                    , dependencyAttribute?.Registration ?? RegistrationType.Add)
-                {
-                    Order = dependencyAttribute?.Order ?? 0
-                };
-
-                // 调用类型扫描依赖关系模型过滤器
-                if (_typeScanningDependencyBuilder._filterConfigure is null
-                    || _typeScanningDependencyBuilder._filterConfigure.Invoke(typeScanningDependencyModel))
-                {
-                    yield return typeScanningDependencyModel;
-                }
+                Order = dependencyAttribute?.Order ?? 0
+            }).Where(typeScanningDependencyModel => _typeScanningDependencyBuilder._filterConfigure is null
+                                                    || _typeScanningDependencyBuilder._filterConfigure.Invoke(typeScanningDependencyModel)))
+            {
+                yield return typeScanningDependencyModel;
             }
         }
     }
@@ -177,7 +170,7 @@ internal sealed class TypeScanningDependencyScanner
         var blacklistServiceTypes = _typeScanningDependencyBuilder._blacklistServiceTypes;
 
         // 服务类型过滤器
-        bool TypeFilter(Type serviceType)
+        bool TypeFilter(Type? serviceType)
         {
             // 检查服务类型是否在黑名单类型服务集合中
             if (blacklistServiceTypes.Any(type => type.IsDefinitionEqual(serviceType)))
@@ -193,18 +186,9 @@ internal sealed class TypeScanningDependencyScanner
             }
 
             // 检查服务类型是否派生自依赖关系接口类型
-            if (typeof(IDependency).IsAssignableFrom(serviceType))
-            {
-                return false;
-            }
-
-            // 检查服务类型是否和类型相兼容
-            if (!type.IsCompatibilityTo(serviceType))
-            {
-                return false;
-            }
-
-            return true;
+            return !typeof(IDependency).IsAssignableFrom(serviceType) &&
+                   // 检查服务类型是否和类型相兼容
+                   type.IsCompatibilityTo(serviceType);
         }
 
         // 获取类型服务集合

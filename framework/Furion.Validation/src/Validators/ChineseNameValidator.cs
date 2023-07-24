@@ -30,17 +30,12 @@ public partial class ChineseNameValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
+        return value switch
         {
-            return true;
-        }
-
-        if (value is string text)
-        {
-            return Regex().IsMatch(text);
-        }
-
-        return false;
+            null => true,
+            string text => Regex().IsMatch(text),
+            _ => false
+        };
     }
 
     /// <summary>

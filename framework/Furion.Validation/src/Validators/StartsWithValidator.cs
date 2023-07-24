@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 以特定字符串开头的验证器
 /// </summary>
-public partial class StartsWithValidator : ValidatorBase
+public class StartsWithValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="StartsWithValidator"/>
@@ -55,17 +55,12 @@ public partial class StartsWithValidator : ValidatorBase
         // 空检查
         ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
 
-        if (value is null)
+        return value switch
         {
-            return false;
-        }
-
-        if (value is string text)
-        {
-            return text.StartsWith(Value, Comparison);
-        }
-
-        return false;
+            null => false,
+            string text => text.StartsWith(Value, Comparison),
+            _ => false
+        };
     }
 
     /// <inheritdoc />

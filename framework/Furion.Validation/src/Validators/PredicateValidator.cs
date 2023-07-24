@@ -18,7 +18,7 @@ namespace Furion.Validation;
 /// 委托对象验证器
 /// </summary>
 /// <typeparam name="T">泛型类型</typeparam>
-public partial class PredicateValidator<T> : PredicateValidator
+public class PredicateValidator<T> : PredicateValidator
 {
     /// <summary>
     /// <inheritdoc cref="PredicateValidator{T}"/>
@@ -35,7 +35,7 @@ public partial class PredicateValidator<T> : PredicateValidator
 /// <summary>
 /// 委托对象验证器
 /// </summary>
-public partial class PredicateValidator : ValidatorBase
+public class PredicateValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="PredicateValidator"/>
@@ -61,8 +61,6 @@ public partial class PredicateValidator : ValidatorBase
         // 空检查
         ArgumentNullException.ThrowIfNull(Predicate, nameof(Predicate));
 
-        return Predicate(value is null
-            ? null
-            : value);
+        return Predicate(value);
     }
 }

@@ -26,8 +26,7 @@ internal static class TypeExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool IsStatic(this Type type)
     {
-        return type.IsSealed
-            && type.IsAbstract;
+        return type is { IsSealed: true, IsAbstract: true };
     }
 
     /// <summary>
@@ -38,18 +37,15 @@ internal static class TypeExtensions
     internal static bool IsAnonymous(this Type type)
     {
         // 检查是否贴有 [CompilerGenerated] 特性
-        if (type.IsDefined(typeof(CompilerGeneratedAttribute), false))
+        if (!type.IsDefined(typeof(CompilerGeneratedAttribute), false))
         {
-            // 类型限定名是否以 <> 开头且以 AnonymousType 结尾
-            if (type.FullName is not null
-                && type.FullName.StartsWith("<>")
-                && type.FullName.Contains("AnonymousType"))
-            {
-                return true;
-            }
+            return false;
         }
 
-        return false;
+        // 类型限定名是否以 <> 开头且以 AnonymousType 结尾
+        return type.FullName is not null
+            && type.FullName.StartsWith("<>")
+            && type.FullName.Contains("AnonymousType");
     }
 
     /// <summary>
@@ -59,8 +55,7 @@ internal static class TypeExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool IsInstantiable(this Type type)
     {
-        return type.IsClass
-            && !type.IsAbstract
+        return type is { IsClass: true, IsAbstract: false }
             && !type.IsStatic();
     }
 
@@ -91,12 +86,9 @@ internal static class TypeExtensions
         where TAttribute : Attribute
     {
         // 检查是否定义
-        if (!type.IsDefined(typeof(TAttribute), inherit))
-        {
-            return null;
-        }
-
-        return type.GetCustomAttribute<TAttribute>(inherit);
+        return !type.IsDefined(typeof(TAttribute), inherit)
+            ? null
+            : type.GetCustomAttribute<TAttribute>(inherit);
     }
 
     /// <summary>
@@ -117,7 +109,7 @@ internal static class TypeExtensions
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="compareType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsDefinitionEqual(this Type type, Type compareType)
+    internal static bool IsDefinitionEqual(this Type type, Type? compareType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(compareType);
@@ -135,13 +127,12 @@ internal static class TypeExtensions
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="inheritType"><see cref="Type"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool IsCompatibilityTo(this Type type, Type inheritType)
+    internal static bool IsCompatibilityTo(this Type type, Type? inheritType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(inheritType);
 
-        return inheritType is not null
-            && inheritType != typeof(object)
+        return inheritType != typeof(object)
             && inheritType.IsAssignableFrom(type)
             && (!type.IsGenericType
                 || (type.IsGenericType
@@ -182,9 +173,7 @@ internal static class TypeExtensions
             return false;
         }
 
-        // 获取类型代码
-        var typeCode = Type.GetTypeCode(type);
-        return typeCode is TypeCode.Byte
+        return Type.GetTypeCode(type) is TypeCode.Byte
             or TypeCode.SByte
             or TypeCode.Int16
             or TypeCode.Int32
@@ -209,10 +198,7 @@ internal static class TypeExtensions
             return true;
         }
 
-        // 获取类型代码
-        var typeCode = Type.GetTypeCode(type);
-        return typeCode == TypeCode.Double
-            || typeCode == TypeCode.Decimal;
+        return Type.GetTypeCode(type) is TypeCode.Double or TypeCode.Decimal;
     }
 
     /// <summary>

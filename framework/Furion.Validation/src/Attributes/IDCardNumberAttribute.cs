@@ -18,12 +18,12 @@ namespace System.ComponentModel.DataAnnotations;
 /// 身份证号验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class IDCardNumberAttribute : ValidationAttribute
+public class IdCardNumberAttribute : ValidationAttribute
 {
     /// <summary>
-    /// <inheritdoc cref="IDCardNumberAttribute"/>
+    /// <inheritdoc cref="IdCardNumberAttribute"/>
     /// </summary>
-    public IDCardNumberAttribute()
+    public IdCardNumberAttribute()
         : base(() => Strings.IDCardNumberValidator_invalid)
     {
     }
@@ -31,6 +31,6 @@ public class IDCardNumberAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new IDCardNumberValidator().IsValid(value);
+        return new IdCardNumberValidator().IsValid(value);
     }
 }

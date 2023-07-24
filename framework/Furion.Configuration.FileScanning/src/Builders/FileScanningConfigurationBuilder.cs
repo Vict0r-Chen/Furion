@@ -17,7 +17,7 @@ namespace Furion.Configuration;
 /// <summary>
 /// 文件扫描配置构建器
 /// </summary>
-public sealed partial class FileScanningConfigurationBuilder : ConfigurationBuilderBase
+public sealed class FileScanningConfigurationBuilder : ConfigurationBuilderBase
 {
     /// <summary>
     /// 待扫描的目录集合

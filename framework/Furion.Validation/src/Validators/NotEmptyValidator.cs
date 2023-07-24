@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 非空验证器
 /// </summary>
-public partial class NotEmptyValidator : ValidatorBase
+public class NotEmptyValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="NotEmptyValidator"/>
@@ -35,12 +35,7 @@ public partial class NotEmptyValidator : ValidatorBase
             return false;
         }
 
-        if (value.TryGetCount(out var count)
-            && count > 0)
-        {
-            return true;
-        }
-
-        return false;
+        return value.TryGetCount(out var count)
+               && count > 0;
     }
 }

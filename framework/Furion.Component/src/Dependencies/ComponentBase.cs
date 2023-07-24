@@ -298,8 +298,8 @@ public abstract class ComponentBase
         var componentInvocationContext = new ComponentInvocationContext(component, componentContext, methodName);
 
         // 循环调用依赖关系链中的组件回调操作
-        ancestors.Where(componentType => componentType.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
-            .Select(componentType => ComponentActivator.GetOrCreate(componentType, componentContext.Options))
+        ancestors.Where(cmp => cmp.IsDeclarationMethod(nameof(OnDependencyInvocation), BindingFlags.Public, out _))
+            .Select(cmp => ComponentActivator.GetOrCreate(cmp, componentContext.Options))
             .ToList()
             .ForEach(cmp => cmp.OnDependencyInvocation(componentInvocationContext));
     }

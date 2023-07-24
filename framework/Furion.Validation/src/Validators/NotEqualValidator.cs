@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 不相等验证器
 /// </summary>
-public partial class NotEqualValidator : ValidatorBase
+public class NotEqualValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="NotEqualValidator"/>

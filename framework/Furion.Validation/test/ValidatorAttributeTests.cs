@@ -23,7 +23,7 @@ public class ValidatorAttributeTests
     [InlineData(typeof(ColorValueAttribute))]
     [InlineData(typeof(DomainAttribute))]
     [InlineData(typeof(EndsWithAttribute))]
-    [InlineData(typeof(IDCardNumberAttribute))]
+    [InlineData(typeof(IdCardNumberAttribute))]
     [InlineData(typeof(NotEmptyAttribute))]
     [InlineData(typeof(PasswordAttribute))]
     [InlineData(typeof(PhoneNumberAttribute))]

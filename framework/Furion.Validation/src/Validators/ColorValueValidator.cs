@@ -37,19 +37,12 @@ public partial class ColorValueValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
+        return value switch
         {
-            return true;
-        }
-
-        if (value is string text)
-        {
-            return (FullMode
-                ? Regex()
-                : StandardRegex()).IsMatch(text);
-        }
-
-        return false;
+            null => true,
+            string text => (FullMode ? Regex() : StandardRegex()).IsMatch(text),
+            _ => false
+        };
     }
 
     /// <summary>

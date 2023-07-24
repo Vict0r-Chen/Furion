@@ -189,17 +189,17 @@
             </summary>
             <param name="value">比较的值</param>
         </member>
-        <member name="T:System.ComponentModel.DataAnnotations.IDCardNumberAttribute">
+        <member name="T:System.ComponentModel.DataAnnotations.IdCardNumberAttribute">
             <summary>
             身份证号验证特性
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.IDCardNumberAttribute.#ctor">
+        <member name="M:System.ComponentModel.DataAnnotations.IdCardNumberAttribute.#ctor">
             <summary>
-            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.IDCardNumberAttribute"/>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.IdCardNumberAttribute"/>
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.IDCardNumberAttribute.IsValid(System.Object)">
+        <member name="M:System.ComponentModel.DataAnnotations.IdCardNumberAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.LessThanAttribute">
@@ -2467,20 +2467,20 @@
         <member name="M:Furion.Validation.GreaterThanValidator.IsValid(System.IComparable,System.IComparable)">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Validation.IDCardNumberValidator">
+        <member name="T:Furion.Validation.IdCardNumberValidator">
             <summary>
             身份证号验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.IDCardNumberValidator.#ctor">
+        <member name="M:Furion.Validation.IdCardNumberValidator.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.IDCardNumberValidator"/>
+            <inheritdoc cref="T:Furion.Validation.IdCardNumberValidator"/>
             </summary>
         </member>
-        <member name="M:Furion.Validation.IDCardNumberValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.IdCardNumberValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.IDCardNumberValidator.Regex">
+        <member name="M:Furion.Validation.IdCardNumberValidator.Regex">
             <remarks>
             Pattern explanation:<br/>
             <code>

@@ -35,7 +35,7 @@ internal static class ObjectMapper
         ArgumentNullException.ThrowIfNull(destination);
 
         // 初始化反射搜索成员方式
-        var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
         // 获取源类型属性集合和目标类型属性集合
         var sourceProperties = typeof(TSource).GetProperties(bindingFlags);

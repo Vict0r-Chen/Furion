@@ -121,17 +121,19 @@ internal sealed class FileScanningConfigurationScanner
             }
 
             // 检查是否定义环境变量名称
-            if (!string.IsNullOrWhiteSpace(EnvironmentName))
+            if (string.IsNullOrWhiteSpace(EnvironmentName))
             {
-                // 组合携带环境变量名的文件路径和对应模型
-                var environmentFile = filePathWithoutExtension + "." + EnvironmentName + extension;
-                var environmentFileModel = fileInGroupModels.Find(model => model.IsMatch(environmentFile));
-
-                // 添加配置文件
-                AddFileByEnvironment(fileConfigurationParser
-                    , environmentFileModel
-                    , environmentFile);
+                continue;
             }
+
+            // 组合携带环境变量名的文件路径和对应模型
+            var environmentFile = filePathWithoutExtension + "." + EnvironmentName + extension;
+            var environmentFileModel = fileInGroupModels.Find(model => model.IsMatch(environmentFile));
+
+            // 添加配置文件
+            AddFileByEnvironment(fileConfigurationParser
+                , environmentFileModel
+                , environmentFile);
         }
     }
 
@@ -308,17 +310,17 @@ internal sealed class FileScanningConfigurationScanner
         }
 
         // 若应用程序内容目录不为空
-        if (!string.IsNullOrWhiteSpace(ContentRoot)
-            && originalFile.StartsWith(ContentRoot, StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrWhiteSpace(ContentRoot)
+            || !originalFile.StartsWith(ContentRoot, StringComparison.OrdinalIgnoreCase))
         {
-            // 生成发布后的文件路径
-            var publicationFile = Path.Combine(baseDirectory, originalFile[ContentRoot.Length..]
-                .TrimStart(Path.DirectorySeparatorChar));
-
-            return new[] { originalFile, publicationFile };
+            return new[] { originalFile };
         }
 
-        return new[] { originalFile };
+        // 生成发布后的文件路径
+        var publicationFile = Path.Combine(baseDirectory, originalFile[ContentRoot.Length..]
+            .TrimStart(Path.DirectorySeparatorChar));
+
+        return new[] { originalFile, publicationFile };
     }
 
     /// <summary>

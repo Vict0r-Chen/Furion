@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器抽象基类
 /// </summary>
-public abstract partial class ValidatorBase
+public abstract class ValidatorBase
 {
     /// <summary>
     /// 错误消息资源访问器
@@ -87,7 +87,7 @@ public abstract partial class ValidatorBase
         // 返回默认验证结果
         return new List<ValidationResult>
         {
-            new ValidationResult(FormatErrorMessage(name, value),new[] { name })
+            new (FormatErrorMessage(name, value),new[] { name })
         };
     }
 

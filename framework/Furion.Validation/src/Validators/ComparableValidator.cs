@@ -24,7 +24,7 @@ public abstract class ComparableValidator : ValidatorBase
     /// </summary>
     /// <param name="value">比较的值</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    public ComparableValidator(object? value, Func<string> errorMessageAccessor)
+    protected ComparableValidator(object? value, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查
@@ -41,19 +41,13 @@ public abstract class ComparableValidator : ValidatorBase
     /// <inheritdoc />
     public override sealed bool IsValid(object? value)
     {
-        if (value is null)
+        return value switch
         {
-            return true;
-        }
-
-        if (value is IComparable value1
-            && Value is IComparable value2
-            && value1.GetType() == value2.GetType())
-        {
-            return IsValid(value1, value2);
-        }
-
-        return false;
+            null => true,
+            IComparable value1 when Value is IComparable value2 && value1.GetType() == value2.GetType() => IsValid(
+                value1, value2),
+            _ => false
+        };
     }
 
     /// <summary>

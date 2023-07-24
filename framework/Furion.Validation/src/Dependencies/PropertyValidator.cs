@@ -208,17 +208,18 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         var propertyValue = GetPropertyValue(instance);
 
         // 处理设置类型验证器
-        if (Validator is not null)
+        if (Validator is null)
         {
-            if (propertyValue is null)
-            {
-                return isValid;
-            }
-
-            return isValid && Validator.IsValid(propertyValue);
+            return isValid && Validators.All(validator =>
+                validator.IsValid(GetValidationObject(validator, instance, propertyValue)));
         }
 
-        return isValid && Validators.All(validator => validator.IsValid(GetValidationObject(validator, instance, propertyValue)));
+        if (propertyValue is null)
+        {
+            return isValid;
+        }
+
+        return isValid && Validator.IsValid(propertyValue);
     }
 
     /// <inheritdoc />
@@ -337,12 +338,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         }
 
         // 检查是否设置了验证对象访问器
-        if (ValidationObjectAccessor is not null)
-        {
-            return ValidationObjectAccessor(validator, instance, propertyValue);
-        }
-
-        return propertyValue;
+        return ValidationObjectAccessor is not null ? ValidationObjectAccessor(validator, instance, propertyValue) : propertyValue;
     }
 
     /// <summary>
@@ -391,13 +387,15 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         {
             var args = new List<string?> { name };
 
-            if (_formatArgsAccessor is not null)
+            if (_formatArgsAccessor is null)
             {
-                // 空检查
-                ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-
-                args.AddRange(_formatArgsAccessor((T)instance));
+                return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, args.ToArray());
             }
+
+            // 空检查
+            ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+
+            args.AddRange(_formatArgsAccessor((T)instance));
 
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, args.ToArray());
         }

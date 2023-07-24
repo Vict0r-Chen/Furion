@@ -27,25 +27,20 @@ internal static class ObjectExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool TryGetCount(this object obj, out int count)
     {
-        // 处理字符类型
-        if (obj is char)
+        switch (obj)
         {
-            count = 1;
-            return true;
-        }
-
-        // 处理字符串类型
-        if (obj is string text)
-        {
-            count = text.Length;
-            return true;
-        }
-
-        // 检查对象是否实现了 ICollection 接口，如果是则直接获取 Count 属性值并返回
-        if (obj is ICollection collection)
-        {
-            count = collection.Count;
-            return true;
+            // 处理字符类型
+            case char:
+                count = 1;
+                return true;
+            // 处理字符串类型
+            case string text:
+                count = text.Length;
+                return true;
+            // 检查对象是否实现了 ICollection 接口，如果是则直接获取 Count 属性值并返回
+            case ICollection collection:
+                count = collection.Count;
+                return true;
         }
 
         // 如果对象没有实现 ICollection 接口，则通过反射来获取 Count 属性值
