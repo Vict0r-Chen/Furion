@@ -75,10 +75,10 @@ internal static class ObjectMapper
                 , destinationParameterExpression);
 
             // 将表达式转换成委托
-            var lambda = lambdaExpression.Compile();
+            var action = lambdaExpression.Compile();
 
             // 调用委托
-            lambda(source, destination);
+            action(source, destination);
         }
     }
 }
