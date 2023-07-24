@@ -28,6 +28,11 @@ internal sealed class ComponentActivator
     internal readonly ComponentOptions _componentOptions;
 
     /// <summary>
+    /// 反射搜索成员方式
+    /// </summary>
+    internal const BindingFlags _bindingAttr = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+    /// <summary>
     /// <inheritdoc cref="ComponentActivator" />
     /// </summary>
     /// <param name="componentType"><see cref="ComponentBase"/></param>
@@ -47,7 +52,7 @@ internal sealed class ComponentActivator
     /// <summary>
     /// 反射搜索成员方式
     /// </summary>
-    internal BindingFlags BindingAttr { get; set; } = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+    internal BindingFlags BindingAttr { get; set; } = _bindingAttr;
 
     /// <summary>
     /// 获取或创建组件实例

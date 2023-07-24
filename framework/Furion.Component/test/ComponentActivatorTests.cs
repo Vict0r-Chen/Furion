@@ -39,7 +39,8 @@ public class ComponentActivatorTests
         Assert.NotNull(componentActivator._componentType);
         Assert.Equal(typeof(ComponentClass), componentActivator._componentType);
         Assert.NotNull(componentActivator._componentOptions);
-        Assert.Equal(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, componentActivator.BindingAttr);
+        Assert.Equal(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly, ComponentActivator._bindingAttr);
+        Assert.Equal(ComponentActivator._bindingAttr, componentActivator.BindingAttr);
     }
 
     [Fact]

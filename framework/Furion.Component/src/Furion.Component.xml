@@ -17,6 +17,11 @@
         <member name="F:Furion.Component.ComponentActivator._componentOptions">
             <inheritdoc cref="T:Furion.Component.ComponentOptions" />
         </member>
+        <member name="F:Furion.Component.ComponentActivator._bindingAttr">
+            <summary>
+            反射搜索成员方式
+            </summary>
+        </member>
         <member name="M:Furion.Component.ComponentActivator.#ctor(System.Type,Furion.Component.ComponentOptions)">
             <summary>
             <inheritdoc cref="T:Furion.Component.ComponentActivator" />
