@@ -48,7 +48,7 @@ public abstract class ValidatorBase
     protected ValidatorBase(Func<string> errorMessageAccessor)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessageAccessor, nameof(errorMessageAccessor));
+        ArgumentNullException.ThrowIfNull(errorMessageAccessor);
 
         _errorMessageResourceAccessor = errorMessageAccessor;
     }
@@ -64,49 +64,37 @@ public abstract class ValidatorBase
     public string? ErrorMessage { get; set; }
 
     /// <summary>
-    /// 检查值合法性
+    /// 检查值是否有效
     /// </summary>
-    /// <param name="value">验证的值</param>
+    /// <param name="value">对象值</param>
     /// <returns><see cref="bool"/></returns>
     public abstract bool IsValid(object? value);
 
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="value">验证的值</param>
+    /// <param name="value">对象值</param>
     /// <param name="name">显示名称</param>
     /// <returns><see cref="List{T}"/></returns>
     public virtual List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        // 检查值合法性
+        // 检查值是否有效
         if (IsValid(value))
         {
             return null;
         }
 
-        // 返回默认验证结果
-        return new List<ValidationResult>
+        return new()
         {
             new (FormatErrorMessage(name, value),new[] { name })
         };
     }
 
     /// <summary>
-    /// 获取验证结果
-    /// </summary>
-    /// <param name="value">验证的值</param>
-    /// <param name="name">显示名称</param>
-    /// <returns><see cref="ValidationResult"/></returns>
-    public virtual ValidationResult? GetValidationResult(object? value, string name)
-    {
-        return GetValidationResults(value, name)?.FirstOrDefault();
-    }
-
-    /// <summary>
     /// 格式化错误消息
     /// </summary>
     /// <param name="name">显示名称</param>
-    /// <param name="value">验证的值</param>
+    /// <param name="value">对象值</param>
     /// <returns><see cref="string"/></returns>
     public virtual string FormatErrorMessage(string name, object? value = default)
     {
@@ -124,22 +112,21 @@ public abstract class ValidatorBase
         // 获取验证结果
         var validationResults = GetValidationResults(value, name);
 
+        // 空检查
         if (validationResults is null)
         {
             return;
         }
 
-        // 创建组合异常
+        // 创建组合异常并抛出
         var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, value));
-
-        // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
     }
 
     /// <summary>
-    /// 检查类型是否一致
+    /// 检查是否同一验证器类型
     /// </summary>
-    /// <param name="validatorType">验证器类型</param>
+    /// <param name="validatorType"><see cref="ValidatorBase"/></param>
     /// <returns><see cref="bool"/></returns>
     internal bool IsSameAs(Type validatorType)
     {

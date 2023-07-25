@@ -25,12 +25,12 @@ public class HelloController
     }
 
     [AutowiredService]  // 属性注入
-    private IConfiguration? Configuration { get; set; }
+    private IConfiguration Configuration { get; set; } = null!;
 
     [HttpGet]
     public string? Get([FromServices] IConfiguration configuration) // 参数注入
     {
-        return configuration["Name"] + "Embed: " + Configuration!["Embed:Name"];
+        return configuration["Name"] + "Embed: " + Configuration["Embed:Name"];
     }
 
     [HttpPost]
