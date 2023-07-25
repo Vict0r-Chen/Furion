@@ -14,8 +14,13 @@
 
 namespace Furion.Core.Tests;
 
-public class ExpressionClass
+public class LinqExpressionClass1
 {
     public int Id { get; set; }
     public string? Name { get; set; }
+}
+
+public class LinqExpressionClass2
+{
+    public int Id { get; set; }
 }

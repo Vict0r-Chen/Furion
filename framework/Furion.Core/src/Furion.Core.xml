@@ -232,30 +232,6 @@
             <param name="exported">类型导出设置</param>
             <returns><see cref="T:System.Type"/>[]</returns>
         </member>
-        <member name="T:System.Linq.Expressions.ExpressionExtensions">
-            <summary>
-            <see cref="T:System.Linq.Expressions.Expression"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:System.Linq.Expressions.ExpressionExtensions.GetPropertyName``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
-            <summary>
-            解析表达式属性名称
-            </summary>
-            <typeparam name="T">对象类型</typeparam>
-            <typeparam name="TProperty">属性类型</typeparam>
-            <param name="propertySelector">属性选择器</param>
-            <returns><see cref="T:System.String"/></returns>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
-        <member name="M:System.Linq.Expressions.ExpressionExtensions.GetPropertyName``1(System.Linq.Expressions.MemberExpression)">
-            <summary>
-            解析表达式属性名称
-            </summary>
-            <typeparam name="T">对象类型</typeparam>
-            <param name="memberExpression"><see cref="T:System.Linq.Expressions.MemberExpression"/></param>
-            <returns><see cref="T:System.String"/></returns>
-            <exception cref="T:System.ArgumentException"></exception>
-        </member>
         <member name="T:System.Collections.Generic.ICollectionExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.ICollection`1"/> 拓展类
@@ -265,7 +241,7 @@
             <summary>
             判断集合是否为空
             </summary>
-            <typeparam name="T">集合类型</typeparam>
+            <typeparam name="T">对象类型</typeparam>
             <param name="collection"><see cref="T:System.Collections.Generic.ICollection`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -281,8 +257,8 @@
             <typeparam name="TKey">字典键类型</typeparam>
             <typeparam name="TValue">字典值类型</typeparam>
             <param name="dictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
-            <param name="key">字典键</param>
-            <param name="value">字典值</param>
+            <param name="key"><typeparamref name="TKey"/></param>
+            <param name="value"><typeparamref name="TValue"/></param>
         </member>
         <member name="M:System.Collections.Generic.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,System.Collections.Generic.List{``1}},System.Collections.Generic.IDictionary{``0,System.Collections.Generic.List{``1}})">
             <summary>
@@ -293,6 +269,30 @@
             <param name="dictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
             <param name="concatDictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
         </member>
+        <member name="T:System.Linq.Expressions.LinqExpressionExtensions">
+            <summary>
+            <see cref="T:System.Linq.Expressions.Expression"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.Linq.Expressions.LinqExpressionExtensions.GetPropertyName``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            解析表达式属性名称
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <typeparam name="TProperty">属性类型</typeparam>
+            <param name="propertySelector"><see cref="T:System.Linq.Expressions.Expression`1"/></param>
+            <returns><see cref="T:System.String"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:System.Linq.Expressions.LinqExpressionExtensions.GetPropertyName``1(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            解析表达式属性名称
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="memberExpression"><see cref="T:System.Linq.Expressions.MemberExpression"/></param>
+            <returns><see cref="T:System.String"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:System.ObjectExtensions">
             <summary>
             <see cref="T:System.Object"/> 拓展类
@@ -302,7 +302,7 @@
             <summary>
             尝试获取对象的数量
             </summary>
-            <param name="obj">对象</param>
+            <param name="obj"><see cref="T:System.Object"/></param>
             <param name="count">数量</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -431,7 +431,7 @@
         </member>
         <member name="F:Furion.CoreOptions._optionsInstances">
             <summary>
-            子选项实例集合
+            子选项集合
             </summary>
         </member>
         <member name="M:Furion.CoreOptions.#ctor">
@@ -441,15 +441,14 @@
         </member>
         <member name="M:Furion.CoreOptions.GetOrAdd``1">
             <summary>
-            获取子选项实例
+            获取子选项
             </summary>
-            <remarks>若子选项实例不存在则添加</remarks>
             <typeparam name="TOptions">选项类型</typeparam>
             <returns><typeparamref name="TOptions"/></returns>
         </member>
         <member name="M:Furion.CoreOptions.Remove``1">
             <summary>
-            移除子选项实例
+            移除子选项
             </summary>
             <typeparam name="TOptions">选项类型</typeparam>
         </member>

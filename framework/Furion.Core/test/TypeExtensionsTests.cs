@@ -29,13 +29,13 @@ public class TypeExtensionsTests
     [InlineData(typeof(bool), false)]
     [InlineData(typeof(object), false)]
     [InlineData(typeof(IDependency), false)]
-    public void IsStatic(Type type, bool result)
+    public void IsStatic_ReturnOK(Type type, bool result)
     {
         Assert.Equal(result, type.IsStatic());
     }
 
     [Fact]
-    public void IsAnonymous()
+    public void IsAnonymous_ReturnOK()
     {
         Assert.False(typeof(InstanceType).IsAnonymous());
         Assert.False(typeof(StaticType).IsAnonymous());
@@ -75,16 +75,25 @@ public class TypeExtensionsTests
     [InlineData(typeof(bool), false)]
     [InlineData(typeof(object), true)]
     [InlineData(typeof(IDependency), false)]
-    public void IsInstantiable(Type type, bool result)
+    public void IsInstantiable_ReturnOK(Type type, bool result)
     {
         Assert.Equal(result, type.IsInstantiable());
+    }
+
+    [Fact]
+    public void IsAlienAssignableTo_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeof(InstanceType).IsAlienAssignableTo(null!);
+        });
     }
 
     [Theory]
     [InlineData(typeof(InstanceType), false)]
     [InlineData(typeof(Dependency), true)]
     [InlineData(typeof(IDependency), false)]
-    public void IsAlienAssignableTo(Type type, bool result)
+    public void IsAlienAssignableTo_ReturnOK(Type type, bool result)
     {
         Assert.Equal(result, type.IsAlienAssignableTo(typeof(IDependency)));
     }
@@ -94,7 +103,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(WithAttributeClass), true, true)]
     [InlineData(typeof(InheritWithAttributeClass), false, false)]
     [InlineData(typeof(InheritWithAttributeClass), true, true)]
-    public void GetDefinedCustomAttribute(Type type, bool notNull, bool inherit)
+    public void GetDefinedCustomAttribute_ReturnOK(Type type, bool notNull, bool inherit)
     {
         var customAttribute = type.GetDefinedCustomAttribute<CustomAttribute>(inherit);
         Assert.Equal(notNull, customAttribute is not null);
@@ -115,9 +124,18 @@ public class TypeExtensionsTests
     [InlineData(typeof(PrivateConstructClass), false)]
     [InlineData(typeof(WithParameterConstructClass), false)]
     [InlineData(typeof(WithParameterAndParameterlessConstructClass), true)]
-    public void HasDefinePublicParameterlessConstructor(Type type, bool result)
+    public void HasDefinePublicParameterlessConstructor_ReturnOK(Type type, bool result)
     {
         Assert.Equal(result, type.HasDefinePublicParameterlessConstructor());
+    }
+
+    [Fact]
+    public void IsDefinitionEqual_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeof(IGenericType<string>).IsDefinitionEqual(null!);
+        });
     }
 
     [Theory]
@@ -138,9 +156,18 @@ public class TypeExtensionsTests
     [InlineData(typeof(IGenericType<,>), typeof(GenericType<,>), false)]
     [InlineData(typeof(InstanceType), typeof(InstanceType), true)]
     [InlineData(typeof(InstanceType), typeof(SealedType), false)]
-    public void IsDefinitionEqual(Type type, Type? compareType, bool result)
+    public void IsDefinitionEqual_ReturnOK(Type type, Type? compareType, bool result)
     {
         Assert.Equal(result, type.IsDefinitionEqual(compareType));
+    }
+
+    [Fact]
+    public void IsCompatibilityTo_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeof(ImplementationType).IsCompatibilityTo(null!);
+        });
     }
 
     [Theory]
@@ -149,7 +176,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(ImplementationType2), typeof(BaseServiceType), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
     [InlineData(typeof(ImplementationType3), typeof(BaseServiceType<string>), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
     [InlineData(typeof(ImplementationType4), typeof(BaseServiceType<string, int>), typeof(IServiceType), typeof(ISecondServiceType), typeof(IOtherServiceType), typeof(IGenericServiceType<string>), typeof(IGenericServiceType<string, int>))]
-    public void IsCompatibilityTo_NonGenericType_ReturnOK(Type type, params Type[] types)
+    public void IsCompatibilityTo_ReturnOK(Type type, params Type[] types)
     {
         var baseTypes = new[] { type.BaseType }.Concat(type.GetInterfaces());
         var serviceTypes = baseTypes.Where(t => type.IsCompatibilityTo(t)).ToArray();
@@ -169,7 +196,7 @@ public class TypeExtensionsTests
     [InlineData(typeof(MultiGenericImplementationType3<,>), typeof(BaseServiceType<,>), typeof(IGenericServiceType<,>), typeof(ISecondGenericServiceType<,>))]
     [InlineData(typeof(MultiGenericImplementationType4<,>), typeof(IGenericServiceType<,>))]
     [InlineData(typeof(MultiGenericImplementationType5<,>))]
-    public void IsCompatibilityTo_GenericType_ReturnOK(Type genericType, params Type[] types)
+    public void IsCompatibilityTo_WithGenericType_ReturnOK(Type genericType, params Type[] types)
     {
         var type = GetType().Assembly.GetTypes().Single(t => t.IsGenericType && t.GetGenericTypeDefinition() == genericType);
         var baseTypes = new[] { type.BaseType }.Concat(type.GetInterfaces());
@@ -178,11 +205,30 @@ public class TypeExtensionsTests
         Assert.True(isEqual);
     }
 
+    [Fact]
+    public void IsDeclarationMethod_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            typeof(DelaryMethodClass).IsDeclarationMethod(null!, BindingFlags.Public, out _);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            typeof(DelaryMethodClass).IsDeclarationMethod(string.Empty, BindingFlags.Public, out _);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            typeof(DelaryMethodClass).IsDeclarationMethod("", BindingFlags.Public, out _);
+        });
+    }
+
     [Theory]
     [InlineData(typeof(DelaryMethodClass), true)]
     [InlineData(typeof(NotDelaryMethodClass), false)]
     [InlineData(typeof(OverrideDelaryMethodClass), true)]
-    public void IsDeclarationMethod(Type type, bool isMultiple)
+    public void IsDeclarationMethod_ReturnOK(Type type, bool isMultiple)
     {
         var result = type.IsDeclarationMethod("Test", BindingFlags.Public, out _);
         Assert.Equal(isMultiple, result);
@@ -198,7 +244,7 @@ public class TypeExtensionsTests
     [InlineData((byte)1, true)]
     [InlineData(-1, true)]
     [InlineData(0, true)]
-    public void IsInteger(object value, bool isInteger)
+    public void IsInteger_ReturnOK(object value, bool isInteger)
     {
         var result = value.GetType().IsInteger();
         Assert.Equal(isInteger, result);
@@ -215,7 +261,7 @@ public class TypeExtensionsTests
     [InlineData(-1, false)]
     [InlineData(0, false)]
     [InlineData(-123.33, true)]
-    public void IsDecimal(object value, bool isDecimal)
+    public void IsDecimal_ReturnOK(object value, bool isDecimal)
     {
         var result = value.GetType().IsDecimal();
         Assert.Equal(isDecimal, result);
@@ -231,7 +277,7 @@ public class TypeExtensionsTests
     [InlineData((byte)1, true)]
     [InlineData(-1, true)]
     [InlineData(0, true)]
-    public void IsNumeric(object value, bool isNumeric)
+    public void IsNumeric_ReturnOK(object value, bool isNumeric)
     {
         var result = value.GetType().IsNumeric();
         Assert.Equal(isNumeric, result);

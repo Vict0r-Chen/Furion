@@ -168,11 +168,13 @@ internal static class TypeExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool IsInteger(this Type type)
     {
+        // 如果是浮点类型则直接返回
         if (type.IsDecimal())
         {
             return false;
         }
 
+        // 检查 TypeCode
         return Type.GetTypeCode(type) is TypeCode.Byte
             or TypeCode.SByte
             or TypeCode.Int16
@@ -191,6 +193,7 @@ internal static class TypeExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool IsDecimal(this Type type)
     {
+        // 如果是浮点类型则直接返回
         if (type == typeof(decimal)
             || type == typeof(double)
             || type == typeof(float))
@@ -198,6 +201,7 @@ internal static class TypeExtensions
             return true;
         }
 
+        // 检查 TypeCode
         return Type.GetTypeCode(type) is TypeCode.Double or TypeCode.Decimal;
     }
 

@@ -924,7 +924,7 @@
             <see cref="T:System.Collections.Generic.IEnumerable`1"/> 拓展类
             </summary>
         </member>
-        <member name="M:Furion.Component.LinqExpressionExtensions.WhereIF``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.Func{``0,System.Boolean})">
+        <member name="M:Furion.Component.LinqExpressionExtensions.WhereIf``1(System.Collections.Generic.IEnumerable{``0},System.Boolean,System.Func{``0,System.Boolean})">
             <inheritdoc cref="M:System.Linq.Enumerable.Where``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})"/>
         </member>
         <member name="T:Furion.Component.DependencyGraph">

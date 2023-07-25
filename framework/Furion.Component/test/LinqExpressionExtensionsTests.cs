@@ -17,24 +17,24 @@ namespace Furion.Component.Tests;
 public class LinqExpressionExtensionsTests
 {
     [Fact]
-    public void WhereIF_Invalid_Parameters()
+    public void WhereIf_Invalid_Parameters()
     {
         var list = new List<int> { 1, 2, 3 };
         Assert.Throws<ArgumentNullException>(() =>
         {
-            list.WhereIF(true, null!);
+            list.WhereIf(true, null!);
         });
     }
 
     [Fact]
-    public void WhereIF_ReturnOK()
+    public void WhereIf_ReturnOK()
     {
         var list = new List<int> { 1, 2, 3 };
 
-        var list1 = list.WhereIF(false, u => u > 1).ToList();
+        var list1 = list.WhereIf(false, u => u > 1).ToList();
         Assert.Equal(list1, list);
 
-        var list2 = list.WhereIF(true, u => u > 1).ToList();
+        var list2 = list.WhereIf(true, u => u > 1).ToList();
         Assert.Equal(new List<int> { 2, 3 }, list2);
     }
 }

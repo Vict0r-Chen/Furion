@@ -17,14 +17,14 @@ namespace System.Linq.Expressions;
 /// <summary>
 /// <see cref="Expression"/> 拓展类
 /// </summary>
-internal static class ExpressionExtensions
+internal static class LinqExpressionExtensions
 {
     /// <summary>
     /// 解析表达式属性名称
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
     /// <typeparam name="TProperty">属性类型</typeparam>
-    /// <param name="propertySelector">属性选择器</param>
+    /// <param name="propertySelector"><see cref="Expression{TDelegate}"/></param>
     /// <returns><see cref="string"/></returns>
     /// <exception cref="ArgumentException"></exception>
     internal static string GetPropertyName<T, TProperty>(this Expression<Func<T, TProperty?>> propertySelector)
@@ -33,8 +33,10 @@ internal static class ExpressionExtensions
         {
             // 检查 Lambda 表达式的主体是否是 MemberExpression 类型
             MemberExpression memberExpression => GetPropertyName<T>(memberExpression),
+
             // 如果主体是 UnaryExpression 类型，则继续解析
             UnaryExpression { Operand: MemberExpression nestedMemberExpression } => GetPropertyName<T>(nestedMemberExpression),
+
             _ => throw new ArgumentException("Expression is not valid for property selection.")
         };
     }
@@ -60,7 +62,7 @@ internal static class ExpressionExtensions
             throw new ArgumentException("Invalid property selection.");
         }
 
-        // 获取 MemberExpression 的 Member 属性，返回属性的名称
+        // 返回属性名称
         return memberExpression.Member.Name;
     }
 }

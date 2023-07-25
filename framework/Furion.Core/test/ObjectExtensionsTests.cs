@@ -17,18 +17,14 @@ namespace Furion.Core.Tests;
 public class ObjectExtensionsTests
 {
     [Fact]
-    public void TryGetCount_Exists()
+    public void TryGetCount_ReturnOK()
     {
         Assert.True(string.Empty.TryGetCount(out _));
         Assert.True(new List<string>().TryGetCount(out _));
         Assert.True(new Dictionary<string, string>().TryGetCount(out _));
         Assert.True(new HashSet<string>().TryGetCount(out _));
         Assert.True(Array.Empty<string>().TryGetCount(out _));
-    }
 
-    [Fact]
-    public void TryGetCount_NotExists()
-    {
         Assert.False(1.TryGetCount(out _));
         Assert.False(true.TryGetCount(out _));
         Assert.False(123.45d.TryGetCount(out _));

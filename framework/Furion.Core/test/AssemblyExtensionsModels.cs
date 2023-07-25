@@ -35,4 +35,5 @@ public abstract class AbstractClass
 public static class StaticClass
 { }
 
-public record RecordClass { }
+public record RecordClass
+{ }

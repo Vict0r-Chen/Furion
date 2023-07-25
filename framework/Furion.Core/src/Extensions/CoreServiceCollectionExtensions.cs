@@ -26,6 +26,7 @@ public static class CoreServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddCoreOptions(this IServiceCollection services)
     {
+        // 添加核心模块选项服务
         services.TryAddSingleton(new CoreOptions());
 
         return services;

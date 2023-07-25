@@ -17,116 +17,60 @@ namespace Furion.Core.Tests;
 public class IDictionaryExtensionsTests
 {
     [Fact]
-    public void AddOrUpdate_IfValueIsNull_WillThrow()
+    public void AddOrUpdate_Invalid_Parameters()
     {
-        var dictionary = new Dictionary<string, List<string?>>();
-
+        var dic = new Dictionary<string, List<object>>();
         Assert.Throws<ArgumentNullException>(() =>
         {
-            dictionary.AddOrUpdate("null", null);
+            dic.AddOrUpdate("key", null!);
         });
     }
 
     [Fact]
-    public void AddOrUpdate_NotExists_WillAdd()
+    public void AddOrUpdate_ReturnOK()
     {
-        var key = "first";
-        var value = 1;
-        var dictionary = new Dictionary<string, List<int>>();
-        dictionary.AddOrUpdate(key, value);
+        var dic = new Dictionary<string, List<object>>();
 
-        Assert.Single(dictionary);
-        Assert.Equal(key, dictionary.Keys.ElementAt(0));
-        Assert.Equal(value, dictionary[key].ElementAt(0));
+        dic.AddOrUpdate("key1", 1);
+        dic.AddOrUpdate("key1", 2);
+        dic.AddOrUpdate("key2", 1);
+
+        Assert.Equal(2, dic.Count);
+        Assert.Equal(new List<object> { 1, 2 }, dic["key1"]);
+        Assert.Equal(new List<object> { 1 }, dic["key2"]);
     }
 
     [Fact]
-    public void AddOrUpdate_Exists_WillUpdate()
+    public void AddOrUpdateDictionary_Invalid_Parameters()
     {
-        var key = "first";
-        var value = 2;
-        var dictionary = new Dictionary<string, List<int>>()
-        {
-            {"first",new List<int>{ 1 } }
-        };
-        dictionary.AddOrUpdate(key, value);
-
-        Assert.Single(dictionary);
-        Assert.Equal(key, dictionary.Keys.ElementAt(0));
-        Assert.Equal(value, dictionary[key].ElementAt(1));
-    }
-
-    [Fact]
-    public void AddOrUpdate_ConcatNull_Throw()
-    {
-        var dictionary = new Dictionary<string, List<string?>>();
-        Dictionary<string, List<string?>>? concatDictionary = null;
-
+        var dic = new Dictionary<string, List<object>>();
         Assert.Throws<ArgumentNullException>(() =>
         {
-            dictionary.AddOrUpdate(concatDictionary!);
+            dic.AddOrUpdate(null!);
         });
     }
 
     [Fact]
-    public void AddOrUpdate_Concat_NewDictionary_WillAdd()
+    public void AddOrUpdateDictionary_ReturnOK()
     {
-        var dictionary = new Dictionary<string, List<int>>();
-        var concatDictionary = new Dictionary<string, List<int>>()
+        var dic = new Dictionary<string, List<object>>
         {
-           {"first",new List<int>{ 1 } },
-           {"two",new List<int>{ 2 } },
+            {"key1", new List<object>{ 1, 2 } },
+            {"key2", new List<object>{ 1 } },
         };
-        dictionary.AddOrUpdate(concatDictionary);
 
-        Assert.Equal(2, dictionary.Count);
-        Assert.Equal("first", dictionary.Keys.ElementAt(0));
-        Assert.Equal("two", dictionary.Keys.ElementAt(1));
-        Assert.Equal(1, dictionary["first"].ElementAt(0));
-        Assert.Equal(2, dictionary["two"].ElementAt(0));
-    }
-
-    [Fact]
-    public void AddOrUpdate_Concat_ExistsDictionary_WillUpdate()
-    {
-        var dictionary = new Dictionary<string, List<int>>()
+        var dic2 = new Dictionary<string, List<object>>
         {
-            {"first",new List<int>{ 1 } }
+            {"key1", new List<object>{ 3, 4 } },
+            {"key2", new List<object>{ 2 } },
+            {"key3", new List<object>{ 1 } },
         };
-        var concatDictionary = new Dictionary<string, List<int>>()
-        {
-           {"first",new List<int>{ 2 } }
-        };
-        dictionary.AddOrUpdate(concatDictionary);
 
-        Assert.Single(dictionary);
-        Assert.Equal("first", dictionary.Keys.ElementAt(0));
-        Assert.Equal(2, dictionary["first"].Count);
-        Assert.Equal(1, dictionary["first"].ElementAt(0));
-        Assert.Equal(2, dictionary["first"].ElementAt(1));
-    }
+        dic.AddOrUpdate(dic2);
 
-    [Fact]
-    public void AddOrUpdate_Concat_ExistsOrNotDictionary_WillAddOrUpdate()
-    {
-        var dictionary = new Dictionary<string, List<int>>()
-        {
-            {"first",new List<int>{ 1 } }
-        };
-        var concatDictionary = new Dictionary<string, List<int>>()
-        {
-           {"first",new List<int>{ 2 } },
-           {"two",new List<int>{ 1 } },
-        };
-        dictionary.AddOrUpdate(concatDictionary);
-
-        Assert.Equal(2, dictionary.Count);
-        Assert.Equal("first", dictionary.Keys.ElementAt(0));
-        Assert.Equal("two", dictionary.Keys.ElementAt(1));
-        Assert.Equal(2, dictionary["first"].Count);
-        Assert.Equal(1, dictionary["first"].ElementAt(0));
-        Assert.Equal(2, dictionary["first"].ElementAt(1));
-        Assert.Single(dictionary["two"]);
-        Assert.Equal(1, dictionary["two"].ElementAt(0));
+        Assert.Equal(3, dic.Count);
+        Assert.Equal(new List<object> { 1, 2, 3, 4 }, dic["key1"]);
+        Assert.Equal(new List<object> { 1, 2 }, dic["key2"]);
+        Assert.Equal(new List<object> { 1 }, dic["key3"]);
     }
 }

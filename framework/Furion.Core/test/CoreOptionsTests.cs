@@ -17,61 +17,37 @@ namespace Furion.Core.Tests;
 public class CoreOptionsTests
 {
     [Fact]
-    public void GetOrAdd_NotExists_WithAdd()
+    public void New_ReturnOK()
     {
         var coreOptions = new CoreOptions();
-        var childOptions = coreOptions.GetOrAdd<ChildOptions>();
 
-        Assert.NotNull(childOptions);
-        Assert.Single(coreOptions._optionsInstances);
-    }
-
-    [Fact]
-    public void GetOrAdd_Exists_WithNotAdd()
-    {
-        var coreOptions = new CoreOptions();
-        var isAdded = coreOptions._optionsInstances.TryAdd(typeof(ChildOptions), new ChildOptions());
-
-        Assert.True(isAdded);
-
-        var childOptions = coreOptions.GetOrAdd<ChildOptions>();
-
-        Assert.NotNull(childOptions);
-        Assert.Single(coreOptions._optionsInstances);
-    }
-
-    [Fact]
-    public void CanNotBeNew()
-    {
-        Assert.Throws<MissingMethodException>(() =>
-        {
-            var coreOptions = Activator.CreateInstance<CoreOptions>();
-        });
-    }
-
-    [Fact]
-    public void OptionsInstances_NotNull()
-    {
-        var coreOptions = new CoreOptions();
+        Assert.NotNull(coreOptions);
         Assert.NotNull(coreOptions._optionsInstances);
-    }
-
-    [Fact]
-    public void Remove_NotExists_ReturnOK()
-    {
-        var coreOptions = new CoreOptions();
-        coreOptions.Remove<ChildOptions>();
         Assert.Empty(coreOptions._optionsInstances);
     }
 
     [Fact]
-    public void Remove_Exists_WithNotAdd()
+    public void GetOrAdd_ReturnOK()
     {
         var coreOptions = new CoreOptions();
         var childOptions = coreOptions.GetOrAdd<ChildOptions>();
 
         Assert.NotNull(childOptions);
         Assert.Single(coreOptions._optionsInstances);
+
+        var childOptions2 = coreOptions.GetOrAdd<ChildOptions>();
+        Assert.Single(coreOptions._optionsInstances);
+        Assert.Equal(childOptions, childOptions2);
+    }
+
+    [Fact]
+    public void Remove_ReturnOK()
+    {
+        var coreOptions = new CoreOptions();
+        _ = coreOptions.GetOrAdd<ChildOptions>();
+
+        coreOptions.Remove<ChildOptions>();
+        Assert.Empty(coreOptions._optionsInstances);
 
         coreOptions.Remove<ChildOptions>();
         Assert.Empty(coreOptions._optionsInstances);

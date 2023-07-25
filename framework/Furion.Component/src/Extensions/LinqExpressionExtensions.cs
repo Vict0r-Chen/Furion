@@ -20,7 +20,7 @@ namespace Furion.Component;
 internal static class LinqExpressionExtensions
 {
     /// <inheritdoc cref="Enumerable.Where{TSource}(IEnumerable{TSource}, Func{TSource, bool})"/>
-    internal static IEnumerable<TSource> WhereIF<TSource>(this IEnumerable<TSource> source
+    internal static IEnumerable<TSource> WhereIf<TSource>(this IEnumerable<TSource> source
         , bool condition
         , Func<TSource, bool> predicate)
     {

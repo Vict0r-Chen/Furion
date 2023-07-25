@@ -17,7 +17,17 @@ namespace Furion.Core.Tests;
 public class CoreServiceCollectionExtensionsTests
 {
     [Fact]
-    public void AddCoreOptions_Duplicate__OneTimeEffective()
+    public void AddCoreOptions_ReturnOK()
+    {
+        var services = new ServiceCollection();
+        services.AddCoreOptions();
+
+        Assert.Single(services);
+        Assert.Contains(services, s => s.ServiceType == typeof(CoreOptions));
+    }
+
+    [Fact]
+    public void AddCoreOptions_Duplicate_ReturnOK()
     {
         var services = new ServiceCollection();
         services.AddCoreOptions();
@@ -27,12 +37,12 @@ public class CoreServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void GetCoreOptions_NotExists_ReturnOk()
+    public void GetCoreOptions_ReturnOk()
     {
         var services = new ServiceCollection();
         var coreOptions = services.GetCoreOptions();
 
-        Assert.NotNull(coreOptions);
         Assert.Single(services);
+        Assert.NotNull(coreOptions);
     }
 }

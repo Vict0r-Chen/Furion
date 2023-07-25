@@ -20,7 +20,7 @@ namespace Furion;
 internal sealed class CoreOptions
 {
     /// <summary>
-    /// 子选项实例集合
+    /// 子选项集合
     /// </summary>
     internal readonly ConcurrentDictionary<Type, object> _optionsInstances;
 
@@ -33,28 +33,33 @@ internal sealed class CoreOptions
     }
 
     /// <summary>
-    /// 获取子选项实例
+    /// 获取子选项
     /// </summary>
-    /// <remarks>若子选项实例不存在则添加</remarks>
     /// <typeparam name="TOptions">选项类型</typeparam>
     /// <returns><typeparamref name="TOptions"/></returns>
     internal TOptions GetOrAdd<TOptions>()
         where TOptions : class, new()
     {
+        // 获取子选项类型
         var optionsType = typeof(TOptions);
+
+        // 如果不存在则添加
         _ = _optionsInstances.TryAdd(optionsType, new TOptions());
 
         return (TOptions)_optionsInstances[optionsType];
     }
 
     /// <summary>
-    /// 移除子选项实例
+    /// 移除子选项
     /// </summary>
     /// <typeparam name="TOptions">选项类型</typeparam>
     internal void Remove<TOptions>()
         where TOptions : class, new()
     {
+        // 获取子选项类型
         var optionsType = typeof(TOptions);
+
+        // 如果存在则移除
         _ = _optionsInstances.TryRemove(optionsType, out _);
     }
 }

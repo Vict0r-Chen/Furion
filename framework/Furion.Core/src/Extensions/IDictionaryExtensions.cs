@@ -25,8 +25,8 @@ internal static class IDictionaryExtensions
     /// <typeparam name="TKey">字典键类型</typeparam>
     /// <typeparam name="TValue">字典值类型</typeparam>
     /// <param name="dictionary"><see cref="IDictionary{TKey, TValue}"/></param>
-    /// <param name="key">字典键</param>
-    /// <param name="value">字典值</param>
+    /// <param name="key"><typeparamref name="TKey"/></param>
+    /// <param name="value"><typeparamref name="TValue"/></param>
     internal static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary
         , TKey key
         , TValue value)
@@ -35,7 +35,7 @@ internal static class IDictionaryExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(value);
 
-        // 尝试获取值
+        // 检查键是否存在
         if (!dictionary.TryGetValue(key, out var values))
         {
             values = new();
@@ -61,7 +61,7 @@ internal static class IDictionaryExtensions
         // 逐条遍历合并更新
         foreach (var (key, newValues) in concatDictionary)
         {
-            // 尝试获取值
+            // 检查键是否存在
             if (!dictionary.TryGetValue(key, out var values))
             {
                 values = new();

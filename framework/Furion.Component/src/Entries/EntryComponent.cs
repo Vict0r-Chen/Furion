@@ -54,7 +54,7 @@ internal sealed class EntryComponent
 
         // 获取拓扑排序后的依赖关系集合
         _sortedDependencies = topologicalGraph.Sort(true)
-            .WhereIF(componentContext is not ServiceComponentContext, ComponentBase.IsWebComponent) // WebComponent
+            .WhereIf(componentContext is not ServiceComponentContext, ComponentBase.IsWebComponent) // WebComponent
             .ToList();
 
         // 初始化依赖关系图

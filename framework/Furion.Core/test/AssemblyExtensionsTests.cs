@@ -17,9 +17,10 @@ namespace Furion.Core.Tests;
 public class AssemblyExtensionsTests
 {
     [Fact]
-    public void GetTypes_Exported_True()
+    public void GetTypes_WithExported_True()
     {
         var types = GetType().Assembly.GetTypes(true);
+
         Assert.Contains(types, t => t == typeof(PublicClass));
         Assert.Contains(types, t => t == typeof(PublicChildClass));
         Assert.DoesNotContain(types, t => t == typeof(PrivateChildClass));
@@ -31,9 +32,10 @@ public class AssemblyExtensionsTests
     }
 
     [Fact]
-    public void GetTypes_Exported_False()
+    public void GetTypes_WithExported_False()
     {
         var types = GetType().Assembly.GetTypes(false);
+
         Assert.Contains(types, t => t == typeof(PublicClass));
         Assert.Contains(types, t => t == typeof(PublicChildClass));
         Assert.Contains(types, t => t == typeof(PrivateChildClass));

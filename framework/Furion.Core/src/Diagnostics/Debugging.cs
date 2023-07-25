@@ -56,7 +56,8 @@ internal static class Debugging
     {
         // 获取消息级别对应的 emoji
         var category = GetLevelEmoji(level);
-        Events.WriteLine(message, category);
+
+        Debug.WriteLine(message, category);
     }
 
     /// <summary>

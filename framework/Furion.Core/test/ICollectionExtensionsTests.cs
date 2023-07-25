@@ -17,7 +17,7 @@ namespace Furion.Core.Tests;
 public class ICollectionExtensionsTests
 {
     [Fact]
-    public void IsNullOrEmpty()
+    public void IsNullOrEmpty_ReturnOK()
     {
         ICollection<int>? collection = null;
         Assert.True(collection.IsNullOrEmpty());

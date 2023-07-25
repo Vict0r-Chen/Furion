@@ -22,44 +22,41 @@ internal static class ObjectExtensions
     /// <summary>
     /// 尝试获取对象的数量
     /// </summary>
-    /// <param name="obj">对象</param>
+    /// <param name="obj"><see cref="object"/></param>
     /// <param name="count">数量</param>
     /// <returns><see cref="bool"/></returns>
     internal static bool TryGetCount(this object obj, out int count)
     {
         switch (obj)
         {
-            // 处理字符类型
+            // 检查对象是否是字符类型
             case char:
                 count = 1;
                 return true;
-            // 处理字符串类型
+            // 检查对象是否是字符串类型
             case string text:
                 count = text.Length;
                 return true;
-            // 检查对象是否实现了 ICollection 接口，如果是则直接获取 Count 属性值并返回
+            // 检查对象是否实现了 ICollection 接口
             case ICollection collection:
                 count = collection.Count;
                 return true;
         }
 
-        // 如果对象没有实现 ICollection 接口，则通过反射来获取 Count 属性值
-        var runtimeProperty = obj.GetType().GetRuntimeProperty("Count");
+        // 反射查找是否存在 Count 属性
+        var runtimeProperty = obj.GetType()
+            .GetRuntimeProperty("Count");
 
-        // 检查是否获取到 Count 属性，且该属性可读且类型为 int
+        // 获取 Count 属性值
         if (runtimeProperty is not null
             && runtimeProperty.CanRead
             && runtimeProperty.PropertyType == typeof(int))
         {
-            // 通过反射获取 Count 属性的值，并将其转换为 int 类型
             count = (int)runtimeProperty.GetValue(obj)!;
             return true;
         }
 
-        // 如果无法获取到对象的数量，则将 count 的值设为 -1，表示获取失败
         count = -1;
-
-        // 返回 false，表示无法获取对象的数量
         return false;
     }
 }
