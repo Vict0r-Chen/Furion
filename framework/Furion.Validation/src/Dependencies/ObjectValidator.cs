@@ -71,7 +71,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public static ObjectValidator<T> Create(Action<ObjectValidator<T>> predicate)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+        ArgumentNullException.ThrowIfNull(predicate);
 
         // 创建类型验证器实例
         var validator = Create();
@@ -107,7 +107,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public IObjectValidator<T> When(Func<T, bool> condition)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+        ArgumentNullException.ThrowIfNull(condition);
 
         return WhenContext(context => condition((T)context.ObjectInstance));
     }
@@ -116,7 +116,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+        ArgumentNullException.ThrowIfNull(condition);
 
         Condition = condition;
 
@@ -140,7 +140,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     internal bool CanValidate(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         if (Condition is null)
         {
@@ -161,7 +161,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public bool IsValid(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 检查是否可以执行验证程序
         if (!CanValidate(instance))
@@ -183,7 +183,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 检查是否可以执行验证程序
         if (!CanValidate(instance))
@@ -209,7 +209,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public void Validate(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 获取验证结果
         var validationResults = GetValidationResults(instance);
@@ -233,7 +233,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     internal void AddPropertyValidator<TProperty>(PropertyValidator<T, TProperty> propertyValidator)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(propertyValidator, nameof(propertyValidator));
+        ArgumentNullException.ThrowIfNull(propertyValidator);
 
         _propertyValidators.Add(propertyValidator);
     }

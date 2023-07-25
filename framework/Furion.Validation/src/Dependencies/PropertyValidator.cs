@@ -102,7 +102,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> WithErrorMessage(string errorMessage)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessage, nameof(errorMessage));
+        ArgumentNullException.ThrowIfNull(errorMessage);
 
         ErrorMessageAccessor = (_) => errorMessage;
 
@@ -117,7 +117,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> WithErrorMessage(Func<T, string> errorMessageAccessor)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessageAccessor, nameof(errorMessageAccessor));
+        ArgumentNullException.ThrowIfNull(errorMessageAccessor);
 
         ErrorMessageAccessor = errorMessageAccessor;
 
@@ -132,7 +132,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> SetValidationObjectAccessor(Func<ValidatorBase, T, object?, object?> validationObjectAccessor)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(validationObjectAccessor, nameof(validationObjectAccessor));
+        ArgumentNullException.ThrowIfNull(validationObjectAccessor);
 
         ValidationObjectAccessor = validationObjectAccessor;
 
@@ -143,7 +143,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public IObjectValidator<T> When(Func<T, bool> condition)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+        ArgumentNullException.ThrowIfNull(condition);
 
         return WhenContext(context => condition((T)context.ObjectInstance));
     }
@@ -152,7 +152,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition, nameof(condition));
+        ArgumentNullException.ThrowIfNull(condition);
 
         Condition = condition;
 
@@ -175,7 +175,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal bool CanValidate(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         if (Condition is null)
         {
@@ -189,7 +189,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public bool IsValid(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 检查是否可以执行验证程序
         if (!CanValidate(instance))
@@ -226,7 +226,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public List<ValidationResult>? GetValidationResults(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 检查是否可以执行验证程序
         if (!CanValidate(instance))
@@ -277,7 +277,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public void Validate(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 获取验证结果
         var validationResults = GetValidationResults(instance);
@@ -301,7 +301,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal TProperty? GetPropertyValue(T instance)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         // 返回属性值
         return (TProperty?)GetPropertyInfo().GetValue(instance);
@@ -317,7 +317,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         var propertyInfo = typeof(T).GetProperty(PropertyName);
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(propertyInfo, nameof(propertyInfo));
+        ArgumentNullException.ThrowIfNull(propertyInfo);
 
         return propertyInfo;
     }
@@ -365,7 +365,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             : base(defaultErrorMessage)
         {
             // 空检查
-            ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
+            ArgumentNullException.ThrowIfNull(predicate);
 
             Predicate = predicate;
             ErrorMessage = defaultErrorMessage;
@@ -381,7 +381,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         public override bool IsValid(object? instance)
         {
             // 空检查
-            ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+            ArgumentNullException.ThrowIfNull(instance);
 
             return Predicate((T)instance);
         }
@@ -397,7 +397,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             }
 
             // 空检查
-            ArgumentNullException.ThrowIfNull(instance, nameof(instance));
+            ArgumentNullException.ThrowIfNull(instance);
 
             args.AddRange(_formatArgsAccessor((T)instance));
 
