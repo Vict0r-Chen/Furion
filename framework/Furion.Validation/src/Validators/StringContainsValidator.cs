@@ -53,7 +53,7 @@ public class StringContainsValidator : ValidatorBase
     public override bool IsValid(object? value)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
+        ArgumentException.ThrowIfNullOrEmpty(Value);
 
         return value switch
         {

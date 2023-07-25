@@ -338,7 +338,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         }
 
         // 检查是否设置了验证对象访问器
-        return ValidationObjectAccessor is not null ? ValidationObjectAccessor(validator, instance, propertyValue) : propertyValue;
+        return ValidationObjectAccessor is not null
+            ? ValidationObjectAccessor(validator, instance, propertyValue)
+            : propertyValue;
     }
 
     /// <summary>
@@ -357,7 +359,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         /// <param name="predicate">委托对象</param>
         /// <param name="defaultErrorMessage">默认错误消息</param>
         /// <param name="formatArgsAccessor">格式化参数访问器</param>
-        internal CustomValidator(Func<T, bool> predicate, string? defaultErrorMessage = default, Func<T, string?[]>? formatArgsAccessor = default)
+        internal CustomValidator(Func<T, bool> predicate
+            , string? defaultErrorMessage = default
+            , Func<T, string?[]>? formatArgsAccessor = default)
             : base(defaultErrorMessage)
         {
             // 空检查
