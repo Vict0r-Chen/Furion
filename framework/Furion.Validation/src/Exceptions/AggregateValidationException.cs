@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 组合的验证异常
+/// 组合验证异常
 /// </summary>
 public sealed class AggregateValidationException : AggregateException
 {

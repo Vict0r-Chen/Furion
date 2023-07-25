@@ -1736,7 +1736,7 @@
         </member>
         <member name="T:Furion.Validation.AggregateValidationException">
             <summary>
-            组合的验证异常
+            组合验证异常
             </summary>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor">
@@ -3190,7 +3190,7 @@
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsSameAs(System.Type)">
             <summary>
-            检查是否同一验证器类型
+            检查是否是同一验证器类型
             </summary>
             <param name="validatorType"><see cref="T:Furion.Validation.ValidatorBase"/></param>
             <returns><see cref="T:System.Boolean"/></returns>

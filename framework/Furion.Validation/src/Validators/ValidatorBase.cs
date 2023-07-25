@@ -118,13 +118,13 @@ public abstract class ValidatorBase
             return;
         }
 
-        // 创建组合异常并抛出
-        var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, value));
+        // 初始化组合验证异常并抛出
+        var validationExceptions = validationResults.Select(result => new ValidationException(result, null, value));
         throw new AggregateValidationException(validationExceptions);
     }
 
     /// <summary>
-    /// 检查是否同一验证器类型
+    /// 检查是否是同一验证器类型
     /// </summary>
     /// <param name="validatorType"><see cref="ValidatorBase"/></param>
     /// <returns><see cref="bool"/></returns>
