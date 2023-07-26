@@ -2955,11 +2955,12 @@
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
-            验证逻辑
+            检查属性注解（特性）合法性
             </summary>
             <param name="instance">对象实例</param>
-            <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
+            <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.Validation.SingleValidator">
             <summary>
@@ -3257,12 +3258,19 @@
         </member>
         <member name="M:Furion.Validation.ValueAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@,System.String)">
             <summary>
-            验证逻辑
+            检查单个值注解（特性）合法性
             </summary>
             <param name="value">对象值</param>
-            <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
+            <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <param name="name">显示名称</param>
             <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:Furion.Validation.ValueAnnotationValidator.EnsureLegalData(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+            <summary>
+            检查验证特性集合合法性
+            </summary>
+            <param name="validationAttributes">验证特性集合</param>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:Furion.Component.ValidationComponent">
             <summary>

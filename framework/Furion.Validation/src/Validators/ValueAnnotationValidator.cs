@@ -17,14 +17,14 @@ namespace Furion.Validation;
 /// <summary>
 /// 单个值注解（特性）验证器
 /// </summary>
-public partial class ValueAnnotationValidator : ValidatorBase
+public class ValueAnnotationValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="ValueAnnotationValidator"/>
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     public ValueAnnotationValidator(params ValidationAttribute[] validationAttributes)
-        : this(validationAttributes?.ToList()!)
+        : this((validationAttributes ?? throw new ArgumentNullException(nameof(validationAttributes))).ToList())
     {
     }
 
@@ -35,16 +35,16 @@ public partial class ValueAnnotationValidator : ValidatorBase
     public ValueAnnotationValidator(IList<ValidationAttribute> validationAttributes)
         : base()
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(validationAttributes, nameof(validationAttributes));
+        // 检查验证特性集合合法性
+        EnsureLegalData(validationAttributes);
 
-        Attributes = validationAttributes.ToList();
+        Attributes = validationAttributes;
     }
 
     /// <summary>
     /// 验证特性集合
     /// </summary>
-    public IList<ValidationAttribute> Attributes { get; }
+    public IList<ValidationAttribute> Attributes { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -55,13 +55,14 @@ public partial class ValueAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
+        // 检查单个值注解（特性）合法性
         if (TryValidate(value, out var validationResults, name))
         {
             return null;
         }
 
-        // 处理自定义错误消息
-        if (!string.IsNullOrEmpty(ErrorMessage))
+        // 检查是否配置了自定义错误消息
+        if (ErrorMessage is not null)
         {
             validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
         }
@@ -70,42 +71,60 @@ public partial class ValueAnnotationValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 验证逻辑
+    /// 检查单个值注解（特性）合法性
     /// </summary>
     /// <param name="value">对象值</param>
-    /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
+    /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <param name="name">显示名称</param>
     /// <returns><see cref="bool"/></returns>
     internal bool TryValidate(object? value, out List<ValidationResult> validationResults, string name)
     {
-        var displayName = name ?? value?.GetType().Name ?? "Value";
+        // 检查验证特性集合合法性
+        EnsureLegalData(Attributes);
+
+        // 字段/显示名称
+        var memberName = name ?? value?.GetType()?.Name ?? "Value";
 
         // 如果定义了 [Required] 特性则优先验证
         var requiredAttribute = Attributes.OfType<RequiredAttribute>().FirstOrDefault();
-        if (requiredAttribute is not null
-            && value is null)
+        if (requiredAttribute is not null && value is null)
         {
-            // 格式化错误消息
-            var errorMessage = requiredAttribute.FormatErrorMessage(displayName);
-
-            validationResults = new List<ValidationResult>()
+            validationResults = new()
             {
-                new (errorMessage,new[]{ displayName })
+                new (requiredAttribute.FormatErrorMessage(memberName),new[]{ memberName })
             };
 
             return false;
         }
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
 
-        // 调用 Validator 静态类验证
+        // 初始化验证上下文
         var validationContext = new ValidationContext(value)
         {
-            MemberName = displayName
+            MemberName = memberName
         };
-        validationResults = new List<ValidationResult>();
+        validationResults = new();
 
+        // 调用 Validator.TryValidateValue 静态方法验证
         return Validator.TryValidateValue(value, validationContext, validationResults, Attributes);
+    }
+
+    /// <summary>
+    /// 检查验证特性集合合法性
+    /// </summary>
+    /// <param name="validationAttributes">验证特性集合</param>
+    /// <exception cref="ArgumentException"></exception>
+    internal static void EnsureLegalData(IList<ValidationAttribute> validationAttributes)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validationAttributes);
+
+        // 子项空检查
+        if (validationAttributes.Any(attribute => attribute is null))
+        {
+            throw new ArgumentException("The validation attribute collection contains a null value.", nameof(validationAttributes));
+        }
     }
 }

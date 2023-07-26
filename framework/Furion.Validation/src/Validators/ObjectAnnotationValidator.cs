@@ -56,7 +56,7 @@ public class ObjectAnnotationValidator : ValidatorBase
 
         // 初始化验证上下文
         var validationContext = new ValidationContext(instance);
-        validationResults = new List<ValidationResult>();
+        validationResults = new();
 
         // 调用 Validator.TryValidateObject 静态方法验证
         return Validator.TryValidateObject(instance, validationContext, validationResults, true);

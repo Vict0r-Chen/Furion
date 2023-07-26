@@ -26,7 +26,7 @@ public class PropertyAnnotationValidator<T> : PropertyAnnotationValidator
     /// </summary>
     /// <param name="propertyExpression"><see cref="Expression{TDelegate}"/></param>
     public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
-        : base(propertyExpression?.GetPropertyName()!)
+        : base(propertyExpression is null ? null! : propertyExpression.GetPropertyName())
     {
     }
 }
@@ -41,6 +41,7 @@ public class PropertyAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="propertyName">属性名称</param>
     public PropertyAnnotationValidator(string propertyName)
+        : base()
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
@@ -62,6 +63,7 @@ public class PropertyAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
+        // 检查属性注解（特性）合法性
         if (TryValidate(value, out var validationResults))
         {
             return null;
@@ -70,40 +72,47 @@ public class PropertyAnnotationValidator : ValidatorBase
         // 检查是否配置了自定义错误消息
         if (ErrorMessage is not null)
         {
-            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
+            var memberName = name ?? PropertyName;
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberName, value), new[] { memberName }));
         }
 
         return validationResults;
     }
 
     /// <summary>
-    /// 验证逻辑
+    /// 检查属性注解（特性）合法性
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
+    /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     internal bool TryValidate(object? instance, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
         ArgumentException.ThrowIfNullOrWhiteSpace(PropertyName);
 
-        // 根据属性名称查找属性对象
-        var propertyInfo = instance.GetType().GetProperty(PropertyName);
+        // 查找类型对应的属性
+        var instanceType = instance.GetType();
+        var propertyInfo = instanceType.GetProperty(PropertyName);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyInfo);
 
-        // 获取属性值
-        var propertyValue = propertyInfo.GetValue(instance);
+        // 检查属性是否可读
+        if (!propertyInfo.CanRead)
+        {
+            throw new InvalidOperationException($"The property `{PropertyName}` in type `{instanceType}` is not readable.");
+        }
 
-        // 调用 Validator 静态类验证
+        // 初始化验证上下文
         var validationContext = new ValidationContext(instance)
         {
             MemberName = PropertyName
         };
-        validationResults = new List<ValidationResult>();
+        validationResults = new();
 
-        return Validator.TryValidateProperty(propertyValue, validationContext, validationResults);
+        // 调用 Validator.TryValidateProperty 静态方法验证
+        return Validator.TryValidateProperty(propertyInfo.GetValue(instance), validationContext, validationResults);
     }
 }
