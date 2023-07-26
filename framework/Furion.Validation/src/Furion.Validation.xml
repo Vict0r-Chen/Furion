@@ -2374,7 +2374,7 @@
         </member>
         <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.Func{System.String})">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            <inheritdoc cref="T:Furion.Validation.EndsWithValidator"/>
             </summary>
             <param name="searchValueAccessor">检索的值访问器</param>
         </member>
@@ -2405,7 +2405,7 @@
         </member>
         <member name="M:Furion.Validation.EqualValidator.#ctor(System.Func{System.Object})">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            <inheritdoc cref="T:Furion.Validation.EqualValidator"/>
             </summary>
             <param name="compareValueAccessor">比较的值访问器</param>
         </member>
@@ -2750,7 +2750,7 @@
         </member>
         <member name="M:Furion.Validation.NotEqualValidator.#ctor(System.Func{System.Object})">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            <inheritdoc cref="T:Furion.Validation.NotEqualValidator"/>
             </summary>
             <param name="compareValueAccessor">比较的值访问器</param>
         </member>
@@ -3008,7 +3008,7 @@
         </member>
         <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.Func{System.String})">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            <inheritdoc cref="T:Furion.Validation.StartsWithValidator"/>
             </summary>
             <param name="searchValueAccessor">检索的值访问器</param>
         </member>
@@ -3045,7 +3045,7 @@
         </member>
         <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.Func{System.String})">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            <inheritdoc cref="T:Furion.Validation.StringContainsValidator"/>
             </summary>
             <param name="searchValueAccessor">检索的值访问器</param>
         </member>

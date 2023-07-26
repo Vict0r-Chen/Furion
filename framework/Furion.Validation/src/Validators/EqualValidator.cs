@@ -29,7 +29,7 @@ public class EqualValidator : ValidatorBase
     }
 
     /// <summary>
-    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// <inheritdoc cref="EqualValidator"/>
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
     public EqualValidator(Func<object?> compareValueAccessor)

@@ -29,7 +29,7 @@ public class NotEqualValidator : ValidatorBase
     }
 
     /// <summary>
-    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// <inheritdoc cref="NotEqualValidator"/>
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
     public NotEqualValidator(Func<object?> compareValueAccessor)

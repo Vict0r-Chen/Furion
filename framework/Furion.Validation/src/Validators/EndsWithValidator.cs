@@ -38,7 +38,7 @@ public class EndsWithValidator : ValidatorBase
     }
 
     /// <summary>
-    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// <inheritdoc cref="EndsWithValidator"/>
     /// </summary>
     /// <param name="searchValueAccessor">检索的值访问器</param>
     public EndsWithValidator(Func<string?> searchValueAccessor)

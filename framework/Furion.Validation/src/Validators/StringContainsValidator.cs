@@ -38,7 +38,7 @@ public class StringContainsValidator : ValidatorBase
     }
 
     /// <summary>
-    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// <inheritdoc cref="StringContainsValidator"/>
     /// </summary>
     /// <param name="searchValueAccessor">检索的值访问器</param>
     public StringContainsValidator(Func<string?> searchValueAccessor)
