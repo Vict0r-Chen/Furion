@@ -1809,16 +1809,6 @@
               查找类似 The field {0} is not a valid color value. 的本地化字符串。
             </summary>
         </member>
-        <member name="P:Furion.Validation.Resources.Strings.CompositeValidator_Invalid">
-            <summary>
-              查找类似 The field {0} is invalid. 的本地化字符串。
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.Resources.Strings.CustomValidator_Invalid">
-            <summary>
-              查找类似 The field {0} is invalid. 的本地化字符串。
-            </summary>
-        </member>
         <member name="P:Furion.Validation.Resources.Strings.DomainValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid domain format. 的本地化字符串。
@@ -2770,11 +2760,6 @@
             对象注解（特性）验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ObjectAnnotationValidator.#ctor">
-            <summary>
-            <inheritdoc cref="T:Furion.Validation.ObjectAnnotationValidator"/>
-            </summary>
-        </member>
         <member name="M:Furion.Validation.ObjectAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>
@@ -2905,7 +2890,7 @@
         </member>
         <member name="T:Furion.Validation.PredicateValidator`1">
             <summary>
-            委托对象验证器
+            自定义委托验证器
             </summary>
             <typeparam name="T">泛型类型</typeparam>
         </member>
@@ -2913,22 +2898,22 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.PredicateValidator`1"/>
             </summary>
-            <param name="predicate">委托对象</param>
+            <param name="predicate">自定义委托</param>
         </member>
         <member name="T:Furion.Validation.PredicateValidator">
             <summary>
-            委托对象验证器
+            自定义委托验证器
             </summary>
         </member>
         <member name="M:Furion.Validation.PredicateValidator.#ctor(System.Func{System.Object,System.Boolean})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.PredicateValidator"/>
             </summary>
-            <param name="predicate">委托对象</param>
+            <param name="predicate">自定义委托</param>
         </member>
         <member name="P:Furion.Validation.PredicateValidator.Predicate">
             <summary>
-            委托对象
+            自定义委托
             </summary>
         </member>
         <member name="M:Furion.Validation.PredicateValidator.IsValid(System.Object)">

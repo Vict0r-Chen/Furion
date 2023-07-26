@@ -106,24 +106,6 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is invalid. 的本地化字符串。
-        /// </summary>
-        internal static string CompositeValidator_Invalid {
-            get {
-                return ResourceManager.GetString("CompositeValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The field {0} is invalid. 的本地化字符串。
-        /// </summary>
-        internal static string CustomValidator_Invalid {
-            get {
-                return ResourceManager.GetString("CustomValidator_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 The field {0} is not a valid domain format. 的本地化字符串。
         /// </summary>
         internal static string DomainValidator_Invalid {

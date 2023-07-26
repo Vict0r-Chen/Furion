@@ -19,13 +19,6 @@ namespace Furion.Validation;
 /// </summary>
 public class ObjectAnnotationValidator : ValidatorBase
 {
-    /// <summary>
-    /// <inheritdoc cref="ObjectAnnotationValidator"/>
-    /// </summary>
-    public ObjectAnnotationValidator()
-    {
-    }
-
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {

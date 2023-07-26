@@ -33,7 +33,7 @@ public class CompositeValidator : ValidatorBase
     /// </summary>
     /// <param name="validators">验证器集合</param>
     public CompositeValidator(IList<ValidatorBase> validators)
-        : base(() => Strings.CompositeValidator_Invalid)
+        : base()
     {
         // 检查验证器集合合法性
         EnsureLegalData(validators);
