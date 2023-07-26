@@ -154,7 +154,7 @@
     <value>The field {0} must be greater than {1}.</value>
   </data>
   <data name="IdCardNumberValidator_invalid" xml:space="preserve">
-    <value>The field {0} is not a valid ID card number format.</value>
+    <value>The field {0} is not a valid Id card number format.</value>
   </data>
   <data name="LessThanOrEqualToValidator_Invalid" xml:space="preserve">
     <value>The field {0} must be less than or equal to {1}.</value>

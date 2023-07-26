@@ -169,7 +169,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
+        ///   查找类似 The field {0} is not a valid Id card number format. 的本地化字符串。
         /// </summary>
         internal static string IdCardNumberValidator_invalid {
             get {
