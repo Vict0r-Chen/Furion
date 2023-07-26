@@ -20,12 +20,6 @@ namespace Furion.Validation;
 public enum ValidatorRelationship
 {
     /// <summary>
-    /// 缺省值
-    /// </summary>
-    /// <remarks><seealso cref="And"/></remarks>
-    Default = 0,
-
-    /// <summary>
     /// 并且
     /// </summary>
     And,

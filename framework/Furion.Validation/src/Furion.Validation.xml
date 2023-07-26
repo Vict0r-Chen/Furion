@@ -962,12 +962,6 @@
             验证器关系
             </summary>
         </member>
-        <member name="F:Furion.Validation.ValidatorRelationship.Default">
-            <summary>
-            缺省值
-            </summary>
-            <remarks><seealso cref="F:Furion.Validation.ValidatorRelationship.And"/></remarks>
-        </member>
         <member name="F:Furion.Validation.ValidatorRelationship.And">
             <summary>
             并且
@@ -2311,7 +2305,7 @@
             </summary>
             <param name="validators">验证器集合</param>
         </member>
-        <member name="P:Furion.Validation.CompositeValidator.ValidatorCollection">
+        <member name="P:Furion.Validation.CompositeValidator.Validators">
             <summary>
             验证器集合
             </summary>
@@ -2327,10 +2321,10 @@
         </member>
         <member name="M:Furion.Validation.CompositeValidator.EnsureLegalData(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
             <summary>
-            合法数据检查
+            检查验证器集合合法性
             </summary>
             <param name="validators">验证器集合</param>
-            <exception cref="T:System.InvalidOperationException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:Furion.Validation.DomainValidator">
             <summary>

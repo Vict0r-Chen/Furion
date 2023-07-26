@@ -24,7 +24,7 @@ public class CompositeValidator : ValidatorBase
     /// </summary>
     /// <param name="validators">验证器集合</param>
     public CompositeValidator(params ValidatorBase[] validators)
-        : this(validators?.ToList()!)
+        : this((validators ?? throw new ArgumentNullException(nameof(validators))).ToList())
     {
     }
 
@@ -35,16 +35,16 @@ public class CompositeValidator : ValidatorBase
     public CompositeValidator(IList<ValidatorBase> validators)
         : base(() => Strings.CompositeValidator_Invalid)
     {
-        // 合法数据检查
+        // 检查验证器集合合法性
         EnsureLegalData(validators);
 
-        ValidatorCollection = validators;
+        Validators = validators;
     }
 
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public IList<ValidatorBase> ValidatorCollection { get; }
+    public IList<ValidatorBase> Validators { get; init; }
 
     /// <inheritdoc cref="ValidatorRelationship" />
     public ValidatorRelationship Relationship { get; set; }
@@ -52,13 +52,19 @@ public class CompositeValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        // 合法数据检查
-        EnsureLegalData(ValidatorCollection);
+        // 检查验证器集合合法性
+        EnsureLegalData(Validators);
+
+        // 空集合检查
+        if (Validators.Count == 0)
+        {
+            return true;
+        }
 
         return Relationship switch
         {
-            ValidatorRelationship.Default or ValidatorRelationship.And => ValidatorCollection.All(validator => validator.IsValid(value)),
-            ValidatorRelationship.Or => ValidatorCollection.Any(validator => validator.IsValid(value)),
+            ValidatorRelationship.And => Validators.All(validator => validator.IsValid(value)),
+            ValidatorRelationship.Or => Validators.Any(validator => validator.IsValid(value)),
             _ => false,
         };
     }
@@ -66,39 +72,36 @@ public class CompositeValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        var validationResults = new List<ValidationResult>();
-
-        // 处理验证器关系为 And 或者为 Or 且全部验证失败的情况
-        if (Relationship is ValidatorRelationship.Default or ValidatorRelationship.And
-            || (Relationship is ValidatorRelationship.Or
-                && !ValidatorCollection.All(validator => validator.IsValid(value))))
+        // 检查值是否有效
+        if (IsValid(value))
         {
-            validationResults.AddRange(ValidatorCollection
-                .SelectMany(validator => validator.GetValidationResults(value, name) ?? Enumerable.Empty<ValidationResult>()));
+            return null;
         }
 
-        // 处理自定义错误消息情况
-        if (ErrorMessage is not null && validationResults.Count > 0)
+        // 初始化验证结果集合
+        var validationResults = Validators.SelectMany(validator => validator.GetValidationResults(value, name) ?? Enumerable.Empty<ValidationResult>())
+            .ToList();
+
+        // 检查是否配置了自定义错误消息
+        if (ErrorMessage is not null)
         {
-            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
+            validationResults.Insert(0, new(FormatErrorMessage(name, value), new[] { name }));
         }
 
-        return validationResults.Count == 0
-            ? null
-            : validationResults;
+        return validationResults;
     }
 
     /// <summary>
-    /// 合法数据检查
+    /// 检查验证器集合合法性
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     internal static void EnsureLegalData(IList<ValidatorBase> validators)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(validators, nameof(validators));
+        ArgumentNullException.ThrowIfNull(validators);
 
-        // 检查集合中是否存在 null 值
+        // 子项空检查
         if (validators.Any(validator => validator is null))
         {
             throw new ArgumentException("The validator collection contains a null value.", nameof(validators));
