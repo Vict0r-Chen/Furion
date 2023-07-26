@@ -17,6 +17,15 @@ namespace Furion.Validation.Tests;
 public class GreaterThanValidatorTests
 {
     [Fact]
+    public void New_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var validator = new GreaterThanValidator(null!);
+        });
+    }
+
+    [Fact]
     public void New_Default()
     {
         var validator = new GreaterThanValidator(30);

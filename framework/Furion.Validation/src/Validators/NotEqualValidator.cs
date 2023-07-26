@@ -52,12 +52,7 @@ public class NotEqualValidator : ValidatorBase
         // 空检查
         ArgumentNullException.ThrowIfNull(CompareValue);
 
-        if (value is null)
-        {
-            return true;
-        }
-
-        return !value.Equals(CompareValue);
+        return value is null || !value.Equals(CompareValue);
     }
 
     /// <inheritdoc />

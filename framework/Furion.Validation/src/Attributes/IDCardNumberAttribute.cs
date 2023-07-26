@@ -24,7 +24,7 @@ public class IdCardNumberAttribute : ValidationAttribute
     /// <inheritdoc cref="IdCardNumberAttribute"/>
     /// </summary>
     public IdCardNumberAttribute()
-        : base(() => Strings.IDCardNumberValidator_invalid)
+        : base(() => Strings.IdCardNumberValidator_invalid)
     {
     }
 

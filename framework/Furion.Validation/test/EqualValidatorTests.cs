@@ -14,42 +14,36 @@
 
 namespace Furion.Validation.Tests;
 
-public class GreaterThanOrEqualToValidatorTests
+public class EqualValidatorTests
 {
     [Fact]
     public void New_Invalid_Parameters()
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new GreaterThanOrEqualToValidator(null!);
+            var validator = new EqualValidator(null!);
         });
     }
 
     [Fact]
     public void New_Default()
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
         Assert.NotNull(validator);
         Assert.Null(validator.ErrorMessage);
-        Assert.Equal(30, validator.CompareValue);
+        Assert.Equal("furion", validator.CompareValue);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} must be greater than or equal to {1}.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} must be equal to {1}.", validator._errorMessageResourceAccessor());
 
-        var validator2 = new GreaterThanOrEqualToValidator(30.0);
-        Assert.Equal(30.0, validator2.CompareValue);
-
-        var validator3 = new GreaterThanOrEqualToValidator("30");
-        Assert.Equal("30", validator3.CompareValue);
-
-        var validator4 = new GreaterThanOrEqualToValidator(() => 30);
-        Assert.Equal(30, validator4.CompareValue);
+        var validator2 = new EqualValidator(() => "furion");
+        Assert.Equal("furion", validator2.CompareValue);
     }
 
     [Fact]
     public void IsValid_Invalid_Parameters()
     {
-        var validator = new GreaterThanOrEqualToValidator(() => null);
+        var validator = new EqualValidator(() => null);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -59,16 +53,11 @@ public class GreaterThanOrEqualToValidatorTests
 
     [Theory]
     [InlineData(null, true)]
-    [InlineData(30, true)]
-    [InlineData(31, true)]
-    [InlineData(29, false)]
-    [InlineData(30.0, false)]
-    [InlineData(31.0, false)]
-    [InlineData("30", false)]
-    [InlineData("31", false)]
+    [InlineData("furion", true)]
+    [InlineData("fur", false)]
     public void IsValid_ReturnOK(object? value, bool result)
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
         Assert.Equal(result, validator.IsValid(value));
     }
@@ -76,27 +65,27 @@ public class GreaterThanOrEqualToValidatorTests
     [Fact]
     public void GetValidationResults_ReturnOK()
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
-        var validationResultsOfSucceed = validator.GetValidationResults(31, "data");
+        var validationResultsOfSucceed = validator.GetValidationResults("furion", "data");
         Assert.Null(validationResultsOfSucceed);
 
-        var validationResultsOfFailure = validator.GetValidationResults(29, "data");
+        var validationResultsOfFailure = validator.GetValidationResults("fur", "data");
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data must be greater than or equal to 30.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data must be equal to furion.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
     public void GetValidationResults_WithErrorMessage_ReturnOK()
     {
-        var validator = new GreaterThanOrEqualToValidator(30)
+        var validator = new EqualValidator("furion")
         {
             ErrorMessage = "数据 {0} 验证失败"
         };
 
-        var validationResultsOfFailure = validator.GetValidationResults(29, "data");
+        var validationResultsOfFailure = validator.GetValidationResults("fur", "data");
         Assert.NotNull(validationResultsOfFailure);
         Assert.Equal("数据 data 验证失败", validationResultsOfFailure.First().ErrorMessage);
     }
@@ -104,39 +93,39 @@ public class GreaterThanOrEqualToValidatorTests
     [Fact]
     public void FormatErrorMessage_ReturnOK()
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
-        Assert.Equal("The field data must be greater than or equal to 30.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data must be equal to furion.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
     public void Validate_ReturnOK()
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
-        validator.Validate(31, "data");
+        validator.Validate("furion", "data");
     }
 
     [Fact]
     public void Validate_Failure()
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
         var exception = Assert.Throws<AggregateValidationException>(() =>
         {
-            validator.Validate(29, "data");
+            validator.Validate("fur", "data");
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data must be greater than or equal to 30.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data must be equal to furion.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]
-    [InlineData(typeof(GreaterThanOrEqualToValidator), true)]
+    [InlineData(typeof(EqualValidator), true)]
     [InlineData(typeof(ValidatorBase), false)]
     public void IsSameAs_ReturnOK(Type type, bool result)
     {
-        var validator = new GreaterThanOrEqualToValidator(30);
+        var validator = new EqualValidator("furion");
 
         Assert.Equal(result, validator.IsSameAs(type));
     }

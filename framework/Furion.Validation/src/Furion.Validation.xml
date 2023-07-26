@@ -1844,7 +1844,7 @@
               查找类似 The field {0} must be greater than {1}. 的本地化字符串。
             </summary>
         </member>
-        <member name="P:Furion.Validation.Resources.Strings.IDCardNumberValidator_invalid">
+        <member name="P:Furion.Validation.Resources.Strings.IdCardNumberValidator_invalid">
             <summary>
               查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
             </summary>

@@ -171,9 +171,9 @@ namespace Furion.Validation.Resources {
         /// <summary>
         ///   查找类似 The field {0} is not a valid ID card number format. 的本地化字符串。
         /// </summary>
-        internal static string IDCardNumberValidator_invalid {
+        internal static string IdCardNumberValidator_invalid {
             get {
-                return ResourceManager.GetString("IDCardNumberValidator_invalid", resourceCulture);
+                return ResourceManager.GetString("IdCardNumberValidator_invalid", resourceCulture);
             }
         }
         

@@ -23,7 +23,7 @@ public partial class IdCardNumberValidator : ValidatorBase
     /// <inheritdoc cref="IdCardNumberValidator"/>
     /// </summary>
     public IdCardNumberValidator()
-        : base(() => Strings.IDCardNumberValidator_invalid)
+        : base(() => Strings.IdCardNumberValidator_invalid)
     {
     }
 

@@ -17,6 +17,15 @@ namespace Furion.Validation.Tests;
 public class LessThanValidatorTests
 {
     [Fact]
+    public void New_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var validator = new LessThanValidator(null!);
+        });
+    }
+
+    [Fact]
     public void New_Default()
     {
         var validator = new LessThanValidator(30);
