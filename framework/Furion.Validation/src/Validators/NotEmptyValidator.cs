@@ -30,12 +30,6 @@ public class NotEmptyValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
-        {
-            return false;
-        }
-
-        return value.TryGetCount(out var count)
-               && count > 0;
+        return value is null || (value.TryGetCount(out var count) && count > 0);
     }
 }

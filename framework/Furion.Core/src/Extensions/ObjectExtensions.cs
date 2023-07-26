@@ -27,6 +27,7 @@ internal static class ObjectExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool TryGetCount(this object obj, out int count)
     {
+        // 处理可直接获取长度的类型
         switch (obj)
         {
             // 检查对象是否是字符类型
@@ -47,7 +48,7 @@ internal static class ObjectExtensions
         var runtimeProperty = obj.GetType()
             .GetRuntimeProperty("Count");
 
-        // 获取 Count 属性值
+        // 反射获取 Count 属性值
         if (runtimeProperty is not null
             && runtimeProperty.CanRead
             && runtimeProperty.PropertyType == typeof(int))

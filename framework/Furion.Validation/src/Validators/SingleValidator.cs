@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 单个值验证器
+/// 单项验证器
 /// </summary>
 public class SingleValidator : ValidatorBase
 {
@@ -30,12 +30,6 @@ public class SingleValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        if (value is null)
-        {
-            return false;
-        }
-
-        return value.TryGetCount(out var count)
-               && count == 1;
+        return value is null || (value.TryGetCount(out var count) && count == 1);
     }
 }

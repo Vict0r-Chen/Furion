@@ -1886,7 +1886,7 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.SingleValidator_Invalid">
             <summary>
-              查找类似 The field {0} only allows for a single value. 的本地化字符串。
+              查找类似 The field {0} only allows a single item. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StartsWithValidator_Invalid">
@@ -2978,7 +2978,7 @@
         </member>
         <member name="T:Furion.Validation.SingleValidator">
             <summary>
-            单个值验证器
+            单项验证器
             </summary>
         </member>
         <member name="M:Furion.Validation.SingleValidator.#ctor">

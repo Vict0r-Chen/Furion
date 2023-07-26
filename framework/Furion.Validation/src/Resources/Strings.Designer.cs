@@ -241,7 +241,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} only allows for a single value. 的本地化字符串。
+        ///   查找类似 The field {0} only allows a single item. 的本地化字符串。
         /// </summary>
         internal static string SingleValidator_Invalid {
             get {
