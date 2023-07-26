@@ -166,6 +166,19 @@ public class CompositeValidatorTests
     }
 
     [Fact]
+    public void Validate_Invalid_Parameters()
+    {
+        var validator = new CompositeValidator();
+        validator.Validators.Add(null!);
+
+        var exception = Assert.Throws<ArgumentException>(() =>
+        {
+            validator.Validate(null, "data");
+        });
+        Assert.Equal("The validator collection contains a null value. (Parameter 'validators')", exception.Message);
+    }
+
+    [Fact]
     public void Validate_ReturnOK()
     {
         var validator = new CompositeValidator(new ChineseNameValidator(), new ChineseValidator());

@@ -33,7 +33,7 @@ public class StartsWithValidator : ValidatorBase
     /// </summary>
     /// <param name="searchValue">检索的值</param>
     public StartsWithValidator(string searchValue)
-        : base(() => searchValue)
+        : this(() => searchValue)
     {
     }
 
@@ -66,14 +66,14 @@ public class StartsWithValidator : ValidatorBase
 
         return value switch
         {
-            null => false,
+            null => true,
             string text => text.StartsWith(SearchValue, Comparison),
             _ => false
         };
     }
 
     /// <inheritdoc />
-    public override string FormatErrorMessage(string name, object? value = default)
+    public override string FormatErrorMessage(string name, object? value = null)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, SearchValue);
     }

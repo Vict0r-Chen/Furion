@@ -56,7 +56,7 @@ public class EqualValidator : ValidatorBase
     }
 
     /// <inheritdoc />
-    public override string FormatErrorMessage(string name, object? value = default)
+    public override string FormatErrorMessage(string name, object? value = null)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, CompareValue);
     }

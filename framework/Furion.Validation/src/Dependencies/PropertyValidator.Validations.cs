@@ -687,7 +687,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <param name="predicate">委托对象</param>
     /// <param name="defaultErrorMessage">默认错误消息</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Custom(Func<T, bool> predicate, string? defaultErrorMessage = default)
+    public PropertyValidator<T, TProperty> Custom(Func<T, bool> predicate, string? defaultErrorMessage = null)
     {
         Validators.Add(new CustomValidator(predicate, defaultErrorMessage));
 

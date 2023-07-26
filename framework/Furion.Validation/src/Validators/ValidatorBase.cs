@@ -96,7 +96,7 @@ public abstract class ValidatorBase
     /// <param name="name">显示名称</param>
     /// <param name="value">对象值</param>
     /// <returns><see cref="string"/></returns>
-    public virtual string FormatErrorMessage(string name, object? value = default)
+    public virtual string FormatErrorMessage(string name, object? value = null)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name);
     }

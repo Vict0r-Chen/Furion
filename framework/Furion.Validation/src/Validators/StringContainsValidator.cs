@@ -33,7 +33,7 @@ public class StringContainsValidator : ValidatorBase
     /// </summary>
     /// <param name="searchValue">检索的值</param>
     public StringContainsValidator(string searchValue)
-        : base(() => searchValue)
+        : this(() => searchValue)
     {
     }
 
@@ -66,14 +66,14 @@ public class StringContainsValidator : ValidatorBase
 
         return value switch
         {
-            null => false,
+            null => true,
             string text => text.Contains(SearchValue, Comparison),
             _ => false
         };
     }
 
     /// <inheritdoc />
-    public override string FormatErrorMessage(string name, object? value = default)
+    public override string FormatErrorMessage(string name, object? value = null)
     {
         return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, SearchValue);
     }

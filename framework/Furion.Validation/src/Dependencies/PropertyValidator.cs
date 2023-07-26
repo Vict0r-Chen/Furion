@@ -361,7 +361,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         /// <param name="formatArgsAccessor">格式化参数访问器</param>
         internal CustomValidator(Func<T, bool> predicate
             , string? defaultErrorMessage = default
-            , Func<T, string?[]>? formatArgsAccessor = default)
+            , Func<T, string?[]>? formatArgsAccessor = null)
             : base(defaultErrorMessage)
         {
             // 空检查
@@ -387,7 +387,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         }
 
         /// <inheritdoc />
-        public override string FormatErrorMessage(string name, object? instance = default)
+        public override string FormatErrorMessage(string name, object? instance = null)
         {
             var args = new List<string?> { name };
 
