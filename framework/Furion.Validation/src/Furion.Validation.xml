@@ -2768,10 +2768,10 @@
         </member>
         <member name="M:Furion.Validation.ObjectAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
-            验证逻辑
+            检查对象注解（特性）合法性
             </summary>
-            <param name="value">对象值</param>
-            <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
+            <param name="instance">对象实例</param>
+            <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Validation.PasswordValidator">

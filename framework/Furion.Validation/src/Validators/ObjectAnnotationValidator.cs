@@ -28,18 +28,14 @@ public class ObjectAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
-        if (value is null)
+        // 检查对象注解（特性）合法性
+        if (value is null || TryValidate(value, out var validationResults))
         {
             return null;
         }
 
-        if (TryValidate(value, out var validationResults))
-        {
-            return null;
-        }
-
-        // 处理自定义错误消息
-        if (!string.IsNullOrEmpty(ErrorMessage))
+        // 检查是否配置了自定义错误消息
+        if (ErrorMessage is not null)
         {
             validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
         }
@@ -48,20 +44,21 @@ public class ObjectAnnotationValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 验证逻辑
+    /// 检查对象注解（特性）合法性
     /// </summary>
-    /// <param name="value">对象值</param>
-    /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
+    /// <param name="instance">对象实例</param>
+    /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool TryValidate(object value, out List<ValidationResult> validationResults)
+    internal static bool TryValidate(object instance, out List<ValidationResult> validationResults)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
+        ArgumentNullException.ThrowIfNull(instance);
 
-        // 调用 Validator 静态类验证
-        var validationContext = new ValidationContext(value);
+        // 初始化验证上下文
+        var validationContext = new ValidationContext(instance);
         validationResults = new List<ValidationResult>();
 
-        return Validator.TryValidateObject(value, validationContext, validationResults, true);
+        // 调用 Validator.TryValidateObject 静态方法验证
+        return Validator.TryValidateObject(instance, validationContext, validationResults, true);
     }
 }

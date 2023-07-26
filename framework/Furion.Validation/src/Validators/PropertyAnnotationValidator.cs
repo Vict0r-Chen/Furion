@@ -43,7 +43,7 @@ public class PropertyAnnotationValidator : ValidatorBase
     public PropertyAnnotationValidator(string propertyName)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName, nameof(propertyName));
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
 
         PropertyName = propertyName;
     }
@@ -67,8 +67,8 @@ public class PropertyAnnotationValidator : ValidatorBase
             return null;
         }
 
-        // 处理自定义错误消息
-        if (!string.IsNullOrEmpty(ErrorMessage))
+        // 检查是否配置了自定义错误消息
+        if (ErrorMessage is not null)
         {
             validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
         }
@@ -85,14 +85,14 @@ public class PropertyAnnotationValidator : ValidatorBase
     internal bool TryValidate(object? instance, out List<ValidationResult> validationResults)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(instance, nameof(instance));
-        ArgumentException.ThrowIfNullOrWhiteSpace(PropertyName, nameof(PropertyName));
+        ArgumentNullException.ThrowIfNull(instance);
+        ArgumentException.ThrowIfNullOrWhiteSpace(PropertyName);
 
         // 根据属性名称查找属性对象
         var propertyInfo = instance.GetType().GetProperty(PropertyName);
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(propertyInfo, nameof(propertyInfo));
+        ArgumentNullException.ThrowIfNull(propertyInfo);
 
         // 获取属性值
         var propertyValue = propertyInfo.GetValue(instance);
