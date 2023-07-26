@@ -14,32 +14,29 @@
 
 namespace Furion.Validation.Tests;
 
-public class IdCardNumberValidatorTests
+public class TelephoneValidatorTests
 {
     [Fact]
     public void New_Default()
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
         Assert.NotNull(validator);
         Assert.Null(validator.ErrorMessage);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} is not a valid Id card number format.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} is not a valid telephone format.", validator._errorMessageResourceAccessor());
     }
 
     [Theory]
     [InlineData(null, true)]
-    [InlineData(622223199912051311, true)]
-    [InlineData("622223199912051311", true)]
-    [InlineData("12345619991205131x", true)]
-    [InlineData(123456991010193, true)]
-    [InlineData("123456991010193", true)]
-    [InlineData(1234569910101933, false)]
-    [InlineData("1234569910101933", false)]
-    [InlineData("12345619991205131a", false)]
+    [InlineData("0341-86091234", true)]
+    [InlineData("0760-88809963", true)]
+    [InlineData("020-88809963", true)]
+    [InlineData("076088809963", false)]
+    [InlineData("13800138000", false)]
     public void IsValid_ReturnOK(object? value, bool result)
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
         Assert.Equal(result, validator.IsValid(value));
     }
@@ -47,27 +44,27 @@ public class IdCardNumberValidatorTests
     [Fact]
     public void GetValidationResults_ReturnOK()
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
-        var validationResultsOfSucceed = validator.GetValidationResults("622223199912051311", "data");
+        var validationResultsOfSucceed = validator.GetValidationResults("0341-86091234", "data");
         Assert.Null(validationResultsOfSucceed);
 
-        var validationResultsOfFailure = validator.GetValidationResults("1234569910101933", "data");
+        var validationResultsOfFailure = validator.GetValidationResults("13800138000", "data");
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data is not a valid Id card number format.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data is not a valid telephone format.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
     public void GetValidationResults_WithErrorMessage_ReturnOK()
     {
-        var validator = new IdCardNumberValidator
+        var validator = new TelephoneValidator
         {
             ErrorMessage = "数据 {0} 验证失败"
         };
 
-        var validationResultsOfFailure = validator.GetValidationResults("1234569910101933", "data");
+        var validationResultsOfFailure = validator.GetValidationResults("13800138000", "data");
         Assert.NotNull(validationResultsOfFailure);
         Assert.Equal("数据 data 验证失败", validationResultsOfFailure.First().ErrorMessage);
     }
@@ -75,39 +72,39 @@ public class IdCardNumberValidatorTests
     [Fact]
     public void FormatErrorMessage_ReturnOK()
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
-        Assert.Equal("The field data is not a valid Id card number format.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data is not a valid telephone format.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
     public void Validate_ReturnOK()
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
-        validator.Validate("622223199912051311", "data");
+        validator.Validate("0341-86091234", "data");
     }
 
     [Fact]
     public void Validate_Failure()
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
         var exception = Assert.Throws<AggregateValidationException>(() =>
         {
-            validator.Validate("1234569910101933", "data");
+            validator.Validate("13800138000", "data");
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data is not a valid Id card number format.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data is not a valid telephone format.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]
-    [InlineData(typeof(IdCardNumberValidator), true)]
+    [InlineData(typeof(TelephoneValidator), true)]
     [InlineData(typeof(ValidatorBase), false)]
     public void IsSameAs_ReturnOK(Type type, bool result)
     {
-        var validator = new IdCardNumberValidator();
+        var validator = new TelephoneValidator();
 
         Assert.Equal(result, validator.IsSameAs(type));
     }

@@ -2929,7 +2929,7 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`1"/>
             </summary>
-            <param name="propertyExpression">属性表达式</param>
+            <param name="propertyExpression"><see cref="T:System.Linq.Expressions.Expression`1"/></param>
         </member>
         <member name="T:Furion.Validation.PropertyAnnotationValidator">
             <summary>

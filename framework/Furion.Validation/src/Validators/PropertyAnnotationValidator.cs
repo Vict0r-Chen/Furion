@@ -24,7 +24,7 @@ public class PropertyAnnotationValidator<T> : PropertyAnnotationValidator
     /// <summary>
     /// <inheritdoc cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
-    /// <param name="propertyExpression">属性表达式</param>
+    /// <param name="propertyExpression"><see cref="Expression{TDelegate}"/></param>
     public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
         : base(propertyExpression?.GetPropertyName()!)
     {
