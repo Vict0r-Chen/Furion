@@ -46,5 +46,5 @@ public partial class UserNameValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[a-zA-Z0-9_-]{4,16}$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

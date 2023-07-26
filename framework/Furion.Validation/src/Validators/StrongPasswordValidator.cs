@@ -46,5 +46,5 @@ public partial class StrongPasswordValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

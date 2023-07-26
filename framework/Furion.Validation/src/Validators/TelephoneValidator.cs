@@ -43,5 +43,5 @@ public partial class TelephoneValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:(?:\d{3}-)?\d{8}|^(?:\d{4}-)?\d{7,8})(?:-\d+)?$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

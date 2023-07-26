@@ -44,5 +44,5 @@ public partial class DomainValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^([0-9a-zA-Z-]{1,}\.)+([a-zA-Z]{2,})$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

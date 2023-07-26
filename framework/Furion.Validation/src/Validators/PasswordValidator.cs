@@ -46,5 +46,5 @@ public partial class PasswordValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?=.*[a-zA-Z])(?=.*\d).{6,18}$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

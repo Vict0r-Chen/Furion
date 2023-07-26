@@ -50,7 +50,7 @@ public partial class ColorValueValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*(?:,\s*[0-9.]+\s*)?)?\)|hsla?\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*(?:,\s*[0-9.]+\s*)?)?\)|hwb\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|lch\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|oklch\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|lab\((?:\s*[-+]?\d+\%?\s*,){2}\s*[-+]?\d+\%?\s*\)|oklab\((?:\s*[-+]?\d+\%?\s*,){2}\s*[-+]?\d+\%?\s*\))$", RegexOptions.IgnoreCase)]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 
     /// <summary>
     /// 颜色值正则表达式（标准模式）
@@ -58,5 +58,5 @@ public partial class ColorValueValidator : ValidatorBase
     /// <remarks>只支持十六进制、RGB、RGBA</remarks>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((?:\s*(?:\d+%?)\s*,){2}\s*(?:\d+%?)\s*(?:,\s*(?:\d+(?:\.\d+)?|\.\d+))?\))$", RegexOptions.IgnoreCase)]
-    internal static partial Regex StandardRegex();
+    private static partial Regex StandardRegex();
 }

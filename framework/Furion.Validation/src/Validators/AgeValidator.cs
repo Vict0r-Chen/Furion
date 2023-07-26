@@ -43,5 +43,5 @@ public partial class AgeValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:[0-9]|[1-9][0-9]?|1[01][0-9]|120)$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

@@ -43,5 +43,5 @@ public partial class ChineseNameValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:[\u4e00-\u9fa5·]{2,16})$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

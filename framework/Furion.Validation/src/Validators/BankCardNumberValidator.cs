@@ -46,5 +46,5 @@ public partial class BankCardNumberValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^[1-9]\d{9,29}$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }

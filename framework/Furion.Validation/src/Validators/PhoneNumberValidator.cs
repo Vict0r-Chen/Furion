@@ -43,5 +43,5 @@ public partial class PhoneNumberValidator : ValidatorBase
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:(?:\+|00)86)?1[3-9]\d{9}$")]
-    internal static partial Regex Regex();
+    private static partial Regex Regex();
 }
