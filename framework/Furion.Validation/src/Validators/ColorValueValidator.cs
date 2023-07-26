@@ -22,15 +22,13 @@ public partial class ColorValueValidator : ValidatorBase
     /// <summary>
     /// <inheritdoc cref="ColorValueValidator"/>
     /// </summary>
-    /// <param name="fullMode">全面模式</param>
-    public ColorValueValidator(bool fullMode = true)
+    public ColorValueValidator()
         : base(() => Strings.ColorValueValidator_Invalid)
     {
-        FullMode = fullMode;
     }
 
     /// <summary>
-    /// 全面模式
+    /// 完整模式
     /// </summary>
     public bool FullMode { get; set; } = true;
 
@@ -46,7 +44,7 @@ public partial class ColorValueValidator : ValidatorBase
     }
 
     /// <summary>
-    /// 颜色值正则表达式（全面模式）
+    /// 颜色值正则表达式（完整模式）
     /// </summary>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*(?:,\s*[0-9.]+\s*)?)?\)|hsla?\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*(?:,\s*[0-9.]+\s*)?)?\)|hwb\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|lch\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|oklch\((?:\s*\d+\%?\s*,){2}\s*(?:\d+\%?\s*)?\)|lab\((?:\s*[-+]?\d+\%?\s*,){2}\s*[-+]?\d+\%?\s*\)|oklab\((?:\s*[-+]?\d+\%?\s*,){2}\s*[-+]?\d+\%?\s*\))$", RegexOptions.IgnoreCase)]
@@ -55,7 +53,7 @@ public partial class ColorValueValidator : ValidatorBase
     /// <summary>
     /// 颜色值正则表达式（标准模式）
     /// </summary>
-    /// <remarks>只支持十六进制、RGB、RGBA</remarks>
+    /// <remarks>十六进制、RGB 或 RGBA</remarks>
     /// <returns><see cref="System.Text.RegularExpressions.Regex"/></returns>
     [GeneratedRegex(@"^(?:#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((?:\s*(?:\d+%?)\s*,){2}\s*(?:\d+%?)\s*(?:,\s*(?:\d+(?:\.\d+)?|\.\d+))?\))$", RegexOptions.IgnoreCase)]
     private static partial Regex StandardRegex();

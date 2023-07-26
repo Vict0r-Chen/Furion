@@ -2055,15 +2055,14 @@
             颜色值验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.ColorValueValidator.#ctor(System.Boolean)">
+        <member name="M:Furion.Validation.ColorValueValidator.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.Validation.ColorValueValidator"/>
             </summary>
-            <param name="fullMode">全面模式</param>
         </member>
         <member name="P:Furion.Validation.ColorValueValidator.FullMode">
             <summary>
-            全面模式
+            完整模式
             </summary>
         </member>
         <member name="M:Furion.Validation.ColorValueValidator.IsValid(System.Object)">
