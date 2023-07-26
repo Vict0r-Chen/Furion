@@ -2268,14 +2268,14 @@
             比较验证器抽象基类
             </summary>
         </member>
-        <member name="M:Furion.Validation.ComparableValidator.#ctor(System.Object,System.Func{System.String})">
+        <member name="M:Furion.Validation.ComparableValidator.#ctor(System.Func{System.Object},System.Func{System.String})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.ComparableValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValueAccessor">比较的值访问器</param>
             <param name="errorMessageAccessor">错误消息资源访问器</param>
         </member>
-        <member name="P:Furion.Validation.ComparableValidator.Value">
+        <member name="P:Furion.Validation.ComparableValidator.CompareValue">
             <summary>
             比较的值
             </summary>
@@ -2287,7 +2287,7 @@
             <summary>
             检查值合法性
             </summary>
-            <param name="value">验证的值</param>
+            <param name="value">对象值</param>
             <param name="compareValue">比较的值</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -2363,22 +2363,28 @@
         </member>
         <member name="T:Furion.Validation.EndsWithValidator">
             <summary>
-            以特定字符串结尾的验证器
+            以特定字符/字符串结尾的验证器
             </summary>
         </member>
         <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.Char)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.EndsWithValidator"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
         <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.String)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.EndsWithValidator"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
-        <member name="P:Furion.Validation.EndsWithValidator.Value">
+        <member name="M:Furion.Validation.EndsWithValidator.#ctor(System.Func{System.String})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            </summary>
+            <param name="searchValueAccessor">检索的值访问器</param>
+        </member>
+        <member name="P:Furion.Validation.EndsWithValidator.SearchValue">
             <summary>
             检索的值
             </summary>
@@ -2401,9 +2407,15 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.EqualValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
-        <member name="P:Furion.Validation.EqualValidator.Value">
+        <member name="M:Furion.Validation.EqualValidator.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
+        </member>
+        <member name="P:Furion.Validation.EqualValidator.CompareValue">
             <summary>
             比较的值
             </summary>
@@ -2423,19 +2435,25 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="M:Furion.Validation.GreaterThanOrEqualToValidator.IsValid(System.IComparable,System.IComparable)">
             <inheritdoc />
@@ -2449,19 +2467,25 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.GreaterThanValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.GreaterThanValidator.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.GreaterThanValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.GreaterThanValidator.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.GreaterThanValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.GreaterThanValidator.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanValidator"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="M:Furion.Validation.GreaterThanValidator.IsValid(System.IComparable,System.IComparable)">
             <inheritdoc />
@@ -2651,19 +2675,25 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.LessThanOrEqualToValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.LessThanOrEqualToValidator.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.LessThanOrEqualToValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.LessThanOrEqualToValidator.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.LessThanOrEqualToValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanOrEqualToValidator.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.LessThanOrEqualToValidator"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="M:Furion.Validation.LessThanOrEqualToValidator.IsValid(System.IComparable,System.IComparable)">
             <inheritdoc />
@@ -2677,19 +2707,25 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.LessThanValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.LessThanValidator.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.LessThanValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:Furion.Validation.LessThanValidator.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.LessThanValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:Furion.Validation.LessThanValidator.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.LessThanValidator"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="M:Furion.Validation.LessThanValidator.IsValid(System.IComparable,System.IComparable)">
             <inheritdoc />
@@ -2716,9 +2752,15 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.NotEqualValidator"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
-        <member name="P:Furion.Validation.NotEqualValidator.Value">
+        <member name="M:Furion.Validation.NotEqualValidator.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
+        </member>
+        <member name="P:Furion.Validation.NotEqualValidator.CompareValue">
             <summary>
             比较的值
             </summary>
@@ -2749,7 +2791,7 @@
             <summary>
             验证逻辑
             </summary>
-            <param name="value">验证的值</param>
+            <param name="value">对象值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -2955,22 +2997,28 @@
         </member>
         <member name="T:Furion.Validation.StartsWithValidator">
             <summary>
-            以特定字符串开头的验证器
+            以特定字符/字符串开头的验证器
             </summary>
         </member>
         <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.Char)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.StartsWithValidator"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
         <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.String)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.StartsWithValidator"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
-        <member name="P:Furion.Validation.StartsWithValidator.Value">
+        <member name="M:Furion.Validation.StartsWithValidator.#ctor(System.Func{System.String})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            </summary>
+            <param name="searchValueAccessor">检索的值访问器</param>
+        </member>
+        <member name="P:Furion.Validation.StartsWithValidator.SearchValue">
             <summary>
             检索的值
             </summary>
@@ -2986,22 +3034,28 @@
         </member>
         <member name="T:Furion.Validation.StringContainsValidator">
             <summary>
-            包含特定字符串的验证器
+            包含特定字符/字符串的验证器
             </summary>
         </member>
         <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.Char)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.StringContainsValidator"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
         <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.String)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.StringContainsValidator"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
-        <member name="P:Furion.Validation.StringContainsValidator.Value">
+        <member name="M:Furion.Validation.StringContainsValidator.#ctor(System.Func{System.String})">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.GreaterThanOrEqualToValidator"/>
+            </summary>
+            <param name="searchValueAccessor">检索的值访问器</param>
+        </member>
+        <member name="P:Furion.Validation.StringContainsValidator.SearchValue">
             <summary>
             检索的值
             </summary>
@@ -3158,7 +3212,7 @@
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
             <summary>
-            检查值是否有效
+            检查值合法性
             </summary>
             <param name="value">对象值</param>
             <returns><see cref="T:System.Boolean"/></returns>
@@ -3183,7 +3237,7 @@
             <summary>
             执行验证
             </summary>
-            <param name="value">验证的值</param>
+            <param name="value">对象值</param>
             <param name="name">显示名称</param>
             <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
         </member>
@@ -3226,7 +3280,7 @@
             <summary>
             验证逻辑
             </summary>
-            <param name="value">验证的值</param>
+            <param name="value">对象值</param>
             <param name="validationResults"><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</param>
             <param name="name">显示名称</param>
             <returns><see cref="T:System.Boolean"/></returns>

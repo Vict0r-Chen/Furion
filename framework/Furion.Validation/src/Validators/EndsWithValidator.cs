@@ -15,36 +15,45 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 以特定字符串结尾的验证器
+/// 以特定字符/字符串结尾的验证器
 /// </summary>
 public class EndsWithValidator : ValidatorBase
 {
     /// <summary>
     /// <inheritdoc cref="EndsWithValidator"/>
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public EndsWithValidator(char value)
-        : this(value.ToString())
+    /// <param name="searchValue">检索的值</param>
+    public EndsWithValidator(char searchValue)
+        : this(searchValue.ToString)
     {
     }
 
     /// <summary>
     /// <inheritdoc cref="EndsWithValidator"/>
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public EndsWithValidator(string value)
+    /// <param name="searchValue">检索的值</param>
+    public EndsWithValidator(string searchValue)
+        : base(() => searchValue)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// </summary>
+    /// <param name="searchValueAccessor">检索的值访问器</param>
+    public EndsWithValidator(Func<string?> searchValueAccessor)
         : base(() => Strings.EndsWithValidator_Invalid)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(value, nameof(value));
+        ArgumentNullException.ThrowIfNull(searchValueAccessor);
 
-        Value = value;
+        SearchValue = searchValueAccessor();
     }
 
     /// <summary>
     /// 检索的值
     /// </summary>
-    public string Value { get; set; }
+    public string? SearchValue { get; set; }
 
     /// <inheritdoc cref="StringComparison"/>
     public StringComparison Comparison { get; set; }
@@ -53,12 +62,12 @@ public class EndsWithValidator : ValidatorBase
     public override bool IsValid(object? value)
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrEmpty(Value, nameof(Value));
+        ArgumentException.ThrowIfNullOrEmpty(SearchValue);
 
         return value switch
         {
             null => false,
-            string text => text.EndsWith(Value, Comparison),
+            string text => text.EndsWith(SearchValue, Comparison),
             _ => false
         };
     }
@@ -66,6 +75,6 @@ public class EndsWithValidator : ValidatorBase
     /// <inheritdoc />
     public override string FormatErrorMessage(string name, object? value = default)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, SearchValue);
     }
 }

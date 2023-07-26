@@ -57,7 +57,7 @@ public class ObjectAnnotationValidator : ValidatorBase
     /// <summary>
     /// 验证逻辑
     /// </summary>
-    /// <param name="value">验证的值</param>
+    /// <param name="value">对象值</param>
     /// <param name="validationResults"><see cref="ValidationResult"/> 集合</param>
     /// <returns><see cref="bool"/></returns>
     internal static bool TryValidate(object value, out List<ValidationResult> validationResults)

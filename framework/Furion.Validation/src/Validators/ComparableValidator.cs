@@ -22,30 +22,32 @@ public abstract class ComparableValidator : ValidatorBase
     /// <summary>
     /// <inheritdoc cref="ComparableValidator"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
+    /// <param name="compareValueAccessor">比较的值访问器</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableValidator(object? value, Func<string> errorMessageAccessor)
+    protected ComparableValidator(Func<object?> compareValueAccessor, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
+        ArgumentNullException.ThrowIfNull(compareValueAccessor);
 
-        Value = value;
+        CompareValue = compareValueAccessor();
     }
 
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object Value { get; set; }
+    public object? CompareValue { get; set; }
 
     /// <inheritdoc />
     public override sealed bool IsValid(object? value)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(CompareValue);
+
         return value switch
         {
             null => true,
-            IComparable value1 when Value is IComparable value2 && value1.GetType() == value2.GetType() => IsValid(
-                value1, value2),
+            IComparable val when CompareValue is IComparable cmpVal && val.GetType() == cmpVal.GetType() => IsValid(val, cmpVal),
             _ => false
         };
     }
@@ -53,14 +55,14 @@ public abstract class ComparableValidator : ValidatorBase
     /// <summary>
     /// 检查值合法性
     /// </summary>
-    /// <param name="value">验证的值</param>
+    /// <param name="value">对象值</param>
     /// <param name="compareValue">比较的值</param>
     /// <returns><see cref="bool"/></returns>
-    public abstract bool IsValid(IComparable value, IComparable compareValue);
+    protected abstract bool IsValid(IComparable value, IComparable compareValue);
 
     /// <inheritdoc />
     public override string FormatErrorMessage(string name, object? value = default)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, CompareValue);
     }
 }

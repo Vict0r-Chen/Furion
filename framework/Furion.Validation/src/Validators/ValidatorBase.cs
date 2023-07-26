@@ -64,7 +64,7 @@ public abstract class ValidatorBase
     public string? ErrorMessage { get; set; }
 
     /// <summary>
-    /// 检查值是否有效
+    /// 检查值合法性
     /// </summary>
     /// <param name="value">对象值</param>
     /// <returns><see cref="bool"/></returns>
@@ -104,7 +104,7 @@ public abstract class ValidatorBase
     /// <summary>
     /// 执行验证
     /// </summary>
-    /// <param name="value">验证的值</param>
+    /// <param name="value">对象值</param>
     /// <param name="name">显示名称</param>
     /// <exception cref="AggregateValidationException"></exception>
     public void Validate(object? value, string name)

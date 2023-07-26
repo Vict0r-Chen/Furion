@@ -22,32 +22,47 @@ public class NotEqualValidator : ValidatorBase
     /// <summary>
     /// <inheritdoc cref="NotEqualValidator"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
-    public NotEqualValidator(object? value)
+    /// <param name="compareValue">比较的值</param>
+    public NotEqualValidator(object? compareValue)
+        : this(() => compareValue)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// </summary>
+    /// <param name="compareValueAccessor">比较的值访问器</param>
+    public NotEqualValidator(Func<object?> compareValueAccessor)
         : base(() => Strings.NotEqualValidator_Invalid)
     {
-        Value = value;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(compareValueAccessor);
+
+        CompareValue = compareValueAccessor();
     }
 
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object? Value { get; set; }
+    public object? CompareValue { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(CompareValue);
+
         if (value is null)
         {
             return true;
         }
 
-        return !value.Equals(Value);
+        return !value.Equals(CompareValue);
     }
 
     /// <inheritdoc />
     public override string FormatErrorMessage(string name, object? value = default)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, CompareValue);
     }
 }

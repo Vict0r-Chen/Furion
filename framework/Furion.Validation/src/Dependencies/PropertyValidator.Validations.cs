@@ -393,7 +393,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
-        Validators.Add(new CustomValidator(instance => new GreaterThanOrEqualToValidator(predicate(instance)).IsValid(GetPropertyValue(instance))
+        Validators.Add(new CustomValidator(instance => new GreaterThanOrEqualToValidator(() => predicate(instance)).IsValid(GetPropertyValue(instance))
             , Strings.GreaterThanOrEqualToValidator_Invalid
             , instance => new[] { GetPropertyValue(instance)?.ToString() }));
 
@@ -434,7 +434,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
-        Validators.Add(new CustomValidator(instance => new GreaterThanValidator(predicate(instance)).IsValid(GetPropertyValue(instance))
+        Validators.Add(new CustomValidator(instance => new GreaterThanValidator(() => predicate(instance)).IsValid(GetPropertyValue(instance))
             , Strings.GreaterThanValidator_Invalid
             , instance => new[] { GetPropertyValue(instance)?.ToString() }));
 
@@ -475,7 +475,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
-        Validators.Add(new CustomValidator(instance => new LessThanOrEqualToValidator(predicate(instance)).IsValid(GetPropertyValue(instance))
+        Validators.Add(new CustomValidator(instance => new LessThanOrEqualToValidator(() => predicate(instance)).IsValid(GetPropertyValue(instance))
             , Strings.LessThanOrEqualToValidator_Invalid
             , instance => new[] { GetPropertyValue(instance)?.ToString() }));
 
@@ -516,7 +516,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
-        Validators.Add(new CustomValidator(instance => new LessThanValidator(predicate(instance)).IsValid(GetPropertyValue(instance))
+        Validators.Add(new CustomValidator(instance => new LessThanValidator(() => predicate(instance)).IsValid(GetPropertyValue(instance))
             , Strings.LessThanValidator_Invalid
             , instance => new[] { GetPropertyValue(instance)?.ToString() }));
 
@@ -545,7 +545,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
-        Validators.Add(new CustomValidator(instance => new NotEqualValidator(predicate(instance)).IsValid(GetPropertyValue(instance))
+        Validators.Add(new CustomValidator(instance => new NotEqualValidator(() => predicate(instance)).IsValid(GetPropertyValue(instance))
             , Strings.NotEqualValidator_Invalid
             , instance => new[] { GetPropertyValue(instance)?.ToString() }));
 
@@ -574,7 +574,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
 
-        Validators.Add(new CustomValidator(instance => new EqualValidator(predicate(instance)).IsValid(GetPropertyValue(instance))
+        Validators.Add(new CustomValidator(instance => new EqualValidator(() => predicate(instance)).IsValid(GetPropertyValue(instance))
             , Strings.EqualValidator_Invalid
             , instance => new[] { GetPropertyValue(instance)?.ToString() }));
 

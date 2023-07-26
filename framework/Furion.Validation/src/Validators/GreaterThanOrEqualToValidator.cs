@@ -22,32 +22,42 @@ public class GreaterThanOrEqualToValidator : ComparableValidator
     /// <summary>
     /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
-    public GreaterThanOrEqualToValidator(int value)
-        : this((object)value)
+    /// <param name="compareValue">比较的值</param>
+    public GreaterThanOrEqualToValidator(int compareValue)
+        : this(() => compareValue)
     {
     }
 
     /// <summary>
     /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
-    public GreaterThanOrEqualToValidator(double value)
-        : this((object)value)
+    /// <param name="compareValue">比较的值</param>
+    public GreaterThanOrEqualToValidator(double compareValue)
+        : this(() => compareValue)
     {
     }
 
     /// <summary>
     /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
-    public GreaterThanOrEqualToValidator(object? value)
-        : base(value, () => Strings.GreaterThanOrEqualToValidator_Invalid)
+    /// <param name="compareValue">比较的值</param>
+    public GreaterThanOrEqualToValidator(object? compareValue)
+        : this(() => compareValue)
     {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="GreaterThanOrEqualToValidator"/>
+    /// </summary>
+    /// <param name="compareValueAccessor">比较的值访问器</param>
+    public GreaterThanOrEqualToValidator(Func<object?> compareValueAccessor)
+        : base(compareValueAccessor, () => Strings.GreaterThanOrEqualToValidator_Invalid)
+    {
+        CompareValue = compareValueAccessor();
     }
 
     /// <inheritdoc />
-    public override bool IsValid(IComparable value, IComparable compareValue)
+    protected override bool IsValid(IComparable value, IComparable compareValue)
     {
         return value.CompareTo(compareValue) >= 0;
     }
