@@ -34,6 +34,7 @@
 [assembly: InternalsVisibleTo("Furion.Exception")]
 [assembly: InternalsVisibleTo("Furion.Exception.AspNetCore")]
 [assembly: InternalsVisibleTo("Furion.FileSystem")]
+[assembly: InternalsVisibleTo("Furion.Kit")]
 [assembly: InternalsVisibleTo("Furion.Localization")]
 [assembly: InternalsVisibleTo("Furion.Localization.AspNetCore")]
 [assembly: InternalsVisibleTo("Furion.Logging")]
