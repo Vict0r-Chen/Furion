@@ -12,11 +12,13 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Component;
-
-/// <summary>
-/// 数据验证模块服务组件
-/// </summary>
-public sealed class ValidationComponent : ComponentBase
-{
-}
+global using Furion.Validation;
+global using Furion.Validation.Resources;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using System.ComponentModel.DataAnnotations;
+global using System.Diagnostics.CodeAnalysis;
+global using System.Globalization;
+global using System.Linq.Expressions;
+global using System.Reflection;
+global using System.Runtime.CompilerServices;

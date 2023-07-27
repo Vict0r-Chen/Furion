@@ -15,9 +15,9 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 数据验证构建器
+/// 流畅式数据验证构建器
 /// </summary>
-public sealed class ValidationBuilder
+public sealed class FluentValidationBuilder
 {
     /// <summary>
     /// 待注册的验证器类型集合
@@ -25,9 +25,9 @@ public sealed class ValidationBuilder
     internal readonly HashSet<Type> _validatorTypes;
 
     /// <summary>
-    /// <inheritdoc cref="ValidationBuilder"/>
+    /// <inheritdoc cref="FluentValidationBuilder"/>
     /// </summary>
-    public ValidationBuilder()
+    public FluentValidationBuilder()
     {
         _validatorTypes = new();
     }
@@ -36,8 +36,8 @@ public sealed class ValidationBuilder
     /// 添加验证器
     /// </summary>
     /// <typeparam name="TValidator"><see cref="AbstractValidator{T}"/></typeparam>
-    /// <returns><see cref="ValidationBuilder"/></returns>
-    public ValidationBuilder AddValidator<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TValidator>()
+    /// <returns><see cref="FluentValidationBuilder"/></returns>
+    public FluentValidationBuilder AddValidator<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TValidator>()
         where TValidator : class, IObjectValidator
     {
         return AddValidator(typeof(TValidator));
@@ -49,7 +49,7 @@ public sealed class ValidationBuilder
     /// <param name="validatorType"><see cref="AbstractValidator{T}"/></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public ValidationBuilder AddValidator([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type validatorType)
+    public FluentValidationBuilder AddValidator([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type validatorType)
     {
         // 检查类型合法性
         EnsureLegalValidatorType(validatorType);

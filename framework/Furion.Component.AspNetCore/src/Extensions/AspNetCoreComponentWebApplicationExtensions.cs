@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Builder;
 /// <summary>
 /// 组件模块 <see cref="WebApplication"/> 拓展类
 /// </summary>
-public static class ComponentWebApplicationExtensions
+public static class AspNetCoreComponentWebApplicationExtensions
 {
     /// <summary>
     /// 添加应用组件

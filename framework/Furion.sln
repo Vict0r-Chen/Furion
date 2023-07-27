@@ -241,6 +241,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Redis", "Furion.Redi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Redis.Tests", "Furion.Redis\test\Furion.Redis.Tests.csproj", "{CEB3346E-0C0C-43B2-B077-90ED6366BBB9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Validation.Fluent", "Furion.Validation.Fluent\src\Furion.Validation.Fluent.csproj", "{CA047441-5505-4C74-8ED9-7CF4BF780B3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Validation.Fluent.Tests", "Furion.Validation.Fluent\test\Furion.Validation.Fluent.Tests.csproj", "{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -623,6 +627,14 @@ Global
 		{CEB3346E-0C0C-43B2-B077-90ED6366BBB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEB3346E-0C0C-43B2-B077-90ED6366BBB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEB3346E-0C0C-43B2-B077-90ED6366BBB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA047441-5505-4C74-8ED9-7CF4BF780B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA047441-5505-4C74-8ED9-7CF4BF780B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA047441-5505-4C74-8ED9-7CF4BF780B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA047441-5505-4C74-8ED9-7CF4BF780B3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -720,6 +732,8 @@ Global
 		{06B84CD6-379A-4D91-B4EE-0F90065A86FE} = {1EED480B-CE87-41C0-B2E4-40E4EC7DFCF2}
 		{7DC7BD4E-1853-46D6-B359-9DFEC74CC160} = {17F2A1E1-0F6A-4EA6-8891-6F311E71B0F5}
 		{CEB3346E-0C0C-43B2-B077-90ED6366BBB9} = {17F2A1E1-0F6A-4EA6-8891-6F311E71B0F5}
+		{CA047441-5505-4C74-8ED9-7CF4BF780B3F} = {36294817-6807-4A4F-91DE-4D845E83046F}
+		{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0} = {36294817-6807-4A4F-91DE-4D845E83046F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E66EA3E6-2FE9-44EB-B8F6-7E49CDBD6C3C}

@@ -17,38 +17,38 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 数据验证模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public static class ValidationServiceCollectionExtensions
+public static class FluentValidationServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加数据验证服务
+    /// 添加流畅式数据验证服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddValidation(this IServiceCollection services, Action<ValidationBuilder>? configure = null)
+    public static IServiceCollection AddFluentValidation(this IServiceCollection services, Action<FluentValidationBuilder>? configure = null)
     {
-        // 初始化数据验证构建器
-        var validationBuilder = new ValidationBuilder();
+        // 初始化流畅式数据验证构建器
+        var fluentValidationBuilder = new FluentValidationBuilder();
 
         // 调用自定义配置委托
-        configure?.Invoke(validationBuilder);
+        configure?.Invoke(fluentValidationBuilder);
 
-        return services.AddValidation(validationBuilder);
+        return services.AddFluentValidation(fluentValidationBuilder);
     }
 
     /// <summary>
-    /// 添加数据验证服务
+    /// 添加流畅式数据验证服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="validationBuilder"><see cref="ValidationBuilder"/></param>
+    /// <param name="fluentValidationBuilder"><see cref="FluentValidationBuilder"/></param>
     /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddValidation(this IServiceCollection services, ValidationBuilder validationBuilder)
+    public static IServiceCollection AddFluentValidation(this IServiceCollection services, FluentValidationBuilder fluentValidationBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(validationBuilder);
+        ArgumentNullException.ThrowIfNull(fluentValidationBuilder);
 
         // 构建模块服务
-        validationBuilder.Build(services);
+        fluentValidationBuilder.Build(services);
 
         return services;
     }

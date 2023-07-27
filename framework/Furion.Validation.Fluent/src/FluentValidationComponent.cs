@@ -17,6 +17,17 @@ namespace Furion.Component;
 /// <summary>
 /// 数据验证模块服务组件
 /// </summary>
-public sealed class ValidationComponent : ComponentBase
+public sealed class FluentValidationComponent : ComponentBase
 {
+    /// <summary>
+    /// 组件配置
+    /// </summary>
+    [ComponentProps]
+    public Action<FluentValidationBuilder>? Props { get; set; }
+
+    /// <inheritdoc />
+    public override void ConfigureServices(ServiceComponentContext context)
+    {
+        context.Services.AddFluentValidation(Props);
+    }
 }

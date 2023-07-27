@@ -57,6 +57,7 @@
 [assembly: InternalsVisibleTo("Furion.UnitOfWork.EntityFrameworkCore")]
 [assembly: InternalsVisibleTo("Furion.Validation")]
 [assembly: InternalsVisibleTo("Furion.Validation.AspNetCore")]
+[assembly: InternalsVisibleTo("Furion.Validation.Fluent")]
 [assembly: InternalsVisibleTo("Furion.Workflow")]
 
 // 配置测试友元程序集

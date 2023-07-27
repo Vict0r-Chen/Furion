@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Hosting;
 /// <summary>
 /// 组件模块 <see cref="HostApplicationBuilder"/> 拓展类
 /// </summary>
-public static class ComponentHostApplicationBuilderExtensions
+public static class HostingComponentHostApplicationBuilderExtensions
 {
     /// <summary>
     /// 添加入口组件

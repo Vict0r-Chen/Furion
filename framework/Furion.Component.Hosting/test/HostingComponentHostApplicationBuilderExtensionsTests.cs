@@ -14,7 +14,7 @@
 
 namespace Furion.Component.Hosting.Tests;
 
-public class ComponentHostApplicationBuilderExtensionsTests
+public class HostingComponentHostApplicationBuilderExtensionsTests
 {
     [Fact]
     public void EntryGenericAction_ReturnOK()

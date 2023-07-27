@@ -21,6 +21,7 @@
 		<ProjectReference Include="..\..\Furion.DependencyInjection.TypeScanning\src\Furion.DependencyInjection.TypeScanning.csproj" />
 		<ProjectReference Include="..\..\Furion.Kit\src\Furion.Kit.csproj" />
 		<ProjectReference Include="..\..\Furion.Validation.AspNetCore\src\Furion.Validation.AspNetCore.csproj" />
+		<ProjectReference Include="..\..\Furion.Validation.Fluent\src\Furion.Validation.Fluent.csproj" />
 	</ItemGroup>
 
 </Project>

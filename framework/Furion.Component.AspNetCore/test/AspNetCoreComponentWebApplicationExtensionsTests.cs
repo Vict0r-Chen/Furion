@@ -14,7 +14,7 @@
 
 namespace Furion.Component.AspNetCore.Tests;
 
-public class ComponentWebApplicationExtensionsTests
+public class AspNetCoreComponentWebApplicationExtensionsTests
 {
     [Fact]
     public void UseComponent_Invalid_Parameters()

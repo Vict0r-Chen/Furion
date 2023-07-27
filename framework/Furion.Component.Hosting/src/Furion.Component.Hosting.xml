@@ -4,12 +4,12 @@
         <name>Furion.Component.Hosting</name>
     </assembly>
     <members>
-        <member name="T:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions">
+        <member name="T:Microsoft.Extensions.Hosting.HostingComponentHostApplicationBuilderExtensions">
             <summary>
             组件模块 <see cref="T:Microsoft.Extensions.Hosting.HostApplicationBuilder"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
+        <member name="M:Microsoft.Extensions.Hosting.HostingComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,System.Action{Furion.Component.ComponentBuilder})">
             <summary>
             添加入口组件
             </summary>
@@ -18,7 +18,7 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
         </member>
-        <member name="M:Microsoft.Extensions.Hosting.ComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
+        <member name="M:Microsoft.Extensions.Hosting.HostingComponentHostApplicationBuilderExtensions.Entry``1(Microsoft.Extensions.Hosting.HostApplicationBuilder,Furion.Component.ComponentBuilder)">
             <summary>
             添加入口组件
             </summary>

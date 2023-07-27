@@ -14,7 +14,7 @@
 
 namespace Furion.Component.AspNetCore.Tests;
 
-public class ComponentWebApplicationBuilderExtensionsTests
+public class AspNetCoreComponentWebApplicationBuilderExtensionsTests
 {
     [Fact]
     public void EntryGenericAction_ReturnOK()

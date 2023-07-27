@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Builder;
 /// <summary>
 /// 组件模块 <see cref="WebApplicationBuilder"/> 拓展类
 /// </summary>
-public static class ComponentWebApplicationBuilderExtensions
+public static class AspNetCoreComponentWebApplicationBuilderExtensions
 {
     /// <summary>
     /// 添加入口组件

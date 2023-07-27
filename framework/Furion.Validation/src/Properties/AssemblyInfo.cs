@@ -14,6 +14,7 @@
 
 // 配置框架友元程序集
 [assembly: InternalsVisibleTo("Furion.Validation.AspNetCore")]
+[assembly: InternalsVisibleTo("Furion.Validation.Fluent")]
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.Validation.Tests")]
