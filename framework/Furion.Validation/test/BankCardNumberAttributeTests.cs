@@ -14,20 +14,19 @@
 
 namespace Furion.Validation.Tests;
 
-public class AgeAttributeTests
+public class BankCardNumberAttributeTests
 {
     public class Model
     {
-        [Age]
-        public int? Data { get; set; }
+        [BankCardNumber]
+        public string? Data { get; set; }
     }
 
     [Theory]
     [InlineData(null, true, null)]
-    [InlineData(0, true, null)]
-    [InlineData(100, true, null)]
-    [InlineData(121, false)]
-    public void DataAnnotations_ReturnOK(int? data, bool result, string? errorMessage = "The field Data is not a valid age format.")
+    [InlineData("6222026006705354000", true, null)]
+    [InlineData("123456789", false)]
+    public void DataAnnotations_ReturnOK(string? data, bool result, string? errorMessage = "The field Data is not a valid bank card number.")
     {
         var model = new Model { Data = data };
 
@@ -42,8 +41,8 @@ public class AgeAttributeTests
     [Fact]
     public void IsValid_ReturnOK()
     {
-        var validation = new AgeAttribute();
-        Assert.True(validation.IsValid(0));
-        Assert.False(validation.IsValid(121));
+        var validation = new BankCardNumberAttribute();
+        Assert.True(validation.IsValid("6222026006705354000"));
+        Assert.False(validation.IsValid("123456789"));
     }
 }
