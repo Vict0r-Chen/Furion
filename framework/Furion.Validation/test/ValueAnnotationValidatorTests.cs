@@ -240,6 +240,7 @@ public class ValueAnnotationValidatorTests
         Assert.Empty(validationResults);
 
         var result2 = validator.TryValidate("赢", "data", out var validationResults2);
+        Assert.False(result2);
         Assert.NotNull(validationResults2);
         Assert.Single(validationResults2);
         Assert.Equal("data", validationResults2.First().MemberNames.First());
