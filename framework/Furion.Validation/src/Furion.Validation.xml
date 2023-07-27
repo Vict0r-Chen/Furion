@@ -1006,9 +1006,9 @@
             数据验证构建器
             </summary>
         </member>
-        <member name="F:Furion.Validation.ValidationBuilder._validators">
+        <member name="F:Furion.Validation.ValidationBuilder._validatorTypes">
             <summary>
-            待注册的验证器服务集合
+            待注册的验证器类型集合
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidationBuilder.#ctor">
@@ -1020,15 +1020,16 @@
             <summary>
             添加验证器
             </summary>
-            <typeparam name="TValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></typeparam>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.AbstractValidator`1"/></typeparam>
             <returns><see cref="T:Furion.Validation.ValidationBuilder"/></returns>
         </member>
         <member name="M:Furion.Validation.ValidationBuilder.AddValidator(System.Type)">
             <summary>
             添加验证器
             </summary>
-            <param name="validatorType"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
-            <returns><see cref="T:Furion.Validation.ValidationBuilder"/></returns>
+            <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Furion.Validation.ValidationBuilder.Build(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
@@ -1036,10 +1037,12 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
-        <member name="M:Furion.Validation.ValidationBuilder.Release">
+        <member name="M:Furion.Validation.ValidationBuilder.EnsureLegalValidatorType(System.Type)">
             <summary>
-            释放对象
+            检查类型合法性
             </summary>
+            <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.Validation.ValidatorRelationship">
             <summary>

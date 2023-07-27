@@ -20,24 +20,24 @@ namespace Furion.Validation;
 public sealed class ValidationBuilder
 {
     /// <summary>
-    /// 待注册的验证器服务集合
+    /// 待注册的验证器类型集合
     /// </summary>
-    internal readonly Dictionary<Type, Type> _validators;
+    internal readonly HashSet<Type> _validatorTypes;
 
     /// <summary>
     /// <inheritdoc cref="ValidationBuilder"/>
     /// </summary>
     public ValidationBuilder()
     {
-        _validators = new();
+        _validatorTypes = new();
     }
 
     /// <summary>
     /// 添加验证器
     /// </summary>
-    /// <typeparam name="TValidator"><see cref="IObjectValidator{T}"/></typeparam>
+    /// <typeparam name="TValidator"><see cref="AbstractValidator{T}"/></typeparam>
     /// <returns><see cref="ValidationBuilder"/></returns>
-    public ValidationBuilder AddValidator<TValidator>()
+    public ValidationBuilder AddValidator<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TValidator>()
         where TValidator : class, IObjectValidator
     {
         return AddValidator(typeof(TValidator));
@@ -46,32 +46,16 @@ public sealed class ValidationBuilder
     /// <summary>
     /// 添加验证器
     /// </summary>
-    /// <param name="validatorType"><see cref="IObjectValidator{T}"/></param>
-    /// <returns><see cref="ValidationBuilder"/></returns>
-    public ValidationBuilder AddValidator(Type validatorType)
+    /// <param name="validatorType"><see cref="AbstractValidator{T}"/></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public ValidationBuilder AddValidator([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type validatorType)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(validatorType, nameof(validatorType));
+        // 检查类型合法性
+        EnsureLegalValidatorType(validatorType);
 
-        // 是否继承 AbstractValidator<> 泛型类型
-        var baseType = validatorType.BaseType;
-        if (!(baseType is not null && typeof(AbstractValidator<>).IsDefinitionEqual(baseType)))
-        {
-            throw new ArgumentException($"`{validatorType.Name}` validator type is not assignable from `AbstractValidator<>`.");
-        }
-
-        // 类型必须可以实例化
-        if (!validatorType.IsInstantiable())
-        {
-            throw new InvalidOperationException($"`{validatorType.Name}` validator type must be able to be instantiated.");
-        }
-
-        // 获取验证器模型类型
-        var modelType = baseType.GenericTypeArguments.First();
-
-        // 添加待注册的验证器服务
-        _validators.Add(typeof(IObjectValidator<>).MakeGenericType(modelType), validatorType);
-        _validators.Add(typeof(IObjectValidator), validatorType);
+        // 将验证器类型添加到集合中
+        _validatorTypes.Add(validatorType);
 
         return this;
     }
@@ -82,21 +66,41 @@ public sealed class ValidationBuilder
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
     {
-        // 遍历集合将验证器服务添加到 IServiceCollection 中
-        foreach (var (serviceType, implementType) in _validators)
+        // 逐条添加服务
+        foreach (var validatorType in _validatorTypes)
         {
-            services.AddTransient(serviceType, implementType);
-        }
+            // 获取验证器模型类型
+            var baseType = validatorType.BaseType!;
+            var modelType = baseType.GenericTypeArguments[0];
 
-        // 释放对象
-        Release();
+            // 添加服务
+            services.TryAddEnumerable(ServiceDescriptor.Transient(typeof(IObjectValidator<>).MakeGenericType(modelType), validatorType));
+            services.TryAddEnumerable(ServiceDescriptor.Transient(typeof(IObjectValidator), validatorType));
+        }
     }
 
     /// <summary>
-    /// 释放对象
+    /// 检查类型合法性
     /// </summary>
-    internal void Release()
+    /// <param name="validatorType"><see cref="AbstractValidator{T}"/></param>
+    /// <exception cref="InvalidOperationException"></exception>
+    internal static void EnsureLegalValidatorType(Type validatorType)
     {
-        _validators.Clear();
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validatorType);
+
+        // 检查类型是否派生自 AbstractValidator<> 类型
+        var baseType = validatorType.BaseType;
+        if (!(baseType is not null
+            && typeof(AbstractValidator<>).IsDefinitionEqual(baseType)))
+        {
+            throw new InvalidOperationException($"`{validatorType}` type is not assignable from `{typeof(AbstractValidator<>)}`.");
+        }
+
+        // 检查类型是否可以实例化
+        if (!validatorType.IsInstantiable())
+        {
+            throw new InvalidOperationException($"`{validatorType}` type must be able to be instantiated.");
+        }
     }
 }
