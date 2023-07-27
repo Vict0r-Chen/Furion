@@ -81,7 +81,7 @@
             <summary>
             比较验证特性抽象基类
             </summary>
-            <typeparam name="TComparableValidator"><see cref="T:Furion.Validation.ComparableValidator"/></typeparam>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.ComparableValidator"/></typeparam>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.#ctor(System.Func{System.Object},System.Func{System.String})">
             <summary>

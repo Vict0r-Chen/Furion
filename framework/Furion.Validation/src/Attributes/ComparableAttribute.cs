@@ -17,10 +17,10 @@ namespace System.ComponentModel.DataAnnotations;
 /// <summary>
 /// 比较验证特性抽象基类
 /// </summary>
-/// <typeparam name="TComparableValidator"><see cref="ComparableValidator"/></typeparam>
+/// <typeparam name="TValidator"><see cref="ComparableValidator"/></typeparam>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public abstract class ComparableAttribute<TComparableValidator> : ValidationAttribute
-    where TComparableValidator : ComparableValidator
+public abstract class ComparableAttribute<TValidator> : ValidationAttribute
+    where TValidator : ComparableValidator
 {
     /// <summary>
     /// <inheritdoc cref="ComparableAttribute{TComparableValidator}"/>
@@ -45,7 +45,7 @@ public abstract class ComparableAttribute<TComparableValidator> : ValidationAttr
     public override sealed bool IsValid(object? value)
     {
         // 反射创建比较验证器
-        var comparableValidator = Activator.CreateInstance(typeof(TComparableValidator), new[] { CompareValue }) as ComparableValidator;
+        var comparableValidator = Activator.CreateInstance(typeof(TValidator), new[] { CompareValue }) as ComparableValidator;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(comparableValidator);

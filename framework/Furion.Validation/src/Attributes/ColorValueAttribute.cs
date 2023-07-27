@@ -36,6 +36,9 @@ public class ColorValueAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new ColorValueValidator { FullMode = FullMode }.IsValid(value);
+        return new ColorValueValidator
+        {
+            FullMode = FullMode
+        }.IsValid(value);
     }
 }
