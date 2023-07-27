@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Furion.Validation.Fluent\src\Furion.Validation.Fluent.csproj" />
+		<ProjectReference Include="..\..\Furion.Validation.Fluent\src\Furion.Validation.Fluent.csproj" />
 	</ItemGroup>
 
 </Project>
