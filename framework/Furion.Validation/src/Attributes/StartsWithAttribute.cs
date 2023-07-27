@@ -15,7 +15,7 @@
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 以特定字符串开头的验证特性
+/// 以特定字符/字符串开头的验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class StartsWithAttribute : ValidationAttribute
@@ -23,36 +23,54 @@ public class StartsWithAttribute : ValidationAttribute
     /// <summary>
     /// <inheritdoc cref="StartsWithAttribute"/>
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public StartsWithAttribute(char value)
-        : this(value.ToString())
+    /// <param name="searchValue">检索的值</param>
+    public StartsWithAttribute(char searchValue)
+        : this(searchValue.ToString)
     {
     }
 
     /// <summary>
     /// <inheritdoc cref="StartsWithAttribute"/>
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public StartsWithAttribute(string value)
+    /// <param name="searchValue">检索的值</param>
+    public StartsWithAttribute(string searchValue)
+        : this(() => searchValue)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="StartsWithAttribute"/>
+    /// </summary>
+    /// <param name="searchValueAccessor">检索的值访问器</param>
+    internal StartsWithAttribute(Func<string> searchValueAccessor)
         : base(() => Strings.StartsWithValidator_Invalid)
     {
-        Value = value;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(searchValueAccessor);
+
+        SearchValue = searchValueAccessor();
     }
 
     /// <summary>
     /// 检索的值
     /// </summary>
-    public string Value { get; init; }
+    public string SearchValue { get; set; }
+
+    /// <inheritdoc cref="StringComparison"/>
+    public StringComparison Comparison { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new StartsWithValidator(Value).IsValid(value);
+        return new StartsWithAttribute(SearchValue)
+        {
+            Comparison = Comparison
+        }.IsValid(value);
     }
 
     /// <inheritdoc />
     public override string FormatErrorMessage(string name)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, SearchValue);
     }
 }

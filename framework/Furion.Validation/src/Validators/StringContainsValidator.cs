@@ -41,7 +41,7 @@ public class StringContainsValidator : ValidatorBase
     /// <inheritdoc cref="StringContainsValidator"/>
     /// </summary>
     /// <param name="searchValueAccessor">检索的值访问器</param>
-    public StringContainsValidator(Func<string?> searchValueAccessor)
+    public StringContainsValidator(Func<string> searchValueAccessor)
         : base(() => Strings.StringContainsValidator_Invalid)
     {
         // 空检查
@@ -53,7 +53,7 @@ public class StringContainsValidator : ValidatorBase
     /// <summary>
     /// 检索的值
     /// </summary>
-    public string? SearchValue { get; set; }
+    public string SearchValue { get; set; }
 
     /// <inheritdoc cref="StringComparison"/>
     public StringComparison Comparison { get; set; }

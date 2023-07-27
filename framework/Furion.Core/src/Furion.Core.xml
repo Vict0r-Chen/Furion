@@ -424,6 +424,11 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Furion.CoreOptions"/></returns>
         </member>
+        <member name="T:Furion.ComponentMetadata">
+            <summary>
+            组件元数据
+            </summary>
+        </member>
         <member name="T:Furion.CoreOptions">
             <summary>
             核心模块选项
@@ -432,6 +437,11 @@
         <member name="F:Furion.CoreOptions._optionsInstances">
             <summary>
             子选项集合
+            </summary>
+        </member>
+        <member name="F:Furion.CoreOptions._metadataOfRegistered">
+            <summary>
+            已注册的组件元数据集合
             </summary>
         </member>
         <member name="M:Furion.CoreOptions.#ctor">

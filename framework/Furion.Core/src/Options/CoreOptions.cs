@@ -25,11 +25,17 @@ internal sealed class CoreOptions
     internal readonly ConcurrentDictionary<Type, object> _optionsInstances;
 
     /// <summary>
+    /// 已注册的组件元数据集合
+    /// </summary>
+    internal readonly ConcurrentDictionary<Type, ComponentMetadata> _metadataOfRegistered;
+
+    /// <summary>
     /// <inheritdoc cref="CoreOptions"/>
     /// </summary>
     internal CoreOptions()
     {
         _optionsInstances = new();
+        _metadataOfRegistered = new();
     }
 
     /// <summary>

@@ -15,7 +15,7 @@
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 以特定字符串结尾的验证特性
+/// 以特定字符/字符串结尾的验证特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class EndsWithAttribute : ValidationAttribute
@@ -23,36 +23,54 @@ public class EndsWithAttribute : ValidationAttribute
     /// <summary>
     /// <inheritdoc cref="EndsWithAttribute"/>
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public EndsWithAttribute(char value)
-        : this(value.ToString())
+    /// <param name="searchValue">检索的值</param>
+    public EndsWithAttribute(char searchValue)
+        : this(searchValue.ToString)
     {
     }
 
     /// <summary>
     /// <inheritdoc cref="EndsWithAttribute"/>
     /// </summary>
-    /// <param name="value">检索的值</param>
-    public EndsWithAttribute(string value)
+    /// <param name="searchValue">检索的值</param>
+    public EndsWithAttribute(string searchValue)
+        : this(() => searchValue)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="EndsWithAttribute"/>
+    /// </summary>
+    /// <param name="searchValueAccessor">检索的值访问器</param>
+    internal EndsWithAttribute(Func<string> searchValueAccessor)
         : base(() => Strings.EndsWithValidator_Invalid)
     {
-        Value = value;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(searchValueAccessor);
+
+        SearchValue = searchValueAccessor();
     }
 
     /// <summary>
     /// 检索的值
     /// </summary>
-    public string Value { get; init; }
+    public string SearchValue { get; set; }
+
+    /// <inheritdoc cref="StringComparison"/>
+    public StringComparison Comparison { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new EndsWithValidator(Value).IsValid(value);
+        return new EndsWithAttribute(SearchValue)
+        {
+            Comparison = Comparison
+        }.IsValid(value);
     }
 
     /// <inheritdoc />
     public override string FormatErrorMessage(string name)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, SearchValue);
     }
 }

@@ -21,7 +21,7 @@ public class StartsWithValidatorTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new StartsWithValidator((Func<string?>)null!);
+            var validator = new StartsWithValidator((Func<string>)null!);
         });
     }
 
@@ -47,7 +47,7 @@ public class StartsWithValidatorTests
     [Fact]
     public void IsValid_Invalid_Parameters()
     {
-        var validator = new StartsWithValidator(() => null);
+        var validator = new StartsWithValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -89,7 +89,7 @@ public class StartsWithValidatorTests
     [Fact]
     public void GetValidationResults_Invalid_Parameters()
     {
-        var validator = new StartsWithValidator(() => null);
+        var validator = new StartsWithValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -148,7 +148,7 @@ public class StartsWithValidatorTests
     [Fact]
     public void Validate_Invalid_Parameters()
     {
-        var validator = new StartsWithValidator(() => null);
+        var validator = new StartsWithValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {

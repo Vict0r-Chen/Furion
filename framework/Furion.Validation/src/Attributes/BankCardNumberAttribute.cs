@@ -15,45 +15,25 @@
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 小于验证特性
+/// 银行卡号验证特性
 /// </summary>
+/// <remarks>
+/// <see href="https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1">银行卡号对照表</see>
+/// </remarks>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class LessThanAttribute : ComparableAttribute<LessThanValidator>
+public class BankCardNumberAttribute : ValidationAttribute
 {
     /// <summary>
-    /// <inheritdoc cref="LessThanAttribute"/>
+    /// <inheritdoc cref="BankCardNumberAttribute"/>
     /// </summary>
-    /// <param name="compareValue">比较的值</param>
-    public LessThanAttribute(int compareValue)
-        : this(() => compareValue)
+    public BankCardNumberAttribute()
+        : base(() => Strings.BankCardNumberValidator_Invalid)
     {
     }
 
-    /// <summary>
-    /// <inheritdoc cref="LessThanAttribute"/>
-    /// </summary>
-    /// <param name="compareValue">比较的值</param>
-    public LessThanAttribute(double compareValue)
-        : this(() => compareValue)
+    /// <inheritdoc />
+    public override bool IsValid(object? value)
     {
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="LessThanAttribute"/>
-    /// </summary>
-    /// <param name="compareValue">比较的值</param>
-    public LessThanAttribute(object? compareValue)
-        : this(() => compareValue)
-    {
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="LessThanAttribute"/>
-    /// </summary>
-    /// <param name="compareValueAccessor">比较的值访问器</param>
-    internal LessThanAttribute(Func<object?> compareValueAccessor)
-        : base(compareValueAccessor, () => Strings.LessThanValidator_Invalid)
-    {
-        CompareValue = compareValueAccessor();
+        return new BankCardNumberValidator().IsValid(value);
     }
 }

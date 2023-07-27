@@ -24,6 +24,8 @@ public class CoreOptionsTests
         Assert.NotNull(coreOptions);
         Assert.NotNull(coreOptions._optionsInstances);
         Assert.Empty(coreOptions._optionsInstances);
+        Assert.NotNull(coreOptions._metadataOfRegistered);
+        Assert.Empty(coreOptions._metadataOfRegistered);
     }
 
     [Fact]

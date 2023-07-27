@@ -28,9 +28,14 @@ public class ColorValueAttribute : ValidationAttribute
     {
     }
 
+    /// <summary>
+    /// 完整模式
+    /// </summary>
+    public bool FullMode { get; set; } = true;
+
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new ColorValueValidator().IsValid(value);
+        return new ColorValueValidator { FullMode = FullMode }.IsValid(value);
     }
 }

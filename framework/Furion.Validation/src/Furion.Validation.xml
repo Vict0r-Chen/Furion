@@ -17,6 +17,22 @@
         <member name="M:System.ComponentModel.DataAnnotations.AgeAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.BankCardNumberAttribute">
+            <summary>
+            银行卡号验证特性
+            </summary>
+            <remarks>
+            <see href="https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1">银行卡号对照表</see>
+            </remarks>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.BankCardNumberAttribute.#ctor">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.BankCardNumberAttribute"/>
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.BankCardNumberAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.ChineseAttribute">
             <summary>
             中文/汉字验证特性
@@ -53,23 +69,28 @@
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.ColorValueAttribute"/>
             </summary>
         </member>
+        <member name="P:System.ComponentModel.DataAnnotations.ColorValueAttribute.FullMode">
+            <summary>
+            完整模式
+            </summary>
+        </member>
         <member name="M:System.ComponentModel.DataAnnotations.ColorValueAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.ComparableAttribute`1">
             <summary>
-            比较验证器验证特性
+            比较验证特性抽象基类
             </summary>
             <typeparam name="TComparableValidator"><see cref="T:Furion.Validation.ComparableValidator"/></typeparam>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.#ctor(System.Object,System.Func{System.String})">
+        <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.#ctor(System.Func{System.Object},System.Func{System.String})">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.ComparableAttribute`1"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValueAccessor">比较的值访问器</param>
             <param name="errorMessageAccessor">错误消息资源访问器</param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.ComparableAttribute`1.Value">
+        <member name="P:System.ComponentModel.DataAnnotations.ComparableAttribute`1.CompareValue">
             <summary>
             比较的值
             </summary>
@@ -95,25 +116,34 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.EndsWithAttribute">
             <summary>
-            以特定字符串结尾的验证特性
+            以特定字符/字符串结尾的验证特性
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.#ctor(System.Char)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.EndsWithAttribute"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.#ctor(System.String)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.EndsWithAttribute"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.EndsWithAttribute.Value">
+        <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.#ctor(System.Func{System.String})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.EndsWithAttribute"/>
+            </summary>
+            <param name="searchValueAccessor">检索的值访问器</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.EndsWithAttribute.SearchValue">
             <summary>
             检索的值
             </summary>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.EndsWithAttribute.Comparison">
+            <inheritdoc cref="T:System.StringComparison"/>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EndsWithAttribute.IsValid(System.Object)">
             <inheritdoc />
@@ -128,11 +158,17 @@
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.EqualAttribute.#ctor(System.Object)">
             <summary>
-            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute"/>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.EqualAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.EqualAttribute.Value">
+        <member name="M:System.ComponentModel.DataAnnotations.EqualAttribute.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.EqualAttribute"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.EqualAttribute.CompareValue">
             <summary>
             比较的值
             </summary>
@@ -152,19 +188,25 @@
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.GreaterThanAttribute.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.GreaterThanAttribute.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanAttribute.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanAttribute"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute">
             <summary>
@@ -175,19 +217,25 @@
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.GreaterThanOrEqualToAttribute"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.IdCardNumberAttribute">
             <summary>
@@ -211,19 +259,25 @@
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.LessThanAttribute.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.LessThanAttribute.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanAttribute.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanAttribute"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute">
             <summary>
@@ -234,19 +288,25 @@
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute.#ctor(System.Double)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute.#ctor(System.Object)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.LessThanOrEqualToAttribute"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.NotEmptyAttribute">
             <summary>
@@ -270,9 +330,15 @@
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.NotEqualAttribute"/>
             </summary>
-            <param name="value">比较的值</param>
+            <param name="compareValue">比较的值</param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.NotEqualAttribute.Value">
+        <member name="M:System.ComponentModel.DataAnnotations.NotEqualAttribute.#ctor(System.Func{System.Object})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.NotEqualAttribute"/>
+            </summary>
+            <param name="compareValueAccessor">比较的值访问器</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.NotEqualAttribute.CompareValue">
             <summary>
             比较的值
             </summary>
@@ -327,7 +393,7 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.SingleAttribute">
             <summary>
-            单个值验证特性
+            单项验证特性
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.SingleAttribute.#ctor">
@@ -340,25 +406,34 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.StartsWithAttribute">
             <summary>
-            以特定字符串开头的验证特性
+            以特定字符/字符串开头的验证特性
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.#ctor(System.Char)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.StartsWithAttribute"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.#ctor(System.String)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.StartsWithAttribute"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.StartsWithAttribute.Value">
+        <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.#ctor(System.Func{System.String})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.StartsWithAttribute"/>
+            </summary>
+            <param name="searchValueAccessor">检索的值访问器</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.StartsWithAttribute.SearchValue">
             <summary>
             检索的值
             </summary>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.StartsWithAttribute.Comparison">
+            <inheritdoc cref="T:System.StringComparison"/>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StartsWithAttribute.IsValid(System.Object)">
             <inheritdoc />
@@ -368,25 +443,34 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.StringContainsAttribute">
             <summary>
-            包含特定字符串的验证特性
+            包含特定字符/字符串的验证特性
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.#ctor(System.Char)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.StringContainsAttribute"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.#ctor(System.String)">
             <summary>
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.StringContainsAttribute"/>
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.StringContainsAttribute.Value">
+        <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.#ctor(System.Func{System.String})">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.StringContainsAttribute"/>
+            </summary>
+            <param name="searchValueAccessor">检索的值访问器</param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.StringContainsAttribute.SearchValue">
             <summary>
             检索的值
             </summary>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.StringContainsAttribute.Comparison">
+            <inheritdoc cref="T:System.StringComparison"/>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.StringContainsAttribute.IsValid(System.Object)">
             <inheritdoc />

@@ -21,7 +21,7 @@ public class StringContainsValidatorTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new StringContainsValidator((Func<string?>)null!);
+            var validator = new StringContainsValidator((Func<string>)null!);
         });
     }
 
@@ -47,7 +47,7 @@ public class StringContainsValidatorTests
     [Fact]
     public void IsValid_Invalid_Parameters()
     {
-        var validator = new StringContainsValidator(() => null);
+        var validator = new StringContainsValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -91,7 +91,7 @@ public class StringContainsValidatorTests
     [Fact]
     public void GetValidationResults_Invalid_Parameters()
     {
-        var validator = new StringContainsValidator(() => null);
+        var validator = new StringContainsValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
@@ -150,7 +150,7 @@ public class StringContainsValidatorTests
     [Fact]
     public void Validate_Invalid_Parameters()
     {
-        var validator = new StringContainsValidator(() => null);
+        var validator = new StringContainsValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {

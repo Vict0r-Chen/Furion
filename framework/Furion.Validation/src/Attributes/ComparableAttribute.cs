@@ -15,7 +15,7 @@
 namespace System.ComponentModel.DataAnnotations;
 
 /// <summary>
-/// 比较验证器验证特性
+/// 比较验证特性抽象基类
 /// </summary>
 /// <typeparam name="TComparableValidator"><see cref="ComparableValidator"/></typeparam>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
@@ -25,30 +25,30 @@ public abstract class ComparableAttribute<TComparableValidator> : ValidationAttr
     /// <summary>
     /// <inheritdoc cref="ComparableAttribute{TComparableValidator}"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
+    /// <param name="compareValueAccessor">比较的值访问器</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableAttribute(object? value, Func<string> errorMessageAccessor)
+    protected ComparableAttribute(Func<object?> compareValueAccessor, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(value, nameof(value));
+        ArgumentNullException.ThrowIfNull(compareValueAccessor);
 
-        Value = value;
+        CompareValue = compareValueAccessor();
     }
 
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object Value { get; }
+    public object? CompareValue { get; set; }
 
     /// <inheritdoc />
     public override sealed bool IsValid(object? value)
     {
-        // 创建比较验证器实例
-        var comparableValidator = Activator.CreateInstance(typeof(TComparableValidator), new object[] { Value }) as ComparableValidator;
+        // 反射创建比较验证器
+        var comparableValidator = Activator.CreateInstance(typeof(TComparableValidator), new[] { CompareValue }) as ComparableValidator;
 
         // 空检查
-        ArgumentNullException.ThrowIfNull(comparableValidator, nameof(comparableValidator));
+        ArgumentNullException.ThrowIfNull(comparableValidator);
 
         return comparableValidator.IsValid(value);
     }
@@ -56,6 +56,6 @@ public abstract class ComparableAttribute<TComparableValidator> : ValidationAttr
     /// <inheritdoc />
     public override string FormatErrorMessage(string name)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, CompareValue);
     }
 }

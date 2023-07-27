@@ -12,25 +12,11 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.ComponentModel.DataAnnotations;
+namespace Furion;
 
 /// <summary>
-/// 单项验证特性
+/// 组件元数据
 /// </summary>
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class SingleAttribute : ValidationAttribute
+internal sealed class ComponentMetadata
 {
-    /// <summary>
-    /// <inheritdoc cref="SingleAttribute"/>
-    /// </summary>
-    public SingleAttribute()
-        : base(() => Strings.SingleValidator_Invalid)
-    {
-    }
-
-    /// <inheritdoc />
-    public override bool IsValid(object? value)
-    {
-        return new SingleValidator().IsValid(value);
-    }
 }

@@ -21,29 +21,41 @@ namespace System.ComponentModel.DataAnnotations;
 public class EqualAttribute : ValidationAttribute
 {
     /// <summary>
-    /// <inheritdoc cref="ValidationAttribute"/>
+    /// <inheritdoc cref="EqualAttribute"/>
     /// </summary>
-    /// <param name="value">比较的值</param>
-    public EqualAttribute(object? value)
+    /// <param name="compareValue">比较的值</param>
+    public EqualAttribute(object? compareValue)
+        : this(() => compareValue)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="EqualAttribute"/>
+    /// </summary>
+    /// <param name="compareValueAccessor">比较的值访问器</param>
+    internal EqualAttribute(Func<object?> compareValueAccessor)
         : base(() => Strings.EqualValidator_Invalid)
     {
-        Value = value;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(compareValueAccessor);
+
+        CompareValue = compareValueAccessor();
     }
 
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object? Value { get; init; }
+    public object? CompareValue { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new EqualValidator(Value).IsValid(value);
+        return new EqualAttribute(CompareValue).IsValid(value);
     }
 
     /// <inheritdoc />
     public override string FormatErrorMessage(string name)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Value);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, CompareValue);
     }
 }
