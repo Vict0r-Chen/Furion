@@ -129,13 +129,17 @@ internal sealed class TypeScanningDependencyScanner
                 serviceTypes.Insert(0, implementationType);
             }
 
-            // 遍历所有服务类型创建类型扫描依赖关系模型集合
-            foreach (var typeScanningDependencyModel in serviceTypes
-                .Select(serviceType => new TypeScanningDependencyModel(serviceType, implementationType, serviceLifetime, dependencyAttribute?.Registration ?? RegistrationType.Add)
+            // 初始化类型扫描依赖关系模型集合
+            var typeScanningDependencyModels = serviceTypes
+                .Select(serviceType => new TypeScanningDependencyModel(serviceType, implementationType
+                    , serviceLifetime, dependencyAttribute?.Registration ?? RegistrationType.Add)
                 {
                     Order = dependencyAttribute?.Order ?? 0
                 })
-                .Where(model => _typeScanningDependencyBuilder._filterConfigure is null || _typeScanningDependencyBuilder._filterConfigure.Invoke(model)))
+                .Where(model => _typeScanningDependencyBuilder._filterConfigure is null || _typeScanningDependencyBuilder._filterConfigure.Invoke(model));
+
+            // 遍历所有服务类型创建类型扫描依赖关系模型集合
+            foreach (var typeScanningDependencyModel in typeScanningDependencyModels)
             {
                 yield return typeScanningDependencyModel;
             }
