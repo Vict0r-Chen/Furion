@@ -17,7 +17,7 @@ namespace Furion.Component;
 /// <summary>
 /// 数据验证 Web 模块服务组件
 /// </summary>
-public sealed class ValidationAspNetCoreComponent : ComponentBase
+public sealed class AspNetCoreValidationComponent : ComponentBase
 {
     /// <inheritdoc />
     public override void ConfigureServices(ServiceComponentContext context)

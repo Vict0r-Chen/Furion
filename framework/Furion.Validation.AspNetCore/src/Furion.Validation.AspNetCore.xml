@@ -4,12 +4,12 @@
         <name>Furion.Validation.AspNetCore</name>
     </assembly>
     <members>
-        <member name="T:Furion.Component.ValidationAspNetCoreComponent">
+        <member name="T:Furion.Component.AspNetCoreValidationComponent">
             <summary>
             数据验证 Web 模块服务组件
             </summary>
         </member>
-        <member name="M:Furion.Component.ValidationAspNetCoreComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
+        <member name="M:Furion.Component.AspNetCoreValidationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
     </members>
