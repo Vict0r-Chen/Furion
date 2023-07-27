@@ -27,7 +27,7 @@ internal sealed class CoreOptions
     /// <summary>
     /// 已注册的组件元数据集合
     /// </summary>
-    internal readonly ConcurrentDictionary<Type, ComponentMetadata> _metadataOfRegistered;
+    internal readonly ConcurrentDictionary<string, ComponentMetadata> _metadataOfRegistered;
 
     /// <summary>
     /// <inheritdoc cref="CoreOptions"/>
@@ -35,7 +35,7 @@ internal sealed class CoreOptions
     internal CoreOptions()
     {
         _optionsInstances = new();
-        _metadataOfRegistered = new();
+        _metadataOfRegistered = new(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -67,5 +67,14 @@ internal sealed class CoreOptions
 
         // 如果存在则移除
         _ = _optionsInstances.TryRemove(optionsType, out _);
+    }
+
+    /// <summary>
+    /// 登记组件注册信息
+    /// </summary>
+    /// <param name="metadata"><see cref="ComponentMetadata"/></param>
+    internal void TryRegisterComponent(ComponentMetadata metadata)
+    {
+        _metadataOfRegistered.TryAdd(metadata.Name, metadata);
     }
 }

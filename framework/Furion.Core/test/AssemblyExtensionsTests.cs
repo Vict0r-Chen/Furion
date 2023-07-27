@@ -45,4 +45,20 @@ public class AssemblyExtensionsTests
         Assert.Contains(types, t => t == typeof(StaticClass));
         Assert.Contains(types, t => t == typeof(RecordClass));
     }
+
+    [Fact]
+    public void GetDescription_ReturnOK()
+    {
+        var description = typeof(CoreOptions).Assembly.GetDescription();
+        Assert.NotNull(description);
+        Assert.Equal("Furion 框架核心模块。", description);
+    }
+
+    [Fact]
+    public void GetVersion_ReturnOK()
+    {
+        var version = typeof(CoreOptions).Assembly.GetVersion();
+        Assert.NotNull(version);
+        Assert.StartsWith("5.", version.ToString());
+    }
 }

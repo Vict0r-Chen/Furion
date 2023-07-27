@@ -31,4 +31,26 @@ internal static class AssemblyExtensions
             ? assembly.GetExportedTypes()
             : assembly.GetTypes();
     }
+
+    /// <summary>
+    /// 获取程序集描述
+    /// </summary>
+    /// <param name="assembly"><see cref="Assembly"/></param>
+    /// <returns><see cref="string"/></returns>
+    internal static string? GetDescription(this Assembly assembly)
+    {
+        var descriptionAttribute = Attribute.GetCustomAttribute(assembly, typeof(AssemblyDescriptionAttribute)) as AssemblyDescriptionAttribute;
+
+        return descriptionAttribute?.Description;
+    }
+
+    /// <summary>
+    /// 获取程序集版本
+    /// </summary>
+    /// <param name="assembly"><see cref="Assembly"/></param>
+    /// <returns><see cref="string"/></returns>
+    internal static Version? GetVersion(this Assembly assembly)
+    {
+        return assembly.GetName().Version;
+    }
 }

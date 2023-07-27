@@ -54,4 +54,22 @@ public class CoreOptionsTests
         coreOptions.Remove<ChildOptions>();
         Assert.Empty(coreOptions._optionsInstances);
     }
+
+    [Fact]
+    public void TryRegisterComponent_ReturnOK()
+    {
+        var coreAssembly = typeof(ComponentMetadata).Assembly;
+
+        var version = coreAssembly.GetVersion();
+        var description = coreAssembly.GetDescription();
+        var componentMetadata = new ComponentMetadata(coreAssembly.GetName().Name!, version, description);
+
+        var coreOptions = new CoreOptions();
+        coreOptions.TryRegisterComponent(componentMetadata);
+        coreOptions.TryRegisterComponent(componentMetadata);
+        coreOptions.TryRegisterComponent(componentMetadata);
+
+        Assert.Single(coreOptions._metadataOfRegistered);
+        Assert.Equal("Furion.Core", coreOptions._metadataOfRegistered.Keys.First());
+    }
 }

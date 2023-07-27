@@ -45,4 +45,50 @@ public class CoreServiceCollectionExtensionsTests
         Assert.Single(services);
         Assert.NotNull(coreOptions);
     }
+
+    [Fact]
+    public void RegisterComponent_Invalid_Parameters()
+    {
+        var services = new ServiceCollection();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.RegisterComponent((Assembly)null!);
+        });
+    }
+
+    [Fact]
+    public void RegisterComponent_ReturnOK()
+    {
+        var services = new ServiceCollection();
+
+        services.RegisterComponent(typeof(ComponentMetadata).Assembly);
+        services.RegisterComponent(typeof(ComponentMetadata).Assembly);
+
+        Assert.Single(services);
+        Assert.Single(services.GetCoreOptions()._metadataOfRegistered);
+    }
+
+    [Fact]
+    public void RegisterComponentType_Invalid_Parameters()
+    {
+        var services = new ServiceCollection();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            services.RegisterComponent((Type)null!);
+        });
+    }
+
+    [Fact]
+    public void RegisterComponentType_ReturnOK()
+    {
+        var services = new ServiceCollection();
+
+        services.RegisterComponent(typeof(ComponentMetadata));
+        services.RegisterComponent(typeof(ComponentMetadata));
+
+        Assert.Single(services);
+        Assert.Single(services.GetCoreOptions()._metadataOfRegistered);
+    }
 }

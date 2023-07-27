@@ -4,6 +4,98 @@
         <name>Furion.Core</name>
     </assembly>
     <members>
+        <member name="T:Furion.Constants">
+            <summary>
+            核心模块常量配置
+            </summary>
+        </member>
+        <member name="F:Furion.Constants.NUGET_PACKAGE_PAGE">
+            <summary>
+            NuGet 包主页地址
+            </summary>
+        </member>
+        <member name="F:Furion.Constants.FURION_COMPONENT_DOCS_PAGE">
+            <summary>
+            Furion 组件文档地址
+            </summary>
+        </member>
+        <member name="T:Furion.ComponentMetadata">
+            <summary>
+            组件元数据
+            </summary>
+        </member>
+        <member name="M:Furion.ComponentMetadata.#ctor(System.String,System.Version,System.String)">
+            <summary>
+            <inheritdoc cref="T:Furion.ComponentMetadata" />
+            </summary>
+            <param name="name">组件名称</param>
+            <param name="version">版本号</param>
+            <param name="description">描述</param>
+        </member>
+        <member name="P:Furion.ComponentMetadata.Name">
+            <summary>
+            组件名称
+            </summary>
+        </member>
+        <member name="P:Furion.ComponentMetadata.Version">
+            <summary>
+            版本号
+            </summary>
+        </member>
+        <member name="P:Furion.ComponentMetadata.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Furion.ComponentMetadata.NuGetPage">
+            <summary>
+            NuGet 地址
+            </summary>
+        </member>
+        <member name="P:Furion.ComponentMetadata.DocumentationPage">
+            <summary>
+            文档地址
+            </summary>
+        </member>
+        <member name="T:Furion.CoreOptions">
+            <summary>
+            核心模块选项
+            </summary>
+        </member>
+        <member name="F:Furion.CoreOptions._optionsInstances">
+            <summary>
+            子选项集合
+            </summary>
+        </member>
+        <member name="F:Furion.CoreOptions._metadataOfRegistered">
+            <summary>
+            已注册的组件元数据集合
+            </summary>
+        </member>
+        <member name="M:Furion.CoreOptions.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.CoreOptions"/>
+            </summary>
+        </member>
+        <member name="M:Furion.CoreOptions.GetOrAdd``1">
+            <summary>
+            获取子选项
+            </summary>
+            <typeparam name="TOptions">选项类型</typeparam>
+            <returns><typeparamref name="TOptions"/></returns>
+        </member>
+        <member name="M:Furion.CoreOptions.Remove``1">
+            <summary>
+            移除子选项
+            </summary>
+            <typeparam name="TOptions">选项类型</typeparam>
+        </member>
+        <member name="M:Furion.CoreOptions.TryRegisterComponent(Furion.ComponentMetadata)">
+            <summary>
+            登记组件注册信息
+            </summary>
+            <param name="metadata"><see cref="T:Furion.ComponentMetadata"/></param>
+        </member>
         <member name="T:System.Debugging">
             <summary>
             向事件管理器中输出事件消息
@@ -232,6 +324,20 @@
             <param name="exported">类型导出设置</param>
             <returns><see cref="T:System.Type"/>[]</returns>
         </member>
+        <member name="M:System.Reflection.AssemblyExtensions.GetDescription(System.Reflection.Assembly)">
+            <summary>
+            获取程序集描述
+            </summary>
+            <param name="assembly"><see cref="T:System.Reflection.Assembly"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:System.Reflection.AssemblyExtensions.GetVersion(System.Reflection.Assembly)">
+            <summary>
+            获取程序集版本
+            </summary>
+            <param name="assembly"><see cref="T:System.Reflection.Assembly"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="T:System.Collections.Generic.ICollectionExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.ICollection`1"/> 拓展类
@@ -424,43 +530,19 @@
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <returns><see cref="T:Furion.CoreOptions"/></returns>
         </member>
-        <member name="T:Furion.ComponentMetadata">
+        <member name="M:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions.RegisterComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
             <summary>
-            组件元数据
+            登记组件注册信息
             </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="assembly"><see cref="T:System.Reflection.Assembly"/></param>
         </member>
-        <member name="T:Furion.CoreOptions">
+        <member name="M:Microsoft.Extensions.DependencyInjection.CoreServiceCollectionExtensions.RegisterComponent(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)">
             <summary>
-            核心模块选项
+            登记组件注册信息
             </summary>
-        </member>
-        <member name="F:Furion.CoreOptions._optionsInstances">
-            <summary>
-            子选项集合
-            </summary>
-        </member>
-        <member name="F:Furion.CoreOptions._metadataOfRegistered">
-            <summary>
-            已注册的组件元数据集合
-            </summary>
-        </member>
-        <member name="M:Furion.CoreOptions.#ctor">
-            <summary>
-            <inheritdoc cref="T:Furion.CoreOptions"/>
-            </summary>
-        </member>
-        <member name="M:Furion.CoreOptions.GetOrAdd``1">
-            <summary>
-            获取子选项
-            </summary>
-            <typeparam name="TOptions">选项类型</typeparam>
-            <returns><typeparamref name="TOptions"/></returns>
-        </member>
-        <member name="M:Furion.CoreOptions.Remove``1">
-            <summary>
-            移除子选项
-            </summary>
-            <typeparam name="TOptions">选项类型</typeparam>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <param name="typeInAssembly"><see cref="T:System.Type"/></param>
         </member>
     </members>
 </doc>

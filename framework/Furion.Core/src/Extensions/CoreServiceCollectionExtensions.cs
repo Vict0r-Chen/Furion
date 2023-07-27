@@ -51,4 +51,40 @@ public static class CoreServiceCollectionExtensions
 
         return coreOptions;
     }
+
+    /// <summary>
+    /// 登记组件注册信息
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="assembly"><see cref="Assembly"/></param>
+    internal static void RegisterComponent(this IServiceCollection services, Assembly assembly)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(assembly);
+
+        // 获取核心模块选项
+        var coreOptions = services.GetCoreOptions();
+
+        // 组件元数据
+        var componentMetadata = new ComponentMetadata(assembly.GetName().Name!
+            , assembly.GetVersion()
+            , assembly.GetDescription());
+
+        // 登记组件注册信息
+        coreOptions.TryRegisterComponent(componentMetadata);
+    }
+
+    /// <summary>
+    /// 登记组件注册信息
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <param name="typeInAssembly"><see cref="Type"/></param>
+    internal static void RegisterComponent(this IServiceCollection services, Type typeInAssembly)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(typeInAssembly);
+
+        // 登记组件注册信息
+        services.RegisterComponent(typeInAssembly.Assembly);
+    }
 }
