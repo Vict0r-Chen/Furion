@@ -30,7 +30,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// <see cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
-    internal readonly PropertyAnnotationValidator _propertyAnnotationValidator;
+    internal readonly PropertyAnnotationValidator<T, TProperty> _propertyAnnotationValidator;
 
     /// <summary>
     /// <inheritdoc cref="PropertyValidator{T, TProperty}"/>
@@ -46,7 +46,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         _objectValidator = objectValidator;
         _objectValidator.AddPropertyValidator(this);
 
-        _propertyAnnotationValidator = new(PropertyName);
+        _propertyAnnotationValidator = new(propertyExpression);
     }
 
     /// <summary>

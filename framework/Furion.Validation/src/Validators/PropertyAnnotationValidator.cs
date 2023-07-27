@@ -18,50 +18,104 @@ namespace Furion.Validation;
 /// 属性注解（特性）验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
-public class PropertyAnnotationValidator<T> : PropertyAnnotationValidator
+/// <typeparam name="TProperty">属性类型</typeparam>
+public class PropertyAnnotationValidator<T, TProperty> : PropertyAnnotationValidator<T>
     where T : class
 {
     /// <summary>
-    /// <inheritdoc cref="PropertyAnnotationValidator{T}"/>
+    /// 属性表达式
     /// </summary>
-    /// <param name="propertyExpression"><see cref="Expression{TDelegate}"/></param>
-    public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
-        : base(propertyExpression is null ? null! : propertyExpression.GetPropertyName())
+    internal Expression<Func<T, TProperty?>> _propertyExpression;
+
+    /// <summary>
+    /// <inheritdoc cref="PropertyAnnotationValidator{T, TProperty}"/>
+    /// </summary>
+    /// <param name="propertyExpression">属性表达式</param>
+    public PropertyAnnotationValidator(Expression<Func<T, TProperty?>> propertyExpression)
+        : base(Convert(propertyExpression))
     {
+        _propertyExpression = propertyExpression;
+    }
+
+    /// <inheritdoc cref="PropertyAnnotationValidator{T}.PropertyExpression"/>
+    public new Expression<Func<T, TProperty?>> PropertyExpression
+    {
+        get
+        {
+            return _propertyExpression;
+        }
+        set
+        {
+            // 转换表达式
+            base.PropertyExpression = Convert(value);
+            _propertyExpression = value;
+        }
+    }
+
+    /// <summary>
+    /// 转换表达式
+    /// </summary>
+    /// <param name="propertyExpression">属性表达式</param>
+    /// <returns><see cref="Expression{TDelegate}"/></returns>
+    internal static Expression<Func<T, object?>> Convert(Expression<Func<T, TProperty?>> propertyExpression)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyExpression);
+
+        // 创建新的表达式
+        return Expression.Lambda<Func<T, object?>>(Expression.Convert(propertyExpression.Body, typeof(object))
+            , propertyExpression.Parameters[0]);
     }
 }
 
 /// <summary>
 /// 属性注解（特性）验证器
 /// </summary>
-public class PropertyAnnotationValidator : ValidatorBase
+/// <typeparam name="T">对象类型</typeparam>
+public class PropertyAnnotationValidator<T> : ValidatorBase<T>
+    where T : class
 {
     /// <summary>
-    /// <inheritdoc cref="PropertyAnnotationValidator"/>
+    /// <inheritdoc cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
-    /// <param name="propertyName">属性名称</param>
-    public PropertyAnnotationValidator(string propertyName)
+    /// <param name="propertyExpression">属性表达式</param>
+    public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
         : base()
     {
         // 空检查
-        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
+        ArgumentNullException.ThrowIfNull(propertyExpression);
 
-        PropertyName = propertyName;
+        PropertyExpression = propertyExpression;
     }
+
+    /// <summary>
+    /// 属性表达式
+    /// </summary>
+    public Expression<Func<T, object?>> PropertyExpression { get; set; }
 
     /// <summary>
     /// 属性名称
     /// </summary>
-    public string PropertyName { get; set; }
+    internal string PropertyName
+    {
+        get
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(PropertyExpression);
+
+            // 解析表达式属性名称
+            return PropertyExpression.GetPropertyName();
+        }
+    }
 
     /// <inheritdoc />
-    public override bool IsValid(object? value)
+    public override bool IsValid(T value)
     {
         return TryValidate(value, out _);
     }
 
     /// <inheritdoc />
-    public override List<ValidationResult>? GetValidationResults(object? value, string name)
+    public override List<ValidationResult>? GetValidationResults(T value, string name)
     {
         // 检查属性注解（特性）合法性
         if (TryValidate(value, out var validationResults))
@@ -86,11 +140,10 @@ public class PropertyAnnotationValidator : ValidatorBase
     /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal bool TryValidate(object? instance, out List<ValidationResult> validationResults)
+    internal bool TryValidate(T instance, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentException.ThrowIfNullOrWhiteSpace(PropertyName);
 
         // 查找类型对应的属性
         var instanceType = instance.GetType();
