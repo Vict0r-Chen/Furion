@@ -19,42 +19,42 @@ namespace Furion.Validation;
 /// </summary>
 public sealed class AggregateValidationException : AggregateException
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException()
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException(IEnumerable<ValidationException> innerExceptions)
         : base(innerExceptions)
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException(params ValidationException[] innerExceptions)
         : base(innerExceptions)
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException(string? message)
         : base(message)
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException(string? message, IEnumerable<ValidationException> innerExceptions)
         : base(message, innerExceptions)
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException(string? message, ValidationException innerException)
         : base(message, innerException)
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="AggregateValidationException" />
     public AggregateValidationException(string? message, params ValidationException[] innerExceptions)
         : base(message, innerExceptions)
     {

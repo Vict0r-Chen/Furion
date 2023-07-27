@@ -1734,25 +1734,25 @@
             </summary>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationException[])">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String)">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException)">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException[])">
-            <inheritdoc />
+            <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
         </member>
         <member name="T:Furion.Validation.ValidatorBaseExtensions">
             <summary>

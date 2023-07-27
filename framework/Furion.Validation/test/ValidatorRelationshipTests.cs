@@ -12,20 +12,17 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace Furion.Validation.Tests;
 
-/// <summary>
-/// 验证器关系
-/// </summary>
-public enum ValidatorRelationship
+public class ValidatorRelationshipTests
 {
-    /// <summary>
-    /// 并且
-    /// </summary>
-    And = 0,
+    [Fact]
+    public void Definition()
+    {
+        var names = Enum.GetNames(typeof(ValidatorRelationship));
+        Assert.Equal(2, names.Length);
 
-    /// <summary>
-    /// 或者
-    /// </summary>
-    Or
+        var strings = new[] { nameof(ValidatorRelationship.And), nameof(ValidatorRelationship.Or) };
+        Assert.True(strings.SequenceEqual(names));
+    }
 }
