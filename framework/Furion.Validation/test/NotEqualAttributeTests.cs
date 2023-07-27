@@ -14,19 +14,19 @@
 
 namespace Furion.Validation.Tests;
 
-public class DomainAttributeTests
+public class NotEqualAttributeTests
 {
     public class Model
     {
-        [Domain]
+        [NotEqual("furion")]
         public string? Data { get; set; }
     }
 
     [Theory]
     [InlineData(null, true, null)]
-    [InlineData("furion.net", true, null)]
-    [InlineData("https://furion.net", false)]
-    public void DataAnnotations_ReturnOK(string? data, bool result, string? errorMessage = "The field Data is not a valid domain format.")
+    [InlineData("fur", true, null)]
+    [InlineData("furion", false)]
+    public void DataAnnotations_ReturnOK(string? data, bool result, string? errorMessage = "The field Data cannot be equal to 'furion'.")
     {
         var model = new Model { Data = data };
 
@@ -41,8 +41,18 @@ public class DomainAttributeTests
     [Fact]
     public void IsValid_ReturnOK()
     {
-        var validation = new DomainAttribute();
-        Assert.True(validation.IsValid("furion.net"));
-        Assert.False(validation.IsValid("https://furion.net"));
+        var validation = new NotEqualAttribute("furion")
+        {
+            CompareValue = "furion"
+        };
+        Assert.True(validation.IsValid("fur"));
+        Assert.False(validation.IsValid("furion"));
+    }
+
+    [Fact]
+    public void FormatErrorMessage_ReturnOK()
+    {
+        var validation = new NotEqualAttribute("furion");
+        Assert.Equal("The field Data cannot be equal to 'furion'.", validation.FormatErrorMessage("Data"));
     }
 }
