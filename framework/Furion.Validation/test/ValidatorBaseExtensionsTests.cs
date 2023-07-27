@@ -29,5 +29,8 @@ public class ValidatorBaseExtensionsTests
 
         var propertyAnnotationValidator = new PropertyAnnotationValidator<PropertyModel, string>(u => u.Name).WithErrorMessage(data);
         Assert.Equal(data, propertyAnnotationValidator.ErrorMessage);
+
+        var userNameValidator = new UserNameValidator().WithErrorMessage(null);
+        Assert.Null(userNameValidator.ErrorMessage);
     }
 }
