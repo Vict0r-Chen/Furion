@@ -50,7 +50,7 @@ public class NotEqualAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new NotEqualAttribute(CompareValue).IsValid(value);
+        return new NotEqualValidator(CompareValue).IsValid(value);
     }
 
     /// <inheritdoc />

@@ -62,7 +62,7 @@ public class EndsWithAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new EndsWithAttribute(SearchValue)
+        return new EndsWithValidator(SearchValue)
         {
             Comparison = Comparison
         }.IsValid(value);

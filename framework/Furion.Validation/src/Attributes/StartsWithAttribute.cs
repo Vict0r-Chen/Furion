@@ -62,7 +62,7 @@ public class StartsWithAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new StartsWithAttribute(SearchValue)
+        return new StartsWithValidator(SearchValue)
         {
             Comparison = Comparison
         }.IsValid(value);

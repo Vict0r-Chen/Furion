@@ -50,7 +50,7 @@ public class EqualAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new EqualAttribute(CompareValue).IsValid(value);
+        return new EqualValidator(CompareValue).IsValid(value);
     }
 
     /// <inheritdoc />

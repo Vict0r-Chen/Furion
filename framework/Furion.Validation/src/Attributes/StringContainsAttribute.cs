@@ -62,7 +62,7 @@ public class StringContainsAttribute : ValidationAttribute
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return new StringContainsAttribute(SearchValue)
+        return new StringContainsValidator(SearchValue)
         {
             Comparison = Comparison
         }.IsValid(value);
