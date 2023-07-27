@@ -2967,11 +2967,12 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.FormatErrorMessage(System.String,`0)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.String,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             检查属性注解（特性）合法性
             </summary>
             <param name="instance">对象实例</param>
+            <param name="propertyName">属性名称</param>
             <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>

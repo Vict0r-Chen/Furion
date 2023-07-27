@@ -131,4 +131,42 @@ public class ObjectAnnotationValidatorTests
 
         Assert.Equal(result, validator.IsSameAs(type));
     }
+
+    [Fact]
+    public void TryValidate_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ObjectAnnotationValidator.TryValidate(null!, out _);
+        });
+    }
+
+    [Fact]
+    public void TryValidate_ReturnOK()
+    {
+        var objectModel = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion",
+            Email = "monksoul@outlook.com"
+        };
+
+        var result = ObjectAnnotationValidator.TryValidate(objectModel, out var validationResults);
+
+        Assert.True(result);
+        Assert.NotNull(validationResults);
+        Assert.Empty(validationResults);
+
+        var objectModel2 = new ObjectModel();
+
+        var result2 = ObjectAnnotationValidator.TryValidate(objectModel2, out var validationResults2);
+
+        Assert.False(result2);
+        Assert.NotNull(validationResults2);
+        Assert.Equal(2, validationResults2.Count);
+        Assert.Equal("Id", validationResults2.ElementAt(0).MemberNames.ElementAt(0));
+        Assert.Equal("Name", validationResults2.ElementAt(1).MemberNames.ElementAt(0));
+        Assert.Equal("The field Id must be between 1 and 2147483647.", validationResults2.ElementAt(0).ErrorMessage);
+        Assert.Equal("The Name field is required.", validationResults2.ElementAt(1).ErrorMessage);
+    }
 }

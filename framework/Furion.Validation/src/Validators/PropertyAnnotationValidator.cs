@@ -111,14 +111,14 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <inheritdoc />
     public override bool IsValid(T value)
     {
-        return TryValidate(value, out _);
+        return TryValidate(value, PropertyName, out _);
     }
 
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(T value, string name)
     {
         // 检查属性注解（特性）合法性
-        if (TryValidate(value, out var validationResults))
+        if (TryValidate(value, PropertyName, out var validationResults))
         {
             return null;
         }
@@ -142,17 +142,19 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// 检查属性注解（特性）合法性
     /// </summary>
     /// <param name="instance">对象实例</param>
+    /// <param name="propertyName">属性名称</param>
     /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal bool TryValidate(T instance, out List<ValidationResult> validationResults)
+    internal static bool TryValidate(T instance, string propertyName, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
 
         // 查找类型对应的属性
         var instanceType = instance.GetType();
-        var propertyInfo = instanceType.GetProperty(PropertyName);
+        var propertyInfo = instanceType.GetProperty(propertyName);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyInfo);
@@ -160,13 +162,13 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         // 检查属性是否可读
         if (!propertyInfo.CanRead)
         {
-            throw new InvalidOperationException($"The property `{PropertyName}` in type `{instanceType}` is not readable.");
+            throw new InvalidOperationException($"The property `{propertyName}` in type `{instanceType}` is not readable.");
         }
 
         // 初始化验证上下文
         var validationContext = new ValidationContext(instance)
         {
-            MemberName = PropertyName
+            MemberName = propertyName
         };
         validationResults = new();
 

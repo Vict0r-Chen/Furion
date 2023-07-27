@@ -45,6 +45,7 @@
 [assembly: InternalsVisibleTo("Furion.Mail.Pop3")]
 [assembly: InternalsVisibleTo("Furion.ObjectMapper")]
 [assembly: InternalsVisibleTo("Furion.Options")]
+[assembly: InternalsVisibleTo("Furion.Redis")]
 [assembly: InternalsVisibleTo("Furion.Reflection")]
 [assembly: InternalsVisibleTo("Furion.Schedule")]
 [assembly: InternalsVisibleTo("Furion.Serialization")]
