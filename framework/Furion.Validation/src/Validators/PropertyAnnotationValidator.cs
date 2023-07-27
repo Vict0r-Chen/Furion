@@ -126,11 +126,16 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         // 检查是否配置了自定义错误消息
         if (ErrorMessage is not null)
         {
-            var memberName = name ?? PropertyName;
-            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(memberName, value), new[] { memberName }));
+            validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));
         }
 
         return validationResults;
+    }
+
+    /// <inheritdoc />
+    public override string FormatErrorMessage(string name, T value)
+    {
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name ?? PropertyName);
     }
 
     /// <summary>

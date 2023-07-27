@@ -2964,6 +2964,9 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetValidationResults(`0,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.FormatErrorMessage(System.String,`0)">
+            <inheritdoc />
+        </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             检查属性注解（特性）合法性
