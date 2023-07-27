@@ -1651,7 +1651,7 @@
             <param name="predicate">委托对象</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Predicate(System.Func{System.Object,System.Boolean})">
+        <member name="M:Furion.Validation.PropertyValidator`2.Predicate(System.Func{`0,System.Boolean})">
             <summary>
             添加委托对象验证器
             </summary>
@@ -2900,23 +2900,12 @@
             </summary>
             <param name="predicate">自定义委托</param>
         </member>
-        <member name="T:Furion.Validation.PredicateValidator">
-            <summary>
-            自定义委托验证器
-            </summary>
-        </member>
-        <member name="M:Furion.Validation.PredicateValidator.#ctor(System.Func{System.Object,System.Boolean})">
-            <summary>
-            <inheritdoc cref="T:Furion.Validation.PredicateValidator"/>
-            </summary>
-            <param name="predicate">自定义委托</param>
-        </member>
-        <member name="P:Furion.Validation.PredicateValidator.Predicate">
+        <member name="P:Furion.Validation.PredicateValidator`1.Predicate">
             <summary>
             自定义委托
             </summary>
         </member>
-        <member name="M:Furion.Validation.PredicateValidator.IsValid(System.Object)">
+        <member name="M:Furion.Validation.PredicateValidator`1.IsValid(`0)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PropertyAnnotationValidator`1">
@@ -3152,6 +3141,45 @@
             ○ Match if at the end of the string or if before an ending newline.<br/>
             </code>
             </remarks>
+        </member>
+        <member name="T:Furion.Validation.ValidatorBase`1">
+            <summary>
+            验证器抽象基类
+            </summary>
+            <typeparam name="T">泛型类型</typeparam>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.#ctor">
+            <inheritdoc cref="T:Furion.Validation.ValidatorBase`1"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.#ctor(System.String)">
+            <inheritdoc cref="T:Furion.Validation.ValidatorBase`1"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.#ctor(System.Func{System.String})">
+            <inheritdoc cref="T:Furion.Validation.ValidatorBase`1"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.IsValid(`0)">
+            <inheritdoc cref="M:Furion.Validation.ValidatorBase.IsValid(System.Object)"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.GetValidationResults(`0,System.String)">
+            <inheritdoc cref="M:Furion.Validation.ValidatorBase.GetValidationResults(System.Object,System.String)"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.GetValidationResults(System.Object,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.FormatErrorMessage(System.String,`0)">
+            <inheritdoc cref="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.String,System.Object)"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.FormatErrorMessage(System.String,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.Validate(`0,System.String)">
+            <inheritdoc cref="M:Furion.Validation.ValidatorBase.IsValid(System.Object)"/>
+        </member>
+        <member name="M:Furion.Validation.ValidatorBase`1.Validate(System.Object,System.String)">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.ValidatorBase">
             <summary>

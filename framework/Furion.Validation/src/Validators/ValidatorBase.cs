@@ -17,6 +17,85 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器抽象基类
 /// </summary>
+/// <typeparam name="T">泛型类型</typeparam>
+public abstract class ValidatorBase<T> : ValidatorBase
+{
+    /// <inheritdoc cref="ValidatorBase{T}"/>
+    protected ValidatorBase()
+        : base()
+    {
+    }
+
+    /// <inheritdoc cref="ValidatorBase{T}"/>
+    protected ValidatorBase(string? defaultErrorMessage)
+        : base(defaultErrorMessage)
+    {
+    }
+
+    /// <inheritdoc cref="ValidatorBase{T}"/>
+    protected ValidatorBase(Func<string> errorMessageAccessor)
+        : base(errorMessageAccessor)
+    {
+    }
+
+    /// <inheritdoc cref="ValidatorBase.IsValid(object?)"/>
+    public abstract bool IsValid(T value);
+
+    /// <inheritdoc />
+    public override sealed bool IsValid(object? value)
+    {
+        return IsValid((T)value!);
+    }
+
+    /// <inheritdoc cref="ValidatorBase.GetValidationResults(object?, string)"/>
+    public virtual List<ValidationResult>? GetValidationResults(T value, string name)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(value);
+
+        return base.GetValidationResults(value, name);
+    }
+
+    /// <inheritdoc />
+    public override sealed List<ValidationResult>? GetValidationResults(object? value, string name)
+    {
+        return GetValidationResults((T)value!, name);
+    }
+
+    /// <inheritdoc cref="ValidatorBase.FormatErrorMessage(string, object?)"/>
+    public virtual string FormatErrorMessage(string name, T value)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(value);
+
+        return base.FormatErrorMessage(name, value);
+    }
+
+    /// <inheritdoc />
+    public override sealed string FormatErrorMessage(string name, object? value = null)
+    {
+        return FormatErrorMessage(name, (T)value!);
+    }
+
+    /// <inheritdoc cref="ValidatorBase.IsValid(object?)"/>
+    public virtual void Validate(T value, string name)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(value);
+
+        base.Validate(value, name);
+    }
+
+    /// <inheritdoc />
+    public override sealed void Validate(object? value, string name)
+    {
+        Validate((T)value!, name);
+    }
+}
+
+/// <summary>
+/// 验证器抽象基类
+/// </summary>
 public abstract class ValidatorBase
 {
     /// <summary>
@@ -107,7 +186,7 @@ public abstract class ValidatorBase
     /// <param name="value">对象值</param>
     /// <param name="name">显示名称</param>
     /// <exception cref="AggregateValidationException"></exception>
-    public void Validate(object? value, string name)
+    public virtual void Validate(object? value, string name)
     {
         // 获取验证结果
         var validationResults = GetValidationResults(value, name);

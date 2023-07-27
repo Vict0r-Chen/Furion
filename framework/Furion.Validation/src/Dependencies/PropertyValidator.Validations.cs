@@ -586,9 +586,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="predicate">委托对象</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Predicate(Func<object?, bool> predicate)
+    public PropertyValidator<T, TProperty> Predicate(Func<T, bool> predicate)
     {
-        Validators.Add(new PredicateValidator(predicate));
+        Validators.Add(new PredicateValidator<T>(predicate));
 
         return this;
     }

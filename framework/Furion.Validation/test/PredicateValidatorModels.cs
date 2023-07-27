@@ -12,39 +12,12 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace Furion.Validation.Tests;
 
-/// <summary>
-/// 自定义委托验证器
-/// </summary>
-/// <typeparam name="T">泛型类型</typeparam>
-public class PredicateValidator<T> : ValidatorBase<T>
+public class PredicateModel
 {
-    /// <summary>
-    /// <inheritdoc cref="PredicateValidator{T}"/>
-    /// </summary>
-    /// <param name="predicate">自定义委托</param>
-    public PredicateValidator(Func<T, bool> predicate)
-        : base()
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(predicate);
-
-        Predicate = predicate;
-    }
-
-    /// <summary>
-    /// 自定义委托
-    /// </summary>
-    public Func<T, bool> Predicate { get; set; }
-
-    /// <inheritdoc />
-    public override bool IsValid(T value)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(value);
-        ArgumentNullException.ThrowIfNull(Predicate);
-
-        return Predicate(value);
-    }
+    public int Id { get; set; }
 }
+
+public class PredicateModel2
+{ }
