@@ -12,25 +12,22 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation;
+namespace Furion.Validation.Tests;
 
-/// <summary>
-/// <see cref="ValidatorBase"/> 拓展类
-/// </summary>
-public static class ValidatorBaseExtensions
+public class ValidatorBaseExtensionsTests
 {
-    /// <summary>
-    /// 设置错误消息
-    /// </summary>
-    /// <typeparam name="TValidator"><see cref="ValidatorBase"/></typeparam>
-    /// <param name="validator"><typeparamref name="TValidator"/></param>
-    /// <param name="errorMessage">错误消息</param>
-    /// <returns><typeparamref name="TValidator"/></returns>
-    public static TValidator WithErrorMessage<TValidator>(this TValidator validator, string? errorMessage)
-        where TValidator : ValidatorBase
+    [Fact]
+    public void WithErrorMessage_ReturnOK()
     {
-        validator.ErrorMessage = errorMessage;
+        var data = "数据校验失败";
 
-        return validator;
+        var ageValidator = new AgeValidator().WithErrorMessage(data);
+        Assert.Equal(data, ageValidator.ErrorMessage);
+
+        var predicateValidator = new PredicateValidator<PredicateModel>(u => u.Id > 0).WithErrorMessage(data);
+        Assert.Equal(data, predicateValidator.ErrorMessage);
+
+        var propertyAnnotationValidator = new PropertyAnnotationValidator<PropertyModel, string>(u => u.Name).WithErrorMessage(data);
+        Assert.Equal(data, propertyAnnotationValidator.ErrorMessage);
     }
 }

@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 数据验证模块构建器
+/// 数据验证构建器
 /// </summary>
 public sealed class ValidationBuilder
 {

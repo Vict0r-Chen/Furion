@@ -919,7 +919,7 @@
         </member>
         <member name="T:Furion.Validation.ValidationBuilder">
             <summary>
-            数据验证模块构建器
+            数据验证构建器
             </summary>
         </member>
         <member name="F:Furion.Validation.ValidationBuilder._validators">
@@ -3348,7 +3348,7 @@
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Furion.Validation.ValidationBuilder})">
             <summary>
-            添加数据验证模块服务
+            添加数据验证服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="configure">自定义配置委托</param>
@@ -3356,7 +3356,7 @@
         </member>
         <member name="M:Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(Microsoft.Extensions.DependencyInjection.IServiceCollection,Furion.Validation.ValidationBuilder)">
             <summary>
-            添加数据验证模块服务
+            添加数据验证服务
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
             <param name="validationBuilder"><see cref="T:Furion.Validation.ValidationBuilder"/></param>

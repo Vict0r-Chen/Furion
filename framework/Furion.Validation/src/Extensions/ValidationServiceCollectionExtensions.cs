@@ -20,14 +20,14 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class ValidationServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加数据验证模块服务
+    /// 添加数据验证服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddValidation(this IServiceCollection services, Action<ValidationBuilder>? configure = null)
     {
-        // 初始化数据验证模块构建器
+        // 初始化数据验证构建器
         var validationBuilder = new ValidationBuilder();
 
         // 调用自定义配置委托
@@ -37,7 +37,7 @@ public static class ValidationServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加数据验证模块服务
+    /// 添加数据验证服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="validationBuilder"><see cref="ValidationBuilder"/></param>
@@ -45,7 +45,7 @@ public static class ValidationServiceCollectionExtensions
     public static IServiceCollection AddValidation(this IServiceCollection services, ValidationBuilder validationBuilder)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(validationBuilder, nameof(validationBuilder));
+        ArgumentNullException.ThrowIfNull(validationBuilder);
 
         // 构建模块服务
         validationBuilder.Build(services);
