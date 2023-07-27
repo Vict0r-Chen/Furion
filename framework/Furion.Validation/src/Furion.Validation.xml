@@ -1816,22 +1816,22 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.EndsWithValidator_Invalid">
             <summary>
-              查找类似 The field {0} is not end with the string {1}. 的本地化字符串。
+              查找类似 The field {0} is not end with the string &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.EqualValidator_Invalid">
             <summary>
-              查找类似 The field {0} must be equal to {1}. 的本地化字符串。
+              查找类似 The field {0} must be equal to &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.GreaterThanOrEqualToValidator_Invalid">
             <summary>
-              查找类似 The field {0} must be greater than or equal to {1}. 的本地化字符串。
+              查找类似 The field {0} must be greater than or equal to &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.GreaterThanValidator_Invalid">
             <summary>
-              查找类似 The field {0} must be greater than {1}. 的本地化字符串。
+              查找类似 The field {0} must be greater than &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.IdCardNumberValidator_invalid">
@@ -1841,12 +1841,12 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.LessThanOrEqualToValidator_Invalid">
             <summary>
-              查找类似 The field {0} must be less than or equal to {1}. 的本地化字符串。
+              查找类似 The field {0} must be less than or equal to &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.LessThanValidator_Invalid">
             <summary>
-              查找类似 The field {0} must be less than {1}. 的本地化字符串。
+              查找类似 The field {0} must be less than &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.NotEmptyValidator_Invalid">
@@ -1856,7 +1856,7 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.NotEqualValidator_Invalid">
             <summary>
-              查找类似 The field {0} cannot be equal to {1}. 的本地化字符串。
+              查找类似 The field {0} cannot be equal to &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.PasswordValidator_Invalid">
@@ -1881,12 +1881,12 @@
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StartsWithValidator_Invalid">
             <summary>
-              查找类似 The field {0} is not start with the string {1}. 的本地化字符串。
+              查找类似 The field {0} is not start with the string &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StringContainsValidator_Invalid">
             <summary>
-              查找类似 The field {0} is not contain the string {1}. 的本地化字符串。
+              查找类似 The field {0} is not contain the string &apos;{1}&apos;. 的本地化字符串。
             </summary>
         </member>
         <member name="P:Furion.Validation.Resources.Strings.StrongPasswordValidator_Invalid">
@@ -2967,12 +2967,11 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.FormatErrorMessage(System.String,`0)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.String,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             检查属性注解（特性）合法性
             </summary>
             <param name="instance">对象实例</param>
-            <param name="propertyName">属性名称</param>
             <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
@@ -3310,13 +3309,16 @@
         <member name="M:Furion.Validation.ValueAnnotationValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ValueAnnotationValidator.TryValidate(System.Object,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@,System.String)">
+        <member name="M:Furion.Validation.ValueAnnotationValidator.FormatErrorMessage(System.String,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ValueAnnotationValidator.TryValidate(System.Object,System.String,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             检查单个值注解（特性）合法性
             </summary>
             <param name="value">对象值</param>
-            <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <param name="name">显示名称</param>
+            <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Validation.ValueAnnotationValidator.EnsureLegalData(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">

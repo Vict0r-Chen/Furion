@@ -35,7 +35,7 @@ public class EndsWithValidatorTests
         Assert.Equal('a'.ToString(), validator.SearchValue);
         Assert.Equal(StringComparison.CurrentCulture, validator.Comparison);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} is not end with the string {1}.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} is not end with the string '{1}'.", validator._errorMessageResourceAccessor());
 
         var validator2 = new EndsWithValidator("a");
         Assert.Equal("a", validator2.SearchValue);
@@ -109,7 +109,7 @@ public class EndsWithValidatorTests
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data is not end with the string n.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data is not end with the string 'n'.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
@@ -142,7 +142,7 @@ public class EndsWithValidatorTests
     {
         var validator = new EndsWithValidator("n");
 
-        Assert.Equal("The field data is not end with the string n.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data is not end with the string 'n'.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
@@ -186,7 +186,7 @@ public class EndsWithValidatorTests
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data is not end with the string n.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data is not end with the string 'n'.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]

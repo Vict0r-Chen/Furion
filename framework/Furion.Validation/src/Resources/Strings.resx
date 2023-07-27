@@ -136,31 +136,31 @@
     <value>The field {0} is not a valid domain format.</value>
   </data>
   <data name="EndsWithValidator_Invalid" xml:space="preserve">
-    <value>The field {0} is not end with the string {1}.</value>
+    <value>The field {0} is not end with the string '{1}'.</value>
   </data>
   <data name="EqualValidator_Invalid" xml:space="preserve">
-    <value>The field {0} must be equal to {1}.</value>
+    <value>The field {0} must be equal to '{1}'.</value>
   </data>
   <data name="GreaterThanOrEqualToValidator_Invalid" xml:space="preserve">
-    <value>The field {0} must be greater than or equal to {1}.</value>
+    <value>The field {0} must be greater than or equal to '{1}'.</value>
   </data>
   <data name="GreaterThanValidator_Invalid" xml:space="preserve">
-    <value>The field {0} must be greater than {1}.</value>
+    <value>The field {0} must be greater than '{1}'.</value>
   </data>
   <data name="IdCardNumberValidator_invalid" xml:space="preserve">
     <value>The field {0} is not a valid Id card number format.</value>
   </data>
   <data name="LessThanOrEqualToValidator_Invalid" xml:space="preserve">
-    <value>The field {0} must be less than or equal to {1}.</value>
+    <value>The field {0} must be less than or equal to '{1}'.</value>
   </data>
   <data name="LessThanValidator_Invalid" xml:space="preserve">
-    <value>The field {0} must be less than {1}.</value>
+    <value>The field {0} must be less than '{1}'.</value>
   </data>
   <data name="NotEmptyValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not allow empty values.</value>
   </data>
   <data name="NotEqualValidator_Invalid" xml:space="preserve">
-    <value>The field {0} cannot be equal to {1}.</value>
+    <value>The field {0} cannot be equal to '{1}'.</value>
   </data>
   <data name="PasswordValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid password format.</value>
@@ -175,10 +175,10 @@
     <value>The field {0} only allows a single item.</value>
   </data>
   <data name="StartsWithValidator_Invalid" xml:space="preserve">
-    <value>The field {0} is not start with the string {1}.</value>
+    <value>The field {0} is not start with the string '{1}'.</value>
   </data>
   <data name="StringContainsValidator_Invalid" xml:space="preserve">
-    <value>The field {0} is not contain the string {1}.</value>
+    <value>The field {0} is not contain the string '{1}'.</value>
   </data>
   <data name="StrongPasswordValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid strong password format.</value>

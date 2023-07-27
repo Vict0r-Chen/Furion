@@ -49,14 +49,14 @@ public class ValueAnnotationValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        return TryValidate(value, out _, null!);
+        return TryValidate(value, null!, out _);
     }
 
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(object? value, string name)
     {
         // 检查单个值注解（特性）合法性
-        if (TryValidate(value, out var validationResults, name))
+        if (TryValidate(value, name, out var validationResults))
         {
             return null;
         }
@@ -70,20 +70,23 @@ public class ValueAnnotationValidator : ValidatorBase
         return validationResults;
     }
 
+    /// <inheritdoc />
+    public override string FormatErrorMessage(string name, object? value = null)
+    {
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name ?? "Value");
+    }
+
     /// <summary>
     /// 检查单个值注解（特性）合法性
     /// </summary>
     /// <param name="value">对象值</param>
-    /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <param name="name">显示名称</param>
+    /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool TryValidate(object? value, out List<ValidationResult> validationResults, string name)
+    internal bool TryValidate(object? value, string name, out List<ValidationResult> validationResults)
     {
         // 检查验证特性集合合法性
         EnsureLegalData(Attributes);
-
-        // 字段/显示名称
-        var memberName = name ?? value?.GetType()?.Name ?? "Value";
 
         // 如果定义了 [Required] 特性则优先验证
         var requiredAttribute = Attributes.OfType<RequiredAttribute>().FirstOrDefault();
@@ -91,7 +94,7 @@ public class ValueAnnotationValidator : ValidatorBase
         {
             validationResults = new()
             {
-                new (requiredAttribute.FormatErrorMessage(memberName),new[]{ memberName })
+                new (requiredAttribute.FormatErrorMessage(name),new[]{ name })
             };
 
             return false;
@@ -103,7 +106,7 @@ public class ValueAnnotationValidator : ValidatorBase
         // 初始化验证上下文
         var validationContext = new ValidationContext(value)
         {
-            MemberName = memberName
+            MemberName = name ?? "Value"
         };
         validationResults = new();
 

@@ -34,7 +34,7 @@ public class NotNotEqualValidatorTests
         Assert.Null(validator.ErrorMessage);
         Assert.Equal("furion", validator.CompareValue);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} cannot be equal to {1}.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} cannot be equal to '{1}'.", validator._errorMessageResourceAccessor());
 
         var validator2 = new NotEqualValidator(() => "furion");
         Assert.Equal("furion", validator2.CompareValue);
@@ -74,7 +74,7 @@ public class NotNotEqualValidatorTests
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data cannot be equal to furion.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data cannot be equal to 'furion'.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class NotNotEqualValidatorTests
     {
         var validator = new NotEqualValidator("furion");
 
-        Assert.Equal("The field data cannot be equal to furion.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data cannot be equal to 'furion'.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
@@ -117,7 +117,7 @@ public class NotNotEqualValidatorTests
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data cannot be equal to furion.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data cannot be equal to 'furion'.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]

@@ -35,7 +35,7 @@ public class StartsWithValidatorTests
         Assert.Equal('f'.ToString(), validator.SearchValue);
         Assert.Equal(StringComparison.CurrentCulture, validator.Comparison);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} is not start with the string {1}.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} is not start with the string '{1}'.", validator._errorMessageResourceAccessor());
 
         var validator2 = new StartsWithValidator("f");
         Assert.Equal("f", validator2.SearchValue);
@@ -109,7 +109,7 @@ public class StartsWithValidatorTests
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data is not start with the string f.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data is not start with the string 'f'.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
@@ -142,7 +142,7 @@ public class StartsWithValidatorTests
     {
         var validator = new StartsWithValidator("f");
 
-        Assert.Equal("The field data is not start with the string f.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data is not start with the string 'f'.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
@@ -186,7 +186,7 @@ public class StartsWithValidatorTests
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data is not start with the string f.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data is not start with the string 'f'.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]

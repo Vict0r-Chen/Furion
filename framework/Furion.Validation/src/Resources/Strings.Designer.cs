@@ -115,7 +115,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not end with the string {1}. 的本地化字符串。
+        ///   查找类似 The field {0} is not end with the string &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string EndsWithValidator_Invalid {
             get {
@@ -124,7 +124,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} must be equal to {1}. 的本地化字符串。
+        ///   查找类似 The field {0} must be equal to &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string EqualValidator_Invalid {
             get {
@@ -133,7 +133,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} must be greater than or equal to {1}. 的本地化字符串。
+        ///   查找类似 The field {0} must be greater than or equal to &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string GreaterThanOrEqualToValidator_Invalid {
             get {
@@ -142,7 +142,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} must be greater than {1}. 的本地化字符串。
+        ///   查找类似 The field {0} must be greater than &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string GreaterThanValidator_Invalid {
             get {
@@ -160,7 +160,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} must be less than or equal to {1}. 的本地化字符串。
+        ///   查找类似 The field {0} must be less than or equal to &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string LessThanOrEqualToValidator_Invalid {
             get {
@@ -169,7 +169,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} must be less than {1}. 的本地化字符串。
+        ///   查找类似 The field {0} must be less than &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string LessThanValidator_Invalid {
             get {
@@ -187,7 +187,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} cannot be equal to {1}. 的本地化字符串。
+        ///   查找类似 The field {0} cannot be equal to &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string NotEqualValidator_Invalid {
             get {
@@ -232,7 +232,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not start with the string {1}. 的本地化字符串。
+        ///   查找类似 The field {0} is not start with the string &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string StartsWithValidator_Invalid {
             get {
@@ -241,7 +241,7 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The field {0} is not contain the string {1}. 的本地化字符串。
+        ///   查找类似 The field {0} is not contain the string &apos;{1}&apos;. 的本地化字符串。
         /// </summary>
         internal static string StringContainsValidator_Invalid {
             get {

@@ -111,14 +111,14 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <inheritdoc />
     public override bool IsValid(T value)
     {
-        return TryValidate(value, PropertyName, out _);
+        return TryValidate(value, out _);
     }
 
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(T value, string name)
     {
         // 检查属性注解（特性）合法性
-        if (TryValidate(value, PropertyName, out var validationResults))
+        if (TryValidate(value, out var validationResults))
         {
             return null;
         }
@@ -142,15 +142,16 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// 检查属性注解（特性）合法性
     /// </summary>
     /// <param name="instance">对象实例</param>
-    /// <param name="propertyName">属性名称</param>
     /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal static bool TryValidate(T instance, string propertyName, out List<ValidationResult> validationResults)
+    internal bool TryValidate(T instance, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
+
+        // 获取属性名称
+        var propertyName = PropertyName;
 
         // 查找类型对应的属性
         var instanceType = instance.GetType();

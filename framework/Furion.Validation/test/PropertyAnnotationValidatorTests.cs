@@ -194,31 +194,24 @@ public class PropertyAnnotationValidatorTests
     [Fact]
     public void TryValidate_Invalid_Parameters()
     {
+        var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
         Assert.Throws<ArgumentNullException>(() =>
         {
-            PropertyAnnotationValidator<PropertyModel>.TryValidate(null!, null!, out _);
-        });
-
-        Assert.Throws<ArgumentException>(() =>
-        {
-            PropertyAnnotationValidator<PropertyModel>.TryValidate(new PropertyModel(), string.Empty, out _);
-        });
-
-        Assert.Throws<ArgumentException>(() =>
-        {
-            PropertyAnnotationValidator<PropertyModel>.TryValidate(new PropertyModel(), "", out _);
+            validator.TryValidate(null!, out _);
         });
     }
 
     [Fact]
     public void TryValidate_ReturnOK()
     {
-        var result = PropertyAnnotationValidator<PropertyModel>.TryValidate(new PropertyModel { Name = "furion" }, "Name", out var validationResults);
+        var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
+
+        var result = validator.TryValidate(new PropertyModel { Name = "furion" }, out var validationResults);
         Assert.True(result);
         Assert.NotNull(validationResults);
         Assert.Empty(validationResults);
 
-        var result2 = PropertyAnnotationValidator<PropertyModel>.TryValidate(new PropertyModel { Name = null }, "Name", out var validationResults2);
+        var result2 = validator.TryValidate(new PropertyModel { Name = null }, out var validationResults2);
         Assert.False(result2);
         Assert.NotNull(validationResults2);
         Assert.Single(validationResults2);

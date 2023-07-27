@@ -34,7 +34,7 @@ public class GreaterThanValidatorTests
         Assert.Null(validator.ErrorMessage);
         Assert.Equal(30, validator.CompareValue);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} must be greater than {1}.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} must be greater than '{1}'.", validator._errorMessageResourceAccessor());
 
         var validator2 = new GreaterThanValidator(30.0);
         Assert.Equal(30.0, validator2.CompareValue);
@@ -85,7 +85,7 @@ public class GreaterThanValidatorTests
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data must be greater than 30.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data must be greater than '30'.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
@@ -106,7 +106,7 @@ public class GreaterThanValidatorTests
     {
         var validator = new GreaterThanValidator(30);
 
-        Assert.Equal("The field data must be greater than 30.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data must be greater than '30'.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
@@ -128,7 +128,7 @@ public class GreaterThanValidatorTests
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data must be greater than 30.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data must be greater than '30'.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]

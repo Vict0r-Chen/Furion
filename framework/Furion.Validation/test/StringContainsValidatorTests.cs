@@ -35,7 +35,7 @@ public class StringContainsValidatorTests
         Assert.Equal('f'.ToString(), validator.SearchValue);
         Assert.Equal(StringComparison.CurrentCulture, validator.Comparison);
         Assert.NotNull(validator._errorMessageResourceAccessor);
-        Assert.Equal("The field {0} is not contain the string {1}.", validator._errorMessageResourceAccessor());
+        Assert.Equal("The field {0} is not contain the string '{1}'.", validator._errorMessageResourceAccessor());
 
         var validator2 = new StringContainsValidator("f");
         Assert.Equal("f", validator2.SearchValue);
@@ -111,7 +111,7 @@ public class StringContainsValidatorTests
         Assert.NotNull(validationResultsOfFailure);
         Assert.Single(validationResultsOfFailure);
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
-        Assert.Equal("The field data is not contain the string f.", validationResultsOfFailure.First().ErrorMessage);
+        Assert.Equal("The field data is not contain the string 'f'.", validationResultsOfFailure.First().ErrorMessage);
     }
 
     [Fact]
@@ -144,7 +144,7 @@ public class StringContainsValidatorTests
     {
         var validator = new StringContainsValidator("f");
 
-        Assert.Equal("The field data is not contain the string f.", validator.FormatErrorMessage("data"));
+        Assert.Equal("The field data is not contain the string 'f'.", validator.FormatErrorMessage("data"));
     }
 
     [Fact]
@@ -188,7 +188,7 @@ public class StringContainsValidatorTests
         });
 
         Assert.Single(exception.InnerExceptions);
-        Assert.Equal("The field data is not contain the string f.", exception.InnerExceptions.First().Message);
+        Assert.Equal("The field data is not contain the string 'f'.", exception.InnerExceptions.First().Message);
     }
 
     [Theory]

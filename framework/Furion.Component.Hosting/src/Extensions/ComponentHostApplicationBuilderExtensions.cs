@@ -29,7 +29,7 @@ public static class ComponentHostApplicationBuilderExtensions
     public static IHost Entry<TComponent>(this HostApplicationBuilder hostApplicationBuilder, Action<ComponentBuilder>? configure = null)
         where TComponent : ComponentBase
     {
-        // 添加根组件
+        // 添加入口组件
         hostApplicationBuilder.AddComponent<TComponent>(configure);
 
         return hostApplicationBuilder.Build();
