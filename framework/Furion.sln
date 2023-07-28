@@ -245,6 +245,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Validation.Fluent", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Validation.Fluent.Tests", "Furion.Validation.Fluent\test\Furion.Validation.Fluent.Tests.csproj", "{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", "{7A327EB9-F56A-47DD-BCFE-403616F62422}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
