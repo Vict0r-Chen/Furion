@@ -945,9 +945,9 @@
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.SetValidator(Furion.Validation.IObjectValidator{`1})">
             <summary>
-            设置对象验证器
+            设置子属性验证器
             </summary>
-            <param name="objectValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
+            <param name="subValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.Add(Furion.Validation.ValidatorBase)">

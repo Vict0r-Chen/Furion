@@ -896,16 +896,16 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
-    /// 设置对象验证器
+    /// 设置子属性验证器
     /// </summary>
-    /// <param name="objectValidator"><see cref="IObjectValidator{T}"/></param>
+    /// <param name="subValidator"><see cref="IObjectValidator{T}"/></param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> SetValidator(IObjectValidator<TProperty> objectValidator)
+    public PropertyValidator<T, TProperty> SetValidator(IObjectValidator<TProperty> subValidator)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(objectValidator);
+        ArgumentNullException.ThrowIfNull(subValidator);
 
-        SubValidator = objectValidator;
+        SubValidator = subValidator;
 
         return this;
     }
