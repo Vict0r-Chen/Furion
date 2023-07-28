@@ -49,9 +49,6 @@ public class EqualValidator : ValidatorBase
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(CompareValue);
-
         return value is null || value.Equals(CompareValue);
     }
 

@@ -41,7 +41,7 @@ public class GreaterThanValidator : ComparableValidator
     /// <inheritdoc cref="GreaterThanValidator"/>
     /// </summary>
     /// <param name="compareValue">比较的值</param>
-    public GreaterThanValidator(object? compareValue)
+    public GreaterThanValidator(object compareValue)
         : this(() => compareValue)
     {
     }
@@ -50,7 +50,7 @@ public class GreaterThanValidator : ComparableValidator
     /// <inheritdoc cref="GreaterThanValidator"/>
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
-    public GreaterThanValidator(Func<object?> compareValueAccessor)
+    public GreaterThanValidator(Func<object> compareValueAccessor)
         : base(compareValueAccessor, () => Strings.GreaterThanValidator_Invalid)
     {
         CompareValue = compareValueAccessor();

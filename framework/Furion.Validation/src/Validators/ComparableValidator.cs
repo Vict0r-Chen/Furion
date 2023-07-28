@@ -24,7 +24,7 @@ public abstract class ComparableValidator : ValidatorBase
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableValidator(Func<object?> compareValueAccessor, Func<string> errorMessageAccessor)
+    protected ComparableValidator(Func<object> compareValueAccessor, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查
@@ -36,7 +36,7 @@ public abstract class ComparableValidator : ValidatorBase
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object? CompareValue { get; set; }
+    public object CompareValue { get; set; }
 
     /// <inheritdoc />
     public override sealed bool IsValid(object? value)

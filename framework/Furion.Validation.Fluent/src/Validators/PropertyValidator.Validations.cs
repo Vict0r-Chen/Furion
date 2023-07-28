@@ -388,7 +388,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="predicate">委托对象</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> GreaterThanOrEqualTo(Func<T, object?> predicate)
+    public PropertyValidator<T, TProperty> GreaterThanOrEqualTo(Func<T, object> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -429,7 +429,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="predicate">委托对象</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> GreaterThan(Func<T, object?> predicate)
+    public PropertyValidator<T, TProperty> GreaterThan(Func<T, object> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -470,7 +470,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="predicate">委托对象</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> LessThanOrEqualTo(Func<T, object?> predicate)
+    public PropertyValidator<T, TProperty> LessThanOrEqualTo(Func<T, object> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));
@@ -511,7 +511,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="predicate">委托对象</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> LessThan(Func<T, object?> predicate)
+    public PropertyValidator<T, TProperty> LessThan(Func<T, object> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate, nameof(predicate));

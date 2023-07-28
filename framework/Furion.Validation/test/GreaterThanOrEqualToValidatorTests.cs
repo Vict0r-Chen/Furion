@@ -49,7 +49,7 @@ public class GreaterThanOrEqualToValidatorTests
     [Fact]
     public void IsValid_Invalid_Parameters()
     {
-        var validator = new GreaterThanOrEqualToValidator(() => null);
+        var validator = new GreaterThanOrEqualToValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {

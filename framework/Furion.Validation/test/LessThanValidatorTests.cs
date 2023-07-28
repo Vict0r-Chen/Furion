@@ -49,7 +49,7 @@ public class LessThanValidatorTests
     [Fact]
     public void IsValid_Invalid_Parameters()
     {
-        var validator = new LessThanValidator(() => null);
+        var validator = new LessThanValidator(() => null!);
 
         Assert.Throws<ArgumentNullException>(() =>
         {

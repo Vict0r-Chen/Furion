@@ -44,7 +44,6 @@ public class ComponentMetadataTests
         var description = coreAssembly.GetDescription();
         var componentMetadata = new ComponentMetadata(coreAssembly.GetName().Name!, version, description);
 
-        Assert.NotNull(componentMetadata);
         Assert.Equal("Furion.Core", componentMetadata.Name);
         Assert.NotNull(componentMetadata.Version);
         Assert.Equal(version?.ToString(), componentMetadata.Version);

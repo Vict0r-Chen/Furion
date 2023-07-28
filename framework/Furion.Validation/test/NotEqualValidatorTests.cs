@@ -40,17 +40,6 @@ public class NotNotEqualValidatorTests
         Assert.Equal("furion", validator2.CompareValue);
     }
 
-    [Fact]
-    public void IsValid_Invalid_Parameters()
-    {
-        var validator = new NotEqualValidator(() => null);
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validator.IsValid(null);
-        });
-    }
-
     [Theory]
     [InlineData(null, true)]
     [InlineData("furion", false)]

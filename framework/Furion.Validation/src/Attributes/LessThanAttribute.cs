@@ -42,7 +42,7 @@ public class LessThanAttribute : ComparableAttribute<LessThanValidator>
     /// <inheritdoc cref="LessThanAttribute"/>
     /// </summary>
     /// <param name="compareValue">比较的值</param>
-    public LessThanAttribute(object? compareValue)
+    public LessThanAttribute(object compareValue)
         : this(() => compareValue)
     {
     }
@@ -51,7 +51,7 @@ public class LessThanAttribute : ComparableAttribute<LessThanValidator>
     /// <inheritdoc cref="LessThanAttribute"/>
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
-    internal LessThanAttribute(Func<object?> compareValueAccessor)
+    internal LessThanAttribute(Func<object> compareValueAccessor)
         : base(compareValueAccessor, () => Strings.LessThanValidator_Invalid)
     {
         CompareValue = compareValueAccessor();

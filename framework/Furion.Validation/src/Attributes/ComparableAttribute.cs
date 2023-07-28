@@ -27,7 +27,7 @@ public abstract class ComparableAttribute<TValidator> : ValidationAttribute
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
     /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableAttribute(Func<object?> compareValueAccessor, Func<string> errorMessageAccessor)
+    protected ComparableAttribute(Func<object> compareValueAccessor, Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
         // 空检查
@@ -39,11 +39,14 @@ public abstract class ComparableAttribute<TValidator> : ValidationAttribute
     /// <summary>
     /// 比较的值
     /// </summary>
-    public object? CompareValue { get; set; }
+    public object CompareValue { get; set; }
 
     /// <inheritdoc />
     public override sealed bool IsValid(object? value)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(CompareValue);
+
         // 反射创建比较验证器
         var comparableValidator = Activator.CreateInstance(typeof(TValidator), new[] { CompareValue }) as ComparableValidator;
 
