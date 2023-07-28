@@ -92,6 +92,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             return Validator!.GetValidationResults(PropertyValue, name);
         }
 
+        /// <inheritdoc />
         public override void Validate(T instance, string name)
         {
             // 初始化
@@ -183,9 +184,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal Func<ValidationContext, bool>? ConditionExpression { get; private set; }
 
     /// <summary>
-    /// 类型验证器
+    /// 子属性验证器
     /// </summary>
-    internal IObjectValidator<TProperty>? Validator { get; private set; }
+    internal IObjectValidator<TProperty>? SubValidator { get; private set; }
 
     /// <summary>
     /// 启用/禁用注解（特性）验证
@@ -296,19 +297,20 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 获取属性值
         var propertyValue = GetPropertyValue(instance);
 
-        // 处理设置类型验证器
-        if (Validator is null)
+        // 检查是否设置了子属性验证器
+        if (SubValidator is null)
         {
             return isValid && Validators
                 .All(validator => validator.IsValid(GetValidationObject(instance, validator, propertyValue)));
         }
 
+        // 空检查（子属性验证器 T 类型不能为 null）
         if (propertyValue is null)
         {
             return isValid;
         }
 
-        return isValid && Validator.IsValid(propertyValue);
+        return isValid && SubValidator.IsValid(propertyValue);
     }
 
     /// <inheritdoc />
@@ -326,22 +328,23 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 初始化验证结果集合
         var validationResults = new List<ValidationResult>();
 
-        // 处理属性注解（特性）验证器
+        // 检查是否启用注解（特性）验证
         if (!SuppressAnnotationValidation)
         {
             validationResults.AddRange(_annotationValidator
-                .GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
+                .GetValidationResults(instance, PropertyName) ?? Enumerable.Empty<ValidationResult>());
         }
 
         // 获取属性值
         var propertyValue = GetPropertyValue(instance);
 
-        // 处理设置类型验证器
-        if (Validator is not null)
+        // 检查是否设置了子属性验证器
+        if (SubValidator is not null)
         {
+            // 空检查（子属性验证器 T 类型不能为 null）
             if (propertyValue is not null)
             {
-                validationResults.AddRange(Validator
+                validationResults.AddRange(SubValidator
                     .GetValidationResults(propertyValue) ?? Enumerable.Empty<ValidationResult>());
             }
         }
@@ -382,7 +385,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 获取属性值
     /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <param name="instance">对象实例</param>
     /// <returns><see cref="object"/></returns>
     internal TProperty? GetPropertyValue(T instance)
     {
@@ -392,15 +395,16 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 获取验证对象
     /// </summary>
+    /// <param name="instance">对象实例</param>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
-    /// <param name="instance"><typeparamref name="T"/></param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
     internal object? GetValidationObject(T instance, ValidatorBase validator, TProperty? propertyValue)
     {
-        // 检查是否是验证器代理类型
+        // 检查是否是验证器委托器类型
         var validatorType = validator.GetType();
-        if (validatorType.IsGenericType && validatorType.GetGenericTypeDefinition() == typeof(ValidatorDelegator<>))
+        if (validatorType.IsGenericType
+            && validatorType.GetGenericTypeDefinition() == typeof(ValidatorDelegator<>))
         {
             return instance;
         }

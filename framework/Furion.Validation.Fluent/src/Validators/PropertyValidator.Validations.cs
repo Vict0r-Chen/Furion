@@ -905,7 +905,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(objectValidator);
 
-        Validator = objectValidator;
+        SubValidator = objectValidator;
 
         return this;
     }
