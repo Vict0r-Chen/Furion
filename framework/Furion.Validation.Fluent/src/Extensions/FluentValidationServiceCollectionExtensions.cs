@@ -20,14 +20,14 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class FluentValidationServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加流畅式数据验证服务
+    /// 添加链式数据验证服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddFluentValidation(this IServiceCollection services, Action<FluentValidationBuilder>? configure = null)
     {
-        // 初始化流畅式数据验证构建器
+        // 初始化链式数据验证构建器
         var fluentValidationBuilder = new FluentValidationBuilder();
 
         // 调用自定义配置委托
@@ -37,7 +37,7 @@ public static class FluentValidationServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加流畅式数据验证服务
+    /// 添加链式数据验证服务
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="fluentValidationBuilder"><see cref="FluentValidationBuilder"/></param>

@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 类型验证器抽象基类
+/// 对象验证器抽象基类
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
 public abstract class AbstractValidator<T> : IObjectValidator<T>
@@ -35,44 +35,42 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <summary>
-    /// 禁止注解（特性）验证
+    /// 禁用注解（特性）验证
     /// </summary>
-    private bool _suppressAnnotations = true;
+    private bool _suppressAnnotationValidation = true;
 
-    /// <summary>
-    /// 禁止注解（特性）验证
-    /// </summary>
+    /// <inheritdoc />
     public bool SuppressAnnotationValidation
     {
-        get => _suppressAnnotations;
+        get => _suppressAnnotationValidation;
         set
         {
-            _suppressAnnotations = value;
+            _suppressAnnotationValidation = value;
             _objectValidator.SuppressAnnotationValidation = value;
         }
     }
 
     /// <summary>
-    /// 创建属性验证器
+    /// 初始化属性验证器
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
-    /// <param name="propertySelector">属性选择器</param>
+    /// <param name="propertyExpression">属性选择器</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertySelector)
+    public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertyExpression)
     {
-        return _objectValidator.Property(propertySelector);
+        return _objectValidator.Property(propertyExpression);
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> When(Func<T, bool> condition)
+    public IObjectValidator<T> When(Func<T, bool> conditionExpression)
     {
-        return _objectValidator.When(condition);
+        return _objectValidator.When(conditionExpression);
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression)
     {
-        return _objectValidator.WhenContext(condition);
+        return _objectValidator.WhenContext(conditionExpression);
     }
 
     /// <inheritdoc />
@@ -93,11 +91,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
         return _objectValidator.GetValidationResults(instance);
     }
 
-    /// <summary>
-    /// 执行验证
-    /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <exception cref="ValidationException"></exception>
+    /// <inheritdoc />
     public void Validate(T instance)
     {
         _objectValidator.Validate(instance);
