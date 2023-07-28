@@ -290,7 +290,7 @@ internal static class TypeExtensions
         );
 
         // 获取动态方法的 ILGenerator，用于生成方法体指令
-        ILGenerator ilGenerator = setterMethod.GetILGenerator();
+        var ilGenerator = setterMethod.GetILGenerator();
 
         // 将第一个参数（即 obj）转换为实际的对象类型
         ilGenerator.Emit(OpCodes.Ldarg_0);
