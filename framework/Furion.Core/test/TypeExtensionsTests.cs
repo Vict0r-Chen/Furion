@@ -282,4 +282,52 @@ public class TypeExtensionsTests
         var result = value.GetType().IsNumeric();
         Assert.Equal(isNumeric, result);
     }
+
+    [Fact]
+    public void CreatePropertySetter_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var setter = typeof(SetterModel).CreatePropertySetter(null!);
+        });
+    }
+
+    [Fact]
+    public void CreatePropertySetter_ReturnOK()
+    {
+        var property = typeof(SetterModel).GetProperty(nameof(SetterModel.Name), BindingFlags.Instance | BindingFlags.Public);
+        Assert.NotNull(property);
+
+        var setter = typeof(SetterModel).CreatePropertySetter(property);
+        Assert.NotNull(setter);
+
+        var model = new SetterModel();
+        setter(model, "Furion");
+
+        Assert.Equal("Furion", model.Name);
+    }
+
+    [Fact]
+    public void CreateFieldSetter_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var setter = typeof(SetterModel).CreateFieldSetter(null!);
+        });
+    }
+
+    [Fact]
+    public void CreateFieldSetter_ReturnOK()
+    {
+        var field = typeof(SetterModel).GetField(nameof(SetterModel.id), BindingFlags.Instance | BindingFlags.Public);
+        Assert.NotNull(field);
+
+        var setter = typeof(SetterModel).CreateFieldSetter(field);
+        Assert.NotNull(setter);
+
+        var model = new SetterModel();
+        setter(model, 10);
+
+        Assert.Equal(10, model.id);
+    }
 }

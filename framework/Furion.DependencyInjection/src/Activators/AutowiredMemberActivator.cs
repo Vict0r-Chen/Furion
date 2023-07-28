@@ -18,46 +18,22 @@ namespace Furion.DependencyInjection;
 internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
 {
     /// <summary>
-    /// 可自动装配的类型属性集合工厂委托
+    /// 可自动装配的类型属性设置器缓存集合
     /// </summary>
-    internal readonly Func<Type, List<PropertyInfo>> _getAutowiredPropertiesFactory;
+    internal readonly ConcurrentDictionary<Type, Dictionary<(string, Type), (bool, Action<object, object?>)>> _autowiredPropertySettersCache;
 
     /// <summary>
-    /// 可自动装配的类型字段集合工厂委托
+    /// 可自动装配的类型字段设置器缓存集合
     /// </summary>
-    internal readonly Func<Type, List<FieldInfo>> _getAutowiredFieldsFactory;
-
-    /// <summary>
-    /// 可自动装配的类型属性缓存集合
-    /// </summary>
-    internal readonly ConcurrentDictionary<Type, List<PropertyInfo>> _typeAutowiredPropertiesCache;
-
-    /// <summary>
-    /// 可自动装配的类型字段缓存集合
-    /// </summary>
-    internal readonly ConcurrentDictionary<Type, List<FieldInfo>> _typeAutowiredFieldsCache;
+    internal readonly ConcurrentDictionary<Type, Dictionary<(string, Type), (bool, Action<object, object?>)>> _autowiredFieldSettersCache;
 
     /// <summary>
     /// <inheritdoc cref="AutowiredMemberActivator"/>
     /// </summary>
     public AutowiredMemberActivator()
     {
-        _typeAutowiredPropertiesCache = new();
-        _typeAutowiredFieldsCache = new();
-
-        _getAutowiredPropertiesFactory = type =>
-        {
-            return type.GetProperties(GetBindingFlags())
-                .Where(property => property.IsDefined(typeof(AutowiredServiceAttribute), false))
-                .ToList();
-        };
-
-        _getAutowiredFieldsFactory = type =>
-        {
-            return type.GetFields(GetBindingFlags())
-                .Where(field => field.IsDefined(typeof(AutowiredServiceAttribute), false))
-                .ToList();
-        };
+        _autowiredPropertySettersCache = new();
+        _autowiredFieldSettersCache = new();
     }
 
     /// <inheritdoc />
@@ -90,31 +66,52 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
         // 对象类型
         var instanceType = instance.GetType();
 
-        // 获取可自动装配的类型属性集合
-        var matchProperties = _typeAutowiredPropertiesCache.GetOrAdd(instanceType, _getAutowiredPropertiesFactory);
-
-        // 遍历属性并设置值
-        foreach (var property in matchProperties)
+        // 获取可自动装配的类型属性设置器集合
+        var propertySetters = _autowiredPropertySettersCache.GetOrAdd(instanceType, type =>
         {
-            // 检查属性是否可写
-            if (!property.CanWrite)
+            // 初始化属性设置器集合
+            var setters = new Dictionary<(string, Type), (bool, Action<object, object?>)>();
+
+            // 查找可自动装配的属性集合
+            var matchProperties = type.GetProperties(GetBindingFlags())
+                .Where(property => property.IsDefined(typeof(AutowiredServiceAttribute), false));
+
+            // 遍历属性集合并创建属性设置器
+            foreach (var property in matchProperties)
             {
-                throw new InvalidOperationException($"Cannot automatically assign read-only property `{property.Name}` of type `{instanceType}`.");
+                // 检查属性是否可写
+                if (!property.CanWrite)
+                {
+                    throw new InvalidOperationException($"Cannot automatically assign read-only property `{property.Name}` of type `{instanceType}`.");
+                }
+
+                // 获取 [AutowiredService] 特性对象
+                var autowiredServiceAttribute = property.GetCustomAttribute<AutowiredServiceAttribute>(false);
+
+                // 空检查
+                ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
+
+                // 创建属性设置器
+                var setter = instanceType.CreatePropertySetter(property);
+
+                // 将属性设置器添加到集合中
+                setters.Add((property.Name, property.PropertyType)
+                    , (autowiredServiceAttribute.CanBeNull, setter));
             }
 
-            // 获取 [AutowiredService] 特性对象
-            var autowiredServiceAttribute = property.GetCustomAttribute<AutowiredServiceAttribute>(false);
+            return setters;
+        });
 
-            // 空检查
-            ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
-
+        // 遍历属性设置器集合并设置值
+        foreach (var ((propertyName, propertyType), (canBeNull, propertySetter)) in propertySetters)
+        {
             // 解析属性值
-            var value = autowiredServiceAttribute.CanBeNull
-                ? serviceProvider.GetService(property.PropertyType)
-                : serviceProvider.GetRequiredService(property.PropertyType);
+            var value = canBeNull
+                ? serviceProvider.GetService(propertyType)
+                : serviceProvider.GetRequiredService(propertyType);
 
             // 设置属性值
-            property.SetValue(instance, value);
+            propertySetter(instance, value);
 
             // 调试事件消息
             var debugMessage = "The property {0} of type {1} has been successfully injected into the service.";
@@ -124,7 +121,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
             }
 
             // 输出调试事件
-            Debugging.Warn(debugMessage, property.Name, instanceType);
+            Debugging.Warn(debugMessage, propertyName, instanceType);
         }
     }
 
@@ -138,31 +135,53 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
         // 对象类型
         var instanceType = instance.GetType();
 
-        // 获取可自动装配的类型字段集合
-        var matchFields = _typeAutowiredFieldsCache.GetOrAdd(instanceType, _getAutowiredFieldsFactory);
-
-        // 遍历字段并设置值
-        foreach (var field in matchFields)
+        // 获取可自动装配的类型字段设置器集合
+        var fieldSetters = _autowiredFieldSettersCache.GetOrAdd(instanceType, type =>
         {
-            // 检查字段是否可写
-            if (field.IsInitOnly)
+            // 初始化字段设置器集合
+            var setters = new Dictionary<(string, Type), (bool, Action<object, object?>)>();
+
+            // 查找可自动装配的字段集合
+            var matchFields = type.GetFields(GetBindingFlags())
+                .Where(field => field.IsDefined(typeof(AutowiredServiceAttribute), false))
+                .ToList();
+
+            // 遍历字段集合并创建字段设置器
+            foreach (var field in matchFields)
             {
-                throw new InvalidOperationException($"Cannot automatically assign read-only field `{field.Name}` of type `{instanceType}`.");
+                // 检查字段是否可写
+                if (field.IsInitOnly)
+                {
+                    throw new InvalidOperationException($"Cannot automatically assign read-only field `{field.Name}` of type `{instanceType}`.");
+                }
+
+                // 获取 [AutowiredService] 特性对象
+                var autowiredServiceAttribute = field.GetCustomAttribute<AutowiredServiceAttribute>(false);
+
+                // 空检查
+                ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
+
+                // 创建字段设置器
+                var setter = instanceType.CreateFieldSetter(field);
+
+                // 将字段设置器添加到集合中
+                setters.Add((field.Name, field.FieldType)
+                    , (autowiredServiceAttribute.CanBeNull, setter));
             }
 
-            // 获取 [AutowiredService] 特性对象
-            var autowiredServiceAttribute = field.GetCustomAttribute<AutowiredServiceAttribute>(false);
+            return setters;
+        });
 
-            // 空检查
-            ArgumentNullException.ThrowIfNull(autowiredServiceAttribute);
-
+        // 遍历字段设置器集合并设置值
+        foreach (var ((fieldName, fieldType), (canBeNull, fieldSetter)) in fieldSetters)
+        {
             // 解析字段值
-            var value = autowiredServiceAttribute.CanBeNull
-                ? serviceProvider.GetService(field.FieldType)
-                : serviceProvider.GetRequiredService(field.FieldType);
+            var value = canBeNull
+                ? serviceProvider.GetService(fieldType)
+                : serviceProvider.GetRequiredService(fieldType);
 
             // 设置字段值
-            field.SetValue(instance, value);
+            fieldSetter(instance, value);
 
             // 调试事件消息
             var debugMessage = "The field {0} of type {1} has been successfully injected into the service.";
@@ -172,7 +191,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
             }
 
             // 输出调试事件
-            Debugging.Warn(debugMessage, field.Name, instanceType);
+            Debugging.Warn(debugMessage, fieldName, instanceType);
         }
     }
 }

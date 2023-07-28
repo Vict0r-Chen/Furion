@@ -7,24 +7,14 @@
         <member name="T:Furion.DependencyInjection.AutowiredMemberActivator">
             <inheritdoc cref="T:Furion.DependencyInjection.IAutowiredMemberActivator" />
         </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._getAutowiredPropertiesFactory">
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._autowiredPropertySettersCache">
             <summary>
-            可自动装配的类型属性集合工厂委托
+            可自动装配的类型属性设置器缓存集合
             </summary>
         </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._getAutowiredFieldsFactory">
+        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._autowiredFieldSettersCache">
             <summary>
-            可自动装配的类型字段集合工厂委托
-            </summary>
-        </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeAutowiredPropertiesCache">
-            <summary>
-            可自动装配的类型属性缓存集合
-            </summary>
-        </member>
-        <member name="F:Furion.DependencyInjection.AutowiredMemberActivator._typeAutowiredFieldsCache">
-            <summary>
-            可自动装配的类型字段缓存集合
+            可自动装配的类型字段设置器缓存集合
             </summary>
         </member>
         <member name="M:Furion.DependencyInjection.AutowiredMemberActivator.#ctor">

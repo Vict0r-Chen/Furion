@@ -215,4 +215,106 @@ internal static class TypeExtensions
         return type.IsInteger()
             || type.IsDecimal();
     }
+
+    /// <summary>
+    /// 创建属性设置器
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="propertyInfo"><see cref="PropertyInfo"/></param>
+    /// <returns><see cref="Action{T1, T2}"/></returns>
+    internal static Action<object, object?> CreatePropertySetter(this Type type, PropertyInfo propertyInfo)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyInfo);
+
+        // 创建一个动态方法来设置属性值
+        var setterMethod = new DynamicMethod(
+            $"{type.FullName}_Set_{propertyInfo.Name}",
+            null,
+            new Type[] { typeof(object), typeof(object) },
+            typeof(TypeExtensions).Module
+        );
+
+        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        var ilGenerator = setterMethod.GetILGenerator();
+
+        // 获取属性的 set 方法
+        var setMethod = propertyInfo.GetSetMethod(nonPublic: true);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(setMethod);
+
+        // 将第一个参数（即 obj）转换为实际的对象类型
+        ilGenerator.Emit(OpCodes.Ldarg_0);
+        ilGenerator.Emit(OpCodes.Castclass, type);
+
+        // 将第二个参数（即 value）加载到堆栈上
+        ilGenerator.Emit(OpCodes.Ldarg_1);
+
+        // 如果属性类型是值类型，则执行拆箱操作（unbox.any）
+        if (propertyInfo.PropertyType.IsValueType)
+        {
+            ilGenerator.Emit(OpCodes.Unbox_Any, propertyInfo.PropertyType);
+        }
+        else // 否则，将值强制转换为属性类型
+        {
+            ilGenerator.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
+        }
+
+        // 调用属性的 set 方法
+        ilGenerator.Emit(OpCodes.Callvirt, setMethod);
+
+        // 返回
+        ilGenerator.Emit(OpCodes.Ret);
+
+        return (Action<object, object?>)setterMethod.CreateDelegate(typeof(Action<object, object>));
+    }
+
+    /// <summary>
+    /// 创建字段设置器
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="fieldInfo"><see cref="FieldInfo"/></param>
+    /// <returns><see cref="Action{T1, T2}"/></returns>
+    internal static Action<object, object?> CreateFieldSetter(this Type type, FieldInfo fieldInfo)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fieldInfo);
+
+        // 创建一个动态方法来设置字段值
+        var setterMethod = new DynamicMethod(
+            $"{type.FullName}_Set_{fieldInfo.Name}",
+            null,
+            new Type[] { typeof(object), typeof(object) },
+            typeof(TypeExtensions).Module
+        );
+
+        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        ILGenerator ilGenerator = setterMethod.GetILGenerator();
+
+        // 将第一个参数（即 obj）转换为实际的对象类型
+        ilGenerator.Emit(OpCodes.Ldarg_0);
+        ilGenerator.Emit(OpCodes.Castclass, type);
+
+        // 将第二个参数（即 value）加载到堆栈上
+        ilGenerator.Emit(OpCodes.Ldarg_1);
+
+        // 如果字段类型是值类型，则执行拆箱操作（unbox.any）
+        if (fieldInfo.FieldType.IsValueType)
+        {
+            ilGenerator.Emit(OpCodes.Unbox_Any, fieldInfo.FieldType);
+        }
+        else // 否则，将值强制转换为字段类型
+        {
+            ilGenerator.Emit(OpCodes.Castclass, fieldInfo.FieldType);
+        }
+
+        // 将字段的值设置为堆栈上的值
+        ilGenerator.Emit(OpCodes.Stfld, fieldInfo);
+
+        // 返回
+        ilGenerator.Emit(OpCodes.Ret);
+
+        return (Action<object, object?>)setterMethod.CreateDelegate(typeof(Action<object, object>));
+    }
 }
