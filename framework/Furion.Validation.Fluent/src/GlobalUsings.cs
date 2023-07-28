@@ -19,4 +19,5 @@ global using Microsoft.Extensions.DependencyInjection.Extensions;
 global using System.ComponentModel.DataAnnotations;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Linq.Expressions;
+global using System.Reflection;
 global using System.Runtime.CompilerServices;

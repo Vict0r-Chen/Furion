@@ -20,16 +20,80 @@ namespace Furion.Validation;
 public sealed class FluentValidationBuilder
 {
     /// <summary>
+    /// 待扫描的程序集集合
+    /// </summary>
+    internal readonly HashSet<Assembly> _assemblies;
+
+    /// <summary>
     /// 待注册的验证器类型集合
     /// </summary>
     internal readonly HashSet<Type> _validatorTypes;
+
+    /// <summary>
+    /// 类型扫描过滤器
+    /// </summary>
+    internal Func<Type, bool>? _typeFilterConfigure;
 
     /// <summary>
     /// <inheritdoc cref="FluentValidationBuilder"/>
     /// </summary>
     public FluentValidationBuilder()
     {
+        _assemblies = new();
         _validatorTypes = new();
+    }
+
+    /// <summary>
+    /// 禁用程序集扫描
+    /// </summary>
+    public bool SuppressAssemblyScanning { get; set; }
+
+    /// <summary>
+    /// 禁用非公开类型
+    /// </summary>
+    public bool SuppressNonPublicType { get; set; }
+
+    /// <summary>
+    /// 添加类型扫描过滤器
+    /// </summary>
+    /// <param name="configure">自定义配置委托</param>
+    public void AddTypeFilter(Func<Type, bool> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        _typeFilterConfigure = configure;
+    }
+
+    /// <summary>
+    /// 添加程序集
+    /// </summary>
+    /// <param name="assemblies"><see cref="Assembly"/>[]</param>
+    /// <returns><see cref="FluentValidationBuilder"/></returns>
+    public FluentValidationBuilder AddAssemblies(params Assembly[] assemblies)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(assemblies);
+
+        Array.ForEach(assemblies, assembly =>
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(assembly);
+
+            _assemblies.Add(assembly);
+        });
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加程序集
+    /// </summary>
+    /// <param name="assemblies"><see cref="IEnumerable{T}"/></param>
+    /// <returns><see cref="FluentValidationBuilder"/></returns>
+    public FluentValidationBuilder AddAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        return AddAssemblies(assemblies.ToArray());
     }
 
     /// <summary>
@@ -66,17 +130,12 @@ public sealed class FluentValidationBuilder
     /// <param name="services"><see cref="IServiceCollection"/></param>
     internal void Build(IServiceCollection services)
     {
-        // 逐条添加服务
-        foreach (var validatorType in _validatorTypes)
-        {
-            // 获取验证器模型类型
-            var baseType = validatorType.BaseType!;
-            var modelType = baseType.GenericTypeArguments[0];
+        // 空检查
+        ArgumentNullException.ThrowIfNull(services);
 
-            // 添加服务
-            services.TryAddEnumerable(ServiceDescriptor.Transient(typeof(IObjectValidator<>).MakeGenericType(modelType), validatorType));
-            services.TryAddEnumerable(ServiceDescriptor.Transient(typeof(IObjectValidator), validatorType));
-        }
+        // 初始化链式验证器扫描器并执行扫描
+        new FluentValidatorScanner(services, this)
+            .ScanToAddServices();
     }
 
     /// <summary>
