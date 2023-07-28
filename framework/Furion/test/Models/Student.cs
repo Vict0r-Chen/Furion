@@ -28,7 +28,7 @@ public class Student
     public Teacher? Teacher { get; set; }
 }
 
-public class StudentValidator : AbstractValidator<Student>, ITransientDependency
+public class StudentValidator : AbstractValidator<Student>
 {
     public StudentValidator()
     {

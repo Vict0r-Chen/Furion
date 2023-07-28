@@ -42,13 +42,13 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     /// <summary>
     /// 禁止注解（特性）验证
     /// </summary>
-    public bool SuppressAnnotations
+    public bool SuppressAnnotationValidation
     {
         get => _suppressAnnotations;
         set
         {
             _suppressAnnotations = value;
-            _objectValidator.SuppressAnnotations = value;
+            _objectValidator.SuppressAnnotationValidation = value;
         }
     }
 

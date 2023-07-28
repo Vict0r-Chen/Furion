@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Furion.Tests.Models;
+
 namespace Furion.Tests;
 
 [DependsOn<FileScanningConfigurationComponent
@@ -19,7 +21,7 @@ namespace Furion.Tests;
     , RemotedConfigurationComponent
     , TypeScanningDependencyInjectionComponent
     , NamedDependencyInjectionComponent
-    , ValidationComponent>]
+    , FluentValidationComponent>]
 public class ServiceComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
@@ -33,6 +35,12 @@ public class ServiceComponent : ComponentBase
         Props<FileScanningConfigurationBuilder>(builder =>
         {
             builder.AddBlacklistGlobbings("embed.json");
+        });
+
+        Props<FluentValidationBuilder>(builder =>
+        {
+            builder.AddValidator<StudentValidator>();
+            builder.AddValidator<TeacherValidator>();
         });
     }
 

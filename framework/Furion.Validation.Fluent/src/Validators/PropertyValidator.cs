@@ -44,7 +44,6 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 将当前属性验证器添加到类型验证器集合中
         _objectValidator = objectValidator;
-        _objectValidator.AddPropertyValidator(this);
 
         _propertyAnnotationValidator = new(propertyExpression);
     }
@@ -60,7 +59,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public string PropertyName { get; }
 
     /// <inheritdoc />
-    public bool SuppressAnnotations { get; set; } = true;
+    public bool SuppressAnnotationValidation { get; set; } = true;
 
     /// <summary>
     /// 错误消息访问器
@@ -89,7 +88,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> WithAnnotations(bool enable = true)
     {
-        SuppressAnnotations = !enable;
+        SuppressAnnotationValidation = !enable;
 
         return this;
     }
@@ -199,7 +198,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 处理属性注解（特性）验证器
         var isValid = true;
-        if (!SuppressAnnotations)
+        if (!SuppressAnnotationValidation)
         {
             isValid = _propertyAnnotationValidator.IsValid(instance);
         }
@@ -237,7 +236,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         var validationResults = new List<ValidationResult>();
 
         // 处理属性注解（特性）验证器
-        if (!SuppressAnnotations)
+        if (!SuppressAnnotationValidation)
         {
             validationResults.AddRange(_propertyAnnotationValidator.GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
         }

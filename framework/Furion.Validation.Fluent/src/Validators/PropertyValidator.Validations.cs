@@ -713,7 +713,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> SetValidator(IObjectValidator<TProperty> objectValidator)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(objectValidator, nameof(objectValidator));
+        ArgumentNullException.ThrowIfNull(objectValidator);
 
         Validator = objectValidator;
 

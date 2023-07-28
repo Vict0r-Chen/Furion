@@ -53,7 +53,7 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
         </member>
-        <member name="P:Furion.Validation.IObjectValidator`1.SuppressAnnotations">
+        <member name="P:Furion.Validation.IObjectValidator`1.SuppressAnnotationValidation">
             <summary>
             禁止注解（特性）验证
             </summary>
@@ -125,7 +125,7 @@
             禁止注解（特性）验证
             </summary>
         </member>
-        <member name="P:Furion.Validation.AbstractValidator`1.SuppressAnnotations">
+        <member name="P:Furion.Validation.AbstractValidator`1.SuppressAnnotationValidation">
             <summary>
             禁止注解（特性）验证
             </summary>
@@ -162,7 +162,7 @@
         </member>
         <member name="T:Furion.Validation.ObjectValidator`1">
             <summary>
-            类型验证器
+            对象验证器
             </summary>
             <typeparam name="T">对象类型</typeparam>
         </member>
@@ -171,7 +171,7 @@
             属性验证器集合
             </summary>
         </member>
-        <member name="F:Furion.Validation.ObjectValidator`1._objectAnnotationValidator">
+        <member name="F:Furion.Validation.ObjectValidator`1._annotationValidator">
             <summary>
             <see cref="T:Furion.Validation.ObjectAnnotationValidator"/>
             </summary>
@@ -180,14 +180,15 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.ObjectValidator`1"/>
             </summary>
-            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="P:Furion.Validation.ObjectValidator`1.SuppressAnnotations">
-            <inheritdoc />
-        </member>
-        <member name="P:Furion.Validation.ObjectValidator`1.Condition">
+        <member name="P:Furion.Validation.ObjectValidator`1.SuppressAnnotationValidation">
             <summary>
-            验证条件
+            禁用注解（特性）验证
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.ObjectValidator`1.ConditionExpression">
+            <summary>
+            执行验证的符合条件表达式
             </summary>
         </member>
         <member name="P:Furion.Validation.ObjectValidator`1.Items">
@@ -195,39 +196,41 @@
             附加属性
             </summary>
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.Create">
-            <summary>
-            创建类型验证器
-            </summary>
-            <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
-        </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Create(System.Action{Furion.Validation.ObjectValidator{`0}})">
             <summary>
-            创建类型验证器
+            初始化对象验证器
             </summary>
-            <param name="predicate">配置委托</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Property``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
             <summary>
-            创建属性验证器
+            初始化属性验证器
             </summary>
             <typeparam name="TProperty">属性类型</typeparam>
-            <param name="propertySelector">属性选择器</param>
+            <param name="propertyExpression">属性表达式</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotations(System.Boolean)">
+        <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotationValidation(System.Boolean)">
             <summary>
-            启用/禁用注解（特性）验证器
+            启用/禁用注解（特性）验证
             </summary>
             <param name="enable">是否启用</param>
-            <returns><see cref="M:Furion.Validation.ObjectValidator`1.Validate(`0)"/></returns>
+            <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.When(System.Func{`0,System.Boolean})">
-            <inheritdoc />
+            <summary>
+            配置执行验证的符合条件表达式
+            </summary>
+            <param name="conditionExpression">条件表达式</param>
+            <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
-            <inheritdoc />
+            <summary>
+            配置执行验证的符合条件表达式
+            </summary>
+            <param name="conditionExpression">条件表达式</param>
+            <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Reset">
             <inheritdoc />
@@ -247,13 +250,6 @@
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Validate(`0)">
             <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.AddPropertyValidator``1(Furion.Validation.PropertyValidator{`0,``0})">
-            <summary>
-            添加属性验证器
-            </summary>
-            <typeparam name="TProperty">属性类型</typeparam>
-            <param name="propertyValidator"><see cref="T:Furion.Validation.PropertyValidator`2" /></param>
         </member>
         <member name="T:Furion.Validation.PropertyValidator`2">
             <summary>
@@ -292,7 +288,7 @@
             属性名称
             </summary>
         </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.SuppressAnnotations">
+        <member name="P:Furion.Validation.PropertyValidator`2.SuppressAnnotationValidation">
             <inheritdoc />
         </member>
         <member name="P:Furion.Validation.PropertyValidator`2.ErrorMessageAccessor">

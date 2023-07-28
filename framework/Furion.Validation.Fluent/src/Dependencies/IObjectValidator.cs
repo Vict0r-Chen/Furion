@@ -23,7 +23,7 @@ public interface IObjectValidator<T> : IObjectValidator
     /// <summary>
     /// 禁止注解（特性）验证
     /// </summary>
-    bool SuppressAnnotations { get; set; }
+    bool SuppressAnnotationValidation { get; set; }
 
     /// <summary>
     /// 配置条件

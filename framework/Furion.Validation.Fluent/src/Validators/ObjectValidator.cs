@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 类型验证器
+/// 对象验证器
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
 public sealed class ObjectValidator<T> : IObjectValidator<T>
@@ -29,25 +29,26 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// <summary>
     /// <see cref="ObjectAnnotationValidator"/>
     /// </summary>
-    internal readonly ObjectAnnotationValidator _objectAnnotationValidator;
+    internal readonly ObjectAnnotationValidator _annotationValidator;
 
     /// <summary>
     /// <inheritdoc cref="ObjectValidator{T}"/>
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
     public ObjectValidator()
     {
         _propertyValidators = new();
-        _objectAnnotationValidator = new();
+        _annotationValidator = new();
     }
 
-    /// <inheritdoc />
-    public bool SuppressAnnotations { get; set; } = true;
+    /// <summary>
+    /// 禁用注解（特性）验证
+    /// </summary>
+    public bool SuppressAnnotationValidation { get; set; } = true;
 
     /// <summary>
-    /// 验证条件
+    /// 执行验证的符合条件表达式
     /// </summary>
-    internal Func<ValidationContext, bool>? Condition { get; private set; }
+    internal Func<ValidationContext, bool>? ConditionExpression { get; private set; }
 
     /// <summary>
     /// 附加属性
@@ -55,70 +56,74 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     internal IDictionary<object, object?>? Items { get; private set; }
 
     /// <summary>
-    /// 创建类型验证器
+    /// 初始化对象验证器
     /// </summary>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="ObjectValidator{T}"/></returns>
-    public static ObjectValidator<T> Create()
+    public static ObjectValidator<T> Create(Action<ObjectValidator<T>>? configure = null)
     {
-        return new ObjectValidator<T>();
-    }
+        // 初始化对象验证器
+        var validator = new ObjectValidator<T>();
 
-    /// <summary>
-    /// 创建类型验证器
-    /// </summary>
-    /// <param name="predicate">配置委托</param>
-    /// <returns><see cref="ObjectValidator{T}"/></returns>
-    public static ObjectValidator<T> Create(Action<ObjectValidator<T>> predicate)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(predicate);
-
-        // 创建类型验证器实例
-        var validator = Create();
-        predicate(validator);
+        // 调用自定义配置委托
+        configure?.Invoke(validator);
 
         return validator;
     }
 
     /// <summary>
-    /// 创建属性验证器
+    /// 初始化属性验证器
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
-    /// <param name="propertySelector">属性选择器</param>
+    /// <param name="propertyExpression">属性表达式</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertySelector)
+    public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertyExpression)
     {
-        return new PropertyValidator<T, TProperty>(this, propertySelector);
+        // 初始化属性验证器
+        var validator = new PropertyValidator<T, TProperty>(this, propertyExpression);
+
+        // 将属性验证器添加到集合中
+        _propertyValidators.Add(validator);
+
+        return validator;
     }
 
     /// <summary>
-    /// 启用/禁用注解（特性）验证器
+    /// 启用/禁用注解（特性）验证
     /// </summary>
     /// <param name="enable">是否启用</param>
-    /// <returns><see cref="Validate(T)"/></returns>
-    public ObjectValidator<T> WithAnnotations(bool enable = true)
+    /// <returns><see cref="ObjectValidator{T}"/></returns>
+    public ObjectValidator<T> WithAnnotationValidation(bool enable = true)
     {
-        SuppressAnnotations = !enable;
+        SuppressAnnotationValidation = !enable;
 
         return this;
     }
 
-    /// <inheritdoc />
-    public IObjectValidator<T> When(Func<T, bool> condition)
+    /// <summary>
+    /// 配置执行验证的符合条件表达式
+    /// </summary>
+    /// <param name="conditionExpression">条件表达式</param>
+    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    public IObjectValidator<T> When(Func<T, bool> conditionExpression)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition);
+        ArgumentNullException.ThrowIfNull(conditionExpression);
 
-        return WhenContext(context => condition((T)context.ObjectInstance));
+        return WhenContext(context => conditionExpression((T)context.ObjectInstance));
     }
 
-    /// <inheritdoc />
-    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    /// <summary>
+    /// 配置执行验证的符合条件表达式
+    /// </summary>
+    /// <param name="conditionExpression">条件表达式</param>
+    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition);
+        ArgumentNullException.ThrowIfNull(conditionExpression);
 
-        Condition = condition;
+        ConditionExpression = conditionExpression;
 
         return this;
     }
@@ -126,7 +131,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// <inheritdoc />
     public IObjectValidator<T> Reset()
     {
-        Condition = null;
+        ConditionExpression = null;
         Items?.Clear();
 
         return this;
@@ -142,14 +147,14 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
-        if (Condition is null)
+        if (ConditionExpression is null)
         {
             return true;
         }
 
         // 执行条件配置
         var validationContext = new ValidationContext(instance, new Dictionary<object, object?>());
-        var result = Condition(validationContext);
+        var result = ConditionExpression(validationContext);
 
         // 同步附加属性
         Items = validationContext.Items;
@@ -171,9 +176,9 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 处理对象注解（特性）验证器
         var isValid = true;
-        if (!SuppressAnnotations)
+        if (!SuppressAnnotationValidation)
         {
-            isValid = _objectAnnotationValidator.IsValid(instance);
+            isValid = _annotationValidator.IsValid(instance);
         }
 
         return isValid && _propertyValidators.All(validator => validator.IsValid(instance));
@@ -194,9 +199,9 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         var validationResults = new List<ValidationResult>();
 
         // 处理对象注解（特性）验证器
-        if (!SuppressAnnotations)
+        if (!SuppressAnnotationValidation)
         {
-            validationResults.AddRange(_objectAnnotationValidator.GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
+            validationResults.AddRange(_annotationValidator.GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
         }
 
         // 获取所有验证器验证结果集合
@@ -223,18 +228,5 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
-    }
-
-    /// <summary>
-    /// 添加属性验证器
-    /// </summary>
-    /// <typeparam name="TProperty">属性类型</typeparam>
-    /// <param name="propertyValidator"><see cref="PropertyValidator{T, TProperty}" /></param>
-    internal void AddPropertyValidator<TProperty>(PropertyValidator<T, TProperty> propertyValidator)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(propertyValidator);
-
-        _propertyValidators.Add(propertyValidator);
     }
 }
