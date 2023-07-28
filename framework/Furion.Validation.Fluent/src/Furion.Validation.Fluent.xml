@@ -49,59 +49,59 @@
         </member>
         <member name="T:Furion.Validation.IObjectValidator`1">
             <summary>
-            类型验证器接口
+            验证器服务
             </summary>
             <typeparam name="T">对象类型</typeparam>
         </member>
         <member name="P:Furion.Validation.IObjectValidator`1.SuppressAnnotationValidation">
             <summary>
-            禁止注解（特性）验证
+            禁用注解（特性）验证
             </summary>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.When(System.Func{`0,System.Boolean})">
             <summary>
-            配置条件
+            配置执行验证的符合条件表达式
             </summary>
-            <param name="condition">条件委托</param>
+            <param name="conditionExpression">条件表达式</param>
             <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
             <summary>
-            配置条件
+            配置执行验证的符合条件表达式
             </summary>
-            <param name="condition">条件委托</param>
+            <param name="conditionExpression">条件表达式</param>
             <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.Reset">
             <summary>
-            清空条件
+            重置验证器
             </summary>
             <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.IsValid(`0)">
             <summary>
-            检查值合法性
+            检查对象合法性
             </summary>
-            <param name="instance"><typeparamref name="T"/></param>
+            <param name="instance">对象实例</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.GetValidationResults(`0)">
             <summary>
             获取验证结果
             </summary>
-            <param name="instance"><typeparamref name="T"/></param>
-            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> 集合</returns>
+            <param name="instance">对象实例</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.Validate(`0)">
             <summary>
             执行验证
             </summary>
-            <param name="instance"><typeparamref name="T"/></param>
+            <param name="instance">对象实例</param>
             <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
         </member>
         <member name="T:Furion.Validation.IObjectValidator">
             <summary>
-            类型验证器接口
+            验证器服务
             </summary>
         </member>
         <member name="T:Furion.Validation.AbstractValidator`1">
@@ -182,9 +182,7 @@
             </summary>
         </member>
         <member name="P:Furion.Validation.ObjectValidator`1.SuppressAnnotationValidation">
-            <summary>
-            禁用注解（特性）验证
-            </summary>
+            <inheritdoc />
         </member>
         <member name="P:Furion.Validation.ObjectValidator`1.ConditionExpression">
             <summary>
@@ -219,18 +217,10 @@
             <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.When(System.Func{`0,System.Boolean})">
-            <summary>
-            配置执行验证的符合条件表达式
-            </summary>
-            <param name="conditionExpression">条件表达式</param>
-            <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
-            <summary>
-            配置执行验证的符合条件表达式
-            </summary>
-            <param name="conditionExpression">条件表达式</param>
-            <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Reset">
             <inheritdoc />
@@ -239,7 +229,7 @@
             <summary>
             检查是否可以执行验证程序
             </summary>
-            <param name="instance"><typeparamref name="T"/></param>
+            <param name="instance">对象实例</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.IsValid(`0)">

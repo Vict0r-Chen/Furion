@@ -74,8 +74,8 @@ public sealed class FluentValidationBuilder
             var modelType = baseType.GenericTypeArguments[0];
 
             // 添加服务
-            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(IObjectValidator<>).MakeGenericType(modelType), validatorType));
-            services.TryAddEnumerable(ServiceDescriptor.Scoped(typeof(IObjectValidator), validatorType));
+            services.TryAddEnumerable(ServiceDescriptor.Transient(typeof(IObjectValidator<>).MakeGenericType(modelType), validatorType));
+            services.TryAddEnumerable(ServiceDescriptor.Transient(typeof(IObjectValidator), validatorType));
         }
     }
 

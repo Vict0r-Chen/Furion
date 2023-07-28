@@ -197,8 +197,11 @@ public abstract class ValidatorBase
             return;
         }
 
-        // 初始化组合验证异常并抛出
-        var validationExceptions = validationResults.Select(result => new ValidationException(result, null, value));
+        // 初始化组合验证异常
+        var validationExceptions = validationResults
+            .Select(result => new ValidationException(result, null, value));
+
+        // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
     }
 

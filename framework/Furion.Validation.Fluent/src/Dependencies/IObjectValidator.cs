@@ -15,60 +15,60 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 类型验证器接口
+/// 验证器服务
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
 public interface IObjectValidator<T> : IObjectValidator
 {
     /// <summary>
-    /// 禁止注解（特性）验证
+    /// 禁用注解（特性）验证
     /// </summary>
     bool SuppressAnnotationValidation { get; set; }
 
     /// <summary>
-    /// 配置条件
+    /// 配置执行验证的符合条件表达式
     /// </summary>
-    /// <param name="condition">条件委托</param>
+    /// <param name="conditionExpression">条件表达式</param>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
-    IObjectValidator<T> When(Func<T, bool> condition);
+    IObjectValidator<T> When(Func<T, bool> conditionExpression);
 
     /// <summary>
-    /// 配置条件
+    /// 配置执行验证的符合条件表达式
     /// </summary>
-    /// <param name="condition">条件委托</param>
+    /// <param name="conditionExpression">条件表达式</param>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
-    IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition);
+    IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression);
 
     /// <summary>
-    /// 清空条件
+    /// 重置验证器
     /// </summary>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
     IObjectValidator<T> Reset();
 
     /// <summary>
-    /// 检查值合法性
+    /// 检查对象合法性
     /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <param name="instance">对象实例</param>
     /// <returns><see cref="bool"/></returns>
     bool IsValid(T instance);
 
     /// <summary>
     /// 获取验证结果
     /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
-    /// <returns><see cref="ValidationResult"/> 集合</returns>
+    /// <param name="instance">对象实例</param>
+    /// <returns><see cref="List{T}"/></returns>
     List<ValidationResult>? GetValidationResults(T instance);
 
     /// <summary>
     /// 执行验证
     /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <param name="instance">对象实例</param>
     /// <exception cref="AggregateValidationException"></exception>
     void Validate(T instance);
 }
 
 /// <summary>
-/// 类型验证器接口
+/// 验证器服务
 /// </summary>
 public interface IObjectValidator
 {

@@ -40,9 +40,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         _annotationValidator = new();
     }
 
-    /// <summary>
-    /// 禁用注解（特性）验证
-    /// </summary>
+    /// <inheritdoc />
     public bool SuppressAnnotationValidation { get; set; } = true;
 
     /// <summary>
@@ -100,24 +98,17 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         return this;
     }
 
-    /// <summary>
-    /// 配置执行验证的符合条件表达式
-    /// </summary>
-    /// <param name="conditionExpression">条件表达式</param>
-    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    /// <inheritdoc />
     public IObjectValidator<T> When(Func<T, bool> conditionExpression)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(conditionExpression);
 
+        // 配置执行验证的符合条件表达式
         return WhenContext(context => conditionExpression((T)context.ObjectInstance));
     }
 
-    /// <summary>
-    /// 配置执行验证的符合条件表达式
-    /// </summary>
-    /// <param name="conditionExpression">条件表达式</param>
-    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    /// <inheritdoc />
     public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression)
     {
         // 空检查
@@ -140,26 +131,25 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// <summary>
     /// 检查是否可以执行验证程序
     /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <param name="instance">对象实例</param>
     /// <returns><see cref="bool"/></returns>
     internal bool CanValidate(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
+        // 检查是否设置了条件表达式
         if (ConditionExpression is null)
         {
             return true;
         }
 
-        // 执行条件配置
+        // 初始化验证上下文
         var validationContext = new ValidationContext(instance, new Dictionary<object, object?>());
-        var result = ConditionExpression(validationContext);
-
-        // 同步附加属性
         Items = validationContext.Items;
 
-        return result;
+        // 调用条件表达式并返回
+        return ConditionExpression(validationContext);
     }
 
     /// <inheritdoc />
@@ -174,14 +164,9 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
             return true;
         }
 
-        // 处理对象注解（特性）验证器
-        var isValid = true;
-        if (!SuppressAnnotationValidation)
-        {
-            isValid = _annotationValidator.IsValid(instance);
-        }
-
-        return isValid && _propertyValidators.All(validator => validator.IsValid(instance));
+        // 检查是否启用注解（特性）验证，同时调用属性验证器集合进行验证
+        return (SuppressAnnotationValidation || _annotationValidator.IsValid(instance))
+            && _propertyValidators.All(validator => validator.IsValid(instance));
     }
 
     /// <inheritdoc />
@@ -196,16 +181,19 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
             return null;
         }
 
+        // 初始化验证结果集合
         var validationResults = new List<ValidationResult>();
 
-        // 处理对象注解（特性）验证器
+        // 检查是否启用注解（特性）验证
         if (!SuppressAnnotationValidation)
         {
-            validationResults.AddRange(_annotationValidator.GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
+            validationResults.AddRange(_annotationValidator
+                .GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
         }
 
-        // 获取所有验证器验证结果集合
-        validationResults.AddRange(_propertyValidators.SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>()));
+        // 获取属性验证器集合所有验证结果
+        validationResults.AddRange(_propertyValidators
+            .SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>()));
 
         return validationResults.Count == 0 ? null : validationResults;
     }
@@ -218,13 +206,16 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 获取验证结果
         var validationResults = GetValidationResults(instance);
+
+        // 空检查
         if (validationResults is null)
         {
             return;
         }
 
-        // 创建组合异常
-        var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, instance));
+        // 初始化组合验证异常
+        var validationExceptions = validationResults
+            .Select(validationResult => new ValidationException(validationResult, null, instance));
 
         // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
