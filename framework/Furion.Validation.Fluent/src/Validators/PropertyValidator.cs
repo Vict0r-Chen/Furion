@@ -23,58 +23,164 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     where T : class
 {
     /// <summary>
-    /// <see cref="ObjectValidator{T}"/>
+    /// 验证器委托器
     /// </summary>
+    /// <typeparam name="TValidator"><see cref="ValidatorBase"/></typeparam>
+    internal sealed class ValidatorDelegator<TValidator> : ValidatorBase<T>
+        where TValidator : ValidatorBase
+    {
+        /// <inheritdoc cref="PropertyValidator{T, TProperty}" />
+        internal readonly PropertyValidator<T, TProperty> _propertyValidator;
+
+        /// <summary>
+        /// 构造函数参数访问器
+        /// </summary>
+        internal readonly Func<T, object?[]?> _constructorParametersAccessor;
+
+        /// <summary>
+        /// <inheritdoc cref="ValidatorDelegator{TValidator}" />
+        /// </summary>
+        /// <param name="propertyValidator"><see cref="PropertyValidator{T, TProperty}"/></param>
+        /// <param name="constructorParametersAccessor">构造函数参数访问器</param>
+        /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+        public ValidatorDelegator(PropertyValidator<T, TProperty> propertyValidator
+            , Func<T, object?[]?> constructorParametersAccessor
+            , Func<string> errorMessageResourceAccessor)
+            : base(errorMessageResourceAccessor)
+        {
+            _propertyValidator = propertyValidator;
+            _constructorParametersAccessor = constructorParametersAccessor;
+        }
+
+        /// <inheritdoc cref="ValidatorBase" />
+        internal TValidator? Validator { get; private set; }
+
+        /// <summary>
+        /// 属性值
+        /// </summary>
+        internal object? PropertyValue { get; private set; }
+
+        /// <summary>
+        /// 自定义配置委托
+        /// </summary>
+        internal Action<TValidator>? ValidatorConfigure { get; private set; }
+
+        /// <inheritdoc />
+        public override bool IsValid(T instance)
+        {
+            // 初始化
+            Initialize(instance);
+
+            return Validator!.IsValid(PropertyValue);
+        }
+
+        /// <inheritdoc />
+        public override string FormatErrorMessage(string name, T instance)
+        {
+            // 初始化
+            Initialize(instance);
+
+            return Validator!.FormatErrorMessage(name, PropertyValue);
+        }
+
+        /// <inheritdoc />
+        public override List<ValidationResult>? GetValidationResults(T instance, string name)
+        {
+            // 初始化
+            Initialize(instance);
+
+            return Validator!.GetValidationResults(PropertyValue, name);
+        }
+
+        public override void Validate(T instance, string name)
+        {
+            // 初始化
+            Initialize(instance);
+
+            Validator!.Validate(PropertyValue, name);
+        }
+
+        /// <summary>
+        /// 配置验证器
+        /// </summary>
+        /// <param name="configure">自定义配置委托</param>
+        public void Configure(Action<TValidator> configure)
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(configure);
+
+            ValidatorConfigure = configure;
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="instance">对象实例</param>
+        internal void Initialize(T instance)
+        {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(instance);
+
+            // 创建验证器
+            Validator ??= Activator.CreateInstance(typeof(TValidator), _constructorParametersAccessor(instance)) as TValidator;
+
+            // 空检查
+            ArgumentNullException.ThrowIfNull(Validator);
+
+            // 设置错误消息
+            Validator.ErrorMessage = ErrorMessage;
+
+            // 调用自定义配置委托
+            ValidatorConfigure?.Invoke(Validator);
+
+            // 初始化属性值
+            PropertyValue = _propertyValidator.GetPropertyValue(instance);
+        }
+    }
+
+    /// <inheritdoc cref="ObjectValidator{T}" />
     internal readonly ObjectValidator<T> _objectValidator;
 
-    /// <summary>
-    /// <see cref="PropertyAnnotationValidator{T}"/>
-    /// </summary>
-    internal readonly PropertyAnnotationValidator<T, TProperty> _propertyAnnotationValidator;
+    /// <inheritdoc cref="PropertyAnnotationValidator{T, TProperty}" />
+    internal readonly PropertyAnnotationValidator<T, TProperty> _annotationValidator;
 
     /// <summary>
     /// <inheritdoc cref="PropertyValidator{T, TProperty}"/>
     /// </summary>
     /// <param name="objectValidator"><see cref="ObjectValidator{T}"/></param>
     /// <param name="propertyExpression">属性选择器</param>
-    internal PropertyValidator(ObjectValidator<T> objectValidator, Expression<Func<T, TProperty?>> propertyExpression)
+    internal PropertyValidator(ObjectValidator<T> objectValidator
+        , Expression<Func<T, TProperty?>> propertyExpression)
     {
-        Validators = new();
+        _objectValidator = objectValidator;
         PropertyName = propertyExpression.GetPropertyName();
 
-        // 将当前属性验证器添加到类型验证器集合中
-        _objectValidator = objectValidator;
-
-        _propertyAnnotationValidator = new(propertyExpression);
+        Validators = new();
+        _annotationValidator = new(propertyExpression);
     }
 
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public List<ValidatorBase> Validators { get; }
+    public List<ValidatorBase> Validators { get; init; }
 
     /// <summary>
     /// 属性名称
     /// </summary>
-    public string PropertyName { get; }
+    public string PropertyName { get; init; }
 
     /// <inheritdoc />
     public bool SuppressAnnotationValidation { get; set; } = true;
 
     /// <summary>
-    /// 错误消息访问器
-    /// </summary>
-    internal Func<T, string>? ErrorMessageAccessor { get; private set; }
-
-    /// <summary>
     /// 验证对象访问器
     /// </summary>
-    internal Func<ValidatorBase, T, object?, object?>? ValidationObjectAccessor { get; private set; }
+    internal Func<T, ValidatorBase, object?, object?>? ValidationObjectAccessor { get; private set; }
 
     /// <summary>
-    /// 验证条件
+    /// 执行验证的符合条件表达式
     /// </summary>
-    internal Func<ValidationContext, bool>? Condition { get; private set; }
+    internal Func<ValidationContext, bool>? ConditionExpression { get; private set; }
 
     /// <summary>
     /// 类型验证器
@@ -82,11 +188,11 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal IObjectValidator<TProperty>? Validator { get; private set; }
 
     /// <summary>
-    /// 启用/禁用注解（特性）验证器
+    /// 启用/禁用注解（特性）验证
     /// </summary>
     /// <param name="enable">是否启用</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> WithAnnotations(bool enable = true)
+    public PropertyValidator<T, TProperty> WithAnnotationValidation(bool enable = true)
     {
         SuppressAnnotationValidation = !enable;
 
@@ -98,27 +204,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="errorMessage">错误消息</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> WithErrorMessage(string errorMessage)
+    public PropertyValidator<T, TProperty> WithErrorMessage(string? errorMessage)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessage);
-
-        ErrorMessageAccessor = (_) => errorMessage;
-
-        return this;
-    }
-
-    /// <summary>
-    /// 设置错误消息
-    /// </summary>
-    /// <param name="errorMessageAccessor">错误消息访问器</param>
-    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> WithErrorMessage(Func<T, string> errorMessageAccessor)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessageAccessor);
-
-        ErrorMessageAccessor = errorMessageAccessor;
+        Validators.LastOrDefault()?.WithErrorMessage(errorMessage);
 
         return this;
     }
@@ -128,7 +216,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="validationObjectAccessor">验证对象访问器</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> SetValidationObjectAccessor(Func<ValidatorBase, T, object?, object?> validationObjectAccessor)
+    public PropertyValidator<T, TProperty> ConfigureValidationObject(Func<T, ValidatorBase, object?, object?> validationObjectAccessor)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validationObjectAccessor);
@@ -139,21 +227,22 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> When(Func<T, bool> condition)
+    public IObjectValidator<T> When(Func<T, bool> conditionExpression)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition);
+        ArgumentNullException.ThrowIfNull(conditionExpression);
 
-        return WhenContext(context => condition((T)context.ObjectInstance));
+        // 配置执行验证的符合条件表达式
+        return WhenContext(context => conditionExpression((T)context.ObjectInstance));
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition);
+        ArgumentNullException.ThrowIfNull(conditionExpression);
 
-        Condition = condition;
+        ConditionExpression = conditionExpression;
 
         return this;
     }
@@ -161,7 +250,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <inheritdoc />
     public IObjectValidator<T> Reset()
     {
-        Condition = null;
+        ConditionExpression = null;
 
         return this;
     }
@@ -169,19 +258,24 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 检查是否可以执行验证程序
     /// </summary>
-    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <param name="instance">对象实例</param>
     /// <returns><see cref="bool"/></returns>
     internal bool CanValidate(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
-        if (Condition is null)
+        // 检查是否设置了条件表达式
+        if (ConditionExpression is null)
         {
             return true;
         }
 
-        return Condition(new ValidationContext(instance, _objectValidator.Items));
+        // 初始化验证上下文
+        var validationContext = new ValidationContext(instance, _objectValidator.Items);
+
+        // 调用条件表达式并返回
+        return ConditionExpression(validationContext);
     }
 
     /// <inheritdoc />
@@ -196,12 +290,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             return true;
         }
 
-        // 处理属性注解（特性）验证器
-        var isValid = true;
-        if (!SuppressAnnotationValidation)
-        {
-            isValid = _propertyAnnotationValidator.IsValid(instance);
-        }
+        // 检查是否启用注解（特性）验证
+        var isValid = SuppressAnnotationValidation || _annotationValidator.IsValid(instance);
 
         // 获取属性值
         var propertyValue = GetPropertyValue(instance);
@@ -209,8 +299,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 处理设置类型验证器
         if (Validator is null)
         {
-            return isValid && Validators.All(validator =>
-                validator.IsValid(GetValidationObject(validator, instance, propertyValue)));
+            return isValid && Validators
+                .All(validator => validator.IsValid(GetValidationObject(instance, validator, propertyValue)));
         }
 
         if (propertyValue is null)
@@ -233,12 +323,14 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             return null;
         }
 
+        // 初始化验证结果集合
         var validationResults = new List<ValidationResult>();
 
         // 处理属性注解（特性）验证器
         if (!SuppressAnnotationValidation)
         {
-            validationResults.AddRange(_propertyAnnotationValidator.GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
+            validationResults.AddRange(_annotationValidator
+                .GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());
         }
 
         // 获取属性值
@@ -249,27 +341,19 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         {
             if (propertyValue is not null)
             {
-                validationResults.AddRange(Validator.GetValidationResults(propertyValue) ?? Enumerable.Empty<ValidationResult>());
+                validationResults.AddRange(Validator
+                    .GetValidationResults(propertyValue) ?? Enumerable.Empty<ValidationResult>());
             }
         }
         else
         {
             // 获取所有验证器验证结果集合
-            validationResults.AddRange(Validators.SelectMany(validator => validator.GetValidationResults(GetValidationObject(validator, instance, propertyValue), PropertyName) ?? Enumerable.Empty<ValidationResult>()));
+            validationResults.AddRange(Validators
+                .SelectMany(validator => validator.GetValidationResults(
+                    GetValidationObject(instance, validator, propertyValue), PropertyName) ?? Enumerable.Empty<ValidationResult>()));
         }
 
-        if (validationResults.Count == 0)
-        {
-            return null;
-        }
-
-        // 添加自定义错误消息
-        if (ErrorMessageAccessor is not null)
-        {
-            validationResults.Insert(0, new ValidationResult(ErrorMessageAccessor(instance), new[] { PropertyName }));
-        }
-
-        return validationResults;
+        return validationResults.Count == 0 ? null : validationResults;
     }
 
     /// <inheritdoc />
@@ -280,13 +364,16 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 获取验证结果
         var validationResults = GetValidationResults(instance);
+
+        // 空检查
         if (validationResults is null)
         {
             return;
         }
 
-        // 创建组合异常
-        var validationExceptions = validationResults.Select(validationResult => new ValidationException(validationResult, null, instance));
+        // 初始化组合验证异常
+        var validationExceptions = validationResults
+            .Select(validationResult => new ValidationException(validationResult, null, instance));
 
         // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
@@ -299,26 +386,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <returns><see cref="object"/></returns>
     internal TProperty? GetPropertyValue(T instance)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(instance);
-
-        // 返回属性值
-        return (TProperty?)GetPropertyInfo().GetValue(instance);
-    }
-
-    /// <summary>
-    /// 获取属性信息
-    /// </summary>
-    /// <returns><see cref="PropertyInfo"/></returns>
-    internal PropertyInfo GetPropertyInfo()
-    {
-        // 根据属性名称查找属性对象
-        var propertyInfo = typeof(T).GetProperty(PropertyName);
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(propertyInfo);
-
-        return propertyInfo;
+        return (TProperty?)_annotationValidator.GetPropertyValue(instance, PropertyName);
     }
 
     /// <summary>
@@ -328,79 +396,18 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <param name="instance"><typeparamref name="T"/></param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
-    internal object? GetValidationObject(ValidatorBase validator, T instance, TProperty? propertyValue)
+    internal object? GetValidationObject(T instance, ValidatorBase validator, TProperty? propertyValue)
     {
-        // 如果是自定义验证器则返回对象实例
-        if (validator.IsSameAs(typeof(CustomValidator)))
+        // 检查是否是验证器代理类型
+        var validatorType = validator.GetType();
+        if (validatorType.IsGenericType && validatorType.GetGenericTypeDefinition() == typeof(ValidatorDelegator<>))
         {
             return instance;
         }
 
         // 检查是否设置了验证对象访问器
         return ValidationObjectAccessor is not null
-            ? ValidationObjectAccessor(validator, instance, propertyValue)
+            ? ValidationObjectAccessor(instance, validator, propertyValue)
             : propertyValue;
-    }
-
-    /// <summary>
-    /// 自定义验证器
-    /// </summary>
-    internal sealed class CustomValidator : ValidatorBase
-    {
-        /// <summary>
-        /// 格式化参数访问器
-        /// </summary>
-        internal readonly Func<T, string?[]>? _formatArgsAccessor;
-
-        /// <summary>
-        /// <inheritdoc cref="CustomValidator"/>
-        /// </summary>
-        /// <param name="predicate">委托对象</param>
-        /// <param name="defaultErrorMessage">默认错误消息</param>
-        /// <param name="formatArgsAccessor">格式化参数访问器</param>
-        internal CustomValidator(Func<T, bool> predicate
-            , string? defaultErrorMessage = default
-            , Func<T, string?[]>? formatArgsAccessor = null)
-            : base(defaultErrorMessage)
-        {
-            // 空检查
-            ArgumentNullException.ThrowIfNull(predicate);
-
-            Predicate = predicate;
-            ErrorMessage = defaultErrorMessage;
-            _formatArgsAccessor = formatArgsAccessor;
-        }
-
-        /// <summary>
-        /// 委托对象
-        /// </summary>
-        internal Func<T, bool> Predicate { get; }
-
-        /// <inheritdoc />
-        public override bool IsValid(object? instance)
-        {
-            // 空检查
-            ArgumentNullException.ThrowIfNull(instance);
-
-            return Predicate((T)instance);
-        }
-
-        /// <inheritdoc />
-        public override string FormatErrorMessage(string name, object? instance = null)
-        {
-            var args = new List<string?> { name };
-
-            if (_formatArgsAccessor is null)
-            {
-                return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, args.ToArray());
-            }
-
-            // 空检查
-            ArgumentNullException.ThrowIfNull(instance);
-
-            args.AddRange(_formatArgsAccessor((T)instance));
-
-            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, args.ToArray());
-        }
     }
 }

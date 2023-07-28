@@ -20,7 +20,7 @@ public class Teacher
     public string? Name { get; set; }
 }
 
-public class TeacherValidator : AbstractValidator<Teacher>, ITransientDependency
+public class TeacherValidator : AbstractValidator<Teacher>
 {
     public TeacherValidator()
     {

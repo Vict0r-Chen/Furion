@@ -26,9 +26,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// </summary>
     internal readonly List<IObjectValidator<T>> _propertyValidators;
 
-    /// <summary>
-    /// <see cref="ObjectAnnotationValidator"/>
-    /// </summary>
+    /// <inheritdoc cref="ObjectAnnotationValidator" />
     internal readonly ObjectAnnotationValidator _annotationValidator;
 
     /// <summary>
@@ -73,7 +71,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// 初始化属性验证器
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
-    /// <param name="propertyExpression">属性表达式</param>
+    /// <param name="propertyExpression">属性选择器</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertyExpression)
     {

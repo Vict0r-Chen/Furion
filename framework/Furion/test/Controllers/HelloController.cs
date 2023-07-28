@@ -39,7 +39,7 @@ public class HelloController
         var validationResults = validator.GetValidationResults(new()
         {
             Name = "Furion",
-            NickName = "su",
+            NickName = "Furion",
             Teacher = new() { Name = "Furion" }
         });
 

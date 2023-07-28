@@ -33,8 +33,8 @@ public abstract class ValidatorBase<T> : ValidatorBase
     }
 
     /// <inheritdoc cref="ValidatorBase{T}"/>
-    protected ValidatorBase(Func<string> errorMessageAccessor)
-        : base(errorMessageAccessor)
+    protected ValidatorBase(Func<string> errorMessageResourceAccessor)
+        : base(errorMessageResourceAccessor)
     {
     }
 
@@ -123,13 +123,13 @@ public abstract class ValidatorBase
     /// <summary>
     /// <inheritdoc cref="ValidatorBase"/>
     /// </summary>
-    /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ValidatorBase(Func<string> errorMessageAccessor)
+    /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+    protected ValidatorBase(Func<string> errorMessageResourceAccessor)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessageAccessor);
+        ArgumentNullException.ThrowIfNull(errorMessageResourceAccessor);
 
-        _errorMessageResourceAccessor = errorMessageAccessor;
+        _errorMessageResourceAccessor = errorMessageResourceAccessor;
     }
 
     /// <summary>

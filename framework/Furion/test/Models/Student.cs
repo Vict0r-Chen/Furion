@@ -32,7 +32,7 @@ public class StudentValidator : AbstractValidator<Student>
 {
     public StudentValidator()
     {
-        RuleFor(s => s.Name).NotNull().NotEqual("Furion");
+        RuleFor(s => s.Name).NotNull().WithErrorMessage("不能为空").NotEqual(u => u.NickName).WithErrorMessage("名称不能和 NickName 一样");
         RuleFor(s => s.Teacher).SetValidator(new TeacherValidator());
     }
 }

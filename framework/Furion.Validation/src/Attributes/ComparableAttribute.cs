@@ -26,9 +26,9 @@ public abstract class ComparableAttribute<TValidator> : ValidationAttribute
     /// <inheritdoc cref="ComparableAttribute{TComparableValidator}"/>
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
-    /// <param name="errorMessageAccessor">错误消息资源访问器</param>
-    protected ComparableAttribute(Func<object> compareValueAccessor, Func<string> errorMessageAccessor)
-        : base(errorMessageAccessor)
+    /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+    protected ComparableAttribute(Func<object> compareValueAccessor, Func<string> errorMessageResourceAccessor)
+        : base(errorMessageResourceAccessor)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(compareValueAccessor);

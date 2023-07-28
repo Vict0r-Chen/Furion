@@ -172,9 +172,7 @@
             </summary>
         </member>
         <member name="F:Furion.Validation.ObjectValidator`1._annotationValidator">
-            <summary>
-            <see cref="T:Furion.Validation.ObjectAnnotationValidator"/>
-            </summary>
+            <inheritdoc cref="T:Furion.Validation.ObjectAnnotationValidator" />
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.#ctor">
             <summary>
@@ -206,7 +204,7 @@
             初始化属性验证器
             </summary>
             <typeparam name="TProperty">属性类型</typeparam>
-            <param name="propertyExpression">属性表达式</param>
+            <param name="propertyExpression">属性选择器</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotationValidation(System.Boolean)">
@@ -251,15 +249,67 @@
             属性验证器
             </summary>
         </member>
-        <member name="F:Furion.Validation.PropertyValidator`2._objectValidator">
+        <member name="T:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1">
             <summary>
-            <see cref="T:Furion.Validation.ObjectValidator`1"/>
+            验证器委托器
+            </summary>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
+        </member>
+        <member name="F:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1._propertyValidator">
+            <inheritdoc cref="T:Furion.Validation.PropertyValidator`2" />
+        </member>
+        <member name="F:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1._constructorParametersAccessor">
+            <summary>
+            构造函数参数访问器
             </summary>
         </member>
-        <member name="F:Furion.Validation.PropertyValidator`2._propertyAnnotationValidator">
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.#ctor(Furion.Validation.PropertyValidator{`0,`1},System.Func{`0,System.Object[]},System.Func{System.String})">
             <summary>
-            <see cref="T:Furion.Validation.PropertyAnnotationValidator`1"/>
+            <inheritdoc cref="T:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1" />
             </summary>
+            <param name="propertyValidator"><see cref="T:Furion.Validation.PropertyValidator`2"/></param>
+            <param name="constructorParametersAccessor">构造函数参数访问器</param>
+            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+        </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.Validator">
+            <inheritdoc cref="T:Furion.Validation.ValidatorBase" />
+        </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.PropertyValue">
+            <summary>
+            属性值
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.ValidatorConfigure">
+            <summary>
+            自定义配置委托
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.IsValid(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.FormatErrorMessage(System.String,`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.GetValidationResults(`0,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.Configure(System.Action{`2})">
+            <summary>
+            配置验证器
+            </summary>
+            <param name="configure">自定义配置委托</param>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.Initialize(`0)">
+            <summary>
+            初始化
+            </summary>
+            <param name="instance">对象实例</param>
+        </member>
+        <member name="F:Furion.Validation.PropertyValidator`2._objectValidator">
+            <inheritdoc cref="T:Furion.Validation.ObjectValidator`1" />
+        </member>
+        <member name="F:Furion.Validation.PropertyValidator`2._annotationValidator">
+            <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`2" />
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.#ctor(Furion.Validation.ObjectValidator{`0},System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
@@ -281,19 +331,14 @@
         <member name="P:Furion.Validation.PropertyValidator`2.SuppressAnnotationValidation">
             <inheritdoc />
         </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.ErrorMessageAccessor">
-            <summary>
-            错误消息访问器
-            </summary>
-        </member>
         <member name="P:Furion.Validation.PropertyValidator`2.ValidationObjectAccessor">
             <summary>
             验证对象访问器
             </summary>
         </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.Condition">
+        <member name="P:Furion.Validation.PropertyValidator`2.ConditionExpression">
             <summary>
-            验证条件
+            执行验证的符合条件表达式
             </summary>
         </member>
         <member name="P:Furion.Validation.PropertyValidator`2.Validator">
@@ -301,9 +346,9 @@
             类型验证器
             </summary>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.WithAnnotations(System.Boolean)">
+        <member name="M:Furion.Validation.PropertyValidator`2.WithAnnotationValidation(System.Boolean)">
             <summary>
-            启用/禁用注解（特性）验证器
+            启用/禁用注解（特性）验证
             </summary>
             <param name="enable">是否启用</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
@@ -315,14 +360,7 @@
             <param name="errorMessage">错误消息</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.WithErrorMessage(System.Func{`0,System.String})">
-            <summary>
-            设置错误消息
-            </summary>
-            <param name="errorMessageAccessor">错误消息访问器</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.SetValidationObjectAccessor(System.Func{Furion.Validation.ValidatorBase,`0,System.Object,System.Object})">
+        <member name="M:Furion.Validation.PropertyValidator`2.ConfigureValidationObject(System.Func{`0,Furion.Validation.ValidatorBase,System.Object,System.Object})">
             <summary>
             设置验证对象访问器
             </summary>
@@ -342,7 +380,7 @@
             <summary>
             检查是否可以执行验证程序
             </summary>
-            <param name="instance"><typeparamref name="T"/></param>
+            <param name="instance">对象实例</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.IsValid(`0)">
@@ -361,13 +399,7 @@
             <param name="instance"><typeparamref name="T"/></param>
             <returns><see cref="T:System.Object"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GetPropertyInfo">
-            <summary>
-            获取属性信息
-            </summary>
-            <returns><see cref="T:System.Reflection.PropertyInfo"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GetValidationObject(Furion.Validation.ValidatorBase,`0,`1)">
+        <member name="M:Furion.Validation.PropertyValidator`2.GetValidationObject(`0,Furion.Validation.ValidatorBase,`1)">
             <summary>
             获取验证对象
             </summary>
@@ -376,40 +408,242 @@
             <param name="propertyValue">属性值</param>
             <returns><see cref="T:System.Object"/></returns>
         </member>
-        <member name="T:Furion.Validation.PropertyValidator`2.CustomValidator">
+        <member name="M:Furion.Validation.PropertyValidator`2.Age">
             <summary>
-            自定义验证器
+            添加年龄（0-120）验证器
             </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="F:Furion.Validation.PropertyValidator`2.CustomValidator._formatArgsAccessor">
+        <member name="M:Furion.Validation.PropertyValidator`2.BankCardNumber">
             <summary>
-            格式化参数访问器
+            添加银行卡号验证器
             </summary>
+            <remarks>
+            <see href="https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1">银行卡号对照表</see>
+            </remarks>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.CustomValidator.#ctor(System.Func{`0,System.Boolean},System.String,System.Func{`0,System.String[]})">
+        <member name="M:Furion.Validation.PropertyValidator`2.ChineseName">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.PropertyValidator`2.CustomValidator"/>
+            添加中文姓名验证器
             </summary>
-            <param name="predicate">委托对象</param>
-            <param name="defaultErrorMessage">默认错误消息</param>
-            <param name="formatArgsAccessor">格式化参数访问器</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.CustomValidator.Predicate">
+        <member name="M:Furion.Validation.PropertyValidator`2.Chinese">
             <summary>
-            委托对象
+            添加中文/汉字验证器
             </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.CustomValidator.IsValid(System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.CustomValidator.FormatErrorMessage(System.String,System.Object)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.NotNull(System.Boolean)">
+        <member name="M:Furion.Validation.PropertyValidator`2.ColorValue">
             <summary>
-            添加必填验证器
+            添加颜色值验证器
             </summary>
-            <param name="allowEmptyStrings">是否允许空字符串</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ColorValue(System.Boolean)">
+            <summary>
+            添加颜色值验证器
+            </summary>
+            <param name="fullMode">完整模式</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(Furion.Validation.ValidatorBase[])">
+            <summary>
+            添加组合验证器
+            </summary>
+            <param name="validators">验证器集合</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
+            <summary>
+            添加组合验证器
+            </summary>
+            <param name="validators">验证器集合</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(Furion.Validation.ValidatorBase[],Furion.Validation.ValidatorRelationship)">
+            <summary>
+            添加组合验证器
+            </summary>
+            <param name="validators">验证器集合</param>
+            <param name="relationship"><see cref="T:Furion.Validation.ValidatorRelationship"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorRelationship)">
+            <summary>
+            添加组合验证器
+            </summary>
+            <param name="validators">验证器集合</param>
+            <param name="relationship"><see cref="T:Furion.Validation.ValidatorRelationship"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Domain">
+            <summary>
+            添加域名验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.Char)">
+            <summary>
+            添加以特定字符/字符串结尾的验证器
+            </summary>
+            <param name="searchValue">检索的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.String)">
+            <summary>
+            添加以特定字符/字符串结尾的验证器
+            </summary>
+            <param name="searchValue">检索的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.Char,System.StringComparison)">
+            <summary>
+            添加以特定字符/字符串结尾的验证器
+            </summary>
+            <param name="searchValue">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.String,System.StringComparison)">
+            <summary>
+            添加以特定字符/字符串结尾的验证器
+            </summary>
+            <param name="searchValue">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Equal(System.Object)">
+            <summary>
+            添加相等验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Equal(System.Func{`0,System.Object})">
+            <summary>
+            添加相等验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Int32)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Double)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Object)">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Func{`0,System.Object})">
+            <summary>
+            添加大于等于验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Int32)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Double)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Object)">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Func{`0,System.Object})">
+            <summary>
+            添加大于验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.IdCardNumber">
+            <summary>
+            添加身份证号验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Int32)">
+            <summary>
+            添加小于等于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Double)">
+            <summary>
+            添加小于等于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Object)">
+            <summary>
+            添加小于等于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Func{`0,System.Object})">
+            <summary>
+            添加小于等于验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Int32)">
+            <summary>
+            添加小于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Double)">
+            <summary>
+            添加小于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Object)">
+            <summary>
+            添加小于验证器
+            </summary>
+            <param name="compareValue">比较的值</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Func{`0,System.Object})">
+            <summary>
+            添加小于验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.NotEmpty">
@@ -418,94 +652,144 @@
             </summary>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.String)">
+        <member name="M:Furion.Validation.PropertyValidator`2.NotEqual(System.Object)">
             <summary>
-            添加以特定字符串结尾的验证器
+            添加不相等验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="compareValue">比较的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.Char)">
+        <member name="M:Furion.Validation.PropertyValidator`2.NotEqual(System.Func{`0,System.Object})">
             <summary>
-            添加以特定字符串结尾的验证器
+            添加不相等验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="predicate">自定义委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.String,System.StringComparison)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Password">
             <summary>
-            添加以特定字符串结尾的验证器
+            添加密码验证器
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <remarks>
+            密码长度为 6-18 位，包含至少一个字母和一个数字
+            </remarks>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.EndsWith(System.Char,System.StringComparison)">
+        <member name="M:Furion.Validation.PropertyValidator`2.PhoneNumber">
             <summary>
-            添加以特定字符串结尾的验证器
+            添加手机号验证器
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.PostalCode">
+            <summary>
+            添加邮政编码验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Predicate(System.Func{`0,System.Boolean})">
+            <summary>
+            添加自定义委托验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.StartsWith(System.String)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Single">
             <summary>
-            添加以特定字符串开头的验证器
+            添加单项验证器
             </summary>
-            <param name="value">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.StartsWith(System.Char)">
             <summary>
-            添加以特定字符串开头的验证器
+            添加以特定字符/字符串开头的验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.StartsWith(System.String,System.StringComparison)">
+        <member name="M:Furion.Validation.PropertyValidator`2.StartsWith(System.String)">
             <summary>
-            添加以特定字符串开头的验证器
+            添加以特定字符/字符串开头的验证器
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <param name="searchValue">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.StartsWith(System.Char,System.StringComparison)">
             <summary>
-            添加以特定字符串开头的验证器
+            添加以特定字符/字符串开头的验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.StringContains(System.String)">
+        <member name="M:Furion.Validation.PropertyValidator`2.StartsWith(System.String,System.StringComparison)">
             <summary>
-            添加包含特定字符串的验证器
+            添加以特定字符/字符串开头的验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.StringContains(System.Char)">
             <summary>
-            添加包含特定字符串的验证器
+            添加包含特定字符/字符串的验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.StringContains(System.String,System.StringComparison)">
+        <member name="M:Furion.Validation.PropertyValidator`2.StringContains(System.String)">
             <summary>
-            添加包含特定字符串的验证器
+            添加包含特定字符/字符串的验证器
             </summary>
-            <param name="value">检索的值</param>
-            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <param name="searchValue">检索的值</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.StringContains(System.Char,System.StringComparison)">
             <summary>
-            添加包含特定字符串的验证器
+            添加包含特定字符/字符串的验证器
             </summary>
-            <param name="value">检索的值</param>
+            <param name="searchValue">检索的值</param>
             <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.StringContains(System.String,System.StringComparison)">
+            <summary>
+            添加包含特定字符/字符串的验证器
+            </summary>
+            <param name="searchValue">检索的值</param>
+            <param name="comparison"><see cref="T:System.StringComparison"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.StrongPassword">
+            <summary>
+            添加强类型密码验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Telephone">
+            <summary>
+            添加座机（电话）验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.UserName">
+            <summary>
+            添加用户名验证器
+            </summary>
+            <remarks>
+            长度 4-16 位，仅支持字母，数字，下划线，减号组合
+            </remarks>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.NotNull">
+            <summary>
+            添加必填验证器
+            </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.NotNull(System.Boolean)">
+            <summary>
+            添加必填验证器
+            </summary>
+            <param name="allowEmptyStrings">是否允许空字符串</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.MaxLength(System.Int32)">
@@ -582,212 +866,33 @@
             </summary>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.UserName">
-            <summary>
-            添加用户名验证器
-            </summary>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Password">
-            <summary>
-            添加密码验证器
-            </summary>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.StrongPassword">
-            <summary>
-            添加强密码验证器
-            </summary>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Int32)">
-            <summary>
-            添加大于等于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Double)">
-            <summary>
-            添加大于等于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThanOrEqualTo(System.Func{`0,System.Object})">
-            <summary>
-            添加大于等于验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Int32)">
-            <summary>
-            添加大于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Double)">
-            <summary>
-            添加大于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GreaterThan(System.Func{`0,System.Object})">
-            <summary>
-            添加大于验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Int32)">
-            <summary>
-            添加大于等于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Double)">
-            <summary>
-            添加大于等于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.LessThanOrEqualTo(System.Func{`0,System.Object})">
-            <summary>
-            添加大于等于验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Int32)">
-            <summary>
-            添加大于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Double)">
-            <summary>
-            添加大于验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.LessThan(System.Func{`0,System.Object})">
-            <summary>
-            添加大于验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.NotEqual(System.Object)">
-            <summary>
-            添加不相等验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.NotEqual(System.Func{`0,System.Object})">
-            <summary>
-            添加不相等验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Equal(System.Object)">
-            <summary>
-            添加相等验证器
-            </summary>
-            <param name="value">比较的值</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Equal(System.Func{`0,System.Object})">
-            <summary>
-            添加相等验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Predicate(System.Func{`0,System.Boolean})">
-            <summary>
-            添加委托对象验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Composite(Furion.Validation.ValidatorBase[])">
-            <summary>
-            添加组合验证器
-            </summary>
-            <param name="validators">验证器集合</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
-            <summary>
-            添加组合验证器
-            </summary>
-            <param name="validators">验证器集合</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.AddAttributes(System.ComponentModel.DataAnnotations.ValidationAttribute[])">
-            <summary>
-            添加注解（特性）验证器
-            </summary>
-            <param name="validationAttributes">验证特性集合</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.AddAttributes(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">
-            <summary>
-            添加注解（特性）验证器
-            </summary>
-            <param name="validationAttributes">验证特性集合</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.AddValidator(Furion.Validation.ValidatorBase)">
-            <summary>
-            添加验证器
-            </summary>
-            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.AddValidators(Furion.Validation.ValidatorBase[])">
-            <summary>
-            添加验证器
-            </summary>
-            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.AddValidators(System.Collections.Generic.IEnumerable{Furion.Validation.ValidatorBase})">
-            <summary>
-            添加验证器
-            </summary>
-            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Custom(System.Func{`0,System.Boolean},System.String)">
-            <summary>
-            添加自定义验证器
-            </summary>
-            <param name="predicate">委托对象</param>
-            <param name="defaultErrorMessage">默认错误消息</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.ObjectAnnotation">
-            <summary>
-            添加对象注解（特性）验证器
-            </summary>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
         <member name="M:Furion.Validation.PropertyValidator`2.SetValidator(Furion.Validation.IObjectValidator{`1})">
             <summary>
-            设置类型验证器
+            设置对象验证器
             </summary>
             <param name="objectValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
-            <returns></returns>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Add(Furion.Validation.ValidatorBase)">
+            <summary>
+            添加验证器
+            </summary>
+            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.Custom(System.Func{`0,System.Boolean})">
+            <summary>
+            添加自定义委托验证器
+            </summary>
+            <param name="predicate">自定义委托</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.AddAttribute(System.ComponentModel.DataAnnotations.ValidationAttribute)">
+            <summary>
+            添加注解（特性）验证器
+            </summary>
+            <param name="validationAttribute">验证特性</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="T:Furion.Component.FluentValidationComponent">
             <summary>

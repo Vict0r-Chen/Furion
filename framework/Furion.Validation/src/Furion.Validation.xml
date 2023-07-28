@@ -88,7 +88,7 @@
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.ComparableAttribute`1"/>
             </summary>
             <param name="compareValueAccessor">比较的值访问器</param>
-            <param name="errorMessageAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
         </member>
         <member name="P:System.ComponentModel.DataAnnotations.ComparableAttribute`1.CompareValue">
             <summary>
@@ -1545,7 +1545,7 @@
             <inheritdoc cref="T:Furion.Validation.ComparableValidator"/>
             </summary>
             <param name="compareValueAccessor">比较的值访问器</param>
-            <param name="errorMessageAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
         </member>
         <member name="P:Furion.Validation.ComparableValidator.CompareValue">
             <summary>
@@ -2205,14 +2205,14 @@
         </member>
         <member name="F:Furion.Validation.PropertyAnnotationValidator`2._propertyExpression">
             <summary>
-            属性表达式
+            属性选择器
             </summary>
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`2"/>
             </summary>
-            <param name="propertyExpression">属性表达式</param>
+            <param name="propertyExpression">属性选择器</param>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`2.PropertyExpression">
             <inheritdoc cref="P:Furion.Validation.PropertyAnnotationValidator`1.PropertyExpression"/>
@@ -2221,7 +2221,7 @@
             <summary>
             转换表达式
             </summary>
-            <param name="propertyExpression">属性表达式</param>
+            <param name="propertyExpression">属性选择器</param>
             <returns><see cref="T:System.Linq.Expressions.Expression`1"/></returns>
         </member>
         <member name="T:Furion.Validation.PropertyAnnotationValidator`1">
@@ -2234,16 +2234,21 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`1"/>
             </summary>
-            <param name="propertyExpression">属性表达式</param>
+            <param name="propertyExpression">属性选择器</param>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.PropertyExpression">
             <summary>
-            属性表达式
+            属性选择器
             </summary>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.PropertyName">
             <summary>
             属性名称
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.PropertyAnnotationValidator`1.Getter">
+            <summary>
+            属性值访问器
             </summary>
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.IsValid(`0)">
@@ -2263,6 +2268,14 @@
             <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetPropertyValue(`0,System.String)">
+            <summary>
+            获取属性值
+            </summary>
+            <param name="propertyName">属性名称</param>
+            <param name="instance"><typeparamref name="T"/></param>
+            <returns><see cref="T:System.Object"/></returns>
         </member>
         <member name="T:Furion.Validation.SingleValidator">
             <summary>
@@ -2519,7 +2532,7 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.ValidatorBase"/>
             </summary>
-            <param name="errorMessageAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
         </member>
         <member name="P:Furion.Validation.ValidatorBase.ErrorMessageString">
             <summary>

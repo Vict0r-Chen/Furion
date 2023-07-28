@@ -23,14 +23,14 @@ public class PropertyAnnotationValidator<T, TProperty> : PropertyAnnotationValid
     where T : class
 {
     /// <summary>
-    /// 属性表达式
+    /// 属性选择器
     /// </summary>
     internal Expression<Func<T, TProperty?>> _propertyExpression;
 
     /// <summary>
     /// <inheritdoc cref="PropertyAnnotationValidator{T, TProperty}"/>
     /// </summary>
-    /// <param name="propertyExpression">属性表达式</param>
+    /// <param name="propertyExpression">属性选择器</param>
     public PropertyAnnotationValidator(Expression<Func<T, TProperty?>> propertyExpression)
         : base(Convert(propertyExpression))
     {
@@ -55,14 +55,14 @@ public class PropertyAnnotationValidator<T, TProperty> : PropertyAnnotationValid
     /// <summary>
     /// 转换表达式
     /// </summary>
-    /// <param name="propertyExpression">属性表达式</param>
+    /// <param name="propertyExpression">属性选择器</param>
     /// <returns><see cref="Expression{TDelegate}"/></returns>
     internal static Expression<Func<T, object?>> Convert(Expression<Func<T, TProperty?>> propertyExpression)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyExpression);
 
-        // 创建新的表达式
+        // 创建 Expression<Func<T, object?>> 表达式
         return Expression.Lambda<Func<T, object?>>(Expression.Convert(propertyExpression.Body, typeof(object))
             , propertyExpression.Parameters[0]);
     }
@@ -78,7 +78,7 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <summary>
     /// <inheritdoc cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
-    /// <param name="propertyExpression">属性表达式</param>
+    /// <param name="propertyExpression">属性选择器</param>
     public PropertyAnnotationValidator(Expression<Func<T, object?>> propertyExpression)
         : base()
     {
@@ -89,7 +89,7 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     }
 
     /// <summary>
-    /// 属性表达式
+    /// 属性选择器
     /// </summary>
     public Expression<Func<T, object?>> PropertyExpression { get; set; }
 
@@ -107,6 +107,11 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
             return PropertyExpression.GetPropertyName();
         }
     }
+
+    /// <summary>
+    /// 属性值访问器
+    /// </summary>
+    internal Func<T, object?>? Getter { get; private set; }
 
     /// <inheritdoc />
     public override bool IsValid(T value)
@@ -153,19 +158,6 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         // 获取属性名称
         var propertyName = PropertyName;
 
-        // 查找类型对应的属性
-        var instanceType = instance.GetType();
-        var propertyInfo = instanceType.GetProperty(propertyName);
-
-        // 空检查
-        ArgumentNullException.ThrowIfNull(propertyInfo);
-
-        // 检查属性是否可读
-        if (!propertyInfo.CanRead)
-        {
-            throw new InvalidOperationException($"The property `{propertyName}` in type `{instanceType}` is not readable.");
-        }
-
         // 初始化验证上下文
         var validationContext = new ValidationContext(instance)
         {
@@ -174,6 +166,35 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         validationResults = new();
 
         // 调用 Validator.TryValidateProperty 静态方法验证
-        return Validator.TryValidateProperty(propertyInfo.GetValue(instance), validationContext, validationResults);
+        return Validator.TryValidateProperty(GetPropertyValue(instance, propertyName), validationContext, validationResults);
+    }
+
+    /// <summary>
+    /// 获取属性值
+    /// </summary>
+    /// <param name="propertyName">属性名称</param>
+    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <returns><see cref="object"/></returns>
+    internal object? GetPropertyValue(T instance, string propertyName)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance);
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
+
+        // 空检查
+        if (Getter is null)
+        {
+            // 创建 t 表达式
+            var paramExpression = Expression.Parameter(typeof(T));
+
+            // 创建 t.Property 表达式
+            var lambdaExpression = Expression.Lambda(Expression.Property(paramExpression, propertyName)
+                , paramExpression);
+
+            // 创建 t => t.Property 表达式
+            Getter = (Func<T, object?>)lambdaExpression.Compile();
+        }
+
+        return Getter(instance);
     }
 }

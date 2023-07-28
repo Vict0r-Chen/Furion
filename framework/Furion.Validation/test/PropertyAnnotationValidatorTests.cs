@@ -38,6 +38,7 @@ public class PropertyAnnotationValidatorTests
         Assert.NotNull(validator);
         Assert.NotNull(validator.PropertyExpression);
         Assert.Equal("Name", validator.PropertyName);
+        Assert.Null(validator.Getter);
         Assert.Null(validator.ErrorMessage);
         Assert.NotNull(validator._errorMessageResourceAccessor);
         Assert.Equal("The field {0} is invalid.", validator._errorMessageResourceAccessor());
@@ -217,5 +218,45 @@ public class PropertyAnnotationValidatorTests
         Assert.Single(validationResults2);
         Assert.Equal("Name", validationResults2.ElementAt(0).MemberNames.First());
         Assert.Equal("The Name field is required.", validationResults2.ElementAt(0).ErrorMessage);
+    }
+
+    [Fact]
+    public void GetPropertyValue_Invalid_Parameters()
+    {
+        var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.GetPropertyValue(null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validator.GetPropertyValue(new PropertyModel(), string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validator.GetPropertyValue(new PropertyModel(), "");
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validator.GetPropertyValue(new PropertyModel(), "Unknown");
+        });
+    }
+
+    [Fact]
+    public void GetPropertyValue_ReturnOK()
+    {
+        var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
+
+        var result = validator.GetPropertyValue(new PropertyModel
+        {
+            Name = "Furion"
+        }, "Name");
+
+        Assert.NotNull(validator.Getter);
+        Assert.Equal("Furion", result);
     }
 }
