@@ -14,15 +14,15 @@
 
 namespace Furion.Validation.Tests;
 
-public class ValidatorRelationshipTests
+public class ValidatorCascadeModeTests
 {
     [Fact]
     public void Definition()
     {
-        var names = Enum.GetNames(typeof(ValidatorRelationship));
+        var names = Enum.GetNames(typeof(ValidatorCascadeMode));
         Assert.Equal(2, names.Length);
 
-        var strings = new[] { nameof(ValidatorRelationship.And), nameof(ValidatorRelationship.Or) };
+        var strings = new[] { nameof(ValidatorCascadeMode.Continue), nameof(ValidatorCascadeMode.UsingFirstSuccess) };
         Assert.True(strings.SequenceEqual(names));
     }
 }

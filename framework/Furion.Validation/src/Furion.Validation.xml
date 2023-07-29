@@ -1001,19 +1001,19 @@
         <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_ascii_7B0400800100004000000000">
             <summary>Supports searching for characters in or not in " !#$%&amp;*?@^".</summary>
         </member>
-        <member name="T:Furion.Validation.ValidatorRelationship">
+        <member name="T:Furion.Validation.ValidatorCascadeMode">
             <summary>
-            验证器关系
+            验证器级联模式
             </summary>
         </member>
-        <member name="F:Furion.Validation.ValidatorRelationship.And">
+        <member name="F:Furion.Validation.ValidatorCascadeMode.Continue">
             <summary>
-            并且
+            验证所有
             </summary>
         </member>
-        <member name="F:Furion.Validation.ValidatorRelationship.Or">
+        <member name="F:Furion.Validation.ValidatorCascadeMode.UsingFirstSuccess">
             <summary>
-            或者
+            首个验证成功则视为通过
             </summary>
         </member>
         <member name="T:Furion.Validation.AggregateValidationException">
@@ -1588,8 +1588,8 @@
             验证器集合
             </summary>
         </member>
-        <member name="P:Furion.Validation.CompositeValidator.Relationship">
-            <inheritdoc cref="T:Furion.Validation.ValidatorRelationship" />
+        <member name="P:Furion.Validation.CompositeValidator.CascadeMode">
+            <inheritdoc cref="T:Furion.Validation.ValidatorCascadeMode" />
         </member>
         <member name="M:Furion.Validation.CompositeValidator.IsValid(System.Object)">
             <inheritdoc />

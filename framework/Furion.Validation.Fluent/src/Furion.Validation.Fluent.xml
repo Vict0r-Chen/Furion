@@ -135,6 +135,13 @@
             <param name="ruleSet">规则集</param>
             <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
         </member>
+        <member name="M:Furion.Validation.IObjectValidator`1.IsInRuleSet(System.String)">
+            <summary>
+            检查规则集
+            </summary>
+            <param name="ruleSet">规则集</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="T:Furion.Validation.IObjectValidator">
             <summary>
             验证器服务
@@ -260,6 +267,9 @@
         <member name="M:Furion.Validation.AbstractValidator`1.Validate(`0,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.IsInRuleSet(System.String)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Validation.ObjectValidator`1">
             <summary>
             对象验证器
@@ -338,6 +348,9 @@
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Validate(`0,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.ObjectValidator`1.IsInRuleSet(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PropertyValidator`2">
@@ -529,6 +542,9 @@
         <member name="M:Furion.Validation.PropertyValidator`2.Validate(`0,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.IsInRuleSet(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`2.GetPropertyValue(`0)">
             <summary>
             获取属性值
@@ -605,20 +621,20 @@
             <param name="validators">验证器集合</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Composite(Furion.Validation.ValidatorBase[],Furion.Validation.ValidatorRelationship)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(Furion.Validation.ValidatorBase[],Furion.Validation.ValidatorCascadeMode)">
             <summary>
             添加组合验证器
             </summary>
             <param name="validators">验证器集合</param>
-            <param name="relationship"><see cref="T:Furion.Validation.ValidatorRelationship"/></param>
+            <param name="cascadeMode"><see cref="T:Furion.Validation.ValidatorCascadeMode"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorRelationship)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorCascadeMode)">
             <summary>
             添加组合验证器
             </summary>
             <param name="validators">验证器集合</param>
-            <param name="relationship"><see cref="T:Furion.Validation.ValidatorRelationship"/></param>
+            <param name="cascadeMode"><see cref="T:Furion.Validation.ValidatorCascadeMode"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.Domain">

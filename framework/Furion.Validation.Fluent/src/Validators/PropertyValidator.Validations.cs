@@ -121,13 +121,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// 添加组合验证器
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <param name="relationship"><see cref="ValidatorRelationship"/></param>
+    /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Composite(ValidatorBase[] validators, ValidatorRelationship relationship)
+    public PropertyValidator<T, TProperty> Composite(ValidatorBase[] validators, ValidatorCascadeMode cascadeMode)
     {
         Validators.Add(new CompositeValidator(validators)
         {
-            Relationship = relationship
+            CascadeMode = cascadeMode
         });
 
         return this;
@@ -137,13 +137,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// 添加组合验证器
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    /// <param name="relationship"><see cref="ValidatorRelationship"/></param>
+    /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Composite(IList<ValidatorBase> validators, ValidatorRelationship relationship)
+    public PropertyValidator<T, TProperty> Composite(IList<ValidatorBase> validators, ValidatorCascadeMode cascadeMode)
     {
         Validators.Add(new CompositeValidator(validators)
         {
-            Relationship = relationship
+            CascadeMode = cascadeMode
         });
 
         return this;

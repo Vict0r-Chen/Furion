@@ -68,6 +68,13 @@ public interface IObjectValidator<T> : IObjectValidator
     /// <param name="ruleSet">规则集</param>
     /// <exception cref="AggregateValidationException"></exception>
     void Validate(T instance, string? ruleSet = null);
+
+    /// <summary>
+    /// 检查规则集
+    /// </summary>
+    /// <param name="ruleSet">规则集</param>
+    /// <returns><see cref="bool"/></returns>
+    bool IsInRuleSet(string? ruleSet = null);
 }
 
 /// <summary>

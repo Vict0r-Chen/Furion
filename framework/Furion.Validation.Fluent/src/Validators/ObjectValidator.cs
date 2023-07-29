@@ -171,7 +171,8 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 检查是否启用注解（特性）验证，同时调用属性验证器集合进行验证
         return (SuppressAnnotationValidation || _annotationValidator.IsValid(instance))
-            && _propertyValidators.All(validator => validator.IsValid(instance, ruleSet));
+            && _propertyValidators.Where(v => v.IsInRuleSet(ruleSet))
+                .All(validator => validator.IsValid(instance, ruleSet));
     }
 
     /// <inheritdoc />
@@ -198,6 +199,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 获取属性验证器集合所有验证结果
         validationResults.AddRange(_propertyValidators
+            .Where(v => v.IsInRuleSet(ruleSet))
             .SelectMany(validator => validator.GetValidationResults(instance, ruleSet) ?? Enumerable.Empty<ValidationResult>()));
 
         return validationResults.Count == 0 ? null : validationResults;
@@ -224,5 +226,11 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
+    }
+
+    /// <inheritdoc />
+    public bool IsInRuleSet(string? ruleSet = null)
+    {
+        return true;
     }
 }

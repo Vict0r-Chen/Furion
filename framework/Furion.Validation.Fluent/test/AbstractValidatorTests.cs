@@ -167,4 +167,13 @@ public class AbstractValidatorTests
         Assert.NotNull(exception.InnerExceptions);
         Assert.Equal(2, exception.InnerExceptions.Count);
     }
+
+    [Fact]
+    public void IsInRuleSet_ReturnOK()
+    {
+        var validator = new TestModelValidator();
+
+        Assert.True(validator.IsInRuleSet());
+        Assert.True(validator.IsInRuleSet("any"));
+    }
 }

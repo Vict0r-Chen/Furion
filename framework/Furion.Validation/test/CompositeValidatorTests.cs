@@ -42,7 +42,7 @@ public class CompositeValidatorTests
         var validator = new CompositeValidator();
 
         Assert.NotNull(validator);
-        Assert.Equal(ValidatorRelationship.And, validator.Relationship);
+        Assert.Equal(ValidatorCascadeMode.Continue, validator.CascadeMode);
         Assert.NotNull(validator.Validators);
         Assert.Empty(validator.Validators);
         Assert.Null(validator.ErrorMessage);
@@ -70,7 +70,7 @@ public class CompositeValidatorTests
         Assert.True(validator.IsValid(null));
         Assert.True(validator.IsValid(string.Empty));
 
-        validator.Relationship = ValidatorRelationship.Or;
+        validator.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
         Assert.True(validator.IsValid(null));
         Assert.True(validator.IsValid(string.Empty));
     }
@@ -84,7 +84,7 @@ public class CompositeValidatorTests
         Assert.False(validator.IsValid("赢"));
         Assert.True(validator.IsValid("赢家"));
 
-        validator.Relationship = ValidatorRelationship.Or;
+        validator.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
         Assert.True(validator.IsValid(null));
         Assert.False(validator.IsValid(string.Empty));
         Assert.True(validator.IsValid("赢"));
@@ -111,7 +111,7 @@ public class CompositeValidatorTests
         Assert.Null(validator.GetValidationResults(null, "data"));
         Assert.Null(validator.GetValidationResults(string.Empty, "data"));
 
-        validator.Relationship = ValidatorRelationship.Or;
+        validator.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
         Assert.Null(validator.GetValidationResults(null, "data"));
         Assert.Null(validator.GetValidationResults(string.Empty, "data"));
     }
@@ -132,7 +132,7 @@ public class CompositeValidatorTests
         Assert.Equal("The field data is not a valid Chinese name.", validationResultsOfFailure.First().ErrorMessage);
 
         // Or =====
-        validator.Relationship = ValidatorRelationship.Or;
+        validator.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
         var validationResultsOfSucceedForOr = validator.GetValidationResults("赢", "data");
         Assert.Null(validationResultsOfSucceedForOr);
 

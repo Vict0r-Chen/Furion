@@ -210,7 +210,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 规则集
     /// </summary>
-    public string[]? RuleSet { get; init; }
+    public string[]? RuleSet { get; internal set; }
 
     /// <summary>
     /// 属性别名
@@ -328,10 +328,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         ArgumentNullException.ThrowIfNull(instance);
 
         // 检查规则集
-        if (RuleSet is not null
-            && ruleSet is not null
-            && ruleSet != "*"   // 如果设置为 * 则检查所有规则集
-            && !ruleSet.Contains(ruleSet))
+        if (!IsInRuleSet(ruleSet))
         {
             return false;
         }
@@ -450,6 +447,30 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 抛出组合验证异常
         throw new AggregateValidationException(validationExceptions);
+    }
+
+    /// <inheritdoc />
+    public bool IsInRuleSet(string? ruleSet = null)
+    {
+        // 如果未设置规则集且传入的规则集为 null 则通过
+        if (ruleSet is null && RuleSet is null)
+        {
+            return true;
+        }
+
+        // 如果设置规则集为 * 则通过
+        if (ruleSet == "*")
+        {
+            return true;
+        }
+
+        // 如果设置了规则集且传入的规则集在其中则通过
+        if (RuleSet is not null && RuleSet.Contains(ruleSet))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>

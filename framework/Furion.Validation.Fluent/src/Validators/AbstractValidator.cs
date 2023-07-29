@@ -127,4 +127,10 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     {
         _objectValidator.Validate(instance, ruleSet);
     }
+
+    /// <inheritdoc />
+    public bool IsInRuleSet(string? ruleSet = null)
+    {
+        return _objectValidator.IsInRuleSet(ruleSet);
+    }
 }

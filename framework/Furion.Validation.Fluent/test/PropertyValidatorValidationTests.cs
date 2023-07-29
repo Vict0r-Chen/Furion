@@ -124,33 +124,33 @@ public class PropertyValidatorValidationTests
     }
 
     [Fact]
-    public void Composite_WithValidatorRelationship_ReturnOK()
+    public void Composite_WithValidatorCascadeMode_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
-        propertyValidator.Composite(new[] { new AgeValidator() }, ValidatorRelationship.Or);
+        propertyValidator.Composite(new[] { new AgeValidator() }, ValidatorCascadeMode.UsingFirstSuccess);
 
         Assert.Single(propertyValidator.Validators);
 
         var validator = propertyValidator.Validators.ElementAt(0) as CompositeValidator;
         Assert.NotNull(validator);
         Assert.Single(validator.Validators);
-        Assert.Equal(ValidatorRelationship.Or, validator.Relationship);
+        Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, validator.CascadeMode);
     }
 
     [Fact]
-    public void Composite_IListParameters_WithValidatorRelationship_ReturnOK()
+    public void Composite_IListParameters_WithValidatorCascadeMode_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
-        propertyValidator.Composite(new List<ValidatorBase> { new AgeValidator() }, ValidatorRelationship.Or);
+        propertyValidator.Composite(new List<ValidatorBase> { new AgeValidator() }, ValidatorCascadeMode.UsingFirstSuccess);
 
         Assert.Single(propertyValidator.Validators);
 
         var validator = propertyValidator.Validators.ElementAt(0) as CompositeValidator;
         Assert.NotNull(validator);
         Assert.Single(validator.Validators);
-        Assert.Equal(ValidatorRelationship.Or, validator.Relationship);
+        Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, validator.CascadeMode);
     }
 
     [Fact]

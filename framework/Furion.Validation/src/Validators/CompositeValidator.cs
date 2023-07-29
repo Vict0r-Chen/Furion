@@ -46,8 +46,8 @@ public class CompositeValidator : ValidatorBase
     /// </summary>
     public IList<ValidatorBase> Validators { get; init; }
 
-    /// <inheritdoc cref="ValidatorRelationship" />
-    public ValidatorRelationship Relationship { get; set; }
+    /// <inheritdoc cref="ValidatorCascadeMode" />
+    public ValidatorCascadeMode CascadeMode { get; set; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -61,10 +61,10 @@ public class CompositeValidator : ValidatorBase
             return true;
         }
 
-        return Relationship switch
+        return CascadeMode switch
         {
-            ValidatorRelationship.And => Validators.All(validator => validator.IsValid(value)),
-            ValidatorRelationship.Or => Validators.Any(validator => validator.IsValid(value)),
+            ValidatorCascadeMode.Continue => Validators.All(validator => validator.IsValid(value)),
+            ValidatorCascadeMode.UsingFirstSuccess => Validators.Any(validator => validator.IsValid(value)),
             _ => false,
         };
     }

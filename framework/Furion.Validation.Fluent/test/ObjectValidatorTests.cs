@@ -241,6 +241,35 @@ public class ObjectValidatorTests
     }
 
     [Fact]
+    public void IsValid_WithRuleSet_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+
+        validator.Property(u => u.Id).GreaterThan(1);
+        validator.Property(u => u.Id, "one").GreaterThan(2);
+        validator.Property(u => u.Id, "two").GreaterThan(3);
+
+        var instance = new ObjectModel
+        {
+            Id = 2
+        };
+
+        Assert.True(validator.IsValid(instance));
+        Assert.False(validator.IsValid(instance, "one"));
+
+        instance.Id = 3;
+        Assert.True(validator.IsValid(instance, "one"));
+
+        Assert.False(validator.IsValid(instance, "two"));
+
+        instance.Id = 4;
+        Assert.True(validator.IsValid(instance, "two"));
+
+        instance.Id = 1;
+        Assert.False(validator.IsValid(instance, "*"));
+    }
+
+    [Fact]
     public void GetValidationResults_Invalid_Parameters()
     {
         var validator = new ObjectValidator<ObjectModel>();
@@ -314,6 +343,42 @@ public class ObjectValidatorTests
             , "The field Name must be a string or array type with a minimum length of '10'."
             ,"The field Name must be equal to 'furion'."};
         Assert.Equal(errorMessages, validationResults.Select(u => u.ErrorMessage).ToArray());
+    }
+
+    [Fact]
+    public void GetValidationResults_WithRuleSet_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+
+        validator.Property(u => u.Id).GreaterThan(1);
+        validator.Property(u => u.Id, "one").GreaterThan(2);
+        validator.Property(u => u.Id, "two").GreaterThan(3);
+
+        var instance = new ObjectModel
+        {
+            Id = 2
+        };
+
+        Assert.Null(validator.GetValidationResults(instance));
+
+        var validationResult = validator.GetValidationResults(instance, "one");
+        Assert.NotNull(validationResult);
+        Assert.Single(validationResult);
+
+        instance.Id = 3;
+        Assert.Null(validator.GetValidationResults(instance, "one"));
+
+        var validationResult2 = validator.GetValidationResults(instance, "two");
+        Assert.NotNull(validationResult2);
+        Assert.Single(validationResult2);
+
+        instance.Id = 4;
+        Assert.Null(validator.GetValidationResults(instance, "two"));
+
+        instance.Id = 1;
+        var validationResult3 = validator.GetValidationResults(instance, "*");
+        Assert.NotNull(validationResult3);
+        Assert.Equal(3, validationResult3.Count);
     }
 
     [Fact]
@@ -397,5 +462,59 @@ public class ObjectValidatorTests
             , "The field Name must be a string or array type with a minimum length of '10'."
             ,"The field Name must be equal to 'furion'."};
         Assert.Equal(errorMessages, exception.InnerExceptions.Select(u => u.Message).ToArray());
+    }
+
+    [Fact]
+    public void Validate_WithRuleSet_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+
+        validator.Property(u => u.Id).GreaterThan(1);
+        validator.Property(u => u.Id, "one").GreaterThan(2);
+        validator.Property(u => u.Id, "two").GreaterThan(3);
+
+        var instance = new ObjectModel
+        {
+            Id = 2
+        };
+
+        validator.Validate(instance);
+
+        var exception = Assert.Throws<AggregateValidationException>(() =>
+        {
+            validator.Validate(instance, "one");
+        });
+        Assert.NotNull(exception.InnerExceptions);
+        Assert.Single(exception.InnerExceptions);
+
+        instance.Id = 3;
+        validator.Validate(instance, "one");
+
+        var exception2 = Assert.Throws<AggregateValidationException>(() =>
+        {
+            validator.Validate(instance, "two");
+        });
+        Assert.NotNull(exception2.InnerExceptions);
+        Assert.Single(exception2.InnerExceptions);
+
+        instance.Id = 4;
+        validator.Validate(instance, "two");
+
+        instance.Id = 1;
+        var exception3 = Assert.Throws<AggregateValidationException>(() =>
+        {
+            validator.Validate(instance, "*");
+        });
+        Assert.NotNull(exception3.InnerExceptions);
+        Assert.Equal(3, exception3.InnerExceptions.Count);
+    }
+
+    [Fact]
+    public void IsInRuleSet_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+
+        Assert.True(validator.IsInRuleSet());
+        Assert.True(validator.IsInRuleSet("any"));
     }
 }

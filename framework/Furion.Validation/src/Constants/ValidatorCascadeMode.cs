@@ -15,17 +15,17 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 验证器关系
+/// 验证器级联模式
 /// </summary>
-public enum ValidatorRelationship
+public enum ValidatorCascadeMode
 {
     /// <summary>
-    /// 并且
+    /// 验证所有
     /// </summary>
-    And = 0,
+    Continue = 0,
 
     /// <summary>
-    /// 或者
+    /// 首个验证成功则视为通过
     /// </summary>
-    Or
+    UsingFirstSuccess
 }

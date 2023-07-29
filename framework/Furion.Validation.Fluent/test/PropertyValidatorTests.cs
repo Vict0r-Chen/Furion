@@ -688,4 +688,20 @@ public class PropertyValidatorTests
 
         Assert.Equal("其他名称", propertyValidator.GetDisplayName());
     }
+
+    [Fact]
+    public void IsInRuleSet_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        Assert.True(propertyValidator.IsInRuleSet());
+        Assert.False(propertyValidator.IsInRuleSet("furion"));
+        Assert.True(propertyValidator.IsInRuleSet("*"));
+
+        propertyValidator.RuleSet = new[] { "furion" };
+        Assert.False(propertyValidator.IsInRuleSet());
+        Assert.True(propertyValidator.IsInRuleSet("furion"));
+        Assert.True(propertyValidator.IsInRuleSet("*"));
+    }
 }
