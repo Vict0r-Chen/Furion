@@ -1016,6 +1016,11 @@
             首个验证成功则视为通过
             </summary>
         </member>
+        <member name="F:Furion.Validation.ValidatorCascadeMode.StopOnFirstFailure">
+            <summary>
+            首个验证失败则停止验证
+            </summary>
+        </member>
         <member name="T:Furion.Validation.AggregateValidationException">
             <summary>
             组合验证异常

@@ -45,6 +45,7 @@ public class PropertyValidatorTests
         Assert.NotNull(propertyValidator.PropertyName);
         Assert.Equal("Name", propertyValidator.PropertyName);
         Assert.True(propertyValidator.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.Continue, propertyValidator.CascadeMode);
         Assert.Null(propertyValidator.ValidationObjectAccessor);
         Assert.Null(propertyValidator.ConditionExpression);
         Assert.Null(propertyValidator.SubValidator);
@@ -115,6 +116,17 @@ public class PropertyValidatorTests
         propertyValidator.WithDisplayName("Furion");
 
         Assert.Equal("Furion", propertyValidator.DisplayName);
+    }
+
+    [Fact]
+    public void WithCascadeMode_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        propertyValidator.WithCascadeMode(ValidatorCascadeMode.StopOnFirstFailure);
+
+        Assert.Equal(ValidatorCascadeMode.StopOnFirstFailure, propertyValidator.CascadeMode);
     }
 
     [Fact]

@@ -20,9 +20,9 @@ public class ValidatorCascadeModeTests
     public void Definition()
     {
         var names = Enum.GetNames(typeof(ValidatorCascadeMode));
-        Assert.Equal(2, names.Length);
+        Assert.Equal(3, names.Length);
 
-        var strings = new[] { nameof(ValidatorCascadeMode.Continue), nameof(ValidatorCascadeMode.UsingFirstSuccess) };
+        var strings = new[] { nameof(ValidatorCascadeMode.Continue), nameof(ValidatorCascadeMode.UsingFirstSuccess), nameof(ValidatorCascadeMode.StopOnFirstFailure) };
         Assert.True(strings.SequenceEqual(names));
     }
 }

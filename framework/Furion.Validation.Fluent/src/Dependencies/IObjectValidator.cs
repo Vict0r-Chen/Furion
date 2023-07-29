@@ -25,6 +25,9 @@ public interface IObjectValidator<T> : IObjectValidator
     /// </summary>
     bool SuppressAnnotationValidation { get; set; }
 
+    /// <inheritdoc cref="ValidatorCascadeMode" />
+    ValidatorCascadeMode CascadeMode { get; set; }
+
     /// <summary>
     /// 配置执行验证的符合条件表达式
     /// </summary>

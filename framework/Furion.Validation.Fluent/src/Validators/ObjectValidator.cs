@@ -39,6 +39,9 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
+    public ValidatorCascadeMode CascadeMode { get; set; }
+
+    /// <inheritdoc />
     public bool SuppressAnnotationValidation { get; set; } = true;
 
     /// <summary>

@@ -55,6 +55,20 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
         }
     }
 
+    /// <inheritdoc cref="ValidatorCascadeMode" />
+    private ValidatorCascadeMode _cascadeMode;
+
+    /// <inheritdoc />
+    public ValidatorCascadeMode CascadeMode
+    {
+        get => _cascadeMode;
+        set
+        {
+            _cascadeMode = value;
+            _objectValidator.CascadeMode = value;
+        }
+    }
+
     /// <summary>
     /// 添加属性规则验证
     /// </summary>

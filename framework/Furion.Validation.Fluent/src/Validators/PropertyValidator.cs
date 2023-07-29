@@ -192,6 +192,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <inheritdoc />
     public bool SuppressAnnotationValidation { get; set; } = true;
 
+    /// <inheritdoc />
+    public ValidatorCascadeMode CascadeMode { get; set; }
+
     /// <summary>
     /// 验证对象访问器
     /// </summary>
@@ -252,6 +255,18 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         ArgumentException.ThrowIfNullOrWhiteSpace(displayName);
 
         DisplayName = displayName;
+
+        return this;
+    }
+
+    /// <summary>
+    /// 设置验证器级联模式
+    /// </summary>
+    /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> WithCascadeMode(ValidatorCascadeMode cascadeMode)
+    {
+        CascadeMode = cascadeMode;
 
         return this;
     }

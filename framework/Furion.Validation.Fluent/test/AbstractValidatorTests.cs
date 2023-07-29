@@ -25,6 +25,7 @@ public class AbstractValidatorTests
         Assert.NotNull(validator._objectValidator);
         Assert.Null(validator._ruleSet);
         Assert.True(validator.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.Continue, validator.CascadeMode);
         Assert.Equal(2, validator._objectValidator._propertyValidators.Count);
     }
 

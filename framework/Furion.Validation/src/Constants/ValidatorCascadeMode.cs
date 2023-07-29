@@ -27,5 +27,10 @@ public enum ValidatorCascadeMode
     /// <summary>
     /// 首个验证成功则视为通过
     /// </summary>
-    UsingFirstSuccess
+    UsingFirstSuccess,
+
+    /// <summary>
+    /// 首个验证失败则停止验证
+    /// </summary>
+    StopOnFirstFailure
 }

@@ -27,6 +27,7 @@ public class ObjectValidatorTests
         Assert.Empty(validator._propertyValidators);
         Assert.NotNull(validator._annotationValidator);
         Assert.True(validator.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.Continue, validator.CascadeMode);
         Assert.Null(validator.ConditionExpression);
         Assert.Null(validator.Items);
     }
