@@ -337,6 +337,13 @@
             <param name="enable">是否启用</param>
             <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.ObjectValidator`1.WithCascadeMode(Furion.Validation.ValidatorCascadeMode)">
+            <summary>
+            设置验证器级联模式
+            </summary>
+            <param name="cascadeMode"><see cref="T:Furion.Validation.ValidatorCascadeMode"/></param>
+            <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
+        </member>
         <member name="M:Furion.Validation.ObjectValidator`1.When(System.Func{`0,System.Boolean})">
             <inheritdoc />
         </member>

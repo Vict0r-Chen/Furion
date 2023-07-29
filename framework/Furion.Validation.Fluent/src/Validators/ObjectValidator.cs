@@ -106,6 +106,18 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         return this;
     }
 
+    /// <summary>
+    /// 设置验证器级联模式
+    /// </summary>
+    /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
+    /// <returns><see cref="ObjectValidator{T}"/></returns>
+    public ObjectValidator<T> WithCascadeMode(ValidatorCascadeMode cascadeMode)
+    {
+        CascadeMode = cascadeMode;
+
+        return this;
+    }
+
     /// <inheritdoc />
     public IObjectValidator<T> When(Func<T, bool> conditionExpression)
     {

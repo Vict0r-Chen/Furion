@@ -98,6 +98,16 @@ public class ObjectValidatorTests
     }
 
     [Fact]
+    public void WithCascadeMode_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        validator.WithCascadeMode(ValidatorCascadeMode.StopOnFirstFailure);
+
+        Assert.Equal(ValidatorCascadeMode.StopOnFirstFailure, validator.CascadeMode);
+    }
+
+    [Fact]
     public void When_Invalid_Parameters()
     {
         var validator = new ObjectValidator<ObjectModel>();
