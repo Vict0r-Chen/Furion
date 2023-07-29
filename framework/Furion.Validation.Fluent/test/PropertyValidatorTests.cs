@@ -48,6 +48,7 @@ public class PropertyValidatorTests
         Assert.Null(propertyValidator.ValidationObjectAccessor);
         Assert.Null(propertyValidator.ConditionExpression);
         Assert.Null(propertyValidator.SubValidator);
+        Assert.Null(propertyValidator.RuleSet);
     }
 
     [Theory]

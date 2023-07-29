@@ -111,25 +111,28 @@
             </summary>
             <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.IObjectValidator`1.IsValid(`0)">
+        <member name="M:Furion.Validation.IObjectValidator`1.IsValid(`0,System.String)">
             <summary>
             检查对象合法性
             </summary>
             <param name="instance">对象实例</param>
+            <param name="ruleSet">规则集</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.IObjectValidator`1.GetValidationResults(`0)">
+        <member name="M:Furion.Validation.IObjectValidator`1.GetValidationResults(`0,System.String)">
             <summary>
             获取验证结果
             </summary>
             <param name="instance">对象实例</param>
+            <param name="ruleSet">规则集</param>
             <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.IObjectValidator`1.Validate(`0)">
+        <member name="M:Furion.Validation.IObjectValidator`1.Validate(`0,System.String)">
             <summary>
             执行验证
             </summary>
             <param name="instance">对象实例</param>
+            <param name="ruleSet">规则集</param>
             <exception cref="T:Furion.Validation.AggregateValidationException"></exception>
         </member>
         <member name="T:Furion.Validation.IObjectValidator">
@@ -140,6 +143,11 @@
         <member name="T:Furion.Validation.Helpers">
             <summary>
             数据验证模块帮助类
+            </summary>
+        </member>
+        <member name="F:Furion.Validation.Helpers._ruleSetSeparator">
+            <summary>
+            规则集分隔符
             </summary>
         </member>
         <member name="M:Furion.Validation.Helpers.EnsureLegalValidatorType(System.Type)">
@@ -200,6 +208,11 @@
             <see cref="T:Furion.Validation.ObjectValidator`1"/>
             </summary>
         </member>
+        <member name="F:Furion.Validation.AbstractValidator`1._ruleSet">
+            <summary>
+            当前规则集
+            </summary>
+        </member>
         <member name="M:Furion.Validation.AbstractValidator`1.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.Validation.AbstractValidator`1"/>
@@ -213,13 +226,21 @@
         <member name="P:Furion.Validation.AbstractValidator`1.SuppressAnnotationValidation">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.AbstractValidator`1.RuleFor``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+        <member name="M:Furion.Validation.AbstractValidator`1.RuleFor``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String)">
             <summary>
-            初始化属性验证器
+            添加属性规则验证
             </summary>
             <typeparam name="TProperty">属性类型</typeparam>
             <param name="propertyExpression">属性选择器</param>
+            <param name="ruleSet">规则集</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.RuleSet(System.String,System.Action)">
+            <summary>
+            添加属性规则集验证
+            </summary>
+            <param name="ruleSet">规则集</param>
+            <param name="setAction"><see cref="T:System.Action"/></param>
         </member>
         <member name="M:Furion.Validation.AbstractValidator`1.When(System.Func{`0,System.Boolean})">
             <inheritdoc />
@@ -230,13 +251,13 @@
         <member name="M:Furion.Validation.AbstractValidator`1.Reset">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.AbstractValidator`1.IsValid(`0)">
+        <member name="M:Furion.Validation.AbstractValidator`1.IsValid(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.AbstractValidator`1.GetValidationResults(`0)">
+        <member name="M:Furion.Validation.AbstractValidator`1.GetValidationResults(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.AbstractValidator`1.Validate(`0)">
+        <member name="M:Furion.Validation.AbstractValidator`1.Validate(`0,System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.ObjectValidator`1">
@@ -278,12 +299,13 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.Property``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+        <member name="M:Furion.Validation.ObjectValidator`1.Property``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String)">
             <summary>
             初始化属性验证器
             </summary>
             <typeparam name="TProperty">属性类型</typeparam>
             <param name="propertyExpression">属性选择器</param>
+            <param name="ruleSet">规则集</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotationValidation(System.Boolean)">
@@ -309,13 +331,13 @@
             <param name="instance">对象实例</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.IsValid(`0)">
+        <member name="M:Furion.Validation.ObjectValidator`1.IsValid(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.GetValidationResults(`0)">
+        <member name="M:Furion.Validation.ObjectValidator`1.GetValidationResults(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.Validate(`0)">
+        <member name="M:Furion.Validation.ObjectValidator`1.Validate(`0,System.String)">
             <inheritdoc />
         </member>
         <member name="T:Furion.Validation.PropertyValidator`2">
@@ -428,6 +450,11 @@
             子属性验证器
             </summary>
         </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.RuleSet">
+            <summary>
+            规则集
+            </summary>
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`2.WithAnnotationValidation(System.Boolean)">
             <summary>
             启用/禁用注解（特性）验证
@@ -466,20 +493,21 @@
         <member name="M:Furion.Validation.PropertyValidator`2.Reset">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.CanValidate(`0)">
+        <member name="M:Furion.Validation.PropertyValidator`2.CanValidate(`0,System.String)">
             <summary>
             检查是否可以执行验证程序
             </summary>
             <param name="instance">对象实例</param>
+            <param name="ruleSet">规则集</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.IsValid(`0)">
+        <member name="M:Furion.Validation.PropertyValidator`2.IsValid(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.GetValidationResults(`0)">
+        <member name="M:Furion.Validation.PropertyValidator`2.GetValidationResults(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Validate(`0)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Validate(`0,System.String)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.GetPropertyValue(`0)">

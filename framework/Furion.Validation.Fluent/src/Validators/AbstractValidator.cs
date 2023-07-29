@@ -27,6 +27,11 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     internal readonly ObjectValidator<T> _objectValidator;
 
     /// <summary>
+    /// 当前规则集
+    /// </summary>
+    internal string? _ruleSet;
+
+    /// <summary>
     /// <inheritdoc cref="AbstractValidator{T}"/>
     /// </summary>
     protected AbstractValidator()
@@ -51,14 +56,40 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <summary>
-    /// 初始化属性验证器
+    /// 添加属性规则验证
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
     /// <param name="propertyExpression">属性选择器</param>
+    /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertyExpression)
+    public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertyExpression, string? ruleSet = null)
     {
-        return _objectValidator.Property(propertyExpression);
+        return _objectValidator.Property(propertyExpression, _ruleSet ?? ruleSet);
+    }
+
+    /// <summary>
+    /// 添加属性规则集验证
+    /// </summary>
+    /// <param name="ruleSet">规则集</param>
+    /// <param name="setAction"><see cref="Action"/></param>
+    public void RuleSet(string ruleSet, Action setAction)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(ruleSet);
+        ArgumentNullException.ThrowIfNull(setAction);
+
+        // 根据分隔符切割规则集并逐条配置
+        foreach (var ruleSetItem in ruleSet.Split(Helpers._ruleSetSeparator, StringSplitOptions.RemoveEmptyEntries))
+        {
+            // 设置当前规则集
+            _ruleSet = ruleSetItem;
+
+            // 调用设置
+            setAction();
+
+            // 清空规则集
+            _ruleSet = null;
+        }
     }
 
     /// <inheritdoc />
@@ -80,20 +111,20 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public bool IsValid(T instance)
+    public bool IsValid(T instance, string? ruleSet = null)
     {
-        return _objectValidator.IsValid(instance);
+        return _objectValidator.IsValid(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(T instance)
+    public List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null)
     {
-        return _objectValidator.GetValidationResults(instance);
+        return _objectValidator.GetValidationResults(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public void Validate(T instance)
+    public void Validate(T instance, string? ruleSet = null)
     {
-        _objectValidator.Validate(instance);
+        _objectValidator.Validate(instance, ruleSet);
     }
 }

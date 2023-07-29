@@ -72,14 +72,18 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
     /// <param name="propertyExpression">属性选择器</param>
+    /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertyExpression)
+    public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertyExpression, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyExpression);
 
         // 初始化属性验证器
-        var validator = new PropertyValidator<T, TProperty>(this, propertyExpression);
+        var validator = new PropertyValidator<T, TProperty>(this, propertyExpression)
+        {
+            RuleSet = ruleSet?.Split(Helpers._ruleSetSeparator, StringSplitOptions.RemoveEmptyEntries)
+        };
 
         // 将属性验证器添加到集合中
         _propertyValidators.Add(validator);
@@ -154,7 +158,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public bool IsValid(T instance)
+    public bool IsValid(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -167,11 +171,11 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 检查是否启用注解（特性）验证，同时调用属性验证器集合进行验证
         return (SuppressAnnotationValidation || _annotationValidator.IsValid(instance))
-            && _propertyValidators.All(validator => validator.IsValid(instance));
+            && _propertyValidators.All(validator => validator.IsValid(instance, ruleSet));
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(T instance)
+    public List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -194,19 +198,19 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 获取属性验证器集合所有验证结果
         validationResults.AddRange(_propertyValidators
-            .SelectMany(validator => validator.GetValidationResults(instance) ?? Enumerable.Empty<ValidationResult>()));
+            .SelectMany(validator => validator.GetValidationResults(instance, ruleSet) ?? Enumerable.Empty<ValidationResult>()));
 
         return validationResults.Count == 0 ? null : validationResults;
     }
 
     /// <inheritdoc />
-    public void Validate(T instance)
+    public void Validate(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
         // 获取验证结果
-        var validationResults = GetValidationResults(instance);
+        var validationResults = GetValidationResults(instance, ruleSet);
 
         // 空检查
         if (validationResults is null)

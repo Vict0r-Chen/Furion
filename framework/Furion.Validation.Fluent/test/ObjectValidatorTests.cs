@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+#pragma warning disable
+
 namespace Furion.Validation.Fluent.Tests;
 
 public class ObjectValidatorTests
@@ -66,6 +68,21 @@ public class ObjectValidatorTests
         var propertyValidator2 = validator._propertyValidators.First() as PropertyValidator<ObjectModel, string>;
         Assert.NotNull(propertyValidator2);
         Assert.Equal("Name", propertyValidator2.PropertyName);
+    }
+
+    [Fact]
+    public void Property_WithRuleSet_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        var propertyValidator = validator.Property(u => u.Name, "furion");
+
+        Assert.Equal("furion", propertyValidator.RuleSet?.First());
+
+        var propertyValidator2 = validator.Property(u => u.Name, "furion,fur");
+        Assert.Equal(new[] { "furion", "fur" }, propertyValidator2.RuleSet);
+
+        var propertyValidator3 = validator.Property(u => u.Name, "furion;fur");
+        Assert.Equal(new[] { "furion", "fur" }, propertyValidator3.RuleSet);
     }
 
     [Theory]

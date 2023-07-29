@@ -49,22 +49,25 @@ public interface IObjectValidator<T> : IObjectValidator
     /// 检查对象合法性
     /// </summary>
     /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="bool"/></returns>
-    bool IsValid(T instance);
+    bool IsValid(T instance, string? ruleSet = null);
 
     /// <summary>
     /// 获取验证结果
     /// </summary>
     /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="List{T}"/></returns>
-    List<ValidationResult>? GetValidationResults(T instance);
+    List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null);
 
     /// <summary>
     /// 执行验证
     /// </summary>
     /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
     /// <exception cref="AggregateValidationException"></exception>
-    void Validate(T instance);
+    void Validate(T instance, string? ruleSet = null);
 }
 
 /// <summary>

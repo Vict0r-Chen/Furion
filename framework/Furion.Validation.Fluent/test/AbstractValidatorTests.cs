@@ -23,6 +23,7 @@ public class AbstractValidatorTests
 
         Assert.NotNull(validator);
         Assert.NotNull(validator._objectValidator);
+        Assert.Null(validator._ruleSet);
         Assert.True(validator.SuppressAnnotationValidation);
         Assert.Equal(2, validator._objectValidator._propertyValidators.Count);
     }
@@ -34,6 +35,62 @@ public class AbstractValidatorTests
         validator.RuleFor(u => u.Id).Range(10, 100);
 
         Assert.Equal(3, validator._objectValidator._propertyValidators.Count);
+    }
+
+    [Fact]
+    public void RuleFor_WithRuleSet_ReturnOK()
+    {
+        var validator = new TestModelValidator();
+        validator.RuleFor(u => u.Id, "furion").Range(10, 100);
+
+        Assert.Equal(3, validator._objectValidator._propertyValidators.Count);
+
+        var propertyValidator = validator._objectValidator._propertyValidators.Last() as PropertyValidator<TestModel, int>;
+        Assert.NotNull(propertyValidator);
+        Assert.Equal("furion", propertyValidator.RuleSet?.First());
+    }
+
+    [Fact]
+    public void RuleSet_Invalid_Parameters()
+    {
+        var validator = new TestModelValidator();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.RuleSet(null!, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validator.RuleSet(string.Empty, null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validator.RuleSet("", null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.RuleSet("furion", null!);
+        });
+    }
+
+    [Fact]
+    public void RuleSet_ReturnOK()
+    {
+        var validator = new TestModelValidator();
+
+        validator.RuleSet("furion", () =>
+        {
+            validator.RuleFor(u => u.Id).GreaterThan(1);
+        });
+
+        Assert.Null(validator._ruleSet);
+
+        var propertyValidator = validator._objectValidator._propertyValidators.Last() as PropertyValidator<TestModel, int>;
+        Assert.NotNull(propertyValidator);
+        Assert.Equal("furion", propertyValidator.RuleSet?.First());
     }
 
     [Fact]

@@ -20,6 +20,11 @@ namespace Furion.Validation;
 internal static class Helpers
 {
     /// <summary>
+    /// 规则集分隔符
+    /// </summary>
+    internal static readonly char[] _ruleSetSeparator = new[] { ',', ';' };
+
+    /// <summary>
     /// 检查验证器类型合法性
     /// </summary>
     /// <param name="validatorType"><see cref="AbstractValidator{T}"/></param>

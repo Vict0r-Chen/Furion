@@ -198,6 +198,11 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal IObjectValidator<TProperty>? SubValidator { get; private set; }
 
     /// <summary>
+    /// 规则集
+    /// </summary>
+    public string[]? RuleSet { get; internal set; }
+
+    /// <summary>
     /// 启用/禁用注解（特性）验证
     /// </summary>
     /// <param name="enable">是否启用</param>
@@ -285,11 +290,21 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// 检查是否可以执行验证程序
     /// </summary>
     /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool CanValidate(T instance)
+    internal bool CanValidate(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
+
+        // 检查规则集
+        if (RuleSet is not null
+            && ruleSet is not null
+            && ruleSet != "*"   // 如果设置为 * 则检查所有规则集
+            && !ruleSet.Contains(ruleSet))
+        {
+            return false;
+        }
 
         // 检查是否设置了条件表达式
         if (ConditionExpression is null)
@@ -305,13 +320,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public bool IsValid(T instance)
+    public bool IsValid(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
         // 检查是否可以执行验证程序
-        if (!CanValidate(instance))
+        if (!CanValidate(instance, ruleSet))
         {
             return true;
         }
@@ -339,13 +354,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(T instance)
+    public List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
         // 检查是否可以执行验证程序
-        if (!CanValidate(instance))
+        if (!CanValidate(instance, ruleSet))
         {
             return null;
         }
@@ -385,13 +400,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public void Validate(T instance)
+    public void Validate(T instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
         // 获取验证结果
-        var validationResults = GetValidationResults(instance);
+        var validationResults = GetValidationResults(instance, ruleSet);
 
         // 空检查
         if (validationResults is null)
