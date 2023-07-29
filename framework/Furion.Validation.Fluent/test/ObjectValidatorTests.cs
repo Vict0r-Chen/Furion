@@ -16,4 +16,191 @@ namespace Furion.Validation.Fluent.Tests;
 
 public class ObjectValidatorTests
 {
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.NotNull(validator._propertyValidators);
+        Assert.Empty(validator._propertyValidators);
+        Assert.NotNull(validator._annotationValidator);
+        Assert.True(validator.SuppressAnnotationValidation);
+        Assert.Null(validator.ConditionExpression);
+        Assert.Null(validator.Items);
+    }
+
+    [Fact]
+    public void Create_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+        Assert.NotNull(validator);
+
+        var validator2 = ObjectValidator<ObjectModel>.Create(v =>
+        {
+            v.SuppressAnnotationValidation = false;
+        });
+        Assert.NotNull(validator2);
+        Assert.False(validator2.SuppressAnnotationValidation);
+    }
+
+    [Fact]
+    public void Property_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.Property<string>(null!);
+        });
+    }
+
+    [Fact]
+    public void Property_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        var propertyValidator = validator.Property(u => u.Name);
+
+        Assert.NotNull(propertyValidator);
+        Assert.Single(validator._propertyValidators);
+
+        var propertyValidator2 = validator._propertyValidators.First() as PropertyValidator<ObjectModel, string>;
+        Assert.NotNull(propertyValidator2);
+        Assert.Equal("Name", propertyValidator2.PropertyName);
+    }
+
+    [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public void WithAnnotationValidation(bool enable, bool result)
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        validator.WithAnnotationValidation(enable);
+
+        Assert.Equal(result, validator.SuppressAnnotationValidation);
+    }
+
+    [Fact]
+    public void When_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.When(null!);
+        });
+    }
+
+    [Fact]
+    public void When_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        validator.When(u => u.Name != null);
+
+        Assert.NotNull(validator.ConditionExpression);
+    }
+
+    [Fact]
+    public void WhenContext_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.WhenContext(null!);
+        });
+    }
+
+    [Fact]
+    public void WhenContext_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        validator.WhenContext(u => u.ObjectInstance != null);
+
+        Assert.NotNull(validator.ConditionExpression);
+    }
+
+    [Fact]
+    public void Reset_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        validator.Reset();
+
+        Assert.Null(validator.ConditionExpression);
+        Assert.Null(validator.Items);
+    }
+
+    [Fact]
+    public void CanValidate_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.CanValidate(null!);
+        });
+    }
+
+    [Fact]
+    public void CanValidate_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        var instance = new ObjectModel
+        {
+            Name = "Furion"
+        };
+
+        Assert.True(validator.CanValidate(instance));
+
+        validator.When(u => u.Name == "Furion");
+        Assert.True(validator.CanValidate(instance));
+
+        validator.When(u => u.Name != "Furion");
+        Assert.False(validator.CanValidate(instance));
+    }
+
+    [Fact]
+    public void IsValid_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.IsValid(null!);
+        });
+    }
+
+    [Fact]
+    public void IsValid_EmptyValidators_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        var instance = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion"
+        };
+
+        Assert.True(validator.IsValid(instance));
+    }
+
+    [Fact]
+    public void IsValid_WithCondition_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create(v =>
+        {
+            v.When(u => u.Id > 1);
+        });
+
+        validator.Property(u => u.Id).GreaterThan(1);
+        var instance = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion"
+        };
+
+        Assert.True(validator.IsValid(instance));
+
+        validator.Reset();
+
+        Assert.False(validator.IsValid(instance));
+    }
 }

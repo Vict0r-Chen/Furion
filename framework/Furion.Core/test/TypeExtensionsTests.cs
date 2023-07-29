@@ -288,20 +288,20 @@ public class TypeExtensionsTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var setter = typeof(SetterModel).CreatePropertySetter(null!);
+            var setter = typeof(EmitModel).CreatePropertySetter(null!);
         });
     }
 
     [Fact]
     public void CreatePropertySetter_ReturnOK()
     {
-        var property = typeof(SetterModel).GetProperty(nameof(SetterModel.Name), BindingFlags.Instance | BindingFlags.Public);
+        var property = typeof(EmitModel).GetProperty(nameof(EmitModel.Name), BindingFlags.Instance | BindingFlags.Public);
         Assert.NotNull(property);
 
-        var setter = typeof(SetterModel).CreatePropertySetter(property);
+        var setter = typeof(EmitModel).CreatePropertySetter(property);
         Assert.NotNull(setter);
 
-        var model = new SetterModel();
+        var model = new EmitModel();
         setter(model, "Furion");
 
         Assert.Equal("Furion", model.Name);
@@ -312,22 +312,74 @@ public class TypeExtensionsTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var setter = typeof(SetterModel).CreateFieldSetter(null!);
+            var setter = typeof(EmitModel).CreateFieldSetter(null!);
         });
     }
 
     [Fact]
     public void CreateFieldSetter_ReturnOK()
     {
-        var field = typeof(SetterModel).GetField(nameof(SetterModel.id), BindingFlags.Instance | BindingFlags.Public);
+        var field = typeof(EmitModel).GetField(nameof(EmitModel.id), BindingFlags.Instance | BindingFlags.Public);
         Assert.NotNull(field);
 
-        var setter = typeof(SetterModel).CreateFieldSetter(field);
+        var setter = typeof(EmitModel).CreateFieldSetter(field);
         Assert.NotNull(setter);
 
-        var model = new SetterModel();
+        var model = new EmitModel();
         setter(model, 10);
 
         Assert.Equal(10, model.id);
+    }
+
+    [Fact]
+    public void CreatePropertyGetter_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var getter = typeof(EmitModel).CreatePropertyGetter(null!);
+        });
+    }
+
+    [Fact]
+    public void CreatePropertyGetter_ReturnOK()
+    {
+        var property = typeof(EmitModel).GetProperty(nameof(EmitModel.Name), BindingFlags.Instance | BindingFlags.Public);
+        Assert.NotNull(property);
+
+        var getter = typeof(EmitModel).CreatePropertyGetter(property);
+        Assert.NotNull(getter);
+
+        var model = new EmitModel
+        {
+            Name = "Furion"
+        };
+
+        Assert.Equal("Furion", getter(model));
+    }
+
+    [Fact]
+    public void CreateFieldGetter_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var getter = typeof(EmitModel).CreateFieldGetter(null!);
+        });
+    }
+
+    [Fact]
+    public void CreateFieldGetter_ReturnOK()
+    {
+        var field = typeof(EmitModel).GetField(nameof(EmitModel.id), BindingFlags.Instance | BindingFlags.Public);
+        Assert.NotNull(field);
+
+        var getter = typeof(EmitModel).CreateFieldGetter(field);
+        Assert.NotNull(getter);
+
+        var model = new EmitModel
+        {
+            id = 1
+        };
+
+        Assert.Equal(1, getter(model));
     }
 }

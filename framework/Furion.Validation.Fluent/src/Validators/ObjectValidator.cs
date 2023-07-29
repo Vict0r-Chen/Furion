@@ -75,6 +75,9 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> Property<TProperty>(Expression<Func<T, TProperty?>> propertyExpression)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyExpression);
+
         // 初始化属性验证器
         var validator = new PropertyValidator<T, TProperty>(this, propertyExpression);
 
@@ -121,7 +124,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public IObjectValidator<T> Reset()
     {
         ConditionExpression = null;
-        Items?.Clear();
+        Items = null;
 
         return this;
     }

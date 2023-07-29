@@ -217,7 +217,7 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 创建属性设置器
+    /// 创建属性值设置器
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="propertyInfo"><see cref="PropertyInfo"/></param>
@@ -271,7 +271,7 @@ internal static class TypeExtensions
     }
 
     /// <summary>
-    /// 创建字段设置器
+    /// 创建字段值设置器
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <param name="fieldInfo"><see cref="FieldInfo"/></param>
@@ -316,5 +316,97 @@ internal static class TypeExtensions
         ilGenerator.Emit(OpCodes.Ret);
 
         return (Action<object, object?>)setterMethod.CreateDelegate(typeof(Action<object, object>));
+    }
+
+    /// <summary>
+    /// 创建属性值访问器
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="propertyInfo"><see cref="PropertyInfo"/></param>
+    /// <returns><see cref="Func{T1, T2}"/></returns>
+    internal static Func<object, object?> CreatePropertyGetter(this Type type, PropertyInfo propertyInfo)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(propertyInfo);
+        ArgumentNullException.ThrowIfNull(propertyInfo.DeclaringType);
+
+        // 创建一个动态方法来获取属性值
+        var dynamicMethod = new DynamicMethod(
+            $"{type.FullName}_Get_{propertyInfo.Name}",
+            typeof(object),
+            new[] { typeof(object) },
+            typeof(TypeExtensions).Module,
+            true
+        );
+
+        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        var ilGenerator = dynamicMethod.GetILGenerator();
+
+        // 获取属性的 get 方法
+        var getMethod = propertyInfo.GetGetMethod(nonPublic: true);
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(getMethod);
+
+        // 将参数（即 obj）转换为实际的对象类型
+        ilGenerator.Emit(OpCodes.Ldarg_0);
+        ilGenerator.Emit(OpCodes.Castclass, propertyInfo.DeclaringType);
+
+        // 调用属性的 get 方法
+        ilGenerator.EmitCall(OpCodes.Callvirt, getMethod, null);
+
+        // 如果属性类型是值类型，则执行装箱操作
+        if (propertyInfo.PropertyType.IsValueType)
+        {
+            ilGenerator.Emit(OpCodes.Box, propertyInfo.PropertyType);
+        }
+
+        // 返回
+        ilGenerator.Emit(OpCodes.Ret);
+
+        return (Func<object, object?>)dynamicMethod.CreateDelegate(typeof(Func<object, object>));
+    }
+
+    /// <summary>
+    /// 创建字段值访问器
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <param name="fieldInfo"><see cref="FieldInfo"/></param>
+    /// <returns><see cref="Func{T1, T2}"/></returns>
+    internal static Func<object, object?> CreateFieldGetter(this Type type, FieldInfo fieldInfo)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fieldInfo);
+        ArgumentNullException.ThrowIfNull(fieldInfo.DeclaringType);
+
+        // 创建一个动态方法来获取字段值
+        var dynamicMethod = new DynamicMethod(
+            $"{type.FullName}_Get_{fieldInfo.Name}",
+            typeof(object),
+            new[] { typeof(object) },
+            typeof(TypeExtensions).Module,
+            true
+        );
+
+        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        var ilGenerator = dynamicMethod.GetILGenerator();
+
+        // 将第一个参数（即 obj）转换为实际的对象类型
+        ilGenerator.Emit(OpCodes.Ldarg_0);
+        ilGenerator.Emit(OpCodes.Castclass, fieldInfo.DeclaringType);
+
+        // 将第二个参数（即字段的引用）加载到堆栈上
+        ilGenerator.Emit(OpCodes.Ldfld, fieldInfo);
+
+        // 如果字段类型是值类型，则执行装箱操作
+        if (fieldInfo.FieldType.IsValueType)
+        {
+            ilGenerator.Emit(OpCodes.Box, fieldInfo.FieldType);
+        }
+
+        // 返回
+        ilGenerator.Emit(OpCodes.Ret);
+
+        return (Func<object, object?>)dynamicMethod.CreateDelegate(typeof(Func<object, object>));
     }
 }

@@ -250,7 +250,7 @@ public class OverrideDelaryMethodClass : DelaryMethodClass
     public override void Test() => base.Test();
 }
 
-public class SetterModel
+public class EmitModel
 {
     public int id;
     public string? Name { get; set; }

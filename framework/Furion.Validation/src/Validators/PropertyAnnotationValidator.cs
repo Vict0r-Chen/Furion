@@ -111,7 +111,7 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <summary>
     /// 属性值访问器
     /// </summary>
-    internal Func<T, object?>? Getter { get; private set; }
+    internal Func<object, object?>? Getter { get; private set; }
 
     /// <inheritdoc />
     public override bool IsValid(T value)
@@ -184,15 +184,15 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         // 空检查
         if (Getter is null)
         {
-            // 创建 t 表达式
-            var paramExpression = Expression.Parameter(typeof(T));
+            // 获取属性对象
+            var propertyInfo = typeof(T).GetProperty(propertyName
+                , BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-            // 创建 t.Property 表达式
-            var lambdaExpression = Expression.Lambda(Expression.Property(paramExpression, propertyName)
-                , paramExpression);
+            // 空检查
+            ArgumentNullException.ThrowIfNull(propertyInfo);
 
-            // 创建 t => t.Property 表达式
-            Getter = (Func<T, object?>)lambdaExpression.Compile();
+            // 创建属性值访问器
+            Getter = typeof(T).CreatePropertyGetter(propertyInfo);
         }
 
         return Getter(instance);

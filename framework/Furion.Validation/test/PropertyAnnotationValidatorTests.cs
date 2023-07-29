@@ -240,7 +240,7 @@ public class PropertyAnnotationValidatorTests
             validator.GetPropertyValue(new PropertyModel(), "");
         });
 
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ArgumentNullException>(() =>
         {
             validator.GetPropertyValue(new PropertyModel(), "Unknown");
         });
