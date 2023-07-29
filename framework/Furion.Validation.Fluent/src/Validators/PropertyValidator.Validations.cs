@@ -911,6 +911,21 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
+    /// 添加注解（特性）验证器
+    /// </summary>
+    /// <param name="validationAttribute"><see cref="ValidationAttribute"/></param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddAttribute(ValidationAttribute validationAttribute)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(validationAttribute);
+
+        Validators.Add(new ValueAnnotationValidator(validationAttribute));
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加自定义委托验证器
     /// </summary>
     /// <param name="predicate">自定义委托</param>
@@ -918,17 +933,5 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> Custom(Func<T, bool> predicate)
     {
         return Predicate(predicate);
-    }
-
-    /// <summary>
-    /// 添加注解（特性）验证器
-    /// </summary>
-    /// <param name="validationAttribute">验证特性</param>
-    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> AddAttribute(ValidationAttribute validationAttribute)
-    {
-        Validators.Add(new ValueAnnotationValidator(validationAttribute));
-
-        return this;
     }
 }

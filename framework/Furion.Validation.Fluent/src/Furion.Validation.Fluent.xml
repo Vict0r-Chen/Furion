@@ -963,18 +963,18 @@
             <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.AddAttribute(System.ComponentModel.DataAnnotations.ValidationAttribute)">
+            <summary>
+            添加注解（特性）验证器
+            </summary>
+            <param name="validationAttribute"><see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`2.Custom(System.Func{`0,System.Boolean})">
             <summary>
             添加自定义委托验证器
             </summary>
             <param name="predicate">自定义委托</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.AddAttribute(System.ComponentModel.DataAnnotations.ValidationAttribute)">
-            <summary>
-            添加注解（特性）验证器
-            </summary>
-            <param name="validationAttribute">验证特性</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="T:Furion.Component.FluentValidationComponent">
