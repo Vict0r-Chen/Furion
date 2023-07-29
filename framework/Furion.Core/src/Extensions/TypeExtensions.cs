@@ -227,7 +227,7 @@ internal static class TypeExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyInfo);
 
-        // 创建一个动态方法来设置属性值
+        // 创建一个新的动态方法，并为其命名，命名格式为类型全名_设置_属性名
         var setterMethod = new DynamicMethod(
             $"{type.FullName}_Set_{propertyInfo.Name}",
             null,
@@ -235,38 +235,41 @@ internal static class TypeExtensions
             typeof(TypeExtensions).Module
         );
 
-        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        // 获取动态方法的 IL 生成器
         var ilGenerator = setterMethod.GetILGenerator();
 
-        // 获取属性的 set 方法
+        // 获取属性的设置方法，并允许非公开访问
         var setMethod = propertyInfo.GetSetMethod(nonPublic: true);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(setMethod);
 
-        // 将第一个参数（即 obj）转换为实际的对象类型
+        // 将目标对象加载到堆栈上，并将其转换为所需的类型
         ilGenerator.Emit(OpCodes.Ldarg_0);
         ilGenerator.Emit(OpCodes.Castclass, type);
 
-        // 将第二个参数（即 value）加载到堆栈上
+        // 将要分配的值加载到堆栈上
         ilGenerator.Emit(OpCodes.Ldarg_1);
 
-        // 如果属性类型是值类型，则执行拆箱操作（unbox.any）
+        // 检查属性类型是否为值类型
         if (propertyInfo.PropertyType.IsValueType)
         {
+            // 对值进行拆箱，转换为适当的值类型
             ilGenerator.Emit(OpCodes.Unbox_Any, propertyInfo.PropertyType);
         }
-        else // 否则，将值强制转换为属性类型
+        else
         {
+            // 将值转换为属性类型
             ilGenerator.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
         }
 
-        // 调用属性的 set 方法
+        // 在目标对象上调用设置方法
         ilGenerator.Emit(OpCodes.Callvirt, setMethod);
 
-        // 返回
+        // 从动态方法返回
         ilGenerator.Emit(OpCodes.Ret);
 
+        // 创建一个委托并将其转换为适当的 Action 类型
         return (Action<object, object?>)setterMethod.CreateDelegate(typeof(Action<object, object>));
     }
 
@@ -281,7 +284,7 @@ internal static class TypeExtensions
         // 空检查
         ArgumentNullException.ThrowIfNull(fieldInfo);
 
-        // 创建一个动态方法来设置字段值
+        // 创建一个新的动态方法，并为其命名，命名格式为类型全名_设置_字段名
         var setterMethod = new DynamicMethod(
             $"{type.FullName}_Set_{fieldInfo.Name}",
             null,
@@ -289,32 +292,35 @@ internal static class TypeExtensions
             typeof(TypeExtensions).Module
         );
 
-        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        // 获取动态方法的 IL 生成器
         var ilGenerator = setterMethod.GetILGenerator();
 
-        // 将第一个参数（即 obj）转换为实际的对象类型
+        // 将目标对象加载到堆栈上，并将其转换为所需的类型
         ilGenerator.Emit(OpCodes.Ldarg_0);
         ilGenerator.Emit(OpCodes.Castclass, type);
 
-        // 将第二个参数（即 value）加载到堆栈上
+        // 将要分配的值加载到堆栈上
         ilGenerator.Emit(OpCodes.Ldarg_1);
 
-        // 如果字段类型是值类型，则执行拆箱操作（unbox.any）
+        // 检查字段类型是否为值类型
         if (fieldInfo.FieldType.IsValueType)
         {
+            // 对值进行拆箱，转换为适当的值类型
             ilGenerator.Emit(OpCodes.Unbox_Any, fieldInfo.FieldType);
         }
-        else // 否则，将值强制转换为字段类型
+        else
         {
+            // 将值转换为字段类型
             ilGenerator.Emit(OpCodes.Castclass, fieldInfo.FieldType);
         }
 
-        // 将字段的值设置为堆栈上的值
+        // 将堆栈上的值存储到字段中
         ilGenerator.Emit(OpCodes.Stfld, fieldInfo);
 
-        // 返回
+        // 从动态方法返回
         ilGenerator.Emit(OpCodes.Ret);
 
+        // 创建一个委托并将其转换为适当的 Action 类型
         return (Action<object, object?>)setterMethod.CreateDelegate(typeof(Action<object, object>));
     }
 
@@ -330,7 +336,7 @@ internal static class TypeExtensions
         ArgumentNullException.ThrowIfNull(propertyInfo);
         ArgumentNullException.ThrowIfNull(propertyInfo.DeclaringType);
 
-        // 创建一个动态方法来获取属性值
+        // 创建一个新的动态方法，并为其命名，命名格式为类型全名_获取_属性名
         var dynamicMethod = new DynamicMethod(
             $"{type.FullName}_Get_{propertyInfo.Name}",
             typeof(object),
@@ -339,31 +345,32 @@ internal static class TypeExtensions
             true
         );
 
-        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        // 获取动态方法的 IL 生成器
         var ilGenerator = dynamicMethod.GetILGenerator();
 
-        // 获取属性的 get 方法
+        // 获取属性的获取方法，并允许非公开访问
         var getMethod = propertyInfo.GetGetMethod(nonPublic: true);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(getMethod);
 
-        // 将参数（即 obj）转换为实际的对象类型
+        // 将目标对象加载到堆栈上，并将其转换为声明类型
         ilGenerator.Emit(OpCodes.Ldarg_0);
         ilGenerator.Emit(OpCodes.Castclass, propertyInfo.DeclaringType);
 
-        // 调用属性的 get 方法
+        // 调用获取方法
         ilGenerator.EmitCall(OpCodes.Callvirt, getMethod, null);
 
-        // 如果属性类型是值类型，则执行装箱操作
+        // 如果属性类型为值类型，则装箱为 object 类型
         if (propertyInfo.PropertyType.IsValueType)
         {
             ilGenerator.Emit(OpCodes.Box, propertyInfo.PropertyType);
         }
 
-        // 返回
+        // 从动态方法返回
         ilGenerator.Emit(OpCodes.Ret);
 
+        // 创建一个委托并将其转换为适当的 Func 类型
         return (Func<object, object?>)dynamicMethod.CreateDelegate(typeof(Func<object, object>));
     }
 
@@ -379,7 +386,7 @@ internal static class TypeExtensions
         ArgumentNullException.ThrowIfNull(fieldInfo);
         ArgumentNullException.ThrowIfNull(fieldInfo.DeclaringType);
 
-        // 创建一个动态方法来获取字段值
+        // 创建一个新的动态方法，并为其命名，命名格式为类型全名_获取_字段名
         var dynamicMethod = new DynamicMethod(
             $"{type.FullName}_Get_{fieldInfo.Name}",
             typeof(object),
@@ -388,25 +395,26 @@ internal static class TypeExtensions
             true
         );
 
-        // 获取动态方法的 ILGenerator，用于生成方法体指令
+        // 获取动态方法的 IL 生成器
         var ilGenerator = dynamicMethod.GetILGenerator();
 
-        // 将第一个参数（即 obj）转换为实际的对象类型
+        // 将目标对象加载到堆栈上，并将其转换为字段的声明类型
         ilGenerator.Emit(OpCodes.Ldarg_0);
         ilGenerator.Emit(OpCodes.Castclass, fieldInfo.DeclaringType);
 
-        // 将第二个参数（即字段的引用）加载到堆栈上
+        // 加载字段的值到堆栈上
         ilGenerator.Emit(OpCodes.Ldfld, fieldInfo);
 
-        // 如果字段类型是值类型，则执行装箱操作
+        // 如果字段类型为值类型，则装箱为 object 类型
         if (fieldInfo.FieldType.IsValueType)
         {
             ilGenerator.Emit(OpCodes.Box, fieldInfo.FieldType);
         }
 
-        // 返回
+        // 从动态方法返回
         ilGenerator.Emit(OpCodes.Ret);
 
+        // 创建一个委托并将其转换为适当的 Func 类型
         return (Func<object, object?>)dynamicMethod.CreateDelegate(typeof(Func<object, object>));
     }
 }
