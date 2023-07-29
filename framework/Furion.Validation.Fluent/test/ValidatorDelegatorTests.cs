@@ -81,51 +81,6 @@ public class ValidatorDelegatorTests
     }
 
     [Fact]
-    public void Initialize_Invalid_Parameters()
-    {
-        var validatorDelegator = new PropertyValidator<PropertyModel, object>
-                .ValidatorDelegator<NotEqualValidator>(new(new ObjectValidator<PropertyModel>(), u => u.Name), u => new[] { "furion" }, () => Strings.NotEqualValidator_Invalid);
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validatorDelegator.Initialize(null!);
-        });
-    }
-
-    [Fact]
-    public void Initialize_ReturnOK()
-    {
-        var validatorDelegator = new PropertyValidator<PropertyModel, string?>
-                .ValidatorDelegator<NotEqualValidator>(new(new ObjectValidator<PropertyModel>(), u => u.Name), u => new[] { "furion" }, () => Strings.NotEqualValidator_Invalid);
-
-        var instance = new PropertyModel
-        {
-            Name = "Furion"
-        };
-        validatorDelegator.Initialize(instance);
-
-        Assert.NotNull(validatorDelegator.Validator);
-        Assert.NotNull(validatorDelegator.PropertyValue);
-        Assert.Equal("Furion", validatorDelegator.PropertyValue);
-        Assert.Equal(validatorDelegator.ErrorMessage, validatorDelegator.Validator.ErrorMessage);
-
-        instance.Name = "百小僧";
-        validatorDelegator.WithErrorMessage("自定义错误消息");
-        validatorDelegator.Configure(v =>
-        {
-            v.CompareValue = "Fur";
-        });
-
-        validatorDelegator.Initialize(instance);
-        Assert.NotNull(validatorDelegator.Validator);
-        Assert.NotNull(validatorDelegator.PropertyValue);
-        Assert.Equal("百小僧", validatorDelegator.PropertyValue);
-        Assert.Equal(validatorDelegator.ErrorMessage, validatorDelegator.Validator.ErrorMessage);
-        Assert.Equal("自定义错误消息", validatorDelegator.Validator.ErrorMessage);
-        Assert.Equal("Fur", validatorDelegator.Validator.CompareValue);
-    }
-
-    [Fact]
     public void IsValid_ReturnOK()
     {
         var validatorDelegator = new PropertyValidator<PropertyModel, string?>
@@ -208,5 +163,64 @@ public class ValidatorDelegatorTests
 
         Assert.Single(exception.InnerExceptions);
         Assert.Equal("The field Name cannot be equal to 'furion'.", exception.InnerExceptions.First().Message);
+    }
+
+    [Fact]
+    public void Initialize_Invalid_Parameters()
+    {
+        var validatorDelegator = new PropertyValidator<PropertyModel, object>
+                .ValidatorDelegator<NotEqualValidator>(new(new ObjectValidator<PropertyModel>(), u => u.Name), u => new[] { "furion" }, () => Strings.NotEqualValidator_Invalid);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validatorDelegator.Initialize(null!);
+        });
+    }
+
+    [Fact]
+    public void Initialize_ReturnOK()
+    {
+        var validatorDelegator = new PropertyValidator<PropertyModel, string?>
+                .ValidatorDelegator<NotEqualValidator>(new(new ObjectValidator<PropertyModel>(), u => u.Name), u => new[] { "furion" }, () => Strings.NotEqualValidator_Invalid);
+
+        var instance = new PropertyModel
+        {
+            Name = "Furion"
+        };
+        validatorDelegator.Initialize(instance);
+
+        Assert.NotNull(validatorDelegator.Validator);
+        Assert.NotNull(validatorDelegator.PropertyValue);
+        Assert.Equal("Furion", validatorDelegator.PropertyValue);
+        Assert.Equal(validatorDelegator.ErrorMessage, validatorDelegator.Validator.ErrorMessage);
+
+        instance.Name = "百小僧";
+        validatorDelegator.WithErrorMessage("自定义错误消息");
+        validatorDelegator.Configure(v =>
+        {
+            v.CompareValue = "Fur";
+        });
+
+        validatorDelegator.Initialize(instance);
+        Assert.NotNull(validatorDelegator.Validator);
+        Assert.NotNull(validatorDelegator.PropertyValue);
+        Assert.Equal("百小僧", validatorDelegator.PropertyValue);
+        Assert.Equal(validatorDelegator.ErrorMessage, validatorDelegator.Validator.ErrorMessage);
+        Assert.Equal("自定义错误消息", validatorDelegator.Validator.ErrorMessage);
+        Assert.Equal("Fur", validatorDelegator.Validator.CompareValue);
+    }
+
+    [Fact]
+    public void GetDisplayName_ReturnOK()
+    {
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(new ObjectValidator<PropertyModel>(), u => u.Name);
+        var validatorDelegator = new PropertyValidator<PropertyModel, string?>
+               .ValidatorDelegator<NotEqualValidator>(propertyValidator, u => new[] { "furion" }, () => Strings.NotEqualValidator_Invalid);
+
+        Assert.Equal("Name", validatorDelegator.GetDisplayName(null!));
+
+        propertyValidator.WithDisplayName("其他名称");
+
+        Assert.Equal("其他名称", propertyValidator.GetDisplayName());
     }
 }

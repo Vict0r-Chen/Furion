@@ -85,7 +85,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 初始化
             Initialize(instance);
 
-            return Validator!.GetValidationResults(PropertyValue, name ?? _propertyValidator.PropertyName);
+            return Validator!.GetValidationResults(PropertyValue, GetDisplayName(name));
         }
 
         /// <inheritdoc />
@@ -94,7 +94,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 初始化
             Initialize(instance);
 
-            return Validator!.FormatErrorMessage(name ?? _propertyValidator.PropertyName, PropertyValue);
+            return Validator!.FormatErrorMessage(GetDisplayName(name), PropertyValue);
         }
 
         /// <inheritdoc />
@@ -103,7 +103,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 初始化
             Initialize(instance);
 
-            Validator!.Validate(PropertyValue, name ?? _propertyValidator.PropertyName);
+            Validator!.Validate(PropertyValue, GetDisplayName(name));
         }
 
         /// <summary>
@@ -141,6 +141,16 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
             // 初始化属性值
             PropertyValue = _propertyValidator.GetPropertyValue(instance);
+        }
+
+        /// <summary>
+        /// 获取属性显示名称
+        /// </summary>
+        /// <param name="name">显示名称</param>
+        /// <returns><see cref="string"/></returns>
+        internal string GetDisplayName(string name)
+        {
+            return name ?? _propertyValidator.GetDisplayName();
         }
     }
 
@@ -200,7 +210,12 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 规则集
     /// </summary>
-    public string[]? RuleSet { get; internal set; }
+    public string[]? RuleSet { get; init; }
+
+    /// <summary>
+    /// 属性别名
+    /// </summary>
+    public string? DisplayName { get; private set; }
 
     /// <summary>
     /// 启用/禁用注解（特性）验证
@@ -222,6 +237,21 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> WithErrorMessage(string? errorMessage)
     {
         Validators.LastOrDefault()?.WithErrorMessage(errorMessage);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 设置属性别名
+    /// </summary>
+    /// <param name="displayName">属性别名</param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> WithDisplayName(string displayName)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(displayName);
+
+        DisplayName = displayName;
 
         return this;
     }
@@ -372,7 +402,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         if (!SuppressAnnotationValidation)
         {
             validationResults.AddRange(_annotationValidator
-                .GetValidationResults(instance, PropertyName) ?? Enumerable.Empty<ValidationResult>());
+                .GetValidationResults(instance, GetDisplayName()) ?? Enumerable.Empty<ValidationResult>());
         }
 
         // 获取属性值
@@ -385,7 +415,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             if (propertyValue is not null)
             {
                 validationResults.AddRange(SubValidator
-                    .GetValidationResults(propertyValue) ?? Enumerable.Empty<ValidationResult>());
+                    .GetValidationResults(propertyValue, ruleSet) ?? Enumerable.Empty<ValidationResult>());
             }
         }
         else
@@ -393,7 +423,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 获取所有验证器验证结果集合
             validationResults.AddRange(Validators
                 .SelectMany(validator => validator.GetValidationResults(
-                    GetValidationObject(instance, validator, propertyValue), PropertyName) ?? Enumerable.Empty<ValidationResult>()));
+                    GetValidationObject(instance, validator, propertyValue), GetDisplayName()) ?? Enumerable.Empty<ValidationResult>()));
         }
 
         return validationResults.Count == 0 ? null : validationResults;
@@ -460,5 +490,14 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         return ValidationObjectAccessor is not null
             ? ValidationObjectAccessor(instance, validator, propertyValue)
             : propertyValue;
+    }
+
+    /// <summary>
+    /// 获取属性显示名称
+    /// </summary>
+    /// <returns><see cref="string"/></returns>
+    internal string GetDisplayName()
+    {
+        return DisplayName ?? PropertyName;
     }
 }

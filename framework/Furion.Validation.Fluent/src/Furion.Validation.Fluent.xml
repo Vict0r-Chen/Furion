@@ -409,6 +409,13 @@
             </summary>
             <param name="instance">对象实例</param>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.GetDisplayName(System.String)">
+            <summary>
+            获取属性显示名称
+            </summary>
+            <param name="name">显示名称</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="F:Furion.Validation.PropertyValidator`2._objectValidator">
             <inheritdoc cref="T:Furion.Validation.ObjectValidator`1" />
         </member>
@@ -455,6 +462,11 @@
             规则集
             </summary>
         </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.DisplayName">
+            <summary>
+            属性别名
+            </summary>
+        </member>
         <member name="M:Furion.Validation.PropertyValidator`2.WithAnnotationValidation(System.Boolean)">
             <summary>
             启用/禁用注解（特性）验证
@@ -467,6 +479,13 @@
             设置错误消息
             </summary>
             <param name="errorMessage">错误消息</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.WithDisplayName(System.String)">
+            <summary>
+            设置属性别名
+            </summary>
+            <param name="displayName">属性别名</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.SetValidator(Furion.Validation.IObjectValidator{`1})">
@@ -525,6 +544,12 @@
             <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
             <param name="propertyValue">属性值</param>
             <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.GetDisplayName">
+            <summary>
+            获取属性显示名称
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.Age">
             <summary>

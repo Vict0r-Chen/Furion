@@ -49,6 +49,7 @@ public class PropertyValidatorTests
         Assert.Null(propertyValidator.ConditionExpression);
         Assert.Null(propertyValidator.SubValidator);
         Assert.Null(propertyValidator.RuleSet);
+        Assert.Null(propertyValidator.DisplayName);
     }
 
     [Theory]
@@ -81,6 +82,39 @@ public class PropertyValidatorTests
 
         var errorMessages = new[] { "错误消息2", "错误消息3" };
         Assert.Equal(errorMessages, propertyValidator.Validators.Select(v => v.ErrorMessage).ToArray());
+    }
+
+    [Fact]
+    public void WithDisplayName_Invalid_Parameters()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            propertyValidator.WithDisplayName(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            propertyValidator.WithDisplayName(string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            propertyValidator.WithDisplayName("");
+        });
+    }
+
+    [Fact]
+    public void WithDisplayName_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        propertyValidator.WithDisplayName("Furion");
+
+        Assert.Equal("Furion", propertyValidator.DisplayName);
     }
 
     [Fact]
@@ -640,5 +674,18 @@ public class PropertyValidatorTests
         propertyValidator.ConfigureValidationObject((obj, validator, value) => obj);
 
         Assert.True(propertyValidator.GetValidationObject(instance, new NotEmptyValidator(), "furion") is PropertyModel);
+    }
+
+    [Fact]
+    public void GetDisplayName_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        Assert.Equal("Name", propertyValidator.GetDisplayName());
+
+        propertyValidator.WithDisplayName("其他名称");
+
+        Assert.Equal("其他名称", propertyValidator.GetDisplayName());
     }
 }
