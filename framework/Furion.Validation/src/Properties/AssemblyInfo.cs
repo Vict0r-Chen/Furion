@@ -18,3 +18,4 @@
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.Validation.Tests")]
+[assembly: InternalsVisibleTo("Furion.Validation.Fluent.Tests")]

@@ -361,10 +361,10 @@
         <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.IsValid(`0)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.FormatErrorMessage(System.String,`0)">
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.GetValidationResults(`0,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.GetValidationResults(`0,System.String)">
+        <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.FormatErrorMessage(System.String,`0)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.Validate(`0,System.String)">

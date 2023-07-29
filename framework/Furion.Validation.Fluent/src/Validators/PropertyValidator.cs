@@ -48,6 +48,11 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             , Func<string> errorMessageResourceAccessor)
             : base(errorMessageResourceAccessor)
         {
+            // 空检查
+            ArgumentNullException.ThrowIfNull(propertyValidator);
+            ArgumentNullException.ThrowIfNull(constructorParametersAccessor);
+            ArgumentNullException.ThrowIfNull(errorMessageResourceAccessor);
+
             _propertyValidator = propertyValidator;
             _constructorParametersAccessor = constructorParametersAccessor;
         }
@@ -75,21 +80,21 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         }
 
         /// <inheritdoc />
-        public override string FormatErrorMessage(string name, T instance)
-        {
-            // 初始化
-            Initialize(instance);
-
-            return Validator!.FormatErrorMessage(name, PropertyValue);
-        }
-
-        /// <inheritdoc />
         public override List<ValidationResult>? GetValidationResults(T instance, string name)
         {
             // 初始化
             Initialize(instance);
 
-            return Validator!.GetValidationResults(PropertyValue, name);
+            return Validator!.GetValidationResults(PropertyValue, name ?? _propertyValidator.PropertyName);
+        }
+
+        /// <inheritdoc />
+        public override string FormatErrorMessage(string name, T instance)
+        {
+            // 初始化
+            Initialize(instance);
+
+            return Validator!.FormatErrorMessage(name ?? _propertyValidator.PropertyName, PropertyValue);
         }
 
         /// <inheritdoc />
@@ -98,7 +103,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 初始化
             Initialize(instance);
 
-            Validator!.Validate(PropertyValue, name);
+            Validator!.Validate(PropertyValue, name ?? _propertyValidator.PropertyName);
         }
 
         /// <summary>
