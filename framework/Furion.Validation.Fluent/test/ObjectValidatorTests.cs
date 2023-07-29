@@ -203,4 +203,182 @@ public class ObjectValidatorTests
 
         Assert.False(validator.IsValid(instance));
     }
+
+    [Fact]
+    public void IsValid_WithAnnotationValidation()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+        validator.Property(u => u.Name).Equal("furion");
+
+        var instance = new ObjectModel
+        {
+            Id = 0,
+            Name = "furion"
+        };
+
+        Assert.True(validator.IsValid(instance));
+
+        validator.WithAnnotationValidation();
+
+        Assert.False(validator.IsValid(instance));
+    }
+
+    [Fact]
+    public void GetValidationResults_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.GetValidationResults(null!);
+        });
+    }
+
+    [Fact]
+    public void GetValidationResults_EmptyValidators_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        var instance = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion"
+        };
+
+        Assert.Null(validator.GetValidationResults(instance));
+    }
+
+    [Fact]
+    public void GetValidationResults_WithCondition_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create(v =>
+        {
+            v.When(u => u.Id > 1);
+        });
+
+        validator.Property(u => u.Id).GreaterThan(1);
+        var instance = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion"
+        };
+
+        Assert.Null(validator.GetValidationResults(instance));
+
+        validator.Reset();
+
+        var validationResults = validator.GetValidationResults(instance);
+        Assert.NotNull(validationResults);
+        Assert.Single(validationResults);
+        Assert.Equal("The field Id must be greater than '1'.", validationResults.First().ErrorMessage);
+    }
+
+    [Fact]
+    public void GetValidationResults_WithAnnotationValidation()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+        validator.Property(u => u.Name).Equal("furion");
+
+        var instance = new ObjectModel
+        {
+            Id = 0,
+            Name = "furion"
+        };
+
+        Assert.Null(validator.GetValidationResults(instance));
+
+        validator.WithAnnotationValidation();
+
+        instance.Name = "百小僧";
+        var validationResults = validator.GetValidationResults(instance);
+        Assert.NotNull(validationResults);
+        Assert.Equal(3, validationResults.Count);
+
+        var errorMessages = new[] { "The field Id must be between 1 and 10."
+            , "The field Name must be a string or array type with a minimum length of '10'."
+            ,"The field Name must be equal to 'furion'."};
+        Assert.Equal(errorMessages, validationResults.Select(u => u.ErrorMessage).ToArray());
+    }
+
+    [Fact]
+    public void Validate_Invalid_Parameters()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.Validate(null!);
+        });
+    }
+
+    [Fact]
+    public void Validate_EmptyValidators_ReturnOK()
+    {
+        var validator = new ObjectValidator<ObjectModel>();
+        var instance = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion"
+        };
+
+        validator.Validate(instance);
+    }
+
+    [Fact]
+    public void Validate_WithCondition_ReturnOK()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create(v =>
+        {
+            v.When(u => u.Id > 1);
+        });
+
+        validator.Property(u => u.Id).GreaterThan(1);
+        var instance = new ObjectModel
+        {
+            Id = 1,
+            Name = "Furion"
+        };
+
+        validator.Validate(instance);
+
+        validator.Reset();
+
+        var exception = Assert.Throws<AggregateValidationException>(() =>
+        {
+            validator.Validate(instance);
+        });
+
+        Assert.NotNull(exception);
+        Assert.Single(exception.InnerExceptions);
+        Assert.Equal("The field Id must be greater than '1'.", exception.InnerExceptions.First().Message);
+    }
+
+    [Fact]
+    public void Validate_WithAnnotationValidation()
+    {
+        var validator = ObjectValidator<ObjectModel>.Create();
+        validator.Property(u => u.Name).Equal("furion");
+
+        var instance = new ObjectModel
+        {
+            Id = 0,
+            Name = "furion"
+        };
+
+        validator.Validate(instance);
+
+        validator.WithAnnotationValidation();
+
+        instance.Name = "百小僧";
+        var exception = Assert.Throws<AggregateValidationException>(() =>
+        {
+            validator.Validate(instance);
+        });
+        Assert.NotNull(exception);
+        Assert.Equal(3, exception.InnerExceptions.Count);
+
+        var errorMessages = new[] { "The field Id must be between 1 and 10."
+            , "The field Name must be a string or array type with a minimum length of '10'."
+            ,"The field Name must be equal to 'furion'."};
+        Assert.Equal(errorMessages, exception.InnerExceptions.Select(u => u.Message).ToArray());
+    }
 }

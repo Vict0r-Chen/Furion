@@ -16,6 +16,9 @@ namespace Furion.Validation.Fluent.Tests;
 
 public class ObjectModel
 {
+    [Range(1, 10)]
     public int Id { get; set; }
+
+    [MinLength(10)]
     public string? Name { get; set; }
 }
