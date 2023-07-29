@@ -16,6 +16,24 @@ namespace Furion.Validation.Fluent.Tests;
 
 public class PropertyModel
 {
+    [Range(1, 10)]
     public int Id { get; set; }
+
+    [MinLength(10)]
     public string? Name { get; set; }
+
+    public SubModel? SubModel { get; set; }
+}
+
+public class SubModel
+{
+    public string? Name { get; set; }
+}
+
+public class SubModelValidator : AbstractValidator<SubModel>
+{
+    public SubModelValidator()
+    {
+        RuleFor(u => u.Name).NotEqual("furion");
+    }
 }

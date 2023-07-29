@@ -158,6 +158,10 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     internal PropertyValidator(ObjectValidator<T> objectValidator
         , Expression<Func<T, TProperty?>> propertyExpression)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(objectValidator);
+        ArgumentNullException.ThrowIfNull(propertyExpression);
+
         _objectValidator = objectValidator;
         PropertyName = propertyExpression.GetPropertyName();
 
@@ -213,6 +217,22 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> WithErrorMessage(string? errorMessage)
     {
         Validators.LastOrDefault()?.WithErrorMessage(errorMessage);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 设置子属性验证器
+    /// </summary>
+    /// <param name="subValidator"><see cref="IObjectValidator{T}"/></param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public PropertyValidator<T, TProperty> SetValidator(IObjectValidator<TProperty> subValidator)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(subValidator);
+
+        SubValidator = subValidator;
 
         return this;
     }
@@ -394,6 +414,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <returns><see cref="object"/></returns>
     internal TProperty? GetPropertyValue(T instance)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance);
+
         return (TProperty?)_annotationValidator.GetPropertyValue(instance, PropertyName);
     }
 
@@ -406,6 +429,10 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <returns><see cref="object"/></returns>
     internal object? GetValidationObject(T instance, ValidatorBase validator, TProperty? propertyValue)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(instance);
+        ArgumentNullException.ThrowIfNull(validator);
+
         // 检查是否是验证器委托器类型
         var validatorType = validator.GetType();
         if (validatorType.IsGenericType

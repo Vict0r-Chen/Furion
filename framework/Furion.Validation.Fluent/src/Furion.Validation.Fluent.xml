@@ -80,13 +80,6 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
-        <member name="M:Furion.Validation.FluentValidationBuilder.EnsureLegalValidatorType(System.Type)">
-            <summary>
-            检查类型合法性
-            </summary>
-            <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
-            <exception cref="T:System.InvalidOperationException"></exception>
-        </member>
         <member name="T:Furion.Validation.IObjectValidator`1">
             <summary>
             验证器服务
@@ -143,6 +136,18 @@
             <summary>
             验证器服务
             </summary>
+        </member>
+        <member name="T:Furion.Validation.Helpers">
+            <summary>
+            数据验证模块帮助类
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.Helpers.EnsureLegalValidatorType(System.Type)">
+            <summary>
+            检查验证器类型合法性
+            </summary>
+            <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.Validation.FluentValidatorScanner">
             <summary>
@@ -436,6 +441,14 @@
             </summary>
             <param name="errorMessage">错误消息</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.SetValidator(Furion.Validation.IObjectValidator{`1})">
+            <summary>
+            设置子属性验证器
+            </summary>
+            <param name="subValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.ConfigureValidationObject(System.Func{`0,Furion.Validation.ValidatorBase,System.Object,System.Object})">
             <summary>
@@ -941,13 +954,6 @@
             <summary>
             添加邮箱地址验证器
             </summary>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.SetValidator(Furion.Validation.IObjectValidator{`1})">
-            <summary>
-            设置子属性验证器
-            </summary>
-            <param name="subValidator"><see cref="T:Furion.Validation.IObjectValidator`1"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.Add(Furion.Validation.ValidatorBase)">

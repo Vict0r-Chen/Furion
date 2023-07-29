@@ -205,7 +205,7 @@ public class ObjectValidatorTests
     }
 
     [Fact]
-    public void IsValid_WithAnnotationValidation()
+    public void IsValid_WithAnnotationValidation_ReturnOK()
     {
         var validator = ObjectValidator<ObjectModel>.Create();
         validator.Property(u => u.Name).Equal("furion");
@@ -273,7 +273,7 @@ public class ObjectValidatorTests
     }
 
     [Fact]
-    public void GetValidationResults_WithAnnotationValidation()
+    public void GetValidationResults_WithAnnotationValidation_ReturnOK()
     {
         var validator = ObjectValidator<ObjectModel>.Create();
         validator.Property(u => u.Name).Equal("furion");
@@ -353,7 +353,7 @@ public class ObjectValidatorTests
     }
 
     [Fact]
-    public void Validate_WithAnnotationValidation()
+    public void Validate_WithAnnotationValidation_ReturnOK()
     {
         var validator = ObjectValidator<ObjectModel>.Create();
         validator.Property(u => u.Name).Equal("furion");
