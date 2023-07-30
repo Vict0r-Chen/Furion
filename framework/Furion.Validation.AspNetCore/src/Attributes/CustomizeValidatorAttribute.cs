@@ -54,14 +54,14 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     /// <returns><see cref="ValidationResult"/></returns>
     internal ValidationResult? IsValid(object? value, Func<Type, IObjectValidator?> createValidatorFactory)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(createValidatorFactory);
-
         // 检查是否可以执行验证程序
         if (!CanValidate(value))
         {
             return ValidationResult.Success;
         }
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(createValidatorFactory);
 
         // 解析验证器服务
         var objectValidator = createValidatorFactory(value!.GetType());
