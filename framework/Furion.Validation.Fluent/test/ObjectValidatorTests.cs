@@ -26,8 +26,9 @@ public class ObjectValidatorTests
         Assert.NotNull(validator._propertyValidators);
         Assert.Empty(validator._propertyValidators);
         Assert.NotNull(validator._annotationValidator);
-        Assert.True(validator.SuppressAnnotationValidation);
-        Assert.Equal(ValidatorCascadeMode.Continue, validator.CascadeMode);
+        Assert.NotNull(validator.Options);
+        Assert.True(validator.Options.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.Continue, validator.Options.CascadeMode);
         Assert.Null(validator.ConditionExpression);
         Assert.Null(validator.Items);
     }
@@ -40,10 +41,10 @@ public class ObjectValidatorTests
 
         var validator2 = ObjectValidator<ObjectModel>.Create(v =>
         {
-            v.SuppressAnnotationValidation = false;
+            v.Options.SuppressAnnotationValidation = false;
         });
         Assert.NotNull(validator2);
-        Assert.False(validator2.SuppressAnnotationValidation);
+        Assert.False(validator2.Options.SuppressAnnotationValidation);
     }
 
     [Fact]
@@ -86,29 +87,41 @@ public class ObjectValidatorTests
         Assert.Equal(new[] { "furion", "fur" }, propertyValidator3.RuleSet);
     }
 
-    [Theory]
-    [InlineData(true, false)]
-    [InlineData(false, true)]
-    public void WithAnnotationValidation_ReturnOK(bool enable, bool result)
+    [Fact]
+    public void ConfigureOptions_Invalid_Parameters()
     {
         var validator = new ObjectValidator<ObjectModel>();
-        validator.WithAnnotationValidation(enable);
 
-        Assert.Equal(result, validator.SuppressAnnotationValidation);
-        Assert.True(validator._annotationValidator.ValidateAllProperties);
-
-        validator.WithAnnotationValidation(enable, false);
-        Assert.False(validator._annotationValidator.ValidateAllProperties);
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.ConfigureOptions(null!);
+        });
     }
 
-    [Fact]
-    public void WithCascadeMode_ReturnOK()
+    [Theory]
+    [InlineData(true, true)]
+    [InlineData(false, false)]
+    public void ConfigureOptions_ReturnOK(bool enable, bool result)
     {
         var validator = new ObjectValidator<ObjectModel>();
+        validator.ConfigureOptions(o =>
+        {
+            o.SuppressAnnotationValidation = enable;
+            o.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
+        });
 
-        validator.WithCascadeMode(ValidatorCascadeMode.StopOnFirstFailure);
+        Assert.Equal(result, validator.Options.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, validator.Options.CascadeMode);
+        Assert.True(validator.Options.ValidateAllPropertiesForAnnotationValidation);
+        Assert.True(validator._annotationValidator.ValidateAllProperties);
 
-        Assert.Equal(ValidatorCascadeMode.StopOnFirstFailure, validator.CascadeMode);
+        validator.ConfigureOptions(o =>
+        {
+            o.ValidateAllPropertiesForAnnotationValidation = false;
+        });
+
+        Assert.False(validator.Options.ValidateAllPropertiesForAnnotationValidation);
+        Assert.False(validator._annotationValidator.ValidateAllProperties);
     }
 
     [Fact]
@@ -250,7 +263,7 @@ public class ObjectValidatorTests
 
         Assert.True(validator.IsValid(instance));
 
-        validator.WithAnnotationValidation();
+        validator.Options.SuppressAnnotationValidation = false;
 
         Assert.False(validator.IsValid(instance));
     }
@@ -347,7 +360,7 @@ public class ObjectValidatorTests
 
         Assert.Null(validator.GetValidationResults(instance));
 
-        validator.WithAnnotationValidation();
+        validator.Options.SuppressAnnotationValidation = false;
 
         instance.Name = "百小僧";
         var validationResults = validator.GetValidationResults(instance);
@@ -463,7 +476,7 @@ public class ObjectValidatorTests
 
         validator.Validate(instance);
 
-        validator.WithAnnotationValidation();
+        validator.Options.SuppressAnnotationValidation = false;
 
         instance.Name = "百小僧";
         var exception = Assert.Throws<AggregateValidationException>(() =>

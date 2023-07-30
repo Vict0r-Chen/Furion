@@ -20,13 +20,8 @@ namespace Furion.Validation;
 /// <typeparam name="T">对象类型</typeparam>
 public interface IObjectValidator<T> : IObjectValidator
 {
-    /// <summary>
-    /// 禁用注解（特性）验证
-    /// </summary>
-    bool SuppressAnnotationValidation { get; set; }
-
-    /// <inheritdoc cref="ValidatorCascadeMode" />
-    ValidatorCascadeMode CascadeMode { get; set; }
+    /// <inheritdoc cref="ValidatorOptions" />
+    ValidatorOptions Options { get; }
 
     /// <summary>
     /// 配置执行验证的符合条件表达式

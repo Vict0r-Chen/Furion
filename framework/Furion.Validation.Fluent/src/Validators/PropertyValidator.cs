@@ -177,6 +177,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         Validators = new();
         _annotationValidator = new(propertyExpression);
+
+        Options = new();
     }
 
     /// <summary>
@@ -190,10 +192,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public string PropertyName { get; init; }
 
     /// <inheritdoc />
-    public bool SuppressAnnotationValidation { get; set; } = true;
-
-    /// <inheritdoc />
-    public ValidatorCascadeMode CascadeMode { get; set; }
+    public ValidatorOptions Options { get; init; }
 
     /// <summary>
     /// 验证对象访问器
@@ -221,13 +220,17 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public string? DisplayName { get; private set; }
 
     /// <summary>
-    /// 启用/禁用注解（特性）验证
+    /// 配置验证器选项
     /// </summary>
-    /// <param name="enable">是否启用</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> WithAnnotationValidation(bool enable = true)
+    public PropertyValidator<T, TProperty> ConfigureOptions(Action<ValidatorOptions> configure)
     {
-        SuppressAnnotationValidation = !enable;
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        // 调用自定义配置委托
+        configure?.Invoke(Options);
 
         return this;
     }
@@ -255,18 +258,6 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         ArgumentException.ThrowIfNullOrWhiteSpace(displayName);
 
         DisplayName = displayName;
-
-        return this;
-    }
-
-    /// <summary>
-    /// 设置验证器级联模式
-    /// </summary>
-    /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
-    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> WithCascadeMode(ValidatorCascadeMode cascadeMode)
-    {
-        CascadeMode = cascadeMode;
 
         return this;
     }
@@ -374,7 +365,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         }
 
         // 检查是否启用注解（特性）验证
-        var isValid = SuppressAnnotationValidation || _annotationValidator.IsValid(instance);
+        var isValid = Options.SuppressAnnotationValidation || _annotationValidator.IsValid(instance);
 
         // 获取属性值
         var propertyValue = GetPropertyValue(instance);
@@ -411,7 +402,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         var validationResults = new List<ValidationResult>();
 
         // 检查是否启用注解（特性）验证
-        if (!SuppressAnnotationValidation)
+        if (!Options.SuppressAnnotationValidation)
         {
             validationResults.AddRange(_annotationValidator
                 .GetValidationResults(instance, GetDisplayName()) ?? Enumerable.Empty<ValidationResult>());

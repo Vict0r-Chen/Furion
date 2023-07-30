@@ -86,13 +86,8 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
         </member>
-        <member name="P:Furion.Validation.IObjectValidator`1.SuppressAnnotationValidation">
-            <summary>
-            禁用注解（特性）验证
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.IObjectValidator`1.CascadeMode">
-            <inheritdoc cref="T:Furion.Validation.ValidatorCascadeMode" />
+        <member name="P:Furion.Validation.IObjectValidator`1.Options">
+            <inheritdoc cref="T:Furion.Validation.ValidatorOptions" />
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.When(System.Func{`0,System.Boolean})">
             <summary>
@@ -167,6 +162,24 @@
             <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
+        <member name="T:Furion.Validation.ValidatorOptions">
+            <summary>
+            验证器选项
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.ValidatorOptions.CascadeMode">
+            <inheritdoc cref="T:Furion.Validation.ValidatorCascadeMode" />
+        </member>
+        <member name="P:Furion.Validation.ValidatorOptions.SuppressAnnotationValidation">
+            <summary>
+            禁用注解（特性）验证
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.ValidatorOptions.ValidateAllPropertiesForAnnotationValidation">
+            <summary>
+            为注解（特性）配置是否验证所有属性
+            </summary>
+        </member>
         <member name="T:Furion.Validation.FluentValidatorScanner">
             <summary>
             链式验证器扫描器
@@ -228,26 +241,15 @@
             <inheritdoc cref="T:Furion.Validation.AbstractValidator`1"/>
             </summary>
         </member>
-        <member name="F:Furion.Validation.AbstractValidator`1._suppressAnnotationValidation">
-            <summary>
-            禁用注解（特性）验证
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.AbstractValidator`1.SuppressAnnotationValidation">
+        <member name="P:Furion.Validation.AbstractValidator`1.Options">
             <inheritdoc />
         </member>
-        <member name="F:Furion.Validation.AbstractValidator`1._cascadeMode">
-            <inheritdoc cref="T:Furion.Validation.ValidatorCascadeMode" />
-        </member>
-        <member name="P:Furion.Validation.AbstractValidator`1.CascadeMode">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Validation.AbstractValidator`1.SetAnnotationValidation(System.Boolean,System.Boolean)">
+        <member name="M:Furion.Validation.AbstractValidator`1.ConfigureOptions(System.Action{Furion.Validation.ValidatorOptions})">
             <summary>
-            启用/禁用注解（特性）验证
+            配置验证器选项
             </summary>
-            <param name="enable">是否启用</param>
-            <param name="validateAllProperties">验证所有属性</param>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.AbstractValidator`1.RuleFor``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String)">
             <summary>
@@ -305,10 +307,7 @@
             <inheritdoc cref="T:Furion.Validation.ObjectValidator`1"/>
             </summary>
         </member>
-        <member name="P:Furion.Validation.ObjectValidator`1.CascadeMode">
-            <inheritdoc />
-        </member>
-        <member name="P:Furion.Validation.ObjectValidator`1.SuppressAnnotationValidation">
+        <member name="P:Furion.Validation.ObjectValidator`1.Options">
             <inheritdoc />
         </member>
         <member name="P:Furion.Validation.ObjectValidator`1.ConditionExpression">
@@ -328,6 +327,13 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
+        <member name="M:Furion.Validation.ObjectValidator`1.ConfigureOptions(System.Action{Furion.Validation.ValidatorOptions})">
+            <summary>
+            配置验证器选项
+            </summary>
+            <param name="configure">自定义配置委托</param>
+            <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
+        </member>
         <member name="M:Furion.Validation.ObjectValidator`1.Property``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String)">
             <summary>
             初始化属性验证器
@@ -336,21 +342,6 @@
             <param name="propertyExpression">属性选择器</param>
             <param name="ruleSet">规则集</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotationValidation(System.Boolean,System.Boolean)">
-            <summary>
-            启用/禁用注解（特性）验证
-            </summary>
-            <param name="enable">是否启用</param>
-            <param name="validateAllProperties">验证所有属性</param>
-            <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
-        </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.WithCascadeMode(Furion.Validation.ValidatorCascadeMode)">
-            <summary>
-            设置验证器级联模式
-            </summary>
-            <param name="cascadeMode"><see cref="T:Furion.Validation.ValidatorCascadeMode"/></param>
-            <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.When(System.Func{`0,System.Boolean})">
             <inheritdoc />
@@ -479,10 +470,7 @@
             属性名称
             </summary>
         </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.SuppressAnnotationValidation">
-            <inheritdoc />
-        </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.CascadeMode">
+        <member name="P:Furion.Validation.PropertyValidator`2.Options">
             <inheritdoc />
         </member>
         <member name="P:Furion.Validation.PropertyValidator`2.ValidationObjectAccessor">
@@ -510,11 +498,11 @@
             属性别名
             </summary>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.WithAnnotationValidation(System.Boolean)">
+        <member name="M:Furion.Validation.PropertyValidator`2.ConfigureOptions(System.Action{Furion.Validation.ValidatorOptions})">
             <summary>
-            启用/禁用注解（特性）验证
+            配置验证器选项
             </summary>
-            <param name="enable">是否启用</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.WithErrorMessage(System.String)">
@@ -529,13 +517,6 @@
             设置属性别名
             </summary>
             <param name="displayName">属性别名</param>
-            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
-        </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.WithCascadeMode(Furion.Validation.ValidatorCascadeMode)">
-            <summary>
-            设置验证器级联模式
-            </summary>
-            <param name="cascadeMode"><see cref="T:Furion.Validation.ValidatorCascadeMode"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.SetValidator(Furion.Validation.IObjectValidator{`1})">

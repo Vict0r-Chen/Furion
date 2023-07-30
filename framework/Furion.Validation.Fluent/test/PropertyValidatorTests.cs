@@ -14,6 +14,8 @@
 
 #pragma warning disable
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Furion.Validation.Fluent.Tests;
 
 public class PropertyValidatorTests
@@ -44,8 +46,9 @@ public class PropertyValidatorTests
         Assert.Empty(propertyValidator.Validators);
         Assert.NotNull(propertyValidator.PropertyName);
         Assert.Equal("Name", propertyValidator.PropertyName);
-        Assert.True(propertyValidator.SuppressAnnotationValidation);
-        Assert.Equal(ValidatorCascadeMode.Continue, propertyValidator.CascadeMode);
+        Assert.NotNull(propertyValidator.Options);
+        Assert.True(propertyValidator.Options.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.Continue, propertyValidator.Options.CascadeMode);
         Assert.Null(propertyValidator.ValidationObjectAccessor);
         Assert.Null(propertyValidator.ConditionExpression);
         Assert.Null(propertyValidator.SubValidator);
@@ -53,17 +56,34 @@ public class PropertyValidatorTests
         Assert.Null(propertyValidator.DisplayName);
     }
 
-    [Theory]
-    [InlineData(true, false)]
-    [InlineData(false, true)]
-    public void WithAnnotationValidation(bool enable, bool result)
+    [Fact]
+    public void ConfigureOptions_Invalid_Parameters()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
 
-        propertyValidator.WithAnnotationValidation(enable);
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            propertyValidator.ConfigureOptions(null!);
+        });
+    }
 
-        Assert.Equal(result, propertyValidator.SuppressAnnotationValidation);
+    [Theory]
+    [InlineData(true, true)]
+    [InlineData(false, false)]
+    public void ConfigureOptions_ReturnOK(bool enable, bool result)
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        propertyValidator.ConfigureOptions(o =>
+        {
+            o.SuppressAnnotationValidation = enable;
+            o.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
+        });
+
+        Assert.Equal(result, propertyValidator.Options.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, propertyValidator.Options.CascadeMode);
     }
 
     [Fact]
@@ -116,17 +136,6 @@ public class PropertyValidatorTests
         propertyValidator.WithDisplayName("Furion");
 
         Assert.Equal("Furion", propertyValidator.DisplayName);
-    }
-
-    [Fact]
-    public void WithCascadeMode_ReturnOK()
-    {
-        var objectValidator = new ObjectValidator<PropertyModel>();
-        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
-
-        propertyValidator.WithCascadeMode(ValidatorCascadeMode.StopOnFirstFailure);
-
-        Assert.Equal(ValidatorCascadeMode.StopOnFirstFailure, propertyValidator.CascadeMode);
     }
 
     [Fact]
@@ -325,7 +334,7 @@ public class PropertyValidatorTests
 
         Assert.True(propertyValidator.IsValid(instance));
 
-        propertyValidator.WithAnnotationValidation();
+        propertyValidator.Options.SuppressAnnotationValidation = false;
 
         Assert.False(propertyValidator.IsValid(instance));
     }
@@ -419,7 +428,7 @@ public class PropertyValidatorTests
 
         Assert.Null(propertyValidator.GetValidationResults(instance));
 
-        propertyValidator.WithAnnotationValidation();
+        propertyValidator.Options.SuppressAnnotationValidation = false;
 
         instance.Name = "百小僧";
         var validationResults = propertyValidator.GetValidationResults(instance);
@@ -550,7 +559,7 @@ public class PropertyValidatorTests
 
         objectValidator.Validate(instance);
 
-        propertyValidator.WithAnnotationValidation();
+        propertyValidator.Options.SuppressAnnotationValidation = false;
 
         instance.Name = "百小僧";
         var exception = Assert.Throws<AggregateValidationException>(() =>

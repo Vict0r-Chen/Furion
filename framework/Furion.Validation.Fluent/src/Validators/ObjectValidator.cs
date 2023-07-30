@@ -34,15 +34,17 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// </summary>
     public ObjectValidator()
     {
+        Options = new();
+
         _propertyValidators = new();
-        _annotationValidator = new();
+        _annotationValidator = new()
+        {
+            ValidateAllProperties = Options.ValidateAllPropertiesForAnnotationValidation
+        };
     }
 
     /// <inheritdoc />
-    public ValidatorCascadeMode CascadeMode { get; set; }
-
-    /// <inheritdoc />
-    public bool SuppressAnnotationValidation { get; set; } = true;
+    public ValidatorOptions Options { get; init; }
 
     /// <summary>
     /// 执行验证的符合条件表达式
@@ -71,6 +73,25 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <summary>
+    /// 配置验证器选项
+    /// </summary>
+    /// <param name="configure">自定义配置委托</param>
+    /// <returns><see cref="ObjectValidator{T}"/></returns>
+    public ObjectValidator<T> ConfigureOptions(Action<ValidatorOptions> configure)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configure);
+
+        // 调用自定义配置委托
+        configure?.Invoke(Options);
+
+        // 同步注解（特性）验证器配置
+        _annotationValidator.ValidateAllProperties = Options.ValidateAllPropertiesForAnnotationValidation;
+
+        return this;
+    }
+
+    /// <summary>
     /// 初始化属性验证器
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
@@ -92,32 +113,6 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         _propertyValidators.Add(validator);
 
         return validator;
-    }
-
-    /// <summary>
-    /// 启用/禁用注解（特性）验证
-    /// </summary>
-    /// <param name="enable">是否启用</param>
-    /// <param name="validateAllProperties">验证所有属性</param>
-    /// <returns><see cref="ObjectValidator{T}"/></returns>
-    public ObjectValidator<T> WithAnnotationValidation(bool enable = true, bool validateAllProperties = true)
-    {
-        SuppressAnnotationValidation = !enable;
-        _annotationValidator.ValidateAllProperties = validateAllProperties;
-
-        return this;
-    }
-
-    /// <summary>
-    /// 设置验证器级联模式
-    /// </summary>
-    /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
-    /// <returns><see cref="ObjectValidator{T}"/></returns>
-    public ObjectValidator<T> WithCascadeMode(ValidatorCascadeMode cascadeMode)
-    {
-        CascadeMode = cascadeMode;
-
-        return this;
     }
 
     /// <inheritdoc />
@@ -187,7 +182,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         }
 
         // 检查是否启用注解（特性）验证，同时调用属性验证器集合进行验证
-        return (SuppressAnnotationValidation || _annotationValidator.IsValid(instance))
+        return (Options.SuppressAnnotationValidation || _annotationValidator.IsValid(instance))
             && _propertyValidators.Where(v => v.IsInRuleSet(ruleSet))
                 .All(validator => validator.IsValid(instance, ruleSet));
     }
@@ -208,7 +203,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         var validationResults = new List<ValidationResult>();
 
         // 检查是否启用注解（特性）验证
-        if (!SuppressAnnotationValidation)
+        if (!Options.SuppressAnnotationValidation)
         {
             validationResults.AddRange(_annotationValidator
                 .GetValidationResults(instance, null!) ?? Enumerable.Empty<ValidationResult>());

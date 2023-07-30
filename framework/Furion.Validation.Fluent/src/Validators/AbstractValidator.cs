@@ -39,45 +39,17 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
         _objectValidator = ObjectValidator<T>.Create();
     }
 
-    /// <summary>
-    /// 禁用注解（特性）验证
-    /// </summary>
-    private bool _suppressAnnotationValidation = true;
-
     /// <inheritdoc />
-    public bool SuppressAnnotationValidation
-    {
-        get => _suppressAnnotationValidation;
-        set
-        {
-            _suppressAnnotationValidation = value;
-            _objectValidator.SuppressAnnotationValidation = value;
-        }
-    }
-
-    /// <inheritdoc cref="ValidatorCascadeMode" />
-    private ValidatorCascadeMode _cascadeMode;
-
-    /// <inheritdoc />
-    public ValidatorCascadeMode CascadeMode
-    {
-        get => _cascadeMode;
-        set
-        {
-            _cascadeMode = value;
-            _objectValidator.CascadeMode = value;
-        }
-    }
+    public ValidatorOptions Options => _objectValidator.Options;
 
     /// <summary>
-    /// 启用/禁用注解（特性）验证
+    /// 配置验证器选项
     /// </summary>
-    /// <param name="enable">是否启用</param>
-    /// <param name="validateAllProperties">验证所有属性</param>
-    public void SetAnnotationValidation(bool enable = true, bool validateAllProperties = true)
+    /// <param name="configure">自定义配置委托</param>
+    /// <returns><see cref="IObjectValidator{T}"/></returns>
+    public IObjectValidator<T> ConfigureOptions(Action<ValidatorOptions> configure)
     {
-        SuppressAnnotationValidation = !enable;
-        _objectValidator._annotationValidator.ValidateAllProperties = validateAllProperties;
+        return _objectValidator.ConfigureOptions(configure);
     }
 
     /// <summary>

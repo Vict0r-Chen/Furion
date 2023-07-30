@@ -24,24 +24,47 @@ public class AbstractValidatorTests
         Assert.NotNull(validator);
         Assert.NotNull(validator._objectValidator);
         Assert.Null(validator._ruleSet);
-        Assert.True(validator.SuppressAnnotationValidation);
-        Assert.Equal(ValidatorCascadeMode.Continue, validator.CascadeMode);
+        Assert.NotNull(validator.Options);
+        Assert.True(validator.Options.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.Continue, validator.Options.CascadeMode);
         Assert.Equal(2, validator._objectValidator._propertyValidators.Count);
     }
 
-    [Theory]
-    [InlineData(true, false)]
-    [InlineData(false, true)]
-    public void SetAnnotationValidation_ReturnOK(bool enable, bool result)
+    [Fact]
+    public void ConfigureOptions_Invalid_Parameters()
     {
         var validator = new TestModelValidator();
-        validator.SetAnnotationValidation(enable);
 
-        Assert.Equal(result, validator.SuppressAnnotationValidation);
-        Assert.Equal(result, validator._objectValidator.SuppressAnnotationValidation);
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validator.ConfigureOptions(null!);
+        });
+    }
+
+    [Theory]
+    [InlineData(true, true)]
+    [InlineData(false, false)]
+    public void ConfigureOptions_ReturnOK(bool enable, bool result)
+    {
+        var validator = new TestModelValidator();
+
+        validator.ConfigureOptions(o =>
+        {
+            o.SuppressAnnotationValidation = enable;
+            o.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
+        });
+
+        Assert.Equal(result, validator.Options.SuppressAnnotationValidation);
+        Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, validator.Options.CascadeMode);
+        Assert.True(validator.Options.ValidateAllPropertiesForAnnotationValidation);
         Assert.True(validator._objectValidator._annotationValidator.ValidateAllProperties);
 
-        validator.SetAnnotationValidation(enable, false);
+        validator.ConfigureOptions(o =>
+        {
+            o.ValidateAllPropertiesForAnnotationValidation = false;
+        });
+
+        Assert.False(validator.Options.ValidateAllPropertiesForAnnotationValidation);
         Assert.False(validator._objectValidator._annotationValidator.ValidateAllProperties);
     }
 
