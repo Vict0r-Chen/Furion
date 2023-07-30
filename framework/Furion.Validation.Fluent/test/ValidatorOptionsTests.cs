@@ -12,23 +12,16 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace System.Linq;
+namespace Furion.Validation.Fluent.Tests;
 
-/// <summary>
-/// <see cref="IEnumerable{T}"/> 拓展类
-/// </summary>
-internal static class IEnumerableExtensions
+public class ValidatorOptionsTests
 {
-    /// <inheritdoc cref="Enumerable.SelectMany{TSource, TResult}(IEnumerable{TSource}, Func{TSource, IEnumerable{TResult}})" />
-    public static IEnumerable<TResult> SelectMany<TSource, TResult>(this IEnumerable<TSource> source
-        , Func<TSource, IEnumerable<TResult>> selector
-        , ValidatorCascadeMode cascadeMode)
+    public void New_ReturnOK()
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(selector);
+        var validatorOptions = new ValidatorOptions();
 
-        return cascadeMode is not ValidatorCascadeMode.StopOnFirstFailure
-            ? source.SelectMany(selector)
-            : source.Select(selector).FirstOrDefault(source => source.Any()) ?? Enumerable.Empty<TResult>();
+        Assert.Equal(ValidatorCascadeMode.Continue, validatorOptions.CascadeMode);
+        Assert.True(validatorOptions.SuppressAnnotationValidation);
+        Assert.True(validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator);
     }
 }
