@@ -56,15 +56,15 @@ public class AbstractValidatorTests
 
         Assert.Equal(result, validator.Options.SuppressAnnotationValidation);
         Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, validator.Options.CascadeMode);
-        Assert.True(validator.Options.ValidateAllPropertiesForAnnotationValidation);
+        Assert.True(validator.Options.ValidateAllPropertiesForObjectAnnotationValidator);
         Assert.True(validator._objectValidator._annotationValidator.ValidateAllProperties);
 
         validator.ConfigureOptions(o =>
         {
-            o.ValidateAllPropertiesForAnnotationValidation = false;
+            o.ValidateAllPropertiesForObjectAnnotationValidator = false;
         });
 
-        Assert.False(validator.Options.ValidateAllPropertiesForAnnotationValidation);
+        Assert.False(validator.Options.ValidateAllPropertiesForObjectAnnotationValidator);
         Assert.False(validator._objectValidator._annotationValidator.ValidateAllProperties);
     }
 

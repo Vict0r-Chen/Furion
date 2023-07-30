@@ -39,7 +39,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         _propertyValidators = new();
         _annotationValidator = new()
         {
-            ValidateAllProperties = Options.ValidateAllPropertiesForAnnotationValidation
+            ValidateAllProperties = Options.ValidateAllPropertiesForObjectAnnotationValidator
         };
     }
 
@@ -86,7 +86,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         configure?.Invoke(Options);
 
         // 同步注解（特性）验证器配置
-        _annotationValidator.ValidateAllProperties = Options.ValidateAllPropertiesForAnnotationValidation;
+        _annotationValidator.ValidateAllProperties = Options.ValidateAllPropertiesForObjectAnnotationValidator;
 
         return this;
     }

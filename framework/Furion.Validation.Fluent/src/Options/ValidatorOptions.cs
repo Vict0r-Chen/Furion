@@ -28,7 +28,7 @@ public sealed class ValidatorOptions
     public bool SuppressAnnotationValidation { get; internal set; } = true;
 
     /// <summary>
-    /// 为注解（特性）配置是否验证所有属性
+    /// 为对象注解（特性）配置是否验证所有属性
     /// </summary>
-    public bool ValidateAllPropertiesForAnnotationValidation { get; internal set; } = true;
+    public bool ValidateAllPropertiesForObjectAnnotationValidator { get; internal set; } = true;
 }
