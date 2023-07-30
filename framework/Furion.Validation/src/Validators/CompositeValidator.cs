@@ -63,7 +63,7 @@ public class CompositeValidator : ValidatorBase
 
         return CascadeMode switch
         {
-            ValidatorCascadeMode.Continue => Validators.All(validator => validator.IsValid(value)),
+            ValidatorCascadeMode.Continue or ValidatorCascadeMode.StopOnFirstFailure => Validators.All(validator => validator.IsValid(value)),
             ValidatorCascadeMode.UsingFirstSuccess => Validators.Any(validator => validator.IsValid(value)),
             _ => false,
         };
@@ -79,7 +79,7 @@ public class CompositeValidator : ValidatorBase
         }
 
         // 初始化验证结果集合
-        var validationResults = Validators.SelectMany(validator => validator.GetValidationResults(value, name) ?? Enumerable.Empty<ValidationResult>())
+        var validationResults = Validators.SelectMany(validator => validator.GetValidationResults(value, name) ?? Enumerable.Empty<ValidationResult>(), CascadeMode)
             .ToList();
 
         // 检查是否配置了自定义错误消息

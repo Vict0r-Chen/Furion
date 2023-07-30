@@ -523,6 +523,14 @@
         <member name="M:System.ComponentModel.DataAnnotations.UserNameAttribute.IsValid(System.Object)">
             <inheritdoc />
         </member>
+        <member name="T:System.Linq.IEnumerableExtensions">
+            <summary>
+            <see cref="T:System.Collections.Generic.IEnumerable`1"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.Linq.IEnumerableExtensions.SelectMany``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}},Furion.Validation.ValidatorCascadeMode)">
+            <inheritdoc cref="M:System.Linq.Enumerable.SelectMany``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}})" />
+        </member>
         <member name="T:System.Text.RegularExpressions.Generated.Regex_0">
             <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the Regex method.</summary>
         </member>

@@ -426,7 +426,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 获取所有验证器验证结果集合
             validationResults.AddRange(Validators
                 .SelectMany(validator => validator.GetValidationResults(
-                    GetValidationObject(instance, validator, propertyValue), GetDisplayName()) ?? Enumerable.Empty<ValidationResult>()));
+                    GetValidationObject(instance, validator, propertyValue), GetDisplayName()) ?? Enumerable.Empty<ValidationResult>(), Options.CascadeMode));
         }
 
         return validationResults.Count == 0 ? null : validationResults;

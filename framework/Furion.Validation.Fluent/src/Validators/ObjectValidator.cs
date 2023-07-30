@@ -212,7 +212,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         // 获取属性验证器集合所有验证结果
         validationResults.AddRange(_propertyValidators
             .Where(v => v.IsInRuleSet(ruleSet))
-            .SelectMany(validator => validator.GetValidationResults(instance, ruleSet) ?? Enumerable.Empty<ValidationResult>()));
+            .SelectMany(validator => validator.GetValidationResults(instance, ruleSet) ?? Enumerable.Empty<ValidationResult>(), Options.CascadeMode));
 
         return validationResults.Count == 0 ? null : validationResults;
     }

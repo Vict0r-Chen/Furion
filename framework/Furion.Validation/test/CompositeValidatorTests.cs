@@ -89,6 +89,12 @@ public class CompositeValidatorTests
         Assert.False(validator.IsValid(string.Empty));
         Assert.True(validator.IsValid("赢"));
         Assert.True(validator.IsValid("赢家"));
+
+        validator.CascadeMode = ValidatorCascadeMode.StopOnFirstFailure;
+        Assert.True(validator.IsValid(null));
+        Assert.False(validator.IsValid(string.Empty));
+        Assert.False(validator.IsValid("赢"));
+        Assert.True(validator.IsValid("赢家"));
     }
 
     [Fact]
@@ -121,7 +127,7 @@ public class CompositeValidatorTests
     {
         var validator = new CompositeValidator(new ChineseNameValidator(), new ChineseValidator());
 
-        // And =====
+        // Continue =====
         var validationResultsOfSucceed = validator.GetValidationResults("百小僧", "data");
         Assert.Null(validationResultsOfSucceed);
 
@@ -131,17 +137,24 @@ public class CompositeValidatorTests
         Assert.Equal("data", validationResultsOfFailure.First().MemberNames.First());
         Assert.Equal("The field data is not a valid Chinese name.", validationResultsOfFailure.First().ErrorMessage);
 
-        // Or =====
+        // UsingFirstSuccess =====
         validator.CascadeMode = ValidatorCascadeMode.UsingFirstSuccess;
-        var validationResultsOfSucceedForOr = validator.GetValidationResults("赢", "data");
-        Assert.Null(validationResultsOfSucceedForOr);
+        var validationResultsOfSucceed2 = validator.GetValidationResults("赢", "data");
+        Assert.Null(validationResultsOfSucceed2);
 
-        var validationResultsOfFailureForOr = validator.GetValidationResults("蒙奇·D·路飞", "data");
-        Assert.NotNull(validationResultsOfFailureForOr);
-        Assert.Equal(2, validationResultsOfFailureForOr.Count);
-        Assert.Equal("data", validationResultsOfFailureForOr.First().MemberNames.First());
-        Assert.Equal("The field data is not a valid Chinese name.", validationResultsOfFailureForOr.First().ErrorMessage);
-        Assert.Equal("The field data is not a valid Chinese.", validationResultsOfFailureForOr.Last().ErrorMessage);
+        var validationResultsOfFailure2 = validator.GetValidationResults("蒙奇·D·路飞", "data");
+        Assert.NotNull(validationResultsOfFailure2);
+        Assert.Equal(2, validationResultsOfFailure2.Count);
+        Assert.Equal("data", validationResultsOfFailure2.First().MemberNames.First());
+        Assert.Equal("The field data is not a valid Chinese name.", validationResultsOfFailure2.First().ErrorMessage);
+        Assert.Equal("The field data is not a valid Chinese.", validationResultsOfFailure2.Last().ErrorMessage);
+
+        // StopOnFirstFailure
+        validator.CascadeMode = ValidatorCascadeMode.StopOnFirstFailure;
+        var validationResultsOfFailure3 = validator.GetValidationResults("蒙奇·D·路飞", "data");
+        Assert.NotNull(validationResultsOfFailure3);
+        Assert.Single(validationResultsOfFailure3);
+        Assert.Equal("The field data is not a valid Chinese name.", validationResultsOfFailure3.First().ErrorMessage);
     }
 
     [Fact]
