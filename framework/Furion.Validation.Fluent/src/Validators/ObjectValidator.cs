@@ -34,12 +34,15 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// </summary>
     public ObjectValidator()
     {
+        _annotationValidator = new();
+        _propertyValidators = new();
+
         Options = new();
 
-        _propertyValidators = new();
-        _annotationValidator = new()
+        // 同步注解（特性）验证器配置
+        Options.PropertyChanged += (sender, args) =>
         {
-            ValidateAllProperties = Options.ValidateAllPropertiesForObjectAnnotationValidator
+            _annotationValidator.ValidateAllProperties = ((ValidatorOptions)sender!).ValidateAllPropertiesForObjectAnnotationValidator;
         };
     }
 
@@ -84,9 +87,6 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
 
         // 调用自定义配置委托
         configure?.Invoke(Options);
-
-        // 同步注解（特性）验证器配置
-        _annotationValidator.ValidateAllProperties = Options.ValidateAllPropertiesForObjectAnnotationValidator;
 
         return this;
     }

@@ -20,9 +20,6 @@ namespace Furion.Validation;
 /// <typeparam name="T">对象类型</typeparam>
 public interface IObjectValidator<T> : IObjectValidator
 {
-    /// <inheritdoc cref="ValidatorOptions" />
-    ValidatorOptions Options { get; }
-
     /// <summary>
     /// 配置执行验证的符合条件表达式
     /// </summary>
@@ -49,6 +46,9 @@ public interface IObjectValidator<T> : IObjectValidator
 /// </summary>
 public interface IObjectValidator
 {
+    /// <inheritdoc cref="ValidatorOptions" />
+    ValidatorOptions Options { get; }
+
     /// <summary>
     /// 检查对象合法性
     /// </summary>

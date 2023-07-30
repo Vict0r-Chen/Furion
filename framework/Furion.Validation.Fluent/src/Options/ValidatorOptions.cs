@@ -17,18 +17,45 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器选项
 /// </summary>
-public sealed class ValidatorOptions
+public class ValidatorOptions
 {
     /// <inheritdoc cref="ValidatorCascadeMode" />
-    public ValidatorCascadeMode CascadeMode { get; internal set; }
+    public ValidatorCascadeMode CascadeMode { get; set; }
 
     /// <summary>
     /// 禁用注解（特性）验证
     /// </summary>
-    public bool SuppressAnnotationValidation { get; internal set; } = true;
+    public bool SuppressAnnotationValidation { get; set; } = true;
+
+    /// <inheritdoc cref="ValidateAllPropertiesForObjectAnnotationValidator" />
+    private bool _validateAllPropertiesForObjectAnnotationValidator = true;
 
     /// <summary>
     /// 为对象注解（特性）配置是否验证所有属性
     /// </summary>
-    public bool ValidateAllPropertiesForObjectAnnotationValidator { get; internal set; } = true;
+    public bool ValidateAllPropertiesForObjectAnnotationValidator
+    {
+        get => _validateAllPropertiesForObjectAnnotationValidator;
+        set
+        {
+            _validateAllPropertiesForObjectAnnotationValidator = value;
+
+            // 触发属性变更事件
+            OnPropertyChanged(nameof(ValidateAllPropertiesForObjectAnnotationValidator));
+        }
+    }
+
+    /// <summary>
+    /// 属性变更事件
+    /// </summary>
+    public event EventHandler? PropertyChanged;
+
+    /// <summary>
+    /// 属性变更事件触发方法
+    /// </summary>
+    /// <param name="propertyName">属性名称</param>
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

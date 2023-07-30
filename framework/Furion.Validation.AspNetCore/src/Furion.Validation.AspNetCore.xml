@@ -50,6 +50,12 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute.ConfigureOptions(Furion.Validation.IObjectValidator)">
+            <summary>
+            配置验证特性
+            </summary>
+            <param name="objectValidator"></param>
+        </member>
         <member name="T:Furion.Validation.CustomizeValidatorAttribute`1">
             <summary>
             验证器特性

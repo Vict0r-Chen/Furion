@@ -25,4 +25,24 @@ public class ValidatorOptionsTests
         Assert.True(validatorOptions.SuppressAnnotationValidation);
         Assert.True(validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator);
     }
+
+    [Fact]
+    public void PropertyChanged_ReturnOK()
+    {
+        var validatorOptions = new ValidatorOptions();
+
+        var i = 0;
+        validatorOptions.PropertyChanged += (sender, args) =>
+        {
+            var options = ((ValidatorOptions)sender!);
+            Assert.NotNull(options);
+
+            i++;
+        };
+
+        validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator = false;
+
+        Assert.False(validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator);
+        Assert.Equal(1, i);
+    }
 }

@@ -86,9 +86,6 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
         </member>
-        <member name="P:Furion.Validation.IObjectValidator`1.Options">
-            <inheritdoc cref="T:Furion.Validation.ValidatorOptions" />
-        </member>
         <member name="M:Furion.Validation.IObjectValidator`1.When(System.Func{`0,System.Boolean})">
             <summary>
             配置执行验证的符合条件表达式
@@ -113,6 +110,9 @@
             <summary>
             验证器服务
             </summary>
+        </member>
+        <member name="P:Furion.Validation.IObjectValidator.Options">
+            <inheritdoc cref="T:Furion.Validation.ValidatorOptions" />
         </member>
         <member name="M:Furion.Validation.IObjectValidator.IsValid(System.Object,System.String)">
             <summary>
@@ -175,10 +175,24 @@
             禁用注解（特性）验证
             </summary>
         </member>
+        <member name="F:Furion.Validation.ValidatorOptions._validateAllPropertiesForObjectAnnotationValidator">
+            <inheritdoc cref="P:Furion.Validation.ValidatorOptions.ValidateAllPropertiesForObjectAnnotationValidator" />
+        </member>
         <member name="P:Furion.Validation.ValidatorOptions.ValidateAllPropertiesForObjectAnnotationValidator">
             <summary>
             为对象注解（特性）配置是否验证所有属性
             </summary>
+        </member>
+        <member name="E:Furion.Validation.ValidatorOptions.PropertyChanged">
+            <summary>
+            属性变更事件
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.ValidatorOptions.OnPropertyChanged(System.String)">
+            <summary>
+            属性变更事件触发方法
+            </summary>
+            <param name="propertyName">属性名称</param>
         </member>
         <member name="T:Furion.Validation.FluentValidatorScanner">
             <summary>

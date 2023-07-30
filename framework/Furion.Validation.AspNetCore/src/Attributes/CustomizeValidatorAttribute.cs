@@ -62,6 +62,8 @@ public class CustomizeValidatorAttribute : ValidationAttribute
 
         if (objectValidator is not null)
         {
+            ConfigureOptions(objectValidator);
+
             var validationResults = objectValidator.GetValidationResults(value, RuleSet);
             if (validationResults is not null)
             {
@@ -97,6 +99,18 @@ public class CustomizeValidatorAttribute : ValidationAttribute
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 配置验证特性
+    /// </summary>
+    /// <param name="objectValidator"></param>
+    protected void ConfigureOptions(IObjectValidator objectValidator)
+    {
+        var validatorOptions = objectValidator.Options;
+        validatorOptions.SuppressAnnotationValidation = SuppressAnnotationValidation;
+        validatorOptions.CascadeMode = CascadeMode;
+        validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator = ValidateAllPropertiesForObjectAnnotationValidator;
     }
 }
 
@@ -138,6 +152,8 @@ public sealed class CustomizeValidatorAttribute<TValidator> : CustomizeValidator
 
         if (objectValidator is not null)
         {
+            ConfigureOptions(objectValidator);
+
             var validationResults = objectValidator.GetValidationResults(value, RuleSet);
             if (validationResults is not null)
             {
