@@ -108,19 +108,19 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public bool IsValid(T instance, string? ruleSet = null)
+    public bool IsValid(object instance, string? ruleSet = null)
     {
         return _objectValidator.IsValid(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null)
+    public List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null)
     {
         return _objectValidator.GetValidationResults(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public void Validate(T instance, string? ruleSet = null)
+    public void Validate(object instance, string? ruleSet = null)
     {
         _objectValidator.Validate(instance, ruleSet);
     }

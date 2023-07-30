@@ -42,37 +42,6 @@ public interface IObjectValidator<T> : IObjectValidator
     /// </summary>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
     IObjectValidator<T> Reset();
-
-    /// <summary>
-    /// 检查对象合法性
-    /// </summary>
-    /// <param name="instance">对象实例</param>
-    /// <param name="ruleSet">规则集</param>
-    /// <returns><see cref="bool"/></returns>
-    bool IsValid(T instance, string? ruleSet = null);
-
-    /// <summary>
-    /// 获取验证结果
-    /// </summary>
-    /// <param name="instance">对象实例</param>
-    /// <param name="ruleSet">规则集</param>
-    /// <returns><see cref="List{T}"/></returns>
-    List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null);
-
-    /// <summary>
-    /// 执行验证
-    /// </summary>
-    /// <param name="instance">对象实例</param>
-    /// <param name="ruleSet">规则集</param>
-    /// <exception cref="AggregateValidationException"></exception>
-    void Validate(T instance, string? ruleSet = null);
-
-    /// <summary>
-    /// 检查规则集
-    /// </summary>
-    /// <param name="ruleSet">规则集</param>
-    /// <returns><see cref="bool"/></returns>
-    bool IsInRuleSet(string? ruleSet = null);
 }
 
 /// <summary>
@@ -80,4 +49,34 @@ public interface IObjectValidator<T> : IObjectValidator
 /// </summary>
 public interface IObjectValidator
 {
+    /// <summary>
+    /// 检查对象合法性
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
+    /// <returns><see cref="bool"/></returns>
+    bool IsValid(object instance, string? ruleSet = null);
+
+    /// <summary>
+    /// 获取验证结果
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
+    /// <returns><see cref="List{T}"/></returns>
+    List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null);
+
+    /// <summary>
+    /// 执行验证
+    /// </summary>
+    /// <param name="instance">对象实例</param>
+    /// <param name="ruleSet">规则集</param>
+    /// <exception cref="AggregateValidationException"></exception>
+    void Validate(object instance, string? ruleSet = null);
+
+    /// <summary>
+    /// 检查规则集
+    /// </summary>
+    /// <param name="ruleSet">规则集</param>
+    /// <returns><see cref="bool"/></returns>
+    bool IsInRuleSet(string? ruleSet = null);
 }

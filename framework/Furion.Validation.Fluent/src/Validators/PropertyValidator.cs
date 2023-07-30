@@ -328,7 +328,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <param name="instance">对象实例</param>
     /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool CanValidate(T instance, string? ruleSet = null)
+    internal bool CanValidate(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -353,7 +353,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public bool IsValid(T instance, string? ruleSet = null)
+    public bool IsValid(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -387,7 +387,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null)
+    public List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -433,7 +433,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <inheritdoc />
-    public void Validate(T instance, string? ruleSet = null)
+    public void Validate(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -484,12 +484,12 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="instance">对象实例</param>
     /// <returns><see cref="object"/></returns>
-    internal TProperty? GetPropertyValue(T instance)
+    internal TProperty? GetPropertyValue(object instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
-        return (TProperty?)_annotationValidator.GetPropertyValue(instance, PropertyName);
+        return (TProperty?)_annotationValidator.GetPropertyValue((T)instance, PropertyName);
     }
 
     /// <summary>
@@ -499,7 +499,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <param name="validator"><see cref="ValidatorBase"/></param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
-    internal object? GetValidationObject(T instance, ValidatorBase validator, TProperty? propertyValue)
+    internal object? GetValidationObject(object instance, ValidatorBase validator, TProperty? propertyValue)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -515,7 +515,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 检查是否设置了验证对象访问器
         return ValidationObjectAccessor is not null
-            ? ValidationObjectAccessor(instance, validator, propertyValue)
+            ? ValidationObjectAccessor((T)instance, validator, propertyValue)
             : propertyValue;
     }
 

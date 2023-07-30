@@ -12,5 +12,23 @@
         <member name="M:Furion.Component.AspNetCoreValidationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
             <inheritdoc />
         </member>
+        <member name="T:Furion.Validation.CustomizeValidatorAttribute">
+            <summary>
+            验证器特性
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.CustomizeValidatorAttribute"/>
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.CustomizeValidatorAttribute.RuleSet">
+            <summary>
+            规则集
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

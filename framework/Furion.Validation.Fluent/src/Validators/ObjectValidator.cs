@@ -150,7 +150,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// </summary>
     /// <param name="instance">对象实例</param>
     /// <returns><see cref="bool"/></returns>
-    internal bool CanValidate(T instance)
+    internal bool CanValidate(object instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -170,7 +170,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public bool IsValid(T instance, string? ruleSet = null)
+    public bool IsValid(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -188,7 +188,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(T instance, string? ruleSet = null)
+    public List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -218,7 +218,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public void Validate(T instance, string? ruleSet = null)
+    public void Validate(object instance, string? ruleSet = null)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);

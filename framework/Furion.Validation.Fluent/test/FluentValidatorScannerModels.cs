@@ -38,15 +38,15 @@ public class FluentModelValidator5 : IObjectValidator<FluentModel>
 {
     public ValidatorOptions Options => throw new NotImplementedException();
 
-    public List<ValidationResult>? GetValidationResults(FluentModel instance, string? ruleSet = null) => throw new NotImplementedException();
+    public List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null) => throw new NotImplementedException();
 
     public bool IsInRuleSet(string? ruleSet = null) => throw new NotImplementedException();
 
-    public bool IsValid(FluentModel instance, string? ruleSet = null) => throw new NotImplementedException();
+    public bool IsValid(object instance, string? ruleSet = null) => throw new NotImplementedException();
 
     public IObjectValidator<FluentModel> Reset() => throw new NotImplementedException();
 
-    public void Validate(FluentModel instance, string? ruleSet = null) => throw new NotImplementedException();
+    public void Validate(object instance, string? ruleSet = null) => throw new NotImplementedException();
 
     public IObjectValidator<FluentModel> When(Func<FluentModel, bool> conditionExpression) => throw new NotImplementedException();
 
