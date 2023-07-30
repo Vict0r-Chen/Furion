@@ -24,6 +24,8 @@ public class FluentValidationBuilderTests
         Assert.NotNull(fluentValidationBuilder);
         Assert.NotNull(fluentValidationBuilder._assemblies);
         Assert.Empty(fluentValidationBuilder._assemblies);
+        Assert.NotNull(fluentValidationBuilder._validatorTypes);
+        Assert.Empty(fluentValidationBuilder._validatorTypes);
         Assert.Null(fluentValidationBuilder._typeFilterConfigure);
         Assert.False(fluentValidationBuilder.SuppressAssemblyScanning);
         Assert.False(fluentValidationBuilder.SuppressNonPublicType);
