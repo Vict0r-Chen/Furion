@@ -45,4 +45,41 @@ public class ValidatorOptionsTests
         Assert.False(validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator);
         Assert.Equal(1, i);
     }
+
+    [Fact]
+    public void OnPropertyChanged_Invalid_Parameters()
+    {
+        var validatorOptions = new ValidatorOptions();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            validatorOptions.OnPropertyChanged(null!);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validatorOptions.OnPropertyChanged(string.Empty);
+        });
+
+        Assert.Throws<ArgumentException>(() =>
+        {
+            validatorOptions.OnPropertyChanged("");
+        });
+    }
+
+    [Fact]
+    public void OnPropertyChanged_ReturnOK()
+    {
+        var validatorOptions = new ValidatorOptions();
+
+        var i = 0;
+        validatorOptions.PropertyChanged += (sender, args) =>
+        {
+            i++;
+        };
+
+        validatorOptions.OnPropertyChanged(nameof(ValidatorOptions.ValidateAllPropertiesForObjectAnnotationValidator));
+
+        Assert.Equal(1, i);
+    }
 }

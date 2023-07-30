@@ -12,34 +12,21 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Furion.Validation;
 
 /// <summary>
-/// 验证器特性
+/// 链式验证器特性
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field, AllowMultiple = false)]
 public class CustomizeValidatorAttribute : ValidationAttribute
 {
-    /// <summary>
-    /// <inheritdoc cref="CustomizeValidatorAttribute"/>
-    /// </summary>
-    public CustomizeValidatorAttribute()
-    {
-    }
-
     /// <inheritdoc cref="ValidatorCascadeMode" />
     public ValidatorCascadeMode CascadeMode { get; set; }
 
-    /// <summary>
-    /// 禁用注解（特性）验证
-    /// </summary>
+    /// <inheritdoc cref="ValidatorOptions.SuppressAnnotationValidation" />
     public bool SuppressAnnotationValidation { get; set; } = true;
 
-    /// <summary>
-    /// 为对象注解（特性）配置是否验证所有属性
-    /// </summary>
+    /// <inheritdoc cref="ValidatorOptions.ValidateAllPropertiesForObjectAnnotationValidator" />
     public bool ValidateAllPropertiesForObjectAnnotationValidator { get; set; } = true;
 
     /// <summary>
@@ -50,24 +37,59 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     /// <inheritdoc />
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
+        // 检查对象合法性
+        return IsValid(value, validationContext, modelType =>
+        {
+            // 解析验证器服务
+            return validationContext.GetService(typeof(IObjectValidator<>)
+                .MakeGenericType(modelType)) as IObjectValidator;
+        });
+    }
+
+    /// <summary>
+    /// 检查对象合法性
+    /// </summary>
+    /// <param name="value">对象值</param>
+    /// <param name="validationContext">验证上下文</param>
+    /// <param name="createValidatorFactory">验证器创建工厂</param>
+    /// <returns><see cref="ValidationResult"/></returns>
+    internal ValidationResult? IsValid(object? value, ValidationContext validationContext, Func<Type, IObjectValidator?> createValidatorFactory)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(createValidatorFactory);
+
+        // 检查是否可以执行验证程序
         if (!CanValidate(value))
         {
             return ValidationResult.Success;
         }
 
-        var valueType = value!.GetType();
+        // 解析验证器服务
+        var objectValidator = createValidatorFactory(value!.GetType());
 
-        var objectValidator = validationContext.GetService(typeof(IObjectValidator<>)
-            .MakeGenericType(valueType)) as IObjectValidator;
-
+        // 空检查
         if (objectValidator is not null)
         {
+            // 配置验证器选项
             ConfigureOptions(objectValidator);
 
-            var validationResults = objectValidator.GetValidationResults(value, RuleSet);
+            // 获取验证结果
+            var validationResults = objectValidator.GetValidationResults(value!, RuleSet);
+
+            // 如果验证失败则返回首条验证结果
             if (validationResults is not null)
             {
-                return validationResults.First();
+                var validationResult = validationResults.First();
+
+                // 检查是否配置了错误消息
+                if (ErrorMessage is not null)
+                {
+                    validationResult.ErrorMessage = ErrorMessage;
+                }
+
+                // 本地化 TODO!
+
+                return validationResult;
             }
         }
 
@@ -75,22 +97,21 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 能否被验证
+    /// 检查是否可以执行验证程序
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    protected bool CanValidate(object? value)
+    /// <param name="value">对象值</param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool CanValidate(object? value)
     {
-        // 检查服务是否注册（流畅服务）
-        if (value is null)
+        // 检查对象值是否是 null 或 string 类型，如果是则跳过
+        if (value is null || value is string)
         {
             return false;
         }
 
+        // 检查对象类型是否是基元类型、数组类型、非引用类型或集合类型，如果是则跳过
         var valueType = value.GetType();
-
-        if (value is string
-            || valueType.IsPrimitive
+        if (valueType.IsPrimitive
             || valueType.IsArray
             || !valueType.IsClass
             || typeof(IEnumerable).IsAssignableFrom(valueType))
@@ -102,12 +123,15 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     }
 
     /// <summary>
-    /// 配置验证特性
+    /// 配置验证器选项
     /// </summary>
-    /// <param name="objectValidator"></param>
-    protected void ConfigureOptions(IObjectValidator objectValidator)
+    /// <param name="objectValidator"><see cref="IObjectValidator"/></param>
+    internal void ConfigureOptions(IObjectValidator objectValidator)
     {
+        // 获取验证器选项
         var validatorOptions = objectValidator.Options;
+
+        // 同步验证器选项属性
         validatorOptions.SuppressAnnotationValidation = SuppressAnnotationValidation;
         validatorOptions.CascadeMode = CascadeMode;
         validatorOptions.ValidateAllPropertiesForObjectAnnotationValidator = ValidateAllPropertiesForObjectAnnotationValidator;
@@ -115,14 +139,15 @@ public class CustomizeValidatorAttribute : ValidationAttribute
 }
 
 /// <summary>
-/// 验证器特性
+/// 链式验证器特性
 /// </summary>
+/// <typeparam name="TValidator"><see cref="AbstractValidator{T}"/></typeparam>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field, AllowMultiple = false)]
 public sealed class CustomizeValidatorAttribute<TValidator> : CustomizeValidatorAttribute
     where TValidator : class, IObjectValidator
 {
     /// <summary>
-    /// <inheritdoc cref="CustomizeValidatorAttribute"/>
+    /// <inheritdoc cref="CustomizeValidatorAttribute{TValidator}" />
     /// </summary>
     public CustomizeValidatorAttribute()
     {
@@ -133,34 +158,20 @@ public sealed class CustomizeValidatorAttribute<TValidator> : CustomizeValidator
     /// <inheritdoc />
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        if (!CanValidate(value))
+        // 检查对象合法性
+        return IsValid(value, validationContext, modelType =>
         {
-            return ValidationResult.Success;
-        }
+            // 获取验证器模型类型
+            var validatorType = typeof(TValidator);
 
-        var valueType = value!.GetType();
-
-        var validatorType = typeof(TValidator);
-        var modelType = validatorType.BaseType!.GenericTypeArguments[0];
-
-        if (modelType != valueType)
-        {
-            throw new InvalidOperationException("验证器模型对不上");
-        }
-
-        var objectValidator = ActivatorUtilities.CreateInstance(validationContext, typeof(TValidator)) as IObjectValidator;
-
-        if (objectValidator is not null)
-        {
-            ConfigureOptions(objectValidator);
-
-            var validationResults = objectValidator.GetValidationResults(value, RuleSet);
-            if (validationResults is not null)
+            // 检查验证器基类 AbstractValidator<T> 的泛型类型是否和验证模型类型一致
+            if (modelType != validatorType.BaseType!.GenericTypeArguments[0])
             {
-                return validationResults.First();
+                throw new InvalidOperationException($"Unable to set Validator `validatorType` to Type `{modelType}`.");
             }
-        }
 
-        return ValidationResult.Success;
+            // 初始化验证器服务
+            return ActivatorUtilities.CreateInstance(validationContext, validatorType) as IObjectValidator;
+        });
     }
 }

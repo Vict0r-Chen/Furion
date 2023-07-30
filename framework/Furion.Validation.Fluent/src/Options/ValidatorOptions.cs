@@ -17,7 +17,7 @@ namespace Furion.Validation;
 /// <summary>
 /// 验证器选项
 /// </summary>
-public class ValidatorOptions
+public sealed class ValidatorOptions
 {
     /// <inheritdoc cref="ValidatorCascadeMode" />
     public ValidatorCascadeMode CascadeMode { get; set; }
@@ -54,8 +54,11 @@ public class ValidatorOptions
     /// 属性变更事件触发方法
     /// </summary>
     /// <param name="propertyName">属性名称</param>
-    protected virtual void OnPropertyChanged(string propertyName)
+    internal void OnPropertyChanged(string propertyName)
     {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
+
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
