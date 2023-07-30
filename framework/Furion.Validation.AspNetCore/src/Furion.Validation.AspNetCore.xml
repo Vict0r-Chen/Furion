@@ -9,9 +9,6 @@
             数据验证 Web 模块服务组件
             </summary>
         </member>
-        <member name="M:Furion.Component.AspNetCoreValidationComponent.ConfigureServices(Furion.Component.ServiceComponentContext)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.Validation.CustomizeValidatorAttribute">
             <summary>
             链式验证器特性
@@ -34,12 +31,11 @@
         <member name="M:Furion.Validation.CustomizeValidatorAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.CustomizeValidatorAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Func{System.Type,Furion.Validation.IObjectValidator})">
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute.IsValid(System.Object,System.Func{System.Type,Furion.Validation.IObjectValidator})">
             <summary>
             检查对象合法性
             </summary>
             <param name="value">对象值</param>
-            <param name="validationContext">验证上下文</param>
             <param name="createValidatorFactory">验证器创建工厂</param>
             <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
         </member>
@@ -58,7 +54,7 @@
         </member>
         <member name="T:Furion.Validation.CustomizeValidatorAttribute`1">
             <summary>
-            验证器特性
+            链式验证器特性
             </summary>
             <typeparam name="TValidator"><see cref="T:Furion.Validation.AbstractValidator`1"/></typeparam>
         </member>

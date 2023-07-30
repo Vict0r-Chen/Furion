@@ -19,7 +19,7 @@ namespace Furion.Tests;
     , RemotedConfigurationComponent
     , TypeScanningDependencyInjectionComponent
     , NamedDependencyInjectionComponent
-    , FluentValidationComponent>]
+    , AspNetCoreValidationComponent>]
 public class ServiceComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)

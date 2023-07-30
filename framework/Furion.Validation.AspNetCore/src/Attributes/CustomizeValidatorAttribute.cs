@@ -38,7 +38,7 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         // 检查对象合法性
-        return IsValid(value, validationContext, modelType =>
+        return IsValid(value, modelType =>
         {
             // 解析验证器服务
             return validationContext.GetService(typeof(IObjectValidator<>)
@@ -50,10 +50,9 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     /// 检查对象合法性
     /// </summary>
     /// <param name="value">对象值</param>
-    /// <param name="validationContext">验证上下文</param>
     /// <param name="createValidatorFactory">验证器创建工厂</param>
     /// <returns><see cref="ValidationResult"/></returns>
-    internal ValidationResult? IsValid(object? value, ValidationContext validationContext, Func<Type, IObjectValidator?> createValidatorFactory)
+    internal ValidationResult? IsValid(object? value, Func<Type, IObjectValidator?> createValidatorFactory)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(createValidatorFactory);
@@ -159,7 +158,7 @@ public sealed class CustomizeValidatorAttribute<TValidator> : CustomizeValidator
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         // 检查对象合法性
-        return IsValid(value, validationContext, modelType =>
+        return IsValid(value, modelType =>
         {
             // 获取验证器模型类型
             var validatorType = typeof(TValidator);
