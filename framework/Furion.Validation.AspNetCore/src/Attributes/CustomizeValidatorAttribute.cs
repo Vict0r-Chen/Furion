@@ -102,18 +102,17 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     /// <returns><see cref="bool"/></returns>
     internal static bool CanValidate(object? value)
     {
-        // 检查对象值是否是 null 或 string 类型，如果是则跳过
-        if (value is null || value is string)
+        // 检查对象值是否是 null、string 或 IEnumerable 类型，如果是则跳过
+        if (value is null || value is string || value is IEnumerable)
         {
             return false;
         }
 
-        // 检查对象类型是否是基元类型、数组类型、非引用类型或集合类型，如果是则跳过
+        // 检查对象类型是否是基元类型、数组类型或非引用类型，如果是则跳过
         var valueType = value.GetType();
         if (valueType.IsPrimitive
             || valueType.IsArray
-            || !valueType.IsClass
-            || typeof(IEnumerable).IsAssignableFrom(valueType))
+            || !valueType.IsClass)
         {
             return false;
         }
@@ -127,6 +126,9 @@ public class CustomizeValidatorAttribute : ValidationAttribute
     /// <param name="objectValidator"><see cref="IObjectValidator"/></param>
     internal void ConfigureOptions(IObjectValidator objectValidator)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(objectValidator);
+
         // 获取验证器选项
         var validatorOptions = objectValidator.Options;
 
