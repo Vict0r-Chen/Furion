@@ -12,12 +12,24 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Microsoft.AspNetCore.Mvc;
+
 namespace Furion.Validation.AspNetCore.Tests;
 
 public class FluentModel
 {
     public int Id { get; set; }
     public string? Name { get; set; }
+}
+
+[CustomizeValidator]
+public class FluentModel2
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+
+    [CustomizeValidator<FluentModelValidator2>]
+    public FluentModel2? Model { get; set; }
 }
 
 public class FluentModelValidator : AbstractValidator<FluentModel>
@@ -34,11 +46,20 @@ public class FluentModelValidator : AbstractValidator<FluentModel>
     }
 }
 
-public abstract class FluentModelValidator2 : AbstractValidator<FluentModel>
+public class FluentModelValidator2 : AbstractValidator<FluentModel2>
+{
+    public FluentModelValidator2()
+    {
+        RuleFor(x => x.Id).GreaterThan(1);
+        RuleFor(u => u.Name).NotNull().NotEqual("furion");
+    }
+}
+
+public abstract class FluentModelValidator3 : AbstractValidator<FluentModel>
 {
 }
 
-public class FluentModelValidator3 : IObjectValidator<FluentModel>
+public class FluentModelValidator4 : IObjectValidator<FluentModel>
 {
     public ValidatorOptions Options => throw new NotImplementedException();
 
@@ -55,4 +76,21 @@ public class FluentModelValidator3 : IObjectValidator<FluentModel>
     public IObjectValidator<FluentModel> When(Func<FluentModel, bool> conditionExpression) => throw new NotImplementedException();
 
     public IObjectValidator<FluentModel> WhenContext(Func<ValidationContext, bool> conditionExpression) => throw new NotImplementedException();
+}
+
+[ApiController]
+[Route("[controller]/[action]")]
+public class CustomizeController : ControllerBase
+{
+    [HttpPost]
+    public FluentModel TestParameter([CustomizeValidator] FluentModel model)
+    {
+        return model;
+    }
+
+    [HttpPost]
+    public FluentModel2 TestClass(FluentModel2 model)
+    {
+        return model;
+    }
 }

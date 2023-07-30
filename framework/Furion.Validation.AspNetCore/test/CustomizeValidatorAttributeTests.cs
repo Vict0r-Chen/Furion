@@ -14,9 +14,6 @@
 
 #pragma warning disable
 
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
-
 namespace Furion.Validation.AspNetCore.Tests;
 
 public class CustomizeValidatorAttributeTests
@@ -26,15 +23,15 @@ public class CustomizeValidatorAttributeTests
     {
         var exception = Assert.Throws<InvalidOperationException>(() =>
         {
-            var customizeValidatorAttribute = new CustomizeValidatorAttribute<FluentModelValidator3>();
+            var customizeValidatorAttribute = new CustomizeValidatorAttribute<FluentModelValidator4>();
         });
-        Assert.Equal("`Furion.Validation.AspNetCore.Tests.FluentModelValidator3` type is not assignable from `Furion.Validation.AbstractValidator`1[T]`.", exception.Message);
+        Assert.Equal("`Furion.Validation.AspNetCore.Tests.FluentModelValidator4` type is not assignable from `Furion.Validation.AbstractValidator`1[T]`.", exception.Message);
 
         var exception2 = Assert.Throws<InvalidOperationException>(() =>
         {
-            var customizeValidatorAttribute = new CustomizeValidatorAttribute<FluentModelValidator2>();
+            var customizeValidatorAttribute = new CustomizeValidatorAttribute<FluentModelValidator3>();
         });
-        Assert.Equal($"`Furion.Validation.AspNetCore.Tests.FluentModelValidator2` type must be able to be instantiated.", exception2.Message);
+        Assert.Equal($"`Furion.Validation.AspNetCore.Tests.FluentModelValidator3` type must be able to be instantiated.", exception2.Message);
     }
 
     [Fact]
@@ -160,5 +157,38 @@ public class CustomizeValidatorAttributeTests
         Assert.Equal(ValidatorCascadeMode.UsingFirstSuccess, validator.Options.CascadeMode);
         Assert.False(validator.Options.SuppressAnnotationValidation);
         Assert.False(validator.Options.ValidateAllPropertiesForObjectAnnotationValidator);
+    }
+
+    [Theory]
+    [InlineData("/Customize/TestParameter", typeof(FluentModel))]
+    [InlineData("/Customize/TestClass", typeof(FluentModel2))]
+    public async Task Integration_ReturnOK(string url, Type type)
+    {
+        var port = Helpers.GetIdlePort();
+        var urls = new[] { "--urls", $"http://localhost:{port}" };
+        var builder = WebApplication.CreateBuilder(urls);
+
+        builder.Services.AddFluentValidation(builder =>
+        {
+            builder.AddAssemblies(GetType().Assembly);
+        });
+        builder.Services.AddControllers()
+            .AddApplicationPart(GetType().Assembly);
+
+        await using var app = builder.Build();
+
+        app.MapControllers();
+
+        await app.StartAsync();
+
+        using var httpClient = new HttpClient();
+        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(nameof(CustomizeValidatorAttributeTests));
+
+        var httpContent = new StringContent(JsonSerializer.Serialize(Activator.CreateInstance(type))
+            , new MediaTypeHeaderValue("application/json"));
+        var httpResponseMessage = await httpClient.PostAsync($"http://localhost:{port}" + url, httpContent);
+
+        Assert.NotNull(httpResponseMessage);
+        Assert.Equal(HttpStatusCode.BadRequest, httpResponseMessage.StatusCode);
     }
 }

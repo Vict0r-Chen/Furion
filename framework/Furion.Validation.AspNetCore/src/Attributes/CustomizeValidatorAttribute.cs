@@ -67,29 +67,34 @@ public class CustomizeValidatorAttribute : ValidationAttribute
         var objectValidator = createValidatorFactory(value!.GetType());
 
         // 空检查
-        if (objectValidator is not null)
+        if (objectValidator is null)
         {
-            // 配置验证器选项
-            ConfigureOptions(objectValidator);
+            // 输出调试事件
+            Debugging.Warn("Validator service of type {0} not found.", value!.GetType());
 
-            // 获取验证结果
-            var validationResults = objectValidator.GetValidationResults(value!, RuleSet);
+            return ValidationResult.Success;
+        }
 
-            // 如果验证失败则返回首条验证结果
-            if (validationResults is not null)
+        // 配置验证器选项
+        ConfigureOptions(objectValidator);
+
+        // 获取验证结果
+        var validationResults = objectValidator.GetValidationResults(value!, RuleSet);
+
+        // 如果验证失败则返回首条验证结果
+        if (validationResults is not null)
+        {
+            var validationResult = validationResults.First();
+
+            // 检查是否配置了错误消息
+            if (ErrorMessage is not null)
             {
-                var validationResult = validationResults.First();
-
-                // 检查是否配置了错误消息
-                if (ErrorMessage is not null)
-                {
-                    validationResult.ErrorMessage = ErrorMessage;
-                }
-
-                // 本地化 TODO!
-
-                return validationResult;
+                validationResult.ErrorMessage = ErrorMessage;
             }
+
+            // 本地化 TODO!
+
+            return validationResult;
         }
 
         return ValidationResult.Success;
