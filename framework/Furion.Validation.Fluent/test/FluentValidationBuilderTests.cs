@@ -163,31 +163,4 @@ public class FluentValidationBuilderTests
 
         _ = services.BuildServiceProvider();
     }
-
-    [Fact]
-    public void EnsureLegalValidatorType_Invalid_Parameters()
-    {
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            FluentValidationBuilder.EnsureLegalValidatorType(null!);
-        });
-
-        var exception = Assert.Throws<InvalidOperationException>(() =>
-        {
-            FluentValidationBuilder.EnsureLegalValidatorType(typeof(FluentModelValidator5));
-        });
-        Assert.Equal("`Furion.Validation.Fluent.Tests.FluentModelValidator5` type is not assignable from `Furion.Validation.AbstractValidator`1[T]`.", exception.Message);
-
-        var exception2 = Assert.Throws<InvalidOperationException>(() =>
-        {
-            FluentValidationBuilder.EnsureLegalValidatorType(typeof(FluentModelValidator4));
-        });
-        Assert.Equal($"`Furion.Validation.Fluent.Tests.FluentModelValidator4` type must be able to be instantiated.", exception2.Message);
-    }
-
-    [Fact]
-    public void EnsureLegalValidatorType_ReturnOK()
-    {
-        FluentValidationBuilder.EnsureLegalValidatorType(typeof(FluentModelValidator));
-    }
 }

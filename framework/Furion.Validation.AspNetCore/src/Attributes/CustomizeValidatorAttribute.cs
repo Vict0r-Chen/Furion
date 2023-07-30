@@ -12,13 +12,15 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Furion.Validation;
 
 /// <summary>
 /// 验证器特性
 /// </summary>
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field)]
-public sealed class CustomizeValidatorAttribute : ValidationAttribute
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field, AllowMultiple = false)]
+public class CustomizeValidatorAttribute : ValidationAttribute
 {
     /// <summary>
     /// <inheritdoc cref="CustomizeValidatorAttribute"/>
@@ -27,7 +29,18 @@ public sealed class CustomizeValidatorAttribute : ValidationAttribute
     {
     }
 
-    // 考虑是否禁止注解验证
+    /// <inheritdoc cref="ValidatorCascadeMode" />
+    public ValidatorCascadeMode CascadeMode { get; set; }
+
+    /// <summary>
+    /// 禁用注解（特性）验证
+    /// </summary>
+    public bool SuppressAnnotationValidation { get; set; } = true;
+
+    /// <summary>
+    /// 为对象注解（特性）配置是否验证所有属性
+    /// </summary>
+    public bool ValidateAllPropertiesForObjectAnnotationValidator { get; set; } = true;
 
     /// <summary>
     /// 规则集
@@ -37,19 +50,95 @@ public sealed class CustomizeValidatorAttribute : ValidationAttribute
     /// <inheritdoc />
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        // 检查服务是否注册（流畅服务）
+        if (!CanValidate(value))
+        {
+            return ValidationResult.Success;
+        }
 
-        var instance = validationContext.ObjectInstance;
-        var instanceType = instance.GetType();
-
-        // 判断是否是引用类型
+        var valueType = value!.GetType();
 
         var objectValidator = validationContext.GetService(typeof(IObjectValidator<>)
-            .MakeGenericType(instanceType)) as IObjectValidator;
+            .MakeGenericType(valueType)) as IObjectValidator;
 
         if (objectValidator is not null)
         {
-            var validationResults = objectValidator.GetValidationResults(instance, RuleSet);
+            var validationResults = objectValidator.GetValidationResults(value, RuleSet);
+            if (validationResults is not null)
+            {
+                return validationResults.First();
+            }
+        }
+
+        return ValidationResult.Success;
+    }
+
+    /// <summary>
+    /// 能否被验证
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    protected bool CanValidate(object? value)
+    {
+        // 检查服务是否注册（流畅服务）
+        if (value is null)
+        {
+            return false;
+        }
+
+        var valueType = value.GetType();
+
+        if (value is string
+            || valueType.IsPrimitive
+            || valueType.IsArray
+            || !valueType.IsClass
+            || typeof(IEnumerable).IsAssignableFrom(valueType))
+        {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+/// <summary>
+/// 验证器特性
+/// </summary>
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field, AllowMultiple = false)]
+public sealed class CustomizeValidatorAttribute<TValidator> : CustomizeValidatorAttribute
+    where TValidator : class, IObjectValidator
+{
+    /// <summary>
+    /// <inheritdoc cref="CustomizeValidatorAttribute"/>
+    /// </summary>
+    public CustomizeValidatorAttribute()
+    {
+        // 检查验证器类型合法性
+        Helpers.EnsureLegalValidatorType(typeof(TValidator));
+    }
+
+    /// <inheritdoc />
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    {
+        if (!CanValidate(value))
+        {
+            return ValidationResult.Success;
+        }
+
+        var valueType = value!.GetType();
+
+        var validatorType = typeof(TValidator);
+        var modelType = validatorType.BaseType!.GenericTypeArguments[0];
+
+        if (modelType != valueType)
+        {
+            throw new InvalidOperationException("验证器模型对不上");
+        }
+
+        var objectValidator = ActivatorUtilities.CreateInstance(validationContext, typeof(TValidator)) as IObjectValidator;
+
+        if (objectValidator is not null)
+        {
+            var validationResults = objectValidator.GetValidationResults(value, RuleSet);
             if (validationResults is not null)
             {
                 return validationResults.First();

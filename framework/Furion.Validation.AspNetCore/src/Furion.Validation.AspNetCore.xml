@@ -22,12 +22,45 @@
             <inheritdoc cref="T:Furion.Validation.CustomizeValidatorAttribute"/>
             </summary>
         </member>
+        <member name="P:Furion.Validation.CustomizeValidatorAttribute.CascadeMode">
+            <inheritdoc cref="T:Furion.Validation.ValidatorCascadeMode" />
+        </member>
+        <member name="P:Furion.Validation.CustomizeValidatorAttribute.SuppressAnnotationValidation">
+            <summary>
+            禁用注解（特性）验证
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.CustomizeValidatorAttribute.ValidateAllPropertiesForObjectAnnotationValidator">
+            <summary>
+            为对象注解（特性）配置是否验证所有属性
+            </summary>
+        </member>
         <member name="P:Furion.Validation.CustomizeValidatorAttribute.RuleSet">
             <summary>
             规则集
             </summary>
         </member>
         <member name="M:Furion.Validation.CustomizeValidatorAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute.CanValidate(System.Object)">
+            <summary>
+            能否被验证
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Furion.Validation.CustomizeValidatorAttribute`1">
+            <summary>
+            验证器特性
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute`1.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.CustomizeValidatorAttribute"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.CustomizeValidatorAttribute`1.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
             <inheritdoc />
         </member>
     </members>

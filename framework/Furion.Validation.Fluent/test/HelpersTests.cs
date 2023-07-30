@@ -23,4 +23,31 @@ public class HelpersTests
     {
         Assert.Equal(new[] { ',', ';' }, Helpers._ruleSetSeparator);
     }
+
+    [Fact]
+    public void EnsureLegalValidatorType_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            Helpers.EnsureLegalValidatorType(null!);
+        });
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+        {
+            Helpers.EnsureLegalValidatorType(typeof(FluentModelValidator5));
+        });
+        Assert.Equal("`Furion.Validation.Fluent.Tests.FluentModelValidator5` type is not assignable from `Furion.Validation.AbstractValidator`1[T]`.", exception.Message);
+
+        var exception2 = Assert.Throws<InvalidOperationException>(() =>
+        {
+            Helpers.EnsureLegalValidatorType(typeof(FluentModelValidator4));
+        });
+        Assert.Equal($"`Furion.Validation.Fluent.Tests.FluentModelValidator4` type must be able to be instantiated.", exception2.Message);
+    }
+
+    [Fact]
+    public void EnsureLegalValidatorType_ReturnOK()
+    {
+        Helpers.EnsureLegalValidatorType(typeof(FluentModelValidator));
+    }
 }

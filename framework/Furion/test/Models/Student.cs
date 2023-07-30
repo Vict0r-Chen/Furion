@@ -25,6 +25,7 @@ public class Student
     [Length(3, 10)]
     public string? NickName { get; set; }
 
+    [CustomizeValidator<TeacherValidator>]
     public Teacher? Teacher { get; set; }
 }
 

@@ -34,7 +34,7 @@ public class HelloController
     }
 
     [HttpPost]
-    public Student Post([FromServices] IObjectValidator<Student> validator, [CustomizeValidator] Student stu)
+    public Student Post([FromServices] IObjectValidator<Student> validator, Student stu)
     {
         var validationResults = validator.GetValidationResults(new Student
         {
@@ -44,5 +44,11 @@ public class HelloController
         });
 
         return stu;
+    }
+
+    [HttpDelete]
+    public string Delete([FromQuery, CustomizeValidator] string value)
+    {
+        return value;
     }
 }
