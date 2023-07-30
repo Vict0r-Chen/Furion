@@ -16,6 +16,7 @@ namespace Furion.Validation.Fluent.Tests;
 
 public class ValidatorOptionsTests
 {
+    [Fact]
     public void New_ReturnOK()
     {
         var validatorOptions = new ValidatorOptions();
