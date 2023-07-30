@@ -23,29 +23,4 @@ internal static class Helpers
     /// 规则集分隔符
     /// </summary>
     internal static readonly char[] _ruleSetSeparator = new[] { ',', ';' };
-
-    /// <summary>
-    /// 检查验证器类型合法性
-    /// </summary>
-    /// <param name="validatorType"><see cref="AbstractValidator{T}"/></param>
-    /// <exception cref="InvalidOperationException"></exception>
-    internal static void EnsureLegalValidatorType(Type validatorType)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(validatorType);
-
-        // 检查类型是否派生自 AbstractValidator<> 类型
-        var baseType = validatorType.BaseType;
-        if (!(baseType is not null
-            && typeof(AbstractValidator<>).IsDefinitionEqual(baseType)))
-        {
-            throw new InvalidOperationException($"`{validatorType}` type is not assignable from `{typeof(AbstractValidator<>)}`.");
-        }
-
-        // 检查类型是否可以实例化
-        if (!validatorType.IsInstantiable())
-        {
-            throw new InvalidOperationException($"`{validatorType}` type must be able to be instantiated.");
-        }
-    }
 }

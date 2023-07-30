@@ -80,6 +80,13 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
+        <member name="M:Furion.Validation.FluentValidationBuilder.EnsureLegalValidatorType(System.Type)">
+            <summary>
+            检查验证器类型合法性
+            </summary>
+            <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
         <member name="T:Furion.Validation.IObjectValidator`1">
             <summary>
             验证器服务
@@ -154,13 +161,6 @@
             <summary>
             规则集分隔符
             </summary>
-        </member>
-        <member name="M:Furion.Validation.Helpers.EnsureLegalValidatorType(System.Type)">
-            <summary>
-            检查验证器类型合法性
-            </summary>
-            <param name="validatorType"><see cref="T:Furion.Validation.AbstractValidator`1"/></param>
-            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="T:Furion.Validation.ValidatorOptions">
             <summary>
