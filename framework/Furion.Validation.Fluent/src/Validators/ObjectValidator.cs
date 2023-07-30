@@ -98,10 +98,12 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// 启用/禁用注解（特性）验证
     /// </summary>
     /// <param name="enable">是否启用</param>
+    /// <param name="validateAllProperties">验证所有属性</param>
     /// <returns><see cref="ObjectValidator{T}"/></returns>
-    public ObjectValidator<T> WithAnnotationValidation(bool enable = true)
+    public ObjectValidator<T> WithAnnotationValidation(bool enable = true, bool validateAllProperties = true)
     {
         SuppressAnnotationValidation = !enable;
+        _annotationValidator.ValidateAllProperties = validateAllProperties;
 
         return this;
     }

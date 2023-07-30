@@ -89,12 +89,16 @@ public class ObjectValidatorTests
     [Theory]
     [InlineData(true, false)]
     [InlineData(false, true)]
-    public void WithAnnotationValidation(bool enable, bool result)
+    public void WithAnnotationValidation_ReturnOK(bool enable, bool result)
     {
         var validator = new ObjectValidator<ObjectModel>();
         validator.WithAnnotationValidation(enable);
 
         Assert.Equal(result, validator.SuppressAnnotationValidation);
+        Assert.True(validator._annotationValidator.ValidateAllProperties);
+
+        validator.WithAnnotationValidation(enable, false);
+        Assert.False(validator._annotationValidator.ValidateAllProperties);
     }
 
     [Fact]

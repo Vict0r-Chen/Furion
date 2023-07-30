@@ -22,6 +22,7 @@ public class ObjectAnnotationValidatorTests
         var validator = new ObjectAnnotationValidator();
 
         Assert.NotNull(validator);
+        Assert.True(validator.ValidateAllProperties);
         Assert.Null(validator.ErrorMessage);
         Assert.NotNull(validator._errorMessageResourceAccessor);
         Assert.Equal("The field {0} is invalid.", validator._errorMessageResourceAccessor());
@@ -135,9 +136,11 @@ public class ObjectAnnotationValidatorTests
     [Fact]
     public void TryValidate_Invalid_Parameters()
     {
+        var validator = new ObjectAnnotationValidator();
+
         Assert.Throws<ArgumentNullException>(() =>
         {
-            ObjectAnnotationValidator.TryValidate(null!, out _);
+            validator.TryValidate(null!, out _);
         });
     }
 
@@ -151,7 +154,9 @@ public class ObjectAnnotationValidatorTests
             Email = "monksoul@outlook.com"
         };
 
-        var result = ObjectAnnotationValidator.TryValidate(objectModel, out var validationResults);
+        var validator = new ObjectAnnotationValidator();
+
+        var result = validator.TryValidate(objectModel, out var validationResults);
 
         Assert.True(result);
         Assert.NotNull(validationResults);
@@ -159,7 +164,7 @@ public class ObjectAnnotationValidatorTests
 
         var objectModel2 = new ObjectModel();
 
-        var result2 = ObjectAnnotationValidator.TryValidate(objectModel2, out var validationResults2);
+        var result2 = validator.TryValidate(objectModel2, out var validationResults2);
 
         Assert.False(result2);
         Assert.NotNull(validationResults2);
@@ -168,5 +173,23 @@ public class ObjectAnnotationValidatorTests
         Assert.Equal("Name", validationResults2.ElementAt(1).MemberNames.ElementAt(0));
         Assert.Equal("The field Id must be between 1 and 2147483647.", validationResults2.ElementAt(0).ErrorMessage);
         Assert.Equal("The Name field is required.", validationResults2.ElementAt(1).ErrorMessage);
+    }
+
+    [Fact]
+    public void TryValidate_WithValidateAllProperties_ReturnOK()
+    {
+        var validator = new ObjectAnnotationValidator
+        {
+            ValidateAllProperties = false
+        };
+
+        var objectModel = new ObjectModel();
+
+        var result = validator.TryValidate(objectModel, out var validationResults);
+
+        Assert.False(result);
+        Assert.NotNull(validationResults);
+        Assert.Single(validationResults);
+        Assert.Equal("The Name field is required.", validationResults.ElementAt(0).ErrorMessage);
     }
 }

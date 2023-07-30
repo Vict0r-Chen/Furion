@@ -19,6 +19,11 @@ namespace Furion.Validation;
 /// </summary>
 public class ObjectAnnotationValidator : ValidatorBase
 {
+    /// <summary>
+    /// 验证所有属性
+    /// </summary>
+    public bool ValidateAllProperties { get; set; } = true;
+
     /// <inheritdoc />
     public override bool IsValid(object? value)
     {
@@ -49,7 +54,7 @@ public class ObjectAnnotationValidator : ValidatorBase
     /// <param name="instance">对象实例</param>
     /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal static bool TryValidate(object instance, out List<ValidationResult> validationResults)
+    internal bool TryValidate(object instance, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -59,6 +64,6 @@ public class ObjectAnnotationValidator : ValidatorBase
         validationResults = new();
 
         // 调用 Validator.TryValidateObject 静态方法验证
-        return Validator.TryValidateObject(instance, validationContext, validationResults, true);
+        return Validator.TryValidateObject(instance, validationContext, validationResults, ValidateAllProperties);
     }
 }

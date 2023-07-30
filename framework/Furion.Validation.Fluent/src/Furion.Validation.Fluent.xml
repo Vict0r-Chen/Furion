@@ -242,6 +242,13 @@
         <member name="P:Furion.Validation.AbstractValidator`1.CascadeMode">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Validation.AbstractValidator`1.SetAnnotationValidation(System.Boolean,System.Boolean)">
+            <summary>
+            启用/禁用注解（特性）验证
+            </summary>
+            <param name="enable">是否启用</param>
+            <param name="validateAllProperties">验证所有属性</param>
+        </member>
         <member name="M:Furion.Validation.AbstractValidator`1.RuleFor``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.String)">
             <summary>
             添加属性规则验证
@@ -330,11 +337,12 @@
             <param name="ruleSet">规则集</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotationValidation(System.Boolean)">
+        <member name="M:Furion.Validation.ObjectValidator`1.WithAnnotationValidation(System.Boolean,System.Boolean)">
             <summary>
             启用/禁用注解（特性）验证
             </summary>
             <param name="enable">是否启用</param>
+            <param name="validateAllProperties">验证所有属性</param>
             <returns><see cref="T:Furion.Validation.ObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.ObjectValidator`1.WithCascadeMode(Furion.Validation.ValidatorCascadeMode)">

@@ -2053,6 +2053,11 @@
             对象注解（特性）验证器
             </summary>
         </member>
+        <member name="P:Furion.Validation.ObjectAnnotationValidator.ValidateAllProperties">
+            <summary>
+            验证所有属性
+            </summary>
+        </member>
         <member name="M:Furion.Validation.ObjectAnnotationValidator.IsValid(System.Object)">
             <inheritdoc />
         </member>

@@ -29,6 +29,22 @@ public class AbstractValidatorTests
         Assert.Equal(2, validator._objectValidator._propertyValidators.Count);
     }
 
+    [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public void SetAnnotationValidation_ReturnOK(bool enable, bool result)
+    {
+        var validator = new TestModelValidator();
+        validator.SetAnnotationValidation(enable);
+
+        Assert.Equal(result, validator.SuppressAnnotationValidation);
+        Assert.Equal(result, validator._objectValidator.SuppressAnnotationValidation);
+        Assert.True(validator._objectValidator._annotationValidator.ValidateAllProperties);
+
+        validator.SetAnnotationValidation(enable, false);
+        Assert.False(validator._objectValidator._annotationValidator.ValidateAllProperties);
+    }
+
     [Fact]
     public void RuleFor_ReturnOK()
     {

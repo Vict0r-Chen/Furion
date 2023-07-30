@@ -70,6 +70,17 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <summary>
+    /// 启用/禁用注解（特性）验证
+    /// </summary>
+    /// <param name="enable">是否启用</param>
+    /// <param name="validateAllProperties">验证所有属性</param>
+    public void SetAnnotationValidation(bool enable = true, bool validateAllProperties = true)
+    {
+        SuppressAnnotationValidation = !enable;
+        _objectValidator._annotationValidator.ValidateAllProperties = validateAllProperties;
+    }
+
+    /// <summary>
     /// 添加属性规则验证
     /// </summary>
     /// <typeparam name="TProperty">属性类型</typeparam>
