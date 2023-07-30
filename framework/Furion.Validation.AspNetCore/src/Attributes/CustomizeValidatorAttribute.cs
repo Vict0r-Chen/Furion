@@ -149,7 +149,7 @@ public class CustomizeValidatorAttribute : ValidationAttribute
 /// </summary>
 /// <typeparam name="TValidator"><see cref="AbstractValidator{T}"/></typeparam>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field, AllowMultiple = false)]
-public sealed class CustomizeValidatorAttribute<TValidator> : CustomizeValidatorAttribute
+public sealed class CustomizeValidatorAttribute<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TValidator> : CustomizeValidatorAttribute
     where TValidator : class, IObjectValidator
 {
     /// <summary>
