@@ -49,7 +49,7 @@ public class PropertyValidatorTests
         Assert.NotNull(propertyValidator.Options);
         Assert.True(propertyValidator.Options.SuppressAnnotationValidation);
         Assert.Equal(ValidatorCascadeMode.Continue, propertyValidator.Options.CascadeMode);
-        Assert.Null(propertyValidator.ValidationObjectAccessor);
+        Assert.Null(propertyValidator.ValidationObjectResolver);
         Assert.Null(propertyValidator.ConditionExpression);
         Assert.Null(propertyValidator.SubValidator);
         Assert.Null(propertyValidator.RuleSet);
@@ -162,26 +162,26 @@ public class PropertyValidatorTests
     }
 
     [Fact]
-    public void ConfigureValidationObject_Invalid_Parameters()
+    public void SetValidationObjectResolver_Invalid_Parameters()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            propertyValidator.ConfigureValidationObject(null!);
+            propertyValidator.SetValidationObjectResolver(null!);
         });
     }
 
     [Fact]
-    public void ConfigureValidationObject_ReturnOK()
+    public void SetValidationObjectResolver_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
 
-        propertyValidator.ConfigureValidationObject((obj, validator, value) => value);
+        propertyValidator.SetValidationObjectResolver((obj, validator, value) => value);
 
-        Assert.NotNull(propertyValidator.ValidationObjectAccessor);
+        Assert.NotNull(propertyValidator.ValidationObjectResolver);
     }
 
     [Fact]
@@ -643,24 +643,24 @@ public class PropertyValidatorTests
     }
 
     [Fact]
-    public void GetValidationObject_Invalid_Parameters()
+    public void ResolveValidationObject_Invalid_Parameters()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            propertyValidator.GetValidationObject(null!, null!, null!);
+            propertyValidator.ResolveValidationObject(null!, null!, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            propertyValidator.GetValidationObject(new(), null!, null!);
+            propertyValidator.ResolveValidationObject(new(), null!, null!);
         });
     }
 
     [Fact]
-    public void GetValidationObject_CheckValidatorDelegator_ReturnOK()
+    public void ResolveValidationObject_CheckValidatorDelegator_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
@@ -674,13 +674,13 @@ public class PropertyValidatorTests
             , instance => new[] { "furion" }
             , () => Strings.EqualValidator_Invalid);
 
-        Assert.True(propertyValidator.GetValidationObject(instance, validatorDelegator, "furion") is PropertyModel);
+        Assert.True(propertyValidator.ResolveValidationObject(instance, validatorDelegator, "furion") is PropertyModel);
 
-        Assert.True(propertyValidator.GetValidationObject(instance, new NotEmptyValidator(), "furion") is string);
+        Assert.True(propertyValidator.ResolveValidationObject(instance, new NotEmptyValidator(), "furion") is string);
     }
 
     [Fact]
-    public void GetValidationObject_WithValidationObjectAccessor_ReturnOK()
+    public void ResolveValidationObject_WithValidationObjectResolver_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
@@ -690,11 +690,11 @@ public class PropertyValidatorTests
             Name = "furion"
         };
 
-        Assert.True(propertyValidator.GetValidationObject(instance, new NotEmptyValidator(), "furion") is string);
+        Assert.True(propertyValidator.ResolveValidationObject(instance, new NotEmptyValidator(), "furion") is string);
 
-        propertyValidator.ConfigureValidationObject((obj, validator, value) => obj);
+        propertyValidator.SetValidationObjectResolver((obj, validator, value) => obj);
 
-        Assert.True(propertyValidator.GetValidationObject(instance, new NotEmptyValidator(), "furion") is PropertyModel);
+        Assert.True(propertyValidator.ResolveValidationObject(instance, new NotEmptyValidator(), "furion") is PropertyModel);
     }
 
     [Fact]

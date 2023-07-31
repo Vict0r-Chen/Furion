@@ -195,9 +195,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public ValidatorOptions Options { get; init; }
 
     /// <summary>
-    /// 验证对象访问器
+    /// 验证对象解析器
     /// </summary>
-    internal Func<T, ValidatorBase, object?, object?>? ValidationObjectAccessor { get; private set; }
+    internal Func<T, ValidatorBase, object?, object?>? ValidationObjectResolver { get; private set; }
 
     /// <summary>
     /// 执行验证的符合条件表达式
@@ -279,16 +279,16 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
-    /// 设置验证对象访问器
+    /// 设置验证对象解析器
     /// </summary>
-    /// <param name="validationObjectAccessor">验证对象访问器</param>
+    /// <param name="predicate">自定义委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> ConfigureValidationObject(Func<T, ValidatorBase, object?, object?> validationObjectAccessor)
+    public PropertyValidator<T, TProperty> SetValidationObjectResolver(Func<T, ValidatorBase, object?, object?> predicate)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(validationObjectAccessor);
+        ArgumentNullException.ThrowIfNull(predicate);
 
-        ValidationObjectAccessor = validationObjectAccessor;
+        ValidationObjectResolver = predicate;
 
         return this;
     }
@@ -374,7 +374,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         if (SubValidator is null)
         {
             return isValid && Validators
-                .All(validator => validator.IsValid(GetValidationObject(instance, validator, propertyValue)));
+                .All(validator => validator.IsValid(ResolveValidationObject(instance, validator, propertyValue)));
         }
 
         // 空检查（子属性验证器 T 类型不能为 null）
@@ -426,7 +426,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 获取所有验证器验证结果集合
             validationResults.AddRange(Validators
                 .SelectMany(validator => validator.GetValidationResults(
-                    GetValidationObject(instance, validator, propertyValue), GetDisplayName()) ?? Enumerable.Empty<ValidationResult>(), Options.CascadeMode));
+                    ResolveValidationObject(instance, validator, propertyValue), GetDisplayName()) ?? Enumerable.Empty<ValidationResult>(), Options.CascadeMode));
         }
 
         return validationResults.Count == 0 ? null : validationResults;
@@ -493,13 +493,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
-    /// 获取验证对象
+    /// 解析验证对象
     /// </summary>
     /// <param name="instance">对象实例</param>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
     /// <param name="propertyValue">属性值</param>
     /// <returns><see cref="object"/></returns>
-    internal object? GetValidationObject(object instance, ValidatorBase validator, TProperty? propertyValue)
+    internal object? ResolveValidationObject(object instance, ValidatorBase validator, TProperty? propertyValue)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
@@ -513,9 +513,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             return instance;
         }
 
-        // 检查是否设置了验证对象访问器
-        return ValidationObjectAccessor is not null
-            ? ValidationObjectAccessor((T)instance, validator, propertyValue)
+        // 检查是否设置了验证对象解析器
+        return ValidationObjectResolver is not null
+            ? ValidationObjectResolver((T)instance, validator, propertyValue)
             : propertyValue;
     }
 
