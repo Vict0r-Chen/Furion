@@ -197,7 +197,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <summary>
     /// 验证对象解析器
     /// </summary>
-    internal Func<T, ValidatorBase, object?, object?>? ValidationObjectResolver { get; private set; }
+    internal Func<ValidationObjectResolverContext<T, TProperty>, object?>? ValidationObjectResolver { get; private set; }
 
     /// <summary>
     /// 执行验证的符合条件表达式
@@ -283,7 +283,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="predicate">自定义委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> SetValidationObjectResolver(Func<T, ValidatorBase, object?, object?> predicate)
+    public PropertyValidator<T, TProperty> SetValidationObjectResolver(Func<ValidationObjectResolverContext<T, TProperty>, object?> predicate)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate);
@@ -515,7 +515,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 检查是否设置了验证对象解析器
         return ValidationObjectResolver is not null
-            ? ValidationObjectResolver((T)instance, validator, propertyValue)
+            ? ValidationObjectResolver(new((T)instance, validator, propertyValue))
             : propertyValue;
     }
 

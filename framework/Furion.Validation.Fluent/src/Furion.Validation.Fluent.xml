@@ -80,6 +80,34 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
         </member>
+        <member name="T:Furion.Validation.ValidationObjectResolverContext`2">
+            <summary>
+            验证对象解析上下文
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <typeparam name="TProperty">属性类型</typeparam>
+        </member>
+        <member name="M:Furion.Validation.ValidationObjectResolverContext`2.#ctor(`0,Furion.Validation.ValidatorBase,`1)">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.ValidationObjectResolverContext`2" />
+            </summary>
+            <param name="objectInstance">对象类型值</param>
+            <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
+            <param name="propertyValue">属性类型值</param>
+        </member>
+        <member name="P:Furion.Validation.ValidationObjectResolverContext`2.ObjectInstance">
+            <summary>
+            对象类型值
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.ValidationObjectResolverContext`2.Validator">
+            <inheritdoc cref="T:Furion.Validation.ValidatorBase" />
+        </member>
+        <member name="P:Furion.Validation.ValidationObjectResolverContext`2.PropertyValue">
+            <summary>
+            属性类型值
+            </summary>
+        </member>
         <member name="T:Furion.Validation.IObjectValidator`1">
             <summary>
             验证器服务
@@ -541,7 +569,7 @@
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.SetValidationObjectResolver(System.Func{`0,Furion.Validation.ValidatorBase,System.Object,System.Object})">
+        <member name="M:Furion.Validation.PropertyValidator`2.SetValidationObjectResolver(System.Func{Furion.Validation.ValidationObjectResolverContext{`0,`1},System.Object})">
             <summary>
             设置验证对象解析器
             </summary>

@@ -179,7 +179,7 @@ public class PropertyValidatorTests
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
 
-        propertyValidator.SetValidationObjectResolver((obj, validator, value) => value);
+        propertyValidator.SetValidationObjectResolver(context => context.PropertyValue);
 
         Assert.NotNull(propertyValidator.ValidationObjectResolver);
     }
@@ -692,7 +692,7 @@ public class PropertyValidatorTests
 
         Assert.True(propertyValidator.ResolveValidationObject(instance, new NotEmptyValidator(), "furion") is string);
 
-        propertyValidator.SetValidationObjectResolver((obj, validator, value) => obj);
+        propertyValidator.SetValidationObjectResolver(context => context.ObjectInstance);
 
         Assert.True(propertyValidator.ResolveValidationObject(instance, new NotEmptyValidator(), "furion") is PropertyModel);
     }

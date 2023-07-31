@@ -18,6 +18,19 @@ namespace Furion.Validation.AspNetCore.Tests;
 
 public class CustomizeValidatorAttributeTests
 {
+    [Theory]
+    [InlineData(typeof(CustomizeValidatorAttribute))]
+    [InlineData(typeof(CustomizeValidatorAttribute<>))]
+    public void AttributeUsage_Definition(Type customizeValidatorAttributeType)
+    {
+        var attributeUsageAttribute = customizeValidatorAttributeType.GetCustomAttribute<AttributeUsageAttribute>();
+
+        Assert.NotNull(attributeUsageAttribute);
+        Assert.Equal(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Field, attributeUsageAttribute.ValidOn);
+        Assert.False(attributeUsageAttribute.AllowMultiple);
+        Assert.True(attributeUsageAttribute.Inherited);
+    }
+
     [Fact]
     public void New_Invalid_Parameters()
     {
