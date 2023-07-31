@@ -43,6 +43,7 @@ public class PropertyAnnotationValidatorTests
         Assert.Null(validator.ErrorMessage);
         Assert.NotNull(validator._errorMessageResourceAccessor);
         Assert.Equal("The field {0} is invalid.", validator._errorMessageResourceAccessor());
+        Assert.Equal(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, PropertyAnnotationValidator<PropertyModel>._bindingAttr);
 
         var validator2 = new PropertyAnnotationValidator<PropertyModel, int>(u => u.Id);
         Assert.Equal("Id", validator2.PropertyName);

@@ -55,6 +55,11 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     where T : class
 {
     /// <summary>
+    /// 反射搜索成员方式
+    /// </summary>
+    internal const BindingFlags _bindingAttr = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+    /// <summary>
     /// <inheritdoc cref="PropertyAnnotationValidator{T}"/>
     /// </summary>
     /// <param name="propertyExpression">属性选择器</param>
@@ -65,7 +70,7 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         ArgumentNullException.ThrowIfNull(propertyExpression);
 
         PropertyName = propertyExpression.GetPropertyName();
-        Property = typeof(T).GetProperty(PropertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+        Property = typeof(T).GetProperty(PropertyName, _bindingAttr)!;
         DisplayName = Property.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
     }
 

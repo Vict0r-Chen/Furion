@@ -2240,6 +2240,11 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
         </member>
+        <member name="F:Furion.Validation.PropertyAnnotationValidator`1._bindingAttr">
+            <summary>
+            反射搜索成员方式
+            </summary>
+        </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`1"/>
