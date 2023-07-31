@@ -129,7 +129,6 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <param name="name">显示名称</param>
     /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
-    /// <exception cref="InvalidOperationException"></exception>
     internal bool TryValidate(T instance, string name, out List<ValidationResult> validationResults)
     {
         // 空检查

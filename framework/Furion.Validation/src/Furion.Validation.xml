@@ -2286,7 +2286,6 @@
             <param name="name">显示名称</param>
             <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
-            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetPropertyValue(`0)">
             <summary>
