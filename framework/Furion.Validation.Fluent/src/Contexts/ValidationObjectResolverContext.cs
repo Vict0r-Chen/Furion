@@ -15,7 +15,7 @@
 namespace Furion.Validation;
 
 /// <summary>
-/// 验证对象解析上下文
+/// 验证对象解析器上下文
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
 /// <typeparam name="TProperty">属性类型</typeparam>
