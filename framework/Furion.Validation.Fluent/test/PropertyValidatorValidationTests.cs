@@ -1026,4 +1026,20 @@ public class PropertyValidatorValidationTests
         Assert.NotNull(validator);
         Assert.Equal(Strings.ValidatorBase_Invalid, validator._errorMessageResourceAccessor());
     }
+
+    [Fact]
+    public void AddDelegator_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+
+        propertyValidator.AddDelegator<EqualValidator>(instance => new[] { "furion" }
+            , () => Strings.EqualValidator_Invalid);
+
+        Assert.Single(propertyValidator.Validators);
+
+        var validator = propertyValidator.Validators.ElementAt(0) as PropertyValidator<PropertyModel, string?>.ValidatorDelegator<EqualValidator>;
+        Assert.NotNull(validator);
+        Assert.Equal(Strings.EqualValidator_Invalid, validator._errorMessageResourceAccessor());
+    }
 }

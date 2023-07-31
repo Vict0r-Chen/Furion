@@ -1113,6 +1113,15 @@
             <param name="predicate">自定义委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.AddDelegator``1(System.Func{`0,System.Object[]},System.Func{System.String})">
+            <summary>
+            添加验证器委托器验证器
+            </summary>
+            <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
+            <param name="constructorParametersAccessor">构造函数参数访问器</param>
+            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
         <member name="T:Furion.Component.FluentValidationComponent">
             <summary>
             数据验证模块服务组件

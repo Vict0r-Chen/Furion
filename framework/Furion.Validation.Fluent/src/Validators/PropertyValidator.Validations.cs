@@ -238,14 +238,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate);
 
-        // 初始化验证器委托器
-        var validatorDelegator = new ValidatorDelegator<EqualValidator>(this
-            , instance => new[] { predicate(instance) }
+        return AddDelegator<EqualValidator>(instance => new[] { predicate(instance) }
             , () => Strings.EqualValidator_Invalid);
-
-        Validators.Add(validatorDelegator);
-
-        return this;
     }
 
     /// <summary>
@@ -294,14 +288,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate);
 
-        // 初始化验证器委托器
-        var validatorDelegator = new ValidatorDelegator<GreaterThanOrEqualToValidator>(this
-            , instance => new[] { predicate(instance) }
+        return AddDelegator<GreaterThanOrEqualToValidator>(instance => new[] { predicate(instance) }
             , () => Strings.GreaterThanOrEqualToValidator_Invalid);
-
-        Validators.Add(validatorDelegator);
-
-        return this;
     }
 
     /// <summary>
@@ -350,14 +338,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate);
 
-        // 初始化验证器委托器
-        var validatorDelegator = new ValidatorDelegator<GreaterThanValidator>(this
-            , instance => new[] { predicate(instance) }
+        return AddDelegator<GreaterThanValidator>(instance => new[] { predicate(instance) }
             , () => Strings.GreaterThanValidator_Invalid);
-
-        Validators.Add(validatorDelegator);
-
-        return this;
     }
 
     /// <summary>
@@ -417,14 +399,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(predicate);
 
-        // 初始化验证器委托器
-        var validatorDelegator = new ValidatorDelegator<LessThanOrEqualToValidator>(this
-            , instance => new[] { predicate(instance) }
+        return AddDelegator<LessThanOrEqualToValidator>(instance => new[] { predicate(instance) }
             , () => Strings.LessThanOrEqualToValidator_Invalid);
-
-        Validators.Add(validatorDelegator);
-
-        return this;
     }
 
     /// <summary>
@@ -933,5 +909,25 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> Custom(Func<T, bool> predicate)
     {
         return Predicate(predicate);
+    }
+
+    /// <summary>
+    /// 添加验证器委托器验证器
+    /// </summary>
+    /// <typeparam name="TValidator"><see cref="ValidatorBase"/></typeparam>
+    /// <param name="constructorParametersAccessor">构造函数参数访问器</param>
+    /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AddDelegator<TValidator>(Func<T, object?[]?>? constructorParametersAccessor = null, Func<string>? errorMessageResourceAccessor = null)
+        where TValidator : ValidatorBase
+    {
+        // 初始化验证器委托器
+        var validatorDelegator = new ValidatorDelegator<TValidator>(this
+            , constructorParametersAccessor
+            , errorMessageResourceAccessor);
+
+        Validators.Add(validatorDelegator);
+
+        return this;
     }
 }

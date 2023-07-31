@@ -26,18 +26,6 @@ public class ValidatorDelegatorTests
             var validatorDelegator = new PropertyValidator<PropertyModel, object>
                 .ValidatorDelegator<AgeValidator>(null!, null!, null!);
         });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            var validatorDelegator = new PropertyValidator<PropertyModel, object>
-                .ValidatorDelegator<AgeValidator>(new(new ObjectValidator<PropertyModel>(), u => u.Name), null!, null!);
-        });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            var validatorDelegator = new PropertyValidator<PropertyModel, object>
-                .ValidatorDelegator<AgeValidator>(new(new ObjectValidator<PropertyModel>(), u => u.Name), u => null!, null!);
-        });
     }
 
     [Fact]

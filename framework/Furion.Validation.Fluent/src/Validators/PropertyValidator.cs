@@ -35,7 +35,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         /// <summary>
         /// 构造函数参数访问器
         /// </summary>
-        internal readonly Func<T, object?[]?> _constructorParametersAccessor;
+        internal readonly Func<T, object?[]?>? _constructorParametersAccessor;
 
         /// <summary>
         /// <inheritdoc cref="ValidatorDelegator{TValidator}" />
@@ -44,14 +44,12 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         /// <param name="constructorParametersAccessor">构造函数参数访问器</param>
         /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
         public ValidatorDelegator(PropertyValidator<T, TProperty> propertyValidator
-            , Func<T, object?[]?> constructorParametersAccessor
-            , Func<string> errorMessageResourceAccessor)
-            : base(errorMessageResourceAccessor)
+            , Func<T, object?[]?>? constructorParametersAccessor = null
+            , Func<string>? errorMessageResourceAccessor = null)
+            : base(errorMessageResourceAccessor ?? (() => Strings.ValidatorBase_Invalid))
         {
             // 空检查
             ArgumentNullException.ThrowIfNull(propertyValidator);
-            ArgumentNullException.ThrowIfNull(constructorParametersAccessor);
-            ArgumentNullException.ThrowIfNull(errorMessageResourceAccessor);
 
             _propertyValidator = propertyValidator;
             _constructorParametersAccessor = constructorParametersAccessor;
@@ -128,7 +126,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             ArgumentNullException.ThrowIfNull(instance);
 
             // 创建验证器
-            Validator ??= Activator.CreateInstance(typeof(TValidator), _constructorParametersAccessor(instance)) as TValidator;
+            Validator ??= Activator.CreateInstance(typeof(TValidator), _constructorParametersAccessor?.Invoke(instance)) as TValidator;
 
             // 空检查
             ArgumentNullException.ThrowIfNull(Validator);
