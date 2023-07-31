@@ -9,12 +9,6 @@
             异常策略接口
             </summary>
         </member>
-        <member name="M:Furion.Exception.IExceptionPolicy.CanExecute(System.Exception)">
-            <summary>
-            检查是否可以执行
-            </summary>
-            <param name="exception"></param>
-        </member>
         <member name="M:Furion.Exception.IExceptionPolicy.Execute(System.Action)">
             <summary>
             同步方法
@@ -55,9 +49,6 @@
             <summary>
             <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
             </summary>
-        </member>
-        <member name="M:Furion.Exception.RetryPolicy.CanExecute(System.Exception)">
-            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.RetryPolicy.Execute(System.Action)">
             <inheritdoc />

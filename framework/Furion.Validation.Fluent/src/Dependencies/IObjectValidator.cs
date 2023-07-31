@@ -21,18 +21,18 @@ namespace Furion.Validation;
 public interface IObjectValidator<T> : IObjectValidator
 {
     /// <summary>
-    /// 配置执行验证的符合条件表达式
+    /// 配置执行验证的条件
     /// </summary>
-    /// <param name="conditionExpression">条件表达式</param>
+    /// <param name="condition">条件</param>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
-    IObjectValidator<T> When(Func<T, bool> conditionExpression);
+    IObjectValidator<T> When(Func<T, bool> condition);
 
     /// <summary>
-    /// 配置执行验证的符合条件表达式
+    /// 配置执行验证的条件
     /// </summary>
-    /// <param name="conditionExpression">条件表达式</param>
+    /// <param name="condition">条件</param>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
-    IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression);
+    IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition);
 
     /// <summary>
     /// 重置验证器

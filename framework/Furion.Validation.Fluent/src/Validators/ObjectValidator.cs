@@ -50,9 +50,9 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public ValidatorOptions Options { get; init; }
 
     /// <summary>
-    /// 执行验证的符合条件表达式
+    /// 执行验证的条件
     /// </summary>
-    internal Func<ValidationContext, bool>? ConditionExpression { get; private set; }
+    internal Func<ValidationContext, bool>? Condition { get; private set; }
 
     /// <summary>
     /// 附加属性
@@ -116,22 +116,22 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> When(Func<T, bool> conditionExpression)
+    public IObjectValidator<T> When(Func<T, bool> condition)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(conditionExpression);
+        ArgumentNullException.ThrowIfNull(condition);
 
-        // 配置执行验证的符合条件表达式
-        return WhenContext(context => conditionExpression((T)context.ObjectInstance));
+        // 配置执行验证的条件
+        return WhenContext(context => condition((T)context.ObjectInstance));
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(conditionExpression);
+        ArgumentNullException.ThrowIfNull(condition);
 
-        ConditionExpression = conditionExpression;
+        Condition = condition;
 
         return this;
     }
@@ -139,7 +139,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     /// <inheritdoc />
     public IObjectValidator<T> Reset()
     {
-        ConditionExpression = null;
+        Condition = null;
         Items = null;
 
         return this;
@@ -155,8 +155,8 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
-        // 检查是否设置了条件表达式
-        if (ConditionExpression is null)
+        // 检查是否设置了条件
+        if (Condition is null)
         {
             return true;
         }
@@ -165,8 +165,8 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         var validationContext = new ValidationContext(instance, new Dictionary<object, object?>());
         Items = validationContext.Items;
 
-        // 调用条件表达式并返回
-        return ConditionExpression(validationContext);
+        // 调用条件并返回
+        return Condition(validationContext);
     }
 
     /// <inheritdoc />

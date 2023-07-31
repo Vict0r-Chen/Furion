@@ -51,7 +51,7 @@ public class PropertyValidatorTests
         Assert.True(propertyValidator.Options.SuppressAnnotationValidation);
         Assert.Equal(ValidatorCascadeMode.Continue, propertyValidator.Options.CascadeMode);
         Assert.Null(propertyValidator.ValidationObjectResolver);
-        Assert.Null(propertyValidator.ConditionExpression);
+        Assert.Null(propertyValidator.Condition);
         Assert.Null(propertyValidator.SubValidator);
         Assert.Null(propertyValidator.RuleSet);
         Assert.Null(propertyValidator.DisplayName);
@@ -204,7 +204,7 @@ public class PropertyValidatorTests
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
         propertyValidator.When(u => u.Name != null);
 
-        Assert.NotNull(propertyValidator.ConditionExpression);
+        Assert.NotNull(propertyValidator.Condition);
     }
 
     [Fact]
@@ -226,7 +226,7 @@ public class PropertyValidatorTests
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
         propertyValidator.WhenContext(u => u.ObjectInstance != null);
 
-        Assert.NotNull(propertyValidator.ConditionExpression);
+        Assert.NotNull(propertyValidator.Condition);
     }
 
     [Fact]
@@ -237,7 +237,7 @@ public class PropertyValidatorTests
 
         propertyValidator.Reset();
 
-        Assert.Null(propertyValidator.ConditionExpression);
+        Assert.Null(propertyValidator.Condition);
     }
 
     [Fact]

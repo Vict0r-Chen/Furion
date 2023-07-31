@@ -139,7 +139,7 @@ public class AbstractValidatorTests
         var validator = new TestModelValidator();
         validator.When(u => u.Id > 0);
 
-        Assert.NotNull(validator._objectValidator.ConditionExpression);
+        Assert.NotNull(validator._objectValidator.Condition);
     }
 
     [Fact]
@@ -148,7 +148,7 @@ public class AbstractValidatorTests
         var validator = new TestModelValidator();
         validator.WhenContext(u => true);
 
-        Assert.NotNull(validator._objectValidator.ConditionExpression);
+        Assert.NotNull(validator._objectValidator.Condition);
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class AbstractValidatorTests
 
         validator.Reset();
 
-        Assert.Null(validator._objectValidator.ConditionExpression);
+        Assert.Null(validator._objectValidator.Condition);
         Assert.Null(validator._objectValidator.Items);
     }
 

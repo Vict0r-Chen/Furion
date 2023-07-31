@@ -49,7 +49,7 @@ public class FluentModelValidator5 : IObjectValidator<FluentModel>
 
     public void Validate(object instance, string? ruleSet = null) => throw new NotImplementedException();
 
-    public IObjectValidator<FluentModel> When(Func<FluentModel, bool> conditionExpression) => throw new NotImplementedException();
+    public IObjectValidator<FluentModel> When(Func<FluentModel, bool> condition) => throw new NotImplementedException();
 
-    public IObjectValidator<FluentModel> WhenContext(Func<ValidationContext, bool> conditionExpression) => throw new NotImplementedException();
+    public IObjectValidator<FluentModel> WhenContext(Func<ValidationContext, bool> condition) => throw new NotImplementedException();
 }

@@ -120,16 +120,16 @@
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.When(System.Func{`0,System.Boolean})">
             <summary>
-            配置执行验证的符合条件表达式
+            配置执行验证的条件
             </summary>
-            <param name="conditionExpression">条件表达式</param>
+            <param name="condition">条件</param>
             <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.WhenContext(System.Func{System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean})">
             <summary>
-            配置执行验证的符合条件表达式
+            配置执行验证的条件
             </summary>
-            <param name="conditionExpression">条件表达式</param>
+            <param name="condition">条件</param>
             <returns><see cref="T:Furion.Validation.IObjectValidator`1"/></returns>
         </member>
         <member name="M:Furion.Validation.IObjectValidator`1.Reset">
@@ -356,9 +356,9 @@
         <member name="P:Furion.Validation.ObjectValidator`1.Options">
             <inheritdoc />
         </member>
-        <member name="P:Furion.Validation.ObjectValidator`1.ConditionExpression">
+        <member name="P:Furion.Validation.ObjectValidator`1.Condition">
             <summary>
-            执行验证的符合条件表达式
+            执行验证的条件
             </summary>
         </member>
         <member name="P:Furion.Validation.ObjectValidator`1.Items">
@@ -532,9 +532,9 @@
             验证对象解析器
             </summary>
         </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.ConditionExpression">
+        <member name="P:Furion.Validation.PropertyValidator`2.Condition">
             <summary>
-            执行验证的符合条件表达式
+            执行验证的条件
             </summary>
         </member>
         <member name="P:Furion.Validation.PropertyValidator`2.SubValidator">

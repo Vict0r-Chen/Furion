@@ -24,20 +24,115 @@ public sealed class RetryPolicy : IExceptionPolicy
     /// </summary>
     public RetryPolicy()
     {
+        RetryIntervals = new[] { TimeSpan.FromSeconds(1) };
+    }
+
+    public int MaxRetryCount { get; set; }
+
+    public TimeSpan[] RetryIntervals { get; set; }
+
+    // 差参数 Exception
+    public Func<bool>? Condition { get; set; }
+
+    public Type[]? RetryExceptions { get; set; }
+
+    public Action<System.Exception>? RetryCallback { get; set; }
+
+    internal bool ShouldRetry(System.Exception exception)
+    {
+        if (RetryExceptions == null || RetryExceptions.Length == 0)
+        {
+            return true;
+        }
+
+        for (int i = 0; i < RetryExceptions.Length; i++)
+        {
+            if (RetryExceptions[i].IsInstanceOfType(exception))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <inheritdoc />
-    public void CanExecute(System.Exception exception) => throw new NotImplementedException();
+    public void Execute(Action predicate)
+    {
+        Execute<object>(() =>
+        {
+            predicate();
+            return null!;
+        });
+    }
 
     /// <inheritdoc />
-    public void Execute(Action predicate) => throw new NotImplementedException();
+    public TResult Execute<TResult>(Func<TResult> predicate)
+    {
+        int retryCount = 0;
+        while (retryCount < MaxRetryCount && (Condition == null || Condition()))
+        {
+            try
+            {
+                return predicate();
+            }
+            catch (System.Exception ex)
+            {
+                if (retryCount == MaxRetryCount - 1 || !ShouldRetry(ex))
+                {
+                    throw;
+                }
+                else
+                {
+                    Thread.Sleep(RetryIntervals[0]);
+                }
+            }
+            finally
+            {
+                retryCount++;
+            }
+        }
+
+        return default!;
+    }
 
     /// <inheritdoc />
-    public TResult Execute<TResult>(Func<TResult> predicate) => throw new NotImplementedException();
+    public async Task ExecuteAsync(Func<Task> predicate, CancellationToken cancellationToken)
+    {
+        await ExecuteAsync<object>(async () =>
+        {
+            await predicate();
+            return Task.FromResult<object>(null!);
+        }, cancellationToken);
+    }
 
     /// <inheritdoc />
-    public Task ExecuteAsync(Func<Task> predicate, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> predicate, CancellationToken cancellationToken)
+    {
+        int retryCount = 0;
+        while (retryCount < MaxRetryCount && (Condition == null || Condition()))
+        {
+            try
+            {
+                return await predicate();
+            }
+            catch (System.Exception ex)
+            {
+                if (retryCount == MaxRetryCount - 1 || !ShouldRetry(ex))
+                {
+                    throw;
+                }
+                else
+                {
+                    await Task.Delay(RetryIntervals[0], cancellationToken);
+                }
+            }
+            finally
+            {
+                retryCount++;
+            }
+        }
 
-    /// <inheritdoc />
-    public Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> predicate, CancellationToken cancellationToken) => throw new NotImplementedException();
+        return default!;
+    }
 }

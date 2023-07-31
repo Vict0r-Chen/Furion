@@ -20,12 +20,6 @@ namespace Furion.Exception;
 public interface IExceptionPolicy
 {
     /// <summary>
-    /// 检查是否可以执行
-    /// </summary>
-    /// <param name="exception"></param>
-    void CanExecute(System.Exception exception);
-
-    /// <summary>
     /// 同步方法
     /// </summary>
     /// <param name="predicate"></param>

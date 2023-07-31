@@ -90,15 +90,15 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> When(Func<T, bool> conditionExpression)
+    public IObjectValidator<T> When(Func<T, bool> condition)
     {
-        return _objectValidator.When(conditionExpression);
+        return _objectValidator.When(condition);
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> conditionExpression)
+    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
-        return _objectValidator.WhenContext(conditionExpression);
+        return _objectValidator.WhenContext(condition);
     }
 
     /// <inheritdoc />

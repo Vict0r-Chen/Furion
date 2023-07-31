@@ -29,7 +29,7 @@ public class ObjectValidatorTests
         Assert.NotNull(validator.Options);
         Assert.True(validator.Options.SuppressAnnotationValidation);
         Assert.Equal(ValidatorCascadeMode.Continue, validator.Options.CascadeMode);
-        Assert.Null(validator.ConditionExpression);
+        Assert.Null(validator.Condition);
         Assert.Null(validator.Items);
     }
 
@@ -141,7 +141,7 @@ public class ObjectValidatorTests
         var validator = new ObjectValidator<ObjectModel>();
         validator.When(u => u.Name != null);
 
-        Assert.NotNull(validator.ConditionExpression);
+        Assert.NotNull(validator.Condition);
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public class ObjectValidatorTests
         var validator = new ObjectValidator<ObjectModel>();
         validator.WhenContext(u => u.ObjectInstance != null);
 
-        Assert.NotNull(validator.ConditionExpression);
+        Assert.NotNull(validator.Condition);
     }
 
     [Fact]
@@ -170,7 +170,7 @@ public class ObjectValidatorTests
         var validator = new ObjectValidator<ObjectModel>();
         validator.Reset();
 
-        Assert.Null(validator.ConditionExpression);
+        Assert.Null(validator.Condition);
         Assert.Null(validator.Items);
     }
 
