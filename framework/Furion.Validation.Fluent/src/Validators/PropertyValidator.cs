@@ -173,11 +173,13 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         ArgumentNullException.ThrowIfNull(propertyExpression);
 
         _objectValidator = objectValidator;
-        PropertyName = propertyExpression.GetPropertyName();
-
-        Validators = new();
         _annotationValidator = new(propertyExpression);
 
+        PropertyName = _annotationValidator.PropertyName;
+        Property = _annotationValidator.Property;
+        DisplayName = _annotationValidator.DisplayName;
+
+        Validators = new();
         Options = new();
     }
 
@@ -190,6 +192,14 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// 属性名称
     /// </summary>
     public string PropertyName { get; init; }
+
+    /// <inheritdoc cref="Property"/>
+    public PropertyInfo Property { get; init; }
+
+    /// <summary>
+    /// 属性别名
+    /// </summary>
+    public string? DisplayName { get; private set; }
 
     /// <inheritdoc />
     public ValidatorOptions Options { get; init; }
@@ -213,11 +223,6 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// 规则集
     /// </summary>
     public string[]? RuleSet { get; internal set; }
-
-    /// <summary>
-    /// 属性别名
-    /// </summary>
-    public string? DisplayName { get; private set; }
 
     /// <summary>
     /// 配置验证器选项
@@ -489,7 +494,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
-        return (TProperty?)_annotationValidator.GetPropertyValue((T)instance, PropertyName);
+        return (TProperty?)_annotationValidator.GetPropertyValue((T)instance);
     }
 
     /// <summary>
@@ -515,7 +520,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
 
         // 检查是否设置了验证对象解析器
         return ValidationObjectResolver is not null
-            ? ValidationObjectResolver(new((T)instance, validator, propertyValue))
+            ? ValidationObjectResolver(new((T)instance, validator, Property, propertyValue))
             : propertyValue;
     }
 

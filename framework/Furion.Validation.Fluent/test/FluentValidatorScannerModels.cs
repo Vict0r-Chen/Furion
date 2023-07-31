@@ -16,6 +16,7 @@ namespace Furion.Validation.Fluent.Tests;
 
 public class FluentModel
 {
+    public string? Name { get; set; }
 }
 
 public class FluentModelValidator : AbstractValidator<FluentModel>

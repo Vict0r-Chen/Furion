@@ -21,26 +21,34 @@ public class ValidationObjectResolverContextTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(null!, null!, null!);
+            var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(null!, null!, null!, null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(new(), null!, null!);
+            var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(new(), null!, null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(new(), new ChineseNameValidator(), null!, null!);
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(new(), new ChineseNameValidator(), null!);
+        var property = typeof(FluentModel).GetProperty("Name", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        Assert.NotNull(property);
+        var validationObjectResolverContext = new ValidationObjectResolverContext<FluentModel, string>(new(), new ChineseNameValidator(), property, null!);
 
         Assert.NotNull(validationObjectResolverContext);
         Assert.NotNull(validationObjectResolverContext.ObjectInstance);
         Assert.NotNull(validationObjectResolverContext.Validator);
+        Assert.NotNull(validationObjectResolverContext.Property);
         Assert.Null(validationObjectResolverContext.PropertyValue);
 
-        var validationObjectResolverContext2 = new ValidationObjectResolverContext<FluentModel, string>(new(), new ChineseNameValidator(), "Furion");
+        var validationObjectResolverContext2 = new ValidationObjectResolverContext<FluentModel, string>(new(), new ChineseNameValidator(), property, "Furion");
         Assert.Equal("Furion", validationObjectResolverContext2.PropertyValue);
     }
 }

@@ -36,18 +36,16 @@ public class PropertyAnnotationValidatorTests
         var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
 
         Assert.NotNull(validator);
-        Assert.NotNull(validator.PropertyExpression);
         Assert.Equal("Name", validator.PropertyName);
+        Assert.NotNull(validator.Property);
+        Assert.Null(validator.DisplayName);
         Assert.Null(validator.Getter);
         Assert.Null(validator.ErrorMessage);
         Assert.NotNull(validator._errorMessageResourceAccessor);
         Assert.Equal("The field {0} is invalid.", validator._errorMessageResourceAccessor());
 
         var validator2 = new PropertyAnnotationValidator<PropertyModel, int>(u => u.Id);
-        Assert.NotNull(validator2._propertyExpression);
-        Assert.NotNull(validator2.PropertyExpression);
         Assert.Equal("Id", validator2.PropertyName);
-        Assert.NotNull(((PropertyAnnotationValidator<PropertyModel>)validator2).PropertyExpression);
     }
 
     [Fact]
@@ -74,12 +72,6 @@ public class PropertyAnnotationValidatorTests
         {
             validator.IsValid(null!);
         });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validator.PropertyExpression = null!;
-            validator.IsValid(new PropertyModel { Name = "furion" });
-        });
     }
 
     [Fact]
@@ -99,12 +91,6 @@ public class PropertyAnnotationValidatorTests
         Assert.Throws<ArgumentNullException>(() =>
         {
             var validationResults = validator.GetValidationResults(null!, null!);
-        });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validator.PropertyExpression = null!;
-            var validationResults = validator.GetValidationResults(new PropertyModel { Name = "furion" }, null!);
         });
     }
 
@@ -152,12 +138,6 @@ public class PropertyAnnotationValidatorTests
         {
             validator.Validate(null!, null!);
         });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validator.PropertyExpression = null!;
-            validator.Validate(new PropertyModel { Name = "furion" }, null!);
-        });
     }
 
     [Fact]
@@ -198,7 +178,7 @@ public class PropertyAnnotationValidatorTests
         var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
         Assert.Throws<ArgumentNullException>(() =>
         {
-            validator.TryValidate(null!, out _);
+            validator.TryValidate(null!, null!, out _);
         });
     }
 
@@ -207,12 +187,12 @@ public class PropertyAnnotationValidatorTests
     {
         var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
 
-        var result = validator.TryValidate(new PropertyModel { Name = "furion" }, out var validationResults);
+        var result = validator.TryValidate(new PropertyModel { Name = "furion" }, null!, out var validationResults);
         Assert.True(result);
         Assert.NotNull(validationResults);
         Assert.Empty(validationResults);
 
-        var result2 = validator.TryValidate(new PropertyModel { Name = null }, out var validationResults2);
+        var result2 = validator.TryValidate(new PropertyModel { Name = null }, null!, out var validationResults2);
         Assert.False(result2);
         Assert.NotNull(validationResults2);
         Assert.Single(validationResults2);
@@ -227,22 +207,7 @@ public class PropertyAnnotationValidatorTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            validator.GetPropertyValue(null!, null!);
-        });
-
-        Assert.Throws<ArgumentException>(() =>
-        {
-            validator.GetPropertyValue(new PropertyModel(), string.Empty);
-        });
-
-        Assert.Throws<ArgumentException>(() =>
-        {
-            validator.GetPropertyValue(new PropertyModel(), "");
-        });
-
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            validator.GetPropertyValue(new PropertyModel(), "Unknown");
+            validator.GetPropertyValue(null!);
         });
     }
 
@@ -254,9 +219,20 @@ public class PropertyAnnotationValidatorTests
         var result = validator.GetPropertyValue(new PropertyModel
         {
             Name = "Furion"
-        }, "Name");
+        });
 
         Assert.NotNull(validator.Getter);
         Assert.Equal("Furion", result);
+    }
+
+    [Fact]
+    public void GetDisplayName_ReturnOK()
+    {
+        var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Email);
+        var validator2 = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
+
+        Assert.Equal("EmailAddress", validator.GetDisplayName(null!));
+        Assert.Equal("Name", validator2.GetDisplayName(null!));
+        Assert.Equal("EmailAddress2", validator.GetDisplayName("EmailAddress2"));
     }
 }

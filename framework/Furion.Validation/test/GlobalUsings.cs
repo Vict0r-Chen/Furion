@@ -13,6 +13,7 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 global using System.Collections;
+global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
 global using System.Reflection;
 global using Xunit;

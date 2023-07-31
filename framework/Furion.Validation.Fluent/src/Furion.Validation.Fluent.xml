@@ -87,12 +87,13 @@
             <typeparam name="T">对象类型</typeparam>
             <typeparam name="TProperty">属性类型</typeparam>
         </member>
-        <member name="M:Furion.Validation.ValidationObjectResolverContext`2.#ctor(`0,Furion.Validation.ValidatorBase,`1)">
+        <member name="M:Furion.Validation.ValidationObjectResolverContext`2.#ctor(`0,Furion.Validation.ValidatorBase,System.Reflection.PropertyInfo,`1)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.ValidationObjectResolverContext`2" />
             </summary>
             <param name="objectInstance">对象类型值</param>
             <param name="validator"><see cref="T:Furion.Validation.ValidatorBase"/></param>
+            <param name="property"><see cref="T:System.Reflection.PropertyInfo"/></param>
             <param name="propertyValue">属性类型值</param>
         </member>
         <member name="P:Furion.Validation.ValidationObjectResolverContext`2.ObjectInstance">
@@ -102,6 +103,9 @@
         </member>
         <member name="P:Furion.Validation.ValidationObjectResolverContext`2.Validator">
             <inheritdoc cref="T:Furion.Validation.ValidatorBase" />
+        </member>
+        <member name="P:Furion.Validation.ValidationObjectResolverContext`2.Property">
+            <inheritdoc cref="T:System.Reflection.PropertyInfo" />
         </member>
         <member name="P:Furion.Validation.ValidationObjectResolverContext`2.PropertyValue">
             <summary>
@@ -512,6 +516,14 @@
             属性名称
             </summary>
         </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.Property">
+            <inheritdoc cref="P:Furion.Validation.PropertyValidator`2.Property"/>
+        </member>
+        <member name="P:Furion.Validation.PropertyValidator`2.DisplayName">
+            <summary>
+            属性别名
+            </summary>
+        </member>
         <member name="P:Furion.Validation.PropertyValidator`2.Options">
             <inheritdoc />
         </member>
@@ -533,11 +545,6 @@
         <member name="P:Furion.Validation.PropertyValidator`2.RuleSet">
             <summary>
             规则集
-            </summary>
-        </member>
-        <member name="P:Furion.Validation.PropertyValidator`2.DisplayName">
-            <summary>
-            属性别名
             </summary>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.ConfigureOptions(System.Action{Furion.Validation.ValidatorOptions})">

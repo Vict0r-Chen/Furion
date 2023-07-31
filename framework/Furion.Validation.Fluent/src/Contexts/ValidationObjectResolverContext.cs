@@ -27,17 +27,21 @@ public sealed class ValidationObjectResolverContext<T, TProperty>
     /// </summary>
     /// <param name="objectInstance">对象类型值</param>
     /// <param name="validator"><see cref="ValidatorBase"/></param>
+    /// <param name="property"><see cref="PropertyInfo"/></param>
     /// <param name="propertyValue">属性类型值</param>
     public ValidationObjectResolverContext(T objectInstance
         , ValidatorBase validator
+        , PropertyInfo property
         , TProperty? propertyValue)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(objectInstance);
         ArgumentNullException.ThrowIfNull(validator);
+        ArgumentNullException.ThrowIfNull(property);
 
         ObjectInstance = objectInstance;
         Validator = validator;
+        Property = property;
         PropertyValue = propertyValue;
     }
 
@@ -48,6 +52,9 @@ public sealed class ValidationObjectResolverContext<T, TProperty>
 
     /// <inheritdoc cref="ValidatorBase" />
     public ValidatorBase Validator { get; init; }
+
+    /// <inheritdoc cref="PropertyInfo" />
+    public PropertyInfo Property { get; init; }
 
     /// <summary>
     /// 属性类型值

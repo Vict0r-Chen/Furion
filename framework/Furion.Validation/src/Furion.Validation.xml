@@ -2221,19 +2221,11 @@
             <typeparam name="T">对象类型</typeparam>
             <typeparam name="TProperty">属性类型</typeparam>
         </member>
-        <member name="F:Furion.Validation.PropertyAnnotationValidator`2._propertyExpression">
-            <summary>
-            属性选择器
-            </summary>
-        </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`2"/>
             </summary>
             <param name="propertyExpression">属性选择器</param>
-        </member>
-        <member name="P:Furion.Validation.PropertyAnnotationValidator`2.PropertyExpression">
-            <inheritdoc cref="P:Furion.Validation.PropertyAnnotationValidator`1.PropertyExpression"/>
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`2.Convert(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
@@ -2254,14 +2246,17 @@
             </summary>
             <param name="propertyExpression">属性选择器</param>
         </member>
-        <member name="P:Furion.Validation.PropertyAnnotationValidator`1.PropertyExpression">
-            <summary>
-            属性选择器
-            </summary>
-        </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.PropertyName">
             <summary>
             属性名称
+            </summary>
+        </member>
+        <member name="P:Furion.Validation.PropertyAnnotationValidator`1.Property">
+            <inheritdoc cref="P:Furion.Validation.PropertyAnnotationValidator`1.Property"/>
+        </member>
+        <member name="P:Furion.Validation.PropertyAnnotationValidator`1.DisplayName">
+            <summary>
+            属性别名
             </summary>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.Getter">
@@ -2278,22 +2273,29 @@
         <member name="M:Furion.Validation.PropertyAnnotationValidator`1.FormatErrorMessage(System.String,`0)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.TryValidate(`0,System.String,System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationResult}@)">
             <summary>
             检查属性注解（特性）合法性
             </summary>
             <param name="instance">对象实例</param>
+            <param name="name">显示名称</param>
             <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
-        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetPropertyValue(`0,System.String)">
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetPropertyValue(`0)">
             <summary>
             获取属性值
             </summary>
-            <param name="propertyName">属性名称</param>
-            <param name="instance"><typeparamref name="T"/></param>
+            <param name="instance">对象实例</param>
             <returns><see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyAnnotationValidator`1.GetDisplayName(System.String)">
+            <summary>
+            获取显示名称
+            </summary>
+            <param name="name">显示名称</param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="T:Furion.Validation.SingleValidator">
             <summary>

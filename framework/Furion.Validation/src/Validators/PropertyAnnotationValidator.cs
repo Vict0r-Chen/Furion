@@ -23,33 +23,12 @@ public class PropertyAnnotationValidator<T, TProperty> : PropertyAnnotationValid
     where T : class
 {
     /// <summary>
-    /// 属性选择器
-    /// </summary>
-    internal Expression<Func<T, TProperty?>> _propertyExpression;
-
-    /// <summary>
     /// <inheritdoc cref="PropertyAnnotationValidator{T, TProperty}"/>
     /// </summary>
     /// <param name="propertyExpression">属性选择器</param>
     public PropertyAnnotationValidator(Expression<Func<T, TProperty?>> propertyExpression)
         : base(Convert(propertyExpression))
     {
-        _propertyExpression = propertyExpression;
-    }
-
-    /// <inheritdoc cref="PropertyAnnotationValidator{T}.PropertyExpression"/>
-    public new Expression<Func<T, TProperty?>> PropertyExpression
-    {
-        get
-        {
-            return _propertyExpression;
-        }
-        set
-        {
-            // 转换表达式
-            base.PropertyExpression = Convert(value);
-            _propertyExpression = value;
-        }
     }
 
     /// <summary>
@@ -85,28 +64,23 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         // 空检查
         ArgumentNullException.ThrowIfNull(propertyExpression);
 
-        PropertyExpression = propertyExpression;
+        PropertyName = propertyExpression.GetPropertyName();
+        Property = typeof(T).GetProperty(PropertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+        DisplayName = Property.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
     }
-
-    /// <summary>
-    /// 属性选择器
-    /// </summary>
-    public Expression<Func<T, object?>> PropertyExpression { get; set; }
 
     /// <summary>
     /// 属性名称
     /// </summary>
-    internal string PropertyName
-    {
-        get
-        {
-            // 空检查
-            ArgumentNullException.ThrowIfNull(PropertyExpression);
+    internal string PropertyName { get; init; }
 
-            // 解析表达式属性名称
-            return PropertyExpression.GetPropertyName();
-        }
-    }
+    /// <inheritdoc cref="Property"/>
+    internal PropertyInfo Property { get; init; }
+
+    /// <summary>
+    /// 属性别名
+    /// </summary>
+    internal string? DisplayName { get; init; }
 
     /// <summary>
     /// 属性值访问器
@@ -116,14 +90,14 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <inheritdoc />
     public override bool IsValid(T value)
     {
-        return TryValidate(value, out _);
+        return TryValidate(value, null!, out _);
     }
 
     /// <inheritdoc />
     public override List<ValidationResult>? GetValidationResults(T value, string name)
     {
         // 检查属性注解（特性）合法性
-        if (TryValidate(value, out var validationResults))
+        if (TryValidate(value, name, out var validationResults))
         {
             return null;
         }
@@ -140,61 +114,56 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// <inheritdoc />
     public override string FormatErrorMessage(string name, T value)
     {
-        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name ?? PropertyName);
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, GetDisplayName(name));
     }
 
     /// <summary>
     /// 检查属性注解（特性）合法性
     /// </summary>
     /// <param name="instance">对象实例</param>
+    /// <param name="name">显示名称</param>
     /// <param name="validationResults"><see cref="List{T}"/></param>
     /// <returns><see cref="bool"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    internal bool TryValidate(T instance, out List<ValidationResult> validationResults)
+    internal bool TryValidate(T instance, string name, out List<ValidationResult> validationResults)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
 
-        // 获取属性名称
-        var propertyName = PropertyName;
-
         // 初始化验证上下文
         var validationContext = new ValidationContext(instance)
         {
-            MemberName = propertyName
+            MemberName = GetDisplayName(name)
         };
         validationResults = new();
 
         // 调用 Validator.TryValidateProperty 静态方法验证
-        return Validator.TryValidateProperty(GetPropertyValue(instance, propertyName), validationContext, validationResults);
+        return Validator.TryValidateProperty(GetPropertyValue(instance), validationContext, validationResults);
     }
 
     /// <summary>
     /// 获取属性值
     /// </summary>
-    /// <param name="propertyName">属性名称</param>
-    /// <param name="instance"><typeparamref name="T"/></param>
+    /// <param name="instance">对象实例</param>
     /// <returns><see cref="object"/></returns>
-    internal object? GetPropertyValue(T instance, string propertyName)
+    internal object? GetPropertyValue(T instance)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(instance);
-        ArgumentException.ThrowIfNullOrWhiteSpace(propertyName);
 
-        // 空检查
-        if (Getter is null)
-        {
-            // 获取属性对象
-            var propertyInfo = typeof(T).GetProperty(propertyName
-                , BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-            // 空检查
-            ArgumentNullException.ThrowIfNull(propertyInfo);
-
-            // 创建属性值访问器
-            Getter = typeof(T).CreatePropertyGetter(propertyInfo);
-        }
+        // 创建属性值访问器
+        Getter ??= typeof(T).CreatePropertyGetter(Property);
 
         return Getter(instance);
+    }
+
+    /// <summary>
+    /// 获取显示名称
+    /// </summary>
+    /// <param name="name">显示名称</param>
+    /// <returns><see cref="string"/></returns>
+    internal string GetDisplayName(string name)
+    {
+        return name ?? DisplayName ?? PropertyName;
     }
 }

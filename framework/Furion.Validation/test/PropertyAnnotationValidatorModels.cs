@@ -21,4 +21,7 @@ public class PropertyModel
 
     [Required, MinLength(3)]
     public string? Name { get; set; }
+
+    [DisplayName("EmailAddress")]
+    public string? Email { get; set; }
 }

@@ -46,6 +46,7 @@ public class PropertyValidatorTests
         Assert.Empty(propertyValidator.Validators);
         Assert.NotNull(propertyValidator.PropertyName);
         Assert.Equal("Name", propertyValidator.PropertyName);
+        Assert.NotNull(propertyValidator.Property);
         Assert.NotNull(propertyValidator.Options);
         Assert.True(propertyValidator.Options.SuppressAnnotationValidation);
         Assert.Equal(ValidatorCascadeMode.Continue, propertyValidator.Options.CascadeMode);
