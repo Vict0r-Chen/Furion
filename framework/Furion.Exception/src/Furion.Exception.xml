@@ -4,5 +4,72 @@
         <name>Furion.Exception</name>
     </assembly>
     <members>
+        <member name="T:Furion.Exception.IExceptionPolicy">
+            <summary>
+            异常策略接口
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy.CanExecute(System.Exception)">
+            <summary>
+            检查是否可以执行
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy.Execute(System.Action)">
+            <summary>
+            同步方法
+            </summary>
+            <param name="predicate"></param>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy.Execute``1(System.Func{``0})">
+            <summary>
+            同步带返回值
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            异步方法
+            </summary>
+            <param name="predicate"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy.ExecuteAsync``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)">
+            <summary>
+            异步带返回值
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="predicate"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy">
+            <summary>
+            重试策略
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.CanExecute(System.Exception)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.Execute(System.Action)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.Execute``1(System.Func{``0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.ExecuteAsync``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
