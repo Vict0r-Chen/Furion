@@ -19,6 +19,7 @@
 		<ProjectReference Include="..\..\Furion.DependencyInjection.Hosting\src\Furion.DependencyInjection.Hosting.csproj" />
 		<ProjectReference Include="..\..\Furion.DependencyInjection.Named\src\Furion.DependencyInjection.Named.csproj" />
 		<ProjectReference Include="..\..\Furion.DependencyInjection.TypeScanning\src\Furion.DependencyInjection.TypeScanning.csproj" />
+		<ProjectReference Include="..\..\Furion.Exception\src\Furion.Exception.csproj" />
 		<ProjectReference Include="..\..\Furion.Kit\src\Furion.Kit.csproj" />
 		<ProjectReference Include="..\..\Furion.Validation.AspNetCore\src\Furion.Validation.AspNetCore.csproj" />
 	</ItemGroup>

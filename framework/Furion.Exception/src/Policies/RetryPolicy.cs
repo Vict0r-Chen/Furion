@@ -45,6 +45,11 @@ public sealed class RetryPolicy : IExceptionPolicy
             return true;
         }
 
+        if (RetryExceptions is null || RetryExceptions.Length == 0)
+        {
+            return true;
+        }
+
         for (int i = 0; i < RetryExceptions.Length; i++)
         {
             if (RetryExceptions[i].IsInstanceOfType(exception))
@@ -70,7 +75,7 @@ public sealed class RetryPolicy : IExceptionPolicy
     public TResult Execute<TResult>(Func<TResult> predicate)
     {
         int retryCount = 0;
-        while (retryCount < MaxRetryCount && (Condition == null || Condition()))
+        while (retryCount <= MaxRetryCount && (Condition == null || Condition()))
         {
             try
             {
@@ -84,7 +89,10 @@ public sealed class RetryPolicy : IExceptionPolicy
                 }
                 else
                 {
-                    Thread.Sleep(RetryIntervals[0]);
+                    Console.WriteLine($"正在重试第 {retryCount} 次");
+                    int intervalIndex = RetryIntervals.Length > 0 ? retryCount % RetryIntervals.Length : 0;
+
+                    Thread.Sleep(RetryIntervals[intervalIndex]);
                 }
             }
             finally
@@ -124,6 +132,8 @@ public sealed class RetryPolicy : IExceptionPolicy
                 }
                 else
                 {
+                    int intervalIndex = RetryIntervals.Length > 0 ? retryCount % RetryIntervals.Length : 0;
+
                     await Task.Delay(RetryIntervals[0], cancellationToken);
                 }
             }

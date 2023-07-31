@@ -17,7 +17,7 @@ using Furion.Tests.Models;
 namespace Furion.Tests.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class HelloController
 {
     public HelloController(IServiceProvider _)  // 构造函数注入
@@ -44,5 +44,20 @@ public class HelloController
         });
 
         return stu;
+    }
+
+    [HttpGet]
+    public void TestRetryPolicy()
+    {
+        var retryPoliy = new RetryPolicy
+        {
+            MaxRetryCount = 3
+        };
+
+        retryPoliy.Execute(() =>
+        {
+            Console.WriteLine("哈哈哈");
+            throw new System.Exception("我出错了");
+        });
     }
 }
