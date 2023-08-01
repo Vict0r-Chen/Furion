@@ -17,7 +17,7 @@ namespace Furion.Exception;
 /// <summary>
 /// 重试策略
 /// </summary>
-public class RetryPolicy : IExceptionPolicy
+public class RetryPolicy : AbstractExceptionPolicy, IExceptionPolicy
 {
     /// <summary>
     /// 默认重试间隔
@@ -36,8 +36,8 @@ public class RetryPolicy : IExceptionPolicy
     /// </summary>
     /// <param name="retryExceptions">重试异常集合</param>
     public RetryPolicy(params Type[] retryExceptions)
+        : base(retryExceptions)
     {
-        RetryExceptions = retryExceptions;
     }
 
     /// <summary>
@@ -51,35 +51,9 @@ public class RetryPolicy : IExceptionPolicy
     public TimeSpan[] RetryIntervals { get; set; } = Array.Empty<TimeSpan>();
 
     /// <summary>
-    /// 条件
-    /// </summary>
-    public Func<System.Exception, bool>? Condition { get; set; }
-
-    /// <summary>
-    /// 重试异常集合
-    /// </summary>
-    public Type[]? RetryExceptions { get; set; }
-
-    /// <summary>
     /// 每次重试触发的回调
     /// </summary>
     public Action<System.Exception, int>? RetryAction { get; set; }
-
-    /// <summary>
-    /// 检查是否需要处理异常
-    /// </summary>
-    /// <param name="exception"></param>
-    /// <returns></returns>
-    internal bool ShouldHandle(System.Exception exception)
-    {
-        if (Condition is not null && Condition(exception))
-        {
-            return false;
-        }
-
-        return RetryExceptions.IsNullOrEmpty()
-            || RetryExceptions!.Any(ex => ex.IsInstanceOfType(exception));
-    }
 
     /// <inheritdoc />
     public void Execute(Action predicate)

@@ -9,6 +9,16 @@
             异常策略接口
             </summary>
         </member>
+        <member name="P:Furion.Exception.IExceptionPolicy.Condition">
+            <summary>
+            条件
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.IExceptionPolicy.HandleExceptions">
+            <summary>
+            重试异常集合
+            </summary>
+        </member>
         <member name="M:Furion.Exception.IExceptionPolicy.Execute(System.Action)">
             <summary>
             同步方法
@@ -39,6 +49,34 @@
             <param name="predicate"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="T:Furion.Exception.AbstractExceptionPolicy">
+            <summary>
+            异常策略抽象基类
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.AbstractExceptionPolicy.#ctor(System.Type[])">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            </summary>
+            <param name="handleExceptions">处理异常集合</param>
+        </member>
+        <member name="P:Furion.Exception.AbstractExceptionPolicy.Condition">
+            <summary>
+            条件
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.AbstractExceptionPolicy.HandleExceptions">
+            <summary>
+            处理异常集合
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.AbstractExceptionPolicy.ShouldHandle(System.Exception)">
+            <summary>
+            检查是否需要处理异常
+            </summary>
+            <param name="exception"></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Exception.RetryPolicy">
             <summary>
@@ -71,27 +109,10 @@
             重试间隔集合
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicy.Condition">
-            <summary>
-            条件
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.RetryPolicy.RetryExceptions">
-            <summary>
-            重试异常集合
-            </summary>
-        </member>
         <member name="P:Furion.Exception.RetryPolicy.RetryAction">
             <summary>
             每次重试触发的回调
             </summary>
-        </member>
-        <member name="M:Furion.Exception.RetryPolicy.ShouldHandle(System.Exception)">
-            <summary>
-            检查是否需要处理异常
-            </summary>
-            <param name="exception"></param>
-            <returns></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy.Execute(System.Action)">
             <inheritdoc />

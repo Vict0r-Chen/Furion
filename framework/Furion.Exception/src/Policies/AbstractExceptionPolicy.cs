@@ -15,48 +15,42 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 异常策略接口
+/// 异常策略抽象基类
 /// </summary>
-public interface IExceptionPolicy
+public abstract class AbstractExceptionPolicy
 {
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy" />
+    /// </summary>
+    /// <param name="handleExceptions">处理异常集合</param>
+    public AbstractExceptionPolicy(params Type[] handleExceptions)
+    {
+        HandleExceptions = handleExceptions;
+    }
+
     /// <summary>
     /// 条件
     /// </summary>
     public Func<System.Exception, bool>? Condition { get; set; }
 
     /// <summary>
-    /// 重试异常集合
+    /// 处理异常集合
     /// </summary>
     public Type[]? HandleExceptions { get; set; }
 
     /// <summary>
-    /// 同步方法
+    /// 检查是否需要处理异常
     /// </summary>
-    /// <param name="predicate"></param>
-    void Execute(Action predicate);
+    /// <param name="exception"></param>
+    /// <returns><see cref="bool"/></returns>
+    protected virtual bool ShouldHandle(System.Exception exception)
+    {
+        if (Condition is not null && Condition(exception))
+        {
+            return false;
+        }
 
-    /// <summary>
-    /// 同步带返回值
-    /// </summary>
-    /// <typeparam name="TResult"></typeparam>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
-    TResult Execute<TResult>(Func<TResult> predicate);
-
-    /// <summary>
-    /// 异步方法
-    /// </summary>
-    /// <param name="predicate"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task ExecuteAsync(Func<Task> predicate, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// 异步带返回值
-    /// </summary>
-    /// <typeparam name="TResult"></typeparam>
-    /// <param name="predicate"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> predicate, CancellationToken cancellationToken);
+        return HandleExceptions.IsNullOrEmpty()
+            || HandleExceptions!.Any(ex => ex.IsInstanceOfType(exception));
+    }
 }

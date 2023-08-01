@@ -51,11 +51,11 @@ public class HelloController
     {
         var retryPoliy = new RetryPolicy
         {
-            MaxRetryCount = 3
-        };
-        retryPoliy.RetryAction = (ex, i) =>
-        {
-            Console.WriteLine($"正在重试第 {i} 次...");
+            MaxRetryCount = 3,
+            RetryAction = (ex, i) =>
+            {
+                Console.WriteLine($"正在重试第 {i} 次...");
+            }
         };
 
         retryPoliy.Execute(() =>
