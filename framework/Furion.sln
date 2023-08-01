@@ -251,6 +251,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furioin.AspNetCore", "Furio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furioin.AspNetCore.Tests", "Furioin.AspNetCore\test\Furioin.AspNetCore.Tests.csproj", "{C269B858-D90D-4326-8EB6-A4C8C3ED4AAB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Exception.Policy", "Furion.Exception.Policy\src\Furion.Exception.Policy.csproj", "{6AF905F7-1980-4E4D-AB92-6CCF7C5B6B08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Furion.Exception.Policy.Tests", "Furion.Exception.Policy\test\Furion.Exception.Policy.Tests.csproj", "{F9E34669-A601-4664-AE20-9744F4EAC91A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -649,6 +653,14 @@ Global
 		{C269B858-D90D-4326-8EB6-A4C8C3ED4AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C269B858-D90D-4326-8EB6-A4C8C3ED4AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C269B858-D90D-4326-8EB6-A4C8C3ED4AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF905F7-1980-4E4D-AB92-6CCF7C5B6B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF905F7-1980-4E4D-AB92-6CCF7C5B6B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF905F7-1980-4E4D-AB92-6CCF7C5B6B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF905F7-1980-4E4D-AB92-6CCF7C5B6B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9E34669-A601-4664-AE20-9744F4EAC91A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9E34669-A601-4664-AE20-9744F4EAC91A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9E34669-A601-4664-AE20-9744F4EAC91A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9E34669-A601-4664-AE20-9744F4EAC91A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -750,6 +762,8 @@ Global
 		{86DD93B4-7D17-4EED-B3BE-7A064EABD8E0} = {36294817-6807-4A4F-91DE-4D845E83046F}
 		{A8DF022E-77B9-446A-BDDD-0E6E819935B8} = {7A327EB9-F56A-47DD-BCFE-403616F62422}
 		{C269B858-D90D-4326-8EB6-A4C8C3ED4AAB} = {7A327EB9-F56A-47DD-BCFE-403616F62422}
+		{6AF905F7-1980-4E4D-AB92-6CCF7C5B6B08} = {521A4E95-484F-49AC-BEE3-1E793CCDFB12}
+		{F9E34669-A601-4664-AE20-9744F4EAC91A} = {521A4E95-484F-49AC-BEE3-1E793CCDFB12}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E66EA3E6-2FE9-44EB-B8F6-7E49CDBD6C3C}

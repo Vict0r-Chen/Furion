@@ -55,7 +55,7 @@ public class HelloController
             {
                 Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
             })
-            .WaitAndRetry(TimeSpan.FromSeconds(3))
+            .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3))
             .Execute(() =>
             {
                 Console.WriteLine("我正在执行操作...");

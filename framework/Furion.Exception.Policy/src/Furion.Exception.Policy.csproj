@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Description>Furion 框架异常策略模块。</Description>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Exception;Policy</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Furion.Exception\src\Furion.Exception.csproj" />
+	</ItemGroup>
+
+</Project>
