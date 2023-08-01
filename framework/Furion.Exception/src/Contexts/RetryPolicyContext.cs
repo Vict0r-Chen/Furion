@@ -31,9 +31,4 @@ public sealed class RetryPolicyContext<TResult>
     /// 重试次数
     /// </summary>
     public int RetryCount { get; internal set; }
-
-    /// <summary>
-    /// 捕获的异常集合
-    /// </summary>
-    public Type[]? HandleExceptions { get; internal set; }
 }

@@ -51,7 +51,7 @@ public class HelloController
     {
         var retryPoliy = new RetryPolicy
         {
-            MaxRetryCount = 0,
+            MaxRetryCount = 3,
             RetryAction = (context) =>
             {
                 Console.WriteLine($"正在重试第 {context.RetryCount} 次...");

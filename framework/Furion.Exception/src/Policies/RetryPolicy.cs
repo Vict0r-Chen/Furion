@@ -20,6 +20,23 @@ namespace Furion.Exception;
 public sealed class RetryPolicy : RetryPolicy<object>
 {
     /// <summary>
+    /// <inheritdoc cref="RetryPolicy" />
+    /// </summary>
+    public RetryPolicy()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy" />
+    /// </summary>
+    /// <param name="handleExceptions">捕获的异常集合</param>
+    public RetryPolicy(params Type[] handleExceptions)
+        : base(handleExceptions)
+    {
+    }
+
+    /// <summary>
     /// 执行操作方法
     /// </summary>
     /// <param name="operation">操作方法</param>
@@ -97,14 +114,19 @@ public class RetryPolicy<TResult>
     public Action<RetryPolicyContext<TResult>>? RetryAction { get; set; }
 
     /// <summary>
-    /// 条件
+    /// 条件集合
     /// </summary>
-    public Func<RetryPolicyContext<TResult>, bool>? Condition { get; set; }
+    public Func<RetryPolicyContext<TResult>, bool>[]? Conditions { get; set; }
 
     /// <summary>
     /// 捕获的异常集合
     /// </summary>
     public Type[]? HandleExceptions { get; set; }
+
+    /// <summary>
+    /// 捕获的内部异常集合
+    /// </summary>
+    public Type[]? HandleInnerExceptions { get; set; }
 
     /// <summary>
     /// 检查是否可以执行重试策略
@@ -119,27 +141,22 @@ public class RetryPolicy<TResult>
             return false;
         }
 
-        // 检查是否存在异常
-        if (context.Exception is not null)
+        // 检查异常信息是否匹配
+        if (IsMatchException(context, HandleExceptions, context.Exception))
         {
-            // 检查是否定义了需要捕获的异常
-            if (HandleExceptions.IsNullOrEmpty()
-                || HandleExceptions!.Any(ex => ex.IsInstanceOfType(context.Exception)))
-            {
-                // 检查是否配置了条件
-                if (Condition is not null)
-                {
-                    return Condition(context);
-                }
+            return true;
+        }
 
-                return true;
-            }
+        // 检查异常信息是否匹配
+        if (IsMatchException(context, HandleInnerExceptions, context.Exception?.InnerException))
+        {
+            return true;
         }
 
         // 检查是否配置了条件
-        if (Condition is not null)
+        if (Conditions is not null && Conditions.Length > 0)
         {
-            return Condition(context);
+            return Conditions.Any(condition => condition(context));
         }
 
         return false;
@@ -171,6 +188,31 @@ public class RetryPolicy<TResult>
     }
 
     /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> HandleInner<TException>()
+        where TException : System.Exception
+    {
+        HandleInnerExceptions ??= Array.Empty<Type>();
+        HandleInnerExceptions[HandleInnerExceptions.Length] = typeof(TException);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrInner<TException>()
+        where TException : System.Exception
+    {
+        return HandleInner<TException>();
+    }
+
+    /// <summary>
     /// 添加重试间隔
     /// </summary>
     /// <param name="retryIntervals"></param>
@@ -190,14 +232,25 @@ public class RetryPolicy<TResult>
     /// </summary>
     /// <param name="condition">条件</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> condition)
+    public RetryPolicy<TResult> HandleResult(Func<RetryPolicyContext<TResult>, bool> condition)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(condition);
 
-        Condition = condition;
+        Conditions ??= Array.Empty<Func<RetryPolicyContext<TResult>, bool>>();
+        Conditions[Conditions.Length] = condition;
 
         return this;
+    }
+
+    /// <summary>
+    /// 添加条件
+    /// </summary>
+    /// <param name="condition">条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> condition)
+    {
+        return HandleResult(condition);
     }
 
     /// <summary>
@@ -211,10 +264,7 @@ public class RetryPolicy<TResult>
         ArgumentNullException.ThrowIfNull(operation);
 
         // 初始化重试策略上下文
-        var context = new RetryPolicyContext<TResult>
-        {
-            HandleExceptions = HandleExceptions
-        };
+        var context = new RetryPolicyContext<TResult>();
 
         while (true)
         {
@@ -270,10 +320,7 @@ public class RetryPolicy<TResult>
         ArgumentNullException.ThrowIfNull(operation);
 
         // 初始化重试策略上下文
-        var context = new RetryPolicyContext<TResult>
-        {
-            HandleExceptions = HandleExceptions
-        };
+        var context = new RetryPolicyContext<TResult>();
 
         while (true)
         {
@@ -334,5 +381,38 @@ public class RetryPolicy<TResult>
         }
 
         return context.Result;
+    }
+
+    /// <summary>
+    /// 检查异常信息是否匹配
+    /// </summary>
+    /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
+    /// <param name="exceptions">异常类型集合</param>
+    /// <param name="exception">异常对象</param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool IsMatchException(RetryPolicyContext<TResult> context, Type[]? exceptions, System.Exception? exception)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(context);
+
+        // 空检查
+        if (exception is null)
+        {
+            return false;
+        }
+
+        // 检查是否定义了需要捕获的异常
+        if (exceptions.IsNullOrEmpty() || exceptions!.Any(ex => ex.IsInstanceOfType(exception)))
+        {
+            // 检查是否配置了条件
+            if (Conditions is not null && Conditions.Length > 0)
+            {
+                return Conditions.Any(condition => condition(context));
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

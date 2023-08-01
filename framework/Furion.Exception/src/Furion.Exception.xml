@@ -22,15 +22,21 @@
             重试次数
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicyContext`1.HandleExceptions">
-            <summary>
-            捕获的异常集合
-            </summary>
-        </member>
         <member name="T:Furion.Exception.RetryPolicy">
             <summary>
             重试策略
             </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.#ctor(System.Type[])">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            </summary>
+            <param name="handleExceptions">捕获的异常集合</param>
         </member>
         <member name="M:Furion.Exception.RetryPolicy.Execute(System.Action)">
             <summary>
@@ -78,14 +84,19 @@
             重试触发操作
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicy`1.Condition">
+        <member name="P:Furion.Exception.RetryPolicy`1.Conditions">
             <summary>
-            条件
+            条件集合
             </summary>
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.HandleExceptions">
             <summary>
             捕获的异常集合
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy`1.HandleInnerExceptions">
+            <summary>
+            捕获的内部异常集合
             </summary>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ShouldRetry(Furion.Exception.RetryPolicyContext{`0})">
@@ -109,11 +120,32 @@
             <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.HandleInner``1">
+            <summary>
+            添加捕获内部异常类型
+            </summary>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.OrInner``1">
+            <summary>
+            添加捕获内部异常类型
+            </summary>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
         <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetry(System.TimeSpan[])">
             <summary>
             添加重试间隔
             </summary>
             <param name="retryIntervals"></param>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.HandleResult(System.Func{Furion.Exception.RetryPolicyContext{`0},System.Boolean})">
+            <summary>
+            添加条件
+            </summary>
+            <param name="condition">条件</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OrResult(System.Func{Furion.Exception.RetryPolicyContext{`0},System.Boolean})">
@@ -144,6 +176,15 @@
             </summary>
             <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
             <returns><typeparamref name="TResult"/></returns>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.IsMatchException(Furion.Exception.RetryPolicyContext{`0},System.Type[],System.Exception)">
+            <summary>
+            检查异常信息是否匹配
+            </summary>
+            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
+            <param name="exceptions">异常类型集合</param>
+            <param name="exception">异常对象</param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Exception.Polly">
             <summary>
