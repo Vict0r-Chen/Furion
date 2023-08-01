@@ -45,7 +45,7 @@ public abstract class ComponentContext
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <param name="configure">自定义配置委托</param>
-    public void Props<TProps>(Action<TProps> configure)
+    public virtual void Props<TProps>(Action<TProps> configure)
         where TProps : class, new()
     {
         // 空检查
@@ -60,7 +60,7 @@ public abstract class ComponentContext
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
-    public void Props<TProps>(IConfiguration configuration)
+    public virtual void Props<TProps>(IConfiguration configuration)
         where TProps : class, new()
     {
         // 空检查
@@ -75,7 +75,7 @@ public abstract class ComponentContext
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><typeparamref name="TProps"/></returns>
-    public TProps? GetProps<TProps>()
+    public virtual TProps? GetProps<TProps>()
         where TProps : class, new()
     {
         // 获取组件配置级联委托
@@ -101,7 +101,7 @@ public abstract class ComponentContext
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><typeparamref name="TProps"/></returns>
-    public TProps GetPropsOrNew<TProps>()
+    public virtual TProps GetPropsOrNew<TProps>()
         where TProps : class, new()
     {
         return GetProps<TProps>() ?? new();
@@ -112,7 +112,7 @@ public abstract class ComponentContext
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <returns><see cref="Action{T}"/></returns>
-    public Action<TProps>? GetPropsAction<TProps>()
+    public virtual Action<TProps>? GetPropsAction<TProps>()
         where TProps : class, new()
     {
         return Options.GetPropsAction<TProps>();

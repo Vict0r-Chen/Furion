@@ -47,7 +47,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     /// </summary>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="IObjectValidator{T}"/></returns>
-    public IObjectValidator<T> ConfigureOptions(Action<ValidatorOptions> configure)
+    public virtual IObjectValidator<T> ConfigureOptions(Action<ValidatorOptions> configure)
     {
         return _objectValidator.ConfigureOptions(configure);
     }
@@ -59,7 +59,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     /// <param name="propertyExpression">属性选择器</param>
     /// <param name="ruleSet">规则集</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertyExpression, string? ruleSet = null)
+    public virtual PropertyValidator<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty?>> propertyExpression, string? ruleSet = null)
     {
         return _objectValidator.Property(propertyExpression, _ruleSet ?? ruleSet);
     }
@@ -69,7 +69,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     /// </summary>
     /// <param name="ruleSet">规则集</param>
     /// <param name="setAction"><see cref="Action"/></param>
-    public void RuleSet(string ruleSet, Action setAction)
+    public virtual void RuleSet(string ruleSet, Action setAction)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(ruleSet);
@@ -90,43 +90,43 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> When(Func<T, bool> condition)
+    public virtual IObjectValidator<T> When(Func<T, bool> condition)
     {
         return _objectValidator.When(condition);
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
+    public virtual IObjectValidator<T> WhenContext(Func<ValidationContext, bool> condition)
     {
         return _objectValidator.WhenContext(condition);
     }
 
     /// <inheritdoc />
-    public IObjectValidator<T> Reset()
+    public virtual IObjectValidator<T> Reset()
     {
         return _objectValidator.Reset();
     }
 
     /// <inheritdoc />
-    public bool IsValid(object instance, string? ruleSet = null)
+    public virtual bool IsValid(object instance, string? ruleSet = null)
     {
         return _objectValidator.IsValid(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null)
+    public virtual List<ValidationResult>? GetValidationResults(object instance, string? ruleSet = null)
     {
         return _objectValidator.GetValidationResults(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public void Validate(object instance, string? ruleSet = null)
+    public virtual void Validate(object instance, string? ruleSet = null)
     {
         _objectValidator.Validate(instance, ruleSet);
     }
 
     /// <inheritdoc />
-    public bool IsInRuleSet(string? ruleSet = null)
+    public virtual bool IsInRuleSet(string? ruleSet = null)
     {
         return _objectValidator.IsInRuleSet(ruleSet);
     }

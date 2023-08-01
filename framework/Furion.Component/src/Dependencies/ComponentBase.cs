@@ -27,7 +27,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <param name="configure">自定义配置委托</param>
-    public void Props<TProps>(Action<TProps> configure)
+    public virtual void Props<TProps>(Action<TProps> configure)
         where TProps : class, new()
     {
         // 空检查
@@ -43,7 +43,7 @@ public abstract class ComponentBase
     /// </summary>
     /// <typeparam name="TProps">组件配置类型</typeparam>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
-    public void Props<TProps>(IConfiguration configuration)
+    public virtual void Props<TProps>(IConfiguration configuration)
         where TProps : class, new()
     {
         // 空检查
@@ -90,7 +90,7 @@ public abstract class ComponentBase
     /// <summary>
     /// 重载组件配置
     /// </summary>
-    public void ReloadProps()
+    public virtual void ReloadProps()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(Options);

@@ -43,7 +43,7 @@ public abstract class ConfigurationBuilderBase
     /// </summary>
     /// <param name="extension">文件拓展名</param>
     /// <param name="parser"><see cref="Func{T, TResult}"/></param>
-    public void AddParser(string extension, Func<Stream, IDictionary<string, string?>> parser)
+    public virtual void AddParser(string extension, Func<Stream, IDictionary<string, string?>> parser)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(extension);
@@ -58,7 +58,7 @@ public abstract class ConfigurationBuilderBase
     /// <param name="extension">文件拓展名</param>
     /// <param name="sourceType">实现 <see cref="FileConfigurationSource"/> 的类型</param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void AddSource(string extension, Type sourceType)
+    public virtual void AddSource(string extension, Type sourceType)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(extension);
