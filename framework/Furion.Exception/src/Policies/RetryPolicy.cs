@@ -25,7 +25,7 @@ public sealed class RetryPolicy : RetryPolicy<object>
 /// 重试策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class RetryPolicy<TResult>
+public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
 {
     /// <summary>
     /// 最大重试次数
@@ -193,7 +193,7 @@ public class RetryPolicy<TResult>
     }
 
     /// <summary>
-    /// 配置重试策略重试直至成功
+    /// 永久重试
     /// </summary>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public RetryPolicy<TResult> Forever()
@@ -203,10 +203,7 @@ public class RetryPolicy<TResult>
         return this;
     }
 
-    /// <summary>
-    /// 执行同步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
+    /// <inheritdoc />
     public void Execute(Action operation)
     {
         // 空检查
@@ -220,12 +217,7 @@ public class RetryPolicy<TResult>
         });
     }
 
-    /// <summary>
-    /// 执行异步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns><see cref="Task{TResult}"/></returns>
+    /// <inheritdoc />
     public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
@@ -239,11 +231,7 @@ public class RetryPolicy<TResult>
         }, cancellationToken);
     }
 
-    /// <summary>
-    /// 执行同步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <returns><typeparamref name="TResult"/></returns>
+    /// <inheritdoc />
     public TResult? Execute(Func<TResult?> operation)
     {
         return ExecuteAsync(() => Task.FromResult(operation()))
@@ -251,12 +239,7 @@ public class RetryPolicy<TResult>
             .GetResult();
     }
 
-    /// <summary>
-    /// 执行异步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns><see cref="Task{TResult}"/></returns>
+    /// <inheritdoc />
     public async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
     {
         // 空检查

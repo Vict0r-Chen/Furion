@@ -25,7 +25,7 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 /// 超时策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class TimeoutPolicy<TResult>
+public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
 {
     /// <summary>
     /// 超时时间
@@ -52,10 +52,7 @@ public class TimeoutPolicy<TResult>
         return this;
     }
 
-    /// <summary>
-    /// 执行同步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
+    /// <inheritdoc />
     public void Execute(Action operation)
     {
         // 空检查
@@ -69,12 +66,7 @@ public class TimeoutPolicy<TResult>
         });
     }
 
-    /// <summary>
-    /// 执行异步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns><see cref="Task{TResult}"/></returns>
+    /// <inheritdoc />
     public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
@@ -88,11 +80,7 @@ public class TimeoutPolicy<TResult>
         }, cancellationToken);
     }
 
-    /// <summary>
-    /// 执行同步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <returns><typeparamref name="TResult"/></returns>
+    /// <inheritdoc />
     public TResult? Execute(Func<TResult?> operation)
     {
         return ExecuteAsync(() => Task.Run(operation))
@@ -100,12 +88,7 @@ public class TimeoutPolicy<TResult>
             .GetResult();
     }
 
-    /// <summary>
-    /// 执行异步操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns><see cref="Task{TResult}"/></returns>
+    /// <inheritdoc />
     public async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
     {
         // 空检查

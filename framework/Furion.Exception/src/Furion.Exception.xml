@@ -53,6 +53,41 @@
             超时的时间
             </summary>
         </member>
+        <member name="T:Furion.Exception.IExceptionPolicy`1">
+            <summary>
+            异常策略服务
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Action)">
+            <summary>
+            执行同步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            执行异步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Func{`0})">
+            <summary>
+            执行同步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+            <returns><typeparamref name="TResult"/></returns>
+        </member>
+        <member name="M:Furion.Exception.IExceptionPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
+            <summary>
+            执行异步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
         <member name="T:Furion.Exception.RetryPolicy">
             <summary>
             重试策略
@@ -159,38 +194,21 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Forever">
             <summary>
-            配置重试策略重试直至成功
+            永久重试
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Execute(System.Action)">
-            <summary>
-            执行同步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
-            <summary>
-            执行异步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
-            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Execute(System.Func{`0})">
-            <summary>
-            执行同步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
-            <returns><typeparamref name="TResult"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
-            <summary>
-            执行异步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
-            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ReturnResultOrThrow(Furion.Exception.RetryPolicyContext{`0})">
             <summary>
@@ -237,33 +255,16 @@
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Action)">
-            <summary>
-            执行同步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
-            <summary>
-            执行异步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
-            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0})">
-            <summary>
-            执行同步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
-            <returns><typeparamref name="TResult"/></returns>
+            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
-            <summary>
-            执行异步操作方法
-            </summary>
-            <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
-            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+            <inheritdoc />
         </member>
         <member name="T:Furion.Exception.Polly">
             <summary>
