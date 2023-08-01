@@ -246,53 +246,9 @@ public class RetryPolicy<TResult>
     /// <returns><typeparamref name="TResult"/></returns>
     public TResult? Execute(Func<TResult?> operation)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(operation);
-
-        // 初始化重试策略上下文
-        var context = new RetryPolicyContext<TResult>();
-
-        while (true)
-        {
-            try
-            {
-                // 获取操作方法执行结果
-                context.Result = operation();
-            }
-            catch (System.Exception exception)
-            {
-                // 获取操作方法执行异常
-                context.Exception = exception;
-            }
-
-            // 检查是否可以执行重试操作
-            if (ShouldRetry(context))
-            {
-                // 检查重试次数是否大于最大重试次数减 1
-                if (context.RetryCount > MaxRetryCount - 1)
-                {
-                    // 返回结果或抛出异常
-                    return ReturnResultOrThrow(context);
-                }
-
-                // 递增上下文数据
-                context.Increment();
-
-                // 调用重试时操作方法
-                RetryAction?.Invoke(context);
-
-                // 检查是否配置了重试间隔
-                if (RetryIntervals is { Length: > 0 })
-                {
-                    Thread.Sleep(RetryIntervals[context.RetryCount % RetryIntervals.Length]);
-                }
-
-                continue;
-            }
-
-            // 返回结果或抛出异常
-            return ReturnResultOrThrow(context);
-        }
+        return ExecuteAsync(() => Task.FromResult(operation()))
+            .GetAwaiter()
+            .GetResult();
     }
 
     /// <summary>
