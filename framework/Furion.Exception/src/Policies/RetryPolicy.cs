@@ -28,6 +28,21 @@ public sealed class RetryPolicy : RetryPolicy<object>
 public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
 {
     /// <summary>
+    /// 操作结果条件集合
+    /// </summary>
+    public IList<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
+
+    /// <summary>
+    /// 捕获的异常集合
+    /// </summary>
+    public IList<Type>? HandleExceptions { get; set; }
+
+    /// <summary>
+    /// 捕获的内部异常集合
+    /// </summary>
+    public IList<Type>? HandleInnerExceptions { get; set; }
+
+    /// <summary>
     /// 最大重试次数
     /// </summary>
     public uint MaxRetryCount { get; set; }
@@ -43,19 +58,142 @@ public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
     public Action<RetryPolicyContext<TResult>>? RetryAction { get; set; }
 
     /// <summary>
-    /// 操作结果条件集合
+    /// 添加捕获异常类型
     /// </summary>
-    public IList<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Handle<TException>()
+        where TException : System.Exception
+    {
+        HandleExceptions ??= new List<Type>();
+        HandleExceptions.Add(typeof(TException));
+
+        return this;
+    }
 
     /// <summary>
-    /// 捕获的异常集合
+    /// 添加捕获异常类型
     /// </summary>
-    public IList<Type>? HandleExceptions { get; set; }
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Handle<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exceptionCondition);
+
+        // 添加捕获异常类型和条件
+        Handle<TException>();
+        HandleResult(context => context.Exception is TException exception && exceptionCondition(exception));
+
+        return this;
+    }
 
     /// <summary>
-    /// 捕获的内部异常集合
+    /// 添加捕获异常类型
     /// </summary>
-    public IList<Type>? HandleInnerExceptions { get; set; }
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Or<TException>()
+        where TException : System.Exception
+    {
+        return Handle<TException>();
+    }
+
+    /// <summary>
+    /// 添加捕获异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Or<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        return Handle(exceptionCondition);
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> HandleInner<TException>()
+        where TException : System.Exception
+    {
+        HandleInnerExceptions ??= new List<Type>();
+        HandleInnerExceptions.Add(typeof(TException));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> HandleInner<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exceptionCondition);
+
+        // 添加捕获异常类型和条件
+        HandleInner<TException>();
+        HandleResult(context => context.Exception?.InnerException is TException exception && exceptionCondition(exception));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrInner<TException>()
+        where TException : System.Exception
+    {
+        return HandleInner<TException>();
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrInner<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        return HandleInner(exceptionCondition);
+    }
+
+    /// <summary>
+    /// 添加操作结果条件
+    /// </summary>
+    /// <param name="resultCondition">操作结果条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> HandleResult(Func<RetryPolicyContext<TResult>, bool> resultCondition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(resultCondition);
+
+        ResultConditions ??= new List<Func<RetryPolicyContext<TResult>, bool>>();
+        ResultConditions.Add(resultCondition);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加操作结果条件
+    /// </summary>
+    /// <param name="resultCondition">操作结果条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> resultCondition)
+    {
+        return HandleResult(resultCondition);
+    }
 
     /// <summary>
     /// 检查是否可以执行重试操作
@@ -84,82 +222,6 @@ public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// 添加捕获异常类型
-    /// </summary>
-    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> Handle<TException>()
-        where TException : System.Exception
-    {
-        HandleExceptions ??= new List<Type>();
-        HandleExceptions.Add(typeof(TException));
-
-        return this;
-    }
-
-    /// <summary>
-    /// 添加捕获异常类型
-    /// </summary>
-    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> Or<TException>()
-        where TException : System.Exception
-    {
-        return Handle<TException>();
-    }
-
-    /// <summary>
-    /// 添加捕获内部异常类型
-    /// </summary>
-    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> HandleInner<TException>()
-        where TException : System.Exception
-    {
-        HandleInnerExceptions ??= new List<Type>();
-        HandleInnerExceptions.Add(typeof(TException));
-
-        return this;
-    }
-
-    /// <summary>
-    /// 添加捕获内部异常类型
-    /// </summary>
-    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> OrInner<TException>()
-        where TException : System.Exception
-    {
-        return HandleInner<TException>();
-    }
-
-    /// <summary>
-    /// 添加操作结果条件
-    /// </summary>
-    /// <param name="resultCondition">操作结果条件</param>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> HandleResult(Func<RetryPolicyContext<TResult>, bool> resultCondition)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(resultCondition);
-
-        ResultConditions ??= new List<Func<RetryPolicyContext<TResult>, bool>>();
-        ResultConditions.Add(resultCondition);
-
-        return this;
-    }
-
-    /// <summary>
-    /// 添加操作结果条件
-    /// </summary>
-    /// <param name="resultCondition">操作结果条件</param>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> resultCondition)
-    {
-        return HandleResult(resultCondition);
     }
 
     /// <summary>

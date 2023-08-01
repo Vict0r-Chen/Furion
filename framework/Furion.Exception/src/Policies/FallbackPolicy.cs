@@ -48,29 +48,6 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
     public IList<Type>? HandleInnerExceptions { get; set; }
 
     /// <summary>
-    /// 检查是否可以执行后备操作
-    /// </summary>
-    /// <param name="context"><see cref="FallbackPolicy{TResult}"/></param>
-    /// <returns><see cref="bool"/></returns>
-    internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
-    {
-        // 检查异常或内部异常是否能够捕获处理
-        if (WhenCatchException(context, HandleExceptions, context.Exception)
-            || WhenCatchException(context, HandleInnerExceptions, context.Exception?.InnerException))
-        {
-            return true;
-        }
-
-        // 检查是否配置了操作结果条件
-        if (ResultConditions is not null && ResultConditions.Count > 0)
-        {
-            return ResultConditions.Any(condition => condition(context));
-        }
-
-        return false;
-    }
-
-    /// <summary>
     /// 添加捕获异常类型
     /// </summary>
     /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
@@ -88,11 +65,42 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
     /// 添加捕获异常类型
     /// </summary>
     /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public FallbackPolicy<TResult> Handle<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exceptionCondition);
+
+        // 添加捕获异常类型和条件
+        Handle<TException>();
+        HandleResult(context => context.Exception is TException exception && exceptionCondition(exception));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加捕获异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public FallbackPolicy<TResult> Or<TException>()
         where TException : System.Exception
     {
         return Handle<TException>();
+    }
+
+    /// <summary>
+    /// 添加捕获异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public FallbackPolicy<TResult> Or<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        return Handle(exceptionCondition);
     }
 
     /// <summary>
@@ -113,11 +121,42 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
     /// 添加捕获内部异常类型
     /// </summary>
     /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public FallbackPolicy<TResult> HandleInner<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exceptionCondition);
+
+        // 添加捕获异常类型和条件
+        HandleInner<TException>();
+        HandleResult(context => context.Exception?.InnerException is TException exception && exceptionCondition(exception));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public FallbackPolicy<TResult> OrInner<TException>()
         where TException : System.Exception
     {
         return HandleInner<TException>();
+    }
+
+    /// <summary>
+    /// 添加捕获内部异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <param name="exceptionCondition">异常条件</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public FallbackPolicy<TResult> OrInner<TException>(Func<TException, bool> exceptionCondition)
+        where TException : System.Exception
+    {
+        return HandleInner(exceptionCondition);
     }
 
     /// <summary>
@@ -144,6 +183,29 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
     public FallbackPolicy<TResult> OrResult(Func<FallbackPolicyContext<TResult>, bool> resultCondition)
     {
         return HandleResult(resultCondition);
+    }
+
+    /// <summary>
+    /// 检查是否可以执行后备操作
+    /// </summary>
+    /// <param name="context"><see cref="FallbackPolicy{TResult}"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
+    {
+        // 检查异常或内部异常是否能够捕获处理
+        if (WhenCatchException(context, HandleExceptions, context.Exception)
+            || WhenCatchException(context, HandleInnerExceptions, context.Exception?.InnerException))
+        {
+            return true;
+        }
+
+        // 检查是否配置了操作结果条件
+        if (ResultConditions is not null && ResultConditions.Count > 0)
+        {
+            return ResultConditions.Any(condition => condition(context));
+        }
+
+        return false;
     }
 
     /// <summary>
