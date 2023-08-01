@@ -24,7 +24,7 @@ public abstract class AbstractPolicy<TResult> : IExceptionPolicy<TResult>
     public string? PolicyName { get; set; }
 
     /// <inheritdoc />
-    public void Execute(Action operation)
+    public virtual void Execute(Action operation)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(operation);
@@ -39,7 +39,7 @@ public abstract class AbstractPolicy<TResult> : IExceptionPolicy<TResult>
     }
 
     /// <inheritdoc />
-    public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
+    public virtual async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(operation);
@@ -54,9 +54,9 @@ public abstract class AbstractPolicy<TResult> : IExceptionPolicy<TResult>
     }
 
     /// <inheritdoc />
-    public TResult? Execute(Func<TResult?> operation)
+    public virtual TResult? Execute(Func<TResult?> operation)
     {
-        return ExecuteAsync(() => Task.Run(operation))
+        return ExecuteAsync(() => Task.FromResult(operation()))
             .GetAwaiter()
             .GetResult();
     }
