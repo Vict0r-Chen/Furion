@@ -19,16 +19,40 @@ namespace Furion.Exception;
 /// </summary>
 public sealed class RetryPolicyContext<TResult>
 {
+    /// <inheritdoc cref="RetryPolicy{TResult}"/>
+    internal RetryPolicyContext()
+    {
+    }
+
     /// <inheritdoc cref="System.Exception"/>
     public System.Exception? Exception { get; internal set; }
 
     /// <summary>
-    /// 操作执行结果
+    /// 操作返回值
     /// </summary>
     public TResult? Result { get; internal set; }
 
     /// <summary>
-    /// 重试次数
+    /// 当前重试次数
     /// </summary>
     public int RetryCount { get; internal set; }
+
+    /// <summary>
+    /// 重试的时间
+    /// </summary>
+    public DateTimeOffset TimeForRetry { get; private set; }
+
+    /// <summary>
+    /// 附加属性
+    /// </summary>
+    public IDictionary<object, object?>? Properties { get; set; }
+
+    /// <summary>
+    /// 递增上下文数据
+    /// </summary>
+    internal void Increment()
+    {
+        RetryCount++;
+        TimeForRetry = DateTimeOffset.UtcNow;
+    }
 }

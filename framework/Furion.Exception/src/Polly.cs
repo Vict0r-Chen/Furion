@@ -20,7 +20,7 @@ namespace Furion.Exception;
 public static class Polly
 {
     /// <summary>
-    /// 创建重试策略
+    /// 初始化重试策略
     /// </summary>
     /// <returns><see cref="RetryPolicy"/></returns>
     public static RetryPolicy Retry()
@@ -29,9 +29,9 @@ public static class Polly
     }
 
     /// <summary>
-    /// 创建重试策略
+    /// 初始化重试策略
     /// </summary>
-    /// <typeparam name="TResult">执行方法返回值类型</typeparam>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public static RetryPolicy<TResult> Retry<TResult>()
     {
@@ -39,7 +39,7 @@ public static class Polly
     }
 
     /// <summary>
-    /// 创建重试策略
+    /// 初始化重试策略
     /// </summary>
     /// <param name="maxRetryCount">最大重试次数</param>
     /// <returns><see cref="RetryPolicy"/></returns>
@@ -52,10 +52,10 @@ public static class Polly
     }
 
     /// <summary>
-    /// 创建重试策略
+    /// 初始化重试策略
     /// </summary>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
     /// <param name="maxRetryCount">最大重试次数</param>
-    /// <typeparam name="TResult">执行方法返回值类型</typeparam>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public static RetryPolicy<TResult> Retry<TResult>(uint maxRetryCount)
     {

@@ -9,8 +9,4 @@
 		<ProjectReference Include="..\..\Furion.Component\src\Furion.Component.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Dependencies\" />
-	</ItemGroup>
-
 </Project>

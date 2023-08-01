@@ -19,85 +19,14 @@ namespace Furion.Exception;
 /// </summary>
 public sealed class RetryPolicy : RetryPolicy<object>
 {
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy" />
-    /// </summary>
-    public RetryPolicy()
-        : base()
-    {
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy" />
-    /// </summary>
-    /// <param name="handleExceptions">捕获的异常集合</param>
-    public RetryPolicy(params Type[] handleExceptions)
-        : base(handleExceptions)
-    {
-    }
-
-    /// <summary>
-    /// 执行操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    public void Execute(Action operation)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(operation);
-
-        // 执行操作方法
-        Execute(() =>
-        {
-            operation();
-            return default;
-        });
-    }
-
-    /// <summary>
-    /// 执行操作方法
-    /// </summary>
-    /// <param name="operation">操作方法</param>
-    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns><see cref="Task{TResult}"/></returns>
-    public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(operation);
-
-        // 执行操作方法
-        await ExecuteAsync(async () =>
-        {
-            await operation();
-            return default;
-        }, cancellationToken);
-    }
 }
 
 /// <summary>
 /// 重试策略
 /// </summary>
-/// <typeparam name="TResult">执行方法返回值类型</typeparam>
+/// <typeparam name="TResult">操作返回值类型</typeparam>
 public class RetryPolicy<TResult>
 {
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TResult}" />
-    /// </summary>
-    public RetryPolicy()
-    {
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TResult}" />
-    /// </summary>
-    /// <param name="handleExceptions">捕获的异常集合</param>
-    public RetryPolicy(params Type[] handleExceptions)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(handleExceptions);
-
-        HandleExceptions = handleExceptions;
-    }
-
     /// <summary>
     /// 最大重试次数
     /// </summary>
@@ -109,54 +38,49 @@ public class RetryPolicy<TResult>
     public TimeSpan[]? RetryIntervals { get; set; }
 
     /// <summary>
-    /// 重试触发操作
+    /// 重试时操作方法
     /// </summary>
     public Action<RetryPolicyContext<TResult>>? RetryAction { get; set; }
 
     /// <summary>
-    /// 条件集合
+    /// 操作结果条件集合
     /// </summary>
-    public Func<RetryPolicyContext<TResult>, bool>[]? Conditions { get; set; }
+    public IList<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
 
     /// <summary>
     /// 捕获的异常集合
     /// </summary>
-    public Type[]? HandleExceptions { get; set; }
+    public IList<Type>? HandleExceptions { get; set; }
 
     /// <summary>
     /// 捕获的内部异常集合
     /// </summary>
-    public Type[]? HandleInnerExceptions { get; set; }
+    public IList<Type>? HandleInnerExceptions { get; set; }
 
     /// <summary>
-    /// 检查是否可以执行重试策略
+    /// 检查是否可以执行重试操作
     /// </summary>
-    /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
+    /// <param name="context"><see cref="RetryPolicy{TResult}"/></param>
     /// <returns><see cref="bool"/></returns>
     internal bool ShouldRetry(RetryPolicyContext<TResult> context)
     {
-        // 检查最大重试次数是否大于 0
+        // 检查最大重试次数是否大于等于 0
         if (MaxRetryCount <= 0)
         {
             return false;
         }
 
-        // 检查异常信息是否匹配
-        if (IsMatchException(context, HandleExceptions, context.Exception))
+        // 检查异常或内部异常是否能够捕获处理
+        if (WhenCatchException(context, HandleExceptions, context.Exception)
+            || WhenCatchException(context, HandleInnerExceptions, context.Exception?.InnerException))
         {
             return true;
         }
 
-        // 检查异常信息是否匹配
-        if (IsMatchException(context, HandleInnerExceptions, context.Exception?.InnerException))
+        // 检查是否配置了操作结果条件
+        if (ResultConditions is not null && ResultConditions.Count > 0)
         {
-            return true;
-        }
-
-        // 检查是否配置了条件
-        if (Conditions is not null && Conditions.Length > 0)
-        {
-            return Conditions.Any(condition => condition(context));
+            return ResultConditions.Any(condition => condition(context));
         }
 
         return false;
@@ -170,8 +94,8 @@ public class RetryPolicy<TResult>
     public RetryPolicy<TResult> Handle<TException>()
         where TException : System.Exception
     {
-        HandleExceptions ??= Array.Empty<Type>();
-        HandleExceptions[HandleExceptions.Length] = typeof(TException);
+        HandleExceptions ??= new List<Type>();
+        HandleExceptions.Add(typeof(TException));
 
         return this;
     }
@@ -195,8 +119,8 @@ public class RetryPolicy<TResult>
     public RetryPolicy<TResult> HandleInner<TException>()
         where TException : System.Exception
     {
-        HandleInnerExceptions ??= Array.Empty<Type>();
-        HandleInnerExceptions[HandleInnerExceptions.Length] = typeof(TException);
+        HandleInnerExceptions ??= new List<Type>();
+        HandleInnerExceptions.Add(typeof(TException));
 
         return this;
     }
@@ -213,9 +137,35 @@ public class RetryPolicy<TResult>
     }
 
     /// <summary>
+    /// 添加操作结果条件
+    /// </summary>
+    /// <param name="resultCondition">操作结果条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> HandleResult(Func<RetryPolicyContext<TResult>, bool> resultCondition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(resultCondition);
+
+        ResultConditions ??= new List<Func<RetryPolicyContext<TResult>, bool>>();
+        ResultConditions.Add(resultCondition);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加操作结果条件
+    /// </summary>
+    /// <param name="resultCondition">操作结果条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> resultCondition)
+    {
+        return HandleResult(resultCondition);
+    }
+
+    /// <summary>
     /// 添加重试间隔
     /// </summary>
-    /// <param name="retryIntervals"></param>
+    /// <param name="retryIntervals">重试间隔</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public RetryPolicy<TResult> WaitAndRetry(params TimeSpan[] retryIntervals)
     {
@@ -228,33 +178,69 @@ public class RetryPolicy<TResult>
     }
 
     /// <summary>
-    /// 添加条件
+    /// 添加重试时操作方法
     /// </summary>
-    /// <param name="condition">条件</param>
+    /// <param name="retryAction">重试时操作方法</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> HandleResult(Func<RetryPolicyContext<TResult>, bool> condition)
+    public RetryPolicy<TResult> OnRetry(Action<RetryPolicyContext<TResult>> retryAction)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(condition);
+        ArgumentNullException.ThrowIfNull(retryAction);
 
-        Conditions ??= Array.Empty<Func<RetryPolicyContext<TResult>, bool>>();
-        Conditions[Conditions.Length] = condition;
+        RetryAction = retryAction;
 
         return this;
     }
 
     /// <summary>
-    /// 添加条件
+    /// 配置重试策略重试直至成功
     /// </summary>
-    /// <param name="condition">条件</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> condition)
+    public RetryPolicy<TResult> Forever()
     {
-        return HandleResult(condition);
+        MaxRetryCount = int.MaxValue;
+
+        return this;
     }
 
     /// <summary>
-    /// 执行操作方法
+    /// 执行同步操作方法
+    /// </summary>
+    /// <param name="operation">操作方法</param>
+    public void Execute(Action operation)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        // 执行同步操作方法
+        Execute(() =>
+        {
+            operation();
+            return default;
+        });
+    }
+
+    /// <summary>
+    /// 执行异步操作方法
+    /// </summary>
+    /// <param name="operation">操作方法</param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task{TResult}"/></returns>
+    public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        // 执行异步操作方法
+        await ExecuteAsync(async () =>
+        {
+            await operation();
+            return default;
+        }, cancellationToken);
+    }
+
+    /// <summary>
+    /// 执行同步操作方法
     /// </summary>
     /// <param name="operation">操作方法</param>
     /// <returns><typeparamref name="TResult"/></returns>
@@ -270,28 +256,29 @@ public class RetryPolicy<TResult>
         {
             try
             {
-                // 获取执行结果
+                // 获取操作方法执行结果
                 context.Result = operation();
             }
-            catch (System.Exception ex)
+            catch (System.Exception exception)
             {
-                context.Exception = ex;
+                // 获取操作方法执行异常
+                context.Exception = exception;
             }
 
-            // 检查是否可以执行重试策略
+            // 检查是否可以执行重试操作
             if (ShouldRetry(context))
             {
-                // 递增重试次数
-                context.RetryCount++;
-
-                // 检查重试次数是否大于最大重试次数
-                if (context.RetryCount > MaxRetryCount)
+                // 检查重试次数是否大于最大重试次数减 1
+                if (context.RetryCount > MaxRetryCount - 1)
                 {
                     // 返回结果或抛出异常
                     return ReturnResultOrThrow(context);
                 }
 
-                // 调用重试触发操作
+                // 递增上下文数据
+                context.Increment();
+
+                // 调用重试时操作方法
                 RetryAction?.Invoke(context);
 
                 // 检查是否配置了重试间隔
@@ -309,7 +296,7 @@ public class RetryPolicy<TResult>
     }
 
     /// <summary>
-    /// 执行操作方法
+    /// 执行异步操作方法
     /// </summary>
     /// <param name="operation">操作方法</param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
@@ -326,28 +313,29 @@ public class RetryPolicy<TResult>
         {
             try
             {
-                // 获取执行结果
+                // 获取操作方法执行结果
                 context.Result = await operation();
             }
-            catch (System.Exception ex)
+            catch (System.Exception exception)
             {
-                context.Exception = ex;
+                // 获取操作方法执行异常
+                context.Exception = exception;
             }
 
-            // 检查是否可以执行重试策略
+            // 检查是否可以执行重试操作
             if (ShouldRetry(context))
             {
-                // 递增重试次数
-                context.RetryCount++;
-
-                // 检查重试次数是否大于最大重试次数
-                if (context.RetryCount > MaxRetryCount)
+                // 检查重试次数是否大于最大重试次数减 1
+                if (context.RetryCount > MaxRetryCount - 1)
                 {
                     // 返回结果或抛出异常
                     return ReturnResultOrThrow(context);
                 }
 
-                // 调用重试触发操作
+                // 递增上下文数据
+                context.Increment();
+
+                // 调用重试时操作方法
                 RetryAction?.Invoke(context);
 
                 // 检查是否配置了重试间隔
@@ -387,27 +375,27 @@ public class RetryPolicy<TResult>
     /// 检查异常信息是否匹配
     /// </summary>
     /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
-    /// <param name="exceptions">异常类型集合</param>
-    /// <param name="exception">异常对象</param>
+    /// <param name="exceptionTypes">异常类型集合</param>
+    /// <param name="exception"><see cref="System.Exception"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool IsMatchException(RetryPolicyContext<TResult> context, Type[]? exceptions, System.Exception? exception)
+    internal bool WhenCatchException(RetryPolicyContext<TResult> context, IList<Type>? exceptionTypes, System.Exception? exception)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(context);
 
-        // 空检查
+        // 检查是否存在异常
         if (exception is null)
         {
             return false;
         }
 
-        // 检查是否定义了需要捕获的异常
-        if (exceptions.IsNullOrEmpty() || exceptions!.Any(ex => ex.IsInstanceOfType(exception)))
+        // 检查是否配置了需要捕获的异常
+        if (exceptionTypes?.Any(ex => ex.IsInstanceOfType(exception)) == true)
         {
-            // 检查是否配置了条件
-            if (Conditions is not null && Conditions.Length > 0)
+            // 检查是否配置了操作结果条件
+            if (ResultConditions is not null && ResultConditions.Count > 0)
             {
-                return Conditions.Any(condition => condition(context));
+                return ResultConditions.Any(condition => condition(context));
             }
 
             return true;
