@@ -15,42 +15,53 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 异常策略抽象基类
+/// 策略静态类
 /// </summary>
-public abstract class AbstractExceptionPolicy
+public static class Polly
 {
     /// <summary>
-    /// <inheritdoc cref="RetryPolicy" />
+    /// 创建重试策略
     /// </summary>
-    /// <param name="handleExceptions">处理异常集合</param>
-    public AbstractExceptionPolicy(params Type[] handleExceptions)
+    /// <returns><see cref="RetryPolicy"/></returns>
+    public static RetryPolicy Retry()
     {
-        HandleExceptions = handleExceptions;
+        return Retry(1);
     }
 
     /// <summary>
-    /// 条件
+    /// 创建重试策略
     /// </summary>
-    public Func<System.Exception, bool>? Condition { get; set; }
-
-    /// <summary>
-    /// 处理异常集合
-    /// </summary>
-    public Type[]? HandleExceptions { get; set; }
-
-    /// <summary>
-    /// 检查是否需要处理异常
-    /// </summary>
-    /// <param name="exception"></param>
-    /// <returns><see cref="bool"/></returns>
-    protected virtual bool ShouldHandle(System.Exception exception)
+    /// <typeparam name="TResult">执行方法返回值类型</typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public static RetryPolicy<TResult> Retry<TResult>()
     {
-        if (Condition is not null && Condition(exception))
-        {
-            return false;
-        }
+        return Retry<TResult>(1);
+    }
 
-        return HandleExceptions.IsNullOrEmpty()
-            || HandleExceptions!.Any(ex => ex.IsInstanceOfType(exception));
+    /// <summary>
+    /// 创建重试策略
+    /// </summary>
+    /// <param name="maxRetryCount">最大重试次数</param>
+    /// <returns><see cref="RetryPolicy"/></returns>
+    public static RetryPolicy Retry(uint maxRetryCount)
+    {
+        return new RetryPolicy
+        {
+            MaxRetryCount = maxRetryCount
+        };
+    }
+
+    /// <summary>
+    /// 创建重试策略
+    /// </summary>
+    /// <param name="maxRetryCount">最大重试次数</param>
+    /// <typeparam name="TResult">执行方法返回值类型</typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public static RetryPolicy<TResult> Retry<TResult>(uint maxRetryCount)
+    {
+        return new RetryPolicy<TResult>
+        {
+            MaxRetryCount = maxRetryCount
+        };
     }
 }

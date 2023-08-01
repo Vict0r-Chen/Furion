@@ -51,17 +51,18 @@ public class HelloController
     {
         var retryPoliy = new RetryPolicy
         {
-            MaxRetryCount = 3,
-            RetryAction = (ex, i) =>
+            MaxRetryCount = 0,
+            RetryAction = (context) =>
             {
-                Console.WriteLine($"正在重试第 {i} 次...");
-            }
+                Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
+            },
+            RetryIntervals = new[] { TimeSpan.FromSeconds(3) },
         };
 
         retryPoliy.Execute(() =>
         {
             Console.WriteLine("哈哈哈");
-            throw new System.Exception("我出错了");
+            throw new System.Exception("模拟错误");
         });
     }
 }

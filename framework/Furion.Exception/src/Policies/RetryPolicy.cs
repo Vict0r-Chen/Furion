@@ -17,342 +17,322 @@ namespace Furion.Exception;
 /// <summary>
 /// 重试策略
 /// </summary>
-public class RetryPolicy : AbstractExceptionPolicy, IExceptionPolicy
+public sealed class RetryPolicy : RetryPolicy<object>
 {
     /// <summary>
-    /// 默认重试间隔
+    /// 执行操作方法
     /// </summary>
-    internal static readonly TimeSpan _defaultRetryInterval = TimeSpan.FromSeconds(3);
+    /// <param name="operation">操作方法</param>
+    public void Execute(Action operation)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        // 执行操作方法
+        Execute(() =>
+        {
+            operation();
+            return default;
+        });
+    }
 
     /// <summary>
-    /// <inheritdoc cref="RetryPolicy" />
+    /// 执行操作方法
+    /// </summary>
+    /// <param name="operation">操作方法</param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task{TResult}"/></returns>
+    public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        // 执行操作方法
+        await ExecuteAsync(async () =>
+        {
+            await operation();
+            return default;
+        }, cancellationToken);
+    }
+}
+
+/// <summary>
+/// 重试策略
+/// </summary>
+/// <typeparam name="TResult">执行方法返回值类型</typeparam>
+public class RetryPolicy<TResult>
+{
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy{TResult}" />
     /// </summary>
     public RetryPolicy()
     {
     }
 
     /// <summary>
-    /// <inheritdoc cref="RetryPolicy" />
+    /// <inheritdoc cref="RetryPolicy{TResult}" />
     /// </summary>
-    /// <param name="retryExceptions">重试异常集合</param>
-    public RetryPolicy(params Type[] retryExceptions)
-        : base(retryExceptions)
+    /// <param name="handleExceptions">捕获的异常集合</param>
+    public RetryPolicy(params Type[] handleExceptions)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(handleExceptions);
+
+        HandleExceptions = handleExceptions;
     }
 
     /// <summary>
     /// 最大重试次数
     /// </summary>
-    public int MaxRetryCount { get; set; }
+    public uint MaxRetryCount { get; set; }
 
     /// <summary>
     /// 重试间隔集合
     /// </summary>
-    public TimeSpan[] RetryIntervals { get; set; } = Array.Empty<TimeSpan>();
+    public TimeSpan[]? RetryIntervals { get; set; }
 
     /// <summary>
-    /// 每次重试触发的回调
+    /// 重试触发操作
     /// </summary>
-    public Action<System.Exception, int>? RetryAction { get; set; }
+    public Action<RetryPolicyContext<TResult>>? RetryAction { get; set; }
 
-    /// <inheritdoc />
-    public void Execute(Action predicate)
+    /// <summary>
+    /// 条件
+    /// </summary>
+    public Func<RetryPolicyContext<TResult>, bool>? Condition { get; set; }
+
+    /// <summary>
+    /// 捕获的异常集合
+    /// </summary>
+    public Type[]? HandleExceptions { get; set; }
+
+    /// <summary>
+    /// 检查是否可以执行重试策略
+    /// </summary>
+    /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool ShouldRetry(RetryPolicyContext<TResult> context)
     {
-        Execute(() =>
+        // 检查最大重试次数是否大于 0
+        if (MaxRetryCount <= 0)
         {
-            predicate();
-            return 0;
-        });
-    }
+            return false;
+        }
 
-    /// <inheritdoc />
-    public TResult Execute<TResult>(Func<TResult> predicate)
-    {
-        var retryCount = 0;
-
-        while (true)
+        // 检查是否存在异常
+        if (context.Exception is not null)
         {
-            try
+            // 检查是否定义了需要捕获的异常
+            if (HandleExceptions.IsNullOrEmpty()
+                || HandleExceptions!.Any(ex => ex.IsInstanceOfType(context.Exception)))
             {
-                return predicate();
-            }
-            catch (System.Exception ex)
-            {
-                retryCount++;
-
-                if (!ShouldHandle(ex) || retryCount > MaxRetryCount)
+                // 检查是否配置了条件
+                if (Condition is not null)
                 {
-                    throw;
+                    return Condition(context);
                 }
 
-                RetryAction?.Invoke(ex, retryCount);
-
-                var retryInterval = ResolveRetryInterval(retryCount);
-                Thread.Sleep(retryInterval);
+                return true;
             }
         }
-    }
 
-    /// <inheritdoc />
-    public async Task ExecuteAsync(Func<Task> predicate, CancellationToken cancellationToken)
-    {
-        await ExecuteAsync(async () =>
+        // 检查是否配置了条件
+        if (Condition is not null)
         {
-            await predicate();
-            return 0;
-        }, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public async Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> predicate, CancellationToken cancellationToken)
-    {
-        var retryCount = 0;
-
-        while (true)
-        {
-            try
-            {
-                return await predicate();
-            }
-            catch (System.Exception ex)
-            {
-                retryCount++;
-
-                if (!ShouldHandle(ex) || retryCount > MaxRetryCount)
-                {
-                    throw;
-                }
-
-                RetryAction?.Invoke(ex, retryCount);
-
-                var retryInterval = ResolveRetryInterval(retryCount);
-                await Task.Delay(retryInterval, cancellationToken);
-            }
+            return Condition(context);
         }
+
+        return false;
     }
 
-    internal TimeSpan ResolveRetryInterval(int retryCount)
+    /// <summary>
+    /// 添加捕获异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Handle<TException>()
+        where TException : System.Exception
+    {
+        HandleExceptions ??= Array.Empty<Type>();
+        HandleExceptions[HandleExceptions.Length] = typeof(TException);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加捕获异常类型
+    /// </summary>
+    /// <typeparam name="TException"><see cref="System.Exception"/></typeparam>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Or<TException>()
+        where TException : System.Exception
+    {
+        return Handle<TException>();
+    }
+
+    /// <summary>
+    /// 添加重试间隔
+    /// </summary>
+    /// <param name="retryIntervals"></param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> WaitAndRetry(params TimeSpan[] retryIntervals)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(RetryIntervals);
+        ArgumentNullException.ThrowIfNull(retryIntervals);
 
-        if (RetryIntervals.Length == 0)
+        RetryIntervals = retryIntervals;
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加条件
+    /// </summary>
+    /// <param name="condition">条件</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OrResult(Func<RetryPolicyContext<TResult>, bool> condition)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(condition);
+
+        Condition = condition;
+
+        return this;
+    }
+
+    /// <summary>
+    /// 执行操作方法
+    /// </summary>
+    /// <param name="operation">操作方法</param>
+    /// <returns><typeparamref name="TResult"/></returns>
+    public TResult? Execute(Func<TResult?> operation)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        // 初始化重试策略上下文
+        var context = new RetryPolicyContext<TResult>
         {
-            return _defaultRetryInterval;
+            HandleExceptions = HandleExceptions
+        };
+
+        while (true)
+        {
+            try
+            {
+                // 获取执行结果
+                context.Result = operation();
+            }
+            catch (System.Exception ex)
+            {
+                context.Exception = ex;
+            }
+
+            // 检查是否可以执行重试策略
+            if (ShouldRetry(context))
+            {
+                // 递增重试次数
+                context.RetryCount++;
+
+                // 检查重试次数是否大于最大重试次数
+                if (context.RetryCount > MaxRetryCount)
+                {
+                    // 返回结果或抛出异常
+                    return ReturnResultOrThrow(context);
+                }
+
+                // 调用重试触发操作
+                RetryAction?.Invoke(context);
+
+                // 检查是否配置了重试间隔
+                if (RetryIntervals is { Length: > 0 })
+                {
+                    Thread.Sleep(RetryIntervals[context.RetryCount % RetryIntervals.Length]);
+                }
+
+                continue;
+            }
+
+            // 返回结果或抛出异常
+            return ReturnResultOrThrow(context);
+        }
+    }
+
+    /// <summary>
+    /// 执行操作方法
+    /// </summary>
+    /// <param name="operation">操作方法</param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task{TResult}"/></returns>
+    public async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        // 初始化重试策略上下文
+        var context = new RetryPolicyContext<TResult>
+        {
+            HandleExceptions = HandleExceptions
+        };
+
+        while (true)
+        {
+            try
+            {
+                // 获取执行结果
+                context.Result = await operation();
+            }
+            catch (System.Exception ex)
+            {
+                context.Exception = ex;
+            }
+
+            // 检查是否可以执行重试策略
+            if (ShouldRetry(context))
+            {
+                // 递增重试次数
+                context.RetryCount++;
+
+                // 检查重试次数是否大于最大重试次数
+                if (context.RetryCount > MaxRetryCount)
+                {
+                    // 返回结果或抛出异常
+                    return ReturnResultOrThrow(context);
+                }
+
+                // 调用重试触发操作
+                RetryAction?.Invoke(context);
+
+                // 检查是否配置了重试间隔
+                if (RetryIntervals is { Length: > 0 })
+                {
+                    await Task.Delay(RetryIntervals[context.RetryCount % RetryIntervals.Length], cancellationToken);
+                }
+
+                continue;
+            }
+
+            // 返回结果或抛出异常
+            return ReturnResultOrThrow(context);
+        }
+    }
+
+    /// <summary>
+    /// 返回结果或抛出异常
+    /// </summary>
+    /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
+    /// <returns><typeparamref name="TResult"/></returns>
+    internal static TResult? ReturnResultOrThrow(RetryPolicyContext<TResult> context)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(context);
+
+        // 检查是否存在异常
+        if (context.Exception is not null)
+        {
+            throw context.Exception;
         }
 
-        return RetryIntervals[retryCount % RetryIntervals.Length];
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException> : RetryPolicy
-    where TException : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException3"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2, TException3> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-    where TException3 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2, TException3}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2)
-            , typeof(TException3))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException3"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException4"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2, TException3, TException4> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-    where TException3 : System.Exception
-    where TException4 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2, TException3, TException4}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2)
-            , typeof(TException3)
-            , typeof(TException4))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException3"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException4"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException5"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2, TException3, TException4, TException5> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-    where TException3 : System.Exception
-    where TException4 : System.Exception
-    where TException5 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2, TException3, TException4, TException5}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2)
-            , typeof(TException3)
-            , typeof(TException4)
-            , typeof(TException5))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException3"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException4"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException5"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException6"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2, TException3, TException4, TException5, TException6> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-    where TException3 : System.Exception
-    where TException4 : System.Exception
-    where TException5 : System.Exception
-    where TException6 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2, TException3, TException4, TException5, TException6}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2)
-            , typeof(TException3)
-            , typeof(TException4)
-            , typeof(TException5)
-            , typeof(TException6))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException3"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException4"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException5"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException6"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException7"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2, TException3, TException4, TException5, TException6, TException7> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-    where TException3 : System.Exception
-    where TException4 : System.Exception
-    where TException5 : System.Exception
-    where TException6 : System.Exception
-    where TException7 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2, TException3, TException4, TException5, TException6, TException7}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2)
-            , typeof(TException3)
-            , typeof(TException4)
-            , typeof(TException5)
-            , typeof(TException6)
-            , typeof(TException7))
-    {
-    }
-}
-
-/// <summary>
-/// 重试策略
-/// </summary>
-/// <typeparam name="TException1"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException2"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException3"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException4"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException5"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException6"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException7"><see cref="System.Exception" /></typeparam>
-/// <typeparam name="TException8"><see cref="System.Exception" /></typeparam>
-public sealed class RetryPolicy<TException1, TException2, TException3, TException4, TException5, TException6, TException7, TException8> : RetryPolicy
-    where TException1 : System.Exception
-    where TException2 : System.Exception
-    where TException3 : System.Exception
-    where TException4 : System.Exception
-    where TException5 : System.Exception
-    where TException6 : System.Exception
-    where TException7 : System.Exception
-    where TException8 : System.Exception
-{
-    /// <summary>
-    /// <inheritdoc cref="RetryPolicy{TException1, TException2, TException3, TException4, TException5, TException6, TException7, TException8}"/>
-    /// </summary>
-    public RetryPolicy()
-        : base(typeof(TException1)
-            , typeof(TException2)
-            , typeof(TException3)
-            , typeof(TException4)
-            , typeof(TException5)
-            , typeof(TException6)
-            , typeof(TException7)
-            , typeof(TException8))
-    {
+        return context.Result;
     }
 }

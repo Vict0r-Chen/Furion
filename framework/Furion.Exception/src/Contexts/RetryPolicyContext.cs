@@ -15,38 +15,25 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 异常策略接口
+/// 重试策略上下文
 /// </summary>
-public interface IExceptionPolicy
+public sealed class RetryPolicyContext<TResult>
 {
-    /// <summary>
-    /// 同步方法
-    /// </summary>
-    /// <param name="predicate"></param>
-    void Execute(Action predicate);
+    /// <inheritdoc cref="System.Exception"/>
+    public System.Exception? Exception { get; internal set; }
 
     /// <summary>
-    /// 同步带返回值
+    /// 操作执行结果
     /// </summary>
-    /// <typeparam name="TResult"></typeparam>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
-    TResult Execute<TResult>(Func<TResult> predicate);
+    public TResult? Result { get; internal set; }
 
     /// <summary>
-    /// 异步方法
+    /// 重试次数
     /// </summary>
-    /// <param name="predicate"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task ExecuteAsync(Func<Task> predicate, CancellationToken cancellationToken);
+    public int RetryCount { get; internal set; }
 
     /// <summary>
-    /// 异步带返回值
+    /// 捕获的异常集合
     /// </summary>
-    /// <typeparam name="TResult"></typeparam>
-    /// <param name="predicate"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> predicate, CancellationToken cancellationToken);
+    public Type[]? HandleExceptions { get; internal set; }
 }
