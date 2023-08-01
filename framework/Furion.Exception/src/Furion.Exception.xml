@@ -130,6 +130,27 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
+        <member name="T:Furion.Exception.AbstractPolicy`1">
+            <summary>
+            策略抽象基类
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.AbstractPolicy`1.PolicyName">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.AbstractPolicy`1.Execute(System.Action)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.AbstractPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.AbstractPolicy`1.Execute(System.Func{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.AbstractPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Exception.FallbackPolicy">
             <summary>
             后备策略
@@ -140,9 +161,6 @@
             后备策略
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
-        </member>
-        <member name="P:Furion.Exception.FallbackPolicy`1.PolicyName">
-            <inheritdoc />
         </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
             <summary>
@@ -259,15 +277,6 @@
             <param name="fallbackAction">后备操作方法</param>
             <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.Execute(System.Action)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.Execute(System.Func{`0})">
-            <inheritdoc />
-        </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -297,9 +306,6 @@
             重试策略
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
-        </member>
-        <member name="P:Furion.Exception.RetryPolicy`1.PolicyName">
-            <inheritdoc />
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.ResultConditions">
             <summary>
@@ -432,15 +438,6 @@
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.Execute(System.Action)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.Execute(System.Func{`0})">
-            <inheritdoc />
-        </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -471,9 +468,6 @@
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
-        <member name="P:Furion.Exception.TimeoutPolicy`1.PolicyName">
-            <inheritdoc />
-        </member>
         <member name="P:Furion.Exception.TimeoutPolicy`1.Timeout">
             <summary>
             超时时间
@@ -491,15 +485,6 @@
             <param name="timeoutAction">超时时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Action)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0})">
-            <inheritdoc />
-        </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -512,8 +497,8 @@
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.IExceptionPolicy`1"/></typeparam>
-            <param name="policy"><see cref="T:Furion.Exception.IExceptionPolicy`1"/></param>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.AbstractPolicy`1"/></typeparam>
+            <param name="policy"><typeparamref name="TPolicy"/></param>
             <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Retry">
@@ -579,8 +564,8 @@
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.IExceptionPolicy`1"/></typeparam>
-            <param name="policy"><see cref="T:Furion.Exception.IExceptionPolicy`1"/></param>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.AbstractPolicy`1"/></typeparam>
+            <param name="policy"><typeparamref name="TPolicy"/></param>
             <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Retry">

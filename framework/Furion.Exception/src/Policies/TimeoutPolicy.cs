@@ -25,11 +25,8 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 /// 超时策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
+public class TimeoutPolicy<TResult> : AbstractPolicy<TResult>
 {
-    /// <inheritdoc />
-    public string? PolicyName { get; set; }
-
     /// <summary>
     /// 超时时间
     /// </summary>
@@ -56,45 +53,7 @@ public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
     }
 
     /// <inheritdoc />
-    public void Execute(Action operation)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(operation);
-
-        // 执行同步操作方法
-        Execute(() =>
-        {
-            operation();
-
-            return default;
-        });
-    }
-
-    /// <inheritdoc />
-    public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(operation);
-
-        // 执行异步操作方法
-        await ExecuteAsync(async () =>
-        {
-            await operation();
-
-            return default;
-        }, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public TResult? Execute(Func<TResult?> operation)
-    {
-        return ExecuteAsync(() => Task.Run(operation))
-            .GetAwaiter()
-            .GetResult();
-    }
-
-    /// <inheritdoc />
-    public async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
+    public override async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(operation);

@@ -22,11 +22,11 @@ public static class Policy
     /// <summary>
     /// 添加自定义策略
     /// </summary>
-    /// <typeparam name="TPolicy"><see cref="IExceptionPolicy{TResult}"/></typeparam>
-    /// <param name="policy"><see cref="IExceptionPolicy{TResult}"/></param>
+    /// <typeparam name="TPolicy"><see cref="AbstractPolicy{TResult}"/></typeparam>
+    /// <param name="policy"><typeparamref name="TPolicy"/></param>
     /// <returns><typeparamref name="TPolicy"/></returns>
     public static TPolicy For<TPolicy>(TPolicy policy)
-        where TPolicy : class, IExceptionPolicy<object>
+        where TPolicy : AbstractPolicy<object>
     {
         return policy;
     }
@@ -139,11 +139,11 @@ public static class Policy<TResult>
     /// <summary>
     /// 添加自定义策略
     /// </summary>
-    /// <typeparam name="TPolicy"><see cref="IExceptionPolicy{TResult}"/></typeparam>
-    /// <param name="policy"><see cref="IExceptionPolicy{TResult}"/></param>
+    /// <typeparam name="TPolicy"><see cref="AbstractPolicy{TResult}"/></typeparam>
+    /// <param name="policy"><typeparamref name="TPolicy"/></param>
     /// <returns><typeparamref name="TPolicy"/></returns>
     public static TPolicy For<TPolicy>(TPolicy policy)
-        where TPolicy : class, IExceptionPolicy<TResult>
+        where TPolicy : AbstractPolicy<TResult>
     {
         return policy;
     }
