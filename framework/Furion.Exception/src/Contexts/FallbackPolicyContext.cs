@@ -17,9 +17,11 @@ namespace Furion.Exception;
 /// <summary>
 /// 后备策略上下文
 /// </summary>
-public sealed class FallbackPolicyContext<TResult>
+public sealed class FallbackPolicyContext<TResult> : PolicyContextBase
 {
+    /// <summary>
     /// <inheritdoc cref="FallbackPolicyContext{TResult}"/>
+    /// </summary>
     internal FallbackPolicyContext()
     {
     }

@@ -27,6 +27,9 @@ public sealed class FallbackPolicy : FallbackPolicy<object>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
 {
+    /// <inheritdoc />
+    public string? PolicyName { get; set; }
+
     /// <summary>
     /// 后备操作方法
     /// </summary>
@@ -288,7 +291,10 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
         ArgumentNullException.ThrowIfNull(operation);
 
         // 初始化后备策略上下文
-        var context = new FallbackPolicyContext<TResult>();
+        var context = new FallbackPolicyContext<TResult>
+        {
+            PolicyName = PolicyName
+        };
 
         try
         {

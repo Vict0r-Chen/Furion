@@ -17,9 +17,11 @@ namespace Furion.Exception;
 /// <summary>
 /// 重试策略上下文
 /// </summary>
-public sealed class RetryPolicyContext<TResult>
+public sealed class RetryPolicyContext<TResult> : PolicyContextBase
 {
+    /// <summary>
     /// <inheritdoc cref="RetryPolicyContext{TResult}"/>
+    /// </summary>
     internal RetryPolicyContext()
     {
     }

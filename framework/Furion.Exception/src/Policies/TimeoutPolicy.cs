@@ -27,6 +27,9 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
 {
+    /// <inheritdoc />
+    public string? PolicyName { get; set; }
+
     /// <summary>
     /// 超时时间
     /// </summary>
@@ -117,7 +120,10 @@ public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
             if (timeoutTask.Status == TaskStatus.RanToCompletion)
             {
                 // 调用重试时操作方法
-                TimeoutAction?.Invoke(new());
+                TimeoutAction?.Invoke(new()
+                {
+                    PolicyName = PolicyName
+                });
 
                 // 抛出超时异常
                 throw new TimeoutException("The operation has timed out.");
@@ -132,7 +138,10 @@ public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
         catch (OperationCanceledException exception) when (exception.CancellationToken == cancellationTokenSource.Token)
         {
             // 调用重试时操作方法
-            TimeoutAction?.Invoke(new());
+            TimeoutAction?.Invoke(new()
+            {
+                PolicyName = PolicyName
+            });
 
             // 抛出超时异常
             throw new TimeoutException("The operation has timed out.");

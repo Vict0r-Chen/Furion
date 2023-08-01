@@ -27,6 +27,9 @@ public sealed class RetryPolicy : RetryPolicy<object>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
 {
+    /// <inheritdoc />
+    public string? PolicyName { get; set; }
+
     /// <summary>
     /// 操作结果条件集合
     /// </summary>
@@ -310,7 +313,10 @@ public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
         ArgumentNullException.ThrowIfNull(operation);
 
         // 初始化重试策略上下文
-        var context = new RetryPolicyContext<TResult>();
+        var context = new RetryPolicyContext<TResult>
+        {
+            PolicyName = PolicyName
+        };
 
         while (true)
         {

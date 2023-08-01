@@ -10,7 +10,9 @@
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicyContext`1.#ctor">
+            <summary>
             <inheritdoc cref="T:Furion.Exception.FallbackPolicyContext`1"/>
+            </summary>
         </member>
         <member name="P:Furion.Exception.FallbackPolicyContext`1.Exception">
             <inheritdoc cref="T:System.Exception"/>
@@ -25,13 +27,25 @@
             异常的时间
              </summary>
         </member>
+        <member name="T:Furion.Exception.PolicyContextBase">
+            <summary>
+            策略上下文抽象基类
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.PolicyContextBase.PolicyName">
+            <summary>
+            策略名称
+            </summary>
+        </member>
         <member name="T:Furion.Exception.RetryPolicyContext`1">
             <summary>
             重试策略上下文
             </summary>
         </member>
         <member name="M:Furion.Exception.RetryPolicyContext`1.#ctor">
+            <summary>
             <inheritdoc cref="T:Furion.Exception.RetryPolicyContext`1"/>
+            </summary>
         </member>
         <member name="P:Furion.Exception.RetryPolicyContext`1.Exception">
             <inheritdoc cref="T:System.Exception"/>
@@ -67,7 +81,9 @@
             </summary>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicyContext`1.#ctor">
+            <summary>
             <inheritdoc cref="T:Furion.Exception.TimeoutPolicyContext`1"/>
+            </summary>
         </member>
         <member name="P:Furion.Exception.TimeoutPolicyContext`1.TimeForTimeout">
             <summary>
@@ -79,6 +95,11 @@
             异常策略服务
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.IExceptionPolicy`1.PolicyName">
+            <summary>
+            策略名称
+            </summary>
         </member>
         <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Action)">
             <summary>
@@ -119,6 +140,9 @@
             后备策略
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.FallbackPolicy`1.PolicyName">
+            <inheritdoc />
         </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
             <summary>
@@ -273,6 +297,9 @@
             重试策略
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy`1.PolicyName">
+            <inheritdoc />
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.ResultConditions">
             <summary>
@@ -443,6 +470,9 @@
             超时策略
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.TimeoutPolicy`1.PolicyName">
+            <inheritdoc />
         </member>
         <member name="P:Furion.Exception.TimeoutPolicy`1.Timeout">
             <summary>

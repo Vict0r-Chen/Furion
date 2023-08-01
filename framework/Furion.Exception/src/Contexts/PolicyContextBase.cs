@@ -15,19 +15,12 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 超时策略上下文
+/// 策略上下文抽象基类
 /// </summary>
-public sealed class TimeoutPolicyContext<TResult> : PolicyContextBase
+public abstract class PolicyContextBase
 {
     /// <summary>
-    /// <inheritdoc cref="TimeoutPolicyContext{TResult}"/>
+    /// 策略名称
     /// </summary>
-    internal TimeoutPolicyContext()
-    {
-    }
-
-    /// <summary>
-    /// 超时的时间
-    /// </summary>
-    public DateTimeOffset TimeForTimeout { get; init; } = DateTimeOffset.UtcNow;
+    public string? PolicyName { get; set; }
 }

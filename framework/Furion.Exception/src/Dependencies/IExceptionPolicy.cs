@@ -21,6 +21,11 @@ namespace Furion.Exception;
 public interface IExceptionPolicy<TResult>
 {
     /// <summary>
+    /// 策略名称
+    /// </summary>
+    string? PolicyName { get; set; }
+
+    /// <summary>
     /// 执行同步操作方法
     /// </summary>
     /// <param name="operation">操作方法</param>
