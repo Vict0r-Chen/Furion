@@ -9,16 +9,6 @@
             异常策略接口
             </summary>
         </member>
-        <member name="P:Furion.Exception.IExceptionPolicy.Condition">
-            <summary>
-            条件
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.IExceptionPolicy.HandleExceptions">
-            <summary>
-            重试异常集合
-            </summary>
-        </member>
         <member name="M:Furion.Exception.IExceptionPolicy.Execute(System.Action)">
             <summary>
             同步方法

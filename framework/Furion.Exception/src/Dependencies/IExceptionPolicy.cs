@@ -20,16 +20,6 @@ namespace Furion.Exception;
 public interface IExceptionPolicy
 {
     /// <summary>
-    /// 条件
-    /// </summary>
-    public Func<System.Exception, bool>? Condition { get; set; }
-
-    /// <summary>
-    /// 重试异常集合
-    /// </summary>
-    public Type[]? HandleExceptions { get; set; }
-
-    /// <summary>
     /// 同步方法
     /// </summary>
     /// <param name="predicate"></param>
