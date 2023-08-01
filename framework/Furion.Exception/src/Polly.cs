@@ -64,4 +64,77 @@ public static class Polly
             MaxRetryCount = maxRetryCount
         };
     }
+
+    /// <summary>
+    /// 初始化超时策略
+    /// </summary>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public static TimeoutPolicy Timeout()
+    {
+        return Timeout(TimeSpan.FromSeconds(10));
+    }
+
+    /// <summary>
+    /// 初始化超时策略
+    /// </summary>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
+    /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
+    public static TimeoutPolicy<TResult> Timeout<TResult>()
+    {
+        return Timeout<TResult>(TimeSpan.FromSeconds(10));
+    }
+
+    /// <summary>
+    /// 初始化超时策略
+    /// </summary>
+    /// <param name="timeout">超时时间（毫秒）</param>
+    /// <returns><see cref="TimeoutPolicy"/></returns>
+    public static TimeoutPolicy Timeout(double timeout)
+    {
+        return new TimeoutPolicy
+        {
+            Timeout = TimeSpan.FromMilliseconds(timeout)
+        };
+    }
+
+    /// <summary>
+    /// 初始化超时策略
+    /// </summary>
+    /// <param name="timeout">超时时间</param>
+    /// <returns><see cref="TimeoutPolicy"/></returns>
+    public static TimeoutPolicy Timeout(TimeSpan timeout)
+    {
+        return new TimeoutPolicy
+        {
+            Timeout = timeout
+        };
+    }
+
+    /// <summary>
+    /// 初始化超时策略
+    /// </summary>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
+    /// <param name="timeout">超时时间（毫秒）</param>
+    /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
+    public static TimeoutPolicy<TResult> Timeout<TResult>(double timeout)
+    {
+        return new TimeoutPolicy<TResult>
+        {
+            Timeout = TimeSpan.FromMilliseconds(timeout)
+        };
+    }
+
+    /// <summary>
+    /// 初始化超时策略
+    /// </summary>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
+    /// <param name="timeout">超时时间</param>
+    /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
+    public static TimeoutPolicy<TResult> Timeout<TResult>(TimeSpan timeout)
+    {
+        return new TimeoutPolicy<TResult>
+        {
+            Timeout = timeout
+        };
+    }
 }

@@ -10,7 +10,7 @@
             </summary>
         </member>
         <member name="M:Furion.Exception.RetryPolicyContext`1.#ctor">
-            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1"/>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicyContext`1"/>
         </member>
         <member name="P:Furion.Exception.RetryPolicyContext`1.Exception">
             <inheritdoc cref="T:System.Exception"/>
@@ -38,6 +38,19 @@
         <member name="M:Furion.Exception.RetryPolicyContext`1.Increment">
             <summary>
             递增上下文数据
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.TimeoutPolicyContext`1">
+            <summary>
+            超时策略上下文
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicyContext`1.#ctor">
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicyContext`1"/>
+        </member>
+        <member name="P:Furion.Exception.TimeoutPolicyContext`1.TimeForTimeout">
+            <summary>
+            超时的时间
             </summary>
         </member>
         <member name="T:Furion.Exception.RetryPolicy">
@@ -195,6 +208,63 @@
             <param name="exception"><see cref="T:System.Exception"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="T:Furion.Exception.TimeoutPolicy">
+            <summary>
+            超时策略
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.TimeoutPolicy`1">
+            <summary>
+            超时策略
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.TimeoutPolicy`1.Timeout">
+            <summary>
+            超时时间
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.TimeoutPolicy`1.TimeoutAction">
+            <summary>
+            超时时操作方法
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.OnTimeout(System.Action{Furion.Exception.TimeoutPolicyContext{`0}})">
+            <summary>
+            添加超时时操作方法
+            </summary>
+            <param name="timeoutAction">超时时操作方法</param>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Action)">
+            <summary>
+            执行同步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            执行异步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0})">
+            <summary>
+            执行同步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+            <returns><typeparamref name="TResult"/></returns>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
+            <summary>
+            执行异步操作方法
+            </summary>
+            <param name="operation">操作方法</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
         <member name="T:Furion.Exception.Polly">
             <summary>
             策略静态类
@@ -227,6 +297,49 @@
             <typeparam name="TResult">操作返回值类型</typeparam>
             <param name="maxRetryCount">最大重试次数</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Polly.Timeout">
+            <summary>
+            初始化超时策略
+            </summary>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Polly.Timeout``1">
+            <summary>
+            初始化超时策略
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Polly.Timeout(System.Double)">
+            <summary>
+            初始化超时策略
+            </summary>
+            <param name="timeout">超时时间（毫秒）</param>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Polly.Timeout(System.TimeSpan)">
+            <summary>
+            初始化超时策略
+            </summary>
+            <param name="timeout">超时时间</param>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Polly.Timeout``1(System.Double)">
+            <summary>
+            初始化超时策略
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+            <param name="timeout">超时时间（毫秒）</param>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Polly.Timeout``1(System.TimeSpan)">
+            <summary>
+            初始化超时策略
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+            <param name="timeout">超时时间</param>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
     </members>
 </doc>

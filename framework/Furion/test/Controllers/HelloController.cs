@@ -58,8 +58,23 @@ public class HelloController
             .WaitAndRetry(TimeSpan.FromSeconds(3))
             .Execute(() =>
             {
-                Console.WriteLine("哈哈哈");
+                Console.WriteLine("我正在执行操作...");
                 throw new System.InvalidOperationException("我出错了");
+            });
+    }
+
+    [HttpGet]
+    public void TestTimeoutPolicy()
+    {
+        Polly.Timeout(3000)
+            .OnTimeout(context =>
+            {
+                Console.WriteLine("不好意思，超时了.");
+            })
+            .Execute(() =>
+            {
+                Console.WriteLine("我正在执行操作...");
+                Thread.Sleep(5000);
             });
     }
 }

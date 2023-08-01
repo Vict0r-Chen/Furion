@@ -321,6 +321,7 @@ public class RetryPolicy<TResult>
         // 检查是否存在异常
         if (context.Exception is not null)
         {
+            // 抛出操作异常
             throw context.Exception;
         }
 
