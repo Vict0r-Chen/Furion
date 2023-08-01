@@ -137,4 +137,56 @@ public static class Polly
             Timeout = timeout
         };
     }
+
+    /// <summary>
+    /// 初始化后备策略
+    /// </summary>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public static FallbackPolicy Fallback()
+    {
+        return new FallbackPolicy();
+    }
+
+    /// <summary>
+    /// 初始化后备策略
+    /// </summary>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public static FallbackPolicy<TResult> Fallback<TResult>()
+    {
+        return new FallbackPolicy<TResult>();
+    }
+
+    /// <summary>
+    /// 初始化后备策略
+    /// </summary>
+    /// <param name="fallbackAction">后备操作方法</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public static FallbackPolicy Fallback(Func<FallbackPolicyContext<object>, object?> fallbackAction)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fallbackAction);
+
+        return new FallbackPolicy
+        {
+            FallbackAction = fallbackAction
+        };
+    }
+
+    /// <summary>
+    /// 初始化后备策略
+    /// </summary>
+    /// <typeparam name="TResult">操作返回值类型</typeparam>
+    /// <param name="fallbackAction">后备操作方法</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public static FallbackPolicy<TResult> Fallback<TResult>(Func<FallbackPolicyContext<TResult>, TResult?> fallbackAction)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fallbackAction);
+
+        return new FallbackPolicy<TResult>
+        {
+            FallbackAction = fallbackAction
+        };
+    }
 }

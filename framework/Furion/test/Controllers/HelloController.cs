@@ -77,4 +77,25 @@ public class HelloController
                 Thread.Sleep(5000);
             });
     }
+
+    [HttpGet]
+    public string? TestFallbackPolicy([FromQuery] string? name = null)
+    {
+        return Polly.Fallback<string>()
+            .Handle<System.Exception>()
+            .HandleResult(context => name is null || context.Exception is not null)
+            .OnFallback(context =>
+            {
+                return "百小僧";
+            })
+            .Execute(() =>
+            {
+                if (name == "furion")
+                {
+                    throw new System.Exception("出错了");
+                }
+
+                return name;
+            });
+    }
 }
