@@ -62,6 +62,7 @@ public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
         Execute(() =>
         {
             operation();
+
             return default;
         });
     }
@@ -76,6 +77,7 @@ public class TimeoutPolicy<TResult> : IExceptionPolicy<TResult>
         await ExecuteAsync(async () =>
         {
             await operation();
+
             return default;
         }, cancellationToken);
     }

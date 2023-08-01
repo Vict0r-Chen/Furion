@@ -161,6 +161,26 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
         return this;
     }
 
+    /// <summary>
+    /// 添加后备操作方法
+    /// </summary>
+    /// <param name="fallbackAction">后备操作方法</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public FallbackPolicy<TResult> OnFallback(Action<FallbackPolicyContext<TResult>> fallbackAction)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fallbackAction);
+
+        FallbackAction = context =>
+        {
+            fallbackAction(context);
+
+            return default;
+        };
+
+        return this;
+    }
+
     /// <inheritdoc />
     public void Execute(Action operation)
     {
@@ -171,6 +191,7 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
         Execute(() =>
         {
             operation();
+
             return default;
         });
     }
@@ -185,6 +206,7 @@ public class FallbackPolicy<TResult> : IExceptionPolicy<TResult>
         await ExecuteAsync(async () =>
         {
             await operation();
+
             return default;
         }, cancellationToken);
     }

@@ -213,6 +213,7 @@ public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
         Execute(() =>
         {
             operation();
+
             return default;
         });
     }
@@ -227,6 +228,7 @@ public class RetryPolicy<TResult> : IExceptionPolicy<TResult>
         await ExecuteAsync(async () =>
         {
             await operation();
+
             return default;
         }, cancellationToken);
     }

@@ -49,7 +49,7 @@ public class HelloController
     [HttpGet]
     public void TestRetryPolicy()
     {
-        Polly.Retry(3)
+        Policy.Retry(3)
             .Handle<System.Exception>()
             .OnRetry(context =>
             {
@@ -66,7 +66,7 @@ public class HelloController
     [HttpGet]
     public void TestTimeoutPolicy()
     {
-        Polly.Timeout(3000)
+        Policy.Timeout(3000)
             .OnTimeout(context =>
             {
                 Console.WriteLine("不好意思，超时了.");
@@ -81,7 +81,7 @@ public class HelloController
     [HttpGet]
     public string? TestFallbackPolicy([FromQuery] string? name = null)
     {
-        return Polly.Fallback<string>()
+        return Policy<string>.Fallback()
             .Handle<System.Exception>()
             .HandleResult(context => name is null || context.Exception is not null)
             .OnFallback(context =>
