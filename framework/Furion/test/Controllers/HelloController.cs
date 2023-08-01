@@ -53,6 +53,10 @@ public class HelloController
         {
             MaxRetryCount = 3
         };
+        retryPoliy.RetryAction = (ex, i) =>
+        {
+            Console.WriteLine($"正在重试第 {i} 次...");
+        };
 
         retryPoliy.Execute(() =>
         {

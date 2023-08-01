@@ -45,10 +45,53 @@
             重试策略
             </summary>
         </member>
+        <member name="F:Furion.Exception.RetryPolicy._defaultRetryInterval">
+            <summary>
+            默认重试间隔
+            </summary>
+        </member>
         <member name="M:Furion.Exception.RetryPolicy.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
             </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.#ctor(System.Type[])">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            </summary>
+            <param name="retryExceptions">重试异常集合</param>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy.MaxRetryCount">
+            <summary>
+            最大重试次数
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy.RetryIntervals">
+            <summary>
+            重试间隔集合
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy.Condition">
+            <summary>
+            条件
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy.RetryExceptions">
+            <summary>
+            重试异常集合
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy.RetryAction">
+            <summary>
+            每次重试触发的回调
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.ShouldHandle(System.Exception)">
+            <summary>
+            检查是否需要处理异常
+            </summary>
+            <param name="exception"></param>
+            <returns></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy.Execute(System.Action)">
             <inheritdoc />
@@ -61,6 +104,122 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicy.ExecuteAsync``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`1">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`2">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`2.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`2"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`3">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException3"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`3.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`3"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`4">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException3"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException4"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`4.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`4"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`5">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException3"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException4"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException5"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`5.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`5"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`6">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException3"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException4"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException5"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException6"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`6.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`6"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`7">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException3"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException4"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException5"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException6"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException7"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`7.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`7"/>
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.RetryPolicy`8">
+            <summary>
+            重试策略
+            </summary>
+            <typeparam name="TException1"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException2"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException3"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException4"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException5"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException6"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException7"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException8"><see cref="T:System.Exception" /></typeparam>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`8.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`8"/>
+            </summary>
         </member>
     </members>
 </doc>
