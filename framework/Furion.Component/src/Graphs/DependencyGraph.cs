@@ -65,7 +65,7 @@ internal sealed class DependencyGraph
                 // 查找当前节点祖先节点集合
                 if (!_ancestorsNodes.TryGetValue(currentNode, out var ancestorsNode))
                 {
-                    ancestorsNode = new List<Type>();
+                    ancestorsNode = new();
                     _ancestorsNodes[currentNode] = ancestorsNode;
                 }
 
@@ -75,7 +75,7 @@ internal sealed class DependencyGraph
                 // 查找当前节点后代节点集合
                 if (!_descendantsNodes.TryGetValue(nodeType, out var descendantsNode))
                 {
-                    descendantsNode = new List<Type>();
+                    descendantsNode = new();
                     _descendantsNodes[nodeType] = descendantsNode;
                 }
 

@@ -14,6 +14,8 @@
 
 namespace Furion.Validation.Fluent.Tests;
 
+#pragma warning disable
+
 public class PropertyValidatorValidationTests
 {
     [Fact]

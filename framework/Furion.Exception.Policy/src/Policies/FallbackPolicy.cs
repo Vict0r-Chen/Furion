@@ -30,7 +30,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// <summary>
     /// 后备消息
     /// </summary>
-    internal const string Fallback_MESSAGE = "Operation execution failed! The backup operation will be called shortly.";
+    internal const string FALLBACK_MESSAGE = "Operation execution failed! The backup operation will be called shortly.";
 
     /// <summary>
     /// 后备操作方法
@@ -45,12 +45,12 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// <summary>
     /// 捕获的异常集合
     /// </summary>
-    public List<Type>? HandleExceptions { get; set; }
+    public HashSet<Type>? HandleExceptions { get; set; }
 
     /// <summary>
     /// 捕获的内部异常集合
     /// </summary>
-    public List<Type>? HandleInnerExceptions { get; set; }
+    public HashSet<Type>? HandleInnerExceptions { get; set; }
 
     /// <summary>
     /// 添加捕获异常类型
@@ -60,7 +60,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     public FallbackPolicy<TResult> Handle<TException>()
         where TException : System.Exception
     {
-        HandleExceptions ??= new List<Type>();
+        HandleExceptions ??= new();
         HandleExceptions.Add(typeof(TException));
 
         return this;
@@ -116,7 +116,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     public FallbackPolicy<TResult> HandleInner<TException>()
         where TException : System.Exception
     {
-        HandleInnerExceptions ??= new List<Type>();
+        HandleInnerExceptions ??= new();
         HandleInnerExceptions.Add(typeof(TException));
 
         return this;
@@ -134,7 +134,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(exceptionCondition);
 
-        // 添加捕获异常类型和条件
+        // 添加捕获内部异常类型和条件
         HandleInner<TException>();
         HandleResult(context => context.Exception?.InnerException is TException exception && exceptionCondition(exception));
 
@@ -174,7 +174,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(resultCondition);
 
-        ResultConditions ??= new List<Func<FallbackPolicyContext<TResult>, bool>>();
+        ResultConditions ??= new();
         ResultConditions.Add(resultCondition);
 
         return this;
@@ -197,9 +197,9 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// <returns><see cref="bool"/></returns>
     internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
     {
-        // 检查异常或内部异常是否能够捕获处理
-        if (WhenCatchException(context, HandleExceptions, context.Exception)
-            || WhenCatchException(context, HandleInnerExceptions, context.Exception?.InnerException))
+        // 检查是否满足捕获异常的条件
+        if (CanHandleException(context, HandleExceptions, context.Exception)
+            || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
         {
             return true;
         }
@@ -276,7 +276,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         if (ShouldFallback(context))
         {
             // 输出调试事件
-            Debugging.Error(Fallback_MESSAGE);
+            Debugging.Error(FALLBACK_MESSAGE);
 
             // 调用后备操作方法
             if (FallbackAction is not null)
@@ -287,6 +287,41 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
 
         // 返回结果或抛出异常
         return ReturnOrThrowIfException(context);
+    }
+
+    /// <summary>
+    /// 检查是否满足捕获异常的条件
+    /// </summary>
+    /// <param name="context"><see cref="FallbackPolicyContext{TResult}"/></param>
+    /// <param name="exceptionTypes">异常类型集合</param>
+    /// <param name="exception"><see cref="System.Exception"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool CanHandleException(FallbackPolicyContext<TResult> context
+        , HashSet<Type>? exceptionTypes
+        , System.Exception? exception)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(context);
+
+        // 空检查
+        if (exception is null)
+        {
+            return false;
+        }
+
+        // 检查是否满足捕获异常的条件
+        if (exceptionTypes?.Any(ex => ex.IsInstanceOfType(exception)) == true)
+        {
+            // 检查是否配置了操作结果条件
+            if (ResultConditions is { Count: > 0 })
+            {
+                return ResultConditions.Any(condition => condition(context));
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -307,38 +342,5 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         }
 
         return context.Result;
-    }
-
-    /// <summary>
-    /// 检查异常信息是否匹配
-    /// </summary>
-    /// <param name="context"><see cref="FallbackPolicyContext{TResult}"/></param>
-    /// <param name="exceptionTypes">异常类型集合</param>
-    /// <param name="exception"><see cref="System.Exception"/></param>
-    /// <returns><see cref="bool"/></returns>
-    internal bool WhenCatchException(FallbackPolicyContext<TResult> context, List<Type>? exceptionTypes, System.Exception? exception)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(context);
-
-        // 检查是否存在异常
-        if (exception is null)
-        {
-            return false;
-        }
-
-        // 检查是否配置了需要捕获的异常
-        if (exceptionTypes?.Any(ex => ex.IsInstanceOfType(exception)) == true)
-        {
-            // 检查是否配置了操作结果条件
-            if (ResultConditions is not null && ResultConditions.Count > 0)
-            {
-                return ResultConditions.Any(condition => condition(context));
-            }
-
-            return true;
-        }
-
-        return false;
     }
 }

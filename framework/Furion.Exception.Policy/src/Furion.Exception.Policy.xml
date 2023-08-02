@@ -224,7 +224,7 @@
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
-        <member name="F:Furion.Exception.FallbackPolicy`1.Fallback_MESSAGE">
+        <member name="F:Furion.Exception.FallbackPolicy`1.FALLBACK_MESSAGE">
             <summary>
             后备消息
             </summary>
@@ -347,21 +347,21 @@
         <member name="M:Furion.Exception.FallbackPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Exception.FallbackPolicy`1.CanHandleException(Furion.Exception.FallbackPolicyContext{`0},System.Collections.Generic.HashSet{System.Type},System.Exception)">
+            <summary>
+            检查是否满足捕获异常的条件
+            </summary>
+            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
+            <param name="exceptionTypes">异常类型集合</param>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.ReturnOrThrowIfException(Furion.Exception.FallbackPolicyContext{`0})">
             <summary>
             返回结果或抛出异常
             </summary>
             <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
             <returns><typeparamref name="TResult"/></returns>
-        </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.WhenCatchException(Furion.Exception.FallbackPolicyContext{`0},System.Collections.Generic.List{System.Type},System.Exception)">
-            <summary>
-            检查异常信息是否匹配
-            </summary>
-            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
-            <param name="exceptionTypes">异常类型集合</param>
-            <param name="exception"><see cref="T:System.Exception"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Exception.PolicyBase`1">
             <summary>
@@ -534,21 +534,21 @@
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.CanHandleException(Furion.Exception.RetryPolicyContext{`0},System.Collections.Generic.HashSet{System.Type},System.Exception)">
+            <summary>
+            检查是否满足捕获异常的条件
+            </summary>
+            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
+            <param name="exceptionTypes">异常类型集合</param>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ReturnOrThrowIfException(Furion.Exception.RetryPolicyContext{`0})">
             <summary>
             返回结果或抛出异常
             </summary>
             <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
             <returns><typeparamref name="TResult"/></returns>
-        </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.WhenCatchException(Furion.Exception.RetryPolicyContext{`0},System.Collections.Generic.List{System.Type},System.Exception)">
-            <summary>
-            检查异常信息是否匹配
-            </summary>
-            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
-            <param name="exceptionTypes">异常类型集合</param>
-            <param name="exception"><see cref="T:System.Exception"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.Exception.TimeoutPolicy">
             <summary>
