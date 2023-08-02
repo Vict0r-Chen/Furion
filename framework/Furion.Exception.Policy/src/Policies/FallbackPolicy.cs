@@ -25,7 +25,7 @@ public sealed class FallbackPolicy : FallbackPolicy<object>
 /// 后备策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class FallbackPolicy<TResult> : AbstractPolicy<TResult>
+public class FallbackPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
     /// 后备操作方法

@@ -25,7 +25,7 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 /// 超时策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class TimeoutPolicy<TResult> : AbstractPolicy<TResult>
+public class TimeoutPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
     /// 超时时间
@@ -50,14 +50,6 @@ public class TimeoutPolicy<TResult> : AbstractPolicy<TResult>
         TimeoutAction = timeoutAction;
 
         return this;
-    }
-
-    /// <inheritdoc />
-    public override TResult? Execute(Func<TResult?> operation)
-    {
-        return ExecuteAsync(() => Task.Run(operation))
-           .GetAwaiter()
-           .GetResult();
     }
 
     /// <inheritdoc />

@@ -25,7 +25,7 @@ public sealed class CompositePolicy : CompositePolicy<object>
 /// 组合策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class CompositePolicy<TResult> : AbstractPolicy<TResult>
+public class CompositePolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
     /// <inheritdoc cref="CompositePolicy{TResult}"/>
@@ -38,7 +38,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
     /// <summary>
     /// 策略集合
     /// </summary>
-    public List<AbstractPolicy<TResult>> Policies { get; init; }
+    public List<PolicyBase<TResult>> Policies { get; init; }
 
     /// <summary>
     /// 执行失败时操作方法
@@ -50,7 +50,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <returns><see cref="CompositePolicy{TResult}"/></returns>
-    public CompositePolicy<TResult> Join(params AbstractPolicy<TResult>[] policies)
+    public CompositePolicy<TResult> Join(params PolicyBase<TResult>[] policies)
     {
         // 检查策略集合合法性
         EnsureLegalData(policies);
@@ -65,7 +65,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <returns><see cref="CompositePolicy{TResult}"/></returns>
-    public CompositePolicy<TResult> Join(IEnumerable<AbstractPolicy<TResult>> policies)
+    public CompositePolicy<TResult> Join(IEnumerable<PolicyBase<TResult>> policies)
     {
         return Join(policies.ToArray());
     }
@@ -122,7 +122,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
                     policy ??= previous.Target;
 
                     // 调用执行失败时操作方法
-                    ExecutionFailureAction?.Invoke(new((AbstractPolicy<TResult>)policy!)
+                    ExecutionFailureAction?.Invoke(new((PolicyBase<TResult>)policy!)
                     {
                         PolicyName = PolicyName,
                         Exception = exception
@@ -141,7 +141,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void EnsureLegalData(IList<AbstractPolicy<TResult>> policies)
+    internal static void EnsureLegalData(IList<PolicyBase<TResult>> policies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(policies);

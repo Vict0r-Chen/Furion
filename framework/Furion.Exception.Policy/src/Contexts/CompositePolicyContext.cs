@@ -22,14 +22,14 @@ public sealed class CompositePolicyContext<TResult> : PolicyContextBase
     /// <summary>
     /// <inheritdoc cref="CompositePolicyContext{TResult}"/>
     /// </summary>
-    /// <param name="policy"><see cref="AbstractPolicy{TResult}"/></param>
-    internal CompositePolicyContext(AbstractPolicy<TResult> policy)
+    /// <param name="policy"><see cref="PolicyBase{TResult}"/></param>
+    internal CompositePolicyContext(PolicyBase<TResult> policy)
     {
         Policy = policy;
     }
 
-    /// <inheritdoc cref="AbstractPolicy{TResult}" />
-    public AbstractPolicy<TResult> Policy { get; init; }
+    /// <inheritdoc cref="PolicyBase{TResult}" />
+    public PolicyBase<TResult> Policy { get; init; }
 
     /// <inheritdoc cref="System.Exception"/>
     public System.Exception? Exception { get; internal set; }

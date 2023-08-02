@@ -9,14 +9,14 @@
             组合策略上下文
             </summary>
         </member>
-        <member name="M:Furion.Exception.CompositePolicyContext`1.#ctor(Furion.Exception.AbstractPolicy{`0})">
+        <member name="M:Furion.Exception.CompositePolicyContext`1.#ctor(Furion.Exception.PolicyBase{`0})">
             <summary>
             <inheritdoc cref="T:Furion.Exception.CompositePolicyContext`1"/>
             </summary>
-            <param name="policy"><see cref="T:Furion.Exception.AbstractPolicy`1"/></param>
+            <param name="policy"><see cref="T:Furion.Exception.PolicyBase`1"/></param>
         </member>
         <member name="P:Furion.Exception.CompositePolicyContext`1.Policy">
-            <inheritdoc cref="T:Furion.Exception.AbstractPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.PolicyBase`1" />
         </member>
         <member name="P:Furion.Exception.CompositePolicyContext`1.Exception">
             <inheritdoc cref="T:System.Exception"/>
@@ -152,27 +152,6 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
-        <member name="T:Furion.Exception.AbstractPolicy`1">
-            <summary>
-            策略抽象基类
-            </summary>
-            <typeparam name="TResult">操作返回值类型</typeparam>
-        </member>
-        <member name="P:Furion.Exception.AbstractPolicy`1.PolicyName">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.AbstractPolicy`1.Execute(System.Action)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.AbstractPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.AbstractPolicy`1.Execute(System.Func{`0})">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Exception.AbstractPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
         <member name="T:Furion.Exception.CompositePolicy">
             <summary>
             组合策略
@@ -199,14 +178,14 @@
             执行失败时操作方法
             </summary>
         </member>
-        <member name="M:Furion.Exception.CompositePolicy`1.Join(Furion.Exception.AbstractPolicy{`0}[])">
+        <member name="M:Furion.Exception.CompositePolicy`1.Join(Furion.Exception.PolicyBase{`0}[])">
             <summary>
             添加策略
             </summary>
             <param name="policies">策略集合</param>
             <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.CompositePolicy`1.Join(System.Collections.Generic.IEnumerable{Furion.Exception.AbstractPolicy{`0}})">
+        <member name="M:Furion.Exception.CompositePolicy`1.Join(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
             添加策略
             </summary>
@@ -223,7 +202,7 @@
         <member name="M:Furion.Exception.CompositePolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Exception.CompositePolicy`1.EnsureLegalData(System.Collections.Generic.IList{Furion.Exception.AbstractPolicy{`0}})">
+        <member name="M:Furion.Exception.CompositePolicy`1.EnsureLegalData(System.Collections.Generic.IList{Furion.Exception.PolicyBase{`0}})">
             <summary>
             检查策略集合合法性
             </summary>
@@ -374,6 +353,27 @@
             <param name="exceptionTypes">异常类型集合</param>
             <param name="exception"><see cref="T:System.Exception"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="T:Furion.Exception.PolicyBase`1">
+            <summary>
+            策略抽象基类
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="P:Furion.Exception.PolicyBase`1.PolicyName">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.PolicyBase`1.Execute(System.Action)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.PolicyBase`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.PolicyBase`1.Execute(System.Func{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.PolicyBase`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Exception.RetryPolicy">
             <summary>
@@ -564,9 +564,6 @@
             <param name="timeoutAction">超时时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0})">
-            <inheritdoc />
-        </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -579,7 +576,7 @@
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.AbstractPolicy`1"/></typeparam>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
             <param name="policy"><typeparamref name="TPolicy"/></param>
             <returns><typeparamref name="TPolicy"/></returns>
         </member>
@@ -642,14 +639,14 @@
             </summary>
             <returns><see cref="T:Furion.Exception.CompositePolicy"/></returns>
         </member>
-        <member name="M:Furion.Exception.Policy.Composite(Furion.Exception.AbstractPolicy{System.Object}[])">
+        <member name="M:Furion.Exception.Policy.Composite(Furion.Exception.PolicyBase{System.Object}[])">
             <summary>
             初始化组合策略
             </summary>
             <param name="policies">策略集合</param>
             <returns><see cref="T:Furion.Exception.CompositePolicy"/></returns>
         </member>
-        <member name="M:Furion.Exception.Policy.Composite(System.Collections.Generic.IEnumerable{Furion.Exception.AbstractPolicy{System.Object}})">
+        <member name="M:Furion.Exception.Policy.Composite(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{System.Object}})">
             <summary>
             初始化组合策略
             </summary>
@@ -666,7 +663,7 @@
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.AbstractPolicy`1"/></typeparam>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
             <param name="policy"><typeparamref name="TPolicy"/></param>
             <returns><typeparamref name="TPolicy"/></returns>
         </member>
@@ -722,14 +719,14 @@
             </summary>
             <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.Policy`1.Composite(Furion.Exception.AbstractPolicy{`0}[])">
+        <member name="M:Furion.Exception.Policy`1.Composite(Furion.Exception.PolicyBase{`0}[])">
             <summary>
             初始化组合策略
             </summary>
             <param name="policies">策略集合</param>
             <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.Policy`1.Composite(System.Collections.Generic.IEnumerable{Furion.Exception.AbstractPolicy{`0}})">
+        <member name="M:Furion.Exception.Policy`1.Composite(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
             初始化组合策略
             </summary>

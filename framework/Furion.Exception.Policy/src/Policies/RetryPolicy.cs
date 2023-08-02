@@ -25,7 +25,7 @@ public sealed class RetryPolicy : RetryPolicy<object>
 /// 重试策略
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public class RetryPolicy<TResult> : AbstractPolicy<TResult>
+public class RetryPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
     /// 操作结果条件集合

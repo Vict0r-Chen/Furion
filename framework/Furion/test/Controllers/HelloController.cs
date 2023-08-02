@@ -64,9 +64,9 @@ public class HelloController
     }
 
     [HttpGet]
-    public void TestTimeoutPolicy()
+    public void TestTimeoutPolicy([FromQuery] int timeout = 3000)
     {
-        Policy.Timeout(3000)
+        Policy.Timeout(timeout)
             .OnTimeout(context =>
             {
                 Console.WriteLine("不好意思，超时了.");

@@ -22,11 +22,11 @@ public static class Policy
     /// <summary>
     /// 添加自定义策略
     /// </summary>
-    /// <typeparam name="TPolicy"><see cref="AbstractPolicy{TResult}"/></typeparam>
+    /// <typeparam name="TPolicy"><see cref="PolicyBase{TResult}"/></typeparam>
     /// <param name="policy"><typeparamref name="TPolicy"/></param>
     /// <returns><typeparamref name="TPolicy"/></returns>
     public static TPolicy For<TPolicy>(TPolicy policy)
-        where TPolicy : AbstractPolicy<object>
+        where TPolicy : PolicyBase<object>
     {
         return policy;
     }
@@ -143,7 +143,7 @@ public static class Policy
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <returns><see cref="CompositePolicy"/></returns>
-    public static CompositePolicy Composite(params AbstractPolicy<object>[] policies)
+    public static CompositePolicy Composite(params PolicyBase<object>[] policies)
     {
         var policy = new CompositePolicy();
         policy.Join(policies);
@@ -156,7 +156,7 @@ public static class Policy
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <returns><see cref="CompositePolicy"/></returns>
-    public static CompositePolicy Composite(IEnumerable<AbstractPolicy<object>> policies)
+    public static CompositePolicy Composite(IEnumerable<PolicyBase<object>> policies)
     {
         var policy = new CompositePolicy();
         policy.Join(policies);
@@ -174,11 +174,11 @@ public static class Policy<TResult>
     /// <summary>
     /// 添加自定义策略
     /// </summary>
-    /// <typeparam name="TPolicy"><see cref="AbstractPolicy{TResult}"/></typeparam>
+    /// <typeparam name="TPolicy"><see cref="PolicyBase{TResult}"/></typeparam>
     /// <param name="policy"><typeparamref name="TPolicy"/></param>
     /// <returns><typeparamref name="TPolicy"/></returns>
     public static TPolicy For<TPolicy>(TPolicy policy)
-        where TPolicy : AbstractPolicy<TResult>
+        where TPolicy : PolicyBase<TResult>
     {
         return policy;
     }
@@ -279,7 +279,7 @@ public static class Policy<TResult>
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <returns><see cref="CompositePolicy{TResult}"/></returns>
-    public static CompositePolicy<TResult> Composite(params AbstractPolicy<TResult>[] policies)
+    public static CompositePolicy<TResult> Composite(params PolicyBase<TResult>[] policies)
     {
         return new CompositePolicy<TResult>()
             .Join(policies);
@@ -290,7 +290,7 @@ public static class Policy<TResult>
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <returns><see cref="CompositePolicy{TResult}"/></returns>
-    public static CompositePolicy<TResult> Composite(IEnumerable<AbstractPolicy<TResult>> policies)
+    public static CompositePolicy<TResult> Composite(IEnumerable<PolicyBase<TResult>> policies)
     {
         return new CompositePolicy<TResult>()
             .Join(policies);

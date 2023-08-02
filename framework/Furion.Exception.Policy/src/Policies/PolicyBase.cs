@@ -18,7 +18,7 @@ namespace Furion.Exception;
 /// 策略抽象基类
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
-public abstract class AbstractPolicy<TResult> : IExceptionPolicy<TResult>
+public abstract class PolicyBase<TResult> : IExceptionPolicy<TResult>
 {
     /// <inheritdoc />
     public string? PolicyName { get; set; }
