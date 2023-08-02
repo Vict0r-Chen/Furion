@@ -28,7 +28,7 @@ public sealed class FallbackPolicy : FallbackPolicy<object>
 public class FallbackPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
-    /// 重试消息
+    /// 后备消息
     /// </summary>
     internal const string Fallback_MESSAGE = "Operation execution failed! The backup operation will be called shortly.";
 

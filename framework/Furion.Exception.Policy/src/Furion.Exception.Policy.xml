@@ -222,7 +222,7 @@
         </member>
         <member name="F:Furion.Exception.FallbackPolicy`1.Fallback_MESSAGE">
             <summary>
-            重试消息
+            后备消息
             </summary>
         </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
