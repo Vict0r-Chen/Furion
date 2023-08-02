@@ -28,14 +28,24 @@ public sealed class RetryPolicy : RetryPolicy<object>
 public class RetryPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
-    /// 重试输出消息
+    /// 等待重试输出消息
     /// </summary>
-    internal const string RETRY_MESSAGE = "Retrying for the {0}nd time…";
+    internal const string WAIT_RETRY_MESSAGE = "Retry after {0} seconds.";
 
     /// <summary>
-    /// 操作结果条件集合
+    /// 重试输出消息
     /// </summary>
-    public List<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
+    internal const string RETRY_MESSAGE = "Retrying for the {0}nd time.";
+
+    /// <summary>
+    /// 最大重试次数
+    /// </summary>
+    public int MaxRetryCount { get; set; }
+
+    /// <summary>
+    /// 等待重试间隔集合
+    /// </summary>
+    public TimeSpan[]? RetryIntervals { get; set; }
 
     /// <summary>
     /// 捕获的异常集合
@@ -48,19 +58,14 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     public HashSet<Type>? HandleInnerExceptions { get; set; }
 
     /// <summary>
-    /// 最大重试次数
+    /// 操作结果条件集合
     /// </summary>
-    public uint MaxRetryCount { get; set; }
-
-    /// <summary>
-    /// 重试间隔集合
-    /// </summary>
-    public TimeSpan[]? RetryIntervals { get; set; }
+    public List<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
 
     /// <summary>
     /// 重试时操作方法
     /// </summary>
-    public Action<RetryPolicyContext<TResult>>? RetryAction { get; set; }
+    public Action<RetryPolicyContext<TResult>>? RetryingAction { get; set; }
 
     /// <summary>
     /// 添加捕获异常类型
@@ -201,9 +206,9 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <summary>
-    /// 添加重试间隔
+    /// 添加等待重试间隔
     /// </summary>
-    /// <param name="retryIntervals">重试间隔</param>
+    /// <param name="retryIntervals">等待重试间隔</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public RetryPolicy<TResult> WaitAndRetry(params TimeSpan[] retryIntervals)
     {
@@ -218,14 +223,14 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// <summary>
     /// 添加重试时操作方法
     /// </summary>
-    /// <param name="retryAction">重试时操作方法</param>
+    /// <param name="retryingAction">重试时操作方法</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> OnRetry(Action<RetryPolicyContext<TResult>> retryAction)
+    public RetryPolicy<TResult> OnRetrying(Action<RetryPolicyContext<TResult>> retryingAction)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(retryAction);
+        ArgumentNullException.ThrowIfNull(retryingAction);
 
-        RetryAction = retryAction;
+        RetryingAction = retryingAction;
 
         return this;
     }
@@ -246,8 +251,11 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool ShouldRetry(RetryPolicyContext<TResult> context)
+    internal bool ShouldHandle(RetryPolicyContext<TResult> context)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(context);
+
         // 检查最大重试次数是否大于等于 0
         if (MaxRetryCount <= 0)
         {
@@ -306,22 +314,29 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
             cancellationToken.ThrowIfCancellationRequested();
 
             // 检查是否满足捕获异常的条件
-            if (ShouldRetry(context))
+            if (ShouldHandle(context))
             {
                 // 递增上下文数据
                 context.Increment();
+
+                // 检查是否配置了重试间隔
+                if (RetryIntervals is { Length: > 0 })
+                {
+                    // 解析延迟时间戳
+                    var delay = RetryIntervals[context.RetryCount % RetryIntervals.Length];
+
+                    // 输出调试事件
+                    Debugging.Info(WAIT_RETRY_MESSAGE, delay.TotalSeconds);
+
+                    // 延迟指定时间
+                    await Task.Delay(delay, cancellationToken);
+                }
 
                 // 输出调试事件
                 Debugging.Warn(RETRY_MESSAGE, context.RetryCount);
 
                 // 调用重试时操作方法
-                RetryAction?.Invoke(context);
-
-                // 检查是否配置了重试间隔
-                if (RetryIntervals is { Length: > 0 })
-                {
-                    await Task.Delay(RetryIntervals[context.RetryCount % RetryIntervals.Length], cancellationToken);
-                }
+                RetryingAction?.Invoke(context);
 
                 continue;
             }

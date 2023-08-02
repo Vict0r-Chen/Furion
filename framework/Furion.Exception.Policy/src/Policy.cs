@@ -45,7 +45,7 @@ public static class Policy
     /// </summary>
     /// <param name="maxRetryCount">最大重试次数</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public static RetryPolicy Retry(uint maxRetryCount)
+    public static RetryPolicy Retry(int maxRetryCount)
     {
         return new()
         {
@@ -191,7 +191,7 @@ public static class Policy<TResult>
     /// </summary>
     /// <param name="maxRetryCount">最大重试次数</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public static RetryPolicy<TResult> Retry(uint maxRetryCount)
+    public static RetryPolicy<TResult> Retry(int maxRetryCount)
     {
         return new()
         {

@@ -285,7 +285,7 @@
             <param name="filePath">文件路径</param>
             <returns><see cref="T:System.String"/>[]</returns>
         </member>
-        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.ScanDirectory(System.String,Microsoft.Extensions.FileSystemGlobbing.Matcher,System.UInt32)">
+        <member name="M:Furion.Configuration.FileScanningConfigurationScanner.ScanDirectory(System.String,Microsoft.Extensions.FileSystemGlobbing.Matcher,System.Int32)">
             <summary>
             扫描目录文件
             </summary>

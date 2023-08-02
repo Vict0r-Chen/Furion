@@ -251,16 +251,6 @@
             <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
             </summary>
         </member>
-        <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
-            <summary>
-            后备操作方法
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.FallbackPolicy`1.ResultConditions">
-            <summary>
-            操作结果条件集合
-            </summary>
-        </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.HandleExceptions">
             <summary>
             捕获的异常集合
@@ -269,6 +259,16 @@
         <member name="P:Furion.Exception.FallbackPolicy`1.HandleInnerExceptions">
             <summary>
             捕获的内部异常集合
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.FallbackPolicy`1.ResultConditions">
+            <summary>
+            操作结果条件集合
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
+            <summary>
+            后备操作方法
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.Handle``1">
@@ -359,7 +359,7 @@
             <param name="fallbackAction">后备操作方法</param>
             <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.ShouldFallback(Furion.Exception.FallbackPolicyContext{`0})">
+        <member name="M:Furion.Exception.FallbackPolicy`1.ShouldHandle(Furion.Exception.FallbackPolicyContext{`0})">
             <summary>
             检查是否满足捕获异常的条件
             </summary>
@@ -417,14 +417,24 @@
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
+        <member name="F:Furion.Exception.RetryPolicy`1.WAIT_RETRY_MESSAGE">
+            <summary>
+            等待重试输出消息
+            </summary>
+        </member>
         <member name="F:Furion.Exception.RetryPolicy`1.RETRY_MESSAGE">
             <summary>
             重试输出消息
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicy`1.ResultConditions">
+        <member name="P:Furion.Exception.RetryPolicy`1.MaxRetryCount">
             <summary>
-            操作结果条件集合
+            最大重试次数
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.RetryPolicy`1.RetryIntervals">
+            <summary>
+            等待重试间隔集合
             </summary>
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.HandleExceptions">
@@ -437,17 +447,12 @@
             捕获的内部异常集合
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicy`1.MaxRetryCount">
+        <member name="P:Furion.Exception.RetryPolicy`1.ResultConditions">
             <summary>
-            最大重试次数
+            操作结果条件集合
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicy`1.RetryIntervals">
-            <summary>
-            重试间隔集合
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.RetryPolicy`1.RetryAction">
+        <member name="P:Furion.Exception.RetryPolicy`1.RetryingAction">
             <summary>
             重试时操作方法
             </summary>
@@ -528,16 +533,16 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetry(System.TimeSpan[])">
             <summary>
-            添加重试间隔
+            添加等待重试间隔
             </summary>
-            <param name="retryIntervals">重试间隔</param>
+            <param name="retryIntervals">等待重试间隔</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.OnRetry(System.Action{Furion.Exception.RetryPolicyContext{`0}})">
+        <member name="M:Furion.Exception.RetryPolicy`1.OnRetrying(System.Action{Furion.Exception.RetryPolicyContext{`0}})">
             <summary>
             添加重试时操作方法
             </summary>
-            <param name="retryAction">重试时操作方法</param>
+            <param name="retryingAction">重试时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Forever">
@@ -546,7 +551,7 @@
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.ShouldRetry(Furion.Exception.RetryPolicyContext{`0})">
+        <member name="M:Furion.Exception.RetryPolicy`1.ShouldHandle(Furion.Exception.RetryPolicyContext{`0})">
             <summary>
             检查是否满足捕获异常的条件
             </summary>
@@ -636,7 +641,7 @@
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.Policy.Retry(System.UInt32)">
+        <member name="M:Furion.Exception.Policy.Retry(System.Int32)">
             <summary>
             初始化重试策略
             </summary>
@@ -723,7 +728,7 @@
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.Policy`1.Retry(System.UInt32)">
+        <member name="M:Furion.Exception.Policy`1.Retry(System.Int32)">
             <summary>
             初始化重试策略
             </summary>

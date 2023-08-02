@@ -48,8 +48,8 @@ public class FileScanningConfigurationBuilderTests
         };
         Assert.Equal(fileBlacklistGlobbing, fileScanningConfigurationBuilder._blacklistFileGlobbing);
 
-        Assert.Equal(typeof(uint), fileScanningConfigurationBuilder.MaxScanDepth.GetType());
-        Assert.Equal((uint)0, fileScanningConfigurationBuilder.MaxScanDepth);
+        Assert.Equal(typeof(int), fileScanningConfigurationBuilder.MaxScanDepth.GetType());
+        Assert.Equal(0, fileScanningConfigurationBuilder.MaxScanDepth);
         Assert.False(fileScanningConfigurationBuilder.DefaultOptional);
         Assert.False(fileScanningConfigurationBuilder.DefaultReloadOnChange);
         Assert.Equal(250, fileScanningConfigurationBuilder.DefaultReloadDelay);

@@ -51,7 +51,7 @@ public class HelloController
     {
         Policy.Retry(3)
             .Handle<System.Exception>()
-            .OnRetry(context =>
+            .OnRetrying(context =>
             {
                 Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
             })
@@ -110,7 +110,7 @@ public class HelloController
 
         var retryPolicy = Policy.Retry(3)
             .Handle<System.Exception>()
-            .OnRetry(context =>
+            .OnRetrying(context =>
             {
                 Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
             })

@@ -66,16 +66,6 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <summary>
-    /// 后备操作方法
-    /// </summary>
-    public Func<FallbackPolicyContext<TResult>, TResult?>? FallbackAction { get; set; }
-
-    /// <summary>
-    /// 操作结果条件集合
-    /// </summary>
-    public List<Func<FallbackPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
-
-    /// <summary>
     /// 捕获的异常集合
     /// </summary>
     public HashSet<Type>? HandleExceptions { get; set; }
@@ -84,6 +74,16 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// 捕获的内部异常集合
     /// </summary>
     public HashSet<Type>? HandleInnerExceptions { get; set; }
+
+    /// <summary>
+    /// 操作结果条件集合
+    /// </summary>
+    public List<Func<FallbackPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
+
+    /// <summary>
+    /// 后备操作方法
+    /// </summary>
+    public Func<FallbackPolicyContext<TResult>, TResult?>? FallbackAction { get; set; }
 
     /// <summary>
     /// 添加捕获异常类型
@@ -261,7 +261,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     /// <param name="context"><see cref="FallbackPolicyContext{TResult}"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
+    internal bool ShouldHandle(FallbackPolicyContext<TResult> context)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(context);
@@ -310,7 +310,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         cancellationToken.ThrowIfCancellationRequested();
 
         // 检查是否满足捕获异常的条件
-        if (ShouldFallback(context))
+        if (ShouldHandle(context))
         {
             // 输出调试事件
             Debugging.Error(FALLBACK_MESSAGE);

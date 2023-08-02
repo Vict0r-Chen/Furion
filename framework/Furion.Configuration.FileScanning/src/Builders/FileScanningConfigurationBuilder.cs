@@ -66,7 +66,7 @@ public sealed class FileScanningConfigurationBuilder : ConfigurationBuilderBase
     /// <summary>
     /// 扫描最大深度
     /// </summary>
-    public uint MaxScanDepth { get; set; }
+    public int MaxScanDepth { get; set; }
 
     /// <summary>
     /// 默认文件可选配置

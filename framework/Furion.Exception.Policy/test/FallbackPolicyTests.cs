@@ -39,10 +39,10 @@ public class FallbackPolicyTests
         Assert.NotNull(policy);
         Assert.Equal("Operation execution failed! The backup operation will be called shortly.", FallbackPolicy<object>.FALLBACK_MESSAGE);
         Assert.Null(policy.PolicyName);
-        Assert.Null(policy.FallbackAction);
-        Assert.Null(policy.ResultConditions);
         Assert.Null(policy.HandleExceptions);
         Assert.Null(policy.HandleInnerExceptions);
+        Assert.Null(policy.ResultConditions);
+        Assert.Null(policy.FallbackAction);
 
         var policy2 = new FallbackPolicy<object>(context => "");
         Assert.NotNull(policy2.FallbackAction);
@@ -275,30 +275,30 @@ public class FallbackPolicyTests
     }
 
     [Fact]
-    public void ShouldFallback_Invalid_Parameters()
+    public void ShouldHandle_Invalid_Parameters()
     {
         var policy = new FallbackPolicy<object>();
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            policy.ShouldFallback(null!);
+            policy.ShouldHandle(null!);
         });
     }
 
     [Fact]
-    public void ShouldFallback_ReturnOK()
+    public void ShouldHandle_ReturnOK()
     {
         var policy = new FallbackPolicy<object>();
 
-        Assert.False(policy.ShouldFallback(new()));
-        Assert.True(policy.ShouldFallback(new()
+        Assert.False(policy.ShouldHandle(new()));
+        Assert.True(policy.ShouldHandle(new()
         {
             Exception = new()
         }));
 
         policy.HandleResult(context => context.Exception == null);
-        Assert.True(policy.ShouldFallback(new()));
-        Assert.False(policy.ShouldFallback(new()
+        Assert.True(policy.ShouldHandle(new()));
+        Assert.False(policy.ShouldHandle(new()
         {
             Exception = new()
         }));

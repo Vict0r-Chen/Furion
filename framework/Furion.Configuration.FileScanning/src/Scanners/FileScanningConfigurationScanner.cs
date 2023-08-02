@@ -332,7 +332,7 @@ internal sealed class FileScanningConfigurationScanner
     /// <returns><see cref="List{T}"/></returns>
     internal static List<string> ScanDirectory(string directory
         , Matcher matcher
-        , uint maxScanDepth = 0)
+        , int maxScanDepth = 0)
     {
         // 检查目录合法性
         EnsureLegalDirectory(directory);
