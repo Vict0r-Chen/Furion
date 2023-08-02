@@ -38,6 +38,7 @@ public class FallbackPolicyTests
         Assert.Equal(typeof(FallbackPolicy<object>), typeof(FallbackPolicy).BaseType);
         Assert.NotNull(policy);
         Assert.Equal("Operation execution failed! The backup operation will be called shortly.", FallbackPolicy<object>.FALLBACK_MESSAGE);
+        Assert.Null(policy.PolicyName);
         Assert.Null(policy.FallbackAction);
         Assert.Null(policy.ResultConditions);
         Assert.Null(policy.HandleExceptions);
@@ -301,6 +302,206 @@ public class FallbackPolicyTests
         {
             Exception = new()
         }));
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_Invalid_Parameters()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+        {
+            var result = await policy.ExecuteAsync(null!);
+        });
+
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            var result = await policy.ExecuteAsync(async () =>
+            {
+                var result = await Task.FromResult("str");
+
+                if (result == "str")
+                {
+                    throw new InvalidOperationException("无效操作");
+                }
+
+                return result;
+            });
+        });
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_NoException_ReturnOK()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        var str = await policy.ExecuteAsync(async () =>
+        {
+            return await Task.FromResult("furion");
+        });
+
+        Assert.Equal("furion", str);
+    }
+
+    [Theory]
+    [InlineData("fur", "fur")]
+    [InlineData("furion", "百小僧")]
+    [InlineData("furion v5", "furion v5")]
+    public async Task ExecuteAsync_HasException_ReturnOK(string value, string result)
+    {
+        var policy = new FallbackPolicy<string>();
+
+        var str = await policy
+            .OnFallback(context =>
+            {
+                return "百小僧";
+            })
+            .ExecuteAsync(async () =>
+            {
+                var stringValue = await Task.FromResult(value);
+
+                if (stringValue == "furion")
+                {
+                    throw new InvalidOperationException("无效操作");
+                }
+
+                return stringValue;
+            });
+
+        Assert.Equal(result, str);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WithHandleException_ReturnOK()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            var str = await policy
+            .Handle<InvalidCastException>()
+            .OnFallback(context =>
+            {
+                return "百小僧";
+            })
+            .ExecuteAsync(async () =>
+            {
+                var stringValue = await Task.FromResult("furion");
+
+                if (stringValue == "furion")
+                {
+                    throw new InvalidOperationException("无效操作");
+                }
+
+                return stringValue;
+            });
+        });
+
+        var str = await policy
+            .Handle<InvalidCastException>()
+            .HandleResult(context => context.Exception is InvalidOperationException)
+            .OnFallback(context =>
+            {
+                return "百小僧";
+            })
+            .ExecuteAsync(async () =>
+            {
+                var stringValue = await Task.FromResult("furion");
+
+                if (stringValue == "furion")
+                {
+                    throw new InvalidOperationException("无效操作");
+                }
+
+                return stringValue;
+            });
+
+        Assert.Equal("百小僧", str);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WithCancellationToken_ReturnOK()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        using var cancellationTokenSource = new CancellationTokenSource();
+        cancellationTokenSource.CancelAfter(800);
+
+        await Assert.ThrowsAsync<OperationCanceledException>(async () =>
+        {
+            var str = await policy
+             .OnFallback(context =>
+             {
+                 return "百小僧";
+             })
+             .ExecuteAsync(async () =>
+             {
+                 var stringValue = await Task.FromResult("furion");
+
+                 await Task.Delay(1000);
+
+                 return stringValue;
+             }, cancellationTokenSource.Token);
+        });
+    }
+
+    [Fact]
+    public void ExecuteAction_ReturnOK()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        static void action()
+        {
+            throw new System.Exception("出错了");
+        }
+
+        var i = 0;
+        policy
+            .OnFallback(context =>
+            {
+                i++;
+            })
+            .Execute(action);
+
+        Assert.Equal(1, i);
+    }
+
+    [Fact]
+    public async Task ExecuteAsyncFunc_ReturnOK()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        var i = 0;
+        await policy
+               .OnFallback(context =>
+               {
+                   i++;
+               })
+               .ExecuteAsync(async () =>
+               {
+                   var str = await Task.FromResult("furion");
+                   throw new System.Exception("出错了");
+               });
+
+        Assert.Equal(1, i);
+    }
+
+    [Fact]
+    public void ExecuteFunc_ReturnOK()
+    {
+        var policy = new FallbackPolicy<string>();
+
+        var str = policy
+              .OnFallback(context =>
+              {
+                  return "furion";
+              })
+              .Execute(() =>
+              {
+                  throw new System.Exception("出错了");
+              });
+
+        Assert.Equal("furion", str);
     }
 
     [Fact]

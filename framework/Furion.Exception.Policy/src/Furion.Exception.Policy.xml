@@ -127,11 +127,12 @@
             策略名称
             </summary>
         </member>
-        <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Action)">
+        <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Action,System.Threading.CancellationToken)">
             <summary>
             执行同步操作方法
             </summary>
             <param name="operation">操作方法</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
         </member>
         <member name="M:Furion.Exception.IExceptionPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
             <summary>
@@ -141,11 +142,12 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Func{`0})">
+        <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
             <summary>
             执行同步操作方法
             </summary>
             <param name="operation">操作方法</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><typeparamref name="TResult"/></returns>
         </member>
         <member name="M:Furion.Exception.IExceptionPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
@@ -392,13 +394,13 @@
         <member name="P:Furion.Exception.PolicyBase`1.PolicyName">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Exception.PolicyBase`1.Execute(System.Action)">
+        <member name="M:Furion.Exception.PolicyBase`1.Execute(System.Action,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Exception.PolicyBase`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Exception.PolicyBase`1.Execute(System.Func{`0})">
+        <member name="M:Furion.Exception.PolicyBase`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Exception.PolicyBase`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
@@ -603,7 +605,7 @@
             <param name="timeoutAction">超时时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0})">
+        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">

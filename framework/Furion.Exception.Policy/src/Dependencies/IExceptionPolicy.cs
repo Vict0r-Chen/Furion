@@ -29,7 +29,8 @@ public interface IExceptionPolicy<TResult>
     /// 执行同步操作方法
     /// </summary>
     /// <param name="operation">操作方法</param>
-    void Execute(Action operation);
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    void Execute(Action operation, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 执行异步操作方法
@@ -43,8 +44,9 @@ public interface IExceptionPolicy<TResult>
     /// 执行同步操作方法
     /// </summary>
     /// <param name="operation">操作方法</param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><typeparamref name="TResult"/></returns>
-    TResult? Execute(Func<TResult?> operation);
+    TResult? Execute(Func<TResult?> operation, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 执行异步操作方法
