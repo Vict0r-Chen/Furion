@@ -40,17 +40,17 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// <summary>
     /// 操作结果条件集合
     /// </summary>
-    public IList<Func<FallbackPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
+    public List<Func<FallbackPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
 
     /// <summary>
     /// 捕获的异常集合
     /// </summary>
-    public IList<Type>? HandleExceptions { get; set; }
+    public List<Type>? HandleExceptions { get; set; }
 
     /// <summary>
     /// 捕获的内部异常集合
     /// </summary>
-    public IList<Type>? HandleInnerExceptions { get; set; }
+    public List<Type>? HandleInnerExceptions { get; set; }
 
     /// <summary>
     /// 添加捕获异常类型
@@ -316,7 +316,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// <param name="exceptionTypes">异常类型集合</param>
     /// <param name="exception"><see cref="System.Exception"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool WhenCatchException(FallbackPolicyContext<TResult> context, IList<Type>? exceptionTypes, System.Exception? exception)
+    internal bool WhenCatchException(FallbackPolicyContext<TResult> context, List<Type>? exceptionTypes, System.Exception? exception)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(context);

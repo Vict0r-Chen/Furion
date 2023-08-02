@@ -681,7 +681,7 @@
             <param name="validators">验证器集合</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.List{Furion.Validation.ValidatorBase})">
             <summary>
             添加组合验证器
             </summary>
@@ -696,7 +696,7 @@
             <param name="cascadeMode"><see cref="T:Furion.Validation.ValidatorCascadeMode"/></param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.IList{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorCascadeMode)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Composite(System.Collections.Generic.List{Furion.Validation.ValidatorBase},Furion.Validation.ValidatorCascadeMode)">
             <summary>
             添加组合验证器
             </summary>

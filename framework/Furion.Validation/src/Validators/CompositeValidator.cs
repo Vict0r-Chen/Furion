@@ -32,7 +32,7 @@ public class CompositeValidator : ValidatorBase
     /// <inheritdoc cref="CompositeValidator"/>
     /// </summary>
     /// <param name="validators">验证器集合</param>
-    public CompositeValidator(IList<ValidatorBase> validators)
+    public CompositeValidator(List<ValidatorBase> validators)
         : base()
     {
         // 检查验证器集合合法性
@@ -44,7 +44,7 @@ public class CompositeValidator : ValidatorBase
     /// <summary>
     /// 验证器集合
     /// </summary>
-    public IList<ValidatorBase> Validators { get; init; }
+    public List<ValidatorBase> Validators { get; init; }
 
     /// <inheritdoc cref="ValidatorCascadeMode" />
     public ValidatorCascadeMode CascadeMode { get; set; }
@@ -96,7 +96,7 @@ public class CompositeValidator : ValidatorBase
     /// </summary>
     /// <param name="validators">验证器集合</param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void EnsureLegalData(IList<ValidatorBase> validators)
+    internal static void EnsureLegalData(IEnumerable<ValidatorBase> validators)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validators);

@@ -32,7 +32,7 @@ public class ValueAnnotationValidator : ValidatorBase
     /// <inheritdoc cref="ValueAnnotationValidator"/>
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
-    public ValueAnnotationValidator(IList<ValidationAttribute> validationAttributes)
+    public ValueAnnotationValidator(List<ValidationAttribute> validationAttributes)
         : base()
     {
         // 检查验证特性集合合法性
@@ -44,7 +44,7 @@ public class ValueAnnotationValidator : ValidatorBase
     /// <summary>
     /// 验证特性集合
     /// </summary>
-    public IList<ValidationAttribute> Attributes { get; init; }
+    public List<ValidationAttribute> Attributes { get; init; }
 
     /// <inheritdoc />
     public override bool IsValid(object? value)
@@ -119,7 +119,7 @@ public class ValueAnnotationValidator : ValidatorBase
     /// </summary>
     /// <param name="validationAttributes">验证特性集合</param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void EnsureLegalData(IList<ValidationAttribute> validationAttributes)
+    internal static void EnsureLegalData(IEnumerable<ValidationAttribute> validationAttributes)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(validationAttributes);

@@ -1590,7 +1590,7 @@
             </summary>
             <param name="validators">验证器集合</param>
         </member>
-        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
+        <member name="M:Furion.Validation.CompositeValidator.#ctor(System.Collections.Generic.List{Furion.Validation.ValidatorBase})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.CompositeValidator"/>
             </summary>
@@ -1610,7 +1610,7 @@
         <member name="M:Furion.Validation.CompositeValidator.GetValidationResults(System.Object,System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Validation.CompositeValidator.EnsureLegalData(System.Collections.Generic.IList{Furion.Validation.ValidatorBase})">
+        <member name="M:Furion.Validation.CompositeValidator.EnsureLegalData(System.Collections.Generic.IEnumerable{Furion.Validation.ValidatorBase})">
             <summary>
             检查验证器集合合法性
             </summary>
@@ -2617,7 +2617,7 @@
             </summary>
             <param name="validationAttributes">验证特性集合</param>
         </member>
-        <member name="M:Furion.Validation.ValueAnnotationValidator.#ctor(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+        <member name="M:Furion.Validation.ValueAnnotationValidator.#ctor(System.Collections.Generic.List{System.ComponentModel.DataAnnotations.ValidationAttribute})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.ValueAnnotationValidator"/>
             </summary>
@@ -2646,7 +2646,7 @@
             <param name="validationResults"><see cref="T:System.Collections.Generic.List`1"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
-        <member name="M:Furion.Validation.ValueAnnotationValidator.EnsureLegalData(System.Collections.Generic.IList{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+        <member name="M:Furion.Validation.ValueAnnotationValidator.EnsureLegalData(System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
             <summary>
             检查验证特性集合合法性
             </summary>

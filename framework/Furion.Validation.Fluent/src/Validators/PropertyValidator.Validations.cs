@@ -110,7 +110,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="validators">验证器集合</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Composite(IList<ValidatorBase> validators)
+    public PropertyValidator<T, TProperty> Composite(List<ValidatorBase> validators)
     {
         Validators.Add(new CompositeValidator(validators));
 
@@ -139,7 +139,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// <param name="validators">验证器集合</param>
     /// <param name="cascadeMode"><see cref="ValidatorCascadeMode"/></param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Composite(IList<ValidatorBase> validators, ValidatorCascadeMode cascadeMode)
+    public PropertyValidator<T, TProperty> Composite(List<ValidatorBase> validators, ValidatorCascadeMode cascadeMode)
     {
         Validators.Add(new CompositeValidator(validators)
         {

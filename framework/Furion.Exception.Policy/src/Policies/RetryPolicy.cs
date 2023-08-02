@@ -35,17 +35,17 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// <summary>
     /// 操作结果条件集合
     /// </summary>
-    public IList<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
+    public List<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
 
     /// <summary>
     /// 捕获的异常集合
     /// </summary>
-    public IList<Type>? HandleExceptions { get; set; }
+    public List<Type>? HandleExceptions { get; set; }
 
     /// <summary>
     /// 捕获的内部异常集合
     /// </summary>
-    public IList<Type>? HandleInnerExceptions { get; set; }
+    public List<Type>? HandleInnerExceptions { get; set; }
 
     /// <summary>
     /// 最大重试次数
@@ -355,7 +355,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// <param name="exceptionTypes">异常类型集合</param>
     /// <param name="exception"><see cref="System.Exception"/></param>
     /// <returns><see cref="bool"/></returns>
-    internal bool WhenCatchException(RetryPolicyContext<TResult> context, IList<Type>? exceptionTypes, System.Exception? exception)
+    internal bool WhenCatchException(RetryPolicyContext<TResult> context, List<Type>? exceptionTypes, System.Exception? exception)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(context);

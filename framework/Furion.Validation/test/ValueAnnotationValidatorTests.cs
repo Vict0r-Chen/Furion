@@ -21,12 +21,12 @@ public class ValueAnnotationValidatorTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new ValueAnnotationValidator(null!);
+            var validator = new ValueAnnotationValidator((List<ValidationAttribute>)null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new ValueAnnotationValidator((IList<ValidationAttribute>)null!);
+            var validator = new ValueAnnotationValidator((List<ValidationAttribute>)null!);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>

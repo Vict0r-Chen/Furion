@@ -141,7 +141,7 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     /// <param name="policies">策略集合</param>
     /// <exception cref="ArgumentException"></exception>
-    internal static void EnsureLegalData(IList<PolicyBase<TResult>> policies)
+    internal static void EnsureLegalData(IEnumerable<PolicyBase<TResult>> policies)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(policies);

@@ -110,7 +110,7 @@ public class PropertyValidatorValidationTests
     }
 
     [Fact]
-    public void Composite_IListParameters_ReturnOK()
+    public void Composite_ListParameters_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
@@ -139,7 +139,7 @@ public class PropertyValidatorValidationTests
     }
 
     [Fact]
-    public void Composite_IListParameters_WithValidatorCascadeMode_ReturnOK()
+    public void Composite_ListParameters_WithValidatorCascadeMode_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);

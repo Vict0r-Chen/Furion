@@ -21,12 +21,12 @@ public class CompositeValidatorTests
     {
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new CompositeValidator(null!);
+            var validator = new CompositeValidator((List<ValidatorBase>)null!);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var validator = new CompositeValidator((IList<ValidatorBase>)null!);
+            var validator = new CompositeValidator((List<ValidatorBase>)null!);
         });
 
         var exception = Assert.Throws<ArgumentException>(() =>
