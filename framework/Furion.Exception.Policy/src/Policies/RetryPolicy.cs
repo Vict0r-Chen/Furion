@@ -28,7 +28,7 @@ public sealed class RetryPolicy : RetryPolicy<object>
 public class RetryPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
-    /// 重试消息
+    /// 重试输出消息
     /// </summary>
     internal const string RETRY_MESSAGE = "Retrying for the {0}nd time…";
 
@@ -288,6 +288,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
             PolicyName = PolicyName
         };
 
+        // 无限循环直到满足条件推出
         while (true)
         {
             try

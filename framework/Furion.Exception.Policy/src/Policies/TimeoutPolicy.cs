@@ -28,7 +28,7 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 public class TimeoutPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
-    /// 超时消息
+    /// 超时输出消息
     /// </summary>
     internal const string TIMEOUT_MESSAGE = "The operation has timed out.";
 
