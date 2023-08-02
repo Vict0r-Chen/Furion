@@ -15,27 +15,27 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 后备策略上下文
+/// 组合策略上下文
 /// </summary>
-public sealed class FallbackPolicyContext<TResult> : PolicyContextBase
+public sealed class CompositePolicyContext<TResult> : PolicyContextBase
 {
     /// <summary>
-    /// <inheritdoc cref="FallbackPolicyContext{TResult}"/>
+    /// <inheritdoc cref="CompositePolicyContext{TResult}"/>
     /// </summary>
-    internal FallbackPolicyContext()
+    /// <param name="policy"><see cref="AbstractPolicy{TResult}"/></param>
+    internal CompositePolicyContext(AbstractPolicy<TResult> policy)
     {
+        Policy = policy;
     }
+
+    /// <inheritdoc cref="AbstractPolicy{TResult}" />
+    public AbstractPolicy<TResult> Policy { get; init; }
 
     /// <inheritdoc cref="System.Exception"/>
     public System.Exception? Exception { get; internal set; }
 
     /// <summary>
-    /// 操作返回值
-    /// </summary>
-    public TResult? Result { get; internal set; }
-
-    /// <summary>
     /// 执行失败的时间
     /// </summary>
-    public DateTimeOffset TimeForFailure { get; internal set; }
+    public DateTimeOffset TimeForFailure { get; init; } = DateTimeOffset.UtcNow;
 }

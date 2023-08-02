@@ -4,6 +4,28 @@
         <name>Furion.Exception.Policy</name>
     </assembly>
     <members>
+        <member name="T:Furion.Exception.CompositePolicyContext`1">
+            <summary>
+            组合策略上下文
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicyContext`1.#ctor(Furion.Exception.AbstractPolicy{`0})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicyContext`1"/>
+            </summary>
+            <param name="policy"><see cref="T:Furion.Exception.AbstractPolicy`1"/></param>
+        </member>
+        <member name="P:Furion.Exception.CompositePolicyContext`1.Policy">
+            <inheritdoc cref="T:Furion.Exception.AbstractPolicy`1" />
+        </member>
+        <member name="P:Furion.Exception.CompositePolicyContext`1.Exception">
+            <inheritdoc cref="T:System.Exception"/>
+        </member>
+        <member name="P:Furion.Exception.CompositePolicyContext`1.TimeForFailure">
+            <summary>
+            执行失败的时间
+            </summary>
+        </member>
         <member name="T:Furion.Exception.FallbackPolicyContext`1">
             <summary>
             后备策略上下文
@@ -22,10 +44,10 @@
             操作返回值
             </summary>
         </member>
-        <member name="P:Furion.Exception.FallbackPolicyContext`1.TimeForException">
-             <summary>
-            异常的时间
-             </summary>
+        <member name="P:Furion.Exception.FallbackPolicyContext`1.TimeForFailure">
+            <summary>
+            执行失败的时间
+            </summary>
         </member>
         <member name="T:Furion.Exception.PolicyContextBase">
             <summary>
@@ -150,6 +172,51 @@
         </member>
         <member name="M:Furion.Exception.AbstractPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.Exception.CompositePolicy`1">
+            <summary>
+            组合策略
+            </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.#ctor(Furion.Exception.AbstractPolicy{`0}[])">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
+            </summary>
+            <param name="policies">策略集合</param>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.#ctor(System.Collections.Generic.IList{Furion.Exception.AbstractPolicy{`0}})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
+            </summary>
+            <param name="policies">策略集合</param>
+        </member>
+        <member name="P:Furion.Exception.CompositePolicy`1.Policies">
+            <summary>
+            策略集合
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.CompositePolicy`1.ExecutionFailureAction">
+            <summary>
+            执行失败时操作方法
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.OnExecutionFailure(System.Action{Furion.Exception.CompositePolicyContext{`0}})">
+            <summary>
+            添加执行失败时操作方法
+            </summary>
+            <param name="executionFailureAction">执行失败时操作方法</param>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.EnsureLegalData(System.Collections.Generic.IList{Furion.Exception.AbstractPolicy{`0}})">
+            <summary>
+            检查策略集合合法性
+            </summary>
+            <param name="policies">策略集合</param>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="T:Furion.Exception.FallbackPolicy">
             <summary>

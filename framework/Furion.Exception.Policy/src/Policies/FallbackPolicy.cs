@@ -264,7 +264,7 @@ public class FallbackPolicy<TResult> : AbstractPolicy<TResult>
         {
             // 获取操作方法执行异常
             context.Exception = exception;
-            context.TimeForException = DateTimeOffset.UtcNow;
+            context.TimeForFailure = DateTimeOffset.UtcNow;
         }
 
         // 检查是否可以执行后备操作

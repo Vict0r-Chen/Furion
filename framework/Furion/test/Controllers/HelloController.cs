@@ -98,4 +98,34 @@ public class HelloController
                 return name;
             });
     }
+
+    [HttpGet]
+    public void TestCompositePolicy()
+    {
+        var timePolicy = Policy.Timeout(5000)
+            .OnTimeout(context =>
+            {
+                Console.WriteLine("不好意思，超时了.");
+            });
+
+        var retryPolicy = Policy.Retry(3)
+            .Handle<System.Exception>()
+            .OnRetry(context =>
+            {
+                Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
+            })
+            .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
+
+        var compositePolicy = new CompositePolicy<object>(timePolicy, retryPolicy)
+            .OnExecutionFailure(context =>
+            {
+                Console.WriteLine($"策略 {context.Policy} 执行失败了.");
+            });
+
+        compositePolicy.Execute(() =>
+        {
+            Console.WriteLine("我正在执行组合操作...");
+            throw new System.InvalidOperationException("我出错了");
+        });
+    }
 }
