@@ -47,7 +47,7 @@ public static class Policy
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public static RetryPolicy Retry(uint maxRetryCount)
     {
-        return new RetryPolicy
+        return new()
         {
             MaxRetryCount = maxRetryCount
         };
@@ -69,7 +69,7 @@ public static class Policy
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy Timeout(double timeout)
     {
-        return new TimeoutPolicy
+        return new()
         {
             Timeout = TimeSpan.FromMilliseconds(timeout)
         };
@@ -82,7 +82,7 @@ public static class Policy
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy Timeout(TimeSpan timeout)
     {
-        return new TimeoutPolicy
+        return new()
         {
             Timeout = timeout
         };
@@ -94,7 +94,7 @@ public static class Policy
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public static FallbackPolicy Fallback()
     {
-        return new FallbackPolicy();
+        return new();
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public static class Policy
         // 空检查
         ArgumentNullException.ThrowIfNull(fallbackAction);
 
-        return new FallbackPolicy
+        return new()
         {
             FallbackAction = fallbackAction
         };
@@ -125,6 +125,41 @@ public static class Policy
 
         var policy = new FallbackPolicy();
         policy.OnFallback(fallbackAction);
+
+        return policy;
+    }
+
+    /// <summary>
+    /// 初始化组合策略
+    /// </summary>
+    /// <returns><see cref="CompositePolicy"/></returns>
+    public static CompositePolicy Composite()
+    {
+        return new();
+    }
+
+    /// <summary>
+    /// 初始化组合策略
+    /// </summary>
+    /// <param name="policies">策略集合</param>
+    /// <returns><see cref="CompositePolicy"/></returns>
+    public static CompositePolicy Composite(params AbstractPolicy<object>[] policies)
+    {
+        var policy = new CompositePolicy();
+        policy.Join(policies);
+
+        return policy;
+    }
+
+    /// <summary>
+    /// 初始化组合策略
+    /// </summary>
+    /// <param name="policies">策略集合</param>
+    /// <returns><see cref="CompositePolicy"/></returns>
+    public static CompositePolicy Composite(IEnumerable<AbstractPolicy<object>> policies)
+    {
+        var policy = new CompositePolicy();
+        policy.Join(policies);
 
         return policy;
     }
@@ -164,7 +199,7 @@ public static class Policy<TResult>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public static RetryPolicy<TResult> Retry(uint maxRetryCount)
     {
-        return new RetryPolicy<TResult>
+        return new()
         {
             MaxRetryCount = maxRetryCount
         };
@@ -186,7 +221,7 @@ public static class Policy<TResult>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy<TResult> Timeout(double timeout)
     {
-        return new TimeoutPolicy<TResult>
+        return new()
         {
             Timeout = TimeSpan.FromMilliseconds(timeout)
         };
@@ -199,7 +234,7 @@ public static class Policy<TResult>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy<TResult> Timeout(TimeSpan timeout)
     {
-        return new TimeoutPolicy<TResult>
+        return new()
         {
             Timeout = timeout
         };
@@ -211,7 +246,7 @@ public static class Policy<TResult>
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public static FallbackPolicy<TResult> Fallback()
     {
-        return new FallbackPolicy<TResult>();
+        return new();
     }
 
     /// <summary>
@@ -224,9 +259,40 @@ public static class Policy<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(fallbackAction);
 
-        return new FallbackPolicy<TResult>
+        return new()
         {
             FallbackAction = fallbackAction
         };
+    }
+
+    /// <summary>
+    /// 初始化组合策略
+    /// </summary>
+    /// <returns><see cref="CompositePolicy{TResult}"/></returns>
+    public static CompositePolicy<TResult> Composite()
+    {
+        return new();
+    }
+
+    /// <summary>
+    /// 初始化组合策略
+    /// </summary>
+    /// <param name="policies">策略集合</param>
+    /// <returns><see cref="CompositePolicy{TResult}"/></returns>
+    public static CompositePolicy<TResult> Composite(params AbstractPolicy<TResult>[] policies)
+    {
+        return new CompositePolicy<TResult>()
+            .Join(policies);
+    }
+
+    /// <summary>
+    /// 初始化组合策略
+    /// </summary>
+    /// <param name="policies">策略集合</param>
+    /// <returns><see cref="CompositePolicy{TResult}"/></returns>
+    public static CompositePolicy<TResult> Composite(IEnumerable<AbstractPolicy<TResult>> policies)
+    {
+        return new CompositePolicy<TResult>()
+            .Join(policies);
     }
 }

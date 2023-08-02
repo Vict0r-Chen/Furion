@@ -100,9 +100,9 @@ public class HelloController
     }
 
     [HttpGet]
-    public void TestCompositePolicy()
+    public void TestCompositePolicy([FromQuery] int timeout = 5000)
     {
-        var timePolicy = Policy.Timeout(5000)
+        var timeoutPolicy = Policy.Timeout(timeout)
             .OnTimeout(context =>
             {
                 Console.WriteLine("不好意思，超时了.");
@@ -116,16 +116,15 @@ public class HelloController
             })
             .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
 
-        var compositePolicy = new CompositePolicy<object>(timePolicy, retryPolicy)
+        Policy.Composite(timeoutPolicy, retryPolicy)
             .OnExecutionFailure(context =>
             {
                 Console.WriteLine($"策略 {context.Policy} 执行失败了.");
+            })
+            .Execute(() =>
+            {
+                Console.WriteLine("我正在执行组合操作...");
+                throw new System.InvalidOperationException("我出错了");
             });
-
-        compositePolicy.Execute(() =>
-        {
-            Console.WriteLine("我正在执行组合操作...");
-            throw new System.InvalidOperationException("我出错了");
-        });
     }
 }

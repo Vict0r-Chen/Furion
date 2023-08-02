@@ -17,39 +17,58 @@ namespace Furion.Exception;
 /// <summary>
 /// 组合策略
 /// </summary>
+public sealed class CompositePolicy : CompositePolicy<object>
+{
+}
+
+/// <summary>
+/// 组合策略
+/// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public class CompositePolicy<TResult> : AbstractPolicy<TResult>
 {
     /// <summary>
     /// <inheritdoc cref="CompositePolicy{TResult}"/>
     /// </summary>
-    /// <param name="policies">策略集合</param>
-    public CompositePolicy(params AbstractPolicy<TResult>[] policies)
-        : this((policies ?? throw new ArgumentNullException(nameof(policies))).ToList())
+    public CompositePolicy()
     {
-    }
-
-    /// <summary>
-    /// <inheritdoc cref="CompositePolicy{TResult}"/>
-    /// </summary>
-    /// <param name="policies">策略集合</param>
-    public CompositePolicy(IList<AbstractPolicy<TResult>> policies)
-    {
-        // 检查策略集合合法性
-        EnsureLegalData(policies);
-
-        Policies = policies;
+        Policies = new();
     }
 
     /// <summary>
     /// 策略集合
     /// </summary>
-    public IList<AbstractPolicy<TResult>> Policies { get; init; }
+    public List<AbstractPolicy<TResult>> Policies { get; init; }
 
     /// <summary>
     /// 执行失败时操作方法
     /// </summary>
     public Action<CompositePolicyContext<TResult>>? ExecutionFailureAction { get; set; }
+
+    /// <summary>
+    /// 添加策略
+    /// </summary>
+    /// <param name="policies">策略集合</param>
+    /// <returns><see cref="CompositePolicy{TResult}"/></returns>
+    public CompositePolicy<TResult> Join(params AbstractPolicy<TResult>[] policies)
+    {
+        // 检查策略集合合法性
+        EnsureLegalData(policies);
+
+        Policies.AddRange(policies);
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加策略
+    /// </summary>
+    /// <param name="policies">策略集合</param>
+    /// <returns><see cref="CompositePolicy{TResult}"/></returns>
+    public CompositePolicy<TResult> Join(IEnumerable<AbstractPolicy<TResult>> policies)
+    {
+        return Join(policies.ToArray());
+    }
 
     /// <summary>
     /// 添加执行失败时操作方法
@@ -90,7 +109,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
                         }
                         catch (System.Exception)
                         {
-                            // 将当前异常的委托对象赋值给异常策略
+                            // 记录异常的策略
                             policy ??= current.Target;
 
                             throw;
@@ -99,7 +118,7 @@ public class CompositePolicy<TResult> : AbstractPolicy<TResult>
                 }
                 catch (System.Exception exception)
                 {
-                    // 将当前异常的委托对象赋值给异常策略
+                    // 记录异常的策略
                     policy ??= previous.Target;
 
                     // 调用执行失败时操作方法

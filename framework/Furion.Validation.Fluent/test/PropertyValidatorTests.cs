@@ -540,7 +540,7 @@ public class PropertyValidatorTests
             propertyValidator.Validate(instance);
         });
 
-        Assert.NotNull(exception.InnerExceptions); ;
+        Assert.NotNull(exception.InnerExceptions);
         Assert.Single(exception.InnerExceptions);
         Assert.Equal("The field Id must be greater than '1'.", exception.InnerExceptions.First().Message);
     }
