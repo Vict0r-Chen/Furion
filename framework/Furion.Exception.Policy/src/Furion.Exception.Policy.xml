@@ -474,6 +474,11 @@
             操作结果条件集合
             </summary>
         </member>
+        <member name="P:Furion.Exception.RetryPolicy`1.WaitRetryAction">
+            <summary>
+            等待重试时操作方法
+            </summary>
+        </member>
         <member name="P:Furion.Exception.RetryPolicy`1.RetryingAction">
             <summary>
             重试时操作方法
@@ -571,6 +576,13 @@
             永久重试并添加重试等待时间
             </summary>
             <param name="retryIntervals">重试等待时间</param>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.OnWaitRetry(System.Action{Furion.Exception.RetryPolicyContext{`0},System.TimeSpan})">
+            <summary>
+            添加等待重试时操作方法
+            </summary>
+            <param name="waitRetryAction">等待重试时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OnRetrying(System.Action{Furion.Exception.RetryPolicyContext{`0}})">

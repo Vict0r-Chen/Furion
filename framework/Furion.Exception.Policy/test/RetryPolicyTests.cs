@@ -265,6 +265,26 @@ public class RetryPolicyTests
     }
 
     [Fact]
+    public void OnWaitRetry_Invalid_Parameters()
+    {
+        var policy = new RetryPolicy<object>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            policy.OnWaitRetry(null!);
+        });
+    }
+
+    [Fact]
+    public void OnWaitRetry_ReturnOK()
+    {
+        var policy = new RetryPolicy<object>();
+        policy.OnWaitRetry((context, delay) => { });
+
+        Assert.NotNull(policy.WaitRetryAction);
+    }
+
+    [Fact]
     public void OnRetrying_Invalid_Parameters()
     {
         var policy = new RetryPolicy<object>();

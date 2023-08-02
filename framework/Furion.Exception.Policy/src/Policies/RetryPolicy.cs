@@ -95,6 +95,11 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     public List<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
 
     /// <summary>
+    /// 等待重试时操作方法
+    /// </summary>
+    public Action<RetryPolicyContext<TResult>, TimeSpan>? WaitRetryAction { get; set; }
+
+    /// <summary>
     /// 重试时操作方法
     /// </summary>
     public Action<RetryPolicyContext<TResult>>? RetryingAction { get; set; }
@@ -275,6 +280,21 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <summary>
+    /// 添加等待重试时操作方法
+    /// </summary>
+    /// <param name="waitRetryAction">等待重试时操作方法</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> OnWaitRetry(Action<RetryPolicyContext<TResult>, TimeSpan> waitRetryAction)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(waitRetryAction);
+
+        WaitRetryAction = waitRetryAction;
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加重试时操作方法
     /// </summary>
     /// <param name="retryingAction">重试时操作方法</param>
@@ -371,7 +391,10 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
                     // 输出调试事件
                     Debugging.Info(WAIT_RETRY_MESSAGE, delay.TotalSeconds);
 
-                    // 延迟指定时间
+                    // 调用等待重试时操作方法
+                    WaitRetryAction?.Invoke(context, delay);
+
+                    // 延迟指定时间再操作
                     await Task.Delay(delay, cancellationToken);
                 }
 
