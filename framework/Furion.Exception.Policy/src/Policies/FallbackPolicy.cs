@@ -263,6 +263,9 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// <returns><see cref="bool"/></returns>
     internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(context);
+
         // 检查是否满足捕获异常的条件
         if (CanHandleException(context, HandleExceptions, context.Exception)
             || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
@@ -298,12 +301,12 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         }
         catch (System.Exception exception)
         {
-            // 获取操作方法执行异常
+            // 设置策略上下文异常信息
             context.Exception = exception;
             context.TimeForFailure = DateTimeOffset.UtcNow;
         }
 
-        // 检查是否可以执行后备操作
+        // 检查是否满足捕获异常的条件
         if (ShouldFallback(context))
         {
             // 输出调试事件
@@ -366,10 +369,9 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(context);
 
-        // 检查是否存在异常
+        // 空检查
         if (context.Exception is not null)
         {
-            // 抛出操作异常
             throw context.Exception;
         }
 

@@ -268,11 +268,39 @@ public class FallbackPolicyTests
     public void OnFallbackAction_ReturnOK()
     {
         var policy = new FallbackPolicy<object>();
-        policy.OnFallback(context =>
-        {
-        });
+        policy.OnFallback(context => { });
 
         Assert.NotNull(policy.FallbackAction);
+    }
+
+    [Fact]
+    public void ShouldFallback_Invalid_Parameters()
+    {
+        var policy = new FallbackPolicy<object>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            policy.ShouldFallback(null!);
+        });
+    }
+
+    [Fact]
+    public void ShouldFallback_ReturnOK()
+    {
+        var policy = new FallbackPolicy<object>();
+
+        Assert.False(policy.ShouldFallback(new()));
+        Assert.True(policy.ShouldFallback(new()
+        {
+            Exception = new()
+        }));
+
+        policy.HandleResult(context => context.Exception == null);
+        Assert.True(policy.ShouldFallback(new()));
+        Assert.False(policy.ShouldFallback(new()
+        {
+            Exception = new()
+        }));
     }
 
     [Fact]

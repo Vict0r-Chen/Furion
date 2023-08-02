@@ -254,6 +254,12 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
             return false;
         }
 
+        // 检查重试次数是否大于最大重试次数减
+        if (context.RetryCount > MaxRetryCount - 1)
+        {
+            return false;
+        }
+
         // 检查是否满足捕获异常的条件
         if (CanHandleException(context, HandleExceptions, context.Exception)
             || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
@@ -291,20 +297,13 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
             }
             catch (System.Exception exception)
             {
-                // 获取操作方法执行异常
+                // 设置策略上下文异常信息
                 context.Exception = exception;
             }
 
-            // 检查是否可以执行重试操作
+            // 检查是否满足捕获异常的条件
             if (ShouldRetry(context))
             {
-                // 检查重试次数是否大于最大重试次数减 1
-                if (context.RetryCount > MaxRetryCount - 1)
-                {
-                    // 返回结果或抛出异常
-                    return ReturnOrThrowIfException(context);
-                }
-
                 // 递增上下文数据
                 context.Increment();
 
@@ -374,10 +373,9 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(context);
 
-        // 检查是否存在异常
+        // 空检查
         if (context.Exception is not null)
         {
-            // 抛出操作异常
             throw context.Exception;
         }
 
