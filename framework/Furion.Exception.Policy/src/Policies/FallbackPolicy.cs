@@ -19,6 +19,21 @@ namespace Furion.Exception;
 /// </summary>
 public sealed class FallbackPolicy : FallbackPolicy<object>
 {
+    /// <summary>
+    /// <inheritdoc cref="FallbackPolicy"/>
+    /// </summary>
+    public FallbackPolicy()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="FallbackPolicy{TResult}"/>
+    /// </summary>
+    public FallbackPolicy(Func<FallbackPolicyContext<object>, object?> fallbackAction)
+        : base(fallbackAction)
+    {
+    }
 }
 
 /// <summary>
@@ -31,6 +46,24 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// 后备消息
     /// </summary>
     internal const string FALLBACK_MESSAGE = "Operation execution failed! The backup operation will be called shortly.";
+
+    /// <summary>
+    /// <inheritdoc cref="FallbackPolicy{TResult}"/>
+    /// </summary>
+    public FallbackPolicy()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="FallbackPolicy{TResult}"/>
+    /// </summary>
+    public FallbackPolicy(Func<FallbackPolicyContext<TResult>, TResult?> fallbackAction)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(fallbackAction);
+
+        FallbackAction = fallbackAction;
+    }
 
     /// <summary>
     /// 后备操作方法
@@ -191,29 +224,6 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <summary>
-    /// 检查是否可以执行后备操作
-    /// </summary>
-    /// <param name="context"><see cref="FallbackPolicy{TResult}"/></param>
-    /// <returns><see cref="bool"/></returns>
-    internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
-    {
-        // 检查是否满足捕获异常的条件
-        if (CanHandleException(context, HandleExceptions, context.Exception)
-            || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
-        {
-            return true;
-        }
-
-        // 检查是否配置了操作结果条件
-        if (ResultConditions is not null && ResultConditions.Count > 0)
-        {
-            return ResultConditions.Any(condition => condition(context));
-        }
-
-        return false;
-    }
-
-    /// <summary>
     /// 添加后备操作方法
     /// </summary>
     /// <param name="fallbackAction">后备操作方法</param>
@@ -238,14 +248,35 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(fallbackAction);
 
-        FallbackAction = context =>
+        return OnFallback(context =>
         {
             fallbackAction(context);
 
             return default;
-        };
+        });
+    }
 
-        return this;
+    /// <summary>
+    /// 检查是否满足捕获异常的条件
+    /// </summary>
+    /// <param name="context"><see cref="FallbackPolicyContext{TResult}"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool ShouldFallback(FallbackPolicyContext<TResult> context)
+    {
+        // 检查是否满足捕获异常的条件
+        if (CanHandleException(context, HandleExceptions, context.Exception)
+            || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
+        {
+            return true;
+        }
+
+        // 检查是否满足操作结果条件
+        if (ResultConditions is { Count: > 0 })
+        {
+            return ResultConditions.Any(condition => condition(context));
+        }
+
+        return false;
     }
 
     /// <inheritdoc />
@@ -293,7 +324,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// 检查是否满足捕获异常的条件
     /// </summary>
     /// <param name="context"><see cref="FallbackPolicyContext{TResult}"/></param>
-    /// <param name="exceptionTypes">异常类型集合</param>
+    /// <param name="exceptionTypes">捕获异常类型集合</param>
     /// <param name="exception"><see cref="System.Exception"/></param>
     /// <returns><see cref="bool"/></returns>
     internal bool CanHandleException(FallbackPolicyContext<TResult> context
@@ -313,7 +344,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         if (exceptionTypes is null or { Count: 0 }
             || exceptionTypes.Any(ex => ex.IsInstanceOfType(exception)))
         {
-            // 检查是否配置了操作结果条件
+            // 检查是否满足操作结果条件
             if (ResultConditions is { Count: > 0 })
             {
                 return ResultConditions.Any(condition => condition(context));

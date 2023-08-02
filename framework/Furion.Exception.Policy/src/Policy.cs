@@ -104,13 +104,7 @@ public static class Policy
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public static FallbackPolicy Fallback(Func<FallbackPolicyContext<object>, object?> fallbackAction)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(fallbackAction);
-
-        return new()
-        {
-            FallbackAction = fallbackAction
-        };
+        return new(fallbackAction);
     }
 
     /// <summary>
@@ -256,13 +250,18 @@ public static class Policy<TResult>
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public static FallbackPolicy<TResult> Fallback(Func<FallbackPolicyContext<TResult>, TResult?> fallbackAction)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(fallbackAction);
+        return new(fallbackAction);
+    }
 
-        return new()
-        {
-            FallbackAction = fallbackAction
-        };
+    /// <summary>
+    /// 初始化后备策略
+    /// </summary>
+    /// <param name="fallbackAction">后备操作方法</param>
+    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    public static FallbackPolicy<TResult> Fallback(Action<FallbackPolicyContext<TResult>> fallbackAction)
+    {
+        return new FallbackPolicy<TResult>()
+            .OnFallback(fallbackAction);
     }
 
     /// <summary>

@@ -201,35 +201,6 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <summary>
-    /// 检查是否可以执行重试操作
-    /// </summary>
-    /// <param name="context"><see cref="RetryPolicy{TResult}"/></param>
-    /// <returns><see cref="bool"/></returns>
-    internal bool ShouldRetry(RetryPolicyContext<TResult> context)
-    {
-        // 检查最大重试次数是否大于等于 0
-        if (MaxRetryCount <= 0)
-        {
-            return false;
-        }
-
-        // 检查是否满足捕获异常的条件
-        if (CanHandleException(context, HandleExceptions, context.Exception)
-            || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
-        {
-            return true;
-        }
-
-        // 检查是否配置了操作结果条件
-        if (ResultConditions is not null && ResultConditions.Count > 0)
-        {
-            return ResultConditions.Any(condition => condition(context));
-        }
-
-        return false;
-    }
-
-    /// <summary>
     /// 添加重试间隔
     /// </summary>
     /// <param name="retryIntervals">重试间隔</param>
@@ -268,6 +239,35 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
         MaxRetryCount = int.MaxValue;
 
         return this;
+    }
+
+    /// <summary>
+    /// 检查是否满足捕获异常的条件
+    /// </summary>
+    /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal bool ShouldRetry(RetryPolicyContext<TResult> context)
+    {
+        // 检查最大重试次数是否大于等于 0
+        if (MaxRetryCount <= 0)
+        {
+            return false;
+        }
+
+        // 检查是否满足捕获异常的条件
+        if (CanHandleException(context, HandleExceptions, context.Exception)
+            || CanHandleException(context, HandleInnerExceptions, context.Exception?.InnerException))
+        {
+            return true;
+        }
+
+        // 检查是否满足操作结果条件
+        if (ResultConditions is { Count: > 0 })
+        {
+            return ResultConditions.Any(condition => condition(context));
+        }
+
+        return false;
     }
 
     /// <inheritdoc />
@@ -332,7 +332,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// 检查是否满足捕获异常的条件
     /// </summary>
     /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
-    /// <param name="exceptionTypes">异常类型集合</param>
+    /// <param name="exceptionTypes">捕获异常类型集合</param>
     /// <param name="exception"><see cref="System.Exception"/></param>
     /// <returns><see cref="bool"/></returns>
     internal bool CanHandleException(RetryPolicyContext<TResult> context
@@ -352,7 +352,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
         if (exceptionTypes is null or { Count: 0 }
             || exceptionTypes.Any(ex => ex.IsInstanceOfType(exception)))
         {
-            // 检查是否配置了操作结果条件
+            // 检查是否满足操作结果条件
             if (ResultConditions is { Count: > 0 })
             {
                 return ResultConditions.Any(condition => condition(context));

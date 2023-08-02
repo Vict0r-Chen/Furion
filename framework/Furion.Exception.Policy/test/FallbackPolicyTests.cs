@@ -17,6 +17,20 @@ namespace Furion.Exception.Policy.Tests;
 public class FallbackPolicyTests
 {
     [Fact]
+    public void New_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var policy = new FallbackPolicy<object>(null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var policy = new FallbackPolicy(null!);
+        });
+    }
+
+    [Fact]
     public void New_ReturnOK()
     {
         var policy = new FallbackPolicy<object>();
@@ -28,6 +42,13 @@ public class FallbackPolicyTests
         Assert.Null(policy.ResultConditions);
         Assert.Null(policy.HandleExceptions);
         Assert.Null(policy.HandleInnerExceptions);
+
+        var policy2 = new FallbackPolicy<object>(context => "");
+        Assert.NotNull(policy2.FallbackAction);
+        var policy3 = new FallbackPolicy(context => "");
+        Assert.NotNull(policy3.FallbackAction);
+        var policy4 = new FallbackPolicy();
+        Assert.Null(policy.FallbackAction);
     }
 
     [Fact]
@@ -213,6 +234,48 @@ public class FallbackPolicyTests
     }
 
     [Fact]
+    public void OnFallback_Invalid_Parameters()
+    {
+        var policy = new FallbackPolicy<object>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            policy.OnFallback(null!);
+        });
+    }
+
+    [Fact]
+    public void OnFallback_ReturnOK()
+    {
+        var policy = new FallbackPolicy<object>();
+        policy.OnFallback(context => "");
+
+        Assert.NotNull(policy.FallbackAction);
+    }
+
+    [Fact]
+    public void OnFallbackAction_Invalid_Parameters()
+    {
+        var policy = new FallbackPolicy<object>();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            policy.OnFallback((Action<FallbackPolicyContext<object>>)null!);
+        });
+    }
+
+    [Fact]
+    public void OnFallbackAction_ReturnOK()
+    {
+        var policy = new FallbackPolicy<object>();
+        policy.OnFallback(context =>
+        {
+        });
+
+        Assert.NotNull(policy.FallbackAction);
+    }
+
+    [Fact]
     public void CanHandleException_Invalid_Parameters()
     {
         var policy = new FallbackPolicy<object>();
@@ -231,6 +294,11 @@ public class FallbackPolicyTests
         Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), null!, null!));
         Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), null!));
         Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), new System.Exception()));
+        Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), new() { typeof(System.Exception) }, new InvalidOperationException()));
+        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new() { typeof(NotSupportedException) }, new InvalidOperationException()));
+
+        policy.HandleResult(context => context.Exception?.Message.Length > 0);
+        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new() { typeof(System.Exception) }, new InvalidOperationException()));
     }
 
     [Fact]

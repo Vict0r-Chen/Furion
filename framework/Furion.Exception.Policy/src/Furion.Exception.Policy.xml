@@ -218,6 +218,16 @@
             后备策略
             </summary>
         </member>
+        <member name="M:Furion.Exception.FallbackPolicy.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.FallbackPolicy.#ctor(System.Func{Furion.Exception.FallbackPolicyContext{System.Object},System.Object})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
+            </summary>
+        </member>
         <member name="T:Furion.Exception.FallbackPolicy`1">
             <summary>
             后备策略
@@ -227,6 +237,16 @@
         <member name="F:Furion.Exception.FallbackPolicy`1.FALLBACK_MESSAGE">
             <summary>
             后备消息
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.FallbackPolicy`1.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.FallbackPolicy`1.#ctor(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
             </summary>
         </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
@@ -323,13 +343,6 @@
             <param name="resultCondition">操作结果条件</param>
             <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.ShouldFallback(Furion.Exception.FallbackPolicyContext{`0})">
-            <summary>
-            检查是否可以执行后备操作
-            </summary>
-            <param name="context"><see cref="T:Furion.Exception.FallbackPolicy`1"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
-        </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.OnFallback(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
             <summary>
             添加后备操作方法
@@ -344,6 +357,13 @@
             <param name="fallbackAction">后备操作方法</param>
             <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
+        <member name="M:Furion.Exception.FallbackPolicy`1.ShouldFallback(Furion.Exception.FallbackPolicyContext{`0})">
+            <summary>
+            检查是否满足捕获异常的条件
+            </summary>
+            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -352,7 +372,7 @@
             检查是否满足捕获异常的条件
             </summary>
             <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
-            <param name="exceptionTypes">异常类型集合</param>
+            <param name="exceptionTypes">捕获异常类型集合</param>
             <param name="exception"><see cref="T:System.Exception"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -504,13 +524,6 @@
             <param name="resultCondition">操作结果条件</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.ShouldRetry(Furion.Exception.RetryPolicyContext{`0})">
-            <summary>
-            检查是否可以执行重试操作
-            </summary>
-            <param name="context"><see cref="T:Furion.Exception.RetryPolicy`1"/></param>
-            <returns><see cref="T:System.Boolean"/></returns>
-        </member>
         <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetry(System.TimeSpan[])">
             <summary>
             添加重试间隔
@@ -531,6 +544,13 @@
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.ShouldRetry(Furion.Exception.RetryPolicyContext{`0})">
+            <summary>
+            检查是否满足捕获异常的条件
+            </summary>
+            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -539,7 +559,7 @@
             检查是否满足捕获异常的条件
             </summary>
             <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
-            <param name="exceptionTypes">异常类型集合</param>
+            <param name="exceptionTypes">捕获异常类型集合</param>
             <param name="exception"><see cref="T:System.Exception"/></param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
@@ -735,6 +755,13 @@
             <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Fallback(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
+            <summary>
+            初始化后备策略
+            </summary>
+            <param name="fallbackAction">后备操作方法</param>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.Policy`1.Fallback(System.Action{Furion.Exception.FallbackPolicyContext{`0}})">
             <summary>
             初始化后备策略
             </summary>
