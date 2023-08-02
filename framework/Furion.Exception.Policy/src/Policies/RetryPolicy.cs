@@ -43,7 +43,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     public int MaxRetryCount { get; set; }
 
     /// <summary>
-    /// 等待重试间隔集合
+    /// 重试等待时间集合
     /// </summary>
     public TimeSpan[]? RetryIntervals { get; set; }
 
@@ -206,9 +206,9 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <summary>
-    /// 添加等待重试间隔
+    /// 添加重试等待时间
     /// </summary>
-    /// <param name="retryIntervals">等待重试间隔</param>
+    /// <param name="retryIntervals">重试等待时间</param>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public RetryPolicy<TResult> WaitAndRetry(params TimeSpan[] retryIntervals)
     {
@@ -218,6 +218,28 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
         RetryIntervals = retryIntervals;
 
         return this;
+    }
+
+    /// <summary>
+    /// 永久重试
+    /// </summary>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> Forever()
+    {
+        MaxRetryCount = int.MaxValue;
+
+        return this;
+    }
+
+    /// <summary>
+    /// 永久重试并添加重试等待时间
+    /// </summary>
+    /// <param name="retryIntervals">重试等待时间</param>
+    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    public RetryPolicy<TResult> WaitAndRetryForever(params TimeSpan[] retryIntervals)
+    {
+        return WaitAndRetry(retryIntervals)
+            .Forever();
     }
 
     /// <summary>
@@ -231,17 +253,6 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
         ArgumentNullException.ThrowIfNull(retryingAction);
 
         RetryingAction = retryingAction;
-
-        return this;
-    }
-
-    /// <summary>
-    /// 永久重试
-    /// </summary>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
-    public RetryPolicy<TResult> Forever()
-    {
-        MaxRetryCount = int.MaxValue;
 
         return this;
     }
@@ -296,7 +307,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
             PolicyName = PolicyName
         };
 
-        // 无限循环直到满足条件推出
+        // 无限循环直到满足条件退出
         while (true)
         {
             try
@@ -319,7 +330,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
                 // 递增上下文数据
                 context.Increment();
 
-                // 检查是否配置了重试间隔
+                // 检查是否配置了重试时间
                 if (RetryIntervals is { Length: > 0 })
                 {
                     // 解析延迟时间戳

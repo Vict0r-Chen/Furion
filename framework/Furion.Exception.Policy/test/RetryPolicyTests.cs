@@ -240,6 +240,25 @@ public class RetryPolicyTests
     }
 
     [Fact]
+    public void Forever_ReturnOK()
+    {
+        var policy = new RetryPolicy<object>();
+        policy.Forever();
+
+        Assert.Equal(int.MaxValue, policy.MaxRetryCount);
+    }
+
+    [Fact]
+    public void WaitAndRetryForever_ReturnOK()
+    {
+        var policy = new RetryPolicy<object>();
+        policy.WaitAndRetryForever(TimeSpan.FromSeconds(1));
+
+        Assert.NotNull(policy.RetryIntervals);
+        Assert.Equal(int.MaxValue, policy.MaxRetryCount);
+    }
+
+    [Fact]
     public void OnRetrying_Invalid_Parameters()
     {
         var policy = new RetryPolicy<object>();
@@ -257,15 +276,6 @@ public class RetryPolicyTests
         policy.OnRetrying(context => { });
 
         Assert.NotNull(policy.RetryingAction);
-    }
-
-    [Fact]
-    public void Forever_ReturnOK()
-    {
-        var policy = new RetryPolicy<object>();
-        policy.Forever();
-
-        Assert.Equal(int.MaxValue, policy.MaxRetryCount);
     }
 
     [Fact]

@@ -434,7 +434,7 @@
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.RetryIntervals">
             <summary>
-            等待重试间隔集合
+            重试等待时间集合
             </summary>
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.HandleExceptions">
@@ -533,9 +533,22 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetry(System.TimeSpan[])">
             <summary>
-            添加等待重试间隔
+            添加重试等待时间
             </summary>
-            <param name="retryIntervals">等待重试间隔</param>
+            <param name="retryIntervals">重试等待时间</param>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.Forever">
+            <summary>
+            永久重试
+            </summary>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetryForever(System.TimeSpan[])">
+            <summary>
+            永久重试并添加重试等待时间
+            </summary>
+            <param name="retryIntervals">重试等待时间</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OnRetrying(System.Action{Furion.Exception.RetryPolicyContext{`0}})">
@@ -543,12 +556,6 @@
             添加重试时操作方法
             </summary>
             <param name="retryingAction">重试时操作方法</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
-        </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.Forever">
-            <summary>
-            永久重试
-            </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ShouldHandle(Furion.Exception.RetryPolicyContext{`0})">
