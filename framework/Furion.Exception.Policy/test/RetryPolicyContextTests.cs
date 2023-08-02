@@ -12,4 +12,32 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Xunit;
+namespace Furion.Exception.Policy.Tests;
+
+public class RetryPolicyContextTests
+{
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var policyContext = new RetryPolicyContext<string>();
+
+        Assert.NotNull(policyContext);
+        Assert.Null(policyContext.Exception);
+        Assert.Null(policyContext.Result);
+        Assert.Equal(0, policyContext.RetryCount);
+        Assert.Null(policyContext.PolicyName);
+        Assert.Equal(default, policyContext.TimeForRetry);
+        Assert.Null(policyContext.Properties);
+    }
+
+    [Fact]
+    public void Increment()
+    {
+        var policyContext = new RetryPolicyContext<string>();
+        policyContext.Increment();
+        Assert.Equal(1, policyContext.RetryCount);
+        policyContext.Increment();
+        Assert.Equal(2, policyContext.RetryCount);
+        Assert.NotEqual(default, policyContext.TimeForRetry);
+    }
+}

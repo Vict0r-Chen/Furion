@@ -17,6 +17,7 @@ namespace Furion.Exception;
 /// <summary>
 /// 后备策略上下文
 /// </summary>
+/// <typeparam name="TResult">操作返回值类型</typeparam>
 public sealed class FallbackPolicyContext<TResult> : PolicyContextBase
 {
     /// <summary>

@@ -17,6 +17,7 @@ namespace Furion.Exception;
 /// <summary>
 /// 组合策略上下文
 /// </summary>
+/// <typeparam name="TResult">操作返回值类型</typeparam>
 public sealed class CompositePolicyContext<TResult> : PolicyContextBase
 {
     /// <summary>
@@ -25,6 +26,9 @@ public sealed class CompositePolicyContext<TResult> : PolicyContextBase
     /// <param name="policy"><see cref="PolicyBase{TResult}"/></param>
     internal CompositePolicyContext(PolicyBase<TResult> policy)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(policy);
+
         Policy = policy;
     }
 

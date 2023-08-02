@@ -12,4 +12,27 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Xunit;
+namespace Furion.Exception.Policy.Tests;
+
+public class CompositePolicyContextTests
+{
+    [Fact]
+    public void New_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var policyContext = new CompositePolicyContext<string>(null!);
+        });
+    }
+
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var policyContext = new CompositePolicyContext<string>(new RetryPolicy<string>());
+
+        Assert.NotNull(policyContext);
+        Assert.NotNull(policyContext.Policy);
+        Assert.Null(policyContext.PolicyName);
+        Assert.NotEqual(default, policyContext.TimeForFailure);
+    }
+}

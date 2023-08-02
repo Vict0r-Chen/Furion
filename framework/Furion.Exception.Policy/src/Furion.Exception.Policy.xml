@@ -8,6 +8,7 @@
             <summary>
             组合策略上下文
             </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
         <member name="M:Furion.Exception.CompositePolicyContext`1.#ctor(Furion.Exception.PolicyBase{`0})">
             <summary>
@@ -30,6 +31,7 @@
             <summary>
             后备策略上下文
             </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
         <member name="M:Furion.Exception.FallbackPolicyContext`1.#ctor">
             <summary>
@@ -63,6 +65,7 @@
             <summary>
             重试策略上下文
             </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
         <member name="M:Furion.Exception.RetryPolicyContext`1.#ctor">
             <summary>
@@ -101,6 +104,7 @@
             <summary>
             超时策略上下文
             </summary>
+            <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicyContext`1.#ctor">
             <summary>
