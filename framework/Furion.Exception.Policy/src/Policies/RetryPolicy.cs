@@ -28,6 +28,11 @@ public sealed class RetryPolicy : RetryPolicy<object>
 public class RetryPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
+    /// 重试消息
+    /// </summary>
+    internal const string RETRY_MESSAGE = "Retrying for the {0}nd time…";
+
+    /// <summary>
     /// 操作结果条件集合
     /// </summary>
     public IList<Func<RetryPolicyContext<TResult>, bool>>? ResultConditions { get; set; }
@@ -302,6 +307,9 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
 
                 // 递增上下文数据
                 context.Increment();
+
+                // 输出调试事件
+                Debugging.Warn(RETRY_MESSAGE, context.RetryCount);
 
                 // 调用重试时操作方法
                 RetryAction?.Invoke(context);

@@ -28,6 +28,11 @@ public sealed class FallbackPolicy : FallbackPolicy<object>
 public class FallbackPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
+    /// 重试消息
+    /// </summary>
+    internal const string Fallback_MESSAGE = "Operation execution failed! The backup operation will be called shortly.";
+
+    /// <summary>
     /// 后备操作方法
     /// </summary>
     public Func<FallbackPolicyContext<TResult>, TResult?>? FallbackAction { get; set; }
@@ -270,6 +275,9 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         // 检查是否可以执行后备操作
         if (ShouldFallback(context))
         {
+            // 输出调试事件
+            Debugging.Error(Fallback_MESSAGE);
+
             // 调用后备操作方法
             if (FallbackAction is not null)
             {

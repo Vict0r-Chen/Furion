@@ -28,6 +28,11 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 public class TimeoutPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
+    /// 超时消息
+    /// </summary>
+    internal const string TIMEOUT_MESSAGE = "The operation has timed out.";
+
+    /// <summary>
     /// 超时时间
     /// </summary>
     public TimeSpan Timeout { get; set; }
@@ -78,14 +83,8 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
             // 检查超时任务是否提前完成
             if (timeoutTask.Status == TaskStatus.RanToCompletion)
             {
-                // 调用重试时操作方法
-                TimeoutAction?.Invoke(new()
-                {
-                    PolicyName = PolicyName
-                });
-
                 // 抛出超时异常
-                throw new TimeoutException("The operation has timed out.");
+                ThrowTimeoutException();
             }
 
             // 检查是否存在取消请求
@@ -96,14 +95,30 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
         }
         catch (OperationCanceledException exception) when (exception.CancellationToken == cancellationTokenSource.Token)
         {
-            // 调用重试时操作方法
-            TimeoutAction?.Invoke(new()
-            {
-                PolicyName = PolicyName
-            });
-
             // 抛出超时异常
-            throw new TimeoutException("The operation has timed out.");
+            ThrowTimeoutException();
         }
+
+        return default;
+    }
+
+    /// <summary>
+    /// 抛出超时异常
+    /// </summary>
+    /// <exception cref="TimeoutException"></exception>
+    [DoesNotReturn]
+    internal void ThrowTimeoutException()
+    {
+        // 输出调试事件
+        Debugging.Error(TIMEOUT_MESSAGE);
+
+        // 调用重试时操作方法
+        TimeoutAction?.Invoke(new()
+        {
+            PolicyName = PolicyName
+        });
+
+        // 抛出超时异常
+        throw new TimeoutException(TIMEOUT_MESSAGE);
     }
 }

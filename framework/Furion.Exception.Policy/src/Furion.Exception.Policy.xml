@@ -220,6 +220,11 @@
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
+        <member name="F:Furion.Exception.FallbackPolicy`1.Fallback_MESSAGE">
+            <summary>
+            重试消息
+            </summary>
+        </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.FallbackAction">
             <summary>
             后备操作方法
@@ -386,6 +391,11 @@
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
+        <member name="F:Furion.Exception.RetryPolicy`1.RETRY_MESSAGE">
+            <summary>
+            重试消息
+            </summary>
+        </member>
         <member name="P:Furion.Exception.RetryPolicy`1.ResultConditions">
             <summary>
             操作结果条件集合
@@ -547,6 +557,11 @@
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
+        <member name="F:Furion.Exception.TimeoutPolicy`1.TIMEOUT_MESSAGE">
+            <summary>
+            超时消息
+            </summary>
+        </member>
         <member name="P:Furion.Exception.TimeoutPolicy`1.Timeout">
             <summary>
             超时时间
@@ -566,6 +581,12 @@
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.ThrowTimeoutException">
+            <summary>
+            抛出超时异常
+            </summary>
+            <exception cref="T:System.TimeoutException"></exception>
         </member>
         <member name="T:Furion.Exception.Policy">
             <summary>
