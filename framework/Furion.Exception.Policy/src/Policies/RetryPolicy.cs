@@ -302,7 +302,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
                 if (context.RetryCount > MaxRetryCount - 1)
                 {
                     // 返回结果或抛出异常
-                    return ReturnResultOrThrow(context);
+                    return ReturnOrThrowIfException(context);
                 }
 
                 // 递增上下文数据
@@ -324,7 +324,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
             }
 
             // 返回结果或抛出异常
-            return ReturnResultOrThrow(context);
+            return ReturnOrThrowIfException(context);
         }
     }
 
@@ -333,7 +333,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     /// <param name="context"><see cref="RetryPolicyContext{TResult}"/></param>
     /// <returns><typeparamref name="TResult"/></returns>
-    internal static TResult? ReturnResultOrThrow(RetryPolicyContext<TResult> context)
+    internal static TResult? ReturnOrThrowIfException(RetryPolicyContext<TResult> context)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(context);

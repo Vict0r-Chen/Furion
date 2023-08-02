@@ -530,7 +530,7 @@
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Exception.RetryPolicy`1.ReturnResultOrThrow(Furion.Exception.RetryPolicyContext{`0})">
+        <member name="M:Furion.Exception.RetryPolicy`1.ReturnOrThrowIfException(Furion.Exception.RetryPolicyContext{`0})">
             <summary>
             返回结果或抛出异常
             </summary>
