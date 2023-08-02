@@ -60,6 +60,9 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     /// <inheritdoc />
     public override TResult? Execute(Func<TResult?> operation)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
         return ExecuteAsync(() => Task.Run(operation))
             .GetAwaiter()
             .GetResult();

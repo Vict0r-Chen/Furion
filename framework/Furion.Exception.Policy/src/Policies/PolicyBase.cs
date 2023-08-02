@@ -56,6 +56,9 @@ public abstract class PolicyBase<TResult> : IExceptionPolicy<TResult>
     /// <inheritdoc />
     public virtual TResult? Execute(Func<TResult?> operation)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
         return ExecuteAsync(() => Task.FromResult(operation()))
             .GetAwaiter()
             .GetResult();
