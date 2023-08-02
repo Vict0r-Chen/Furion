@@ -310,7 +310,8 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         }
 
         // 检查是否满足捕获异常的条件
-        if (exceptionTypes?.Any(ex => ex.IsInstanceOfType(exception)) == true)
+        if (exceptionTypes is null or { Count: 0 }
+            || exceptionTypes.Any(ex => ex.IsInstanceOfType(exception)))
         {
             // 检查是否配置了操作结果条件
             if (ResultConditions is { Count: > 0 })

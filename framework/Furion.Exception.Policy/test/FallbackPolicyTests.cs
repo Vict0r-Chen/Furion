@@ -230,7 +230,7 @@ public class FallbackPolicyTests
 
         Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), null!, null!));
         Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), null!));
-        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), new System.Exception()));
+        Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), new System.Exception()));
     }
 
     [Fact]
