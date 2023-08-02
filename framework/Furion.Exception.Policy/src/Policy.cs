@@ -34,7 +34,7 @@ public static class Policy
     /// <summary>
     /// 初始化重试策略
     /// </summary>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    /// <returns><see cref="RetryPolicy"/></returns>
     public static RetryPolicy Retry()
     {
         return Retry(1);
@@ -44,19 +44,16 @@ public static class Policy
     /// 初始化重试策略
     /// </summary>
     /// <param name="maxRetryCount">最大重试次数</param>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    /// <returns><see cref="RetryPolicy"/></returns>
     public static RetryPolicy Retry(int maxRetryCount)
     {
-        return new()
-        {
-            MaxRetryCount = maxRetryCount
-        };
+        return new(maxRetryCount);
     }
 
     /// <summary>
     /// 初始化超时策略
     /// </summary>
-    /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
+    /// <returns><see cref="TimeoutPolicy"/></returns>
     public static TimeoutPolicy Timeout()
     {
         return Timeout(TimeSpan.FromSeconds(10));
@@ -66,32 +63,26 @@ public static class Policy
     /// 初始化超时策略
     /// </summary>
     /// <param name="timeout">超时时间（毫秒）</param>
-    /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
+    /// <returns><see cref="TimeoutPolicy"/></returns>
     public static TimeoutPolicy Timeout(double timeout)
     {
-        return new()
-        {
-            Timeout = TimeSpan.FromMilliseconds(timeout)
-        };
+        return new(TimeSpan.FromMilliseconds(timeout));
     }
 
     /// <summary>
     /// 初始化超时策略
     /// </summary>
     /// <param name="timeout">超时时间</param>
-    /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
+    /// <returns><see cref="TimeoutPolicy"/></returns>
     public static TimeoutPolicy Timeout(TimeSpan timeout)
     {
-        return new()
-        {
-            Timeout = timeout
-        };
+        return new(timeout);
     }
 
     /// <summary>
     /// 初始化后备策略
     /// </summary>
-    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    /// <returns><see cref="FallbackPolicy"/></returns>
     public static FallbackPolicy Fallback()
     {
         return new();
@@ -101,7 +92,7 @@ public static class Policy
     /// 初始化后备策略
     /// </summary>
     /// <param name="fallbackAction">后备操作方法</param>
-    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    /// <returns><see cref="FallbackPolicy"/></returns>
     public static FallbackPolicy Fallback(Func<FallbackPolicyContext<object>, object?> fallbackAction)
     {
         return new(fallbackAction);
@@ -111,7 +102,7 @@ public static class Policy
     /// 初始化后备策略
     /// </summary>
     /// <param name="fallbackAction">后备操作方法</param>
-    /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
+    /// <returns><see cref="FallbackPolicy"/></returns>
     public static FallbackPolicy Fallback(Action<FallbackPolicyContext<object>> fallbackAction)
     {
         // 空检查
@@ -193,10 +184,7 @@ public static class Policy<TResult>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public static RetryPolicy<TResult> Retry(int maxRetryCount)
     {
-        return new()
-        {
-            MaxRetryCount = maxRetryCount
-        };
+        return new(maxRetryCount);
     }
 
     /// <summary>
@@ -215,10 +203,7 @@ public static class Policy<TResult>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy<TResult> Timeout(double timeout)
     {
-        return new()
-        {
-            Timeout = TimeSpan.FromMilliseconds(timeout)
-        };
+        return new(TimeSpan.FromMilliseconds(timeout));
     }
 
     /// <summary>
@@ -228,10 +213,7 @@ public static class Policy<TResult>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy<TResult> Timeout(TimeSpan timeout)
     {
-        return new()
-        {
-            Timeout = timeout
-        };
+        return new(timeout);
     }
 
     /// <summary>

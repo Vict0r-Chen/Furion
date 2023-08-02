@@ -35,6 +35,12 @@ public class RetryPolicyTests
 
         var policy2 = new RetryPolicy();
         Assert.NotNull(policy2);
+
+        var policy3 = new RetryPolicy<object>(3);
+        Assert.Equal(3, policy3.MaxRetryCount);
+
+        var policy4 = new RetryPolicy(3);
+        Assert.Equal(3, policy4.MaxRetryCount);
     }
 
     [Fact]

@@ -19,6 +19,22 @@ namespace Furion.Exception;
 /// </summary>
 public sealed class RetryPolicy : RetryPolicy<object>
 {
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy"/>
+    /// </summary>
+    public RetryPolicy()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy"/>
+    /// </summary>
+    /// <param name="maxRetryCount">最大重试次数</param>
+    public RetryPolicy(int maxRetryCount)
+        : base(maxRetryCount)
+    {
+    }
 }
 
 /// <summary>
@@ -36,6 +52,22 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     /// 重试输出消息
     /// </summary>
     internal const string RETRY_MESSAGE = "Retrying for the {0}nd time.";
+
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy{TResult}"/>
+    /// </summary>
+    public RetryPolicy()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="RetryPolicy{TResult}"/>
+    /// </summary>
+    /// <param name="maxRetryCount">最大重试次数</param>
+    public RetryPolicy(int maxRetryCount)
+    {
+        MaxRetryCount = maxRetryCount;
+    }
 
     /// <summary>
     /// 最大重试次数

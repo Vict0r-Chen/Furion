@@ -19,6 +19,22 @@ namespace Furion.Exception;
 /// </summary>
 public sealed class TimeoutPolicy : TimeoutPolicy<object>
 {
+    /// <summary>
+    /// <inheritdoc cref="TimeoutPolicy"/>
+    /// </summary>
+    public TimeoutPolicy()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="TimeoutPolicy"/>
+    /// </summary>
+    /// <param name="timeout">超时时间</param>
+    public TimeoutPolicy(TimeSpan timeout)
+        : base(timeout)
+    {
+    }
 }
 
 /// <summary>
@@ -31,6 +47,22 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     /// 超时输出消息
     /// </summary>
     internal const string TIMEOUT_MESSAGE = "The operation has timed out.";
+
+    /// <summary>
+    /// <inheritdoc cref="TimeoutPolicy{TResult}"/>
+    /// </summary>
+    public TimeoutPolicy()
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="TimeoutPolicy{TResult}"/>
+    /// </summary>
+    /// <param name="timeout">超时时间</param>
+    public TimeoutPolicy(TimeSpan timeout)
+    {
+        Timeout = timeout;
+    }
 
     /// <summary>
     /// 超时时间

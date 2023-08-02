@@ -411,6 +411,17 @@
             重试策略
             </summary>
         </member>
+        <member name="M:Furion.Exception.RetryPolicy.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy.#ctor(System.Int32)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy"/>
+            </summary>
+            <param name="maxRetryCount">最大重试次数</param>
+        </member>
         <member name="T:Furion.Exception.RetryPolicy`1">
             <summary>
             重试策略
@@ -426,6 +437,17 @@
             <summary>
             重试输出消息
             </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.RetryPolicy`1.#ctor(System.Int32)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1"/>
+            </summary>
+            <param name="maxRetryCount">最大重试次数</param>
         </member>
         <member name="P:Furion.Exception.RetryPolicy`1.MaxRetryCount">
             <summary>
@@ -589,6 +611,17 @@
             超时策略
             </summary>
         </member>
+        <member name="M:Furion.Exception.TimeoutPolicy.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy.#ctor(System.TimeSpan)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
+            </summary>
+            <param name="timeout">超时时间</param>
+        </member>
         <member name="T:Furion.Exception.TimeoutPolicy`1">
             <summary>
             超时策略
@@ -599,6 +632,17 @@
             <summary>
             超时输出消息
             </summary>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor(System.TimeSpan)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
+            </summary>
+            <param name="timeout">超时时间</param>
         </member>
         <member name="P:Furion.Exception.TimeoutPolicy`1.Timeout">
             <summary>
@@ -646,54 +690,54 @@
             <summary>
             初始化重试策略
             </summary>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Retry(System.Int32)">
             <summary>
             初始化重试策略
             </summary>
             <param name="maxRetryCount">最大重试次数</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout">
             <summary>
             初始化超时策略
             </summary>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout(System.Double)">
             <summary>
             初始化超时策略
             </summary>
             <param name="timeout">超时时间（毫秒）</param>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout(System.TimeSpan)">
             <summary>
             初始化超时策略
             </summary>
             <param name="timeout">超时时间</param>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Fallback">
             <summary>
             初始化后备策略
             </summary>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Fallback(System.Func{Furion.Exception.FallbackPolicyContext{System.Object},System.Object})">
             <summary>
             初始化后备策略
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Fallback(System.Action{Furion.Exception.FallbackPolicyContext{System.Object}})">
             <summary>
             初始化后备策略
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Composite">
             <summary>
