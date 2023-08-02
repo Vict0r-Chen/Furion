@@ -74,7 +74,7 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
     /// 添加执行失败时操作方法
     /// </summary>
     /// <param name="executionFailureAction">执行失败时操作方法</param>
-    /// <returns><see cref="RetryPolicy{TResult}"/></returns>
+    /// <returns><see cref="CompositePolicy{TResult}"/></returns>
     public CompositePolicy<TResult> OnExecutionFailure(Action<CompositePolicyContext<TResult>> executionFailureAction)
     {
         // 空检查

@@ -197,7 +197,7 @@
             添加执行失败时操作方法
             </summary>
             <param name="executionFailureAction">执行失败时操作方法</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
@@ -343,7 +343,7 @@
         <member name="M:Furion.Exception.FallbackPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:Furion.Exception.FallbackPolicy`1.ReturnResultOrThrow(Furion.Exception.FallbackPolicyContext{`0})">
+        <member name="M:Furion.Exception.FallbackPolicy`1.ReturnOrThrowIfException(Furion.Exception.FallbackPolicyContext{`0})">
             <summary>
             返回结果或抛出异常
             </summary>

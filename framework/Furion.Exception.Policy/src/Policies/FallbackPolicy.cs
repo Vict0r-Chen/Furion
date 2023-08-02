@@ -285,7 +285,8 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
             }
         }
 
-        return ReturnResultOrThrow(context);
+        // 返回结果或抛出异常
+        return ReturnOrThrowIfException(context);
     }
 
     /// <summary>
@@ -293,7 +294,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     /// <param name="context"><see cref="FallbackPolicyContext{TResult}"/></param>
     /// <returns><typeparamref name="TResult"/></returns>
-    internal static TResult? ReturnResultOrThrow(FallbackPolicyContext<TResult> context)
+    internal static TResult? ReturnOrThrowIfException(FallbackPolicyContext<TResult> context)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(context);
