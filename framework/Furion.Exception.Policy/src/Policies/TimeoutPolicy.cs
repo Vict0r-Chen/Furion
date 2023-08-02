@@ -58,6 +58,14 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <inheritdoc />
+    public override TResult? Execute(Func<TResult?> operation)
+    {
+        return ExecuteAsync(() => Task.Run(operation))
+            .GetAwaiter()
+            .GetResult();
+    }
+
+    /// <inheritdoc />
     public override async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
