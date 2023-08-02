@@ -94,7 +94,7 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
         // 生成异步操作方法级联委托
         var cascadeExecuteAsync = Policies
             .Select(p => new Func<Func<Task<TResult?>>, CancellationToken, Task<TResult?>>(p.ExecuteAsync))
-            .Aggregate((previous, current) => async (opt, token) =>
+            .Aggregate((previous, current) => async (opt, tkn) =>
             {
                 // 初始化异常的策略
                 object? policy = null;
@@ -105,7 +105,7 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
                     {
                         try
                         {
-                            return await current(opt, token);
+                            return await current(opt, tkn);
                         }
                         catch (System.Exception)
                         {
@@ -114,7 +114,7 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
 
                             throw;
                         }
-                    }, token);
+                    }, tkn);
                 }
                 catch (System.Exception exception)
                 {

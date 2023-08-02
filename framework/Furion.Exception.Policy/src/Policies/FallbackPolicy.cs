@@ -306,6 +306,9 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
             context.TimeForFailure = DateTimeOffset.UtcNow;
         }
 
+        // 检查是否存在取消请求
+        cancellationToken.ThrowIfCancellationRequested();
+
         // 检查是否满足捕获异常的条件
         if (ShouldFallback(context))
         {

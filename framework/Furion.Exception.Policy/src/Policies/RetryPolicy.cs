@@ -301,6 +301,9 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
                 context.Exception = exception;
             }
 
+            // 检查是否存在取消请求
+            cancellationToken.ThrowIfCancellationRequested();
+
             // 检查是否满足捕获异常的条件
             if (ShouldRetry(context))
             {
