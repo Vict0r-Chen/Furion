@@ -237,6 +237,14 @@
         <member name="M:Furion.Exception.CompositePolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.ExecutePolicyChain(System.Func{System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken,System.Threading.Tasks.Task{`0}},System.Func{System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken,System.Threading.Tasks.Task{`0}})">
+            <summary>
+            执行策略链
+            </summary>
+            <param name="previous"><see cref="T:System.Func`3"/></param>
+            <param name="current"><see cref="T:System.Func`3"/></param>
+            <returns><see cref="T:System.Func`3"/></returns>
+        </member>
         <member name="M:Furion.Exception.CompositePolicy`1.EnsureLegalData(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
             检查策略集合合法性

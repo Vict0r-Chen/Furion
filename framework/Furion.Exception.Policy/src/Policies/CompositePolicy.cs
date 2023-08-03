@@ -148,56 +148,69 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
         // 生成异步操作方法级联委托
         var cascadeExecuteAsync = Policies
             .Select(p => new Func<Func<Task<TResult?>>, CancellationToken, Task<TResult?>>(p.ExecuteAsync))
-            .Aggregate((previous, current) => async (opt, token) =>
-            {
-                object? policy = null;
-                try
-                {
-                    // 执行前一个策略
-                    return await previous(async () =>
-                    {
-                        try
-                        {
-                            // 执行当前策略
-                            return await current(opt, token);
-                        }
-                        // 检查内部策略是否已被取消
-                        catch (OperationCanceledException)
-                        {
-                            throw;
-                        }
-                        catch (System.Exception)
-                        {
-                            // 记录执行异常的策略
-                            policy ??= current.Target;
-
-                            throw;
-                        }
-                    }, token);
-                }
-                // 检查内部策略是否已被取消
-                catch (OperationCanceledException)
-                {
-                    throw;
-                }
-                catch (System.Exception exception)
-                {
-                    // 记录执行异常的策略
-                    policy ??= previous.Target;
-
-                    // 调用执行失败时操作方法
-                    ExecutionFailureAction?.Invoke(new((PolicyBase<TResult>)policy!)
-                    {
-                        PolicyName = PolicyName,
-                        Exception = exception
-                    });
-
-                    throw;
-                }
-            });
+            .Aggregate(ExecutePolicyChain);
 
         // 调用异步操作方法级联委托
         return await cascadeExecuteAsync(operation, cancellationToken);
+    }
+
+    /// <summary>
+    /// 执行策略链
+    /// </summary>
+    /// <param name="previous"><see cref="Func{T1, T2, TResult}"/></param>
+    /// <param name="current"><see cref="Func{T1, T2, TResult}"/></param>
+    /// <returns><see cref="Func{T1, T2, TResult}"/></returns>
+    internal Func<Func<Task<TResult?>>, CancellationToken, Task<TResult?>> ExecutePolicyChain(
+        Func<Func<Task<TResult?>>, CancellationToken, Task<TResult?>> previous
+        , Func<Func<Task<TResult?>>, CancellationToken, Task<TResult?>> current)
+    {
+        return async (opt, token) =>
+        {
+            object? policy = null;
+            try
+            {
+                // 执行前一个策略
+                return await previous(async () =>
+                {
+                    try
+                    {
+                        // 执行当前策略
+                        return await current(opt, token);
+                    }
+                    // 检查内部策略是否已被取消
+                    catch (OperationCanceledException)
+                    {
+                        throw;
+                    }
+                    catch (System.Exception)
+                    {
+                        // 记录执行异常的策略
+                        policy ??= current.Target;
+
+                        throw;
+                    }
+                }, token);
+            }
+            // 检查内部策略是否已被取消
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (System.Exception exception)
+            {
+                // 记录执行异常的策略
+                policy ??= previous.Target;
+
+                // 调用执行失败时操作方法
+                ExecutionFailureAction?.Invoke(new((PolicyBase<TResult>)policy!)
+                {
+                    PolicyName = PolicyName,
+                    Exception = exception
+                });
+
+                throw;
+            }
+        };
     }
 
     /// <summary>

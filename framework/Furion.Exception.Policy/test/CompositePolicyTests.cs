@@ -203,6 +203,70 @@ public class CompositePolicyTests
     }
 
     [Fact]
+    public void ExecuteAsync_Context_Policy1_ReturnOK()
+    {
+        Assert.Throws<System.InvalidOperationException>(() =>
+        {
+            var timeoutPolicy = new TimeoutPolicy(1000)
+            .OnTimeout(context =>
+            {
+            });
+
+            var retryPolicy = new RetryPolicy(3)
+                .Handle<System.Exception>()
+                .OnWaitRetry((context, delay) =>
+                {
+                })
+                .OnRetrying(context =>
+                {
+                })
+                .WaitAndRetry(TimeSpan.FromMilliseconds(100));
+
+            new CompositePolicy(timeoutPolicy, retryPolicy)
+                .OnExecutionFailure(context =>
+                {
+                    Assert.Equal(typeof(RetryPolicy), context.Policy.GetType());
+                })
+                .Execute(() =>
+                {
+                    throw new System.InvalidOperationException("我出错了");
+                });
+        });
+    }
+
+    [Fact]
+    public void ExecuteAsync_Context_Policy2_ReturnOK()
+    {
+        Assert.Throws<System.TimeoutException>(() =>
+        {
+            var timeoutPolicy = new TimeoutPolicy(200)
+            .OnTimeout(context =>
+            {
+            });
+
+            var retryPolicy = new RetryPolicy(3)
+                .Handle<System.Exception>()
+                .OnWaitRetry((context, delay) =>
+                {
+                })
+                .OnRetrying(context =>
+                {
+                })
+                .WaitAndRetry(TimeSpan.FromMilliseconds(100));
+
+            new CompositePolicy(timeoutPolicy, retryPolicy)
+                .OnExecutionFailure(context =>
+                {
+                    Assert.Equal(typeof(TimeoutPolicy), context.Policy.GetType());
+                })
+                .Execute(() =>
+                {
+                    throw new System.InvalidOperationException("我出错了");
+                });
+        });
+    }
+
+    [Fact]
     public void ExecuteAction_ReturnOK()
     {
         var policy = new CompositePolicy<string>(
@@ -277,6 +341,18 @@ public class CompositePolicyTests
 
         Assert.Equal("furion", str2);
         Assert.Equal(0, i);
+    }
+
+    [Fact]
+    public void ExecutePolicyChain_ReturnOK()
+    {
+        var policy = new CompositePolicy<string>(
+            new TimeoutPolicy<string>(3000)
+            , new FallbackPolicy<string>(context => "furion")
+            , new RetryPolicy<string>(3));
+
+        var cascadeExecuteAsync = policy.ExecutePolicyChain(new(policy.Policies[0].ExecuteAsync), new(policy.Policies[1].ExecuteAsync));
+        Assert.NotNull(cascadeExecuteAsync);
     }
 
     [Fact]
