@@ -19,42 +19,65 @@ namespace Furion.Validation;
 /// </summary>
 public sealed class AggregateValidationException : AggregateException
 {
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
     public AggregateValidationException()
     {
     }
 
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
+    /// <param name="innerExceptions">内部异常集合</param>
     public AggregateValidationException(IEnumerable<ValidationException> innerExceptions)
         : base(innerExceptions)
     {
     }
 
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
+    /// <param name="innerExceptions">内部异常集合</param>
     public AggregateValidationException(params ValidationException[] innerExceptions)
         : base(innerExceptions)
     {
     }
 
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
+    /// <param name="message">异常消息</param>
     public AggregateValidationException(string? message)
         : base(message)
     {
     }
 
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
+    /// <param name="message">异常消息</param>
+    /// <param name="innerExceptions">内部异常集合</param>
     public AggregateValidationException(string? message, IEnumerable<ValidationException> innerExceptions)
         : base(message, innerExceptions)
     {
     }
 
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
+    /// <param name="message">异常消息</param>
+    /// <param name="innerException">内部异常</param>
     public AggregateValidationException(string? message, ValidationException innerException)
         : base(message, innerException)
     {
     }
 
+    /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
+    /// </summary>
+    /// <param name="message">异常消息</param>
+    /// <param name="innerExceptions">内部异常集合</param>
     public AggregateValidationException(string? message, params ValidationException[] innerExceptions)
         : base(message, innerExceptions)
     {

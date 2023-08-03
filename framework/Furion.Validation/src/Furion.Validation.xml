@@ -1035,25 +1035,48 @@
             </summary>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
+            <param name="innerExceptions">内部异常集合</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationException[])">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
+            <param name="innerExceptions">内部异常集合</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String)">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
+            <param name="message">异常消息</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="innerExceptions">内部异常集合</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException)">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="innerException">内部异常</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException[])">
+            <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="innerExceptions">内部异常集合</param>
         </member>
         <member name="T:Furion.Validation.ValidatorBaseExtensions">
             <summary>
