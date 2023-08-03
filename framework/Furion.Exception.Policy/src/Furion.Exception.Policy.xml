@@ -757,6 +757,13 @@
             异常策略静态类
             </summary>
         </member>
+        <member name="M:Furion.Exception.Policy.For``1">
+            <summary>
+            添加自定义策略
+            </summary>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
+            <returns><typeparamref name="TPolicy"/></returns>
+        </member>
         <member name="M:Furion.Exception.Policy.For``1(``0)">
             <summary>
             添加自定义策略
@@ -852,9 +859,16 @@
         </member>
         <member name="T:Furion.Exception.Policy`1">
             <summary>
-            策略静态类
+            异常策略静态类
             </summary>
             <typeparam name="TResult">操作返回值类型</typeparam>
+        </member>
+        <member name="M:Furion.Exception.Policy`1.For``1">
+            <summary>
+            添加自定义策略
+            </summary>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
+            <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.For``1(``0)">
             <summary>

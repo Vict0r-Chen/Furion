@@ -23,6 +23,17 @@ public static class Policy
     /// 添加自定义策略
     /// </summary>
     /// <typeparam name="TPolicy"><see cref="PolicyBase{TResult}"/></typeparam>
+    /// <returns><typeparamref name="TPolicy"/></returns>
+    public static TPolicy For<TPolicy>()
+        where TPolicy : PolicyBase<object>, new()
+    {
+        return new();
+    }
+
+    /// <summary>
+    /// 添加自定义策略
+    /// </summary>
+    /// <typeparam name="TPolicy"><see cref="PolicyBase{TResult}"/></typeparam>
     /// <param name="policy"><typeparamref name="TPolicy"/></param>
     /// <returns><typeparamref name="TPolicy"/></returns>
     public static TPolicy For<TPolicy>(TPolicy policy)
@@ -151,11 +162,22 @@ public static class Policy
 }
 
 /// <summary>
-/// 策略静态类
+/// 异常策略静态类
 /// </summary>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public static class Policy<TResult>
 {
+    /// <summary>
+    /// 添加自定义策略
+    /// </summary>
+    /// <typeparam name="TPolicy"><see cref="PolicyBase{TResult}"/></typeparam>
+    /// <returns><typeparamref name="TPolicy"/></returns>
+    public static TPolicy For<TPolicy>()
+        where TPolicy : PolicyBase<TResult>, new()
+    {
+        return new();
+    }
+
     /// <summary>
     /// 添加自定义策略
     /// </summary>
