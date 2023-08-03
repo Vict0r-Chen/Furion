@@ -351,6 +351,252 @@ public class RetryPolicyTests
     }
 
     [Fact]
+    public async Task ExecuteAsync_Invalid_Parameters()
+    {
+        var policy = new RetryPolicy<object>();
+
+        await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+        {
+            await policy.ExecuteAsync(null!);
+        });
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_NoException_ReturnOK()
+    {
+        var policy = new RetryPolicy<string>();
+
+        var str = await policy.ExecuteAsync(async () =>
+        {
+            return await Task.FromResult("furion");
+        });
+
+        Assert.Equal("furion", str);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_HasException_ReturnOK()
+    {
+        var policy = new RetryPolicy<object>(3)
+            .WaitAndRetry(TimeSpan.FromMicroseconds(100));
+
+        var waitRetry = 0;
+        var retrying = 0;
+
+        await Assert.ThrowsAsync<System.Exception>(async () =>
+        {
+            var str = await policy
+            .OnWaitRetry((context, delay) =>
+            {
+                waitRetry++;
+            })
+            .OnRetrying(context =>
+            {
+                retrying++;
+            })
+            .ExecuteAsync(async () =>
+            {
+                var value = "furion";
+                if (value == "furion")
+                {
+                    throw new System.Exception("出错了");
+                }
+
+                return await Task.FromResult(value);
+            });
+        });
+
+        Assert.Equal(3, waitRetry);
+        Assert.Equal(3, retrying);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WithHandleException_ReturnOK()
+    {
+        var policy = new RetryPolicy<string>(3)
+            .WaitAndRetry(TimeSpan.FromMicroseconds(100));
+
+        var waitRetry = 0;
+        var retrying = 0;
+
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            var str = await policy
+            .Handle<InvalidCastException>()
+            .OnWaitRetry((context, delay) =>
+            {
+                waitRetry++;
+            })
+            .OnRetrying(context =>
+            {
+                retrying++;
+            })
+            .ExecuteAsync(async () =>
+            {
+                var value = "furion";
+                if (value == "furion")
+                {
+                    throw new System.InvalidOperationException("出错了");
+                }
+
+                return await Task.FromResult(value);
+            });
+        });
+
+        Assert.Equal(0, waitRetry);
+        Assert.Equal(0, retrying);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            var str = await policy
+            .Handle<InvalidCastException>()
+            .HandleResult(context => context.Exception is InvalidOperationException)
+            .OnWaitRetry((context, delay) =>
+            {
+                waitRetry++;
+            })
+            .OnRetrying(context =>
+            {
+                retrying++;
+            })
+            .ExecuteAsync(async () =>
+            {
+                var value = "furion";
+                if (value == "furion")
+                {
+                    throw new System.InvalidOperationException("出错了");
+                }
+
+                return await Task.FromResult(value);
+            });
+        });
+
+        Assert.Equal(3, waitRetry);
+        Assert.Equal(3, retrying);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WithCancellationToken_ReturnOK()
+    {
+        var policy = new RetryPolicy<string>(3)
+            .WaitAndRetry(TimeSpan.FromSeconds(1));
+
+        using var cancellationTokenSource = new CancellationTokenSource();
+        cancellationTokenSource.CancelAfter(800);
+
+        await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+        {
+            var str = await policy
+            .ExecuteAsync(async () =>
+             {
+                 var value = "furion";
+                 if (value == "furion")
+                 {
+                     throw new System.Exception("出错了");
+                 }
+
+                 return await Task.FromResult(value);
+             }, cancellationTokenSource.Token);
+        });
+    }
+
+    [Fact]
+    public void ExecuteAction_ReturnOK()
+    {
+        var policy = new RetryPolicy<string>(3)
+            .WaitAndRetry(TimeSpan.FromMicroseconds(100));
+
+        var waitRetry = 0;
+        var retrying = 0;
+
+        static void action()
+        {
+            throw new System.Exception("出错了");
+        }
+
+        Assert.Throws<System.Exception>(() =>
+        {
+            policy.OnWaitRetry((context, delay) =>
+            {
+                waitRetry++;
+            })
+            .OnRetrying(context =>
+            {
+                retrying++;
+            })
+            .Execute(action);
+        });
+
+        Assert.Equal(3, waitRetry);
+        Assert.Equal(3, retrying);
+    }
+
+    [Fact]
+    public async Task ExecuteAsyncFunc_ReturnOK()
+    {
+        var policy = new RetryPolicy<string>(3)
+           .WaitAndRetry(TimeSpan.FromMicroseconds(100));
+
+        var waitRetry = 0;
+        var retrying = 0;
+
+        await Assert.ThrowsAsync<System.Exception>(async () =>
+        {
+            await policy.OnWaitRetry((context, delay) =>
+            {
+                waitRetry++;
+            })
+            .OnRetrying(context =>
+            {
+                retrying++;
+            })
+            .ExecuteAsync(async () =>
+            {
+                await Task.CompletedTask;
+                throw new System.Exception("出错了");
+            });
+        });
+
+        Assert.Equal(3, waitRetry);
+        Assert.Equal(3, retrying);
+    }
+
+    [Fact]
+    public void ExecuteFunc_ReturnOK()
+    {
+        var policy = new RetryPolicy<string>(3)
+            .WaitAndRetry(TimeSpan.FromMicroseconds(100));
+
+        var waitRetry = 0;
+        var retrying = 0;
+
+        Assert.Throws<System.Exception>(() =>
+        {
+            var str = policy.OnWaitRetry((context, delay) =>
+            {
+                waitRetry++;
+            })
+            .OnRetrying(context =>
+            {
+                retrying++;
+            })
+            .Execute(() =>
+            {
+                var value = "furion";
+                if (value == "furion")
+                {
+                    throw new System.Exception("出错了");
+                }
+
+                return value;
+            });
+        });
+
+        Assert.Equal(3, waitRetry);
+        Assert.Equal(3, retrying);
+    }
+
+    [Fact]
     public void CanHandleException_Invalid_Parameters()
     {
         var policy = new RetryPolicy<object>();
