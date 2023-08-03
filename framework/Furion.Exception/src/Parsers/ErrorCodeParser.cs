@@ -79,7 +79,7 @@ internal sealed class ErrorCodeParser
         // 空检查
         ArgumentNullException.ThrowIfNull(enumName);
 
-        // 返回或
+        // 查找或创建错误消息
         return _errorCodeMessages.GetOrAdd($"{enumType}.{enumName}", _ => errorCode.GetEnumDescription());
     }
 }

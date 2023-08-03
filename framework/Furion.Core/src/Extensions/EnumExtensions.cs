@@ -20,7 +20,7 @@ namespace Furion.Core;
 internal static class EnumExtensions
 {
     /// <summary>
-    /// 获取枚举描述
+    /// 获取枚举值描述
     /// </summary>
     /// <param name="enumValue">枚举值</param>
     /// <returns><see cref="string"/></returns>
