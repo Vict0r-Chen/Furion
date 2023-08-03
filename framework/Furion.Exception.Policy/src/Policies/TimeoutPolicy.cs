@@ -17,6 +17,10 @@ namespace Furion.Exception;
 /// <summary>
 /// 超时策略
 /// </summary>
+/// <remarks>
+/// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+/// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+/// </remarks>
 public sealed class TimeoutPolicy : TimeoutPolicy<object>
 {
     /// <summary>
@@ -40,6 +44,10 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 /// <summary>
 /// 超时策略
 /// </summary>
+/// <remarks>
+/// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+/// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+/// </remarks>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public class TimeoutPolicy<TResult> : PolicyBase<TResult>
 {
@@ -90,21 +98,16 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <inheritdoc />
-    public override TResult? Execute(Func<TResult?> operation, CancellationToken cancellationToken = default)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(operation);
-
-        return ExecuteAsync(() => Task.Run(operation), cancellationToken)
-            .GetAwaiter()
-            .GetResult();
-    }
-
-    /// <inheritdoc />
     public override async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(operation);
+
+        // 检查是否配置了超时时间
+        if (Timeout == TimeSpan.Zero)
+        {
+            return await operation();
+        }
 
         // 创建关键的取消标记
         using var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -123,15 +126,15 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
             // 等待超时任务和操作方法任务任何一个完成
             await Task.WhenAny(timeoutTask, operationTask);
 
+            // 检查是否存在取消请求
+            cancellationToken.ThrowIfCancellationRequested();
+
             // 检查超时任务是否提前完成
             if (timeoutTask.Status == TaskStatus.RanToCompletion)
             {
                 // 抛出超时异常
                 ThrowTimeoutException();
             }
-
-            // 检查是否存在取消请求
-            cancellationToken.ThrowIfCancellationRequested();
 
             // 返回操作方法结果
             return await operationTask;

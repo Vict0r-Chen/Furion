@@ -78,7 +78,7 @@ public class HelloController
             .Execute(() =>
             {
                 Console.WriteLine("我正在执行操作...");
-                Thread.Sleep(5000);
+                Task.Delay(TimeSpan.FromSeconds(5)).Wait();
             });
     }
 

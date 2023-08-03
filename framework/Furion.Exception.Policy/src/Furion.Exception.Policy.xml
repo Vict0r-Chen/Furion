@@ -622,6 +622,10 @@
             <summary>
             超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy.#ctor">
             <summary>
@@ -638,6 +642,10 @@
             <summary>
             超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <typeparam name="TResult">操作返回值类型</typeparam>
         </member>
         <member name="F:Furion.Exception.TimeoutPolicy`1.TIMEOUT_MESSAGE">
@@ -672,9 +680,6 @@
             </summary>
             <param name="timeoutAction">超时时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
-        </member>
-        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
-            <inheritdoc />
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
@@ -715,12 +720,20 @@
             <summary>
             初始化超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout(System.Double)">
             <summary>
             初始化超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <param name="timeout">超时时间（毫秒）</param>
             <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
@@ -728,6 +741,10 @@
             <summary>
             初始化超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <param name="timeout">超时时间</param>
             <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
@@ -802,12 +819,20 @@
             <summary>
             初始化超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Timeout(System.Double)">
             <summary>
             初始化超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <param name="timeout">超时时间（毫秒）</param>
             <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
@@ -815,6 +840,10 @@
             <summary>
             初始化超时策略
             </summary>
+            <remarks>
+            <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
+            <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+            </remarks>
             <param name="timeout">超时时间</param>
             <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
