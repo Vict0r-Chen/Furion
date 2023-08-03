@@ -34,6 +34,15 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
     /// <summary>
     /// <inheritdoc cref="TimeoutPolicy"/>
     /// </summary>
+    /// <param name="timeout">超时时间（毫秒）</param>
+    public TimeoutPolicy(double timeout)
+        : base(timeout)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="TimeoutPolicy"/>
+    /// </summary>
     /// <param name="timeout">超时时间</param>
     public TimeoutPolicy(TimeSpan timeout)
         : base(timeout)
@@ -61,6 +70,15 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     public TimeoutPolicy()
     {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="TimeoutPolicy{TResult}"/>
+    /// </summary>
+    /// <param name="timeout">超时时间（毫秒）</param>
+    public TimeoutPolicy(double timeout)
+    {
+        Timeout = TimeSpan.FromMilliseconds(timeout);
     }
 
     /// <summary>

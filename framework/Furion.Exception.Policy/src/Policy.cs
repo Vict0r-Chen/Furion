@@ -51,7 +51,7 @@ public static class Policy
     }
 
     /// <summary>
-    /// 初始化超时策略
+    /// 初始化超时策略（默认 10 秒）
     /// </summary>
     /// <remarks>
     /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
@@ -74,7 +74,7 @@ public static class Policy
     /// <returns><see cref="TimeoutPolicy"/></returns>
     public static TimeoutPolicy Timeout(double timeout)
     {
-        return new(TimeSpan.FromMilliseconds(timeout));
+        return new(timeout);
     }
 
     /// <summary>
@@ -142,10 +142,7 @@ public static class Policy
     /// <returns><see cref="CompositePolicy"/></returns>
     public static CompositePolicy Composite(params PolicyBase<object>[] policies)
     {
-        var policy = new CompositePolicy();
-        policy.Join(policies);
-
-        return policy;
+        return new(policies);
     }
 
     /// <summary>
@@ -155,10 +152,7 @@ public static class Policy
     /// <returns><see cref="CompositePolicy"/></returns>
     public static CompositePolicy Composite(IEnumerable<PolicyBase<object>> policies)
     {
-        var policy = new CompositePolicy();
-        policy.Join(policies);
-
-        return policy;
+        return new(policies);
     }
 }
 
@@ -200,7 +194,7 @@ public static class Policy<TResult>
     }
 
     /// <summary>
-    /// 初始化超时策略
+    /// 初始化超时策略（默认 10 秒）
     /// </summary>
     /// <remarks>
     /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
@@ -223,7 +217,7 @@ public static class Policy<TResult>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy<TResult> Timeout(double timeout)
     {
-        return new(TimeSpan.FromMilliseconds(timeout));
+        return new(timeout);
     }
 
     /// <summary>
@@ -286,8 +280,7 @@ public static class Policy<TResult>
     /// <returns><see cref="CompositePolicy{TResult}"/></returns>
     public static CompositePolicy<TResult> Composite(params PolicyBase<TResult>[] policies)
     {
-        return new CompositePolicy<TResult>()
-            .Join(policies);
+        return new(policies);
     }
 
     /// <summary>
@@ -297,7 +290,6 @@ public static class Policy<TResult>
     /// <returns><see cref="CompositePolicy{TResult}"/></returns>
     public static CompositePolicy<TResult> Composite(IEnumerable<PolicyBase<TResult>> policies)
     {
-        return new CompositePolicy<TResult>()
-            .Join(policies);
+        return new(policies);
     }
 }

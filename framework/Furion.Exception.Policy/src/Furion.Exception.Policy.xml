@@ -163,6 +163,23 @@
             组合策略
             </summary>
         </member>
+        <member name="M:Furion.Exception.CompositePolicy.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy.#ctor(Furion.Exception.PolicyBase{System.Object}[])">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy"/>
+            </summary>
+            <param name="policies">策略集合</param>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy.#ctor(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{System.Object}})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy"/>
+            </summary>
+            <param name="policies">策略集合</param>
+        </member>
         <member name="T:Furion.Exception.CompositePolicy`1">
             <summary>
             组合策略
@@ -173,6 +190,18 @@
             <summary>
             <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
             </summary>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.#ctor(Furion.Exception.PolicyBase{`0}[])">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
+            </summary>
+            <param name="policies">策略集合</param>
+        </member>
+        <member name="M:Furion.Exception.CompositePolicy`1.#ctor(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
+            </summary>
+            <param name="policies">策略集合</param>
         </member>
         <member name="P:Furion.Exception.CompositePolicy`1.Policies">
             <summary>
@@ -632,6 +661,12 @@
             <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
             </summary>
         </member>
+        <member name="M:Furion.Exception.TimeoutPolicy.#ctor(System.Double)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
+            </summary>
+            <param name="timeout">超时时间（毫秒）</param>
+        </member>
         <member name="M:Furion.Exception.TimeoutPolicy.#ctor(System.TimeSpan)">
             <summary>
             <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
@@ -657,6 +692,12 @@
             <summary>
             <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
             </summary>
+        </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor(System.Double)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
+            </summary>
+            <param name="timeout">超时时间（毫秒）</param>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor(System.TimeSpan)">
             <summary>
@@ -721,7 +762,7 @@
         </member>
         <member name="M:Furion.Exception.Policy.Timeout">
             <summary>
-            初始化超时策略
+            初始化超时策略（默认 10 秒）
             </summary>
             <remarks>
             <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
@@ -820,7 +861,7 @@
         </member>
         <member name="M:Furion.Exception.Policy`1.Timeout">
             <summary>
-            初始化超时策略
+            初始化超时策略（默认 10 秒）
             </summary>
             <remarks>
             <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>

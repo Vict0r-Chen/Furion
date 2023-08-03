@@ -484,11 +484,12 @@ public class RetryPolicyTests
         using var cancellationTokenSource = new CancellationTokenSource();
         cancellationTokenSource.CancelAfter(800);
 
-        await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+        await Assert.ThrowsAsync<OperationCanceledException>(async () =>
         {
             var str = await policy
             .ExecuteAsync(async () =>
              {
+                 await Task.Delay(TimeSpan.FromSeconds(2));
                  var value = "furion";
                  if (value == "furion")
                  {

@@ -36,6 +36,12 @@ public class TimeoutPolicyTests
 
         var policy4 = new TimeoutPolicy(TimeSpan.FromSeconds(1));
         Assert.Equal(TimeSpan.FromSeconds(1), policy4.Timeout);
+
+        var policy5 = new TimeoutPolicy<object>(1000);
+        Assert.Equal(TimeSpan.FromSeconds(1), policy5.Timeout);
+
+        var policy6 = new TimeoutPolicy(1000);
+        Assert.Equal(TimeSpan.FromSeconds(1), actual: policy6.Timeout);
     }
 
     [Fact]
