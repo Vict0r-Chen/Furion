@@ -12,11 +12,30 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Core;
-global using Furion.Exception;
-global using System.Collections.Concurrent;
-global using System.ComponentModel;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Globalization;
-global using System.Runtime.CompilerServices;
-global using System.Runtime.Serialization;
+namespace Furion.Core.Tests;
+
+public class EnumExtensionsTests
+{
+    [Fact]
+    public void GetEnumDescription_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            EnumExtensions.GetEnumDescription(null!);
+        });
+
+        var exception = Assert.Throws<ArgumentException>(() =>
+        {
+            EnumExtensions.GetEnumDescription(10);
+        });
+        Assert.Equal("The parameter is not an enumeration type. (Parameter 'enumValue')", exception.Message);
+    }
+
+    [Theory]
+    [InlineData(EnumModel.None, "None")]
+    [InlineData(EnumModel.Default, "缺省值")]
+    public void GetEnumDescription_ReturnOK(EnumModel model, string description)
+    {
+        Assert.Equal(description, model.GetEnumDescription());
+    }
+}

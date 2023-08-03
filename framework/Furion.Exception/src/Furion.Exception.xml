@@ -4,5 +4,171 @@
         <name>Furion.Exception</name>
     </assembly>
     <members>
+        <member name="T:Furion.Exception.ApplicationException">
+            <summary>
+            应用程序异常抽象基类
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ApplicationException.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ApplicationException" />
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ApplicationException.#ctor(System.String)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ApplicationException" />
+            </summary>
+            <param name="message">异常消息</param>
+        </member>
+        <member name="M:Furion.Exception.ApplicationException.#ctor(System.String,System.Exception)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ApplicationException" />
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="innerException">内部异常</param>
+        </member>
+        <member name="M:Furion.Exception.ApplicationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ApplicationException" />
+            </summary>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+        </member>
+        <member name="P:Furion.Exception.ApplicationException.Solution">
+            <summary>
+            解决方案
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.ApplicationException.Properties">
+            <summary>
+            附加属性
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ApplicationException.ToHtmlString">
+            <summary>
+            输出 HTML 字符串
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Furion.Exception.ApplicationException.ToJsonString">
+            <summary>
+            输出 JSON 字符串
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:Furion.Exception.UserFriendlyException">
+            <summary>
+            用户友好异常
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.UserFriendlyException" />
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.#ctor(System.String)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.UserFriendlyException" />
+            </summary>
+            <param name="message">异常消息</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.#ctor(System.String,System.Exception)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.UserFriendlyException" />
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="innerException">内部异常</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.UserFriendlyException" />
+            </summary>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+        </member>
+        <member name="P:Furion.Exception.UserFriendlyException.ErrorCode">
+            <summary>
+            错误码
+            </summary>
+        </member>
+        <member name="T:Furion.Exception.ErrorCodeParser">
+            <summary>
+            错误码解析器
+            </summary>
+        </member>
+        <member name="F:Furion.Exception.ErrorCodeParser._errorCodeMessages">
+            <summary>
+            错误码消息集合
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ErrorCodeParser.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ErrorCodeParser.Parse(System.Object)">
+            <summary>
+            解析错误码并返回错误消息
+            </summary>
+            <param name="errorCode">错误码</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Furion.Exception.ErrorCodeParser.ParseEnum(System.Object)">
+            <summary>
+            解析枚举类型错误码并返回错误消息
+            </summary>
+            <param name="errorCode">错误码</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:Furion.Exception.ExceptionSolution">
+            <summary>
+            异常解决方案
+            </summary>
+        </member>
+        <member name="T:System.Oops">
+            <summary>
+            异常类
+            </summary>
+        </member>
+        <member name="F:System.Oops._instance">
+            <summary>
+            延迟初始化 <see cref="T:System.Oops"/> 实例并保证线程安全
+            </summary>
+        </member>
+        <member name="M:System.Oops.#ctor">
+            <summary>
+            <inheritdoc cref="T:System.Oops" />
+            </summary>
+        </member>
+        <member name="P:System.Oops.Instance">
+            <inheritdoc cref="T:System.Oops" />
+        </member>
+        <member name="P:System.Oops.ErrorCodeParser">
+            <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
+        </member>
+        <member name="M:System.Oops.Oh(System.Object,System.Object[])">
+            <summary>
+            初始化用户友好异常
+            </summary>
+            <param name="errorCode">错误码</param>
+            <param name="args">格式化参数</param>
+            <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
+        </member>
+        <member name="M:System.Oops.Oh``1(System.Object,System.Object[])">
+            <summary>
+            初始化用户友好异常
+            </summary>
+            <param name="errorCode">错误码</param>
+            <param name="args">格式化参数</param>
+            <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
+        </member>
+        <member name="M:System.Oops.FormatErrorMessage(System.String,System.Object[])">
+            <summary>
+            格式化错误消息
+            </summary>
+            <param name="errorMessage">错误消息</param>
+            <param name="args">格式化参数</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
     </members>
 </doc>

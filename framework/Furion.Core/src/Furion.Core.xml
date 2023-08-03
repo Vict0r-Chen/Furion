@@ -19,6 +19,19 @@
             Furion 组件文档地址
             </summary>
         </member>
+        <member name="T:Furion.Core.EnumExtensions">
+            <summary>
+            枚举拓展类
+            </summary>
+        </member>
+        <member name="M:Furion.Core.EnumExtensions.GetEnumDescription(System.Object)">
+            <summary>
+            获取枚举描述
+            </summary>
+            <param name="enumValue">枚举值</param>
+            <returns><see cref="T:System.String"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:Furion.ComponentMetadata">
             <summary>
             组件元数据

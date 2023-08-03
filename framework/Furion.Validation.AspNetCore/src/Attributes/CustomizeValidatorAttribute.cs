@@ -92,8 +92,6 @@ public class CustomizeValidatorAttribute : ValidationAttribute
                 validationResult.ErrorMessage = ErrorMessage;
             }
 
-            // 本地化 TODO!
-
             return validationResult;
         }
 

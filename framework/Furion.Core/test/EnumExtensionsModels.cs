@@ -12,11 +12,12 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Core;
-global using Furion.Exception;
-global using System.Collections.Concurrent;
-global using System.ComponentModel;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Globalization;
-global using System.Runtime.CompilerServices;
-global using System.Runtime.Serialization;
+namespace Furion.Core.Tests;
+
+public enum EnumModel
+{
+    None,
+
+    [Description("缺省值")]
+    Default
+}
