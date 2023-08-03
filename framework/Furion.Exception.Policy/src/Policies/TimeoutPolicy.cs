@@ -111,6 +111,7 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     /// <inheritdoc />
     public override async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
     {
+        // 空检查
         ArgumentNullException.ThrowIfNull(operation);
 
         // 检查是否配置了超时时间
