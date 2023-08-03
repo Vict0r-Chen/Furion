@@ -15,7 +15,7 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 策略静态类
+/// 异常策略静态类
 /// </summary>
 public static class Policy
 {
@@ -32,12 +32,12 @@ public static class Policy
     }
 
     /// <summary>
-    /// 初始化重试策略
+    /// 初始化重试策略（默认 3 次）
     /// </summary>
     /// <returns><see cref="RetryPolicy"/></returns>
     public static RetryPolicy Retry()
     {
-        return Retry(1);
+        return Retry(3);
     }
 
     /// <summary>
@@ -117,13 +117,7 @@ public static class Policy
     /// <returns><see cref="FallbackPolicy"/></returns>
     public static FallbackPolicy Fallback(Action<FallbackPolicyContext<object>> fallbackAction)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(fallbackAction);
-
-        var policy = new FallbackPolicy();
-        policy.OnFallback(fallbackAction);
-
-        return policy;
+        return new(fallbackAction);
     }
 
     /// <summary>
@@ -175,12 +169,12 @@ public static class Policy<TResult>
     }
 
     /// <summary>
-    /// 初始化重试策略
+    /// 初始化重试策略（默认 3 次）
     /// </summary>
     /// <returns><see cref="RetryPolicy{TResult}"/></returns>
     public static RetryPolicy<TResult> Retry()
     {
-        return Retry(1);
+        return Retry(3);
     }
 
     /// <summary>
@@ -260,8 +254,7 @@ public static class Policy<TResult>
     /// <returns><see cref="FallbackPolicy{TResult}"/></returns>
     public static FallbackPolicy<TResult> Fallback(Action<FallbackPolicyContext<TResult>> fallbackAction)
     {
-        return new FallbackPolicy<TResult>()
-            .OnFallback(fallbackAction);
+        return new(fallbackAction);
     }
 
     /// <summary>

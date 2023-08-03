@@ -28,9 +28,17 @@ public sealed class FallbackPolicy : FallbackPolicy<object>
     }
 
     /// <summary>
-    /// <inheritdoc cref="FallbackPolicy{TResult}"/>
+    /// <inheritdoc cref="FallbackPolicy"/>
     /// </summary>
     public FallbackPolicy(Func<FallbackPolicyContext<object>, object?> fallbackAction)
+        : base(fallbackAction)
+    {
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="FallbackPolicy"/>
+    /// </summary>
+    public FallbackPolicy(Action<FallbackPolicyContext<object>> fallbackAction)
         : base(fallbackAction)
     {
     }
@@ -59,10 +67,15 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     public FallbackPolicy(Func<FallbackPolicyContext<TResult>, TResult?> fallbackAction)
     {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(fallbackAction);
+        OnFallback(fallbackAction);
+    }
 
-        FallbackAction = fallbackAction;
+    /// <summary>
+    /// <inheritdoc cref="FallbackPolicy{TResult}"/>
+    /// </summary>
+    public FallbackPolicy(Action<FallbackPolicyContext<TResult>> fallbackAction)
+    {
+        OnFallback(fallbackAction);
     }
 
     /// <summary>

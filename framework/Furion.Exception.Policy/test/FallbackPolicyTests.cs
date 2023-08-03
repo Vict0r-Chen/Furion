@@ -46,10 +46,18 @@ public class FallbackPolicyTests
 
         var policy2 = new FallbackPolicy<object>(context => "");
         Assert.NotNull(policy2.FallbackAction);
+
         var policy3 = new FallbackPolicy(context => "");
         Assert.NotNull(policy3.FallbackAction);
+
         var policy4 = new FallbackPolicy();
-        Assert.Null(policy.FallbackAction);
+        Assert.Null(policy4.FallbackAction);
+
+        var policy5 = new FallbackPolicy<object>(context => { });
+        Assert.NotNull(policy5.FallbackAction);
+
+        var policy6 = new FallbackPolicy(context => { });
+        Assert.NotNull(policy6.FallbackAction);
     }
 
     [Fact]

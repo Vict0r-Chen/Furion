@@ -264,7 +264,12 @@
         </member>
         <member name="M:Furion.Exception.FallbackPolicy.#ctor(System.Func{Furion.Exception.FallbackPolicyContext{System.Object},System.Object})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.FallbackPolicy.#ctor(System.Action{Furion.Exception.FallbackPolicyContext{System.Object}})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy"/>
             </summary>
         </member>
         <member name="T:Furion.Exception.FallbackPolicy`1">
@@ -284,6 +289,11 @@
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.#ctor(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.FallbackPolicy`1.#ctor(System.Action{Furion.Exception.FallbackPolicyContext{`0}})">
             <summary>
             <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
             </summary>
@@ -744,7 +754,7 @@
         </member>
         <member name="T:Furion.Exception.Policy">
             <summary>
-            策略静态类
+            异常策略静态类
             </summary>
         </member>
         <member name="M:Furion.Exception.Policy.For``1(``0)">
@@ -757,7 +767,7 @@
         </member>
         <member name="M:Furion.Exception.Policy.Retry">
             <summary>
-            初始化重试策略
+            初始化重试策略（默认 3 次）
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy"/></returns>
         </member>
@@ -856,7 +866,7 @@
         </member>
         <member name="M:Furion.Exception.Policy`1.Retry">
             <summary>
-            初始化重试策略
+            初始化重试策略（默认 3 次）
             </summary>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
