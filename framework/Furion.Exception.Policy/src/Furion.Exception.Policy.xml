@@ -681,6 +681,9 @@
             <param name="timeoutAction">超时时操作方法</param>
             <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
+        <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>

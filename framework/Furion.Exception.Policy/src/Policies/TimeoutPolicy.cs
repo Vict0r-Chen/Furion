@@ -98,9 +98,19 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
     }
 
     /// <inheritdoc />
-    public override async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
+    public override TResult? Execute(Func<TResult?> operation, CancellationToken cancellationToken = default)
     {
         // 空检查
+        ArgumentNullException.ThrowIfNull(operation);
+
+        return ExecuteAsync(() => Task.Run(() => operation()), cancellationToken)
+            .GetAwaiter()
+            .GetResult();
+    }
+
+    /// <inheritdoc />
+    public override async Task<TResult?> ExecuteAsync(Func<Task<TResult?>> operation, CancellationToken cancellationToken = default)
+    {
         ArgumentNullException.ThrowIfNull(operation);
 
         // 检查是否配置了超时时间
@@ -117,27 +127,26 @@ public class TimeoutPolicy<TResult> : PolicyBase<TResult>
 
         try
         {
-            // 初始化一个超时任务
-            var timeoutTask = Task.Delay(Timeout, cancellationTokenSource.Token);
-
             // 获取操作方法任务
             var operationTask = operation();
 
-            // 等待超时任务和操作方法任务任何一个完成
-            await Task.WhenAny(timeoutTask, operationTask);
+            // 获取提前完成的任务
+            var completedTask = await Task.WhenAny(operationTask, Task.Delay(Timeout, cancellationTokenSource.Token));
 
             // 检查是否存在取消请求
             cancellationToken.ThrowIfCancellationRequested();
 
-            // 检查超时任务是否提前完成
-            if (timeoutTask.Status == TaskStatus.RanToCompletion)
+            // 检查提前完成的任务是否是操作方法任务
+            if (completedTask == operationTask)
+            {
+                // 返回操作方法结果
+                return await operationTask;
+            }
+            else
             {
                 // 抛出超时异常
                 ThrowTimeoutException();
             }
-
-            // 返回操作方法结果
-            return await operationTask;
         }
         catch (OperationCanceledException exception) when (exception.CancellationToken == cancellationTokenSource.Token)
         {

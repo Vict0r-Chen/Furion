@@ -134,7 +134,7 @@ public sealed class Invocation
     /// <returns><see cref="Task{TResult}"/></returns>
     public async Task<T?> ProceedAsync<T>()
     {
-        return (T)await (Task<object>)Proceed()!;
+        return (T)await ((Task<object>)Proceed()!);
     }
 
     /// <summary>
@@ -153,8 +153,8 @@ public sealed class Invocation
 
         // 查找被代理方法
         var method = target.GetType()
-                                     .GetMethods()
-                                     .SingleOrDefault(m => m.GetRuntimeBaseDefinition() == targetMethod.GetRuntimeBaseDefinition());
+            .GetMethods()
+            .SingleOrDefault(m => m.GetRuntimeBaseDefinition() == targetMethod.GetRuntimeBaseDefinition());
 
         // 接口默认实现方法
         if (method is null)
