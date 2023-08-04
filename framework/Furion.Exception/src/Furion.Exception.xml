@@ -31,8 +31,8 @@
             <summary>
             <inheritdoc cref="T:Furion.Exception.ApplicationException" />
             </summary>
-            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
-            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo" /></param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext" /></param>
         </member>
         <member name="P:Furion.Exception.ApplicationException.TimeForException">
             <summary>
@@ -53,13 +53,13 @@
             <summary>
             输出 HTML 字符串
             </summary>
-            <returns><see cref="T:System.String"/></returns>
+            <returns><see cref="T:System.String" /></returns>
         </member>
         <member name="M:Furion.Exception.ApplicationException.ToJsonString">
             <summary>
             输出 JSON 字符串
             </summary>
-            <returns><see cref="T:System.String"/></returns>
+            <returns><see cref="T:System.String" /></returns>
         </member>
         <member name="T:Furion.Exception.UserFriendlyException">
             <summary>
@@ -88,8 +88,8 @@
             <summary>
             <inheritdoc cref="T:Furion.Exception.UserFriendlyException" />
             </summary>
-            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
-            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo" /></param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext" /></param>
         </member>
         <member name="P:Furion.Exception.UserFriendlyException.ErrorCode">
             <summary>
@@ -103,7 +103,7 @@
         </member>
         <member name="F:Furion.Exception.ErrorCodeParser._instance">
             <summary>
-            延迟初始化 <see cref="T:Furion.Exception.ErrorCodeParser"/> 实例并保证线程安全
+            延迟初始化 <see cref="T:Furion.Exception.ErrorCodeParser" /> 实例并保证线程安全
             </summary>
         </member>
         <member name="F:Furion.Exception.ErrorCodeParser._errorCodeMessages">
@@ -125,14 +125,14 @@
             </summary>
             <param name="errorCode">错误码</param>
             <param name="args">格式化参数</param>
-            <returns><see cref="T:System.String"/></returns>
+            <returns><see cref="T:System.String" /></returns>
         </member>
         <member name="M:Furion.Exception.ErrorCodeParser.ParseEnum(System.Object)">
             <summary>
             解析枚举类型错误码并返回错误消息
             </summary>
             <param name="errorCode">错误码</param>
-            <returns><see cref="T:System.String"/></returns>
+            <returns><see cref="T:System.String" /></returns>
         </member>
         <member name="T:Furion.Exception.ExceptionSolution">
             <summary>
@@ -150,7 +150,7 @@
             </summary>
             <param name="errorCode">错误码</param>
             <param name="args">格式化参数</param>
-            <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
+            <returns><see cref="T:Furion.Exception.UserFriendlyException" /></returns>
         </member>
         <member name="M:System.Oops.Oh``1(System.Object,System.Object[])">
             <summary>
@@ -158,7 +158,7 @@
             </summary>
             <param name="errorCode">错误码</param>
             <param name="args">格式化参数</param>
-            <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
+            <returns><see cref="T:Furion.Exception.UserFriendlyException" /></returns>
         </member>
         <member name="M:System.Oops.ThrowIfNull(System.Object,System.String)">
             <summary>

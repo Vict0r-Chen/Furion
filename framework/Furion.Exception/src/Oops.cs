@@ -78,7 +78,7 @@ public static class Oops
     {
         if (argument == null)
         {
-            Throw(paramName!);
+            ThrowHelpers.Throw(paramName!);
         }
     }
 
@@ -91,7 +91,7 @@ public static class Oops
     {
         if (string.IsNullOrWhiteSpace(argument))
         {
-            ThrowNullOrWhiteSpaceException(argument!, paramName!);
+            ThrowHelpers.ThrowNullOrWhiteSpaceException(argument!, paramName!);
         }
     }
 
@@ -104,44 +104,7 @@ public static class Oops
     {
         if (string.IsNullOrEmpty(argument))
         {
-            ThrowNullOrEmptyException(argument!, paramName!);
+            ThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
         }
-    }
-
-    /// <summary>
-    /// 抛出异常
-    /// </summary>
-    /// <param name="paramName">参数名称</param>
-    /// <exception cref="UserFriendlyException"></exception>
-    [DoesNotReturn]
-    internal static void Throw(string paramName)
-    {
-        throw new UserFriendlyException(null, new ArgumentNullException(paramName));
-    }
-
-    /// <summary>
-    /// 抛出异常
-    /// </summary>
-    /// <param name="argument">参数值</param>
-    /// <param name="paramName">参数名称</param>
-    /// <exception cref="UserFriendlyException"></exception>
-    [DoesNotReturn]
-    internal static void ThrowNullOrEmptyException(string argument, string paramName)
-    {
-        ThrowIfNull(argument, paramName);
-        throw new UserFriendlyException(null, new ArgumentException("Argument is empty.", paramName));
-    }
-
-    /// <summary>
-    /// 抛出异常
-    /// </summary>
-    /// <param name="argument">参数值</param>
-    /// <param name="paramName">参数名称</param>
-    /// <exception cref="UserFriendlyException"></exception>
-    [DoesNotReturn]
-    internal static void ThrowNullOrWhiteSpaceException(string argument, string paramName)
-    {
-        ThrowIfNull(argument, paramName);
-        throw new UserFriendlyException(null, new ArgumentException("Argument is whitespace.", paramName));
     }
 }
