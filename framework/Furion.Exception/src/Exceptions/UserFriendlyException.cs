@@ -61,9 +61,4 @@ public class UserFriendlyException : ApplicationException
     {
         Level = ExceptionLevel.Service;
     }
-
-    /// <summary>
-    /// 异常编码
-    /// </summary>
-    public object? Code { get; set; }
 }

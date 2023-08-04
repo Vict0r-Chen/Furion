@@ -22,7 +22,7 @@ internal sealed class ExceptionCodeParser
     /// <summary>
     /// 延迟初始化 <see cref="ExceptionCodeParser"/> 实例并保证线程安全
     /// </summary>
-    private static readonly Lazy<ExceptionCodeParser> _instance = new(() => new());
+    internal static readonly Lazy<ExceptionCodeParser> _instance = new(() => new());
 
     /// <summary>
     /// 异常编码信息缓存集合

@@ -59,9 +59,9 @@ public abstract class ApplicationException : System.Exception
     }
 
     /// <summary>
-    /// 异常时间
+    /// 异常编码
     /// </summary>
-    public DateTimeOffset ExceptionTime { get; init; } = DateTimeOffset.UtcNow;
+    public object? Code { get; set; }
 
     /// <inheritdoc cref="ExceptionLevel"/>
     public ExceptionLevel Level { get; set; }

@@ -15,17 +15,12 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 异常级别
+/// 异常模块常量配置
 /// </summary>
-public enum ExceptionLevel
+internal static class Constants
 {
     /// <summary>
-    /// 业务异常
+    /// 默认异常信息
     /// </summary>
-    Service = 0,
-
-    /// <summary>
-    /// 系统异常
-    /// </summary>
-    Error
+    internal const string DEFAULT_EXCEPTION_MESSAGE = "Internal Server Error.";
 }

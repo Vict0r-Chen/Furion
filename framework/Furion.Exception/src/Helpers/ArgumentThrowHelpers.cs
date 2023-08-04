@@ -20,7 +20,7 @@ namespace Furion.Exception;
 internal static class ArgumentThrowHelpers
 {
     /// <summary>
-    /// 抛出异常
+    /// 抛出用户友好参数异常
     /// </summary>
     /// <param name="paramName">参数名称</param>
     /// <exception cref="UserFriendlyException"></exception>
@@ -31,7 +31,7 @@ internal static class ArgumentThrowHelpers
     }
 
     /// <summary>
-    /// 抛出异常
+    /// 抛出用户友好参数异常
     /// </summary>
     /// <param name="argument">参数值</param>
     /// <param name="paramName">参数名称</param>
@@ -48,7 +48,25 @@ internal static class ArgumentThrowHelpers
     }
 
     /// <summary>
-    /// 抛出异常
+    /// 抛出用户友好参数异常
+    /// </summary>
+    /// <typeparam name="T">集合类型</typeparam>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    internal static void ThrowNullOrEmptyException<T>(ICollection<T>? argument, string paramName)
+    {
+        if (argument is null)
+        {
+            Throw(paramName);
+        }
+
+        throw new UserFriendlyException(null, new ArgumentException("Collection is empty.", paramName));
+    }
+
+    /// <summary>
+    /// 抛出用户友好参数异常
     /// </summary>
     /// <param name="argument">参数值</param>
     /// <param name="paramName">参数名称</param>

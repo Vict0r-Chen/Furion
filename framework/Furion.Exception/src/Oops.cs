@@ -15,17 +15,40 @@
 namespace System;
 
 /// <summary>
-/// 异常类
+/// 异常静态类
 /// </summary>
 public static class Oops
 {
     /// <summary>
-    /// 初始化用户友好异常
+    /// 抛出用户友好异常
+    /// </summary>
+    [DoesNotReturn]
+    public static void Throw()
+    {
+        Throw(Constants.DEFAULT_EXCEPTION_MESSAGE);
+    }
+
+    /// <summary>
+    /// 抛出用户友好异常
     /// </summary>
     /// <param name="code">异常编码</param>
     /// <param name="args">格式化参数</param>
-    /// <returns><see cref="UserFriendlyException"/></returns>
-    public static UserFriendlyException Oh(object? code, params object?[] args)
+    [DoesNotReturn]
+    public static void Throw(object? code, params object?[] args)
+    {
+        Throw<object>(code, args);
+    }
+
+    /// <summary>
+    /// 抛出用户友好异常
+    /// </summary>
+    /// <typeparam name="TResult">异常返回类型</typeparam>
+    /// <param name="code">异常编码</param>
+    /// <param name="args">格式化参数</param>
+    /// <returns><typeparamref name="TResult"/></returns>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    public static TResult Throw<TResult>(object? code, params object?[] args)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
@@ -34,20 +57,23 @@ public static class Oops
         var errorMessage = ExceptionCodeParser.Parse(code, args);
 
         // 返回用户友好异常
-        return new(errorMessage)
+        throw new UserFriendlyException(errorMessage)
         {
             Code = code
         };
     }
 
     /// <summary>
-    /// 初始化用户友好异常
+    /// 抛出用户友好异常
     /// </summary>
+    /// <typeparam name="TResult">异常返回类型</typeparam>
     /// <param name="code">异常编码</param>
+    /// <param name="exceptionType">异常类型</param>
     /// <param name="args">格式化参数</param>
-    /// <returns><see cref="UserFriendlyException"/></returns>
-    public static UserFriendlyException Oh<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TException>(object? code, params object?[] args)
-        where TException : Exception
+    /// <returns><typeparamref name="TResult"/></returns>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    public static TResult Throw<TResult>(object? code, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type exceptionType, params object?[] args)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
@@ -56,21 +82,20 @@ public static class Oops
         var errorMessage = ExceptionCodeParser.Parse(code, args);
 
         // 反射创建异常实例
-        var exception = Activator.CreateInstance(typeof(TException)
-            , new[] { errorMessage }) as TException;
+        var exception = Activator.CreateInstance(exceptionType, new[] { errorMessage }) as System.Exception;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(exception);
 
         // 返回用户友好异常
-        return new(null, exception)
+        throw new UserFriendlyException(null, exception)
         {
             Code = code
         };
     }
 
     /// <summary>
-    /// 若参数值为空则抛出异常
+    /// 若参数值为 <see langword="null"/> 则抛出用户友好参数异常
     /// </summary>
     /// <param name="argument">参数值</param>
     /// <param name="paramName">参数名称</param>
@@ -83,7 +108,7 @@ public static class Oops
     }
 
     /// <summary>
-    /// 若字符串值为空或空白则抛出异常
+    /// 若参数值为 <see langword="null"/> 或空白字符串则抛出用户友好参数异常
     /// </summary>
     /// <param name="argument">参数值</param>
     /// <param name="paramName">参数名称</param>
@@ -96,7 +121,7 @@ public static class Oops
     }
 
     /// <summary>
-    /// 若字符串值为空或空字符串则抛出异常
+    /// 若参数值为 <see langword="null"/> 或空字符串则抛出用户友好参数异常
     /// </summary>
     /// <param name="argument">参数值</param>
     /// <param name="paramName">参数名称</param>
@@ -105,6 +130,20 @@ public static class Oops
         if (string.IsNullOrEmpty(argument))
         {
             ArgumentThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 若参数值为 <see langword="null"/> 或空集合则抛出用户友好参数异常
+    /// </summary>
+    /// <typeparam name="T">集合项类型</typeparam>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNullOrEmpty<T>([NotNull] ICollection<T>? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (argument is null or { Count: 0 })
+        {
+            ArgumentThrowHelpers.ThrowNullOrEmptyException(argument, paramName!);
         }
     }
 }
