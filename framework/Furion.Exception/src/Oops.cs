@@ -30,7 +30,7 @@ public static class Oops
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
 
-        // 解析异常编码并返回错误信息
+        // 解析异常编码并返回异常信息
         var errorMessage = ExceptionCodeParser.Parse(code, args);
 
         // 返回用户友好异常
@@ -52,7 +52,7 @@ public static class Oops
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
 
-        // 解析异常编码并返回错误信息
+        // 解析异常编码并返回异常信息
         var errorMessage = ExceptionCodeParser.Parse(code, args);
 
         // 反射创建异常实例

@@ -25,23 +25,23 @@ internal sealed class ExceptionCodeParser
     private static readonly Lazy<ExceptionCodeParser> _instance = new(() => new());
 
     /// <summary>
-    /// 异常编码信息集合
+    /// 异常编码信息缓存集合
     /// </summary>
-    internal readonly ConcurrentDictionary<string, string> _codeMessages;
+    internal readonly ConcurrentDictionary<string, string> _codeMessagesCache;
 
     /// <summary>
     /// <inheritdoc cref="ExceptionCodeParser" />
     /// </summary>
     private ExceptionCodeParser()
     {
-        _codeMessages = new(StringComparer.OrdinalIgnoreCase);
+        _codeMessagesCache = new(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <inheritdoc cref="ExceptionCodeParser" />
     internal static ExceptionCodeParser Instance => _instance.Value;
 
     /// <summary>
-    /// 解析异常编码并返回错误信息
+    /// 解析异常编码并返回异常信息
     /// </summary>
     /// <param name="code">异常编码</param>
     /// <param name="args">格式化参数</param>
@@ -51,23 +51,23 @@ internal sealed class ExceptionCodeParser
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
 
-        // 解析错误信息
-        var errorMessage = code switch
+        // 解析异常信息
+        var message = code switch
         {
             // 检查异常编码是否是字符串类型
             string stringCode => stringCode,
             // 检查异常编码是否是枚举类型
             var enumCode when enumCode.GetType().IsEnum => Instance.ParseEnum(enumCode),
-            // 缺省值
+            // 其他类型
             _ => code?.ToString() ?? string.Empty
         };
 
-        // 格式化错误信息并返回
-        return string.Format(CultureInfo.CurrentCulture, errorMessage, args);
+        // 格式化异常信息并返回
+        return string.Format(CultureInfo.CurrentCulture, message, args);
     }
 
     /// <summary>
-    /// 解析枚举类型异常编码并返回错误信息
+    /// 解析枚举类型异常编码并返回异常信息
     /// </summary>
     /// <param name="code">异常编码</param>
     /// <returns><see cref="string"/></returns>
@@ -85,7 +85,7 @@ internal sealed class ExceptionCodeParser
         // 空检查
         ArgumentNullException.ThrowIfNull(enumName);
 
-        // 查找或创建错误信息
-        return _codeMessages.GetOrAdd($"{enumType}.{enumName}", _ => code.GetEnumDescription());
+        // 查找或创建异常信息
+        return _codeMessagesCache.GetOrAdd($"{enumType}.{enumName}", _ => code.GetEnumDescription());
     }
 }

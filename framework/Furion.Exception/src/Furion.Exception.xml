@@ -130,9 +130,9 @@
             延迟初始化 <see cref="T:Furion.Exception.ExceptionCodeParser"/> 实例并保证线程安全
             </summary>
         </member>
-        <member name="F:Furion.Exception.ExceptionCodeParser._codeMessages">
+        <member name="F:Furion.Exception.ExceptionCodeParser._codeMessagesCache">
             <summary>
-            异常编码信息集合
+            异常编码信息缓存集合
             </summary>
         </member>
         <member name="M:Furion.Exception.ExceptionCodeParser.#ctor">
@@ -145,7 +145,7 @@
         </member>
         <member name="M:Furion.Exception.ExceptionCodeParser.Parse(System.Object,System.Object[])">
             <summary>
-            解析异常编码并返回错误信息
+            解析异常编码并返回异常信息
             </summary>
             <param name="code">异常编码</param>
             <param name="args">格式化参数</param>
@@ -153,7 +153,7 @@
         </member>
         <member name="M:Furion.Exception.ExceptionCodeParser.ParseEnum(System.Object)">
             <summary>
-            解析枚举类型异常编码并返回错误信息
+            解析枚举类型异常编码并返回异常信息
             </summary>
             <param name="code">异常编码</param>
             <returns><see cref="T:System.String"/></returns>
