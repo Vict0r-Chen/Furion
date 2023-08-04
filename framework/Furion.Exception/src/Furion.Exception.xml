@@ -49,18 +49,6 @@
             附加属性
             </summary>
         </member>
-        <member name="M:Furion.Exception.ApplicationException.ToHtmlString">
-            <summary>
-            输出 HTML 字符串
-            </summary>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Furion.Exception.ApplicationException.ToJsonString">
-            <summary>
-            输出 JSON 字符串
-            </summary>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
         <member name="T:Furion.Exception.UserFriendlyException">
             <summary>
             用户友好异常

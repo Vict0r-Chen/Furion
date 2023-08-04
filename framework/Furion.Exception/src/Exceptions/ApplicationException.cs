@@ -72,22 +72,4 @@ public abstract class ApplicationException : System.Exception
     /// 附加属性
     /// </summary>
     public IDictionary<object, object?>? Properties { get; set; }
-
-    /// <summary>
-    /// 输出 HTML 字符串
-    /// </summary>
-    /// <returns><see cref="string"/></returns>
-    public virtual string ToHtmlString()
-    {
-        return null!;
-    }
-
-    /// <summary>
-    /// 输出 JSON 字符串
-    /// </summary>
-    /// <returns><see cref="string"/></returns>
-    public virtual string ToJsonString()
-    {
-        return null!;
-    }
 }
