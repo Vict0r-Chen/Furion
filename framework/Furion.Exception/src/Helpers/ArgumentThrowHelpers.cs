@@ -55,7 +55,7 @@ internal static class ArgumentThrowHelpers
     /// <param name="paramName">参数名称</param>
     /// <exception cref="UserFriendlyException"></exception>
     [DoesNotReturn]
-    internal static void ThrowNullOrEmptyException<T>(ICollection<T>? argument, string paramName)
+    internal static void ThrowNullOrEmptyException<T>(ICollection<T> argument, string paramName)
     {
         if (argument is null)
         {

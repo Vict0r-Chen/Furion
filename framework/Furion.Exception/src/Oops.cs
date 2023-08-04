@@ -73,7 +73,9 @@ public static class Oops
     /// <returns><typeparamref name="TResult"/></returns>
     /// <exception cref="UserFriendlyException"></exception>
     [DoesNotReturn]
-    public static TResult Throw<TResult>(object? code, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type exceptionType, params object?[] args)
+    public static TResult Throw<TResult>(object? code
+        , [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type exceptionType
+        , params object?[] args)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
@@ -169,7 +171,7 @@ public static class Oops
     {
         if (argument is null or { Count: 0 })
         {
-            ArgumentThrowHelpers.ThrowNullOrEmptyException(argument, paramName!);
+            ArgumentThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
         }
     }
 }
