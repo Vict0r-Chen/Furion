@@ -17,27 +17,8 @@ namespace System;
 /// <summary>
 /// 异常类
 /// </summary>
-public sealed class Oops
+public static class Oops
 {
-    /// <summary>
-    /// 延迟初始化 <see cref="Oops"/> 实例并保证线程安全
-    /// </summary>
-    private static readonly Lazy<Oops> _instance = new(() => new());
-
-    /// <summary>
-    /// <inheritdoc cref="Oops" />
-    /// </summary>
-    private Oops()
-    {
-        ErrorCodeParser = new();
-    }
-
-    /// <inheritdoc cref="Oops" />
-    internal static Oops Instance => _instance.Value;
-
-    /// <inheritdoc cref="Furion.Exception.ErrorCodeParser" />
-    internal ErrorCodeParser ErrorCodeParser { get; init; }
-
     /// <summary>
     /// 初始化用户友好异常
     /// </summary>
@@ -50,10 +31,10 @@ public sealed class Oops
         ArgumentNullException.ThrowIfNull(errorCode);
 
         // 解析错误码并返回错误消息
-        var errorMessage = Instance.ErrorCodeParser.Parse(errorCode);
+        var errorMessage = ErrorCodeParser.Parse(errorCode, args);
 
         // 返回用户友好异常
-        return new(FormatErrorMessage(errorMessage, args))
+        return new(errorMessage)
         {
             ErrorCode = errorCode
         };
@@ -72,11 +53,11 @@ public sealed class Oops
         ArgumentNullException.ThrowIfNull(errorCode);
 
         // 解析错误码并返回错误消息
-        var errorMessage = Instance.ErrorCodeParser.Parse(errorCode);
+        var errorMessage = ErrorCodeParser.Parse(errorCode, args);
 
         // 反射创建异常实例
         var exception = Activator.CreateInstance(typeof(TException)
-            , new[] { FormatErrorMessage(errorMessage, args) }) as TException;
+            , new[] { errorMessage }) as TException;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(exception);
@@ -86,19 +67,5 @@ public sealed class Oops
         {
             ErrorCode = errorCode
         };
-    }
-
-    /// <summary>
-    /// 格式化错误消息
-    /// </summary>
-    /// <param name="errorMessage">错误消息</param>
-    /// <param name="args">格式化参数</param>
-    /// <returns><see cref="string"/></returns>
-    internal static string FormatErrorMessage(string errorMessage, params object?[] args)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(errorMessage);
-
-        return string.Format(CultureInfo.CurrentCulture, errorMessage, args);
     }
 }

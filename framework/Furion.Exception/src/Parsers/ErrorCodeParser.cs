@@ -20,6 +20,11 @@ namespace Furion.Exception;
 internal sealed class ErrorCodeParser
 {
     /// <summary>
+    /// 延迟初始化 <see cref="ErrorCodeParser"/> 实例并保证线程安全
+    /// </summary>
+    private static readonly Lazy<ErrorCodeParser> _instance = new(() => new());
+
+    /// <summary>
     /// 错误码消息集合
     /// </summary>
     internal readonly ConcurrentDictionary<string, string> _errorCodeMessages;
@@ -27,37 +32,38 @@ internal sealed class ErrorCodeParser
     /// <summary>
     /// <inheritdoc cref="ErrorCodeParser" />
     /// </summary>
-    internal ErrorCodeParser()
+    private ErrorCodeParser()
     {
         _errorCodeMessages = new(StringComparer.OrdinalIgnoreCase);
     }
+
+    /// <inheritdoc cref="ErrorCodeParser" />
+    internal static ErrorCodeParser Instance => _instance.Value;
 
     /// <summary>
     /// 解析错误码并返回错误消息
     /// </summary>
     /// <param name="errorCode">错误码</param>
+    /// <param name="args">格式化参数</param>
     /// <returns><see cref="string"/></returns>
-    internal string Parse(object? errorCode)
+    internal static string Parse(object? errorCode, params object?[] args)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(errorCode);
 
-        // 检查错误码是否是字符串类型
-        if (errorCode is string stringErrorCode)
+        // 解析错误消息
+        var errorMessage = errorCode switch
         {
-            return stringErrorCode;
-        }
+            // 检查错误码是否是字符串类型
+            string stringErrorCode => stringErrorCode,
+            // 检查错误码是否是枚举类型
+            var enumErrorCode when enumErrorCode.GetType().IsEnum => Instance.ParseEnum(enumErrorCode),
+            // 缺省值
+            _ => errorCode?.ToString() ?? string.Empty
+        };
 
-        // 获取错误码类型
-        var errorCodeType = errorCode.GetType();
-
-        // 检查错误码是否是枚举类型
-        if (errorCodeType.IsEnum)
-        {
-            return ParseEnum(errorCode);
-        }
-
-        return errorCode.ToString()!;
+        // 格式化错误消息并返回
+        return string.Format(CultureInfo.CurrentCulture, errorMessage, args);
     }
 
     /// <summary>

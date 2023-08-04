@@ -96,6 +96,11 @@
             错误码解析器
             </summary>
         </member>
+        <member name="F:Furion.Exception.ErrorCodeParser._instance">
+            <summary>
+            延迟初始化 <see cref="T:Furion.Exception.ErrorCodeParser"/> 实例并保证线程安全
+            </summary>
+        </member>
         <member name="F:Furion.Exception.ErrorCodeParser._errorCodeMessages">
             <summary>
             错误码消息集合
@@ -106,11 +111,15 @@
             <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
             </summary>
         </member>
-        <member name="M:Furion.Exception.ErrorCodeParser.Parse(System.Object)">
+        <member name="P:Furion.Exception.ErrorCodeParser.Instance">
+            <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
+        </member>
+        <member name="M:Furion.Exception.ErrorCodeParser.Parse(System.Object,System.Object[])">
             <summary>
             解析错误码并返回错误消息
             </summary>
             <param name="errorCode">错误码</param>
+            <param name="args">格式化参数</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Exception.ErrorCodeParser.ParseEnum(System.Object)">
@@ -130,22 +139,6 @@
             异常类
             </summary>
         </member>
-        <member name="F:System.Oops._instance">
-            <summary>
-            延迟初始化 <see cref="T:System.Oops"/> 实例并保证线程安全
-            </summary>
-        </member>
-        <member name="M:System.Oops.#ctor">
-            <summary>
-            <inheritdoc cref="T:System.Oops" />
-            </summary>
-        </member>
-        <member name="P:System.Oops.Instance">
-            <inheritdoc cref="T:System.Oops" />
-        </member>
-        <member name="P:System.Oops.ErrorCodeParser">
-            <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
-        </member>
         <member name="M:System.Oops.Oh(System.Object,System.Object[])">
             <summary>
             初始化用户友好异常
@@ -161,14 +154,6 @@
             <param name="errorCode">错误码</param>
             <param name="args">格式化参数</param>
             <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
-        </member>
-        <member name="M:System.Oops.FormatErrorMessage(System.String,System.Object[])">
-            <summary>
-            格式化错误消息
-            </summary>
-            <param name="errorMessage">错误消息</param>
-            <param name="args">格式化参数</param>
-            <returns><see cref="T:System.String"/></returns>
         </member>
     </members>
 </doc>
