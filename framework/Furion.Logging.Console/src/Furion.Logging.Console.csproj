@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Description>Furion 框架控制台日志模块。</Description>
+		<PackageTags>Furion;ASP.NET;dotNET China;Cross Platform;百小僧;Monk;MonkSoul;Core;Logging;Console</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Furion.Logging\src\Furion.Logging.csproj" />
+	</ItemGroup>
+
+</Project>

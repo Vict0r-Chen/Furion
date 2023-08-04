@@ -41,6 +41,8 @@
 [assembly: InternalsVisibleTo("Furion.Localization.AspNetCore")]
 [assembly: InternalsVisibleTo("Furion.Logging")]
 [assembly: InternalsVisibleTo("Furion.Logging.AspNetCore")]
+[assembly: InternalsVisibleTo("Furion.Logging.Console")]
+[assembly: InternalsVisibleTo("Furion.Logging.File")]
 [assembly: InternalsVisibleTo("Furion.Mail")]
 [assembly: InternalsVisibleTo("Furion.Mail.Smtp")]
 [assembly: InternalsVisibleTo("Furion.Mail.Imap")]
