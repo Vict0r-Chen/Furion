@@ -202,7 +202,7 @@ public class PropertyValidatorTests
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
-        propertyValidator.When(u => u.Name != null);
+        propertyValidator.When(u => u.Name is not null);
 
         Assert.NotNull(propertyValidator.Condition);
     }
@@ -224,7 +224,7 @@ public class PropertyValidatorTests
     {
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
-        propertyValidator.WhenContext(u => u.ObjectInstance != null);
+        propertyValidator.WhenContext(u => u.ObjectInstance is not null);
 
         Assert.NotNull(propertyValidator.Condition);
     }

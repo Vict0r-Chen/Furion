@@ -210,6 +210,20 @@
             <returns><typeparamref name="TResult"/></returns>
             <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
+        <member name="M:System.Oops.ThrowIf(System.Boolean)">
+            <summary>
+            若条件成立则抛出用户友好异常
+            </summary>
+            <param name="condition">异常条件</param>
+        </member>
+        <member name="M:System.Oops.ThrowIf(System.Boolean,System.Object,System.Object[])">
+            <summary>
+            若条件成立则抛出用户友好异常
+            </summary>
+            <param name="condition">异常条件</param>
+            <param name="code">异常编码</param>
+            <param name="args">格式化参数</param>
+        </member>
         <member name="M:System.Oops.ThrowIfNull(System.Object,System.String)">
             <summary>
             若参数值为 <see langword="null"/> 则抛出用户友好参数异常

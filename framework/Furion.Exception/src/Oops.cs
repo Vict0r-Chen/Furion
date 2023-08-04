@@ -95,13 +95,39 @@ public static class Oops
     }
 
     /// <summary>
+    /// 若条件成立则抛出用户友好异常
+    /// </summary>
+    /// <param name="condition">异常条件</param>
+    public static void ThrowIf(bool condition)
+    {
+        if (condition)
+        {
+            Throw(Constants.DEFAULT_EXCEPTION_MESSAGE);
+        }
+    }
+
+    /// <summary>
+    /// 若条件成立则抛出用户友好异常
+    /// </summary>
+    /// <param name="condition">异常条件</param>
+    /// <param name="code">异常编码</param>
+    /// <param name="args">格式化参数</param>
+    public static void ThrowIf(bool condition, object? code, params object?[] args)
+    {
+        if (condition)
+        {
+            Throw(code, args);
+        }
+    }
+
+    /// <summary>
     /// 若参数值为 <see langword="null"/> 则抛出用户友好参数异常
     /// </summary>
     /// <param name="argument">参数值</param>
     /// <param name="paramName">参数名称</param>
     public static void ThrowIfNull([NotNull] object? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
     {
-        if (argument == null)
+        if (argument is null)
         {
             ArgumentThrowHelpers.Throw(paramName!);
         }

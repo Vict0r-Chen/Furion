@@ -139,7 +139,7 @@ public class ObjectValidatorTests
     public void When_ReturnOK()
     {
         var validator = new ObjectValidator<ObjectModel>();
-        validator.When(u => u.Name != null);
+        validator.When(u => u.Name is not null);
 
         Assert.NotNull(validator.Condition);
     }
@@ -159,7 +159,7 @@ public class ObjectValidatorTests
     public void WhenContext_ReturnOK()
     {
         var validator = new ObjectValidator<ObjectModel>();
-        validator.WhenContext(u => u.ObjectInstance != null);
+        validator.WhenContext(u => u.ObjectInstance is not null);
 
         Assert.NotNull(validator.Condition);
     }

@@ -329,7 +329,7 @@ public class RetryPolicyTests
             Result = 0
         }));
 
-        policy.HandleResult(context => context.Exception == null);
+        policy.HandleResult(context => context.Exception is null);
         Assert.True(policy.ShouldHandle(new()));
         Assert.False(policy.ShouldHandle(new()
         {

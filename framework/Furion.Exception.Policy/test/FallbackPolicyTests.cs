@@ -304,7 +304,7 @@ public class FallbackPolicyTests
             Exception = new()
         }));
 
-        policy.HandleResult(context => context.Exception == null);
+        policy.HandleResult(context => context.Exception is null);
         Assert.True(policy.ShouldHandle(new()));
         Assert.False(policy.ShouldHandle(new()
         {
