@@ -59,7 +59,7 @@ internal sealed class ExceptionCodeParser
             // 检查异常编码是否是枚举类型
             var enumCode when enumCode.GetType().IsEnum => Instance.ParseEnum(enumCode),
             // 其他类型
-            _ => code?.ToString() ?? string.Empty
+            _ => code.ToString() ?? string.Empty
         };
 
         // 格式化异常信息并返回

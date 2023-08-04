@@ -79,6 +79,7 @@ public static class Oops
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(code);
+        ArgumentNullException.ThrowIfNull(exceptionType);
 
         // 解析异常编码并返回异常信息
         var errorMessage = ExceptionCodeParser.Parse(code, args);

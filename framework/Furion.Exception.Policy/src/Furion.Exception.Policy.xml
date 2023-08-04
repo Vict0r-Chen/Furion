@@ -12,15 +12,15 @@
         </member>
         <member name="M:Furion.Exception.CompositePolicyContext`1.#ctor(Furion.Exception.PolicyBase{`0})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicyContext`1" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicyContext`1"/>
             </summary>
-            <param name="policy"><see cref="T:Furion.Exception.PolicyBase`1" /></param>
+            <param name="policy"><see cref="T:Furion.Exception.PolicyBase`1"/></param>
         </member>
         <member name="P:Furion.Exception.CompositePolicyContext`1.Policy">
             <inheritdoc cref="T:Furion.Exception.PolicyBase`1" />
         </member>
         <member name="P:Furion.Exception.CompositePolicyContext`1.Exception">
-            <inheritdoc cref="T:System.Exception" />
+            <inheritdoc cref="T:System.Exception"/>
         </member>
         <member name="T:Furion.Exception.FallbackPolicyContext`1">
             <summary>
@@ -30,11 +30,11 @@
         </member>
         <member name="M:Furion.Exception.FallbackPolicyContext`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicyContext`1" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicyContext`1"/>
             </summary>
         </member>
         <member name="P:Furion.Exception.FallbackPolicyContext`1.Exception">
-            <inheritdoc cref="T:System.Exception" />
+            <inheritdoc cref="T:System.Exception"/>
         </member>
         <member name="P:Furion.Exception.FallbackPolicyContext`1.Result">
             <summary>
@@ -59,11 +59,11 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicyContext`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.RetryPolicyContext`1" />
+            <inheritdoc cref="T:Furion.Exception.RetryPolicyContext`1"/>
             </summary>
         </member>
         <member name="P:Furion.Exception.RetryPolicyContext`1.Exception">
-            <inheritdoc cref="T:System.Exception" />
+            <inheritdoc cref="T:System.Exception"/>
         </member>
         <member name="P:Furion.Exception.RetryPolicyContext`1.Result">
             <summary>
@@ -93,7 +93,7 @@
         </member>
         <member name="M:Furion.Exception.TimeoutPolicyContext`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicyContext`1" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicyContext`1"/>
             </summary>
         </member>
         <member name="T:Furion.Exception.IExceptionPolicy`1">
@@ -112,31 +112,31 @@
             执行同步操作方法
             </summary>
             <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken" /></param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
         </member>
         <member name="M:Furion.Exception.IExceptionPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
             <summary>
             执行异步操作方法
             </summary>
             <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken" /></param>
-            <returns><see cref="T:System.Threading.Tasks.Task`1" /></returns>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
         <member name="M:Furion.Exception.IExceptionPolicy`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
             <summary>
             执行同步操作方法
             </summary>
             <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken" /></param>
-            <returns><typeparamref name="TResult" /></returns>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><typeparamref name="TResult"/></returns>
         </member>
         <member name="M:Furion.Exception.IExceptionPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <summary>
             执行异步操作方法
             </summary>
             <param name="operation">操作方法</param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken" /></param>
-            <returns><see cref="T:System.Threading.Tasks.Task`1" /></returns>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
         <member name="T:Furion.Exception.CompositePolicy">
             <summary>
@@ -145,18 +145,18 @@
         </member>
         <member name="M:Furion.Exception.CompositePolicy.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicy" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.CompositePolicy.#ctor(Furion.Exception.PolicyBase{System.Object}[])">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicy" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy"/>
             </summary>
             <param name="policies">策略集合</param>
         </member>
         <member name="M:Furion.Exception.CompositePolicy.#ctor(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{System.Object}})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicy" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy"/>
             </summary>
             <param name="policies">策略集合</param>
         </member>
@@ -168,18 +168,18 @@
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.#ctor(Furion.Exception.PolicyBase{`0}[])">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
             </summary>
             <param name="policies">策略集合</param>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.#ctor(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.CompositePolicy`1"/>
             </summary>
             <param name="policies">策略集合</param>
         </member>
@@ -198,21 +198,21 @@
             添加策略
             </summary>
             <param name="policies">策略集合</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.Join(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
             添加策略
             </summary>
             <param name="policies">策略集合</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.OnExecutionFailure(System.Action{Furion.Exception.CompositePolicyContext{`0}})">
             <summary>
             添加执行失败时操作方法
             </summary>
             <param name="executionFailureAction">执行失败时操作方法</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
@@ -221,9 +221,9 @@
             <summary>
             执行策略链
             </summary>
-            <param name="previous"><see cref="T:System.Func`3" /></param>
-            <param name="current"><see cref="T:System.Func`3" /></param>
-            <returns><see cref="T:System.Func`3" /></returns>
+            <param name="previous"><see cref="T:System.Func`3"/></param>
+            <param name="current"><see cref="T:System.Func`3"/></param>
+            <returns><see cref="T:System.Func`3"/></returns>
         </member>
         <member name="M:Furion.Exception.CompositePolicy`1.EnsureLegalData(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
@@ -239,17 +239,17 @@
         </member>
         <member name="M:Furion.Exception.FallbackPolicy.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy.#ctor(System.Func{Furion.Exception.FallbackPolicyContext{System.Object},System.Object})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy.#ctor(System.Action{Furion.Exception.FallbackPolicyContext{System.Object}})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy"/>
             </summary>
         </member>
         <member name="T:Furion.Exception.FallbackPolicy`1">
@@ -265,17 +265,17 @@
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.#ctor(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.#ctor(System.Action{Furion.Exception.FallbackPolicyContext{`0}})">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.FallbackPolicy`1"/>
             </summary>
         </member>
         <member name="P:Furion.Exception.FallbackPolicy`1.HandleExceptions">
@@ -302,96 +302,96 @@
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.Handle``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.Or``1">
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.Or``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.HandleInner``1">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.HandleInner``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.OrInner``1">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.OrInner``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.HandleResult(System.Func{Furion.Exception.FallbackPolicyContext{`0},System.Boolean})">
             <summary>
             添加操作结果条件
             </summary>
             <param name="resultCondition">操作结果条件</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.OrResult(System.Func{Furion.Exception.FallbackPolicyContext{`0},System.Boolean})">
             <summary>
             添加操作结果条件
             </summary>
             <param name="resultCondition">操作结果条件</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.OnFallback(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
             <summary>
             添加后备操作方法
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.OnFallback(System.Action{Furion.Exception.FallbackPolicyContext{`0}})">
             <summary>
             添加后备操作方法
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.ShouldHandle(Furion.Exception.FallbackPolicyContext{`0})">
             <summary>
             检查是否满足捕获异常的条件
             </summary>
-            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1" /></param>
-            <returns><see cref="T:System.Boolean" /></returns>
+            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
@@ -400,17 +400,17 @@
             <summary>
             检查是否满足捕获异常的条件
             </summary>
-            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1" /></param>
+            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
             <param name="exceptionTypes">捕获异常类型集合</param>
-            <param name="exception"><see cref="T:System.Exception" /></param>
-            <returns><see cref="T:System.Boolean" /></returns>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.ReturnOrThrowIfException(Furion.Exception.FallbackPolicyContext{`0})">
             <summary>
             返回结果或抛出异常
             </summary>
-            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1" /></param>
-            <returns><typeparamref name="TResult" /></returns>
+            <param name="context"><see cref="T:Furion.Exception.FallbackPolicyContext`1"/></param>
+            <returns><typeparamref name="TResult"/></returns>
         </member>
         <member name="T:Furion.Exception.PolicyBase`1">
             <summary>
@@ -440,12 +440,12 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicy.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.RetryPolicy.#ctor(System.Int32)">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.RetryPolicy" />
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy"/>
             </summary>
             <param name="maxRetryCount">最大重试次数</param>
         </member>
@@ -467,12 +467,12 @@
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.#ctor(System.Int32)">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.RetryPolicy`1"/>
             </summary>
             <param name="maxRetryCount">最大重试次数</param>
         </member>
@@ -515,116 +515,116 @@
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Handle``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Or``1">
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Or``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.HandleInner``1">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.HandleInner``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OrInner``1">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OrInner``1(System.Func{``0,System.Boolean})">
             <summary>
             添加捕获内部异常类型
             </summary>
-            <typeparam name="TException"><see cref="T:System.Exception" /></typeparam>
+            <typeparam name="TException"><see cref="T:System.Exception"/></typeparam>
             <param name="exceptionCondition">异常条件</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.HandleResult(System.Func{Furion.Exception.RetryPolicyContext{`0},System.Boolean})">
             <summary>
             添加操作结果条件
             </summary>
             <param name="resultCondition">操作结果条件</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OrResult(System.Func{Furion.Exception.RetryPolicyContext{`0},System.Boolean})">
             <summary>
             添加操作结果条件
             </summary>
             <param name="resultCondition">操作结果条件</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetry(System.TimeSpan[])">
             <summary>
             添加重试等待时间
             </summary>
             <param name="retryIntervals">重试等待时间</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.Forever">
             <summary>
             永久重试
             </summary>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.WaitAndRetryForever(System.TimeSpan[])">
             <summary>
             永久重试并添加重试等待时间
             </summary>
             <param name="retryIntervals">重试等待时间</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OnWaitRetry(System.Action{Furion.Exception.RetryPolicyContext{`0},System.TimeSpan})">
             <summary>
             添加等待重试时操作方法
             </summary>
             <param name="waitRetryAction">等待重试时操作方法</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.OnRetrying(System.Action{Furion.Exception.RetryPolicyContext{`0}})">
             <summary>
             添加重试时操作方法
             </summary>
             <param name="retryingAction">重试时操作方法</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ShouldHandle(Furion.Exception.RetryPolicyContext{`0})">
             <summary>
             检查是否满足捕获异常的条件
             </summary>
-            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1" /></param>
-            <returns><see cref="T:System.Boolean" /></returns>
+            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ExecuteAsync(System.Func{System.Threading.Tasks.Task{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
@@ -633,17 +633,17 @@
             <summary>
             检查是否满足捕获异常的条件
             </summary>
-            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1" /></param>
+            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
             <param name="exceptionTypes">捕获异常类型集合</param>
-            <param name="exception"><see cref="T:System.Exception" /></param>
-            <returns><see cref="T:System.Boolean" /></returns>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.ReturnOrThrowIfException(Furion.Exception.RetryPolicyContext{`0})">
             <summary>
             返回结果或抛出异常
             </summary>
-            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1" /></param>
-            <returns><typeparamref name="TResult" /></returns>
+            <param name="context"><see cref="T:Furion.Exception.RetryPolicyContext`1"/></param>
+            <returns><typeparamref name="TResult"/></returns>
         </member>
         <member name="T:Furion.Exception.TimeoutPolicy">
             <summary>
@@ -655,18 +655,18 @@
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy.#ctor(System.Double)">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
             </summary>
             <param name="timeout">超时时间（毫秒）</param>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy.#ctor(System.TimeSpan)">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy"/>
             </summary>
             <param name="timeout">超时时间</param>
         </member>
@@ -686,18 +686,18 @@
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
             </summary>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor(System.Double)">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
             </summary>
             <param name="timeout">超时时间（毫秒）</param>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor(System.TimeSpan)">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1" />
+            <inheritdoc cref="T:Furion.Exception.TimeoutPolicy`1"/>
             </summary>
             <param name="timeout">超时时间</param>
         </member>
@@ -716,7 +716,7 @@
             添加超时时操作方法
             </summary>
             <param name="timeoutAction">超时时操作方法</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.Execute(System.Func{`0},System.Threading.CancellationToken)">
             <inheritdoc />
@@ -739,29 +739,29 @@
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1" /></typeparam>
-            <returns><typeparamref name="TPolicy" /></returns>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
+            <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.For``1(``0)">
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1" /></typeparam>
-            <param name="policy"><typeparamref name="TPolicy" /></param>
-            <returns><typeparamref name="TPolicy" /></returns>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
+            <param name="policy"><typeparamref name="TPolicy"/></param>
+            <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Retry">
             <summary>
             初始化重试策略（默认 3 次）
             </summary>
-            <returns><see cref="T:Furion.Exception.RetryPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Retry(System.Int32)">
             <summary>
             初始化重试策略
             </summary>
             <param name="maxRetryCount">最大重试次数</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout">
             <summary>
@@ -770,7 +770,7 @@
             <remarks>
             <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
             </remarks>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout(System.Double)">
             <summary>
@@ -780,7 +780,7 @@
             <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
             </remarks>
             <param name="timeout">超时时间（毫秒）</param>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Timeout(System.TimeSpan)">
             <summary>
@@ -790,47 +790,47 @@
             <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
             </remarks>
             <param name="timeout">超时时间</param>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Fallback">
             <summary>
             初始化后备策略
             </summary>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Fallback(System.Func{Furion.Exception.FallbackPolicyContext{System.Object},System.Object})">
             <summary>
             初始化后备策略
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Fallback(System.Action{Furion.Exception.FallbackPolicyContext{System.Object}})">
             <summary>
             初始化后备策略
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Composite">
             <summary>
             初始化组合策略
             </summary>
-            <returns><see cref="T:Furion.Exception.CompositePolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Composite(Furion.Exception.PolicyBase{System.Object}[])">
             <summary>
             初始化组合策略
             </summary>
             <param name="policies">策略集合</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy.Composite(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{System.Object}})">
             <summary>
             初始化组合策略
             </summary>
             <param name="policies">策略集合</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy"/></returns>
         </member>
         <member name="T:Furion.Exception.Policy`1">
             <summary>
@@ -842,29 +842,29 @@
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1" /></typeparam>
-            <returns><typeparamref name="TPolicy" /></returns>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
+            <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.For``1(``0)">
             <summary>
             添加自定义策略
             </summary>
-            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1" /></typeparam>
-            <param name="policy"><typeparamref name="TPolicy" /></param>
-            <returns><typeparamref name="TPolicy" /></returns>
+            <typeparam name="TPolicy"><see cref="T:Furion.Exception.PolicyBase`1"/></typeparam>
+            <param name="policy"><typeparamref name="TPolicy"/></param>
+            <returns><typeparamref name="TPolicy"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Retry">
             <summary>
             初始化重试策略（默认 3 次）
             </summary>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Retry(System.Int32)">
             <summary>
             初始化重试策略
             </summary>
             <param name="maxRetryCount">最大重试次数</param>
-            <returns><see cref="T:Furion.Exception.RetryPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.RetryPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Timeout">
             <summary>
@@ -873,7 +873,7 @@
             <remarks>
             <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
             </remarks>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Timeout(System.Double)">
             <summary>
@@ -883,7 +883,7 @@
             <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
             </remarks>
             <param name="timeout">超时时间（毫秒）</param>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Timeout(System.TimeSpan)">
             <summary>
@@ -893,47 +893,47 @@
             <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
             </remarks>
             <param name="timeout">超时时间</param>
-            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.TimeoutPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Fallback">
             <summary>
             初始化后备策略
             </summary>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Fallback(System.Func{Furion.Exception.FallbackPolicyContext{`0},`0})">
             <summary>
             初始化后备策略
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Fallback(System.Action{Furion.Exception.FallbackPolicyContext{`0}})">
             <summary>
             初始化后备策略
             </summary>
             <param name="fallbackAction">后备操作方法</param>
-            <returns><see cref="T:Furion.Exception.FallbackPolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.FallbackPolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Composite">
             <summary>
             初始化组合策略
             </summary>
-            <returns><see cref="T:Furion.Exception.CompositePolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Composite(Furion.Exception.PolicyBase{`0}[])">
             <summary>
             初始化组合策略
             </summary>
             <param name="policies">策略集合</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="M:Furion.Exception.Policy`1.Composite(System.Collections.Generic.IEnumerable{Furion.Exception.PolicyBase{`0}})">
             <summary>
             初始化组合策略
             </summary>
             <param name="policies">策略集合</param>
-            <returns><see cref="T:Furion.Exception.CompositePolicy`1" /></returns>
+            <returns><see cref="T:Furion.Exception.CompositePolicy`1"/></returns>
         </member>
         <member name="T:Furion.Component.PolicyExceptionComponent">
             <summary>

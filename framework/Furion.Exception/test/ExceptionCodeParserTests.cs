@@ -75,6 +75,8 @@ public class ExceptionCodeParserTests : IDisposable
     public void Dispose()
     {
         GC.SuppressFinalize(this);
+
+        Thread.Sleep(10);
         ExceptionCodeParser.Instance._codeMessagesCache.Clear();
     }
 }
