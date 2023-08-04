@@ -97,19 +97,19 @@
             <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
-        <member name="T:Furion.Exception.ArgumentThrowHelpers">
+        <member name="T:Furion.Exception.ArgumentExceptionHelper">
             <summary>
             参数异常帮助类
             </summary>
         </member>
-        <member name="M:Furion.Exception.ArgumentThrowHelpers.Throw(System.String)">
+        <member name="M:Furion.Exception.ArgumentExceptionHelper.Throw(System.String)">
             <summary>
             抛出用户友好参数异常
             </summary>
             <param name="paramName">参数名称</param>
             <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
-        <member name="M:Furion.Exception.ArgumentThrowHelpers.ThrowNullOrEmptyException(System.String,System.String)">
+        <member name="M:Furion.Exception.ArgumentExceptionHelper.ThrowNullOrEmptyException(System.String,System.String)">
             <summary>
             抛出用户友好参数异常
             </summary>
@@ -117,7 +117,7 @@
             <param name="paramName">参数名称</param>
             <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
-        <member name="M:Furion.Exception.ArgumentThrowHelpers.ThrowNullOrEmptyException``1(System.Collections.Generic.ICollection{``0},System.String)">
+        <member name="M:Furion.Exception.ArgumentExceptionHelper.ThrowNullOrEmptyException``1(System.Collections.Generic.ICollection{``0},System.String)">
             <summary>
             抛出用户友好参数异常
             </summary>
@@ -126,7 +126,7 @@
             <param name="paramName">参数名称</param>
             <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
-        <member name="M:Furion.Exception.ArgumentThrowHelpers.ThrowNullOrWhiteSpaceException(System.String,System.String)">
+        <member name="M:Furion.Exception.ArgumentExceptionHelper.ThrowNullOrWhiteSpaceException(System.String,System.String)">
             <summary>
             抛出用户友好参数异常
             </summary>

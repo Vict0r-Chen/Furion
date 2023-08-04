@@ -131,7 +131,7 @@ public static class Oops
     {
         if (argument is null)
         {
-            ArgumentThrowHelpers.Throw(paramName!);
+            ArgumentExceptionHelper.Throw(paramName!);
         }
     }
 
@@ -144,7 +144,7 @@ public static class Oops
     {
         if (string.IsNullOrWhiteSpace(argument))
         {
-            ArgumentThrowHelpers.ThrowNullOrWhiteSpaceException(argument!, paramName!);
+            ArgumentExceptionHelper.ThrowNullOrWhiteSpaceException(argument!, paramName!);
         }
     }
 
@@ -157,7 +157,7 @@ public static class Oops
     {
         if (string.IsNullOrEmpty(argument))
         {
-            ArgumentThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
+            ArgumentExceptionHelper.ThrowNullOrEmptyException(argument!, paramName!);
         }
     }
 
@@ -171,7 +171,7 @@ public static class Oops
     {
         if (argument is null or { Count: 0 })
         {
-            ArgumentThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
+            ArgumentExceptionHelper.ThrowNullOrEmptyException(argument!, paramName!);
         }
     }
 }

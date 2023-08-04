@@ -17,7 +17,7 @@ namespace Furion.Exception;
 /// <summary>
 /// 应用程序异常抽象基类
 /// </summary>
-public abstract class ApplicationException : System.Exception
+public class ApplicationException : System.Exception
 {
     /// <summary>
     /// <inheritdoc cref="ApplicationException" />

@@ -12,4 +12,17 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Xunit;
+namespace Furion.Exception.Tests;
+
+public class ExceptionLevelTests
+{
+    [Fact]
+    public void Definition()
+    {
+        var names = Enum.GetNames(typeof(ExceptionLevel));
+        Assert.Equal(2, names.Length);
+
+        var strings = new[] { nameof(ExceptionLevel.Service), nameof(ExceptionLevel.Error) };
+        Assert.True(strings.SequenceEqual(names));
+    }
+}

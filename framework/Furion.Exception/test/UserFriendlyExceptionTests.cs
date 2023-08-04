@@ -12,4 +12,23 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Xunit;
+namespace Furion.Exception.Tests;
+
+public class UserFriendlyExceptionTests
+{
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var exception1 = new UserFriendlyException();
+        var exception2 = new UserFriendlyException("出错了~");
+        var exception3 = new UserFriendlyException("出错了~", new System.Exception());
+
+        Assert.NotNull(exception1);
+        Assert.Null(exception1.Code);
+        Assert.Equal(ExceptionLevel.Service, exception1.Level);
+        Assert.NotNull(exception2);
+        Assert.Equal(ExceptionLevel.Service, exception2.Level);
+        Assert.NotNull(exception3);
+        Assert.Equal(ExceptionLevel.Service, exception3.Level);
+    }
+}
