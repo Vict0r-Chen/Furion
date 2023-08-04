@@ -34,6 +34,11 @@
             <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
+        <member name="P:Furion.Exception.ApplicationException.TimeForException">
+            <summary>
+            异常时间
+            </summary>
+        </member>
         <member name="P:Furion.Exception.ApplicationException.Solution">
             <summary>
             解决方案
@@ -154,6 +159,50 @@
             <param name="errorCode">错误码</param>
             <param name="args">格式化参数</param>
             <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
+        </member>
+        <member name="M:System.Oops.ThrowIfNull(System.Object,System.String)">
+            <summary>
+            若参数值为空则抛出异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
+        <member name="M:System.Oops.ThrowIfNullOrWhiteSpace(System.String,System.String)">
+            <summary>
+            若字符串值为空或空白则抛出异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
+        <member name="M:System.Oops.ThrowIfNullOrEmpty(System.String,System.String)">
+            <summary>
+            若字符串值为空或空字符串则抛出异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
+        <member name="M:System.Oops.Throw(System.String)">
+            <summary>
+            抛出异常
+            </summary>
+            <param name="paramName">参数名称</param>
+            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
+        </member>
+        <member name="M:System.Oops.ThrowNullOrEmptyException(System.String,System.String)">
+            <summary>
+            抛出异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
+        </member>
+        <member name="M:System.Oops.ThrowNullOrWhiteSpaceException(System.String,System.String)">
+            <summary>
+            抛出异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
     </members>
 </doc>

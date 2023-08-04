@@ -59,6 +59,11 @@ public abstract class ApplicationException : System.Exception
     }
 
     /// <summary>
+    /// 异常时间
+    /// </summary>
+    public DateTimeOffset TimeForException { get; init; } = DateTimeOffset.UtcNow;
+
+    /// <summary>
     /// 解决方案
     /// </summary>
     public string? Solution { get; set; }

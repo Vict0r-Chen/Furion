@@ -68,4 +68,80 @@ public static class Oops
             ErrorCode = errorCode
         };
     }
+
+    /// <summary>
+    /// 若参数值为空则抛出异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNull([NotNull] object? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (argument == null)
+        {
+            Throw(paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 若字符串值为空或空白则抛出异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNullOrWhiteSpace([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (string.IsNullOrWhiteSpace(argument))
+        {
+            ThrowNullOrWhiteSpaceException(argument!, paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 若字符串值为空或空字符串则抛出异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNullOrEmpty([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (string.IsNullOrEmpty(argument))
+        {
+            ThrowNullOrEmptyException(argument!, paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 抛出异常
+    /// </summary>
+    /// <param name="paramName">参数名称</param>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    internal static void Throw(string paramName)
+    {
+        throw new UserFriendlyException(null, new ArgumentNullException(paramName));
+    }
+
+    /// <summary>
+    /// 抛出异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    internal static void ThrowNullOrEmptyException(string argument, string paramName)
+    {
+        ThrowIfNull(argument, paramName);
+        throw new UserFriendlyException(null, new ArgumentException("Argument is empty.", paramName));
+    }
+
+    /// <summary>
+    /// 抛出异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    internal static void ThrowNullOrWhiteSpaceException(string argument, string paramName)
+    {
+        ThrowIfNull(argument, paramName);
+        throw new UserFriendlyException(null, new ArgumentException("Argument is whitespace.", paramName));
+    }
 }
