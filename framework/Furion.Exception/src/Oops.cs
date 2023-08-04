@@ -22,38 +22,38 @@ public static class Oops
     /// <summary>
     /// 初始化用户友好异常
     /// </summary>
-    /// <param name="errorCode">错误码</param>
+    /// <param name="code">异常编码</param>
     /// <param name="args">格式化参数</param>
     /// <returns><see cref="UserFriendlyException"/></returns>
-    public static UserFriendlyException Oh(object? errorCode, params object?[] args)
+    public static UserFriendlyException Oh(object? code, params object?[] args)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorCode);
+        ArgumentNullException.ThrowIfNull(code);
 
-        // 解析错误码并返回错误信息
-        var errorMessage = ErrorCodeParser.Parse(errorCode, args);
+        // 解析异常编码并返回错误信息
+        var errorMessage = ExceptionCodeParser.Parse(code, args);
 
         // 返回用户友好异常
         return new(errorMessage)
         {
-            ErrorCode = errorCode
+            Code = code
         };
     }
 
     /// <summary>
     /// 初始化用户友好异常
     /// </summary>
-    /// <param name="errorCode">错误码</param>
+    /// <param name="code">异常编码</param>
     /// <param name="args">格式化参数</param>
     /// <returns><see cref="UserFriendlyException"/></returns>
-    public static UserFriendlyException Oh<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TException>(object? errorCode, params object?[] args)
+    public static UserFriendlyException Oh<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TException>(object? code, params object?[] args)
         where TException : Exception
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorCode);
+        ArgumentNullException.ThrowIfNull(code);
 
-        // 解析错误码并返回错误信息
-        var errorMessage = ErrorCodeParser.Parse(errorCode, args);
+        // 解析异常编码并返回错误信息
+        var errorMessage = ExceptionCodeParser.Parse(code, args);
 
         // 反射创建异常实例
         var exception = Activator.CreateInstance(typeof(TException)
@@ -65,7 +65,7 @@ public static class Oops
         // 返回用户友好异常
         return new(null, exception)
         {
-            ErrorCode = errorCode
+            Code = code
         };
     }
 

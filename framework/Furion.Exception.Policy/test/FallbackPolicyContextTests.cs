@@ -25,6 +25,5 @@ public class FallbackPolicyContextTests
         Assert.Null(policyContext.Exception);
         Assert.Null(policyContext.Result);
         Assert.Null(policyContext.PolicyName);
-        Assert.Equal(default, policyContext.TimeForFailure);
     }
 }

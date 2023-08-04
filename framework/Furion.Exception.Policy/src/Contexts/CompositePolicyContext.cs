@@ -37,9 +37,4 @@ public sealed class CompositePolicyContext<TResult> : PolicyContextBase
 
     /// <inheritdoc cref="System.Exception"/>
     public System.Exception? Exception { get; internal set; }
-
-    /// <summary>
-    /// 执行失败的时间
-    /// </summary>
-    public DateTimeOffset TimeForFailure { get; init; } = DateTimeOffset.UtcNow;
 }

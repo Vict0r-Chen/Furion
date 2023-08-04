@@ -15,8 +15,17 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 异常解决方案
+/// 异常级别
 /// </summary>
-public sealed class ExceptionSolution
+public enum ExceptionLevel
 {
+    /// <summary>
+    /// 服务异常
+    /// </summary>
+    Service = 0,
+
+    /// <summary>
+    /// 系统异常
+    /// </summary>
+    Error
 }

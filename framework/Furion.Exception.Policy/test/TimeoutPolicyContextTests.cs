@@ -23,6 +23,5 @@ public class TimeoutPolicyContextTests
 
         Assert.NotNull(policyContext);
         Assert.Null(policyContext.PolicyName);
-        Assert.NotEqual(default, policyContext.TimeForTimeout);
     }
 }

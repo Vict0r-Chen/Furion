@@ -25,6 +25,7 @@ public class UserFriendlyException : ApplicationException
     public UserFriendlyException()
         : base()
     {
+        Level = ExceptionLevel.Service;
     }
 
     /// <summary>
@@ -34,6 +35,7 @@ public class UserFriendlyException : ApplicationException
     public UserFriendlyException(string? message)
         : base(message)
     {
+        Level = ExceptionLevel.Service;
     }
 
     /// <summary>
@@ -44,6 +46,7 @@ public class UserFriendlyException : ApplicationException
     public UserFriendlyException(string? message, System.Exception? innerException)
         : base(message, innerException)
     {
+        Level = ExceptionLevel.Service;
     }
 
     /// <summary>
@@ -56,10 +59,11 @@ public class UserFriendlyException : ApplicationException
     protected UserFriendlyException(SerializationInfo info, StreamingContext context)
         : base(info, context)
     {
+        Level = ExceptionLevel.Service;
     }
 
     /// <summary>
-    /// 错误码
+    /// 异常编码
     /// </summary>
-    public object? ErrorCode { get; set; }
+    public object? Code { get; set; }
 }

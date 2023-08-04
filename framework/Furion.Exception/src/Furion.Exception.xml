@@ -4,6 +4,21 @@
         <name>Furion.Exception</name>
     </assembly>
     <members>
+        <member name="T:Furion.Exception.ExceptionLevel">
+            <summary>
+            异常级别
+            </summary>
+        </member>
+        <member name="F:Furion.Exception.ExceptionLevel.Service">
+            <summary>
+            服务异常
+            </summary>
+        </member>
+        <member name="F:Furion.Exception.ExceptionLevel.Error">
+            <summary>
+            系统异常
+            </summary>
+        </member>
         <member name="T:Furion.Exception.ApplicationException">
             <summary>
             应用程序异常抽象基类
@@ -34,20 +49,13 @@
             <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
-        <member name="P:Furion.Exception.ApplicationException.TimeForException">
+        <member name="P:Furion.Exception.ApplicationException.ExceptionTime">
             <summary>
             异常时间
             </summary>
         </member>
-        <member name="P:Furion.Exception.ApplicationException.Solution">
-            <summary>
-            解决方案
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.ApplicationException.Properties">
-            <summary>
-            附加属性
-            </summary>
+        <member name="P:Furion.Exception.ApplicationException.Level">
+            <inheritdoc cref="T:Furion.Exception.ExceptionLevel"/>
         </member>
         <member name="T:Furion.Exception.UserFriendlyException">
             <summary>
@@ -79,9 +87,9 @@
             <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
-        <member name="P:Furion.Exception.UserFriendlyException.ErrorCode">
+        <member name="P:Furion.Exception.UserFriendlyException.Code">
             <summary>
-            错误码
+            异常编码
             </summary>
         </member>
         <member name="T:Furion.Exception.ArgumentThrowHelpers">
@@ -112,48 +120,43 @@
             <param name="paramName">参数名称</param>
             <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
-        <member name="T:Furion.Exception.ErrorCodeParser">
+        <member name="T:Furion.Exception.ExceptionCodeParser">
             <summary>
-            错误码解析器
+            异常编码解析器
             </summary>
         </member>
-        <member name="F:Furion.Exception.ErrorCodeParser._instance">
+        <member name="F:Furion.Exception.ExceptionCodeParser._instance">
             <summary>
-            延迟初始化 <see cref="T:Furion.Exception.ErrorCodeParser"/> 实例并保证线程安全
+            延迟初始化 <see cref="T:Furion.Exception.ExceptionCodeParser"/> 实例并保证线程安全
             </summary>
         </member>
-        <member name="F:Furion.Exception.ErrorCodeParser._errorCodeMessages">
+        <member name="F:Furion.Exception.ExceptionCodeParser._codeMessages">
             <summary>
-            错误码信息集合
+            异常编码信息集合
             </summary>
         </member>
-        <member name="M:Furion.Exception.ErrorCodeParser.#ctor">
+        <member name="M:Furion.Exception.ExceptionCodeParser.#ctor">
             <summary>
-            <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
+            <inheritdoc cref="T:Furion.Exception.ExceptionCodeParser" />
             </summary>
         </member>
-        <member name="P:Furion.Exception.ErrorCodeParser.Instance">
-            <inheritdoc cref="T:Furion.Exception.ErrorCodeParser" />
+        <member name="P:Furion.Exception.ExceptionCodeParser.Instance">
+            <inheritdoc cref="T:Furion.Exception.ExceptionCodeParser" />
         </member>
-        <member name="M:Furion.Exception.ErrorCodeParser.Parse(System.Object,System.Object[])">
+        <member name="M:Furion.Exception.ExceptionCodeParser.Parse(System.Object,System.Object[])">
             <summary>
-            解析错误码并返回错误信息
+            解析异常编码并返回错误信息
             </summary>
-            <param name="errorCode">错误码</param>
+            <param name="code">异常编码</param>
             <param name="args">格式化参数</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
-        <member name="M:Furion.Exception.ErrorCodeParser.ParseEnum(System.Object)">
+        <member name="M:Furion.Exception.ExceptionCodeParser.ParseEnum(System.Object)">
             <summary>
-            解析枚举类型错误码并返回错误信息
+            解析枚举类型异常编码并返回错误信息
             </summary>
-            <param name="errorCode">错误码</param>
+            <param name="code">异常编码</param>
             <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="T:Furion.Exception.ExceptionSolution">
-            <summary>
-            异常解决方案
-            </summary>
         </member>
         <member name="T:System.Oops">
             <summary>
@@ -164,7 +167,7 @@
             <summary>
             初始化用户友好异常
             </summary>
-            <param name="errorCode">错误码</param>
+            <param name="code">异常编码</param>
             <param name="args">格式化参数</param>
             <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
         </member>
@@ -172,7 +175,7 @@
             <summary>
             初始化用户友好异常
             </summary>
-            <param name="errorCode">错误码</param>
+            <param name="code">异常编码</param>
             <param name="args">格式化参数</param>
             <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
         </member>

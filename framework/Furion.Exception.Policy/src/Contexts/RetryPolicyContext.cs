@@ -41,11 +41,6 @@ public sealed class RetryPolicyContext<TResult> : PolicyContextBase
     public int RetryCount { get; internal set; }
 
     /// <summary>
-    /// 重试的时间
-    /// </summary>
-    public DateTimeOffset TimeForRetry { get; private set; }
-
-    /// <summary>
     /// 附加属性
     /// </summary>
     public IDictionary<object, object?>? Properties { get; set; }
@@ -56,6 +51,5 @@ public sealed class RetryPolicyContext<TResult> : PolicyContextBase
     internal void Increment()
     {
         RetryCount++;
-        TimeForRetry = DateTimeOffset.UtcNow;
     }
 }

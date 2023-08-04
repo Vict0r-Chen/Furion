@@ -34,9 +34,4 @@ public sealed class FallbackPolicyContext<TResult> : PolicyContextBase
     /// 操作返回值
     /// </summary>
     public TResult? Result { get; internal set; }
-
-    /// <summary>
-    /// 执行失败的时间
-    /// </summary>
-    public DateTimeOffset TimeForFailure { get; internal set; }
 }

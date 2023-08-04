@@ -26,9 +26,4 @@ public sealed class TimeoutPolicyContext<TResult> : PolicyContextBase
     internal TimeoutPolicyContext()
     {
     }
-
-    /// <summary>
-    /// 超时的时间
-    /// </summary>
-    public DateTimeOffset TimeForTimeout { get; init; } = DateTimeOffset.UtcNow;
 }

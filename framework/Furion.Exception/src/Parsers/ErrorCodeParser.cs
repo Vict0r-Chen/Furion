@@ -15,51 +15,51 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 错误码解析器
+/// 异常编码解析器
 /// </summary>
-internal sealed class ErrorCodeParser
+internal sealed class ExceptionCodeParser
 {
     /// <summary>
-    /// 延迟初始化 <see cref="ErrorCodeParser"/> 实例并保证线程安全
+    /// 延迟初始化 <see cref="ExceptionCodeParser"/> 实例并保证线程安全
     /// </summary>
-    private static readonly Lazy<ErrorCodeParser> _instance = new(() => new());
+    private static readonly Lazy<ExceptionCodeParser> _instance = new(() => new());
 
     /// <summary>
-    /// 错误码信息集合
+    /// 异常编码信息集合
     /// </summary>
-    internal readonly ConcurrentDictionary<string, string> _errorCodeMessages;
+    internal readonly ConcurrentDictionary<string, string> _codeMessages;
 
     /// <summary>
-    /// <inheritdoc cref="ErrorCodeParser" />
+    /// <inheritdoc cref="ExceptionCodeParser" />
     /// </summary>
-    private ErrorCodeParser()
+    private ExceptionCodeParser()
     {
-        _errorCodeMessages = new(StringComparer.OrdinalIgnoreCase);
+        _codeMessages = new(StringComparer.OrdinalIgnoreCase);
     }
 
-    /// <inheritdoc cref="ErrorCodeParser" />
-    internal static ErrorCodeParser Instance => _instance.Value;
+    /// <inheritdoc cref="ExceptionCodeParser" />
+    internal static ExceptionCodeParser Instance => _instance.Value;
 
     /// <summary>
-    /// 解析错误码并返回错误信息
+    /// 解析异常编码并返回错误信息
     /// </summary>
-    /// <param name="errorCode">错误码</param>
+    /// <param name="code">异常编码</param>
     /// <param name="args">格式化参数</param>
     /// <returns><see cref="string"/></returns>
-    internal static string Parse(object? errorCode, params object?[] args)
+    internal static string Parse(object? code, params object?[] args)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorCode);
+        ArgumentNullException.ThrowIfNull(code);
 
         // 解析错误信息
-        var errorMessage = errorCode switch
+        var errorMessage = code switch
         {
-            // 检查错误码是否是字符串类型
-            string stringErrorCode => stringErrorCode,
-            // 检查错误码是否是枚举类型
-            var enumErrorCode when enumErrorCode.GetType().IsEnum => Instance.ParseEnum(enumErrorCode),
+            // 检查异常编码是否是字符串类型
+            string stringCode => stringCode,
+            // 检查异常编码是否是枚举类型
+            var enumCode when enumCode.GetType().IsEnum => Instance.ParseEnum(enumCode),
             // 缺省值
-            _ => errorCode?.ToString() ?? string.Empty
+            _ => code?.ToString() ?? string.Empty
         };
 
         // 格式化错误信息并返回
@@ -67,25 +67,25 @@ internal sealed class ErrorCodeParser
     }
 
     /// <summary>
-    /// 解析枚举类型错误码并返回错误信息
+    /// 解析枚举类型异常编码并返回错误信息
     /// </summary>
-    /// <param name="errorCode">错误码</param>
+    /// <param name="code">异常编码</param>
     /// <returns><see cref="string"/></returns>
-    internal string ParseEnum(object errorCode)
+    internal string ParseEnum(object code)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(errorCode);
+        ArgumentNullException.ThrowIfNull(code);
 
         // 获取枚举类型
-        var enumType = errorCode.GetType();
+        var enumType = code.GetType();
 
         // 获取枚举名称
-        var enumName = Enum.GetName(enumType, errorCode);
+        var enumName = Enum.GetName(enumType, code);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(enumName);
 
         // 查找或创建错误信息
-        return _errorCodeMessages.GetOrAdd($"{enumType}.{enumName}", _ => errorCode.GetEnumDescription());
+        return _codeMessages.GetOrAdd($"{enumType}.{enumName}", _ => code.GetEnumDescription());
     }
 }

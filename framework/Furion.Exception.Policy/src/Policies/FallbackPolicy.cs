@@ -316,7 +316,6 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         {
             // 设置策略上下文异常信息
             context.Exception = exception;
-            context.TimeForFailure = DateTimeOffset.UtcNow;
         }
 
         // 检查是否存在取消请求

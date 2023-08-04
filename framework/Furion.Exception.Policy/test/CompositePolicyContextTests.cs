@@ -33,6 +33,5 @@ public class CompositePolicyContextTests
         Assert.NotNull(policyContext);
         Assert.NotNull(policyContext.Policy);
         Assert.Null(policyContext.PolicyName);
-        Assert.NotEqual(default, policyContext.TimeForFailure);
     }
 }

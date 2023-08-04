@@ -26,7 +26,6 @@ public class RetryPolicyContextTests
         Assert.Null(policyContext.Result);
         Assert.Equal(0, policyContext.RetryCount);
         Assert.Null(policyContext.PolicyName);
-        Assert.Equal(default, policyContext.TimeForRetry);
         Assert.Null(policyContext.Properties);
     }
 
@@ -38,6 +37,5 @@ public class RetryPolicyContextTests
         Assert.Equal(1, policyContext.RetryCount);
         policyContext.Increment();
         Assert.Equal(2, policyContext.RetryCount);
-        Assert.NotEqual(default, policyContext.TimeForRetry);
     }
 }

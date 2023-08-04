@@ -22,11 +22,6 @@
         <member name="P:Furion.Exception.CompositePolicyContext`1.Exception">
             <inheritdoc cref="T:System.Exception"/>
         </member>
-        <member name="P:Furion.Exception.CompositePolicyContext`1.TimeForFailure">
-            <summary>
-            执行失败的时间
-            </summary>
-        </member>
         <member name="T:Furion.Exception.FallbackPolicyContext`1">
             <summary>
             后备策略上下文
@@ -44,11 +39,6 @@
         <member name="P:Furion.Exception.FallbackPolicyContext`1.Result">
             <summary>
             操作返回值
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.FallbackPolicyContext`1.TimeForFailure">
-            <summary>
-            执行失败的时间
             </summary>
         </member>
         <member name="T:Furion.Exception.PolicyContextBase">
@@ -85,11 +75,6 @@
             当前重试次数
             </summary>
         </member>
-        <member name="P:Furion.Exception.RetryPolicyContext`1.TimeForRetry">
-            <summary>
-            重试的时间
-            </summary>
-        </member>
         <member name="P:Furion.Exception.RetryPolicyContext`1.Properties">
             <summary>
             附加属性
@@ -109,11 +94,6 @@
         <member name="M:Furion.Exception.TimeoutPolicyContext`1.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.Exception.TimeoutPolicyContext`1"/>
-            </summary>
-        </member>
-        <member name="P:Furion.Exception.TimeoutPolicyContext`1.TimeForTimeout">
-            <summary>
-            超时的时间
             </summary>
         </member>
         <member name="T:Furion.Exception.IExceptionPolicy`1">
