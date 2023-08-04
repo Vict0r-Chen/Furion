@@ -37,6 +37,23 @@ internal static class ArgumentExceptionHelper
     /// <param name="paramName">参数名称</param>
     /// <exception cref="UserFriendlyException"></exception>
     [DoesNotReturn]
+    internal static void ThrowNullOrWhiteSpaceException(string argument, string paramName)
+    {
+        if (argument is null)
+        {
+            Throw(paramName);
+        }
+
+        throw new UserFriendlyException(null, new ArgumentException("Argument is whitespace.", paramName));
+    }
+
+    /// <summary>
+    /// 抛出用户友好参数异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
     internal static void ThrowNullOrEmptyException(string argument, string paramName)
     {
         if (argument is null)
@@ -63,22 +80,5 @@ internal static class ArgumentExceptionHelper
         }
 
         throw new UserFriendlyException(null, new ArgumentException("Collection is empty.", paramName));
-    }
-
-    /// <summary>
-    /// 抛出用户友好参数异常
-    /// </summary>
-    /// <param name="argument">参数值</param>
-    /// <param name="paramName">参数名称</param>
-    /// <exception cref="UserFriendlyException"></exception>
-    [DoesNotReturn]
-    internal static void ThrowNullOrWhiteSpaceException(string argument, string paramName)
-    {
-        if (argument is null)
-        {
-            Throw(paramName);
-        }
-
-        throw new UserFriendlyException(null, new ArgumentException("Argument is whitespace.", paramName));
     }
 }

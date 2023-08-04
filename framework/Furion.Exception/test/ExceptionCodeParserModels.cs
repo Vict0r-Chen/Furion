@@ -12,5 +12,15 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using System.ComponentModel;
-global using Xunit;
+namespace Furion.Exception.Tests;
+
+public enum ExceptionCodeModel
+{
+    None = 0,
+
+    [Description("缺省值")]
+    Default,
+
+    [Description("其他 {0} 的")]
+    Other
+}
