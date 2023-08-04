@@ -18,8 +18,7 @@ namespace Furion.Exception;
 /// 超时策略
 /// </summary>
 /// <remarks>
-/// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-/// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+/// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
 /// </remarks>
 public sealed class TimeoutPolicy : TimeoutPolicy<object>
 {
@@ -54,8 +53,7 @@ public sealed class TimeoutPolicy : TimeoutPolicy<object>
 /// 超时策略
 /// </summary>
 /// <remarks>
-/// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-/// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+/// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
 /// </remarks>
 /// <typeparam name="TResult">操作返回值类型</typeparam>
 public class TimeoutPolicy<TResult> : PolicyBase<TResult>

@@ -96,6 +96,9 @@ public sealed class Oops
     /// <returns><see cref="string"/></returns>
     internal static string FormatErrorMessage(string errorMessage, params object?[] args)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(errorMessage);
+
         return string.Format(CultureInfo.CurrentCulture, errorMessage, args);
     }
 }

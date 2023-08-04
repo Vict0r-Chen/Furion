@@ -65,8 +65,7 @@ public static class Policy
     /// 初始化超时策略（默认 10 秒）
     /// </summary>
     /// <remarks>
-    /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-    /// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+    /// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
     /// </remarks>
     /// <returns><see cref="TimeoutPolicy"/></returns>
     public static TimeoutPolicy Timeout()
@@ -78,8 +77,7 @@ public static class Policy
     /// 初始化超时策略
     /// </summary>
     /// <remarks>
-    /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-    /// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+    /// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
     /// </remarks>
     /// <param name="timeout">超时时间（毫秒）</param>
     /// <returns><see cref="TimeoutPolicy"/></returns>
@@ -92,8 +90,7 @@ public static class Policy
     /// 初始化超时策略
     /// </summary>
     /// <remarks>
-    /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-    /// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+    /// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
     /// </remarks>
     /// <param name="timeout">超时时间</param>
     /// <returns><see cref="TimeoutPolicy"/></returns>
@@ -213,8 +210,7 @@ public static class Policy<TResult>
     /// 初始化超时策略（默认 10 秒）
     /// </summary>
     /// <remarks>
-    /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-    /// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+    /// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
     /// </remarks>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
     public static TimeoutPolicy<TResult> Timeout()
@@ -226,8 +222,7 @@ public static class Policy<TResult>
     /// 初始化超时策略
     /// </summary>
     /// <remarks>
-    /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-    /// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+    /// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
     /// </remarks>
     /// <param name="timeout">超时时间（毫秒）</param>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
@@ -240,8 +235,7 @@ public static class Policy<TResult>
     /// 初始化超时策略
     /// </summary>
     /// <remarks>
-    /// <para>若需要测试同步阻塞，请使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
-    /// <para>若需使用 <c>Thread.Sleep(...)</c> 可以使用 <c>Task.Run(()=> ...)</c> 包装代码逻辑</para>
+    /// <para>若需要测试同步阻塞，建议使用 <c>Task.Delay(...).Wait()</c> 替代 <c>Thread.Sleep(...)</c></para>
     /// </remarks>
     /// <param name="timeout">超时时间</param>
     /// <returns><see cref="TimeoutPolicy{TResult}"/></returns>
