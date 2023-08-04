@@ -44,12 +44,12 @@ public sealed class RetryPolicy : RetryPolicy<object>
 public class RetryPolicy<TResult> : PolicyBase<TResult>
 {
     /// <summary>
-    /// 等待重试输出消息
+    /// 等待重试输出信息
     /// </summary>
     internal const string WAIT_RETRY_MESSAGE = "Retry after {0} seconds.";
 
     /// <summary>
-    /// 重试输出消息
+    /// 重试输出信息
     /// </summary>
     internal const string RETRY_MESSAGE = "Retrying for the {0}nd time.";
 

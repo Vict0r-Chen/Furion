@@ -916,7 +916,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <typeparam name="TValidator"><see cref="ValidatorBase"/></typeparam>
     /// <param name="constructorParametersAccessor">构造函数参数访问器</param>
-    /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+    /// <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> AddDelegator<TValidator>(Func<T, object?[]?>? constructorParametersAccessor = null, Func<string>? errorMessageResourceAccessor = null)
         where TValidator : ValidatorBase

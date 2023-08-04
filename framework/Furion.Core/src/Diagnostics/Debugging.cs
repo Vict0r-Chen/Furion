@@ -15,15 +15,15 @@
 namespace System;
 
 /// <summary>
-/// 向事件管理器中输出事件消息
+/// 向事件管理器中输出事件信息
 /// </summary>
 internal static class Debugging
 {
     /// <summary>
-    /// 输出一行事件消息
+    /// 输出一行事件信息
     /// </summary>
     /// <param name="level">
-    /// <para>消息级别</para>
+    /// <para>信息级别</para>
     /// <list type="number">
     /// <item>
     /// <description>跟踪</description>
@@ -51,20 +51,20 @@ internal static class Debugging
     /// </item>
     /// </list>
     /// </param>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void WriteLine(int level, string message)
     {
-        // 获取消息级别对应的 emoji
+        // 获取信息级别对应的 emoji
         var category = GetLevelEmoji(level);
 
         Debug.WriteLine(message, category);
     }
 
     /// <summary>
-    /// 输出一行事件消息
+    /// 输出一行事件信息
     /// </summary>
     /// <param name="level">
-    /// <para>消息级别</para>
+    /// <para>信息级别</para>
     /// <list type="number">
     /// <item>
     /// <description>跟踪</description>
@@ -92,7 +92,7 @@ internal static class Debugging
     /// </item>
     /// </list>
     /// </param>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void WriteLine(int level, string message, params object?[] args)
     {
@@ -100,18 +100,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出跟踪级别事件消息
+    /// 输出跟踪级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Trace(string message)
     {
         WriteLine(1, message);
     }
 
     /// <summary>
-    /// 输出跟踪级别事件消息
+    /// 输出跟踪级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Trace(string message, params object?[] args)
     {
@@ -119,18 +119,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出信息级别事件消息
+    /// 输出信息级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Info(string message)
     {
         WriteLine(2, message);
     }
 
     /// <summary>
-    /// 输出信息级别事件消息
+    /// 输出信息级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Info(string message, params object?[] args)
     {
@@ -138,18 +138,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出警告级别事件消息
+    /// 输出警告级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Warn(string message)
     {
         WriteLine(3, message);
     }
 
     /// <summary>
-    /// 输出警告级别事件消息
+    /// 输出警告级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Warn(string message, params object?[] args)
     {
@@ -157,18 +157,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出错误级别事件消息
+    /// 输出错误级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Error(string message)
     {
         WriteLine(4, message);
     }
 
     /// <summary>
-    /// 输出错误级别事件消息
+    /// 输出错误级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Error(string message, params object?[] args)
     {
@@ -176,18 +176,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出文件级别事件消息
+    /// 输出文件级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void File(string message)
     {
         WriteLine(5, message);
     }
 
     /// <summary>
-    /// 输出文件级别事件消息
+    /// 输出文件级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void File(string message, params object?[] args)
     {
@@ -195,18 +195,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出提示级别事件消息
+    /// 输出提示级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Tip(string message)
     {
         WriteLine(6, message);
     }
 
     /// <summary>
-    /// 输出提示级别事件消息
+    /// 输出提示级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Tip(string message, params object?[] args)
     {
@@ -214,18 +214,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出搜索级别事件消息
+    /// 输出搜索级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Search(string message)
     {
         WriteLine(7, message);
     }
 
     /// <summary>
-    /// 输出搜索级别事件消息
+    /// 输出搜索级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Search(string message, params object?[] args)
     {
@@ -233,18 +233,18 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 输出时钟级别事件消息
+    /// 输出时钟级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     internal static void Clock(string message)
     {
         WriteLine(8, message);
     }
 
     /// <summary>
-    /// 输出时钟级别事件消息
+    /// 输出时钟级别事件信息
     /// </summary>
-    /// <param name="message">事件消息</param>
+    /// <param name="message">事件信息</param>
     /// <param name="args">格式化参数</param>
     internal static void Clock(string message, params object?[] args)
     {
@@ -252,10 +252,10 @@ internal static class Debugging
     }
 
     /// <summary>
-    /// 获取消息级别对应的 emoji
+    /// 获取信息级别对应的 emoji
     /// </summary>
     /// <param name="level">
-    /// <para>消息级别</para>
+    /// <para>信息级别</para>
     /// <list type="number">
     /// <item>
     /// <description>跟踪</description>

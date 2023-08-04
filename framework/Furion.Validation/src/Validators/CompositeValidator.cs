@@ -82,7 +82,7 @@ public class CompositeValidator : ValidatorBase
         var validationResults = Validators.SelectMany(validator => validator.GetValidationResults(value, name) ?? Enumerable.Empty<ValidationResult>(), CascadeMode)
             .ToList();
 
-        // 检查是否配置了自定义错误消息
+        // 检查是否配置了自定义错误信息
         if (ErrorMessage is not null)
         {
             validationResults.Insert(0, new(FormatErrorMessage(name, value), new[] { name }));

@@ -47,7 +47,7 @@ public sealed class AggregateValidationException : AggregateException
     /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     public AggregateValidationException(string? message)
         : base(message)
     {
@@ -56,7 +56,7 @@ public sealed class AggregateValidationException : AggregateException
     /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     /// <param name="innerExceptions">内部异常集合</param>
     public AggregateValidationException(string? message, IEnumerable<ValidationException> innerExceptions)
         : base(message, innerExceptions)
@@ -66,7 +66,7 @@ public sealed class AggregateValidationException : AggregateException
     /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     /// <param name="innerException">内部异常</param>
     public AggregateValidationException(string? message, ValidationException innerException)
         : base(message, innerException)
@@ -76,7 +76,7 @@ public sealed class AggregateValidationException : AggregateException
     /// <summary>
     /// <inheritdoc cref="AggregateValidationException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     /// <param name="innerExceptions">内部异常集合</param>
     public AggregateValidationException(string? message, params ValidationException[] innerExceptions)
         : base(message, innerExceptions)

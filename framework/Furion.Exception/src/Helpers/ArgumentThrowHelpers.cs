@@ -15,9 +15,9 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 抛异常帮助类
+/// 参数异常帮助类
 /// </summary>
-internal static class ThrowHelpers
+internal static class ArgumentThrowHelpers
 {
     /// <summary>
     /// 抛出异常

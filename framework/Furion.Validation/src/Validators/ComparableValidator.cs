@@ -23,7 +23,7 @@ public abstract class ComparableValidator : ValidatorBase
     /// <inheritdoc cref="ComparableValidator"/>
     /// </summary>
     /// <param name="compareValueAccessor">比较的值访问器</param>
-    /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+    /// <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
     protected ComparableValidator(Func<object> compareValueAccessor, Func<string> errorMessageResourceAccessor)
         : base(errorMessageResourceAccessor)
     {

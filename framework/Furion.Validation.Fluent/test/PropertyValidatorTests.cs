@@ -93,16 +93,16 @@ public class PropertyValidatorTests
         var objectValidator = new ObjectValidator<PropertyModel>();
         var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
 
-        propertyValidator.WithErrorMessage("错误消息1");
+        propertyValidator.WithErrorMessage("错误信息1");
         Assert.Null(propertyValidator.Validators.LastOrDefault()?.ErrorMessage);
 
-        propertyValidator.Age().WithErrorMessage("错误消息2");
-        Assert.Equal("错误消息2", propertyValidator.Validators.LastOrDefault()?.ErrorMessage);
+        propertyValidator.Age().WithErrorMessage("错误信息2");
+        Assert.Equal("错误信息2", propertyValidator.Validators.LastOrDefault()?.ErrorMessage);
 
-        propertyValidator.NotNull().WithErrorMessage("错误消息3");
-        Assert.Equal("错误消息3", propertyValidator.Validators.LastOrDefault()?.ErrorMessage);
+        propertyValidator.NotNull().WithErrorMessage("错误信息3");
+        Assert.Equal("错误信息3", propertyValidator.Validators.LastOrDefault()?.ErrorMessage);
 
-        var errorMessages = new[] { "错误消息2", "错误消息3" };
+        var errorMessages = new[] { "错误信息2", "错误信息3" };
         Assert.Equal(errorMessages, propertyValidator.Validators.Select(v => v.ErrorMessage).ToArray());
     }
 

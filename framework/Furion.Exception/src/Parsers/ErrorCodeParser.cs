@@ -25,7 +25,7 @@ internal sealed class ErrorCodeParser
     private static readonly Lazy<ErrorCodeParser> _instance = new(() => new());
 
     /// <summary>
-    /// 错误码消息集合
+    /// 错误码信息集合
     /// </summary>
     internal readonly ConcurrentDictionary<string, string> _errorCodeMessages;
 
@@ -41,7 +41,7 @@ internal sealed class ErrorCodeParser
     internal static ErrorCodeParser Instance => _instance.Value;
 
     /// <summary>
-    /// 解析错误码并返回错误消息
+    /// 解析错误码并返回错误信息
     /// </summary>
     /// <param name="errorCode">错误码</param>
     /// <param name="args">格式化参数</param>
@@ -51,7 +51,7 @@ internal sealed class ErrorCodeParser
         // 空检查
         ArgumentNullException.ThrowIfNull(errorCode);
 
-        // 解析错误消息
+        // 解析错误信息
         var errorMessage = errorCode switch
         {
             // 检查错误码是否是字符串类型
@@ -62,12 +62,12 @@ internal sealed class ErrorCodeParser
             _ => errorCode?.ToString() ?? string.Empty
         };
 
-        // 格式化错误消息并返回
+        // 格式化错误信息并返回
         return string.Format(CultureInfo.CurrentCulture, errorMessage, args);
     }
 
     /// <summary>
-    /// 解析枚举类型错误码并返回错误消息
+    /// 解析枚举类型错误码并返回错误信息
     /// </summary>
     /// <param name="errorCode">错误码</param>
     /// <returns><see cref="string"/></returns>
@@ -85,7 +85,7 @@ internal sealed class ErrorCodeParser
         // 空检查
         ArgumentNullException.ThrowIfNull(enumName);
 
-        // 查找或创建错误消息
+        // 查找或创建错误信息
         return _errorCodeMessages.GetOrAdd($"{enumType}.{enumName}", _ => errorCode.GetEnumDescription());
     }
 }

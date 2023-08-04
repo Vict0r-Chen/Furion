@@ -30,7 +30,7 @@ public class UserFriendlyException : ApplicationException
     /// <summary>
     /// <inheritdoc cref="UserFriendlyException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     public UserFriendlyException(string? message)
         : base(message)
     {
@@ -39,7 +39,7 @@ public class UserFriendlyException : ApplicationException
     /// <summary>
     /// <inheritdoc cref="UserFriendlyException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     /// <param name="innerException">内部异常</param>
     public UserFriendlyException(string? message, System.Exception? innerException)
         : base(message, innerException)

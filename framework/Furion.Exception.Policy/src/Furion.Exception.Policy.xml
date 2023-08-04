@@ -280,7 +280,7 @@
         </member>
         <member name="F:Furion.Exception.FallbackPolicy`1.FALLBACK_MESSAGE">
             <summary>
-            后备输出消息
+            后备输出信息
             </summary>
         </member>
         <member name="M:Furion.Exception.FallbackPolicy`1.#ctor">
@@ -477,12 +477,12 @@
         </member>
         <member name="F:Furion.Exception.RetryPolicy`1.WAIT_RETRY_MESSAGE">
             <summary>
-            等待重试输出消息
+            等待重试输出信息
             </summary>
         </member>
         <member name="F:Furion.Exception.RetryPolicy`1.RETRY_MESSAGE">
             <summary>
-            重试输出消息
+            重试输出信息
             </summary>
         </member>
         <member name="M:Furion.Exception.RetryPolicy`1.#ctor">
@@ -701,7 +701,7 @@
         </member>
         <member name="F:Furion.Exception.TimeoutPolicy`1.TIMEOUT_MESSAGE">
             <summary>
-            超时输出消息
+            超时输出信息
             </summary>
         </member>
         <member name="M:Furion.Exception.TimeoutPolicy`1.#ctor">

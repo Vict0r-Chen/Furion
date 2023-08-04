@@ -183,7 +183,7 @@ public class ValidatorDelegatorTests
         Assert.Equal(validatorDelegator.ErrorMessage, validatorDelegator.Validator.ErrorMessage);
 
         instance.Name = "百小僧";
-        validatorDelegator.WithErrorMessage("自定义错误消息");
+        validatorDelegator.WithErrorMessage("自定义错误信息");
         validatorDelegator.Configure(v =>
         {
             v.CompareValue = "Fur";
@@ -194,7 +194,7 @@ public class ValidatorDelegatorTests
         Assert.NotNull(validatorDelegator.PropertyValue);
         Assert.Equal("百小僧", validatorDelegator.PropertyValue);
         Assert.Equal(validatorDelegator.ErrorMessage, validatorDelegator.Validator.ErrorMessage);
-        Assert.Equal("自定义错误消息", validatorDelegator.Validator.ErrorMessage);
+        Assert.Equal("自定义错误信息", validatorDelegator.Validator.ErrorMessage);
         Assert.Equal("Fur", validatorDelegator.Validator.CompareValue);
     }
 

@@ -39,7 +39,7 @@ public class ObjectAnnotationValidator : ValidatorBase
             return null;
         }
 
-        // 检查是否配置了自定义错误消息
+        // 检查是否配置了自定义错误信息
         if (ErrorMessage is not null)
         {
             validationResults.Insert(0, new ValidationResult(FormatErrorMessage(name, value), new[] { name }));

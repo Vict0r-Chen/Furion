@@ -42,7 +42,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         /// </summary>
         /// <param name="propertyValidator"><see cref="PropertyValidator{T, TProperty}"/></param>
         /// <param name="constructorParametersAccessor">构造函数参数访问器</param>
-        /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+        /// <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
         public ValidatorDelegator(PropertyValidator<T, TProperty> propertyValidator
             , Func<T, object?[]?>? constructorParametersAccessor = null
             , Func<string>? errorMessageResourceAccessor = null)
@@ -131,7 +131,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
             // 空检查
             ArgumentNullException.ThrowIfNull(Validator);
 
-            // 设置错误消息
+            // 设置错误信息
             Validator.ErrorMessage = ErrorMessage;
 
             // 调用自定义配置委托
@@ -239,9 +239,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
-    /// 设置错误消息
+    /// 设置错误信息
     /// </summary>
-    /// <param name="errorMessage">错误消息</param>
+    /// <param name="errorMessage">错误信息</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> WithErrorMessage(string? errorMessage)
     {

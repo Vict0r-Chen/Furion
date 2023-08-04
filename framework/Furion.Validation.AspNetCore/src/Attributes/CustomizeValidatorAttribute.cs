@@ -86,7 +86,7 @@ public class CustomizeValidatorAttribute : ValidationAttribute
         {
             var validationResult = validationResults.First();
 
-            // 检查是否配置了错误消息
+            // 检查是否配置了错误信息
             if (ErrorMessage is not null)
             {
                 validationResult.ErrorMessage = ErrorMessage;

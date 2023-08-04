@@ -88,7 +88,7 @@
             <inheritdoc cref="T:System.ComponentModel.DataAnnotations.ComparableAttribute`1"/>
             </summary>
             <param name="compareValueAccessor">比较的值访问器</param>
-            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
         </member>
         <member name="P:System.ComponentModel.DataAnnotations.ComparableAttribute`1.CompareValue">
             <summary>
@@ -1055,27 +1055,27 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
             </summary>
-            <param name="message">异常消息</param>
+            <param name="message">异常信息</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationException})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
             </summary>
-            <param name="message">异常消息</param>
+            <param name="message">异常信息</param>
             <param name="innerExceptions">内部异常集合</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException)">
             <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
             </summary>
-            <param name="message">异常消息</param>
+            <param name="message">异常信息</param>
             <param name="innerException">内部异常</param>
         </member>
         <member name="M:Furion.Validation.AggregateValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationException[])">
             <summary>
             <inheritdoc cref="T:Furion.Validation.AggregateValidationException" />
             </summary>
-            <param name="message">异常消息</param>
+            <param name="message">异常信息</param>
             <param name="innerExceptions">内部异常集合</param>
         </member>
         <member name="T:Furion.Validation.ValidatorBaseExtensions">
@@ -1085,11 +1085,11 @@
         </member>
         <member name="M:Furion.Validation.ValidatorBaseExtensions.WithErrorMessage``1(``0,System.String)">
             <summary>
-            设置错误消息
+            设置错误信息
             </summary>
             <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
             <param name="validator"><typeparamref name="TValidator"/></param>
-            <param name="errorMessage">错误消息</param>
+            <param name="errorMessage">错误信息</param>
             <returns><typeparamref name="TValidator"/></returns>
         </member>
         <member name="T:Furion.Validation.Resources.Strings">
@@ -1581,7 +1581,7 @@
             <inheritdoc cref="T:Furion.Validation.ComparableValidator"/>
             </summary>
             <param name="compareValueAccessor">比较的值访问器</param>
-            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
         </member>
         <member name="P:Furion.Validation.ComparableValidator.CompareValue">
             <summary>
@@ -2561,7 +2561,7 @@
         </member>
         <member name="F:Furion.Validation.ValidatorBase._errorMessageResourceAccessor">
             <summary>
-            错误消息资源访问器
+            错误信息资源访问器
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.#ctor">
@@ -2573,22 +2573,22 @@
             <summary>
             <inheritdoc cref="T:Furion.Validation.ValidatorBase"/>
             </summary>
-            <param name="defaultErrorMessage">默认错误消息</param>
+            <param name="defaultErrorMessage">默认错误信息</param>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.#ctor(System.Func{System.String})">
             <summary>
             <inheritdoc cref="T:Furion.Validation.ValidatorBase"/>
             </summary>
-            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
         </member>
         <member name="P:Furion.Validation.ValidatorBase.ErrorMessageString">
             <summary>
-            错误消息
+            错误信息
             </summary>
         </member>
         <member name="P:Furion.Validation.ValidatorBase.ErrorMessage">
             <summary>
-            自定义错误消息
+            自定义错误信息
             </summary>
         </member>
         <member name="M:Furion.Validation.ValidatorBase.IsValid(System.Object)">
@@ -2608,7 +2608,7 @@
         </member>
         <member name="M:Furion.Validation.ValidatorBase.FormatErrorMessage(System.String,System.Object)">
             <summary>
-            格式化错误消息
+            格式化错误信息
             </summary>
             <param name="name">显示名称</param>
             <param name="value">对象值</param>

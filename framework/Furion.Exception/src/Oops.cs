@@ -30,7 +30,7 @@ public static class Oops
         // 空检查
         ArgumentNullException.ThrowIfNull(errorCode);
 
-        // 解析错误码并返回错误消息
+        // 解析错误码并返回错误信息
         var errorMessage = ErrorCodeParser.Parse(errorCode, args);
 
         // 返回用户友好异常
@@ -52,7 +52,7 @@ public static class Oops
         // 空检查
         ArgumentNullException.ThrowIfNull(errorCode);
 
-        // 解析错误码并返回错误消息
+        // 解析错误码并返回错误信息
         var errorMessage = ErrorCodeParser.Parse(errorCode, args);
 
         // 反射创建异常实例
@@ -78,7 +78,7 @@ public static class Oops
     {
         if (argument == null)
         {
-            ThrowHelpers.Throw(paramName!);
+            ArgumentThrowHelpers.Throw(paramName!);
         }
     }
 
@@ -91,7 +91,7 @@ public static class Oops
     {
         if (string.IsNullOrWhiteSpace(argument))
         {
-            ThrowHelpers.ThrowNullOrWhiteSpaceException(argument!, paramName!);
+            ArgumentThrowHelpers.ThrowNullOrWhiteSpaceException(argument!, paramName!);
         }
     }
 
@@ -104,7 +104,7 @@ public static class Oops
     {
         if (string.IsNullOrEmpty(argument))
         {
-            ThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
+            ArgumentThrowHelpers.ThrowNullOrEmptyException(argument!, paramName!);
         }
     }
 }

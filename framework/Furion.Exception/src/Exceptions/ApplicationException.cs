@@ -30,7 +30,7 @@ public abstract class ApplicationException : System.Exception
     /// <summary>
     /// <inheritdoc cref="ApplicationException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     public ApplicationException(string? message)
         : base(message)
     {
@@ -39,7 +39,7 @@ public abstract class ApplicationException : System.Exception
     /// <summary>
     /// <inheritdoc cref="ApplicationException" />
     /// </summary>
-    /// <param name="message">异常消息</param>
+    /// <param name="message">异常信息</param>
     /// <param name="innerException">内部异常</param>
     public ApplicationException(string? message, System.Exception? innerException)
         : base(message, innerException)

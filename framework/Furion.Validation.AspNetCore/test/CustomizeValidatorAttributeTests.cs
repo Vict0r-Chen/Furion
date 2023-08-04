@@ -90,14 +90,14 @@ public class CustomizeValidatorAttributeTests
     {
         var customizeValidatorAttribute = new CustomizeValidatorAttribute
         {
-            ErrorMessage = "自定义错误消息"
+            ErrorMessage = "自定义错误信息"
         };
         var model = new FluentModel();
 
         var validationResult = customizeValidatorAttribute.IsValid(model, _ => new FluentModelValidator());
 
         Assert.NotNull(validationResult);
-        Assert.Equal("自定义错误消息", validationResult.ErrorMessage);
+        Assert.Equal("自定义错误信息", validationResult.ErrorMessage);
     }
 
     [Fact]

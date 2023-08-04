@@ -447,7 +447,7 @@
             </summary>
             <param name="propertyValidator"><see cref="T:Furion.Validation.PropertyValidator`2"/></param>
             <param name="constructorParametersAccessor">构造函数参数访问器</param>
-            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
         </member>
         <member name="P:Furion.Validation.PropertyValidator`2.ValidatorDelegator`1.Validator">
             <inheritdoc cref="T:Furion.Validation.ValidatorBase" />
@@ -556,9 +556,9 @@
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.WithErrorMessage(System.String)">
             <summary>
-            设置错误消息
+            设置错误信息
             </summary>
-            <param name="errorMessage">错误消息</param>
+            <param name="errorMessage">错误信息</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.WithDisplayName(System.String)">
@@ -1119,7 +1119,7 @@
             </summary>
             <typeparam name="TValidator"><see cref="T:Furion.Validation.ValidatorBase"/></typeparam>
             <param name="constructorParametersAccessor">构造函数参数访问器</param>
-            <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+            <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="T:Furion.Component.FluentValidationComponent">

@@ -113,7 +113,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
             // 设置属性值
             propertySetter(instance, value);
 
-            // 调试事件消息
+            // 调试事件信息
             var debugMessage = "The property {0} of type {1} has been successfully injected into the service.";
             if (value is null)
             {
@@ -183,7 +183,7 @@ internal sealed class AutowiredMemberActivator : IAutowiredMemberActivator
             // 设置字段值
             fieldSetter(instance, value);
 
-            // 调试事件消息
+            // 调试事件信息
             var debugMessage = "The field {0} of type {1} has been successfully injected into the service.";
             if (value is null)
             {

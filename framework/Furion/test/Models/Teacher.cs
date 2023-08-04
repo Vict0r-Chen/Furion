@@ -24,6 +24,6 @@ public class TeacherValidator : AbstractValidator<Teacher>
 {
     public TeacherValidator()
     {
-        RuleFor(s => s.Name).NotNull().NotEqual("Furion").WithErrorMessage("Tearche 的错误消息");
+        RuleFor(s => s.Name).NotNull().NotEqual("Furion").WithErrorMessage("Tearche 的错误信息");
     }
 }

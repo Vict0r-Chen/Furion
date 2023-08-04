@@ -63,7 +63,7 @@ internal sealed class ManifestResourceConfigurationParser
         // 调用文件配置解析器对象进行解析
         var keyValues = _fileConfigurationParser.Parse(manifestResourceConfigurationModel.Extension, stream);
 
-        // 调试事件消息
+        // 调试事件信息
         var debugMessage = "The embed resource `{0}` has been successfully loaded into the configuration.";
 
         // 检查是否设置了前缀

@@ -79,7 +79,7 @@ internal sealed class RemotedConfigurationParser
         // 调用文件配置解析器对象进行解析
         var keyValues = _fileConfigurationParser.Parse(extension!, stream);
 
-        // 调试事件消息
+        // 调试事件信息
         var debugMessage = "The remote address `{0}` has been successfully loaded into the configuration.";
 
         // 检查是否设置了前缀
@@ -136,7 +136,7 @@ internal sealed class RemotedConfigurationParser
         // 调用自定义 HttpClient 配置委托
         remotedConfigurationModel.ClientConfigurator?.Invoke(httpClient);
 
-        // 声明 HTTP 请求响应消息
+        // 声明 HTTP 请求响应信息
         HttpResponseMessage httpResponseMessage;
 
         // 处理可选配置

@@ -99,7 +99,7 @@ public abstract class ValidatorBase<T> : ValidatorBase
 public abstract class ValidatorBase
 {
     /// <summary>
-    /// 错误消息资源访问器
+    /// 错误信息资源访问器
     /// </summary>
     internal readonly Func<string> _errorMessageResourceAccessor;
 
@@ -114,7 +114,7 @@ public abstract class ValidatorBase
     /// <summary>
     /// <inheritdoc cref="ValidatorBase"/>
     /// </summary>
-    /// <param name="defaultErrorMessage">默认错误消息</param>
+    /// <param name="defaultErrorMessage">默认错误信息</param>
     protected ValidatorBase(string? defaultErrorMessage)
         : this(() => defaultErrorMessage ?? Strings.ValidatorBase_Invalid)
     {
@@ -123,7 +123,7 @@ public abstract class ValidatorBase
     /// <summary>
     /// <inheritdoc cref="ValidatorBase"/>
     /// </summary>
-    /// <param name="errorMessageResourceAccessor">错误消息资源访问器</param>
+    /// <param name="errorMessageResourceAccessor">错误信息资源访问器</param>
     protected ValidatorBase(Func<string> errorMessageResourceAccessor)
     {
         // 空检查
@@ -133,12 +133,12 @@ public abstract class ValidatorBase
     }
 
     /// <summary>
-    /// 错误消息
+    /// 错误信息
     /// </summary>
     protected string ErrorMessageString => ErrorMessage ?? _errorMessageResourceAccessor();
 
     /// <summary>
-    /// 自定义错误消息
+    /// 自定义错误信息
     /// </summary>
     public string? ErrorMessage { get; set; }
 
@@ -170,7 +170,7 @@ public abstract class ValidatorBase
     }
 
     /// <summary>
-    /// 格式化错误消息
+    /// 格式化错误信息
     /// </summary>
     /// <param name="name">显示名称</param>
     /// <param name="value">对象值</param>

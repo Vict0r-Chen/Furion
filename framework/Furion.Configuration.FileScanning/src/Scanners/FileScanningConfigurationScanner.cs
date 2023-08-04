@@ -259,7 +259,7 @@ internal sealed class FileScanningConfigurationScanner
         // 添加配置文件
         _configurationBuilder.Add(fileConfigurationSource);
 
-        // 调试事件消息
+        // 调试事件信息
         var debugMessage = "The file `{0}` has been successfully added to the configuration.";
         if (!fileScanningConfigurationModel.EnvironmentFlag)
         {
