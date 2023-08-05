@@ -1,12 +1,10 @@
-import { Layout } from "antd";
-
-const { Footer } = Layout;
-
-const footerStyle: React.CSSProperties = {
-  height: 30,
-  backgroundColor: "#ffffff",
-};
+import { Container, Powerby } from "./style";
 
 export default function FooterPanel() {
-  return <Footer style={footerStyle}></Footer>;
+  return (
+    <Container>
+      <div></div>
+      <Powerby>版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司</Powerby>
+    </Container>
+  );
 }

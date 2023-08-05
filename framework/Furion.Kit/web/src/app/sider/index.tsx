@@ -23,7 +23,7 @@ export default function SiderPanel() {
       </Line>
       <Space direction="vertical" align="center" size={20}>
         <Function type="icon-starter" title="启动" />
-        <Function type="icon-code-generate" title="生成" />
+        <Function type="icon-code-generate" title="代码" />
       </Space>
       <Line>
         <Divider style={{ margin: "20px 0" }} />
