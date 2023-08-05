@@ -13,7 +13,6 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 global using Furion.Core;
-global using Furion.Exception;
 global using System.Collections.Concurrent;
 global using System.ComponentModel;
 global using System.Diagnostics.CodeAnalysis;

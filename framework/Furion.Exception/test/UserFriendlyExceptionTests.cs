@@ -31,4 +31,264 @@ public class UserFriendlyExceptionTests
         Assert.NotNull(exception3);
         Assert.Equal(ExceptionLevel.Service, exception3.Level);
     }
+
+    [Fact]
+    public void Throw_Parameterless_ReturnOK()
+    {
+        var exception = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.Throw();
+        });
+
+        Assert.Equal(Constants.DEFAULT_EXCEPTION_MESSAGE, exception.Message);
+        Assert.Equal(Constants.DEFAULT_EXCEPTION_MESSAGE, exception.Code);
+    }
+
+    [Fact]
+    public void Throw_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            UserFriendlyException.Throw(null!);
+        });
+    }
+
+    [Theory]
+    [InlineData("出错啦", "出错啦")]
+    [InlineData(true, "True")]
+    [InlineData(false, "False")]
+    [InlineData(0, "0")]
+    [InlineData(ExceptionCodeModel.None, "None")]
+    [InlineData(ExceptionCodeModel.Default, "缺省值")]
+    [InlineData(ExceptionCodeModel.Other, "其他  的", "")]
+    [InlineData("出错啦 {0} ~", "出错啦 furion ~", "furion")]
+    [InlineData(ExceptionCodeModel.Other, "其他 furion 的", "furion")]
+    public void Throw_ReturnOK(object code, string result, params object?[] args)
+    {
+        var exception = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.Throw(code, args);
+        });
+
+        Assert.Equal(result, exception.Message);
+        Assert.Equal(code, exception.Code);
+    }
+
+    [Fact]
+    public void ThrowGeneric_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            UserFriendlyException.Throw<string>(null!);
+        });
+    }
+
+    [Theory]
+    [InlineData("出错啦", "出错啦")]
+    [InlineData(true, "True")]
+    [InlineData(false, "False")]
+    [InlineData(0, "0")]
+    [InlineData(ExceptionCodeModel.None, "None")]
+    [InlineData(ExceptionCodeModel.Default, "缺省值")]
+    [InlineData(ExceptionCodeModel.Other, "其他  的", "")]
+    [InlineData("出错啦 {0} ~", "出错啦 furion ~", "furion")]
+    [InlineData(ExceptionCodeModel.Other, "其他 furion 的", "furion")]
+    public void ThrowGeneric_ReturnOK(object code, string result, params object?[] args)
+    {
+        var exception = Assert.Throws<UserFriendlyException>(() =>
+        {
+            string? name = null;
+            var str = name ?? UserFriendlyException.Throw<string>(code, args);
+        });
+
+        Assert.Equal(result, exception.Message);
+        Assert.Equal(code, exception.Code);
+    }
+
+    [Fact]
+    public void ThrowGeneric_WithType_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            UserFriendlyException.Throw<string>(null!, (Type)null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            UserFriendlyException.Throw<string>("", (Type)null!);
+        });
+    }
+
+    [Theory]
+    [InlineData("出错啦", "出错啦")]
+    [InlineData(true, "True")]
+    [InlineData(false, "False")]
+    [InlineData(0, "0")]
+    [InlineData(ExceptionCodeModel.None, "None")]
+    [InlineData(ExceptionCodeModel.Default, "缺省值")]
+    [InlineData(ExceptionCodeModel.Other, "其他  的", "")]
+    [InlineData("出错啦 {0} ~", "出错啦 furion ~", "furion")]
+    [InlineData(ExceptionCodeModel.Other, "其他 furion 的", "furion")]
+    public void ThrowGeneric_WithType_ReturnOK(object code, string result, params object?[] args)
+    {
+        var exception = Assert.Throws<UserFriendlyException>(() =>
+        {
+            string? name = null;
+            var str = name ?? UserFriendlyException.Throw<string>(code, typeof(InvalidOperationException), args);
+        });
+
+        Assert.NotNull(exception.Message);
+        Assert.Equal(code, exception.Code);
+        Assert.NotNull(exception.InnerException);
+        Assert.True(exception.InnerException is InvalidOperationException);
+        Assert.Equal(result, exception.InnerException.Message);
+    }
+
+    [Fact]
+    public void ThrowIf_Parameterless_ReturnOK()
+    {
+        UserFriendlyException.ThrowIf(false);
+
+        var exception = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIf(true);
+        });
+
+        Assert.Equal(Constants.DEFAULT_EXCEPTION_MESSAGE, exception.Message);
+        Assert.Equal(Constants.DEFAULT_EXCEPTION_MESSAGE, exception.Code);
+    }
+
+    [Theory]
+    [InlineData("出错啦", "出错啦")]
+    [InlineData(true, "True")]
+    [InlineData(false, "False")]
+    [InlineData(0, "0")]
+    [InlineData(ExceptionCodeModel.None, "None")]
+    [InlineData(ExceptionCodeModel.Default, "缺省值")]
+    [InlineData(ExceptionCodeModel.Other, "其他  的", "")]
+    [InlineData("出错啦 {0} ~", "出错啦 furion ~", "furion")]
+    [InlineData(ExceptionCodeModel.Other, "其他 furion 的", "furion")]
+    public void ThrowIf_ReturnOK(object code, string result, params object?[] args)
+    {
+        UserFriendlyException.ThrowIf(false, code, args);
+
+        var exception = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIf(true, code, args);
+        });
+
+        Assert.Equal(result, exception.Message);
+        Assert.Equal(code, exception.Code);
+    }
+
+    [Fact]
+    public void ThrowIfNull_ReturnOK()
+    {
+        UserFriendlyException.ThrowIfNull("furion");
+
+        var excetpion = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNull(null, "furion");
+        });
+
+        Assert.NotNull(excetpion.Message);
+        Assert.NotNull(excetpion.InnerException);
+
+        var argumentException = excetpion.InnerException as ArgumentNullException;
+        Assert.NotNull(argumentException);
+        Assert.Equal("furion", argumentException.ParamName);
+    }
+
+    [Fact]
+    public void ThrowIfNullOrWhiteSpace_ReturnOK()
+    {
+        UserFriendlyException.ThrowIfNullOrWhiteSpace("furion");
+
+        var excetpion = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNullOrWhiteSpace(null!, "furion");
+        });
+
+        Assert.NotNull(excetpion.Message);
+        Assert.NotNull(excetpion.InnerException);
+
+        var argumentException = excetpion.InnerException as ArgumentNullException;
+        Assert.NotNull(argumentException);
+        Assert.Equal("furion", argumentException.ParamName);
+
+        var excetpion1 = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNullOrWhiteSpace("  ", "furion");
+        });
+
+        Assert.NotNull(excetpion1.Message);
+        Assert.NotNull(excetpion1.InnerException);
+
+        var argumentException1 = excetpion1.InnerException as ArgumentException;
+        Assert.NotNull(argumentException1);
+        Assert.Equal("furion", argumentException1.ParamName);
+        Assert.Equal("Argument is whitespace. (Parameter 'furion')", argumentException1.Message);
+    }
+
+    [Fact]
+    public void ThrowIfNullOrEmpty_ReturnOK()
+    {
+        UserFriendlyException.ThrowIfNullOrEmpty("furion");
+
+        var excetpion = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNullOrEmpty(null!, "furion");
+        });
+
+        Assert.NotNull(excetpion.Message);
+        Assert.NotNull(excetpion.InnerException);
+
+        var argumentException = excetpion.InnerException as ArgumentNullException;
+        Assert.NotNull(argumentException);
+        Assert.Equal("furion", argumentException.ParamName);
+
+        var excetpion1 = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNullOrEmpty(string.Empty, "furion");
+        });
+
+        Assert.NotNull(excetpion1.Message);
+        Assert.NotNull(excetpion1.InnerException);
+
+        var argumentException1 = excetpion1.InnerException as ArgumentException;
+        Assert.NotNull(argumentException1);
+        Assert.Equal("furion", argumentException1.ParamName);
+        Assert.Equal("Argument is empty. (Parameter 'furion')", argumentException1.Message);
+    }
+
+    [Fact]
+    public void ThrowIfNullOrEmpty_Collection_ReturnOK()
+    {
+        UserFriendlyException.ThrowIfNullOrEmpty(new List<string> { "furion" });
+
+        var excetpion = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNullOrEmpty((ICollection<string>)null!, "furion");
+        });
+
+        Assert.NotNull(excetpion.Message);
+        Assert.NotNull(excetpion.InnerException);
+
+        var argumentException = excetpion.InnerException as ArgumentNullException;
+        Assert.NotNull(argumentException);
+        Assert.Equal("furion", argumentException.ParamName);
+
+        var excetpion1 = Assert.Throws<UserFriendlyException>(() =>
+        {
+            UserFriendlyException.ThrowIfNullOrEmpty(Array.Empty<string>(), "furion");
+        });
+
+        Assert.NotNull(excetpion1.Message);
+        Assert.NotNull(excetpion1.InnerException);
+
+        var argumentException1 = excetpion1.InnerException as ArgumentException;
+        Assert.NotNull(argumentException1);
+        Assert.Equal("furion", argumentException1.ParamName);
+        Assert.Equal("Collection is empty. (Parameter 'furion')", argumentException1.Message);
+    }
 }

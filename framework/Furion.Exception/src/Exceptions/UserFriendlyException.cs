@@ -61,4 +61,161 @@ public class UserFriendlyException : ApplicationException
     {
         Level = ExceptionLevel.Service;
     }
+
+    /// <summary>
+    /// 抛出用户友好异常
+    /// </summary>
+    [DoesNotReturn]
+    public static void Throw()
+    {
+        Throw(Constants.DEFAULT_EXCEPTION_MESSAGE);
+    }
+
+    /// <summary>
+    /// 抛出用户友好异常
+    /// </summary>
+    /// <param name="code">异常编码</param>
+    /// <param name="args">格式化参数</param>
+    [DoesNotReturn]
+    public static void Throw(object? code, params object?[] args)
+    {
+        Throw<object>(code, args);
+    }
+
+    /// <summary>
+    /// 抛出用户友好异常
+    /// </summary>
+    /// <typeparam name="TResult">异常返回类型</typeparam>
+    /// <param name="code">异常编码</param>
+    /// <param name="args">格式化参数</param>
+    /// <returns><typeparamref name="TResult"/></returns>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    public static TResult Throw<TResult>(object? code, params object?[] args)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(code);
+
+        // 解析异常编码并返回异常信息
+        var errorMessage = ExceptionCodeParser.Parse(code, args);
+
+        // 抛出用户友好异常
+        throw new UserFriendlyException(errorMessage)
+        {
+            Code = code
+        };
+    }
+
+    /// <summary>
+    /// 抛出用户友好异常
+    /// </summary>
+    /// <typeparam name="TResult">异常返回类型</typeparam>
+    /// <param name="code">异常编码</param>
+    /// <param name="exceptionType">异常类型</param>
+    /// <param name="args">格式化参数</param>
+    /// <returns><typeparamref name="TResult"/></returns>
+    /// <exception cref="UserFriendlyException"></exception>
+    [DoesNotReturn]
+    public static TResult Throw<TResult>(object? code
+        , [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type exceptionType
+        , params object?[] args)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(code);
+        ArgumentNullException.ThrowIfNull(exceptionType);
+
+        // 解析异常编码并返回异常信息
+        var errorMessage = ExceptionCodeParser.Parse(code, args);
+
+        // 反射创建异常实例
+        var exception = Activator.CreateInstance(exceptionType, new[] { errorMessage }) as System.Exception;
+
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exception);
+
+        // 抛出用户友好异常
+        throw new UserFriendlyException(null, exception)
+        {
+            Code = code
+        };
+    }
+
+    /// <summary>
+    /// 若条件成立则抛出用户友好异常
+    /// </summary>
+    /// <param name="condition">异常条件</param>
+    public static void ThrowIf(bool condition)
+    {
+        if (condition)
+        {
+            Throw(Constants.DEFAULT_EXCEPTION_MESSAGE);
+        }
+    }
+
+    /// <summary>
+    /// 若条件成立则抛出用户友好异常
+    /// </summary>
+    /// <param name="condition">异常条件</param>
+    /// <param name="code">异常编码</param>
+    /// <param name="args">格式化参数</param>
+    public static void ThrowIf(bool condition, object? code, params object?[] args)
+    {
+        if (condition)
+        {
+            Throw(code, args);
+        }
+    }
+
+    /// <summary>
+    /// 若参数值为 <see langword="null"/> 则抛出用户友好参数异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNull([NotNull] object? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (argument is null)
+        {
+            ArgumentExceptionHelper.Throw(paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 若参数值为 <see langword="null"/> 或空白字符串则抛出用户友好参数异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNullOrWhiteSpace([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (string.IsNullOrWhiteSpace(argument))
+        {
+            ArgumentExceptionHelper.ThrowNullOrWhiteSpaceException(argument!, paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 若参数值为 <see langword="null"/> 或空字符串则抛出用户友好参数异常
+    /// </summary>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNullOrEmpty([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (string.IsNullOrEmpty(argument))
+        {
+            ArgumentExceptionHelper.ThrowNullOrEmptyException(argument!, paramName!);
+        }
+    }
+
+    /// <summary>
+    /// 若参数值为 <see langword="null"/> 或空集合则抛出用户友好参数异常
+    /// </summary>
+    /// <typeparam name="T">集合项类型</typeparam>
+    /// <param name="argument">参数值</param>
+    /// <param name="paramName">参数名称</param>
+    public static void ThrowIfNullOrEmpty<T>([NotNull] ICollection<T>? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+        if (argument is null or { Count: 0 })
+        {
+            ArgumentExceptionHelper.ThrowNullOrEmptyException(argument!, paramName!);
+        }
+    }
 }

@@ -139,7 +139,7 @@ public class HelloController
     [HttpGet]
     public void TestThrow([FromQuery] string? name = null)
     {
-        var z = name is null ? Oops.Throw<string>("字符串不能为空") : name;
-        var c = name ?? Oops.Throw<string>("字符串不能为空");
+        var z = name is null ? UserFriendlyException.Throw<string>("字符串不能为空") : name;
+        var c = name ?? UserFriendlyException.Throw<string>("字符串不能为空");
     }
 }

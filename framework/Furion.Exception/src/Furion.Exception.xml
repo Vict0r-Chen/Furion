@@ -97,6 +97,82 @@
             <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
+        <member name="M:Furion.Exception.UserFriendlyException.Throw">
+            <summary>
+            抛出用户友好异常
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.Throw(System.Object,System.Object[])">
+            <summary>
+            抛出用户友好异常
+            </summary>
+            <param name="code">异常编码</param>
+            <param name="args">格式化参数</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.Throw``1(System.Object,System.Object[])">
+            <summary>
+            抛出用户友好异常
+            </summary>
+            <typeparam name="TResult">异常返回类型</typeparam>
+            <param name="code">异常编码</param>
+            <param name="args">格式化参数</param>
+            <returns><typeparamref name="TResult"/></returns>
+            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.Throw``1(System.Object,System.Type,System.Object[])">
+            <summary>
+            抛出用户友好异常
+            </summary>
+            <typeparam name="TResult">异常返回类型</typeparam>
+            <param name="code">异常编码</param>
+            <param name="exceptionType">异常类型</param>
+            <param name="args">格式化参数</param>
+            <returns><typeparamref name="TResult"/></returns>
+            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.ThrowIf(System.Boolean)">
+            <summary>
+            若条件成立则抛出用户友好异常
+            </summary>
+            <param name="condition">异常条件</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.ThrowIf(System.Boolean,System.Object,System.Object[])">
+            <summary>
+            若条件成立则抛出用户友好异常
+            </summary>
+            <param name="condition">异常条件</param>
+            <param name="code">异常编码</param>
+            <param name="args">格式化参数</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.ThrowIfNull(System.Object,System.String)">
+            <summary>
+            若参数值为 <see langword="null"/> 则抛出用户友好参数异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.ThrowIfNullOrWhiteSpace(System.String,System.String)">
+            <summary>
+            若参数值为 <see langword="null"/> 或空白字符串则抛出用户友好参数异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.ThrowIfNullOrEmpty(System.String,System.String)">
+            <summary>
+            若参数值为 <see langword="null"/> 或空字符串则抛出用户友好参数异常
+            </summary>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.ThrowIfNullOrEmpty``1(System.Collections.Generic.ICollection{``0},System.String)">
+            <summary>
+            若参数值为 <see langword="null"/> 或空集合则抛出用户友好参数异常
+            </summary>
+            <typeparam name="T">集合项类型</typeparam>
+            <param name="argument">参数值</param>
+            <param name="paramName">参数名称</param>
+        </member>
         <member name="T:Furion.Exception.ArgumentExceptionHelper">
             <summary>
             参数异常帮助类
@@ -176,87 +252,6 @@
             <summary>
             异常模块服务组件
             </summary>
-        </member>
-        <member name="T:System.Oops">
-            <summary>
-            异常静态类
-            </summary>
-        </member>
-        <member name="M:System.Oops.Throw">
-            <summary>
-            抛出用户友好异常
-            </summary>
-        </member>
-        <member name="M:System.Oops.Throw(System.Object,System.Object[])">
-            <summary>
-            抛出用户友好异常
-            </summary>
-            <param name="code">异常编码</param>
-            <param name="args">格式化参数</param>
-        </member>
-        <member name="M:System.Oops.Throw``1(System.Object,System.Object[])">
-            <summary>
-            抛出用户友好异常
-            </summary>
-            <typeparam name="TResult">异常返回类型</typeparam>
-            <param name="code">异常编码</param>
-            <param name="args">格式化参数</param>
-            <returns><typeparamref name="TResult"/></returns>
-            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
-        </member>
-        <member name="M:System.Oops.Throw``1(System.Object,System.Type,System.Object[])">
-            <summary>
-            抛出用户友好异常
-            </summary>
-            <typeparam name="TResult">异常返回类型</typeparam>
-            <param name="code">异常编码</param>
-            <param name="exceptionType">异常类型</param>
-            <param name="args">格式化参数</param>
-            <returns><typeparamref name="TResult"/></returns>
-            <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
-        </member>
-        <member name="M:System.Oops.ThrowIf(System.Boolean)">
-            <summary>
-            若条件成立则抛出用户友好异常
-            </summary>
-            <param name="condition">异常条件</param>
-        </member>
-        <member name="M:System.Oops.ThrowIf(System.Boolean,System.Object,System.Object[])">
-            <summary>
-            若条件成立则抛出用户友好异常
-            </summary>
-            <param name="condition">异常条件</param>
-            <param name="code">异常编码</param>
-            <param name="args">格式化参数</param>
-        </member>
-        <member name="M:System.Oops.ThrowIfNull(System.Object,System.String)">
-            <summary>
-            若参数值为 <see langword="null"/> 则抛出用户友好参数异常
-            </summary>
-            <param name="argument">参数值</param>
-            <param name="paramName">参数名称</param>
-        </member>
-        <member name="M:System.Oops.ThrowIfNullOrWhiteSpace(System.String,System.String)">
-            <summary>
-            若参数值为 <see langword="null"/> 或空白字符串则抛出用户友好参数异常
-            </summary>
-            <param name="argument">参数值</param>
-            <param name="paramName">参数名称</param>
-        </member>
-        <member name="M:System.Oops.ThrowIfNullOrEmpty(System.String,System.String)">
-            <summary>
-            若参数值为 <see langword="null"/> 或空字符串则抛出用户友好参数异常
-            </summary>
-            <param name="argument">参数值</param>
-            <param name="paramName">参数名称</param>
-        </member>
-        <member name="M:System.Oops.ThrowIfNullOrEmpty``1(System.Collections.Generic.ICollection{``0},System.String)">
-            <summary>
-            若参数值为 <see langword="null"/> 或空集合则抛出用户友好参数异常
-            </summary>
-            <typeparam name="T">集合项类型</typeparam>
-            <param name="argument">参数值</param>
-            <param name="paramName">参数名称</param>
         </member>
     </members>
 </doc>
