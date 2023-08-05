@@ -21,10 +21,10 @@
         </member>
         <member name="F:Furion.Exception.ExceptionLevel.Service">
             <summary>
-            业务异常
+            服务异常
             </summary>
         </member>
-        <member name="F:Furion.Exception.ExceptionLevel.Error">
+        <member name="F:Furion.Exception.ExceptionLevel.System">
             <summary>
             系统异常
             </summary>
@@ -96,6 +96,20 @@
             </summary>
             <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
             <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.WithCode(System.Object)">
+            <summary>
+            设置异常编码
+            </summary>
+            <param name="code">异常编码</param>
+            <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
+        </member>
+        <member name="M:Furion.Exception.UserFriendlyException.SetLevel(Furion.Exception.ExceptionLevel)">
+            <summary>
+            设置异常级别
+            </summary>
+            <param name="level"><see cref="T:Furion.Exception.ExceptionLevel"/></param>
+            <returns><see cref="T:Furion.Exception.UserFriendlyException"/></returns>
         </member>
         <member name="M:Furion.Exception.UserFriendlyException.Throw">
             <summary>

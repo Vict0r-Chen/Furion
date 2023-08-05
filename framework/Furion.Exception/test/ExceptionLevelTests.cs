@@ -22,7 +22,7 @@ public class ExceptionLevelTests
         var names = Enum.GetNames(typeof(ExceptionLevel));
         Assert.Equal(2, names.Length);
 
-        var strings = new[] { nameof(ExceptionLevel.Service), nameof(ExceptionLevel.Error) };
+        var strings = new[] { nameof(ExceptionLevel.Service), nameof(ExceptionLevel.System) };
         Assert.True(strings.SequenceEqual(names));
     }
 }

@@ -33,6 +33,35 @@ public class UserFriendlyExceptionTests
     }
 
     [Fact]
+    public void WithCode_Invalid_Parameters()
+    {
+        var exception = new UserFriendlyException();
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            exception.WithCode(null!);
+        });
+    }
+
+    [Fact]
+    public void WithCode_ReturnOK()
+    {
+        var exception = new UserFriendlyException();
+
+        exception.WithCode(ExceptionCodeModel.Default);
+        Assert.Equal(ExceptionCodeModel.Default, exception.Code);
+    }
+
+    [Fact]
+    public void SetLevel_ReturnOK()
+    {
+        var exception = new UserFriendlyException();
+
+        exception.SetLevel(ExceptionLevel.System);
+        Assert.Equal(ExceptionLevel.System, exception.Level);
+    }
+
+    [Fact]
     public void Throw_Parameterless_ReturnOK()
     {
         var exception = Assert.Throws<UserFriendlyException>(() =>

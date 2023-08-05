@@ -63,6 +63,33 @@ public class UserFriendlyException : ApplicationException
     }
 
     /// <summary>
+    /// 设置异常编码
+    /// </summary>
+    /// <param name="code">异常编码</param>
+    /// <returns><see cref="UserFriendlyException"/></returns>
+    public UserFriendlyException WithCode(object code)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(code);
+
+        Code = code;
+
+        return this;
+    }
+
+    /// <summary>
+    /// 设置异常级别
+    /// </summary>
+    /// <param name="level"><see cref="ExceptionLevel"/></param>
+    /// <returns><see cref="UserFriendlyException"/></returns>
+    public UserFriendlyException SetLevel(ExceptionLevel level)
+    {
+        Level = level;
+
+        return this;
+    }
+
+    /// <summary>
     /// 抛出用户友好异常
     /// </summary>
     [DoesNotReturn]
@@ -97,10 +124,10 @@ public class UserFriendlyException : ApplicationException
         ArgumentNullException.ThrowIfNull(code);
 
         // 解析异常编码并返回异常信息
-        var errorMessage = ExceptionCodeParser.Parse(code, args);
+        var message = ExceptionCodeParser.Parse(code, args);
 
         // 抛出用户友好异常
-        throw new UserFriendlyException(errorMessage)
+        throw new UserFriendlyException(message)
         {
             Code = code
         };
@@ -125,10 +152,10 @@ public class UserFriendlyException : ApplicationException
         ArgumentNullException.ThrowIfNull(exceptionType);
 
         // 解析异常编码并返回异常信息
-        var errorMessage = ExceptionCodeParser.Parse(code, args);
+        var message = ExceptionCodeParser.Parse(code, args);
 
         // 反射创建异常实例
-        var exception = Activator.CreateInstance(exceptionType, new[] { errorMessage }) as System.Exception;
+        var exception = Activator.CreateInstance(exceptionType, new[] { message }) as System.Exception;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(exception);

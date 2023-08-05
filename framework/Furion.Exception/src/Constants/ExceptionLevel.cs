@@ -20,12 +20,12 @@ namespace Furion.Exception;
 public enum ExceptionLevel
 {
     /// <summary>
-    /// 业务异常
+    /// 服务异常
     /// </summary>
     Service = 0,
 
     /// <summary>
     /// 系统异常
     /// </summary>
-    Error
+    System
 }
