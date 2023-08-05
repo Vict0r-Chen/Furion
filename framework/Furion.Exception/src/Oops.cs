@@ -56,7 +56,7 @@ public static class Oops
         // 解析异常编码并返回异常信息
         var errorMessage = ExceptionCodeParser.Parse(code, args);
 
-        // 返回用户友好异常
+        // 抛出用户友好异常
         throw new UserFriendlyException(errorMessage)
         {
             Code = code
@@ -90,7 +90,7 @@ public static class Oops
         // 空检查
         ArgumentNullException.ThrowIfNull(exception);
 
-        // 返回用户友好异常
+        // 抛出用户友好异常
         throw new UserFriendlyException(null, exception)
         {
             Code = code
