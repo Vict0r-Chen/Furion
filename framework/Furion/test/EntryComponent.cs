@@ -51,6 +51,8 @@ public class ApplicationComponent : WebComponent
     {
         var app = context.Application;
 
+        app.UseKit();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

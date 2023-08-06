@@ -4,5 +4,17 @@
         <name>Furion.Kit</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.AspNetCore.Builder.KitApplicationBuilderExtensions">
+            <summary>
+            Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitApplicationBuilderExtensions.UseKit(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            添加 Kit 中间件
+            </summary>
+            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
+        </member>
     </members>
 </doc>
