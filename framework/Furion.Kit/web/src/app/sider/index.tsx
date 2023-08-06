@@ -34,6 +34,12 @@ export default function SiderPanel() {
               )}
             </NavLink>
 
+            <NavLink to="/console">
+              {({ isActive, isPending }) => (
+                <Function type="icon-console" active={isActive} title="输出" />
+              )}
+            </NavLink>
+
             <NavLink to="/exception">
               {({ isActive, isPending }) => (
                 <Function
