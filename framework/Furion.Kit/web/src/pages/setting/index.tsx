@@ -1,9 +1,11 @@
 import {
   Anchor,
   Button,
+  Checkbox,
   Divider,
   Input,
   Layout,
+  Popconfirm,
   Radio,
   Select,
   Space,
@@ -11,7 +13,7 @@ import {
   message,
 } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
-import { useState } from "react";
+import React, { useState } from "react";
 import IconFont from "../../components/iconfont";
 import { Container, Panel } from "./style";
 
@@ -224,16 +226,35 @@ export default function Setting() {
                     setAdvice(ev.target.value);
                   }}
                 />
-                <Button
-                  type="primary"
-                  disabled={advice.length < 10}
-                  onClick={() => {
-                    setAdvice("");
-                    success("已成功发送，我们将在 7 个工作日内给您答复。");
-                  }}
-                >
-                  告诉我们
-                </Button>
+                <Space>
+                  <Button
+                    type="primary"
+                    disabled={advice.length < 10}
+                    onClick={() => {
+                      setAdvice("");
+                      success("已成功发送，我们将在 7 个工作日内给您答复。");
+                    }}
+                  >
+                    通知我们
+                  </Button>
+                  <Text style={{ color: "#000000a6" }}>哪些信息可以收集？</Text>
+
+                  <Popconfirm
+                    placement="topLeft"
+                    title="配置您许可的信息收集。"
+                    description={<Collect />}
+                    onConfirm={() => {}}
+                    okText="选好了"
+                    cancelText="取消"
+                  >
+                    <Text
+                      style={{ color: "#000000a6", cursor: "pointer" }}
+                      underline
+                    >
+                      配置
+                    </Text>
+                  </Popconfirm>
+                </Space>
               </Space>
             </div>
             <Divider />
@@ -254,3 +275,18 @@ export default function Setting() {
     </>
   );
 }
+
+const Collect: React.FC = () => {
+  return (
+    <div style={{ padding: "10px 20px 10px 0" }}>
+      <Space direction="vertical">
+        <Checkbox defaultChecked>操作系统 (版本/MAC/IP)</Checkbox>
+        <Checkbox defaultChecked>浏览器 (版本)</Checkbox>
+        <Checkbox defaultChecked>项目 (名称/网站/端口)</Checkbox>
+        <Checkbox defaultChecked disabled>
+          框架 (.NET SDK/Furion)
+        </Checkbox>
+      </Space>
+    </div>
+  );
+};
