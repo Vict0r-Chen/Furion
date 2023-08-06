@@ -24,28 +24,18 @@ export default function SiderPanel() {
               )}
             </NavLink>
 
-            <NavLink to="/component">
-              {({ isActive, isPending }) => (
-                <Function
-                  type="icon-component"
-                  active={isActive}
-                  title="组件"
-                />
-              )}
-            </NavLink>
-
             <NavLink to="/console">
               {({ isActive, isPending }) => (
                 <Function type="icon-console" active={isActive} title="输出" />
               )}
             </NavLink>
 
-            <NavLink to="/exception">
+            <NavLink to="/diagnosis">
               {({ isActive, isPending }) => (
                 <Function
                   active={isActive}
-                  type="icon-exception"
-                  title="异常"
+                  type="icon-diagnosis"
+                  title="诊断"
                   badge={5}
                   badgeStatus="error"
                 />
@@ -68,6 +58,16 @@ export default function SiderPanel() {
                   type="icon-system-info"
                   active={isActive}
                   title="系统"
+                />
+              )}
+            </NavLink>
+
+            <NavLink to="/component">
+              {({ isActive, isPending }) => (
+                <Function
+                  type="icon-component"
+                  active={isActive}
+                  title="组件"
                 />
               )}
             </NavLink>

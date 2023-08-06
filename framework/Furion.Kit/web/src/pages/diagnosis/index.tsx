@@ -1,27 +1,22 @@
 import {
   Anchor,
-  Button,
   Divider,
-  Input,
   Layout,
-  Radio,
-  Select,
   Space,
-  Typography,
+  Typography
 } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
 import IconFont from "../../components/iconfont";
 import { Container, Panel } from "./style";
 
-const { TextArea } = Input;
 const { Title, Text } = Typography;
 const { Sider, Content } = Layout;
 
-export default function Exception() {
+export default function Diagnosis() {
   return (
     <Panel>
-      <Title level={3}>异常</Title>
-      <Container id="exception-container">
+      <Title level={3}>诊断</Title>
+      <Container id="diagnosis-container">
         <Sider
           theme="light"
           style={{ position: "sticky", overflowY: "auto", top: 0 }}
@@ -31,14 +26,14 @@ export default function Exception() {
               onClick={(ev) => ev.preventDefault()}
               getContainer={() =>
                 document.getElementById(
-                  "exception-container"
+                  "diagnosis-container"
                 ) as AnchorContainer
               }
               affix={false}
               items={[
                 {
                   key: "stack",
-                  href: "#exception-stack",
+                  href: "#diagnosis-stack",
                   title: (
                     <Space>
                       <IconFont type="icon-stack" />
@@ -48,7 +43,7 @@ export default function Exception() {
                 },
                 {
                   key: "query",
-                  href: "#exception-query",
+                  href: "#diagnosis-query",
                   title: (
                     <Space>
                       <IconFont type="icon-query" style={{ fontSize: 15 }} />
@@ -58,7 +53,7 @@ export default function Exception() {
                 },
                 {
                   key: "cookies",
-                  href: "#exception-cookies",
+                  href: "#diagnosis-cookies",
                   title: (
                     <Space>
                       <IconFont type="icon-cookies" style={{ fontSize: 15 }} />
@@ -68,7 +63,7 @@ export default function Exception() {
                 },
                 {
                   key: "request",
-                  href: "#exception-request",
+                  href: "#diagnosis-request",
                   title: (
                     <Space>
                       <IconFont type="icon-request" style={{ fontSize: 15 }} />
@@ -78,7 +73,7 @@ export default function Exception() {
                 },
                 {
                   key: "response",
-                  href: "#exception-response",
+                  href: "#diagnosis-response",
                   title: (
                     <Space>
                       <IconFont type="icon-response" style={{ fontSize: 15 }} />
@@ -88,7 +83,7 @@ export default function Exception() {
                 },
                 {
                   key: "routing",
-                  href: "#exception-routing",
+                  href: "#diagnosis-routing",
                   title: (
                     <Space>
                       <IconFont type="icon-routing" style={{ fontSize: 15 }} />
@@ -101,91 +96,46 @@ export default function Exception() {
           </div>
         </Sider>
         <Content style={{ marginLeft: 15 }}>
-          <Title level={5} style={{ marginTop: 0 }} id="exception-stack">
+          <Title level={5} style={{ marginTop: 0 }} id="diagnosis-stack">
             Stack
           </Title>
           <div style={{ marginTop: 15 }}>
-            <Space direction="vertical" size={15}>
-              <Space>
-                <Button type="primary">登录</Button>
-                <Text style={{ color: "#000000a6" }}>还没有账号？</Text>
-                <Text style={{ color: "#000000a6" }} underline>
-                  注册
-                </Text>
-              </Space>
-            </Space>
+            <Space direction="vertical" size={15}></Space>
           </div>
           <Divider />
-          <Title level={5} id="exception-query">
+          <Title level={5} id="diagnosis-query">
             Query
           </Title>
           <div style={{ marginTop: 15 }}>
-            <Space direction="vertical" size={15}>
-              <Radio.Group defaultValue="light" buttonStyle="solid">
-                <Radio.Button value="light">白天</Radio.Button>
-                <Radio.Button value="dark">夜间</Radio.Button>
-                <Radio.Button value="system">跟随系统</Radio.Button>
-              </Radio.Group>
-            </Space>
+            <Space direction="vertical" size={15}></Space>
           </div>
           <Divider />
-          <Title level={5} id="exception-cookies">
+          <Title level={5} id="diagnosis-cookies">
             Cookies
           </Title>
           <div style={{ marginTop: 15 }}>
-            <Space direction="vertical" size={15}>
-              <Select
-                defaultValue="zh-CN"
-                style={{ width: 120 }}
-                options={[
-                  { value: "zh-CN", label: "简体中文" },
-                  { value: "en-US", label: "English" },
-                ]}
-              />
-            </Space>
+            <Space direction="vertical" size={15}></Space>
           </div>
           <Divider />
-          <Title level={5} id="exception-request">
+          <Title level={5} id="diagnosis-request">
             Request
           </Title>
           <div style={{ marginTop: 15 }}>
-            <Space direction="vertical" size={15}>
-              <Space>
-                <Button type="primary">立即备份</Button>
-                <Text style={{ color: "#000000a6" }}>
-                  最近备份：2023.08.05 12:23:11
-                </Text>
-              </Space>
-            </Space>
+            <Space direction="vertical" size={15}></Space>
           </div>
           <Divider />
-          <Title level={5} id="exception-response">
+          <Title level={5} id="diagnosis-response">
             Response
           </Title>
           <div style={{ marginTop: 15 }}>
-            <Space direction="vertical" size={15}>
-              <TextArea
-                rows={4}
-                cols={60}
-                showCount
-                style={{ height: 120, resize: "none" }}
-                placeholder="请写下您的宝贵意见......"
-              />
-              <Button type="primary" disabled>
-                告诉我们
-              </Button>
-            </Space>
+            <Space direction="vertical" size={15}></Space>
           </div>
           <Divider />
-          <Title level={5} id="exception-routing">
+          <Title level={5} id="diagnosis-routing">
             Routing
           </Title>
           <div style={{ marginTop: 15 }}>
-            <Space direction="vertical" size={15}>
-              <Text style={{ color: "#000000a6" }}>
-                一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。
-              </Text>
-            </Space>
+            <Space direction="vertical" size={15}></Space>
           </div>
           <Divider />
         </Content>

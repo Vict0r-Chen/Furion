@@ -11,6 +11,7 @@ import {
   message,
 } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
+import { useState } from "react";
 import IconFont from "../../components/iconfont";
 import { Container, Panel } from "./style";
 
@@ -19,6 +20,7 @@ const { Title, Text } = Typography;
 const { Sider, Content } = Layout;
 
 export default function Setting() {
+  const [advice, setAdvice] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
 
   const success = (message: string = "保存成功") => {
@@ -26,6 +28,21 @@ export default function Setting() {
       type: "success",
       content: message,
     });
+  };
+
+  const openBackupMessage = () => {
+    messageApi.open({
+      key: "backup",
+      type: "loading",
+      content: "备份中...",
+    });
+    setTimeout(() => {
+      messageApi.open({
+        key: "backup",
+        type: "success",
+        content: "备份成功",
+      });
+    }, 2000);
   };
 
   return (
@@ -130,7 +147,10 @@ export default function Setting() {
                 <Space>
                   <Button type="primary">登录</Button>
                   <Text style={{ color: "#000000a6" }}>还没有账号？</Text>
-                  <Text style={{ color: "#000000a6" }} underline>
+                  <Text
+                    style={{ color: "#000000a6", cursor: "pointer" }}
+                    underline
+                  >
                     注册
                   </Text>
                 </Space>
@@ -143,7 +163,7 @@ export default function Setting() {
             <div style={{ marginTop: 15 }}>
               <Space direction="vertical" size={15}>
                 <Radio.Group
-                  defaultValue="light"
+                  defaultValue="白天"
                   buttonStyle="solid"
                   onChange={() => success("切换成功")}
                 >
@@ -177,7 +197,7 @@ export default function Setting() {
             <div style={{ marginTop: 15 }}>
               <Space direction="vertical" size={15}>
                 <Space>
-                  <Button type="primary" onClick={() => success("备份成功")}>
+                  <Button type="primary" onClick={() => openBackupMessage()}>
                     立即备份
                   </Button>
                   <Text style={{ color: "#000000a6" }}>
@@ -196,10 +216,22 @@ export default function Setting() {
                   rows={4}
                   cols={60}
                   showCount
+                  allowClear
                   style={{ height: 120, resize: "none" }}
-                  placeholder="请写下您的宝贵意见......"
+                  placeholder="请写下您的宝贵意见，10个字以上。"
+                  value={advice}
+                  onChange={(ev) => {
+                    setAdvice(ev.target.value);
+                  }}
                 />
-                <Button type="primary" disabled>
+                <Button
+                  type="primary"
+                  disabled={advice.length < 10}
+                  onClick={() => {
+                    setAdvice("");
+                    success("已成功发送，我们将在 7 个工作日内给您答复。");
+                  }}
+                >
                   告诉我们
                 </Button>
               </Space>

@@ -2,8 +2,8 @@ import { createHashRouter } from "react-router-dom";
 import App from "./app";
 import Component from "./pages/component";
 import Console from "./pages/console";
+import Diagnosis from "./pages/diagnosis";
 import ErrorPage from "./pages/error-page";
-import Exception from "./pages/exception";
 import Explore from "./pages/explore";
 import Generate from "./pages/generate";
 import OpenAPI from "./pages/openapi";
@@ -34,8 +34,8 @@ const router = createHashRouter([
             element: <Console />,
           },
           {
-            path: "exception",
-            element: <Exception />,
+            path: "diagnosis",
+            element: <Diagnosis />,
           },
           {
             path: "openapi",
