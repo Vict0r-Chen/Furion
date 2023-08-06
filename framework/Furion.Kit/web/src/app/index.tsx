@@ -24,19 +24,6 @@ function App() {
           <FooterPanel />
         </Layout>
       </LayoutPanel>
-      {/* <FloatButton.Group
-        trigger="hover"
-        type="primary"
-        style={{ right: 34 }}
-        icon={<QuestionCircleOutlined />}
-      >
-        <Tooltip placement="right" title="使用文档">
-          <FloatButton href="https://furion.net" target="_blank" />
-        </Tooltip>
-        <Tooltip placement="right" title="商务合作">
-          <FloatButton icon={<CommentOutlined />} />
-        </Tooltip>
-      </FloatButton.Group> */}
     </Watermark>
   );
 }

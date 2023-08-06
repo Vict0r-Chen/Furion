@@ -5,7 +5,7 @@ const { Content } = Layout;
 
 const Container = styled(Content)`
   background-color: #ffffff;
-  padding: 20px;
+  padding: 0 40px;
   overflow: auto;
 `;
 

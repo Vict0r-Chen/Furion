@@ -2,11 +2,11 @@ import { Typography } from "antd";
 
 const { Title } = Typography;
 
-export default function Component() {
+export default function Exception() {
   return (
     <div>
-      <Title level={3}>组件</Title>
-      组件页
+      <Title level={3}>异常</Title>
+      异常页
     </div>
   );
 }

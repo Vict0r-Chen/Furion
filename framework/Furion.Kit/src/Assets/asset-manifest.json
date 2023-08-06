@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/furion/static/css/main.7587ba51.css",
-    "main.js": "/furion/static/js/main.c37e49e5.js",
+    "main.js": "/furion/static/js/main.f4b766c9.js",
     "index.html": "/furion/index.html",
     "main.7587ba51.css.map": "/furion/static/css/main.7587ba51.css.map",
-    "main.c37e49e5.js.map": "/furion/static/js/main.c37e49e5.js.map"
+    "main.f4b766c9.js.map": "/furion/static/js/main.f4b766c9.js.map"
   },
   "entrypoints": [
     "static/css/main.7587ba51.css",
-    "static/js/main.c37e49e5.js"
+    "static/js/main.f4b766c9.js"
   ]
 }

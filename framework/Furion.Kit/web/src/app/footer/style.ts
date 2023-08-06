@@ -13,10 +13,10 @@ const Container = styled(Footer)`
   align-items: center;
 `;
 
-const Powerby = styled(Text)`
+const FooterText = styled(Text)`
   color: #000000a6;
   font-size: 12px;
 `;
 
-export { Container, Powerby };
+export { Container, FooterText };
 
