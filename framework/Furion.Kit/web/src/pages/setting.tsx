@@ -1,4 +1,5 @@
 import {
+  Anchor,
   Button,
   Divider,
   Input,
@@ -21,35 +22,82 @@ export default function Setting() {
       <Layout>
         <Sider theme="light">
           <div style={{ marginTop: 20 }}>
-            <Space direction="vertical" size={20}>
-              <Space>
-                <IconFont
-                  type="icon-account"
-                  style={{ fontSize: 15, color: "#1677ff" }}
-                />
-                <Text style={{ color: "#1677ff" }}>账户设置</Text>
-              </Space>
-              <Space>
-                <IconFont type="icon-appearance" style={{ fontSize: 15 }} />
-                <Text>外观</Text>
-              </Space>
-              <Space>
-                <IconFont type="icon-backup" style={{ fontSize: 15 }} />
-                <Text>备份</Text>
-              </Space>
-              <Space>
-                <IconFont type="icon-advice" style={{ fontSize: 15 }} />
-                <Text>意见反馈</Text>
-              </Space>
-              <Space>
-                <IconFont type="icon-aboutus" style={{ fontSize: 15 }} />
-                <Text>关于我们</Text>
-              </Space>
-            </Space>
+            <Anchor
+              affix={false}
+              items={[
+                {
+                  key: "account",
+                  href: "#setting-account",
+                  title: (
+                    <Space>
+                      <IconFont type="icon-account" />
+                      <Text>账户设置</Text>
+                    </Space>
+                  ),
+                },
+                {
+                  key: "apperance",
+                  href: "#setting-appearance",
+                  title: (
+                    <Space>
+                      <IconFont
+                        type="icon-appearance"
+                        style={{ fontSize: 15 }}
+                      />
+                      <Text>外观</Text>
+                    </Space>
+                  ),
+                },
+                {
+                  key: "language",
+                  href: "#setting-language",
+                  title: (
+                    <Space>
+                      <IconFont type="icon-language" style={{ fontSize: 15 }} />
+                      <Text>语言</Text>
+                    </Space>
+                  ),
+                },
+                {
+                  key: "backup",
+                  href: "#setting-backup",
+                  title: (
+                    <Space>
+                      <IconFont type="icon-backup" style={{ fontSize: 15 }} />
+                      <Text>备份</Text>
+                    </Space>
+                  ),
+                },
+                {
+                  key: "advice",
+                  href: "#setting-advice",
+                  title: (
+                    <Space>
+                      <IconFont type="icon-advice" style={{ fontSize: 15 }} />
+                      <Text>意见反馈</Text>
+                    </Space>
+                  ),
+                },
+                {
+                  key: "aboutus",
+                  href: "#setting-aboutus",
+                  title: (
+                    <Space>
+                      <IconFont type="icon-aboutus" style={{ fontSize: 15 }} />
+                      <Text>关于我们</Text>
+                    </Space>
+                  ),
+                },
+              ]}
+            />
           </div>
         </Sider>
-        <Content style={{ backgroundColor: "#ffffff" }}>
-          <Title level={5} style={{ marginTop: 0 }}>
+        <Content
+          style={{
+            backgroundColor: "#ffffff",
+          }}
+        >
+          <Title level={5} style={{ marginTop: 0 }} id="setting-account">
             账户设置
           </Title>
           <div style={{ marginTop: 15 }}>
@@ -64,7 +112,9 @@ export default function Setting() {
             </Space>
           </div>
           <Divider />
-          <Title level={5}>外观</Title>
+          <Title level={5} id="setting-appearance">
+            外观
+          </Title>
           <div style={{ marginTop: 15 }}>
             <Space direction="vertical" size={15}>
               <Radio.Group defaultValue="light" buttonStyle="solid">
@@ -75,7 +125,9 @@ export default function Setting() {
             </Space>
           </div>
           <Divider />
-          <Title level={5}>语言</Title>
+          <Title level={5} id="setting-language">
+            语言
+          </Title>
           <div style={{ marginTop: 15 }}>
             <Space direction="vertical" size={15}>
               <Select
@@ -89,7 +141,9 @@ export default function Setting() {
             </Space>
           </div>
           <Divider />
-          <Title level={5}>备份</Title>
+          <Title level={5} id="setting-backup">
+            备份
+          </Title>
           <div style={{ marginTop: 15 }}>
             <Space direction="vertical" size={15}>
               <Space>
@@ -101,7 +155,9 @@ export default function Setting() {
             </Space>
           </div>
           <Divider />
-          <Title level={5}>意见反馈</Title>
+          <Title level={5} id="setting-advice">
+            意见反馈
+          </Title>
           <div style={{ marginTop: 15 }}>
             <Space direction="vertical" size={15}>
               <TextArea
@@ -117,7 +173,9 @@ export default function Setting() {
             </Space>
           </div>
           <Divider />
-          <Title level={5}>关于我们</Title>
+          <Title level={5} id="setting-aboutus">
+            关于我们
+          </Title>
           <div style={{ marginTop: 15 }}>
             <Space direction="vertical" size={15}>
               <Text style={{ color: "#000000a6" }}>
