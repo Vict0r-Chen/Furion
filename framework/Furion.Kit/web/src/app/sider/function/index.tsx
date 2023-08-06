@@ -2,14 +2,14 @@ import { Badge, Tooltip } from "antd";
 import React from "react";
 import { Icon, IconButton } from "./style";
 
-export type FunctionProps = {
+interface FunctionProps {
   type: string;
   active?: boolean;
   title?: string;
   style?: React.CSSProperties;
   badge?: number;
   badgeStatus?: "success" | "processing" | "default" | "error" | "warning";
-};
+}
 
 export default function Function({
   type,

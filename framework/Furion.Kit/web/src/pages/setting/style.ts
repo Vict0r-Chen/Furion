@@ -15,20 +15,6 @@ const Container = styled(Layout)`
   &:hover {
     overflow: auto;
   }
-
-  &::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0);
-  }
 `;
 
 export { Container, Panel };
