@@ -6,6 +6,7 @@ const { Footer } = Layout;
 
 const Container = styled(Footer)`
   height: 30px;
+  min-height: 30px;
   background-color: #ffffff;
   padding: 0 15px;
   display: flex;

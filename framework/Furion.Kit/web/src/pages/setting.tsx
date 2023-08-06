@@ -17,10 +17,17 @@ const { Sider, Content } = Layout;
 
 export default function Setting() {
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Title level={3}>设置</Title>
-      <Layout>
-        <Sider theme="light">
+      <Layout
+        style={{
+          overflow: "auto",
+          flex: 1,
+          backgroundColor: "#ffffff",
+          display: "flex",
+        }}
+      >
+        <Sider theme="light" style={{ position: "sticky" }}>
           <div style={{ marginTop: 20 }}>
             <Anchor
               affix={false}
@@ -92,11 +99,7 @@ export default function Setting() {
             />
           </div>
         </Sider>
-        <Content
-          style={{
-            backgroundColor: "#ffffff",
-          }}
-        >
+        <Content>
           <Title level={5} style={{ marginTop: 0 }} id="setting-account">
             账户设置
           </Title>

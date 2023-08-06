@@ -15,7 +15,7 @@ function App() {
         <Layout>
           <HeaderPanel />
           <Divider style={{ margin: 0 }} />
-          <Layout>
+          <Layout style={{ backgroundColor: "#ffffff" }}>
             <ContentPanel />
             <Divider type="vertical" style={{ margin: 0, height: "100%" }} />
             <Toolbar />
