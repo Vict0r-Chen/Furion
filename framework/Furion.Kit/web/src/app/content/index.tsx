@@ -1,11 +1,14 @@
-import { Layout } from "antd";
-
-const { Content } = Layout;
-
-const contentStyle: React.CSSProperties = {
-  backgroundColor: "#ffffff",
-};
+import { Alert } from "antd";
+import { Container } from "./style";
 
 export default function ContentPanel() {
-  return <Content style={contentStyle}></Content>;
+  return (
+    <Container>
+      <Alert
+        message="Furion v5.0.0.Preview.1 版本发布啦！"
+        type="success"
+        showIcon
+      />
+    </Container>
+  );
 }

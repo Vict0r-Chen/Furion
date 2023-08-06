@@ -9,7 +9,7 @@ export default function SiderPanel() {
       <Main>
         <Menus>
           <Logo>
-            <Image src={logo} width={36} />
+            <Image src={logo} width={36} preview={false} />
           </Logo>
           <Line>
             <Divider />
@@ -17,7 +17,12 @@ export default function SiderPanel() {
           <Space direction="vertical" align="center" size={20}>
             <Function type="icon-panel" active title="面板" />
             <Function type="icon-component" title="组件" />
-            <Function type="icon-exception" title="异常" />
+            <Function
+              type="icon-exception"
+              title="异常"
+              badge={5}
+              badgeStatus="error"
+            />
             <Function type="icon-openapi" title="开放" />
           </Space>
           <Line>
@@ -32,7 +37,11 @@ export default function SiderPanel() {
             <Divider style={{ margin: "20px 0" }} />
           </Line>
           <Space direction="vertical" align="center" size={20}>
-            <Function type="icon-explore" title="探索" />
+            <Function
+              type="icon-explore"
+              title="探索"
+              style={{ color: "#52c41a" }}
+            />
           </Space>
         </Menus>
         <Explore>

@@ -1,5 +1,5 @@
 import { CommentOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { Divider, FloatButton, Layout, Watermark } from "antd";
+import { Divider, FloatButton, Layout, Tooltip, Watermark } from "antd";
 import ContentPanel from "./content";
 import FooterPanel from "./footer";
 import HeaderPanel from "./header";
@@ -8,7 +8,7 @@ import { LayoutPanel } from "./style";
 
 function App() {
   return (
-    <Watermark content={[]}>
+    <Watermark content={["Furion"]}>
       <LayoutPanel>
         <SiderPanel />
         <Divider type="vertical" style={{ margin: 0, height: "100vh" }} />
@@ -26,8 +26,12 @@ function App() {
         style={{ right: 24 }}
         icon={<QuestionCircleOutlined />}
       >
-        <FloatButton href="https://furion.net" target="_blank" />
-        <FloatButton icon={<CommentOutlined />} />
+        <Tooltip placement="right" title="使用文档">
+          <FloatButton href="https://furion.net" target="_blank" />
+        </Tooltip>
+        <Tooltip placement="right" title="商务合作">
+          <FloatButton icon={<CommentOutlined />} />
+        </Tooltip>
       </FloatButton.Group>
     </Watermark>
   );
