@@ -1,10 +1,10 @@
-import { CommentOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { Divider, FloatButton, Layout, Tooltip, Watermark } from "antd";
+import { Divider, Layout, Watermark } from "antd";
 import ContentPanel from "./content";
 import FooterPanel from "./footer";
 import HeaderPanel from "./header";
 import SiderPanel from "./sider";
 import { LayoutPanel } from "./style";
+import Toolbar from "./toolbar";
 
 function App() {
   return (
@@ -15,15 +15,19 @@ function App() {
         <Layout>
           <HeaderPanel />
           <Divider style={{ margin: 0 }} />
-          <ContentPanel />
+          <Layout>
+            <ContentPanel />
+            <Divider type="vertical" style={{ margin: 0, height: "100%" }} />
+            <Toolbar />
+          </Layout>
           <Divider style={{ margin: 0 }} />
           <FooterPanel />
         </Layout>
       </LayoutPanel>
-      <FloatButton.Group
+      {/* <FloatButton.Group
         trigger="hover"
         type="primary"
-        style={{ right: 24 }}
+        style={{ right: 34 }}
         icon={<QuestionCircleOutlined />}
       >
         <Tooltip placement="right" title="使用文档">
@@ -32,7 +36,7 @@ function App() {
         <Tooltip placement="right" title="商务合作">
           <FloatButton icon={<CommentOutlined />} />
         </Tooltip>
-      </FloatButton.Group>
+      </FloatButton.Group> */}
     </Watermark>
   );
 }
