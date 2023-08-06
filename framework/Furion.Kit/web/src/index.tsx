@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./app";
 import "./index.css";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import Component from "./pages/component";
 import ErrorPage from "./pages/error-page";
 import Exception from "./pages/exception";
@@ -15,61 +15,56 @@ import Setting from "./pages/setting";
 import Starter from "./pages/starter";
 import SystemInfo from "./pages/systeminfo";
 
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <App />,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          errorElement: <ErrorPage />,
-          children: [
-            {
-              index: true,
-              element: <Panel />,
-            },
-            {
-              path: "component",
-              element: <Component />,
-            },
-            {
-              path: "exception",
-              element: <Exception />,
-            },
-            {
-              path: "openapi",
-              element: <OpenAPI />,
-            },
-            {
-              path: "starter",
-              element: <Starter />,
-            },
-            {
-              path: "generate",
-              element: <Generate />,
-            },
-            {
-              path: "systeminfo",
-              element: <SystemInfo />,
-            },
-            {
-              path: "explore",
-              element: <Explore />,
-            },
-            {
-              path: "setting",
-              element: <Setting />,
-            },
-          ],
-        },
-      ],
-    },
-  ],
+const router = createHashRouter([
   {
-    basename: "/furion",
-  }
-);
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <Panel />,
+          },
+          {
+            path: "component",
+            element: <Component />,
+          },
+          {
+            path: "exception",
+            element: <Exception />,
+          },
+          {
+            path: "openapi",
+            element: <OpenAPI />,
+          },
+          {
+            path: "starter",
+            element: <Starter />,
+          },
+          {
+            path: "generate",
+            element: <Generate />,
+          },
+          {
+            path: "systeminfo",
+            element: <SystemInfo />,
+          },
+          {
+            path: "explore",
+            element: <Explore />,
+          },
+          {
+            path: "setting",
+            element: <Setting />,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
