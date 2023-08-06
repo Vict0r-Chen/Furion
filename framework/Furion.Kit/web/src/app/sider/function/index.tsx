@@ -20,8 +20,8 @@ export default function Function({
   badgeStatus,
 }: FunctionProps) {
   const Element = (
-    <IconButton active={active}>
-      <Icon type={type} active={active} style={style} />
+    <IconButton $active={active}>
+      <Icon type={type} $active={active} style={style} />
     </IconButton>
   );
 

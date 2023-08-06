@@ -11,7 +11,7 @@ const activeColorCss = css`
   color: #001d66;
 `;
 
-const IconButton = styled.div<{ active?: boolean }>`
+const IconButton = styled.div<{ $active?: boolean }>`
   width: 40px;
   height: 40px;
   display: flex;
@@ -23,7 +23,7 @@ const IconButton = styled.div<{ active?: boolean }>`
   transition: transform 0.2s;
 
   ${(props) =>
-    props.active === true
+    props.$active === true
       ? activeCss
       : css`
           background-color: #e6f4ff;
@@ -40,12 +40,12 @@ const IconButton = styled.div<{ active?: boolean }>`
   }
 `;
 
-const Icon = styled(IconFont)<{ active?: boolean }>`
+const Icon = styled(IconFont)<{ $active?: boolean }>`
   font-size: 24px;
   color: #000000e0;
 
   ${(props) =>
-    props.active === true
+    props.$active === true
       ? activeColorCss
       : css`
           color: #000000e0;
