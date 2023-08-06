@@ -10,7 +10,8 @@ import {
   Typography,
 } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
-import IconFont from "../components/iconfont";
+import IconFont from "../../components/iconfont";
+import { Container, Panel } from "./style";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -18,16 +19,9 @@ const { Sider, Content } = Layout;
 
 export default function Setting() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <Panel>
       <Title level={3}>设置</Title>
-      <Layout
-        id="setting-container"
-        style={{
-          overflow: "auto",
-          flex: 1,
-          backgroundColor: "#ffffff",
-        }}
-      >
+      <Container id="setting-container">
         <Sider
           theme="light"
           style={{ position: "sticky", overflowY: "auto", top: 0 }}
@@ -196,7 +190,7 @@ export default function Setting() {
           </div>
           <Divider />
         </Content>
-      </Layout>
-    </div>
+      </Container>
+    </Panel>
   );
 }

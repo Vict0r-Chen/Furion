@@ -62,6 +62,16 @@ export default function SiderPanel() {
             <Divider style={{ margin: "20px 0" }} />
           </Line>
           <Space direction="vertical" align="center" size={20}>
+            <NavLink to="/systeminfo">
+              {({ isActive, isPending }) => (
+                <Function
+                  type="icon-system-info"
+                  active={isActive}
+                  title="系统"
+                />
+              )}
+            </NavLink>
+
             <NavLink to="/starter">
               {({ isActive, isPending }) => (
                 <Function type="icon-starter" active={isActive} title="启动" />
@@ -77,20 +87,12 @@ export default function SiderPanel() {
                 />
               )}
             </NavLink>
-
-            <NavLink to="/systeminfo">
-              {({ isActive, isPending }) => (
-                <Function
-                  type="icon-system-info"
-                  active={isActive}
-                  title="系统"
-                />
-              )}
-            </NavLink>
           </Space>
           <Line>
             <Divider style={{ margin: "20px 0" }} />
           </Line>
+        </Menus>
+        <Explore>
           <Space direction="vertical" align="center" size={20}>
             <NavLink to="/explore">
               {({ isActive, isPending }) => (
@@ -102,10 +104,6 @@ export default function SiderPanel() {
                 />
               )}
             </NavLink>
-          </Space>
-        </Menus>
-        <Explore>
-          <Space direction="vertical" align="center" size={20}>
             <NavLink to="/setting">
               {({ isActive, isPending }) => (
                 <Function type="icon-setting" active={isActive} title="设置" />

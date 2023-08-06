@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
 import IconFont from "../../components/iconfont";
+import { Container, Panel } from "./style";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -18,16 +19,9 @@ const { Sider, Content } = Layout;
 
 export default function Exception() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <Panel>
       <Title level={3}>异常</Title>
-      <Layout
-        id="setting-container"
-        style={{
-          overflow: "auto",
-          flex: 1,
-          backgroundColor: "#ffffff",
-        }}
-      >
+      <Container id="exception-container">
         <Sider
           theme="light"
           style={{ position: "sticky", overflowY: "auto", top: 0 }}
@@ -36,7 +30,9 @@ export default function Exception() {
             <Anchor
               onClick={(ev) => ev.preventDefault()}
               getContainer={() =>
-                document.getElementById("setting-container") as AnchorContainer
+                document.getElementById(
+                  "exception-container"
+                ) as AnchorContainer
               }
               affix={false}
               items={[
@@ -193,7 +189,7 @@ export default function Exception() {
           </div>
           <Divider />
         </Content>
-      </Layout>
-    </div>
+      </Container>
+    </Panel>
   );
 }
