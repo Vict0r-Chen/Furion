@@ -23,40 +23,45 @@ const router = createBrowserRouter(
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "panel",
-          element: <Panel />,
-        },
-        {
-          path: "component",
-          element: <Component />,
-        },
-        {
-          path: "exception",
-          element: <Exception />,
-        },
-        {
-          path: "openapi",
-          element: <OpenAPI />,
-        },
-        {
-          path: "starter",
-          element: <Starter />,
-        },
-        {
-          path: "generate",
-          element: <Generate />,
-        },
-        {
-          path: "systeminfo",
-          element: <SystemInfo />,
-        },
-        {
-          path: "explore",
-          element: <Explore />,
-        },
-        {
-          path: "setting",
-          element: <Setting />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              index: true,
+              element: <Panel />,
+            },
+            {
+              path: "component",
+              element: <Component />,
+            },
+            {
+              path: "exception",
+              element: <Exception />,
+            },
+            {
+              path: "openapi",
+              element: <OpenAPI />,
+            },
+            {
+              path: "starter",
+              element: <Starter />,
+            },
+            {
+              path: "generate",
+              element: <Generate />,
+            },
+            {
+              path: "systeminfo",
+              element: <SystemInfo />,
+            },
+            {
+              path: "explore",
+              element: <Explore />,
+            },
+            {
+              path: "setting",
+              element: <Setting />,
+            },
+          ],
         },
       ],
     },

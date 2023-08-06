@@ -18,7 +18,7 @@ export default function SiderPanel() {
             <Divider />
           </Line>
           <Space direction="vertical" align="center" size={20}>
-            <NavLink to="/panel">
+            <NavLink to="/">
               {({ isActive, isPending }) => (
                 <Function type="icon-panel" active={isActive} title="面板" />
               )}
