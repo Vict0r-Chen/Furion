@@ -33,14 +33,16 @@ export default function Toolbar() {
               />
             </Tooltip>
             <Tooltip placement="left" title="用户手册">
-              <IconFont
-                type="icon-documentation"
-                style={{
-                  color: "#8c8c8c",
-                  fontSize: "18px",
-                  cursor: "pointer",
-                }}
-              />
+              <a href="https://furion.net" target="_blank" rel="noreferrer">
+                <IconFont
+                  type="icon-documentation"
+                  style={{
+                    color: "#8c8c8c",
+                    fontSize: "18px",
+                    cursor: "pointer",
+                  }}
+                />
+              </a>
             </Tooltip>
           </Space>
         </div>
