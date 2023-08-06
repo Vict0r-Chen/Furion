@@ -9,6 +9,7 @@ import {
   Space,
   Typography,
 } from "antd";
+import { AnchorContainer } from "antd/es/anchor/Anchor";
 import IconFont from "../components/iconfont";
 
 const { TextArea } = Input;
@@ -20,16 +21,23 @@ export default function Setting() {
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Title level={3}>设置</Title>
       <Layout
+        id="setting-container"
         style={{
           overflow: "auto",
           flex: 1,
           backgroundColor: "#ffffff",
-          display: "flex",
         }}
       >
-        <Sider theme="light" style={{ position: "sticky" }}>
+        <Sider
+          theme="light"
+          style={{ position: "sticky", overflowY: "auto", top: 0 }}
+        >
           <div style={{ marginTop: 20 }}>
             <Anchor
+              onClick={(ev) => ev.preventDefault()}
+              getContainer={() =>
+                document.getElementById("setting-container") as AnchorContainer
+              }
               affix={false}
               items={[
                 {
@@ -99,7 +107,7 @@ export default function Setting() {
             />
           </div>
         </Sider>
-        <Content>
+        <Content style={{ marginLeft: 15 }}>
           <Title level={5} style={{ marginTop: 0 }} id="setting-account">
             账户设置
           </Title>
