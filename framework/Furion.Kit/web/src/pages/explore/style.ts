@@ -37,7 +37,7 @@ const CardItem = styled.div<{ $install?: boolean }>`
   height: 70px;
   margin-right: 20px;
   margin-bottom: 20px;
-  background-color: #0092ff;
+  background-color: #e6f4ff;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -47,8 +47,9 @@ const CardItem = styled.div<{ $install?: boolean }>`
   ${(props) =>
     props.$install
       ? css`
-          border: 1px solid #95de64;
+          border: 1px solid #b7eb8f;
           box-shadow: 0px 0px 10px #b7eb8f;
+          background-color: #d9f7be;
         `
       : undefined}
 
@@ -56,12 +57,11 @@ const CardItem = styled.div<{ $install?: boolean }>`
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.4s;
-  background-color: #e6f4ff;
 
   &:hover {
     transform: translateY(-6px);
 
-    ${activeCss}
+    ${(props) => (props.$install ? undefined : activeCss)}
   }
 `;
 

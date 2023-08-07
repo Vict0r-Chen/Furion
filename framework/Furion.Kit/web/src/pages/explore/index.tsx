@@ -93,7 +93,7 @@ export default function Explore() {
               icon={
                 <IconFont
                   type="icon-panel"
-                  style={{ fontSize: "36px", color: "#1677ff" }}
+                  style={{ fontSize: "36px", color: "#389e0d" }}
                 />
               }
               version="v5.0.0"
@@ -107,7 +107,7 @@ export default function Explore() {
               icon={
                 <IconFont
                   type="icon-console"
-                  style={{ fontSize: "36px", color: "#1677ff" }}
+                  style={{ fontSize: "36px", color: "#389e0d" }}
                 />
               }
               version="v5.0.0"
@@ -121,7 +121,7 @@ export default function Explore() {
               icon={
                 <IconFont
                   type="icon-diagnosis"
-                  style={{ fontSize: "36px", color: "#1677ff" }}
+                  style={{ fontSize: "36px", color: "#389e0d" }}
                 />
               }
               version="v5.0.0"
