@@ -1,6 +1,7 @@
 import { createHashRouter } from "react-router-dom";
 import App from "./app";
 import Component from "./pages/component";
+import Configuration from "./pages/configuration";
 import Console from "./pages/console";
 import Diagnosis from "./pages/diagnosis";
 import ErrorPage from "./pages/error-page";
@@ -44,6 +45,10 @@ const router = createHashRouter([
           {
             path: "starter",
             element: <Starter />,
+          },
+          {
+            path: "configuration",
+            element: <Configuration />,
           },
           {
             path: "generate",

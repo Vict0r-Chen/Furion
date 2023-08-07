@@ -25,9 +25,11 @@ const Main = styled.div`
 const Menus = styled.div`
   flex: 1;
   overflow-y: auto;
+  padding: 3px 0;
 `;
 
 const Explore = styled.div`
+  margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
