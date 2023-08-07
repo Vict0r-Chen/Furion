@@ -42,6 +42,7 @@ const CardItem = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 10px;
+  position: relative;
 
   overflow: hidden;
   border-radius: 8px;

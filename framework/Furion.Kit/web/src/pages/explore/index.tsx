@@ -76,7 +76,7 @@ export default function Explore() {
           >
             <Input
               style={{ width: 180 }}
-              placeholder="输入关键字搜索"
+              placeholder="ERP WMS OA"
               suffix={<IconFont type="icon-search" />}
             />
           </div>
@@ -95,12 +95,16 @@ export default function Explore() {
                 </Space>
               }
               title={
-                <Space direction="vertical" size={0}>
+                <Space direction="vertical">
+                  <Space size={5}>
+                    <Text>版本：</Text>
+                    <Text style={{ color: "#595959" }}>5.0.0</Text>
+                  </Space>
                   <Space size={5}>
                     <Text>推荐指数</Text>
                     <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
                   </Space>
-                  <Rate allowHalf defaultValue={5} />
+                  <Rate allowHalf defaultValue={5} disabled />
                 </Space>
               }
               placement="bottom"
@@ -130,12 +134,16 @@ export default function Explore() {
                 </Space>
               }
               title={
-                <Space direction="vertical" size={0}>
+                <Space direction="vertical">
+                  <Space size={5}>
+                    <Text>版本：</Text>
+                    <Text style={{ color: "#595959" }}>5.0.0</Text>
+                  </Space>
                   <Space size={5}>
                     <Text>推荐指数</Text>
                     <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
                   </Space>
-                  <Rate allowHalf defaultValue={4.5} />
+                  <Rate allowHalf defaultValue={4.5} disabled />
                 </Space>
               }
               placement="bottom"
@@ -172,12 +180,16 @@ export default function Explore() {
                 </Space>
               }
               title={
-                <Space direction="vertical" size={0}>
+                <Space direction="vertical">
+                  <Space size={5}>
+                    <Text>版本：</Text>
+                    <Text style={{ color: "#595959" }}>5.0.0</Text>
+                  </Space>
                   <Space size={5}>
                     <Text>推荐指数</Text>
                     <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
                   </Space>
-                  <Rate allowHalf defaultValue={3} />
+                  <Rate allowHalf defaultValue={3} disabled />
                 </Space>
               }
               placement="bottom"
