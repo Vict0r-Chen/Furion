@@ -8,15 +8,15 @@ export default function SiderPanel() {
   return (
     <Container width={60}>
       <Main>
+        <Logo>
+          <Link to="/">
+            <Image src={logo} width={36} preview={false} />
+          </Link>
+        </Logo>
+        <Line>
+          <Divider />
+        </Line>
         <Menus>
-          <Logo>
-            <Link to="/">
-              <Image src={logo} width={36} preview={false} />
-            </Link>
-          </Logo>
-          <Line>
-            <Divider />
-          </Line>
           <Space direction="vertical" align="center" size={20}>
             <NavLink to="/">
               {({ isActive, isPending }) => (

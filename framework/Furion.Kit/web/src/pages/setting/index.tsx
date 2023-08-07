@@ -241,7 +241,7 @@ export default function Setting() {
 
                   <Popconfirm
                     placement="topLeft"
-                    title="配置您许可的信息收集。"
+                    title="我们可以收集您哪些信息？"
                     description={<Collect />}
                     onConfirm={() => {}}
                     okText="选好了"

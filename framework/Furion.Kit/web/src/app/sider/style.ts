@@ -24,10 +24,14 @@ const Main = styled.div`
 
 const Menus = styled.div`
   flex: 1;
+  overflow-y: auto;
 `;
 
 const Explore = styled.div`
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 
 export { Container, Explore, Line, Logo, Main, Menus };
