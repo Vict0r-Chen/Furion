@@ -10,6 +10,7 @@ import {
   Typography,
 } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
+import React from "react";
 import logo from "../../assets/logo.png";
 import IconFont from "../../components/iconfont";
 import {
@@ -49,8 +50,8 @@ export default function Explore() {
                   href: "#explore-application",
                   title: (
                     <Space>
-                      <IconFont type="icon-tag" />
-                      <Text>应用案例</Text>
+                      <IconFont type="icon-local" />
+                      <Text>本地应用</Text>
                     </Space>
                   ),
                 },
@@ -59,8 +60,8 @@ export default function Explore() {
                   href: "#explore-tools",
                   title: (
                     <Space>
-                      <IconFont type="icon-tag" />
-                      <Text>开发工具</Text>
+                      <IconFont type="icon-internet" />
+                      <Text>联网应用</Text>
                     </Space>
                   ),
                 },
@@ -83,133 +84,146 @@ export default function Explore() {
           <Space>
             <IconFont type="icon-tag" style={{ fontSize: 18 }} />
             <Title level={5} style={{ marginTop: 0 }} id="explore-application">
-              应用案例
+              本地应用
             </Title>
           </Space>
           <CardPanel>
-            <Popover
-              content={
-                <Space>
-                  <Button type="primary">安装</Button>
-                  <Button disabled>卸载</Button>
-                </Space>
+            <Application
+              title="看板"
+              icon={
+                <IconFont
+                  type="icon-panel"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
               }
-              title={
-                <Space direction="vertical">
-                  <Space size={5}>
-                    <Text>版本：</Text>
-                    <Text style={{ color: "#595959" }}>5.0.0</Text>
-                  </Space>
-                  <Space size={5}>
-                    <Text>推荐指数</Text>
-                    <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
-                  </Space>
-                  <Rate allowHalf defaultValue={5} disabled />
-                </Space>
-              }
-              placement="bottom"
-            >
-              <CardItem>
-                <CardIcon src={logo} />
-                <CardMain>
-                  <CardTitle>Furioin</CardTitle>
-                  <CardDescription>
-                    一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。
-                  </CardDescription>
-                </CardMain>
-                <CardViewIcon>
-                  <IconFont
-                    type="icon-view-arrow-right"
-                    style={{ color: "#8c8c8c" }}
-                  />
-                </CardViewIcon>
-              </CardItem>
-            </Popover>
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={5}
+              install={true}
+            />
 
-            <Popover
-              content={
-                <Space>
-                  <Button type="primary">安装</Button>
-                  <Button disabled>卸载</Button>
-                </Space>
+            <Application
+              title="输出"
+              icon={
+                <IconFont
+                  type="icon-console"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
               }
-              title={
-                <Space direction="vertical">
-                  <Space size={5}>
-                    <Text>版本：</Text>
-                    <Text style={{ color: "#595959" }}>5.0.0</Text>
-                  </Space>
-                  <Space size={5}>
-                    <Text>推荐指数</Text>
-                    <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
-                  </Space>
-                  <Rate allowHalf defaultValue={4.5} disabled />
-                </Space>
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+              install={true}
+            />
+
+            <Application
+              title="诊断"
+              icon={
+                <IconFont
+                  type="icon-diagnosis"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
               }
-              placement="bottom"
-            >
-              <CardItem>
-                <CardIcon src={logo} />
-                <CardMain>
-                  <CardTitle>Furion Kit</CardTitle>
-                  <CardDescription>Furion 框架开发工具箱。</CardDescription>
-                </CardMain>
-                <CardViewIcon>
-                  <IconFont
-                    type="icon-view-arrow-right"
-                    style={{ color: "#8c8c8c" }}
-                  />
-                </CardViewIcon>
-              </CardItem>
-            </Popover>
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+              install={true}
+            />
+
+            <Application
+              title="开放"
+              icon={
+                <IconFont
+                  type="icon-openapi"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
+              }
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+            />
+
+            <Application
+              title="系统"
+              icon={
+                <IconFont
+                  type="icon-system-info"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
+              }
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+            />
+
+            <Application
+              title="组件"
+              icon={
+                <IconFont
+                  type="icon-component"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
+              }
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+            />
+
+            <Application
+              title="配置"
+              icon={
+                <IconFont
+                  type="icon-configuration"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
+              }
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+            />
+
+            <Application
+              title="启动"
+              icon={
+                <IconFont
+                  type="icon-starter"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
+              }
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+            />
+
+            <Application
+              title="代码"
+              icon={
+                <IconFont
+                  type="icon-code-generate"
+                  style={{ fontSize: "36px", color: "#1677ff" }}
+                />
+              }
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={4.5}
+            />
           </CardPanel>
           <Divider />
 
           <Space>
             <IconFont type="icon-tag" style={{ fontSize: 18 }} />
             <Title level={5} style={{ marginTop: 0 }} id="explore-tools">
-              开发工具
+              联网应用
             </Title>
           </Space>
           <CardPanel>
-            <Popover
-              content={
-                <Space>
-                  <Button type="primary">安装</Button>
-                  <Button disabled>卸载</Button>
-                </Space>
-              }
-              title={
-                <Space direction="vertical">
-                  <Space size={5}>
-                    <Text>版本：</Text>
-                    <Text style={{ color: "#595959" }}>5.0.0</Text>
-                  </Space>
-                  <Space size={5}>
-                    <Text>推荐指数</Text>
-                    <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
-                  </Space>
-                  <Rate allowHalf defaultValue={3} disabled />
-                </Space>
-              }
-              placement="bottom"
-            >
-              <CardItem>
-                <CardIcon src={logo} />
-                <CardMain>
-                  <CardTitle>Furioin</CardTitle>
-                  <CardDescription>
-                    一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。
-                  </CardDescription>
-                </CardMain>
-                <CardViewIcon>
-                  <IconFont
-                    type="icon-view-arrow-right"
-                    style={{ color: "#8c8c8c" }}
-                  />
-                </CardViewIcon>
-              </CardItem>
-            </Popover>
+            <Application
+              title="Furion"
+              icon={<img src={logo} alt="" height={40} />}
+              version="v5.0.0"
+              description="一个应用程序框架，您可以将它集成到任何 .NET/C# 应用程序中。"
+              rate={5}
+            />
           </CardPanel>
           <Divider />
         </Content>
@@ -217,3 +231,61 @@ export default function Explore() {
     </Panel>
   );
 }
+
+interface ApplicationProps {
+  title: string;
+  rate: number;
+  description?: string;
+  icon: React.ReactNode;
+  version?: string;
+  install?: boolean;
+}
+
+const Application: React.FC<ApplicationProps> = ({
+  title,
+  rate,
+  description,
+  icon,
+  version,
+  install = false,
+}) => {
+  return (
+    <Popover
+      content={
+        <Space>
+          <Button type="primary" disabled={install}>
+            安装
+          </Button>
+          <Button type="primary" danger disabled={!install}>
+            卸载
+          </Button>
+        </Space>
+      }
+      title={
+        <Space direction="vertical">
+          <Space size={5}>
+            <Text>版本：</Text>
+            <Text style={{ color: "#595959" }}>{version}</Text>
+          </Space>
+          <Space size={5}>
+            <Text>推荐指数</Text>
+            <IconFont type="icon-info" style={{ color: "#8c8c8c" }} />
+          </Space>
+          <Rate allowHalf defaultValue={rate} disabled />
+        </Space>
+      }
+      placement="bottom"
+    >
+      <CardItem $install={install}>
+        <CardIcon>{icon}</CardIcon>
+        <CardMain>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardMain>
+        <CardViewIcon>
+          <IconFont type="icon-view-arrow-right" style={{ color: "#8c8c8c" }} />
+        </CardViewIcon>
+      </CardItem>
+    </Popover>
+  );
+};

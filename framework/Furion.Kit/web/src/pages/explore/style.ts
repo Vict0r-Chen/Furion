@@ -31,7 +31,7 @@ const activeCss = css`
   box-shadow: 0px 0px 10px #69b1ff;
 `;
 
-const CardItem = styled.div`
+const CardItem = styled.div<{ $install?: boolean }>`
   box-sizing: border-box;
   width: 218px;
   height: 70px;
@@ -43,6 +43,14 @@ const CardItem = styled.div`
   align-items: center;
   padding: 10px;
   position: relative;
+
+  ${(props) =>
+    props.$install
+      ? css`
+          border: 1px solid #95de64;
+          box-shadow: 0px 0px 10px #b7eb8f;
+        `
+      : undefined}
 
   overflow: hidden;
   border-radius: 8px;
@@ -57,12 +65,15 @@ const CardItem = styled.div`
   }
 `;
 
-const CardIcon = styled.img`
+const CardIcon = styled.div`
   height: 40px;
   width: 40px;
   min-width: 40px;
   margin-right: 10px;
-  display: block;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CardMain = styled.div`
