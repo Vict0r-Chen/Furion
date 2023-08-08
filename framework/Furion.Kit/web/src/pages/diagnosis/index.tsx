@@ -10,10 +10,18 @@ const { Sider, Content } = Layout;
 
 export default function Diagnosis() {
   useEffect(() => {
-    var eventSource = new EventSource("https://localhost:7115/http");
+    var eventSource = new EventSource("https://localhost:7115/furion/http-sse");
 
-    eventSource.onmessage = function (e) {
-      console.log(e);
+    eventSource.onmessage = function (event) {
+      console.log("Received SSE data:", event.data);
+    };
+
+    eventSource.onerror = function (event) {
+      console.log("SSE error:", event);
+    };
+
+    eventSource.onopen = function () {
+      console.log("SSE connection opened");
     };
 
     return () => {

@@ -22,5 +22,5 @@ internal sealed class HttpDiagnosticModel
 
     public string? Exception { get; set; }
 
-    public bool IsCompleted { get; set; }
+    internal bool IsCompleted { get; set; }
 }

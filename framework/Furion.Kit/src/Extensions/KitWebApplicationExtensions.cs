@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Microsoft.AspNetCore.Http.HttpResults;
+
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -26,19 +28,41 @@ public static class KitWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication)
     {
-        webApplication.MapGet("/http", async (HttpContext context, CancellationToken cancellationToken) =>
-        {
-            var diagnosticListener = new HttpDiagnosticListener();
-            diagnosticListener.Observe();
-            cancellationToken.Register(() =>
+        // 这里弄一个分组
+        webApplication.MapGroup("/furion")
+            .MapGet("http-sse", async (HttpContext context, CancellationToken cancellationToken) =>
             {
-                diagnosticListener.Dispose();
-            });
+                var diagnosticListener = new HttpDiagnosticListener();
+                diagnosticListener.Observe();
+                cancellationToken.Register(() =>
+                {
+                    diagnosticListener.Dispose();
+                });
 
-            var item = await diagnosticListener.ReadAsync(cancellationToken);
-            return new SSEResult(item);
-        }).Accepts<SSEResult>("text/event-stream")
-        .ExcludeFromDescription();
+                // 允许跨域
+                context.Response.Headers.AccessControlAllowOrigin = "*";
+                context.Response.Headers.AccessControlAllowHeaders = "*";
+
+                // 设置响应头，指定 SSE 响应的 Content-Type
+                context.Response.ContentType = "text/event-stream";
+
+                // 启用响应的发送保持活动性
+                context.Response.Headers.CacheControl = "no-cache";
+                context.Response.Headers.Connection = "keep-alive";
+
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    var item = await diagnosticListener.ReadAsync(cancellationToken);
+                    await context.Response.WriteAsync("data: " + JsonSerializer.Serialize(item) + "\n\n", cancellationToken);
+                }
+
+                // 关闭连接
+                context.Response.ContentType = "text/event-stream";
+                context.Response.StatusCode = StatusCodes.Status204NoContent;
+                await context.Response.Body.FlushAsync(cancellationToken);
+
+            }).Accepts<NoContent>("text/event-stream")
+            .ExcludeFromDescription();
 
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
