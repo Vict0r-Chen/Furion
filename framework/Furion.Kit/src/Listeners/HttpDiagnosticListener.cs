@@ -14,12 +14,49 @@
 
 namespace Furion.Kit;
 
-internal sealed class HttpDiagnosticListener : DiagnosticListenerBase
+/// <summary>
+/// HTTP 诊断侦听器
+/// </summary>
+internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagnosticModel>
 {
-    internal override string ListenerName => "Microsoft.AspNetCore";
+    /// <summary>
+    /// HTTP 诊断信息缓存集合
+    /// </summary>
+    internal readonly ConcurrentDictionary<string, HttpDiagnosticModel> _httpDiagnosticsCache;
 
-    internal override void OnListener(KeyValuePair<string, object?> data)
+    /// <summary>
+    /// <inheritdoc cref="HttpDiagnosticListener"/>
+    /// </summary>
+    public HttpDiagnosticListener()
+        : base("Microsoft.AspNetCore")
     {
-        Console.WriteLine($"Data received: {data.Key}: {data.Value}");
+        _httpDiagnosticsCache = new();
+    }
+
+    /// <inheritdoc />
+    internal override void OnSubscribe(KeyValuePair<string, object?> data)
+    {
+        if (data.Value is BeforeActionFilterOnActionExecutingEventData beforeActionFilterOnActionExecutingEventData)
+        {
+            Console.WriteLine(data.Key);
+            var actionExecutingContext = beforeActionFilterOnActionExecutingEventData.ActionExecutingContext;
+
+            Console.WriteLine(actionExecutingContext.HttpContext.TraceIdentifier);
+            Console.WriteLine(actionExecutingContext.HttpContext.Request.Path);
+        }
+
+        if (data.Value is AfterActionFilterOnActionExecutedEventData afterActionFilterOnActionExecutedEventData)
+        {
+            Console.WriteLine(data.Key);
+            var actionExecutedContext = afterActionFilterOnActionExecutedEventData.ActionExecutedContext;
+            Console.WriteLine(actionExecutedContext.HttpContext.TraceIdentifier);
+
+            if (actionExecutedContext.Exception is not null)
+            {
+                Console.WriteLine(actionExecutedContext.Exception);
+            }
+        }
+
+        //Console.WriteLine($"Data received: {data.Key}: {data.Value}");
     }
 }

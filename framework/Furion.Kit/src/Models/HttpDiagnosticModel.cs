@@ -14,28 +14,6 @@
 
 namespace Furion.Kit;
 
-internal sealed class Observer<T> : IObserver<T>
+internal sealed class HttpDiagnosticModel
 {
-    internal readonly Action<T> _onNext;
-    internal readonly Action _onCompleted;
-
-    internal Observer(Action<T>? onNext, Action? onCompleted)
-    {
-        _onNext = onNext ?? new Action<T>(_ => { });
-        _onCompleted = onCompleted ?? new Action(() => { });
-    }
-
-    public void OnCompleted()
-    {
-        _onCompleted();
-    }
-
-    public void OnError(Exception error)
-    {
-    }
-
-    public void OnNext(T value)
-    {
-        _onNext(value);
-    }
 }

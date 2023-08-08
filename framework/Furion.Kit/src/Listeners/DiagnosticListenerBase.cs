@@ -14,41 +14,118 @@
 
 namespace Furion.Kit;
 
-internal abstract class DiagnosticListenerBase : IDiagnosticListener
+/// <summary>
+/// 诊断监听器抽象基类
+/// </summary>
+/// <typeparam name="T">数据类型</typeparam>
+internal abstract class DiagnosticListenerBase<T> : IDiagnosticListener<T>
 {
-    internal IDisposable? networkSubscription;
-    internal IDisposable? listenerSubscription;
-    internal readonly object allListeners = new();
+    /// <summary>
+    ///  并发锁标识
+    /// </summary>
+    internal readonly object _lockObject = new();
 
-    internal abstract string ListenerName { get; }
+    /// <summary>
+    /// 内存通道事件源存储器
+    /// </summary>
+    internal readonly Channel<T> _channel;
 
-    internal void OnObserve()
+    /// <summary>
+    /// 通知信息订阅器
+    /// </summary>
+    internal IDisposable? _subscription;
+
+    /// <summary>
+    /// 侦听器信息信息订阅器
+    /// </summary>
+    internal IDisposable? _listenerSubscription;
+
+    /// <summary>
+    /// 侦听器类别
+    /// </summary>
+    internal readonly string _listenerCategory;
+
+    /// <summary>
+    /// <inheritdoc cref="DiagnosticListenerBase{T}" />
+    /// </summary>
+    /// <param name="listenerCategory">侦听器类别</param>
+    /// <param name="capacity">队列容量</param>
+    public DiagnosticListenerBase(string listenerCategory, int capacity = 3000)
     {
-        var observer = new Observer<DiagnosticListener>(OnNewListener, null);
-        listenerSubscription = DiagnosticListener.AllListeners.Subscribe(observer);
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(listenerCategory);
+
+        _listenerCategory = listenerCategory;
+
+        // 配置通道，设置超出默认容量后进入等待
+        var boundedChannelOptions = new BoundedChannelOptions(capacity)
+        {
+            FullMode = BoundedChannelFullMode.Wait
+        };
+
+        // 创建有限容量通道
+        _channel = Channel.CreateBounded<T>(boundedChannelOptions);
     }
 
-    internal void OnNewListener(DiagnosticListener listener)
+    /// <inheritdoc />
+    public void Observe()
     {
-        Console.WriteLine($"New Listener discovered: {listener.Name}");
+        // 初始化诊断侦听器
+        var diagnosticObserver = new DiagnosticObserver<DiagnosticListener>(AddSubscription, null);
 
-        if (listener.Name != ListenerName)
+        // 注册诊断侦听器
+        _listenerSubscription = DiagnosticListener.AllListeners.Subscribe(diagnosticObserver);
+    }
+
+    /// <summary>
+    /// 添加通知信息订阅器
+    /// </summary>
+    /// <param name="listener"></param>
+    internal void AddSubscription(DiagnosticListener listener)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(listener);
+
+        // 检查侦听器类别是否一致
+        if (listener.Name != _listenerCategory)
         {
             return;
         }
 
-        lock (allListeners)
+        // 添加通知信息订阅器
+        lock (_lockObject)
         {
-            networkSubscription?.Dispose();
-
-            networkSubscription = listener.Subscribe(new Observer<KeyValuePair<string, object?>>(OnListener, null));
+            _subscription?.Dispose();
+            _subscription = listener.Subscribe(new DiagnosticObserver<KeyValuePair<string, object?>>(OnSubscribe, null));
         }
     }
 
-    internal abstract void OnListener(KeyValuePair<string, object?> data);
+    /// <summary>
+    /// 订阅通知信息
+    /// </summary>
+    /// <param name="data">通知信息</param>
+    internal abstract void OnSubscribe(KeyValuePair<string, object?> data);
 
+    /// <summary>
+    /// 写入队列
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    protected virtual async Task WriteAsync(T item, CancellationToken cancellationToken)
+    {
+        await _channel.Writer.WriteAsync(item, cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<T> ReadAsync(CancellationToken cancellationToken)
+    {
+        return await _channel.Reader.ReadAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
     public void Dispose()
     {
-        listenerSubscription?.Dispose();
+        _listenerSubscription?.Dispose();
     }
 }

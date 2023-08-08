@@ -15,20 +15,46 @@
 namespace Furion.Kit;
 
 /// <summary>
-/// 诊断监听器
+/// 诊断侦听器
 /// </summary>
-/// <typeparam name="T">数据类型</typeparam>
-internal interface IDiagnosticListener<T> : IDisposable
+/// <typeparam name="T">通知信息类型</typeparam>
+internal sealed class DiagnosticObserver<T> : IObserver<T>
 {
     /// <summary>
-    /// 观察新数据
+    /// 向观察者提供新数据
     /// </summary>
-    void Observe();
+    internal readonly Action<T> _onNext;
 
     /// <summary>
-    /// 读取新数据
+    /// 通知观察者提供程序已完成发送基于推送的通知
     /// </summary>
-    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns><typeparamref name="T"/></returns>
-    Task<T> ReadAsync(CancellationToken cancellationToken);
+    internal readonly Action _onCompleted;
+
+    /// <summary>
+    /// <inheritdoc cref="DiagnosticObserver{T}"/>
+    /// </summary>
+    /// <param name="onNext">向观察者提供新数据</param>
+    /// <param name="onCompleted">通知观察者提供程序已完成发送基于推送的通知。</param>
+    internal DiagnosticObserver(Action<T>? onNext, Action? onCompleted)
+    {
+        _onNext = onNext ?? new(_ => { });
+        _onCompleted = onCompleted ?? new(() => { });
+    }
+
+    /// <inheritdoc />
+    public void OnNext(T value)
+    {
+        _onNext(value);
+    }
+
+    /// <inheritdoc />
+    public void OnError(Exception error)
+    {
+    }
+
+    /// <inheritdoc />
+    public void OnCompleted()
+    {
+        _onCompleted();
+    }
 }

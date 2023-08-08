@@ -4,6 +4,141 @@
         <name>Furion.Kit</name>
     </assembly>
     <members>
+        <member name="T:Furion.Kit.IDiagnosticListener`1">
+            <summary>
+            诊断监听器
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+        </member>
+        <member name="M:Furion.Kit.IDiagnosticListener`1.Observe">
+            <summary>
+            观察新数据
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.IDiagnosticListener`1.ReadAsync(System.Threading.CancellationToken)">
+            <summary>
+            读取新数据
+            </summary>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><typeparamref name="T"/></returns>
+        </member>
+        <member name="T:Furion.Kit.DiagnosticListenerBase`1">
+            <summary>
+            诊断监听器抽象基类
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._lockObject">
+            <summary>
+             并发锁标识
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._channel">
+            <summary>
+            内存通道事件源存储器
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._subscription">
+            <summary>
+            通知信息订阅器
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._listenerSubscription">
+            <summary>
+            侦听器信息信息订阅器
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._listenerCategory">
+            <summary>
+            侦听器类别
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.#ctor(System.String,System.Int32)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.DiagnosticListenerBase`1" />
+            </summary>
+            <param name="listenerCategory">侦听器类别</param>
+            <param name="capacity">队列容量</param>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.Observe">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.AddSubscription(System.Diagnostics.DiagnosticListener)">
+            <summary>
+            添加通知信息订阅器
+            </summary>
+            <param name="listener"></param>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <summary>
+            订阅通知信息
+            </summary>
+            <param name="data">通知信息</param>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.WriteAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            写入队列
+            </summary>
+            <param name="item"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.ReadAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Kit.HttpDiagnosticListener">
+            <summary>
+            HTTP 诊断侦听器
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.HttpDiagnosticListener._httpDiagnosticsCache">
+            <summary>
+            HTTP 诊断信息缓存集合
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.HttpDiagnosticListener.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.HttpDiagnosticListener"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.HttpDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Furion.Kit.DiagnosticObserver`1">
+            <summary>
+            诊断侦听器
+            </summary>
+            <typeparam name="T">通知信息类型</typeparam>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticObserver`1._onNext">
+            <summary>
+            向观察者提供新数据
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticObserver`1._onCompleted">
+            <summary>
+            通知观察者提供程序已完成发送基于推送的通知
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticObserver`1.#ctor(System.Action{`0},System.Action)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.DiagnosticObserver`1"/>
+            </summary>
+            <param name="onNext">向观察者提供新数据</param>
+            <param name="onCompleted">通知观察者提供程序已完成发送基于推送的通知。</param>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticObserver`1.OnNext(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Kit.DiagnosticObserver`1.OnError(System.Exception)">
+            <inheritdoc />
+        </member>
+        <member name="M:Furion.Kit.DiagnosticObserver`1.OnCompleted">
+            <inheritdoc />
+        </member>
         <member name="T:Microsoft.AspNetCore.Builder.KitApplicationBuilderExtensions">
             <summary>
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> 拓展类
