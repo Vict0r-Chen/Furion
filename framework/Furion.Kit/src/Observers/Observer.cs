@@ -12,7 +12,30 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Kit;
-global using Microsoft.Extensions.FileProviders;
-global using System.Diagnostics;
-global using System.Runtime.CompilerServices;
+namespace Furion.Kit;
+
+internal sealed class Observer<T> : IObserver<T>
+{
+    internal readonly Action<T> _onNext;
+    internal readonly Action _onCompleted;
+
+    internal Observer(Action<T>? onNext, Action? onCompleted)
+    {
+        _onNext = onNext ?? new Action<T>(_ => { });
+        _onCompleted = onCompleted ?? new Action(() => { });
+    }
+
+    public void OnCompleted()
+    {
+        _onCompleted();
+    }
+
+    public void OnError(Exception error)
+    {
+    }
+
+    public void OnNext(T value)
+    {
+        _onNext(value);
+    }
+}

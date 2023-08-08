@@ -26,6 +26,8 @@ public static class KitApplicationBuilderExtensions
     /// <returns><see cref="IApplicationBuilder"/></returns>
     public static IApplicationBuilder UseKit(this IApplicationBuilder applicationBuilder)
     {
+        new HttpDiagnosticListener().OnObserve();
+
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitApplicationBuilderExtensions).Assembly;
 
