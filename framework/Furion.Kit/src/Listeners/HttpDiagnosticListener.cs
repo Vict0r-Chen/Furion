@@ -36,7 +36,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
     /// <inheritdoc />
     internal override void OnSubscribe(KeyValuePair<string, object?> data)
     {
-        // 这里支持诊断各种类型，提供一个属性
+        // 这里支持诊断各种 Web 应用类型，提供一个属性
 
         if (data.Value is BeforeActionFilterOnActionExecutingEventData beforeActionFilterOnActionExecutingEventData)
         {

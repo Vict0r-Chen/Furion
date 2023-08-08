@@ -3,7 +3,7 @@ import { db } from "../../../db";
 
 export default function RequestList() {
   const httpDiagnost = useLiveQuery(async () => {
-    return await db.httpDiagnost.reverse().toArray();
+    return await db.httpDiagnost.reverse().limit(10).toArray();
   });
 
   if (!httpDiagnost) {

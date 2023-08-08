@@ -18,7 +18,7 @@ namespace Furion.Kit;
 /// 诊断监听器抽象基类
 /// </summary>
 /// <typeparam name="T">数据类型</typeparam>
-internal abstract class DiagnosticListenerBase<T> : IDiagnosticListener<T>
+internal abstract class DiagnosticListenerBase<T>
 {
     /// <summary>
     ///  并发锁标识
