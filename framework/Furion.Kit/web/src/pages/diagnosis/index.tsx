@@ -15,7 +15,7 @@ export default function Diagnosis() {
 
     const addData = async (data: HttpDiagnost) => {
       try {
-        await db.httpDiagnost.add(data);
+        await db.httpDiagnost.put(data);
       } catch (error) {
         console.log(error);
       }

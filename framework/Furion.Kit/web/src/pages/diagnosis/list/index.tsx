@@ -3,10 +3,12 @@ import { db } from "../../../db";
 
 export default function RequestList() {
   const httpDiagnost = useLiveQuery(async () => {
-    return await db.httpDiagnost.toArray();
+    return await db.httpDiagnost.reverse().toArray();
   });
 
-  console.log(httpDiagnost);
+  if (!httpDiagnost) {
+    return <div>加载中...</div>;
+  }
 
   return (
     <div>
