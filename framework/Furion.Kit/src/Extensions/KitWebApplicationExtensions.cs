@@ -13,6 +13,7 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Text.Encodings.Web;
 
 namespace Microsoft.AspNetCore.Builder;
 
@@ -53,7 +54,12 @@ public static class KitWebApplicationExtensions
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     var item = await diagnosticListener.ReadAsync(cancellationToken);
-                    await context.Response.WriteAsync("data: " + JsonSerializer.Serialize(item) + "\n\n", cancellationToken);
+
+                    await context.Response.WriteAsync("data: " + JsonSerializer.Serialize(item, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    }) + "\n\n", cancellationToken);
                 }
 
                 // 关闭连接

@@ -2,6 +2,7 @@ import { Anchor, Divider, Layout, Space, Typography } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
 import { useEffect } from "react";
 import IconFont from "../../components/iconfont";
+import { HttpDiagnost, db } from "../../db";
 import RequestList from "./list";
 import { Container, Panel } from "./style";
 
@@ -12,8 +13,17 @@ export default function Diagnosis() {
   useEffect(() => {
     var eventSource = new EventSource("https://localhost:7115/furion/http-sse");
 
+    const addData = async (data: HttpDiagnost) => {
+      try {
+        await db.httpDiagnost.add(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     eventSource.onmessage = function (event) {
       console.log("Received SSE data:", event.data);
+      addData(JSON.parse(event.data) as HttpDiagnost);
     };
 
     eventSource.onerror = function (event) {
