@@ -38,7 +38,6 @@ public class ServiceComponent : ComponentBase
 
     public override void ConfigureServices(ServiceComponentContext context)
     {
-        context.Services.AddKit();
         context.Services.AddControllers()
             .AddControllersWithAutowired();
         context.Services.AddEndpointsApiExplorer();

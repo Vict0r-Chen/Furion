@@ -1,5 +1,6 @@
 import { Anchor, Divider, Layout, Space, Typography } from "antd";
 import { AnchorContainer } from "antd/es/anchor/Anchor";
+import { useEffect } from "react";
 import IconFont from "../../components/iconfont";
 import RequestList from "./list";
 import { Container, Panel } from "./style";
@@ -8,6 +9,18 @@ const { Title, Text } = Typography;
 const { Sider, Content } = Layout;
 
 export default function Diagnosis() {
+  useEffect(() => {
+    var eventSource = new EventSource("https://localhost:7115/http");
+
+    eventSource.onmessage = function (e) {
+      console.log(e);
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
   return (
     <Panel>
       <Title level={3}>诊断</Title>

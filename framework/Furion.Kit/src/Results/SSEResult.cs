@@ -12,22 +12,30 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Furion.Kit;
 
-/// <summary>
-/// Kit 模块 <see cref="IServiceCollection"/> 拓展类
-/// </summary>
-public static class KitServiceCollectionExtensions
+internal class SSEResult : IResult
 {
-    /// <summary>
-    /// 添加自动装配成员激活器服务
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddKit(this IServiceCollection services)
-    {
-        services.TryAddEnumerable(ServiceDescriptor.Singleton<IDiagnosticListener, HttpDiagnosticListener>());
+    private readonly object _data;
 
-        return services;
+    public SSEResult(object data)
+    {
+        _data = data;
+    }
+
+    public async Task ExecuteAsync(HttpContext httpContext)
+    {
+        var json = JsonSerializer.Serialize(_data);
+        var message = "data: " + json + "\n\n";
+
+        // 允许跨域，设置返回 json
+        httpContext.Response.Headers["Access-Control-Allow-Origin"] = "*";
+        httpContext.Response.Headers["Access-Control-Allow-Headers"] = "*";
+
+        httpContext.Response.ContentType = "text/event-stream";
+        httpContext.Response.ContentLength = Encoding.UTF8.GetByteCount(message);
+
+        await httpContext.Response.WriteAsync(message);
+        await httpContext.Response.Body.FlushAsync();
     }
 }

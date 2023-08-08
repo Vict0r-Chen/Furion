@@ -26,20 +26,19 @@ public static class KitWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication)
     {
-        var diagnosticListeners = webApplication.Services.GetServices<IDiagnosticListener>();
-        foreach (var diagnosticListener in diagnosticListeners)
+        webApplication.MapGet("/http", async (HttpContext context, CancellationToken cancellationToken) =>
         {
+            var diagnosticListener = new HttpDiagnosticListener();
             diagnosticListener.Observe();
-        }
+            cancellationToken.Register(() =>
+            {
+                diagnosticListener.Dispose();
+            });
 
-        webApplication.MapGet("/http", async (HttpContext context, IEnumerable<IDiagnosticListener> listeners, CancellationToken cancellationToken) =>
-        {
-            var listener = listeners.OfType<HttpDiagnosticListener>().First();
-
-            // Get all todo items
-            var item = await listener.ReadAsync(cancellationToken);
-            await context.Response.WriteAsJsonAsync(item, cancellationToken);
-        }).ExcludeFromDescription();
+            var item = await diagnosticListener.ReadAsync(cancellationToken);
+            return new SSEResult(item);
+        }).Accepts<SSEResult>("text/event-stream")
+        .ExcludeFromDescription();
 
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
@@ -53,5 +52,10 @@ public static class KitWebApplicationExtensions
         });
 
         return webApplication;
+    }
+
+    private static string SerializeToJson(object obj)
+    {
+        return JsonSerializer.Serialize(obj);
     }
 }

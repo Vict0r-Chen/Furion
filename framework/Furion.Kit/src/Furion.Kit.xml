@@ -144,18 +144,6 @@
         <member name="M:Furion.Kit.DiagnosticObserver`1.OnCompleted">
             <inheritdoc />
         </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.KitServiceCollectionExtensions">
-            <summary>
-            Kit 模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.KitServiceCollectionExtensions.AddKit(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            添加自动装配成员激活器服务
-            </summary>
-            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
-            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
-        </member>
         <member name="T:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions">
             <summary>
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
