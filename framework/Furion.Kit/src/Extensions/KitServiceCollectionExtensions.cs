@@ -12,33 +12,22 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.AspNetCore.Builder;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Kit 模块 <see cref="IApplicationBuilder"/> 拓展类
+/// Kit 模块 <see cref="IServiceCollection"/> 拓展类
 /// </summary>
-public static class KitApplicationBuilderExtensions
+public static class KitServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加 Kit 中间件
+    /// 添加自动装配成员激活器服务
     /// </summary>
-    /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
-    /// <returns><see cref="IApplicationBuilder"/></returns>
-    public static IApplicationBuilder UseKit(this IApplicationBuilder applicationBuilder)
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddKit(this IServiceCollection services)
     {
-        new HttpDiagnosticListener().Observe();
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IDiagnosticListener, HttpDiagnosticListener>());
 
-        // 获取当前类型所在程序集
-        var currentAssembly = typeof(KitApplicationBuilderExtensions).Assembly;
-
-        // 添加 Kit 静态资源
-        applicationBuilder.UseFileServer(new FileServerOptions
-        {
-            FileProvider = new EmbeddedFileProvider(currentAssembly, $"{currentAssembly.GetName().Name}.Assets"),
-            RequestPath = "/furion",
-            EnableDirectoryBrowsing = false
-        });
-
-        return applicationBuilder;
+        return services;
     }
 }

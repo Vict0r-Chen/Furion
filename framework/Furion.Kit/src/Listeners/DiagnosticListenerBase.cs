@@ -112,13 +112,13 @@ internal abstract class DiagnosticListenerBase<T> : IDiagnosticListener<T>
     /// <param name="item"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    protected virtual async Task WriteAsync(T item, CancellationToken cancellationToken)
+    protected virtual async Task WriteAsync(T item, CancellationToken cancellationToken = default)
     {
         await _channel.Writer.WriteAsync(item, cancellationToken);
     }
 
     /// <inheritdoc />
-    public virtual async Task<T> ReadAsync(CancellationToken cancellationToken)
+    public virtual async Task<T> ReadAsync(CancellationToken cancellationToken = default)
     {
         return await _channel.Reader.ReadAsync(cancellationToken);
     }

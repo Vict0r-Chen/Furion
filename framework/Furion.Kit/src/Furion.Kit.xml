@@ -10,17 +10,22 @@
             </summary>
             <typeparam name="T">数据类型</typeparam>
         </member>
-        <member name="M:Furion.Kit.IDiagnosticListener`1.Observe">
-            <summary>
-            观察新数据
-            </summary>
-        </member>
         <member name="M:Furion.Kit.IDiagnosticListener`1.ReadAsync(System.Threading.CancellationToken)">
             <summary>
             读取新数据
             </summary>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><typeparamref name="T"/></returns>
+        </member>
+        <member name="T:Furion.Kit.IDiagnosticListener">
+            <summary>
+            诊断监听器
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.IDiagnosticListener.Observe">
+            <summary>
+            观察新数据
+            </summary>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
@@ -139,17 +144,29 @@
         <member name="M:Furion.Kit.DiagnosticObserver`1.OnCompleted">
             <inheritdoc />
         </member>
-        <member name="T:Microsoft.AspNetCore.Builder.KitApplicationBuilderExtensions">
+        <member name="T:Microsoft.Extensions.DependencyInjection.KitServiceCollectionExtensions">
             <summary>
-            Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/> 拓展类
+            Kit 模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitApplicationBuilderExtensions.UseKit(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.KitServiceCollectionExtensions.AddKit(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加自动装配成员激活器服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions">
+            <summary>
+            Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication)">
             <summary>
             添加 Kit 中间件
             </summary>
-            <param name="applicationBuilder"><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
+            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
     </members>
 </doc>

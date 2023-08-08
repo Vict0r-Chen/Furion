@@ -18,17 +18,23 @@ namespace Furion.Kit;
 /// 诊断监听器
 /// </summary>
 /// <typeparam name="T">数据类型</typeparam>
-internal interface IDiagnosticListener<T> : IDisposable
+internal interface IDiagnosticListener<T> : IDiagnosticListener
 {
-    /// <summary>
-    /// 观察新数据
-    /// </summary>
-    void Observe();
-
     /// <summary>
     /// 读取新数据
     /// </summary>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><typeparamref name="T"/></returns>
-    Task<T> ReadAsync(CancellationToken cancellationToken);
+    Task<T> ReadAsync(CancellationToken cancellationToken = default);
+}
+
+/// <summary>
+/// 诊断监听器
+/// </summary>
+internal interface IDiagnosticListener : IDisposable
+{
+    /// <summary>
+    /// 观察新数据
+    /// </summary>
+    void Observe();
 }

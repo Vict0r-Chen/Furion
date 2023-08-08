@@ -38,25 +38,38 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
     {
         if (data.Value is BeforeActionFilterOnActionExecutingEventData beforeActionFilterOnActionExecutingEventData)
         {
-            Console.WriteLine(data.Key);
-            var actionExecutingContext = beforeActionFilterOnActionExecutingEventData.ActionExecutingContext;
+            var httpContext = beforeActionFilterOnActionExecutingEventData.ActionExecutingContext.HttpContext;
 
-            Console.WriteLine(actionExecutingContext.HttpContext.TraceIdentifier);
-            Console.WriteLine(actionExecutingContext.HttpContext.Request.Path);
-        }
-
-        if (data.Value is AfterActionFilterOnActionExecutedEventData afterActionFilterOnActionExecutedEventData)
-        {
-            Console.WriteLine(data.Key);
-            var actionExecutedContext = afterActionFilterOnActionExecutedEventData.ActionExecutedContext;
-            Console.WriteLine(actionExecutedContext.HttpContext.TraceIdentifier);
-
-            if (actionExecutedContext.Exception is not null)
+            if (_httpDiagnosticsCache.TryAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
             {
-                Console.WriteLine(actionExecutedContext.Exception);
+                TraceIdentifier = httpContext.TraceIdentifier,
+                RequestPath = httpContext.Request.Path
+            }))
+            {
+                Console.WriteLine(data.Key);
             }
         }
 
+        if (data.Value is BeforeActionFilterOnActionExecutedEventData beforeActionFilterOnActionExecutedEventData)
+        {
+            var httpContext = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.HttpContext;
+
+            _httpDiagnosticsCache.TryGetValue(httpContext.TraceIdentifier, out var oldValue);
+            if (oldValue != null && !oldValue.IsCompleted)
+            {
+                if (_httpDiagnosticsCache.TryRemove(httpContext.TraceIdentifier, out var removedValue))
+                {
+                    Console.WriteLine(data.Key);
+
+                    // 在此处对旧值进行更新
+                    removedValue.IsCompleted = true;
+                    removedValue.Exception = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception?.ToString();
+                    _ = WriteAsync(removedValue);
+                }
+            }
+        }
+
+        // Console.WriteLine(data.Key);
         //Console.WriteLine($"Data received: {data.Key}: {data.Value}");
     }
 }
