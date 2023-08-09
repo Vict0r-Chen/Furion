@@ -4,8 +4,9 @@ import {
   IssuesCloseOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
-import { Divider, QRCode, Space, Spin, Typography } from "antd";
+import { Divider, QRCode, Skeleton, Space, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import { db } from "../../../db";
@@ -14,14 +15,25 @@ const { Title, Text } = Typography;
 
 export default function DiagnosisDetail() {
   let { id } = useParams();
+  const [loading, setLoading] = useState(true);
 
-  const diagnosis = useLiveQuery(
-    async () => await db.httpDiagnost.get({ traceIdentifier: id }),
-    [id]
-  );
+  const diagnosis = useLiveQuery(async () => {
+    setLoading(true);
+    var data = await db.httpDiagnost.get({ traceIdentifier: id });
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+    return data;
+  }, [id]);
 
-  if (!diagnosis) {
-    return <Spin />;
+  if (loading || !diagnosis) {
+    return (
+      <>
+        <Skeleton active />
+        <Skeleton active />
+        <Skeleton active />
+      </>
+    );
   }
 
   return (

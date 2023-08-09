@@ -71,7 +71,13 @@ export default function RequestList() {
   }, []);
 
   if (!httpDiagnost) {
-    return <Skeleton active />;
+    return (
+      <>
+        <Skeleton active />
+        <Skeleton active />
+        <Skeleton active />
+      </>
+    );
   }
 
   return (
