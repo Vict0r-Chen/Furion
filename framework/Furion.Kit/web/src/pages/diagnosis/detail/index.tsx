@@ -150,7 +150,9 @@ export default function DiagnosisDetail() {
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           <Space>
-            <CodeMirror editable={false} value={diagnosis.exception} />
+            {diagnosis.exception && (
+              <CodeMirror editable={false} value={diagnosis.exception} />
+            )}
           </Space>
         </Space>
       </div>

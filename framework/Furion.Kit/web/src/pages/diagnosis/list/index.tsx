@@ -1,6 +1,8 @@
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
+  FullscreenExitOutlined,
+  FullscreenOutlined,
   IssuesCloseOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
@@ -35,6 +37,7 @@ export default function RequestList() {
   const [time, setTime] = useState(new Date());
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
 
   const count = useLiveQuery(async () =>
     db.httpDiagnost.filter((f) => f.requestPath !== "/furion/http-sse").count()
@@ -89,7 +92,19 @@ export default function RequestList() {
         open={open}
         mask={false}
         autoFocus={false}
-        width={600}
+        width={fullscreen ? "100%" : undefined}
+        extra={
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => setFullscreen((s) => !s)}
+          >
+            {fullscreen ? (
+              <FullscreenExitOutlined style={{ color: "#1677ff" }} />
+            ) : (
+              <FullscreenOutlined />
+            )}
+          </span>
+        }
       >
         <Outlet />
       </Drawer>
