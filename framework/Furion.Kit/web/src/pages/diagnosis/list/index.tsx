@@ -8,7 +8,7 @@ const { Text } = Typography;
 
 export default function RequestList() {
   const httpDiagnost = useLiveQuery(async () => {
-    return await db.httpDiagnost.reverse().limit(50).toArray();
+    return await db.httpDiagnost.reverse().limit(24).toArray();
   });
 
   if (!httpDiagnost) {
@@ -16,7 +16,12 @@ export default function RequestList() {
   }
 
   return (
-    <Card hoverable title="请求" style={{ width: "100%", marginTop: 15 }}>
+    <Card
+      hoverable
+      title="请求"
+      style={{ width: "100%", marginTop: 15 }}
+      extra={<Text>{httpDiagnost.length}</Text>}
+    >
       <Space direction="vertical">
         {httpDiagnost?.map((item) => (
           <div key={item.traceIdentifier}>
