@@ -17,7 +17,7 @@ namespace Furion.Kit;
 /// <summary>
 /// 诊断监听器抽象基类
 /// </summary>
-/// <typeparam name="TData">诊断订阅器通道数据类型</typeparam>
+/// <typeparam name="TData">诊断订阅器数据类型</typeparam>
 internal abstract class DiagnosticListenerBase<TData> : IDisposable
 {
     /// <summary>
@@ -26,30 +26,30 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     internal readonly object _lockObject = new();
 
     /// <summary>
-    /// 诊断订阅器数据通道
+    /// 诊断订阅器通道
     /// </summary>
     internal readonly Channel<TData> _diagnosticChannel;
 
     /// <summary>
-    /// 诊断订阅器对象
+    /// 诊断订阅器
     /// </summary>
     internal IDisposable? _subscription;
 
     /// <summary>
-    /// 监听器订阅器对象
+    /// 监听器的订阅器对象
     /// </summary>
     internal IDisposable? _listenerSubscription;
 
     /// <summary>
-    /// 诊断侦听器类别
+    /// 监听类别
     /// </summary>
     internal readonly string _listenerCategory;
 
     /// <summary>
     /// <inheritdoc cref="DiagnosticListenerBase{T}" />
     /// </summary>
-    /// <param name="listenerCategory">诊断侦听器类别</param>
-    /// <param name="capacity">队列容量</param>
+    /// <param name="listenerCategory">监听类别</param>
+    /// <param name="capacity">诊断订阅器通道容量</param>
     internal DiagnosticListenerBase(string listenerCategory, int capacity = 3000)
     {
         // 空检查
@@ -57,7 +57,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
 
         _listenerCategory = listenerCategory;
 
-        // 初始化诊断订阅器数据通道
+        // 初始化诊断订阅器通道
         _diagnosticChannel = Channel.CreateBounded<TData>(new BoundedChannelOptions(capacity)
         {
             FullMode = BoundedChannelFullMode.Wait
@@ -69,10 +69,10 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     /// </summary>
     public void Listening()
     {
-        // 初始化诊断侦听器
+        // 初始化诊断观察者
         var diagnosticObserver = new DiagnosticObserver<DiagnosticListener>(AddSubscription, null);
 
-        // 注册诊断侦听器
+        // 注册诊断观察者
         _listenerSubscription = DiagnosticListener.AllListeners.Subscribe(diagnosticObserver);
     }
 
@@ -85,13 +85,13 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         // 空检查
         ArgumentNullException.ThrowIfNull(diagnosticListener);
 
-        // 检查诊断侦听器类别是否一致
+        // 检查诊断监听器类别
         if (diagnosticListener.Name != _listenerCategory)
         {
             return;
         }
 
-        // 添加诊断订阅器
+        // 注册诊断订阅器
         lock (_lockObject)
         {
             _subscription?.Dispose();
@@ -100,24 +100,24 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     }
 
     /// <summary>
-    /// 订阅通知信息
+    /// 订阅诊断通知信息
     /// </summary>
     /// <param name="data">通知信息</param>
     internal abstract void OnSubscribe(KeyValuePair<string, object?> data);
 
     /// <summary>
-    ///
+    /// 写入诊断订阅器通道数据
     /// </summary>
     /// <param name="data"><typeparamref name="TData"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><see cref="Task"/></returns>
-    protected virtual async Task WriteAsync(TData data, CancellationToken cancellationToken = default)
+    internal virtual async Task WriteAsync(TData data, CancellationToken cancellationToken = default)
     {
         await _diagnosticChannel.Writer.WriteAsync(data, cancellationToken);
     }
 
     /// <summary>
-    ///
+    /// 读取诊断订阅器通道数据
     /// </summary>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><see cref="Task{TResult}"/></returns>

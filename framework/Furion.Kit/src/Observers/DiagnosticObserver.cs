@@ -15,7 +15,7 @@
 namespace Furion.Kit;
 
 /// <summary>
-/// 诊断侦听器
+/// 诊断观察者
 /// </summary>
 /// <typeparam name="T">通知信息类型</typeparam>
 internal sealed class DiagnosticObserver<T> : IObserver<T>

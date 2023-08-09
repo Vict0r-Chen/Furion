@@ -27,8 +27,9 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
     /// <summary>
     /// <inheritdoc cref="HttpDiagnosticListener"/>
     /// </summary>
-    public HttpDiagnosticListener()
-        : base("Microsoft.AspNetCore")
+    /// <param name="capacity"></param>
+    public HttpDiagnosticListener(int capacity = 3000)
+        : base("Microsoft.AspNetCore", capacity)
     {
         _httpDiagnosticsCache = new();
     }
