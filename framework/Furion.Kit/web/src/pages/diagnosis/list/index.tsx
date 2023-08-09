@@ -3,17 +3,21 @@ import { Card, Popover, Space, Spin, Tag, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
 import React, { useEffect, useState } from "react";
 import { db } from "../../../db";
+import { useServerStore } from "../../../stores/server.store";
 import { HighlightText } from "./style";
 
 const { Text } = Typography;
 
 export default function RequestList() {
+  const online = useServerStore((state) => state.online);
   const [time, setTime] = useState(new Date());
+
   const httpDiagnost = useLiveQuery(async () => {
     return await db.httpDiagnost
       .where("requestPath")
       .notEqual("/furion/http-sse")
       .reverse()
+      .limit(50)
       .sortBy("startTimestamp");
   });
 
@@ -30,7 +34,7 @@ export default function RequestList() {
   }
 
   return (
-    <Card hoverable style={{ width: "100%", marginTop: 15 }}>
+    <Card hoverable style={{ width: "100%", margin: "15px 0" }}>
       <Space direction="vertical">
         {httpDiagnost?.map((item) => (
           <div key={item.traceIdentifier}>
@@ -45,9 +49,10 @@ export default function RequestList() {
                 </Text>
               ) : (
                 <>
-                  {item.startTimestamp &&
-                  (time.getTime() - item.startTimestamp.getTime()) / 1000 >
-                    10 ? (
+                  {!online ||
+                  (item.startTimestamp &&
+                    (time.getTime() - item.startTimestamp.getTime()) / 1000 >
+                      10) ? (
                     <WarningOutlined style={{ color: "#faad14" }} />
                   ) : (
                     <Spin size="small" />

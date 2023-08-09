@@ -1,13 +1,18 @@
 import { Alert, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { HttpDiagnost, db } from "../../db";
+import { useServerStore } from "../../stores/server.store";
 import RequestList from "./list";
 import { Panel } from "./style";
 
 const { Title } = Typography;
 
 export default function Diagnosis() {
-  const [monitor, setMonitor] = useState(true);
+  const [online, setState] = useServerStore((state) => [
+    state.online,
+    state.setState,
+  ]);
+
   useEffect(() => {
     var eventSource = new EventSource("https://localhost:7115/furion/http-sse");
 
@@ -33,12 +38,12 @@ export default function Diagnosis() {
     };
 
     eventSource.onerror = function (event) {
-      setMonitor(false);
+      setState(false);
       console.log("SSE error:", event);
     };
 
     eventSource.onopen = function () {
-      setMonitor(true);
+      setState(true);
       console.log("SSE connection opened");
     };
 
@@ -50,7 +55,7 @@ export default function Diagnosis() {
   return (
     <Panel>
       <Title level={3}>诊断</Title>
-      {!monitor && (
+      {!online && (
         <Alert
           message="诊断器连接失败，请确保服务器已正常启动。"
           type="warning"
