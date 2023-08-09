@@ -1,21 +1,29 @@
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, WarningOutlined } from "@ant-design/icons";
 import { Card, Popover, Space, Spin, Tag, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../../../db";
 import { HighlightText } from "./style";
 
 const { Text } = Typography;
 
 export default function RequestList() {
+  const [time, setTime] = useState(new Date());
   const httpDiagnost = useLiveQuery(async () => {
     return await db.httpDiagnost
       .where("requestPath")
       .notEqual("/furion/http-sse")
       .reverse()
-      .limit(24)
-      .sortBy("timestamp");
+      .sortBy("startTimestamp");
   });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   if (!httpDiagnost) {
     return <Spin />;
@@ -28,13 +36,25 @@ export default function RequestList() {
           <div key={item.traceIdentifier}>
             <Space size={15}>
               <HttpMethod value={item.requestMethod} />
-              {/* 这里可以判断未知 */}
-              <Text
-                type={item.exception ? "danger" : "success"}
-                style={{ fontWeight: 500 }}
-              >
-                {item.statusCode}
-              </Text>
+              {item.statusCode ? (
+                <Text
+                  type={item.exception ? "danger" : "success"}
+                  style={{ fontWeight: 500 }}
+                >
+                  {item.statusCode}
+                </Text>
+              ) : (
+                <>
+                  {item.startTimestamp &&
+                  (time.getTime() - item.startTimestamp.getTime()) / 1000 >
+                    10 ? (
+                    <WarningOutlined style={{ color: "#faad14" }} />
+                  ) : (
+                    <Spin size="small" />
+                  )}
+                </>
+              )}
+
               <Popover
                 title={
                   <Space size={5}>
