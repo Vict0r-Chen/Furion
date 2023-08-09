@@ -49,7 +49,7 @@ export default function RequestList() {
     return () => clearInterval(timer);
   }, []);
 
-  if (!httpDiagnost || !count) {
+  if (!httpDiagnost) {
     return <Skeleton active />;
   }
 
@@ -138,15 +138,15 @@ export default function RequestList() {
           setPage((p) => p + 1);
         }}
       >
-        {count > httpDiagnost.length ? (
+        {count && count > httpDiagnost.length ? (
           <>
             {loading && <Skeleton active />}
             <Button>加载更多</Button>
           </>
+        ) : count ? (
+          <Text type="secondary">没有更多数据了</Text>
         ) : (
-          <>
-            <Text type="secondary">没有更多数据了</Text>
-          </>
+          <></>
         )}
       </div>
     </>
