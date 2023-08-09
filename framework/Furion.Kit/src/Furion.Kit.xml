@@ -211,6 +211,11 @@
         <member name="P:Furion.Kit.HttpDiagnosticModel.Endpoint">
             <inheritdoc cref="T:Furion.Kit.EndpointModel"/>
         </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.StatusCode">
+            <summary>
+            状态码
+            </summary>
+        </member>
         <member name="P:Furion.Kit.HttpDiagnosticModel.StartTimestamp">
             <summary>
             请求时间

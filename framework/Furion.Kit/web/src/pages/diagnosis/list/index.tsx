@@ -1,6 +1,7 @@
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
+  IssuesCloseOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
 import {
@@ -140,6 +141,13 @@ export default function RequestList() {
                             item.statusCode <= 299 && (
                               <CheckCircleOutlined
                                 style={{ color: "#52c41a" }}
+                              />
+                            )}
+                          {item.statusCode &&
+                            item.statusCode >= 400 &&
+                            item.statusCode <= 499 && (
+                              <IssuesCloseOutlined
+                                style={{ color: "#ff4d4f" }}
                               />
                             )}
                           {item.statusCode && item.statusCode >= 500 && (

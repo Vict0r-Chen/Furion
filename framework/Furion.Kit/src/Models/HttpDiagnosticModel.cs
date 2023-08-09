@@ -44,6 +44,9 @@ internal sealed class HttpDiagnosticModel
 
     public string? Exception { get; internal set; }
 
+    /// <summary>
+    /// 状态码
+    /// </summary>
     public int? StatusCode { get; internal set; }
 
     /// <summary>
