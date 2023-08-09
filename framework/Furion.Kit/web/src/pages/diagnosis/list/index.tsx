@@ -18,27 +18,28 @@ import { HighlightText } from "./style";
 
 const { Text } = Typography;
 
+const pageSize = 5;
+
 export default function RequestList() {
   const online = useServerStore((state) => state.online);
   const [time, setTime] = useState(new Date());
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const httpDiagnost = useLiveQuery(async () => {
-    setLoading(true);
+  const count = useLiveQuery(async () =>
+    db.httpDiagnost.filter((f) => f.requestPath !== "/furion/http-sse").count()
+  );
 
+  const httpDiagnost = useLiveQuery(async () => {
     var data = await db.httpDiagnost
       .filter((f) => f.requestPath !== "/furion/http-sse")
       .reverse()
+      .limit(pageSize * page)
       .toArray();
 
     setLoading(false);
     return data;
   }, [page]);
-
-  const count = useLiveQuery(async () =>
-    db.httpDiagnost.filter((f) => f.requestPath !== "/furion/http-sse").count()
-  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -48,8 +49,8 @@ export default function RequestList() {
     return () => clearInterval(timer);
   }, []);
 
-  if (!httpDiagnost) {
-    return <Skeleton />;
+  if (!httpDiagnost || !count) {
+    return <Skeleton active />;
   }
 
   return (
@@ -130,17 +131,24 @@ export default function RequestList() {
           </Space>
         )}
       </Card>
-      {httpDiagnost.length > 0 && (
-        <div
-          style={{ textAlign: "center" }}
-          onClick={() => {
-            setPage((p) => p + 1);
-          }}
-        >
-          {loading && <Skeleton />}
-          <Button>加载更多 {count}</Button>
-        </div>
-      )}
+      <div
+        style={{ textAlign: "center" }}
+        onClick={() => {
+          setLoading(true);
+          setPage((p) => p + 1);
+        }}
+      >
+        {count > httpDiagnost.length ? (
+          <>
+            {loading && <Skeleton active />}
+            <Button>加载更多</Button>
+          </>
+        ) : (
+          <>
+            <Text type="secondary">没有更多数据了</Text>
+          </>
+        )}
+      </div>
     </>
   );
 }
