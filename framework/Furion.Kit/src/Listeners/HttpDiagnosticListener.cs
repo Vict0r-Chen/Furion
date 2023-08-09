@@ -45,7 +45,8 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
             if (_httpDiagnosticsCache.TryAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
             {
                 TraceIdentifier = httpContext.TraceIdentifier,
-                RequestPath = httpContext.Request.Path
+                RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
+                RequestHttpMethod = httpContext.Request.Method
             }))
             {
                 Console.WriteLine(data.Key);
@@ -65,6 +66,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
 
                     // 在此处对旧值进行更新
                     removedValue.IsCompleted = true;
+                    removedValue.ResponseStatusCode = httpContext.Response.StatusCode;
                     removedValue.Exception = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception?.ToString();
                     _ = WriteAsync(removedValue);
                 }

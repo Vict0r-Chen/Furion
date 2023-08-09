@@ -134,7 +134,7 @@ public class UserFriendlyException : ApplicationException
     }
 
     /// <summary>
-    /// 抛出用户友好异常
+    /// 抛出用户友好异常    
     /// </summary>
     /// <typeparam name="TResult">异常返回类型</typeparam>
     /// <param name="code">异常编码</param>

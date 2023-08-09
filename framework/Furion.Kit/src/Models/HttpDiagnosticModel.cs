@@ -18,9 +18,13 @@ internal sealed class HttpDiagnosticModel
 {
     public string? TraceIdentifier { get; set; }
 
+    public string? RequestHttpMethod { get; set; }
+
     public string? RequestPath { get; set; }
 
     public string? Exception { get; set; }
+
+    public int? ResponseStatusCode { get; set; }
 
     internal bool IsCompleted { get; set; }
 }

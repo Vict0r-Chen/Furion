@@ -142,4 +142,39 @@ public class HelloController
         var z = name is null ? UserFriendlyException.Throw<string>("字符串不能为空") : name;
         var c = name ?? UserFriendlyException.Throw<string>("字符串不能为空");
     }
+
+    [HttpGet]
+    public void TestGet()
+    {
+    }
+
+    [HttpPost]
+    public void TestPost()
+    {
+    }
+
+    [HttpDelete]
+    public void TestDelete()
+    {
+    }
+
+    [HttpPut]
+    public void TestPut()
+    {
+    }
+
+    [HttpHead]
+    public void TestHead()
+    {
+    }
+
+    [HttpPatch]
+    public void TestPath()
+    {
+    }
+
+    [HttpOptions]
+    public void TestOptions()
+    {
+    }
 }

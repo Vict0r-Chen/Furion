@@ -4,7 +4,9 @@ export interface HttpDiagnost {
   id?: number;
   traceIdentifier: string;
   requestPath: string;
+  requestHttpMethod: string;
   exception?: string;
+  responseStatusCode: number;
 }
 
 export class MySubClassedDexie extends Dexie {
@@ -13,7 +15,8 @@ export class MySubClassedDexie extends Dexie {
   constructor() {
     super("furion-kit");
     this.version(1).stores({
-      httpDiagnost: "++id, traceIdentifier, requestPath, exception",
+      httpDiagnost:
+        "++id, traceIdentifier,  requestPath, requestHttpMethod, exception, responseStatusCode",
     });
   }
 }
