@@ -9,6 +9,7 @@ export interface HttpDiagnost {
   endpoint?: EndpointModel;
   startTimestamp?: Date;
   endTimestamp?: Date;
+  displayName?: string;
 }
 
 export interface EndpointModel {
@@ -25,7 +26,7 @@ export class MySubClassedDexie extends Dexie {
     super("furion-kit");
     this.version(1).stores({
       httpDiagnost:
-        "++traceIdentifier,  requestPath, requestMethod, exception, statusCode, endpoint, startTimestamp, endTimestamp",
+        "++traceIdentifier,  requestPath, requestMethod, exception, statusCode, endpoint, startTimestamp, endTimestamp, displayName",
     });
   }
 }

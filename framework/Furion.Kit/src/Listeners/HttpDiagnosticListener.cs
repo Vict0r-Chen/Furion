@@ -12,6 +12,12 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
+using System.Reflection;
+
 namespace Furion.Kit;
 
 /// <summary>
@@ -56,7 +62,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                 };
 
                 var endpoint = httpContext.GetEndpoint();
-                if (endpoint != null)
+                if (endpoint is not null)
                 {
                     var endpointModel = new EndpointModel
                     {
@@ -73,8 +79,13 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                             endpointModel.HttpMethods = string.Join(", ", readOnlyList);
                         }
                     }
-
                     httpDiagnosticModel.Endpoint = endpointModel;
+
+                    var controllerActionDescriptor = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
+                    if (controllerActionDescriptor is not null)
+                    {
+                        httpDiagnosticModel.DisplayName = controllerActionDescriptor.MethodInfo.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
+                    }
                 }
 
                 if (_httpDiagnosticModelsCache.TryAdd(httpDiagnosticModel.TraceIdentifier, httpDiagnosticModel))

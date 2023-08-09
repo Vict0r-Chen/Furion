@@ -18,7 +18,7 @@ import { HighlightText } from "./style";
 
 const { Text } = Typography;
 
-const pageSize = 5;
+const pageSize = 20;
 
 export default function RequestList() {
   const online = useServerStore((state) => state.online);
@@ -121,6 +121,8 @@ export default function RequestList() {
                   >
                     {item.endpoint?.displayName}
                   </HighlightText>
+
+                  {item.displayName && <Text mark>{item.displayName}</Text>}
 
                   {item.exception && (
                     <Tag icon={<CloseCircleOutlined />} color="#f50" />
