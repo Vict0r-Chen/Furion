@@ -46,7 +46,7 @@ export default function RequestList() {
     return data;
   }, [page]);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(id ? true : false);
 
   const showDrawer = () => {
     setOpen(true);
@@ -54,6 +54,7 @@ export default function RequestList() {
 
   const onClose = () => {
     setOpen(false);
+    navigate("/diagnosis");
   };
 
   useEffect(() => {
@@ -71,11 +72,12 @@ export default function RequestList() {
   return (
     <>
       <Drawer
-        title="0HMSP26E20VAM:0000000B"
+        title={id}
         placement="right"
         onClose={onClose}
         open={open}
         mask={false}
+        autoFocus={false}
       >
         <Outlet />
       </Drawer>
@@ -127,6 +129,7 @@ export default function RequestList() {
                       type={item.exception ? "danger" : undefined}
                       style={{ fontWeight: 500 }}
                       onClick={() => {
+                        showDrawer();
                         navigate("/diagnosis/detail/" + item.traceIdentifier);
                       }}
                     >
