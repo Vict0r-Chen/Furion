@@ -2,6 +2,7 @@ import { CloseCircleOutlined, WarningOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
+  Drawer,
   Empty,
   Popover,
   Skeleton,
@@ -12,6 +13,7 @@ import {
 } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
 import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import IconFont from "../../../components/iconfont";
 import { db } from "../../../db";
 import { useServerStore } from "../../../stores/server.store";
@@ -22,6 +24,8 @@ const { Text } = Typography;
 const pageSize = 20;
 
 export default function RequestList() {
+  const navigate = useNavigate();
+  let { id } = useParams();
   const online = useServerStore((state) => state.online);
   const [time, setTime] = useState(new Date());
   const [page, setPage] = useState(1);
@@ -42,6 +46,16 @@ export default function RequestList() {
     return data;
   }, [page]);
 
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date());
@@ -56,6 +70,15 @@ export default function RequestList() {
 
   return (
     <>
+      <Drawer
+        title="0HMSP26E20VAM:0000000B"
+        placement="right"
+        onClose={onClose}
+        open={open}
+        mask={false}
+      >
+        <Outlet />
+      </Drawer>
       <Card hoverable style={{ width: "100%", margin: "15px 0" }}>
         {httpDiagnost.length === 0 ? (
           <Empty description="暂无数据" />
@@ -103,6 +126,9 @@ export default function RequestList() {
                       italic
                       type={item.exception ? "danger" : undefined}
                       style={{ fontWeight: 500 }}
+                      onClick={() => {
+                        navigate("/diagnosis/detail/" + item.traceIdentifier);
+                      }}
                     >
                       {decodeURIComponent(item.requestPath)}
                     </Text>

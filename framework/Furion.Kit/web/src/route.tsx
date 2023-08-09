@@ -4,6 +4,7 @@ import Component from "./pages/component";
 import Configuration from "./pages/configuration";
 import Console from "./pages/console";
 import Diagnosis from "./pages/diagnosis";
+import DiagnosisDetail from "./pages/diagnosis/detail";
 import ErrorPage from "./pages/error-page";
 import Explore from "./pages/explore";
 import Generate from "./pages/generate";
@@ -37,6 +38,12 @@ const router = createHashRouter([
           {
             path: "diagnosis",
             element: <Diagnosis />,
+            children: [
+              {
+                path: "detail/:id",
+                element: <DiagnosisDetail />,
+              },
+            ],
           },
           {
             path: "openapi",
