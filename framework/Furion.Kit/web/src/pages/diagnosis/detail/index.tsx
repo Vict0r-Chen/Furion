@@ -4,9 +4,9 @@ import {
   IssuesCloseOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
-import CodeMirror from "@uiw/react-codemirror";
 import { Divider, QRCode, Skeleton, Space, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Highlight, themes } from "prism-react-renderer";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import logo from "../../../assets/logo.png";
@@ -54,7 +54,7 @@ export default function DiagnosisDetail() {
               地址：
             </Text>
             <Text underline italic copyable style={{ color: "#595959" }}>
-              {diagnosis.requestPath}
+              {decodeURIComponent(diagnosis.requestPath)}
             </Text>
           </Space>
           <Space>
@@ -141,81 +141,123 @@ export default function DiagnosisDetail() {
         </Space>
       </div>
       <Divider />
-      <Space>
-        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
-        <Title level={5} style={{ marginTop: 0 }}>
-          堆栈信息
-        </Title>
-      </Space>
-      <div style={{ marginTop: 15 }}>
-        <Space direction="vertical" size={10}>
+      {diagnosis.exception && (
+        <>
           <Space>
-            {diagnosis.exception && (
-              <CodeMirror editable={false} value={diagnosis.exception} />
-            )}
+            <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+            <Title level={5} style={{ marginTop: 0 }}>
+              堆栈信息
+            </Title>
           </Space>
-        </Space>
-      </div>
-      <Divider />
-      <Space>
-        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
-        <Title level={5} style={{ marginTop: 0 }}>
-          查询参数
-        </Title>
-      </Space>
-      <div style={{ marginTop: 15 }}>
-        <Space direction="vertical" size={10}>
-          {diagnosis.query?.map((item) => (
-            <Space key={item.key}>
-              <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-                {item.key}：
-              </Text>
-              <Text style={{ color: "#595959" }}>{item.value}</Text>
+          <div style={{ marginTop: 15, overflow: "auto" }}>
+            <Space direction="vertical" size={10}>
+              <Space>
+                <Highlight
+                  theme={themes.vsLight}
+                  code={diagnosis.exception}
+                  language="txt"
+                >
+                  {({
+                    className,
+                    style,
+                    tokens,
+                    getLineProps,
+                    getTokenProps,
+                  }) => (
+                    <pre
+                      style={{
+                        ...style,
+                        width: "100%",
+                        overflow: "auto",
+                      }}
+                    >
+                      {tokens.map((line, i) => (
+                        <div key={i} {...getLineProps({ line })}>
+                          <span style={{ marginRight: 10 }}>{i + 1}</span>
+                          {line.map((token, key) => (
+                            <span key={key} {...getTokenProps({ token })} />
+                          ))}
+                        </div>
+                      ))}
+                    </pre>
+                  )}
+                </Highlight>
+              </Space>
             </Space>
-          ))}
-        </Space>
-      </div>
-      <Divider />
+          </div>
+          <Divider />
+        </>
+      )}
+      {diagnosis.query && diagnosis.query.length > 0 && (
+        <>
+          <Space>
+            <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+            <Title level={5} style={{ marginTop: 0 }}>
+              查询参数
+            </Title>
+          </Space>
+          <div style={{ marginTop: 15 }}>
+            <Space direction="vertical" size={10}>
+              {diagnosis.query?.map((item) => (
+                <Space key={item.key}>
+                  <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                    {item.key}：
+                  </Text>
+                  <Text style={{ color: "#595959" }}>{item.value}</Text>
+                </Space>
+              ))}
+            </Space>
+          </div>
+          <Divider />
+        </>
+      )}
+      {diagnosis.cookies && diagnosis.cookies.length > 0 && (
+        <>
+          <Space>
+            <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+            <Title level={5} style={{ marginTop: 0 }}>
+              Cookies
+            </Title>
+          </Space>
+          <div style={{ marginTop: 15 }}>
+            <Space direction="vertical" size={10}>
+              {diagnosis.cookies?.map((item) => (
+                <Space key={item.key}>
+                  <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                    {item.key}：
+                  </Text>
+                  <Text style={{ color: "#595959" }}>{item.value}</Text>
+                </Space>
+              ))}
+            </Space>
+          </div>
+          <Divider />
+        </>
+      )}
 
-      <Space>
-        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
-        <Title level={5} style={{ marginTop: 0 }}>
-          Cookies
-        </Title>
-      </Space>
-      <div style={{ marginTop: 15 }}>
-        <Space direction="vertical" size={10}>
-          {diagnosis.cookies?.map((item) => (
-            <Space key={item.key}>
-              <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-                {item.key}：
-              </Text>
-              <Text style={{ color: "#595959" }}>{item.value}</Text>
+      {diagnosis.headers && diagnosis.headers.length > 0 && (
+        <>
+          <Space>
+            <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+            <Title level={5} style={{ marginTop: 0 }}>
+              请求头
+            </Title>
+          </Space>
+          <div style={{ marginTop: 15 }}>
+            <Space direction="vertical" size={10}>
+              {diagnosis.headers?.map((item) => (
+                <Space key={item.key}>
+                  <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                    {item.key}：
+                  </Text>
+                  <Text style={{ color: "#595959" }}>{item.value}</Text>
+                </Space>
+              ))}
             </Space>
-          ))}
-        </Space>
-      </div>
-      <Divider />
-
-      <Space>
-        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
-        <Title level={5} style={{ marginTop: 0 }}>
-          请求头
-        </Title>
-      </Space>
-      <div style={{ marginTop: 15 }}>
-        <Space direction="vertical" size={10}>
-          {diagnosis.headers?.map((item) => (
-            <Space key={item.key}>
-              <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-                {item.key}：
-              </Text>
-              <Text style={{ color: "#595959" }}>{item.value}</Text>
-            </Space>
-          ))}
-        </Space>
-      </div>
-      <Divider />
+          </div>
+          <Divider />
+        </>
+      )}
 
       <Space>
         <IconFont type="icon-tag" style={{ fontSize: 18 }} />

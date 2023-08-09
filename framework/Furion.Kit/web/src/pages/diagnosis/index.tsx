@@ -25,7 +25,6 @@ export default function Diagnosis() {
     };
 
     eventSource.onmessage = function (event) {
-      console.log("Received SSE data:", event.data);
       var data = JSON.parse(event.data);
       if (data.startTimestamp) {
         data.startTimestamp = new Date(data.startTimestamp);
@@ -39,12 +38,10 @@ export default function Diagnosis() {
 
     eventSource.onerror = function (event) {
       setState(false);
-      console.log("SSE error:", event);
     };
 
     eventSource.onopen = function () {
       setState(true);
-      console.log("SSE connection opened");
     };
 
     return () => {

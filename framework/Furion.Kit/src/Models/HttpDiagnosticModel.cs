@@ -69,9 +69,9 @@ internal sealed class HttpDiagnosticModel
     /// </summary>
     public string? MethodName { get; internal set; }
 
-    public IEnumerable<KeyValueModel>? Query { get; internal set; }
+    public List<KeyValueModel>? Query { get; internal set; }
 
-    public IEnumerable<KeyValueModel>? Cookies { get; internal set; }
+    public List<KeyValueModel>? Cookies { get; internal set; }
 
-    public IEnumerable<KeyValueModel>? Headers { get; internal set; }
+    public List<KeyValueModel>? Headers { get; internal set; }
 }

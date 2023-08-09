@@ -59,9 +59,9 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                     RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
                     RequestMethod = httpContext.Request.Method,
                     StartTimestamp = DateTimeOffset.UtcNow,
-                    Query = httpContext.Request.Query.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }),
-                    Cookies = httpContext.Request.Cookies.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }),
-                    Headers = httpContext.Request.Headers.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }),
+                    Query = httpContext.Request.Query.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }).ToList(),
+                    Cookies = httpContext.Request.Cookies.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }).ToList(),
+                    Headers = httpContext.Request.Headers.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }).ToList(),
                 };
 
                 var endpoint = httpContext.GetEndpoint();
@@ -99,8 +99,6 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                 }
             }
         }
-
-        Console.WriteLine(data.Key + "----------" + data.Value);
 
         // 监听筛选器执行完成事件
         if (data.Value is AfterActionFilterOnActionExecutedEventData eventData)
