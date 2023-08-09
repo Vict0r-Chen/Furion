@@ -4,11 +4,13 @@ import {
   IssuesCloseOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
+import CodeMirror from "@uiw/react-codemirror";
 import { Divider, QRCode, Skeleton, Space, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import logo from "../../../assets/logo.png";
+import IconFont from "../../../components/iconfont";
 import { db } from "../../../db";
 
 const { Title, Text } = Typography;
@@ -38,9 +40,13 @@ export default function DiagnosisDetail() {
 
   return (
     <div>
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        请求概要
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          请求概要
+        </Title>
+      </Space>
+
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           <Space>
@@ -112,9 +118,12 @@ export default function DiagnosisDetail() {
         </Space>
       </div>
       <Divider />
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        类型信息
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          类型信息
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           <Space>
@@ -132,16 +141,26 @@ export default function DiagnosisDetail() {
         </Space>
       </div>
       <Divider />
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        Stack
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          堆栈信息
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
-        <Space direction="vertical" size={10}></Space>
+        <Space direction="vertical" size={10}>
+          <Space>
+            <CodeMirror editable={false} value={diagnosis.exception} />
+          </Space>
+        </Space>
       </div>
       <Divider />
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        Query
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          查询参数
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           {diagnosis.query?.map((item) => (
@@ -156,9 +175,12 @@ export default function DiagnosisDetail() {
       </div>
       <Divider />
 
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        Cookies
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          Cookies
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           {diagnosis.cookies?.map((item) => (
@@ -173,9 +195,12 @@ export default function DiagnosisDetail() {
       </div>
       <Divider />
 
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        Headers
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          请求头
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           {diagnosis.headers?.map((item) => (
@@ -190,9 +215,12 @@ export default function DiagnosisDetail() {
       </div>
       <Divider />
 
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        Routing
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          路由表
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>
           <Space>
@@ -230,9 +258,12 @@ export default function DiagnosisDetail() {
         </Space>
       </div>
       <Divider />
-      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        异常码
-      </Title>
+      <Space>
+        <IconFont type="icon-tag" style={{ fontSize: 18 }} />
+        <Title level={5} style={{ marginTop: 0 }}>
+          页面二维码
+        </Title>
+      </Space>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={15}>
           <QRCode errorLevel="H" value="https://furion.net/" icon={logo} />
