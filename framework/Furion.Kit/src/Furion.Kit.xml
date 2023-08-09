@@ -4,6 +4,20 @@
         <name>Furion.Kit</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions">
+            <summary>
+            Kit 模块 <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions.MapGetSSE(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.Delegate)">
+            <summary>
+            添加 SSE 请求终点路由
+            </summary>
+            <param name="endpoints"><see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/></param>
+            <param name="pattern">路由</param>
+            <param name="handler">处理程序</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.RouteHandlerBuilder"/></returns>
+        </member>
         <member name="T:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions">
             <summary>
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
@@ -82,7 +96,7 @@
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.WriteAsync(`0,System.Threading.CancellationToken)">
             <summary>
-            写入诊断订阅器通道数据
+            将数据写入诊断订阅器通道
             </summary>
             <param name="data"><typeparamref name="TData"/></param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
@@ -94,6 +108,21 @@
             </summary>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.SSEHandler(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
+            <summary>
+            构建 SSE 请求处理程序
+            </summary>
+            <param name="context"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.SerializeData(`0)">
+            <summary>
+            序列化诊断订阅器通道数据
+            </summary>
+            <param name="data"><typeparamref name="TData"/></param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.Dispose">
             <inheritdoc />

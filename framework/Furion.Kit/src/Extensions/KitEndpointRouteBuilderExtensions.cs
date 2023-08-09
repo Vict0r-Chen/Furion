@@ -12,16 +12,24 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Kit;
-global using Microsoft.AspNetCore.Http;
-global using Microsoft.AspNetCore.Http.HttpResults;
-global using Microsoft.AspNetCore.Mvc.Diagnostics;
-global using Microsoft.AspNetCore.Routing;
-global using Microsoft.Extensions.FileProviders;
-global using System.Collections.Concurrent;
-global using System.Diagnostics;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Runtime.CompilerServices;
-global using System.Text.Encodings.Web;
-global using System.Text.Json;
-global using System.Threading.Channels;
+namespace Microsoft.AspNetCore.Builder;
+
+/// <summary>
+/// Kit 模块 <see cref="IEndpointRouteBuilder"/> 拓展类
+/// </summary>
+internal static class KitEndpointRouteBuilderExtensions
+{
+    /// <summary>
+    /// 添加 SSE 请求终点路由
+    /// </summary>
+    /// <param name="endpoints"><see cref="IEndpointRouteBuilder"/></param>
+    /// <param name="pattern">路由</param>
+    /// <param name="handler">处理程序</param>
+    /// <returns><see cref="RouteHandlerBuilder"/></returns>
+    internal static RouteHandlerBuilder MapGetSSE(this IEndpointRouteBuilder endpoints, [StringSyntax("Route")] string pattern, Delegate handler)
+    {
+        return endpoints.MapGet(pattern, handler)
+            .Accepts<NoContent>("text/event-stream")
+            .ExcludeFromDescription();
+    }
+}

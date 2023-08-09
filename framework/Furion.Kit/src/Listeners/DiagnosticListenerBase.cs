@@ -105,7 +105,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     internal abstract void OnSubscribe(KeyValuePair<string, object?> data);
 
     /// <summary>
-    /// 写入诊断订阅器通道数据
+    /// 将数据写入诊断订阅器通道
     /// </summary>
     /// <param name="data"><typeparamref name="TData"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
@@ -123,6 +123,63 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     internal virtual async Task<TData> ReadAsync(CancellationToken cancellationToken = default)
     {
         return await _diagnosticChannel.Reader.ReadAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// 构建 SSE 请求处理程序
+    /// </summary>
+    /// <param name="context"><see cref="HttpContext"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task"/></returns>
+    internal virtual async Task SSEHandler(HttpContext context, CancellationToken cancellationToken)
+    {
+        // 开始观察
+        Listening();
+
+        // 检查请求是否终止
+        cancellationToken.Register(Dispose);
+
+        // 设置响应头，允许跨域请求
+        context.Response.Headers.AccessControlAllowOrigin = "*";
+        context.Response.Headers.AccessControlAllowHeaders = "*";
+
+        // 设置响应头，指定 Content-Type
+        context.Response.ContentType = "text/event-stream";
+
+        // 设置响应头，启用响应发送保持活动性
+        context.Response.Headers.CacheControl = "no-cache";
+        context.Response.Headers.Connection = "keep-alive";
+
+        // 在请求未终止前持续推送
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            // 读取诊断订阅器通道数据
+            var data = await ReadAsync(cancellationToken);
+
+            // 持续推送至客户端
+            await context.Response.WriteAsync("data: " + SerializeData(data) + "\n\n", cancellationToken);
+        }
+
+        // 关闭连接
+        context.Response.ContentType = "text/event-stream";
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+
+        // 清空 Body 流
+        await context.Response.Body.FlushAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// 序列化诊断订阅器通道数据
+    /// </summary>
+    /// <param name="data"><typeparamref name="TData"/></param>
+    /// <returns><see cref="string"/></returns>
+    internal static string SerializeData(TData data)
+    {
+        return JsonSerializer.Serialize(data, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        });
     }
 
     /// <inheritdoc />

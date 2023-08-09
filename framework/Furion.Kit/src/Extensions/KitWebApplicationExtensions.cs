@@ -41,45 +41,8 @@ public static class KitWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
-        // 这里弄一个分组
         webApplication.MapGroup("/furion")
-            .MapGet("http-sse", async (HttpContext context, CancellationToken cancellationToken) =>
-            {
-                var diagnosticListener = new HttpDiagnosticListener();
-                diagnosticListener.Listening();
-                cancellationToken.Register(() =>
-                {
-                    diagnosticListener.Dispose();
-                });
-
-                // 允许跨域
-                context.Response.Headers.AccessControlAllowOrigin = "*";
-                context.Response.Headers.AccessControlAllowHeaders = "*";
-
-                // 设置响应头，指定 SSE 响应的 Content-Type
-                context.Response.ContentType = "text/event-stream";
-
-                // 启用响应的发送保持活动性
-                context.Response.Headers.CacheControl = "no-cache";
-                context.Response.Headers.Connection = "keep-alive";
-
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    var item = await diagnosticListener.ReadAsync(cancellationToken);
-
-                    await context.Response.WriteAsync("data: " + JsonSerializer.Serialize(item, new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                    }) + "\n\n", cancellationToken);
-                }
-
-                // 关闭连接
-                context.Response.ContentType = "text/event-stream";
-                context.Response.StatusCode = StatusCodes.Status204NoContent;
-                await context.Response.Body.FlushAsync(cancellationToken);
-            }).Accepts<NoContent>("text/event-stream")
-            .ExcludeFromDescription();
+            .MapGetSSE("http-sse", new HttpDiagnosticListener(kitOptions.Capacity).SSEHandler);
 
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
