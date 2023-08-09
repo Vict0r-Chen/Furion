@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Microsoft.AspNetCore.Http;
+
 namespace Furion.Kit;
 
 /// <summary>
@@ -36,7 +38,18 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
     /// <inheritdoc />
     internal override void OnSubscribe(KeyValuePair<string, object?> data)
     {
-        // 这里支持诊断各种 Web 应用类型，提供一个属性
+        if (data.Key == "Microsoft.AspNetCore.Routing.EndpointMatched")
+        {
+            var httpContext = data.Value as DefaultHttpContext;
+            var endpoint = httpContext?.GetEndpoint();
+
+            Console.WriteLine("-- Begin ---");
+            // 这里支持诊断各种 Web 应用类型，提供一个属性
+            Console.WriteLine(data.Value);
+            Console.WriteLine("-- End ---");
+        }
+
+        //Console.WriteLine(data.Key);
 
         if (data.Value is BeforeActionFilterOnActionExecutingEventData beforeActionFilterOnActionExecutingEventData)
         {
@@ -49,7 +62,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                 RequestHttpMethod = httpContext.Request.Method
             }))
             {
-                Console.WriteLine(data.Key);
+                //Console.WriteLine(data.Key);
             }
         }
 
@@ -62,7 +75,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
             {
                 if (_httpDiagnosticsCache.TryRemove(httpContext.TraceIdentifier, out var removedValue))
                 {
-                    Console.WriteLine(data.Key);
+                    //Console.WriteLine(data.Key);
 
                     // 在此处对旧值进行更新
                     removedValue.IsCompleted = true;
@@ -71,6 +84,25 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                     _ = WriteAsync(removedValue);
                 }
             }
+        }
+
+        if (data.Value is AfterActionEventData a)
+        {
+            //Console.WriteLine("-- Begin OK ---");
+            //Console.WriteLine(a.HttpContext.Response.StatusCode);
+            //Console.WriteLine(data.Value);
+            //Console.WriteLine("-- End OK ---");
+        }
+
+        if (data.Key == "Microsoft.AspNetCore.Hosting.EndRequest")
+        {
+            var type = data.Value!.GetType();
+            var httpContext = type.GetProperty("httpContext")!.GetValue(data.Value) as HttpContext;
+
+            Console.WriteLine("-- Begin OK ---");
+            Console.WriteLine(httpContext!.Response.StatusCode);
+            Console.WriteLine(data.Value);
+            Console.WriteLine("-- End OK ---");
         }
 
         // Console.WriteLine(data.Key);
