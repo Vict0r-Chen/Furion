@@ -39,47 +39,55 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
         if (data.Key == "Microsoft.AspNetCore.Routing.EndpointMatched")
         {
             var httpContext = data.Value as DefaultHttpContext;
-            var endpoint = httpContext?.GetEndpoint();
+            if (httpContext is not null)
+            {
+                var model = _httpDiagnosticsCache.GetOrAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
+                {
+                    TraceIdentifier = httpContext.TraceIdentifier,
+                    RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
+                    RequestHttpMethod = httpContext.Request.Method
+                });
 
-            Console.WriteLine("-- Begin ---");
-            // 这里支持诊断各种 Web 应用类型，提供一个属性
-            Console.WriteLine(data.Value);
-            Console.WriteLine("-- End ---");
+                _ = WriteAsync(model);
+            }
+            //var endpoint = httpContext?.GetEndpoint();
+
+            //Console.WriteLine("-- Begin ---");
+            //// 这里支持诊断各种 Web 应用类型，提供一个属性
+            //Console.WriteLine(data.Value);
+            //Console.WriteLine("-- End ---");
         }
 
         //Console.WriteLine(data.Key);
 
         if (data.Value is BeforeActionFilterOnActionExecutingEventData beforeActionFilterOnActionExecutingEventData)
         {
-            var httpContext = beforeActionFilterOnActionExecutingEventData.ActionExecutingContext.HttpContext;
+            //var httpContext = beforeActionFilterOnActionExecutingEventData.ActionExecutingContext.HttpContext;
 
-            if (_httpDiagnosticsCache.TryAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
-            {
-                TraceIdentifier = httpContext.TraceIdentifier,
-                RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
-                RequestHttpMethod = httpContext.Request.Method
-            }))
-            {
-                //Console.WriteLine(data.Key);
-            }
+            //if (_httpDiagnosticsCache.TryAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
+            //{
+            //    TraceIdentifier = httpContext.TraceIdentifier,
+            //    RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
+            //    RequestHttpMethod = httpContext.Request.Method
+            //}))
+            //{
+            //    //Console.WriteLine(data.Key);
+            //}
         }
 
         if (data.Value is BeforeActionFilterOnActionExecutedEventData beforeActionFilterOnActionExecutedEventData)
         {
-            var httpContext = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.HttpContext;
-
-            _httpDiagnosticsCache.TryGetValue(httpContext.TraceIdentifier, out var oldValue);
-            if (oldValue != null && !oldValue.IsCompleted)
+            if (beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception is not null)
             {
-                if (_httpDiagnosticsCache.TryRemove(httpContext.TraceIdentifier, out var removedValue))
+                var httpContext = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.HttpContext;
+                if (_httpDiagnosticsCache.TryGetValue(httpContext.TraceIdentifier, out var model))
                 {
-                    //Console.WriteLine(data.Key);
+                    model.Exception = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception?.ToString();
 
-                    // 在此处对旧值进行更新
-                    removedValue.IsCompleted = true;
-                    removedValue.ResponseStatusCode = httpContext.Response.StatusCode;
-                    removedValue.Exception = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception?.ToString();
-                    _ = WriteAsync(removedValue);
+                    if (_httpDiagnosticsCache.TryUpdate(httpContext.TraceIdentifier, model, model))
+                    {
+                        _ = WriteAsync(model);
+                    }
                 }
             }
         }
@@ -94,13 +102,16 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
 
         if (data.Key == "Microsoft.AspNetCore.Hosting.EndRequest")
         {
-            var type = data.Value!.GetType();
-            var httpContext = type.GetProperty("httpContext")!.GetValue(data.Value) as HttpContext;
+            var httpContext = data.Value?.GetType()?.GetProperty("httpContext")?.GetValue(data.Value) as HttpContext;
+            if (httpContext is not null)
+            {
+                if (_httpDiagnosticsCache.TryRemove(httpContext.TraceIdentifier, out var model))
+                {
+                    model.ResponseStatusCode = httpContext.Response.StatusCode;
 
-            Console.WriteLine("-- Begin OK ---");
-            Console.WriteLine(httpContext!.Response.StatusCode);
-            Console.WriteLine(data.Value);
-            Console.WriteLine("-- End OK ---");
+                    _ = WriteAsync(model);
+                }
+            }
         }
 
         // Console.WriteLine(data.Key);

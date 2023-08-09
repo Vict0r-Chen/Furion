@@ -5,7 +5,7 @@ export interface HttpDiagnost {
   requestPath: string;
   requestHttpMethod: string;
   exception?: string;
-  responseStatusCode: number;
+  responseStatusCode?: number;
 }
 
 export class MySubClassedDexie extends Dexie {
