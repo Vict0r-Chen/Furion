@@ -29,48 +29,50 @@
             <summary>
             诊断监听器抽象基类
             </summary>
-            <typeparam name="T">数据类型</typeparam>
+            <typeparam name="TData">诊断订阅器通道数据类型</typeparam>
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._lockObject">
             <summary>
-             并发锁标识
+            并发锁标识
             </summary>
         </member>
-        <member name="F:Furion.Kit.DiagnosticListenerBase`1._channel">
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._diagnosticChannel">
             <summary>
-            内存通道事件源存储器
+            诊断订阅器数据通道
             </summary>
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._subscription">
             <summary>
-            通知信息订阅器
+            诊断订阅器对象
             </summary>
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._listenerSubscription">
             <summary>
-            侦听器信息信息订阅器
+            监听器订阅器对象
             </summary>
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._listenerCategory">
             <summary>
-            侦听器类别
+            诊断侦听器类别
             </summary>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.#ctor(System.String,System.Int32)">
             <summary>
             <inheritdoc cref="T:Furion.Kit.DiagnosticListenerBase`1" />
             </summary>
-            <param name="listenerCategory">侦听器类别</param>
+            <param name="listenerCategory">诊断侦听器类别</param>
             <param name="capacity">队列容量</param>
         </member>
-        <member name="M:Furion.Kit.DiagnosticListenerBase`1.Observe">
-            <inheritdoc />
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.Listening">
+            <summary>
+            开始观察
+            </summary>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.AddSubscription(System.Diagnostics.DiagnosticListener)">
             <summary>
-            添加通知信息订阅器
+            添加诊断订阅器
             </summary>
-            <param name="listener"></param>
+            <param name="diagnosticListener"><see cref="T:System.Diagnostics.DiagnosticListener"/></param>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
             <summary>
@@ -79,15 +81,19 @@
             <param name="data">通知信息</param>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.WriteAsync(`0,System.Threading.CancellationToken)">
-            <summary>
-            写入队列
-            </summary>
-            <param name="item"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
+             <summary>
+            
+             </summary>
+             <param name="data"><typeparamref name="TData"/></param>
+             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.ReadAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
+             <summary>
+            
+             </summary>
+             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.Dispose">
             <inheritdoc />

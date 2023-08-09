@@ -118,7 +118,9 @@
         </member>
         <member name="M:Furion.Configuration.FileConfigurationParser.FileExtensionRegex">
             <remarks>
-            Pattern explanation:<br/>
+            Pattern:<br/>
+            <code>^\\.[a-zA-Z0-9]+$</code><br/>
+            Explanation:<br/>
             <code>
             ○ Match if at the beginning of the string.<br/>
             ○ Match '.'.<br/>

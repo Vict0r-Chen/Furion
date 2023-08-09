@@ -154,7 +154,7 @@ public class TimeoutPolicyTests
 
         static void action()
         {
-            Task.Delay(TimeSpan.FromSeconds(2)).Wait();
+            Thread.Sleep(TimeSpan.FromSeconds(2));
             Console.WriteLine("...");
         }
 
@@ -207,7 +207,7 @@ public class TimeoutPolicyTests
             .Execute(() =>
             {
                 var value = "furion";
-                Task.Delay(TimeSpan.FromSeconds(2)).Wait();
+                Thread.Sleep(TimeSpan.FromSeconds(2));
                 return value;
             });
         });

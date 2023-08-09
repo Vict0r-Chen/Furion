@@ -16,15 +16,15 @@ namespace Furion.Kit;
 
 internal sealed class HttpDiagnosticModel
 {
-    public string? TraceIdentifier { get; set; }
+    public string? TraceIdentifier { get; internal set; }
 
-    public string? RequestHttpMethod { get; set; }
+    public string? RequestHttpMethod { get; internal set; }
 
-    public string? RequestPath { get; set; }
+    public string? RequestPath { get; internal set; }
 
-    public string? Exception { get; set; }
+    public string? Exception { get; internal set; }
 
-    public int? ResponseStatusCode { get; set; }
+    public int? ResponseStatusCode { get; internal set; }
 
-    internal bool IsCompleted { get; set; }
+    public string? DisplayName { get; internal set; }
 }

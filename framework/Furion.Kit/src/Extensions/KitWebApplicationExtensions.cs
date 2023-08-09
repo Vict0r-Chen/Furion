@@ -19,7 +19,6 @@ namespace Microsoft.AspNetCore.Builder;
 /// </summary>
 public static class KitWebApplicationExtensions
 {
-
     /// <summary>
     /// 添加 Kit 中间件
     /// </summary>
@@ -47,7 +46,7 @@ public static class KitWebApplicationExtensions
             .MapGet("http-sse", async (HttpContext context, CancellationToken cancellationToken) =>
             {
                 var diagnosticListener = new HttpDiagnosticListener();
-                diagnosticListener.Observe();
+                diagnosticListener.Listening();
                 cancellationToken.Register(() =>
                 {
                     diagnosticListener.Dispose();
@@ -79,7 +78,6 @@ public static class KitWebApplicationExtensions
                 context.Response.ContentType = "text/event-stream";
                 context.Response.StatusCode = StatusCodes.Status204NoContent;
                 await context.Response.Body.FlushAsync(cancellationToken);
-
             }).Accepts<NoContent>("text/event-stream")
             .ExcludeFromDescription();
 

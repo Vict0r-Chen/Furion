@@ -17,58 +17,57 @@ namespace Furion.Kit;
 /// <summary>
 /// 诊断监听器抽象基类
 /// </summary>
-/// <typeparam name="T">数据类型</typeparam>
-internal abstract class DiagnosticListenerBase<T> : IDisposable
+/// <typeparam name="TData">诊断订阅器通道数据类型</typeparam>
+internal abstract class DiagnosticListenerBase<TData> : IDisposable
 {
     /// <summary>
-    ///  并发锁标识
+    /// 并发锁标识
     /// </summary>
     internal readonly object _lockObject = new();
 
     /// <summary>
-    /// 内存通道事件源存储器
+    /// 诊断订阅器数据通道
     /// </summary>
-    internal readonly Channel<T> _channel;
+    internal readonly Channel<TData> _diagnosticChannel;
 
     /// <summary>
-    /// 通知信息订阅器
+    /// 诊断订阅器对象
     /// </summary>
     internal IDisposable? _subscription;
 
     /// <summary>
-    /// 侦听器信息信息订阅器
+    /// 监听器订阅器对象
     /// </summary>
     internal IDisposable? _listenerSubscription;
 
     /// <summary>
-    /// 侦听器类别
+    /// 诊断侦听器类别
     /// </summary>
     internal readonly string _listenerCategory;
 
     /// <summary>
     /// <inheritdoc cref="DiagnosticListenerBase{T}" />
     /// </summary>
-    /// <param name="listenerCategory">侦听器类别</param>
+    /// <param name="listenerCategory">诊断侦听器类别</param>
     /// <param name="capacity">队列容量</param>
-    public DiagnosticListenerBase(string listenerCategory, int capacity = 3000)
+    internal DiagnosticListenerBase(string listenerCategory, int capacity = 3000)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(listenerCategory);
 
         _listenerCategory = listenerCategory;
 
-        // 配置通道，设置超出默认容量后进入等待
-        var boundedChannelOptions = new BoundedChannelOptions(capacity)
+        // 初始化诊断订阅器数据通道
+        _diagnosticChannel = Channel.CreateBounded<TData>(new BoundedChannelOptions(capacity)
         {
             FullMode = BoundedChannelFullMode.Wait
-        };
-
-        // 创建有限容量通道
-        _channel = Channel.CreateBounded<T>(boundedChannelOptions);
+        });
     }
 
-    /// <inheritdoc />
-    public void Observe()
+    /// <summary>
+    /// 开始观察
+    /// </summary>
+    public void Listening()
     {
         // 初始化诊断侦听器
         var diagnosticObserver = new DiagnosticObserver<DiagnosticListener>(AddSubscription, null);
@@ -78,25 +77,25 @@ internal abstract class DiagnosticListenerBase<T> : IDisposable
     }
 
     /// <summary>
-    /// 添加通知信息订阅器
+    /// 添加诊断订阅器
     /// </summary>
-    /// <param name="listener"></param>
-    internal void AddSubscription(DiagnosticListener listener)
+    /// <param name="diagnosticListener"><see cref="DiagnosticListener"/></param>
+    internal void AddSubscription(DiagnosticListener diagnosticListener)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(listener);
+        ArgumentNullException.ThrowIfNull(diagnosticListener);
 
-        // 检查侦听器类别是否一致
-        if (listener.Name != _listenerCategory)
+        // 检查诊断侦听器类别是否一致
+        if (diagnosticListener.Name != _listenerCategory)
         {
             return;
         }
 
-        // 添加通知信息订阅器
+        // 添加诊断订阅器
         lock (_lockObject)
         {
             _subscription?.Dispose();
-            _subscription = listener.Subscribe(new DiagnosticObserver<KeyValuePair<string, object?>>(OnSubscribe, null));
+            _subscription = diagnosticListener.Subscribe(new DiagnosticObserver<KeyValuePair<string, object?>>(OnSubscribe, null));
         }
     }
 
@@ -107,20 +106,24 @@ internal abstract class DiagnosticListenerBase<T> : IDisposable
     internal abstract void OnSubscribe(KeyValuePair<string, object?> data);
 
     /// <summary>
-    /// 写入队列
+    ///
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    protected virtual async Task WriteAsync(T item, CancellationToken cancellationToken = default)
+    /// <param name="data"><typeparamref name="TData"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task"/></returns>
+    protected virtual async Task WriteAsync(TData data, CancellationToken cancellationToken = default)
     {
-        await _channel.Writer.WriteAsync(item, cancellationToken);
+        await _diagnosticChannel.Writer.WriteAsync(data, cancellationToken);
     }
 
-    /// <inheritdoc />
-    internal virtual async Task<T> ReadAsync(CancellationToken cancellationToken = default)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task{TResult}"/></returns>
+    internal virtual async Task<TData> ReadAsync(CancellationToken cancellationToken = default)
     {
-        return await _channel.Reader.ReadAsync(cancellationToken);
+        return await _diagnosticChannel.Reader.ReadAsync(cancellationToken);
     }
 
     /// <inheritdoc />
