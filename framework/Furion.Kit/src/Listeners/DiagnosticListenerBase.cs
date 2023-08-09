@@ -31,12 +31,12 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     internal readonly Channel<TData> _diagnosticChannel;
 
     /// <summary>
-    /// 诊断订阅器
+    /// 诊断订阅器引用
     /// </summary>
     internal IDisposable? _subscription;
 
     /// <summary>
-    /// 监听器的订阅器对象
+    /// 诊断观察者引用
     /// </summary>
     internal IDisposable? _listenerSubscription;
 
@@ -57,7 +57,6 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
 
         _listenerCategory = listenerCategory;
 
-        // 初始化诊断订阅器通道
         _diagnosticChannel = Channel.CreateBounded<TData>(new BoundedChannelOptions(capacity)
         {
             FullMode = BoundedChannelFullMode.Wait
