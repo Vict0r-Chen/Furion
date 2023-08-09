@@ -21,6 +21,7 @@ global using Microsoft.Extensions.FileProviders;
 global using System.Collections.Concurrent;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
+global using System.Linq.Expressions;
 global using System.Runtime.CompilerServices;
 global using System.Text.Encodings.Web;
 global using System.Text.Json;

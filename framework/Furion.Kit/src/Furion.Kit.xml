@@ -129,22 +129,39 @@
         </member>
         <member name="T:Furion.Kit.HttpDiagnosticListener">
             <summary>
-            HTTP 诊断侦听器
+            HTTP 诊断监听器
             </summary>
         </member>
-        <member name="F:Furion.Kit.HttpDiagnosticListener._httpDiagnosticsCache">
+        <member name="F:Furion.Kit.HttpDiagnosticListener._httpDiagnosticModelsCache">
             <summary>
-            HTTP 诊断信息缓存集合
+            HTTP 诊断模型缓存集合
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.HttpDiagnosticListener._anonymousHttpContextGetter">
+            <summary>
+            匿名类 httpContext 属性访问器
             </summary>
         </member>
         <member name="M:Furion.Kit.HttpDiagnosticListener.#ctor(System.Int32)">
             <summary>
             <inheritdoc cref="T:Furion.Kit.HttpDiagnosticListener"/>
             </summary>
-            <param name="capacity"></param>
+            <param name="capacity">诊断订阅器通道容量</param>
         </member>
         <member name="M:Furion.Kit.HttpDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
             <inheritdoc />
+        </member>
+        <member name="M:Furion.Kit.HttpDiagnosticListener.GetAnonymousHttpContextValue(System.Object)">
+            <summary>
+            获取匿名类 httpContext 属性访问器
+            </summary>
+            <param name="anonymousObject">匿名类对象</param>
+            <returns><see cref="T:System.Func`2"/></returns>
+        </member>
+        <member name="T:Furion.Kit.HttpDiagnosticModel">
+            <summary>
+            HTTP 诊断模型
+            </summary>
         </member>
         <member name="T:Furion.Kit.DiagnosticObserver`1">
             <summary>

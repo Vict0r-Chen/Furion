@@ -14,6 +14,9 @@
 
 namespace Furion.Kit;
 
+/// <summary>
+/// HTTP 诊断模型
+/// </summary>
 internal sealed class HttpDiagnosticModel
 {
     public string? TraceIdentifier { get; internal set; }

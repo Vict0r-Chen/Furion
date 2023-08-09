@@ -15,107 +15,111 @@
 namespace Furion.Kit;
 
 /// <summary>
-/// HTTP 诊断侦听器
+/// HTTP 诊断监听器
 /// </summary>
 internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagnosticModel>
 {
     /// <summary>
-    /// HTTP 诊断信息缓存集合
+    /// HTTP 诊断模型缓存集合
     /// </summary>
-    internal readonly ConcurrentDictionary<string, HttpDiagnosticModel> _httpDiagnosticsCache;
+    internal readonly ConcurrentDictionary<string, HttpDiagnosticModel> _httpDiagnosticModelsCache;
+
+    /// <summary>
+    /// 匿名类 httpContext 属性访问器
+    /// </summary>
+    internal Delegate? _anonymousHttpContextGetter;
 
     /// <summary>
     /// <inheritdoc cref="HttpDiagnosticListener"/>
     /// </summary>
-    /// <param name="capacity"></param>
-    public HttpDiagnosticListener(int capacity = 3000)
+    /// <param name="capacity">诊断订阅器通道容量</param>
+    internal HttpDiagnosticListener(int capacity = 3000)
         : base("Microsoft.AspNetCore", capacity)
     {
-        _httpDiagnosticsCache = new();
+        _httpDiagnosticModelsCache = new(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <inheritdoc />
     internal override void OnSubscribe(KeyValuePair<string, object?> data)
     {
+        // 监听路由匹配事件
         if (data.Key == "Microsoft.AspNetCore.Routing.EndpointMatched")
         {
-            var httpContext = data.Value as DefaultHttpContext;
-            if (httpContext is not null)
+            if (data.Value is HttpContext httpContext)
             {
-                var model = _httpDiagnosticsCache.GetOrAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
+                var httpDiagnosticModel = _httpDiagnosticModelsCache.GetOrAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
                 {
                     TraceIdentifier = httpContext.TraceIdentifier,
                     RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
                     RequestHttpMethod = httpContext.Request.Method
                 });
 
-                _ = WriteAsync(model);
+                _ = WriteAsync(httpDiagnosticModel);
             }
-            //var endpoint = httpContext?.GetEndpoint();
-
-            //Console.WriteLine("-- Begin ---");
-            //// 这里支持诊断各种 Web 应用类型，提供一个属性
-            //Console.WriteLine(data.Value);
-            //Console.WriteLine("-- End ---");
         }
 
-        //Console.WriteLine(data.Key);
-
-        if (data.Value is BeforeActionFilterOnActionExecutingEventData beforeActionFilterOnActionExecutingEventData)
+        // 监听筛选器执行完成事件
+        if (data.Value is AfterActionFilterOnActionExecutedEventData eventData)
         {
-            //var httpContext = beforeActionFilterOnActionExecutingEventData.ActionExecutingContext.HttpContext;
-
-            //if (_httpDiagnosticsCache.TryAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
-            //{
-            //    TraceIdentifier = httpContext.TraceIdentifier,
-            //    RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
-            //    RequestHttpMethod = httpContext.Request.Method
-            //}))
-            //{
-            //    //Console.WriteLine(data.Key);
-            //}
-        }
-
-        if (data.Value is BeforeActionFilterOnActionExecutedEventData beforeActionFilterOnActionExecutedEventData)
-        {
-            if (beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception is not null)
+            var exception = eventData.ActionExecutedContext.Exception;
+            if (exception is not null)
             {
-                var httpContext = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.HttpContext;
-                if (_httpDiagnosticsCache.TryGetValue(httpContext.TraceIdentifier, out var model))
-                {
-                    model.Exception = beforeActionFilterOnActionExecutedEventData.ActionExecutedContext.Exception?.ToString();
+                var httpContext = eventData.ActionExecutedContext.HttpContext;
 
-                    if (_httpDiagnosticsCache.TryUpdate(httpContext.TraceIdentifier, model, model))
+                if (_httpDiagnosticModelsCache.TryGetValue(httpContext.TraceIdentifier, out var httpDiagnosticModel))
+                {
+                    httpDiagnosticModel.Exception = exception?.ToString();
+
+                    if (_httpDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, httpDiagnosticModel, httpDiagnosticModel))
                     {
-                        _ = WriteAsync(model);
+                        _ = WriteAsync(httpDiagnosticModel);
                     }
                 }
             }
         }
 
-        if (data.Value is AfterActionEventData a)
-        {
-            //Console.WriteLine("-- Begin OK ---");
-            //Console.WriteLine(a.HttpContext.Response.StatusCode);
-            //Console.WriteLine(data.Value);
-            //Console.WriteLine("-- End OK ---");
-        }
-
+        // 监听请求完成事件
         if (data.Key == "Microsoft.AspNetCore.Hosting.EndRequest")
         {
-            var httpContext = data.Value?.GetType()?.GetProperty("httpContext")?.GetValue(data.Value) as HttpContext;
+            var httpContext = GetAnonymousHttpContextValue(data.Value!) as HttpContext;
             if (httpContext is not null)
             {
-                if (_httpDiagnosticsCache.TryRemove(httpContext.TraceIdentifier, out var model))
+                if (_httpDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var httpDiagnosticModel))
                 {
-                    model.ResponseStatusCode = httpContext.Response.StatusCode;
+                    httpDiagnosticModel.ResponseStatusCode = httpContext.Response.StatusCode;
 
-                    _ = WriteAsync(model);
+                    _ = WriteAsync(httpDiagnosticModel);
                 }
             }
         }
+    }
 
-        // Console.WriteLine(data.Key);
-        //Console.WriteLine($"Data received: {data.Key}: {data.Value}");
+    /// <summary>
+    /// 获取匿名类 httpContext 属性访问器
+    /// </summary>
+    /// <param name="anonymousObject">匿名类对象</param>
+    /// <returns><see cref="Func{T, TResult}"/></returns>
+    internal object? GetAnonymousHttpContextValue(object anonymousObject)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(anonymousObject);
+
+        // 空检查
+        if (_anonymousHttpContextGetter is null)
+        {
+            // 创建 obj 表达式
+            var paramExpression = Expression.Parameter(anonymousObject.GetType(), "obj");
+
+            // 创建 obj.httpContext 表达式
+            var propertyExpression = Expression.Property(paramExpression, "httpContext");
+
+            // 创建 obj => obj.httpContext 表达式
+            var lambdaExpression = Expression.Lambda(propertyExpression, paramExpression);
+
+            // 编译表达式
+            _anonymousHttpContextGetter = lambdaExpression.Compile();
+        }
+
+        return _anonymousHttpContextGetter.DynamicInvoke(anonymousObject);
     }
 }
