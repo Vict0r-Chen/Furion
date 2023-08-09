@@ -12,6 +12,7 @@ import {
 } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
 import React, { useEffect, useState } from "react";
+import IconFont from "../../../components/iconfont";
 import { db } from "../../../db";
 import { useServerStore } from "../../../stores/server.store";
 import { HighlightText } from "./style";
@@ -122,7 +123,14 @@ export default function RequestList() {
                     {item.endpoint?.displayName}
                   </HighlightText>
 
-                  {item.displayName && <Text mark>{item.displayName}</Text>}
+                  {item.displayName && (
+                    <Space>
+                      <IconFont type="icon-tag" style={{ color: "#8c8c8c" }} />
+                      <Text italic style={{ color: "#434343" }}>
+                        {item.displayName}
+                      </Text>
+                    </Space>
+                  )}
 
                   {item.exception && (
                     <Tag icon={<CloseCircleOutlined />} color="#f50" />
