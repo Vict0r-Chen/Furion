@@ -114,7 +114,7 @@
         </member>
         <member name="F:Furion.Kit.DiagnosticObserver`1._onCompleted">
             <summary>
-            通知观察者提供程序已完成发送基于推送的通知
+            通知观察者推送已完成
             </summary>
         </member>
         <member name="M:Furion.Kit.DiagnosticObserver`1.#ctor(System.Action{`0},System.Action)">
@@ -122,7 +122,7 @@
             <inheritdoc cref="T:Furion.Kit.DiagnosticObserver`1"/>
             </summary>
             <param name="onNext">向观察者提供新数据</param>
-            <param name="onCompleted">通知观察者提供程序已完成发送基于推送的通知。</param>
+            <param name="onCompleted">通知观察者推送已完成</param>
         </member>
         <member name="M:Furion.Kit.DiagnosticObserver`1.OnNext(`0)">
             <inheritdoc />

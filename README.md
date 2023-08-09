@@ -90,6 +90,7 @@ Furion v5 版本采用 C# 12 和 .NET 8 进行开发。
 | [Furion.Logging.AspNetCore](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Logging.AspNetCore)                             | ⏳   | ⏳       |                                                                                                                                                                                   | ⚠️   |
 | [Furion.Logging.Console](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Logging.Console)                                   | ⏳   | ⏳       |                                                                                                                                                                                   | ⚠️   |
 | [Furion.Logging.File](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Logging.File)                                         | ⏳   | ⏳       |                                                                                                                                                                                   | ⚠️   |
+| [Furion.Kit](https://gitee.com/dotnetchina/Furion/tree/v5-dev/framework/Furion.Kit)                                                           | ⏳   | ⏳       |                                                                                                                                                                                   | ⚠️   |
 
 > 状态说明
 >

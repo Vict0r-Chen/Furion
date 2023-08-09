@@ -26,7 +26,7 @@ internal sealed class DiagnosticObserver<T> : IObserver<T>
     internal readonly Action<T> _onNext;
 
     /// <summary>
-    /// 通知观察者提供程序已完成发送基于推送的通知
+    /// 通知观察者推送已完成
     /// </summary>
     internal readonly Action _onCompleted;
 
@@ -34,7 +34,7 @@ internal sealed class DiagnosticObserver<T> : IObserver<T>
     /// <inheritdoc cref="DiagnosticObserver{T}"/>
     /// </summary>
     /// <param name="onNext">向观察者提供新数据</param>
-    /// <param name="onCompleted">通知观察者提供程序已完成发送基于推送的通知。</param>
+    /// <param name="onCompleted">通知观察者推送已完成</param>
     internal DiagnosticObserver(Action<T>? onNext, Action? onCompleted)
     {
         _onNext = onNext ?? new(_ => { });
@@ -48,7 +48,7 @@ internal sealed class DiagnosticObserver<T> : IObserver<T>
     }
 
     /// <inheritdoc />
-    public void OnError(Exception error)
+    public void OnError(Exception exception)
     {
     }
 

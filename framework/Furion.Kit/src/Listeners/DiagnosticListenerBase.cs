@@ -18,7 +18,7 @@ namespace Furion.Kit;
 /// 诊断监听器抽象基类
 /// </summary>
 /// <typeparam name="T">数据类型</typeparam>
-internal abstract class DiagnosticListenerBase<T>
+internal abstract class DiagnosticListenerBase<T> : IDisposable
 {
     /// <summary>
     ///  并发锁标识
@@ -118,7 +118,7 @@ internal abstract class DiagnosticListenerBase<T>
     }
 
     /// <inheritdoc />
-    public virtual async Task<T> ReadAsync(CancellationToken cancellationToken = default)
+    internal virtual async Task<T> ReadAsync(CancellationToken cancellationToken = default)
     {
         return await _channel.Reader.ReadAsync(cancellationToken);
     }
