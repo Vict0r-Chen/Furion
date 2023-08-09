@@ -19,12 +19,28 @@ namespace Microsoft.AspNetCore.Builder;
 /// </summary>
 public static class KitWebApplicationExtensions
 {
+
     /// <summary>
     /// 添加 Kit 中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <param name="configure"></param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseKit(this WebApplication webApplication)
+    public static WebApplication UseKit(this WebApplication webApplication, Action<KitOptions>? configure = null)
+    {
+        var kitOptions = new KitOptions();
+        configure?.Invoke(kitOptions);
+
+        return webApplication.UseKit(kitOptions);
+    }
+
+    /// <summary>
+    /// 添加 Kit 中间件
+    /// </summary>
+    /// <param name="webApplication"><see cref="WebApplication"/></param>
+    /// <param name="kitOptions"></param>
+    /// <returns><see cref="WebApplication"/></returns>
+    public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
         // 这里弄一个分组
         webApplication.MapGroup("/furion")
@@ -79,10 +95,5 @@ public static class KitWebApplicationExtensions
         });
 
         return webApplication;
-    }
-
-    private static string SerializeToJson(object obj)
-    {
-        return JsonSerializer.Serialize(obj);
     }
 }

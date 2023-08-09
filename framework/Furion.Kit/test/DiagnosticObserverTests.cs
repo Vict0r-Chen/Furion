@@ -34,7 +34,7 @@ public class DiagnosticObserverTests
         {
             i += d;
         }, null);
-        diagnosticObserver._onNext(1);
+        diagnosticObserver.OnNext(1);
 
         Assert.Equal(1, i);
     }

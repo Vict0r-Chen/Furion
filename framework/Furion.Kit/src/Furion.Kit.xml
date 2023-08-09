@@ -9,11 +9,20 @@
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication)">
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Kit.KitOptions})">
             <summary>
             添加 Kit 中间件
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <param name="configure"></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
+            <summary>
+            添加 Kit 中间件
+            </summary>
+            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <param name="kitOptions"></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
@@ -132,6 +141,16 @@
         </member>
         <member name="M:Furion.Kit.DiagnosticObserver`1.OnCompleted">
             <inheritdoc />
+        </member>
+        <member name="T:Furion.Kit.KitOptions">
+            <summary>
+            Kit 模块选项
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.KitOptions.Capacity">
+            <summary>
+            容量
+            </summary>
         </member>
     </members>
 </doc>
