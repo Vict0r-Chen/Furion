@@ -121,6 +121,64 @@ export default function DiagnosisDetail() {
       </div>
       <Divider />
       <Title level={5} style={{ marginTop: 0 }} id="setting-account">
+        Stack
+      </Title>
+      <div style={{ marginTop: 15 }}>
+        <Space direction="vertical" size={10}></Space>
+      </div>
+      <Divider />
+      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
+        Query
+      </Title>
+      <div style={{ marginTop: 15 }}>
+        <Space direction="vertical" size={10}>
+          {diagnosis.query?.map((item) => (
+            <Space key={item.key}>
+              <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                {item.key}：
+              </Text>
+              <Text style={{ color: "#595959" }}>{item.value}</Text>
+            </Space>
+          ))}
+        </Space>
+      </div>
+      <Divider />
+
+      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
+        Cookies
+      </Title>
+      <div style={{ marginTop: 15 }}>
+        <Space direction="vertical" size={10}>
+          {diagnosis.cookies?.map((item) => (
+            <Space key={item.key}>
+              <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                {item.key}：
+              </Text>
+              <Text style={{ color: "#595959" }}>{item.value}</Text>
+            </Space>
+          ))}
+        </Space>
+      </div>
+      <Divider />
+
+      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
+        Headers
+      </Title>
+      <div style={{ marginTop: 15 }}>
+        <Space direction="vertical" size={10}>
+          {diagnosis.headers?.map((item) => (
+            <Space key={item.key}>
+              <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                {item.key}：
+              </Text>
+              <Text style={{ color: "#595959" }}>{item.value}</Text>
+            </Space>
+          ))}
+        </Space>
+      </div>
+      <Divider />
+
+      <Title level={5} style={{ marginTop: 0 }} id="setting-account">
         Routing
       </Title>
       <div style={{ marginTop: 15 }}>
