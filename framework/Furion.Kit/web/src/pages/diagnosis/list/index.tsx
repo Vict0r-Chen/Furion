@@ -8,7 +8,12 @@ const { Text } = Typography;
 
 export default function RequestList() {
   const httpDiagnost = useLiveQuery(async () => {
-    return await db.httpDiagnost.reverse().limit(24).toArray();
+    return await db.httpDiagnost
+      .where("requestPath")
+      .notEqual("/furion/http-sse")
+      .reverse()
+      .limit(24)
+      .sortBy("timestamp");
   });
 
   if (!httpDiagnost) {
@@ -16,44 +21,51 @@ export default function RequestList() {
   }
 
   return (
-    <Card
-      hoverable
-      title="请求"
-      style={{ width: "100%", marginTop: 15 }}
-      extra={<Text>{httpDiagnost.length}</Text>}
-    >
+    <Card hoverable style={{ width: "100%", marginTop: 15 }}>
       <Space direction="vertical">
         {httpDiagnost?.map((item) => (
           <div key={item.traceIdentifier}>
-            <Popover
-              title={
-                <Space size={5}>
-                  <Text>连接标识：</Text>
-                  <Text style={{ color: "#595959" }}>
-                    {item.traceIdentifier}
-                  </Text>
-                </Space>
-              }
-            >
-              <Space>
-                <HttpMethod value={item.requestHttpMethod} />
-                {/* 这里可以判断未知 */}
-                <Text type="success">{item.responseStatusCode}</Text>
+            <Space size={15}>
+              <HttpMethod value={item.requestMethod} />
+              {/* 这里可以判断未知 */}
+              <Text
+                type={item.exception ? "danger" : "success"}
+                style={{ fontWeight: 500 }}
+              >
+                {item.statusCode}
+              </Text>
+              <Popover
+                title={
+                  <Space size={5}>
+                    <Text>连接标识：</Text>
+                    <Text style={{ color: "#595959" }}>
+                      {item.traceIdentifier}
+                    </Text>
+                  </Space>
+                }
+              >
                 <Text
                   underline
                   copyable
                   ellipsis
                   italic
                   type={item.exception ? "danger" : undefined}
-                  style={{ fontWeight: item.exception ? 500 : undefined }}
+                  style={{ fontWeight: 500 }}
                 >
                   {decodeURIComponent(item.requestPath)}
                 </Text>
-                {item.exception && (
-                  <Tag icon={<CloseCircleOutlined />} color="#f50" />
-                )}
-              </Space>
-            </Popover>
+              </Popover>
+              {item.startTimestamp && item.endTimestamp && (
+                <Text type="secondary">
+                  {item.endTimestamp.getTime() - item.startTimestamp.getTime()}
+                  ms
+                </Text>
+              )}
+              <Text keyboard>{item.endpoint?.displayName}</Text>
+              {item.exception && (
+                <Tag icon={<CloseCircleOutlined />} color="#f50" />
+              )}
+            </Space>
           </div>
         ))}
       </Space>

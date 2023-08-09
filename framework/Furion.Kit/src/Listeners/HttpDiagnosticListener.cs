@@ -47,16 +47,44 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
         {
             if (data.Value is HttpContext httpContext)
             {
-                var httpDiagnosticModel = _httpDiagnosticModelsCache.GetOrAdd(httpContext.TraceIdentifier, new HttpDiagnosticModel
+                var httpDiagnosticModel = new HttpDiagnosticModel
                 {
                     TraceIdentifier = httpContext.TraceIdentifier,
                     RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
-                    RequestHttpMethod = httpContext.Request.Method
-                });
+                    RequestMethod = httpContext.Request.Method,
+                    StartTimestamp = DateTimeOffset.UtcNow
+                };
 
-                _ = WriteAsync(httpDiagnosticModel);
+                var endpoint = httpContext.GetEndpoint();
+                if (endpoint != null)
+                {
+                    var endpointModel = new EndpointModel
+                    {
+                        DisplayName = endpoint.DisplayName
+                    };
+
+                    if (endpoint is RouteEndpoint routeEndpoint)
+                    {
+                        endpointModel.RoutePattern = routeEndpoint.RoutePattern.RawText;
+                        endpointModel.Order = routeEndpoint.Order;
+                        var readOnlyList = endpoint.Metadata.GetMetadata<IHttpMethodMetadata>()?.HttpMethods;
+                        if (readOnlyList != null)
+                        {
+                            endpointModel.HttpMethods = string.Join(", ", readOnlyList);
+                        }
+                    }
+
+                    httpDiagnosticModel.Endpoint = endpointModel;
+                }
+
+                if (_httpDiagnosticModelsCache.TryAdd(httpDiagnosticModel.TraceIdentifier, httpDiagnosticModel))
+                {
+                    _ = WriteAsync(httpDiagnosticModel);
+                }
             }
         }
+
+        Console.WriteLine(data.Key + "----------" + data.Value);
 
         // 监听筛选器执行完成事件
         if (data.Value is AfterActionFilterOnActionExecutedEventData eventData)
@@ -66,7 +94,8 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
             {
                 var httpContext = eventData.ActionExecutedContext.HttpContext;
 
-                if (_httpDiagnosticModelsCache.TryGetValue(httpContext.TraceIdentifier, out var httpDiagnosticModel))
+                if (_httpDiagnosticModelsCache.TryGetValue(httpContext.TraceIdentifier, out var httpDiagnosticModel)
+                    && httpDiagnosticModel.Exception is null)
                 {
                     httpDiagnosticModel.Exception = exception?.ToString();
 
@@ -86,7 +115,8 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
             {
                 if (_httpDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var httpDiagnosticModel))
                 {
-                    httpDiagnosticModel.ResponseStatusCode = httpContext.Response.StatusCode;
+                    httpDiagnosticModel.StatusCode = httpContext.Response.StatusCode;
+                    httpDiagnosticModel.EndTimestamp = DateTimeOffset.UtcNow;
 
                     _ = WriteAsync(httpDiagnosticModel);
                 }

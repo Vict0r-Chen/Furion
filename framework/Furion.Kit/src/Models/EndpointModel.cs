@@ -15,44 +15,27 @@
 namespace Furion.Kit;
 
 /// <summary>
-/// HTTP 诊断模型
+/// 终点路由模型
 /// </summary>
-internal sealed class HttpDiagnosticModel
+internal sealed class EndpointModel
 {
     /// <summary>
-    /// [DisplayName] 特性名称
+    /// 显示名称
     /// </summary>
     public string? DisplayName { get; internal set; }
 
     /// <summary>
-    /// 连接标识
+    /// 路由格式
     /// </summary>
-    public string? TraceIdentifier { get; internal set; }
+    public string? RoutePattern { get; internal set; }
 
     /// <summary>
-    /// 请求方式
+    /// 排序
     /// </summary>
-    public string? RequestMethod { get; internal set; }
+    public int? Order { get; internal set; }
 
     /// <summary>
-    /// 请求路径
+    /// 请求方式集合
     /// </summary>
-    public string? RequestPath { get; internal set; }
-
-    /// <inheritdoc cref="EndpointModel"/>
-    public EndpointModel? Endpoint { get; internal set; }
-
-    public string? Exception { get; internal set; }
-
-    public int? StatusCode { get; internal set; }
-
-    /// <summary>
-    /// 请求时间
-    /// </summary>
-    public DateTimeOffset? StartTimestamp { get; internal set; }
-
-    /// <summary>
-    /// 请求结束时间
-    /// </summary>
-    public DateTimeOffset? EndTimestamp { get; internal set; }
+    public string? HttpMethods { get; internal set; }
 }

@@ -3,9 +3,19 @@ import Dexie, { Table } from "dexie";
 export interface HttpDiagnost {
   traceIdentifier: string;
   requestPath: string;
-  requestHttpMethod: string;
+  requestMethod: string;
   exception?: string;
-  responseStatusCode?: number;
+  statusCode?: number;
+  endpoint?: EndpointModel;
+  startTimestamp?: Date;
+  endTimestamp?: Date;
+}
+
+export interface EndpointModel {
+  displayName?: string;
+  routePattern?: string;
+  order: number;
+  httpMethods?: string;
 }
 
 export class MySubClassedDexie extends Dexie {
@@ -15,7 +25,7 @@ export class MySubClassedDexie extends Dexie {
     super("furion-kit");
     this.version(1).stores({
       httpDiagnost:
-        "++traceIdentifier,  requestPath, requestHttpMethod, exception, responseStatusCode",
+        "++traceIdentifier,  requestPath, requestMethod, exception, statusCode, endpoint, startTimestamp, endTimestamp",
     });
   }
 }

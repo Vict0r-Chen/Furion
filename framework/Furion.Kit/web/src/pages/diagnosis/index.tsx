@@ -21,7 +21,15 @@ export default function Diagnosis() {
 
     eventSource.onmessage = function (event) {
       console.log("Received SSE data:", event.data);
-      addData(JSON.parse(event.data) as HttpDiagnost);
+      var data = JSON.parse(event.data);
+      if (data.startTimestamp) {
+        data.startTimestamp = new Date(data.startTimestamp);
+      }
+      if (data.endTimestamp) {
+        data.endTimestamp = new Date(data.endTimestamp);
+      }
+
+      addData(data as HttpDiagnost);
     };
 
     eventSource.onerror = function (event) {

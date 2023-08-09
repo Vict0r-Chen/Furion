@@ -158,9 +158,67 @@
             <param name="anonymousObject">匿名类对象</param>
             <returns><see cref="T:System.Func`2"/></returns>
         </member>
+        <member name="T:Furion.Kit.EndpointModel">
+            <summary>
+            终点路由模型
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointModel.DisplayName">
+            <summary>
+            显示名称
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointModel.RoutePattern">
+            <summary>
+            路由格式
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointModel.Order">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointModel.HttpMethods">
+            <summary>
+            请求方式集合
+            </summary>
+        </member>
         <member name="T:Furion.Kit.HttpDiagnosticModel">
             <summary>
             HTTP 诊断模型
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.DisplayName">
+            <summary>
+            [DisplayName] 特性名称
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.TraceIdentifier">
+            <summary>
+            连接标识
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.RequestMethod">
+            <summary>
+            请求方式
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.RequestPath">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.Endpoint">
+            <inheritdoc cref="T:Furion.Kit.EndpointModel"/>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.StartTimestamp">
+            <summary>
+            请求时间
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.EndTimestamp">
+            <summary>
+            请求结束时间
             </summary>
         </member>
         <member name="T:Furion.Kit.DiagnosticObserver`1">
