@@ -10,6 +10,11 @@ export interface HttpDiagnost {
   startTimestamp?: Date;
   endTimestamp?: Date;
   displayName?: string;
+  controllerType?: string;
+  methodName?: string;
+  query?: KeyValueModel[];
+  cookies?: KeyValueModel[];
+  headers: KeyValueModel[];
 }
 
 export interface EndpointModel {
@@ -19,6 +24,11 @@ export interface EndpointModel {
   httpMethods?: string;
 }
 
+export interface KeyValueModel {
+  key: string;
+  value?: string;
+}
+
 export class MySubClassedDexie extends Dexie {
   httpDiagnost!: Table<HttpDiagnost>;
 
@@ -26,7 +36,7 @@ export class MySubClassedDexie extends Dexie {
     super("furion-kit");
     this.version(1).stores({
       httpDiagnost:
-        "++traceIdentifier,  requestPath, requestMethod, exception, statusCode, endpoint, startTimestamp, endTimestamp, displayName",
+        "++traceIdentifier,  requestPath, requestMethod, exception, statusCode, endpoint, startTimestamp, endTimestamp, displayName, controllerType, methodName, query, cookies, headers",
     });
   }
 }

@@ -58,4 +58,20 @@ internal sealed class HttpDiagnosticModel
     /// 请求结束时间
     /// </summary>
     public DateTimeOffset? EndTimestamp { get; internal set; }
+
+    /// <summary>
+    /// 控制器类型
+    /// </summary>
+    public string? ControllerType { get; internal set; }
+
+    /// <summary>
+    /// 方法签名
+    /// </summary>
+    public string? MethodName { get; internal set; }
+
+    public IEnumerable<KeyValueModel>? Query { get; internal set; }
+
+    public IEnumerable<KeyValueModel>? Cookies { get; internal set; }
+
+    public IEnumerable<KeyValueModel>? Headers { get; internal set; }
 }

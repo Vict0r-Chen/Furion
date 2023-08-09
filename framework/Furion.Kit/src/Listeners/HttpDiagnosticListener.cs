@@ -58,7 +58,10 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                     TraceIdentifier = httpContext.TraceIdentifier,
                     RequestPath = httpContext.Request.Path + httpContext.Request.QueryString,
                     RequestMethod = httpContext.Request.Method,
-                    StartTimestamp = DateTimeOffset.UtcNow
+                    StartTimestamp = DateTimeOffset.UtcNow,
+                    Query = httpContext.Request.Query.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }),
+                    Cookies = httpContext.Request.Cookies.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }),
+                    Headers = httpContext.Request.Headers.Select(u => new KeyValueModel { Key = u.Key, Value = u.Value }),
                 };
 
                 var endpoint = httpContext.GetEndpoint();
@@ -85,6 +88,8 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                     if (controllerActionDescriptor is not null)
                     {
                         httpDiagnosticModel.DisplayName = controllerActionDescriptor.MethodInfo.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
+                        httpDiagnosticModel.ControllerType = controllerActionDescriptor.ControllerTypeInfo.ToString();
+                        httpDiagnosticModel.MethodName = controllerActionDescriptor.MethodInfo.ToString();
                     }
                 }
 

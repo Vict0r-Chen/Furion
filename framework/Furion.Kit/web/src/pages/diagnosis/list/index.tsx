@@ -83,6 +83,7 @@ export default function RequestList() {
         open={open}
         mask={false}
         autoFocus={false}
+        width={600}
       >
         <Outlet />
       </Drawer>

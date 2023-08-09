@@ -104,11 +104,24 @@ export default function DiagnosisDetail() {
         类型信息
       </Title>
       <div style={{ marginTop: 15 }}>
-        <Space direction="vertical" size={10}></Space>
+        <Space direction="vertical" size={10}>
+          <Space>
+            <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+              Controller Type：
+            </Text>
+            <Text style={{ color: "#595959" }}>{diagnosis.controllerType}</Text>
+          </Space>
+          <Space>
+            <Text style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+              Method：
+            </Text>
+            <Text style={{ color: "#595959" }}>{diagnosis.methodName}</Text>
+          </Space>
+        </Space>
       </div>
       <Divider />
       <Title level={5} style={{ marginTop: 0 }} id="setting-account">
-        路由信息
+        Routing
       </Title>
       <div style={{ marginTop: 15 }}>
         <Space direction="vertical" size={10}>

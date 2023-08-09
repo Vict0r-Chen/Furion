@@ -226,6 +226,16 @@
             请求结束时间
             </summary>
         </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.ControllerType">
+            <summary>
+            控制器类型
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.HttpDiagnosticModel.MethodName">
+            <summary>
+            方法签名
+            </summary>
+        </member>
         <member name="T:Furion.Kit.DiagnosticObserver`1">
             <summary>
             诊断观察者
