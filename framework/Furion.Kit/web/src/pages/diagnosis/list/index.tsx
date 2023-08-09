@@ -3,6 +3,7 @@ import { Card, Popover, Space, Spin, Tag, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
 import React from "react";
 import { db } from "../../../db";
+import { HighlightText } from "./style";
 
 const { Text } = Typography;
 
@@ -61,7 +62,15 @@ export default function RequestList() {
                   ms
                 </Text>
               )}
-              <Text keyboard>{item.endpoint?.displayName}</Text>
+              <HighlightText
+                type="secondary"
+                italic
+                keyboard
+                $color="#000000A6"
+              >
+                {item.endpoint?.displayName}
+              </HighlightText>
+
               {item.exception && (
                 <Tag icon={<CloseCircleOutlined />} color="#f50" />
               )}
