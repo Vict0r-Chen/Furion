@@ -1,4 +1,8 @@
-import { CloseCircleOutlined, WarningOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -113,11 +117,38 @@ export default function RequestList() {
 
                   <Popover
                     title={
-                      <Space size={5}>
-                        <Text>连接标识：</Text>
-                        <Text style={{ color: "#595959" }}>
-                          {item.traceIdentifier}
-                        </Text>
+                      <Space direction="vertical">
+                        <Space size={5}>
+                          <Text>标识：</Text>
+                          <Text style={{ color: "#595959" }} copyable>
+                            {item.traceIdentifier}
+                          </Text>
+                        </Space>
+                        <Space size={5}>
+                          <Text>请求时间：</Text>
+                          <Text style={{ color: "#595959" }}>
+                            {item.startTimestamp?.toLocaleString()}
+                          </Text>
+                        </Space>
+                        <Space size={5}>
+                          <Text>状态码：</Text>
+                          <Text type={item.exception ? "danger" : "success"}>
+                            {item.statusCode}
+                          </Text>
+                          {item.statusCode &&
+                            item.statusCode >= 200 &&
+                            item.statusCode <= 299 && (
+                              <CheckCircleOutlined
+                                style={{ color: "#52c41a" }}
+                              />
+                            )}
+                          {item.statusCode && item.statusCode >= 500 && (
+                            <CloseCircleOutlined style={{ color: "#ff4d4f" }} />
+                          )}
+                          {!item.statusCode && (
+                            <WarningOutlined style={{ color: "#faad14" }} />
+                          )}
+                        </Space>
                       </Space>
                     }
                   >
