@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import logo from "../../assets/logo.png";
 
@@ -13,9 +14,9 @@ const Img = styled.img`
 
 const Logo: React.FC = () => (
   <Container>
-    <a href="/">
+    <Link to="/">
       <Img src={logo} alt="Furion Kit Log" />
-    </a>
+    </Link>
   </Container>
 );
 

@@ -9,20 +9,11 @@ interface State {
 }
 
 const useSiderStore = create<State>((set) => {
-  var floatLocal = window.localStorage.getItem("float");
-  var float = floatLocal ? Boolean(Number(floatLocal)) : false;
-
   return {
-    float,
+    float: false,
     floatX: 24,
     floatY: 45,
-    switchFloat: () =>
-      set((draft) => {
-        var f = !draft.float;
-        window.localStorage.setItem("float", f ? "1" : "0");
-
-        return { ...draft, float: f };
-      }),
+    switchFloat: () => set((draft) => ({ ...draft, float: !draft.float })),
     setPosition: (x, y) => set((draft) => ({ ...draft, floatX: x, floatY: y })),
   };
 });
