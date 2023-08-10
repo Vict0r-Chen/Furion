@@ -173,6 +173,7 @@ public class UserFriendlyException : ApplicationException
     /// <param name="condition">异常条件</param>
     public static void ThrowIf(bool condition)
     {
+        // 检查条件是否成立
         if (condition)
         {
             Throw(Constants.DEFAULT_EXCEPTION_MESSAGE);
@@ -187,6 +188,7 @@ public class UserFriendlyException : ApplicationException
     /// <param name="args">格式化参数</param>
     public static void ThrowIf(bool condition, object? code, params object?[] args)
     {
+        // 检查条件是否成立
         if (condition)
         {
             Throw(code, args);
@@ -200,6 +202,7 @@ public class UserFriendlyException : ApplicationException
     /// <param name="paramName">参数名称</param>
     public static void ThrowIfNull([NotNull] object? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
     {
+        // 空检查
         if (argument is null)
         {
             ArgumentExceptionHelper.Throw(paramName!);
@@ -213,6 +216,7 @@ public class UserFriendlyException : ApplicationException
     /// <param name="paramName">参数名称</param>
     public static void ThrowIfNullOrWhiteSpace([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
     {
+        // 空检查
         if (string.IsNullOrWhiteSpace(argument))
         {
             ArgumentExceptionHelper.ThrowNullOrWhiteSpaceException(argument!, paramName!);
@@ -226,6 +230,7 @@ public class UserFriendlyException : ApplicationException
     /// <param name="paramName">参数名称</param>
     public static void ThrowIfNullOrEmpty([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
     {
+        // 空检查
         if (string.IsNullOrEmpty(argument))
         {
             ArgumentExceptionHelper.ThrowNullOrEmptyException(argument!, paramName!);
@@ -240,6 +245,7 @@ public class UserFriendlyException : ApplicationException
     /// <param name="paramName">参数名称</param>
     public static void ThrowIfNullOrEmpty<T>([NotNull] ICollection<T>? argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null)
     {
+        // 空检查
         if (argument is null or { Count: 0 })
         {
             ArgumentExceptionHelper.ThrowNullOrEmptyException(argument!, paramName!);

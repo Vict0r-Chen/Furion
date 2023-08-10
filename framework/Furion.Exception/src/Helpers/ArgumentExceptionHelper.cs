@@ -39,6 +39,7 @@ internal static class ArgumentExceptionHelper
     [DoesNotReturn]
     internal static void ThrowNullOrWhiteSpaceException(string argument, string paramName)
     {
+        // 空检查
         if (argument is null)
         {
             Throw(paramName);
@@ -56,6 +57,7 @@ internal static class ArgumentExceptionHelper
     [DoesNotReturn]
     internal static void ThrowNullOrEmptyException(string argument, string paramName)
     {
+        // 空检查
         if (argument is null)
         {
             Throw(paramName);
@@ -74,6 +76,7 @@ internal static class ArgumentExceptionHelper
     [DoesNotReturn]
     internal static void ThrowNullOrEmptyException<T>(ICollection<T> argument, string paramName)
     {
+        // 空检查
         if (argument is null)
         {
             Throw(paramName);
