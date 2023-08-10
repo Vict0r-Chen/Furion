@@ -167,7 +167,7 @@ const Sider: React.FC = () => {
           bounds="parent"
           nodeRef={containerRef}
           defaultPosition={position}
-          onDrag={(ev, data) => {
+          onStop={(ev, data) => {
             setPosition(data.x, data.y);
           }}
         >
