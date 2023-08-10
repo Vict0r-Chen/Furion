@@ -16,6 +16,7 @@ const Container = styled(SpaceBetween)<{ $float?: boolean }>`
   width: 60px;
   min-width: 60px;
   height: 100%;
+  max-height: 100%;
   background-color: #f7f8fb;
   padding: 15px 0;
   box-sizing: border-box;
@@ -27,8 +28,6 @@ const Container = styled(SpaceBetween)<{ $float?: boolean }>`
       z-index: 100;
       left: 24px;
       height: auto;
-      /* top: 50%;
-      transform: translateY(-50%); */
       border-radius: 8px;
       border: 1px solid #bae0ff;
       box-shadow: 0px 0px 3px #bae0ff;
