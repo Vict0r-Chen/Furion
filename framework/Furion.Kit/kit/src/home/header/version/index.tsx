@@ -1,10 +1,9 @@
 import { Space } from "antd";
 import { styled } from "styled-components";
 import IconFont from "../../../components/iconfont";
-import Text from "../../../components/text";
+import TextBox from "../../../components/textbox";
 
 const Container = styled.div`
-  height: 100%;
   background-color: #e6f4ff;
   display: flex;
   justify-content: center;
@@ -12,6 +11,11 @@ const Container = styled.div`
   padding: 0 15px;
   position: relative;
   cursor: pointer;
+  height: 35px;
+  min-height: 35px;
+  margin-left: 30px;
+  color: #001d66;
+  font-size: 14px;
 
   &::before {
     content: "";
@@ -27,13 +31,13 @@ const Container = styled.div`
 
   &:hover,
   &:hover::before {
+    color: #001d66;
     background-color: #bae0ff;
   }
 `;
 
-const Number = styled(Text)`
+const Number = styled(TextBox)`
   font-weight: 600;
-  color: unset;
 `;
 
 const Icon = styled(IconFont)`
@@ -47,6 +51,10 @@ const BranchIcon = styled(Icon)`
 const Link = styled.a`
   text-decoration: none;
   color: unset;
+
+  &:hover {
+    color: unset;
+  }
 `;
 
 interface VersionProps {
