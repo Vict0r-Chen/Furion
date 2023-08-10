@@ -1,6 +1,8 @@
 import { Space } from "antd";
+import { useRef } from "react";
 import { styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
+import useResize from "../../hooks/useResize";
 import Function, { FunctionProps } from "../function";
 import Logo from "../logo";
 
@@ -74,7 +76,7 @@ const functions: FunctionProps[] = [
     render: (isActive) => (
       <Function.Icon type="icon-starter" $active={isActive} />
     ),
-    link: "/configuration",
+    link: "/starter",
     title: "启动",
   },
   {
@@ -104,9 +106,15 @@ const functions: FunctionProps[] = [
 ];
 
 const Sider: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useResize(containerRef, (rect) => {
+    console.log(rect);
+  });
+
   return (
     <>
-      <Container>
+      <Container ref={containerRef}>
         <div>
           <Logo />
           <Space direction="vertical" size={15}>
