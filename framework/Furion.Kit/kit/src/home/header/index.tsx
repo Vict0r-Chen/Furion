@@ -3,27 +3,54 @@ import React from "react";
 import { styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
 import IconFont from "../../components/iconfont";
+import SpaceBetween from "../../components/space-between";
+import useStore from "../../stores/store";
 import Noble from "./noble";
 import NotificationBox from "./notification";
 import SearchBox from "./searchbox";
 import Version from "./version";
 
-const Container = styled.div`
+const Container = styled(SpaceBetween)`
   height: 35px;
   min-height: 35px;
-  display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   padding-left: 15px;
 `;
 
+const HeaderIcon = styled(IconFont)`
+  font-size: 20px;
+  color: #8c8c8c;
+  cursor: pointer;
+
+  &:hover {
+    color: #69b1ff;
+  }
+`;
+
+const ClearFloatIcon = styled(HeaderIcon)`
+  color: #001d66;
+`;
+
 const HeaderDefault: React.FC = () => {
+  const [float, switchFloat] = useStore((state) => [
+    state.float,
+    state.switchFloat,
+  ]);
+
   return (
     <>
       <Container>
         <div>
-          <Space size={15}>
+          <Space size={15} align="center">
+            <div onClick={switchFloat}>
+              {float ? (
+                <ClearFloatIcon type="icon-clear-float" />
+              ) : (
+                <HeaderIcon type="icon-float" />
+              )}
+            </div>
+
             <Noble />
           </Space>
         </div>
@@ -39,16 +66,6 @@ const HeaderDefault: React.FC = () => {
     </>
   );
 };
-
-const HeaderIcon = styled(IconFont)`
-  font-size: 20px;
-  color: #8c8c8c;
-  cursor: pointer;
-
-  &:hover {
-    color: #000000e0;
-  }
-`;
 
 type HeaderComponent = typeof HeaderDefault & {
   Icon: typeof HeaderIcon;

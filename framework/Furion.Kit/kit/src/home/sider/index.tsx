@@ -1,13 +1,14 @@
 import { Space } from "antd";
 import { useRef } from "react";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
+import SpaceBetween from "../../components/space-between";
 import useResize from "../../hooks/useResize";
+import useStore from "../../stores/store";
 import Function, { FunctionProps } from "../function";
 import Logo from "../logo";
 
-const Container = styled.div`
-  display: flex;
+const Container = styled(SpaceBetween)<{ $float?: boolean }>`
   flex-direction: column;
   text-align: center;
   align-items: center;
@@ -15,9 +16,26 @@ const Container = styled.div`
   min-width: 60px;
   height: 100%;
   background-color: #f7f8fb;
-  justify-content: space-between;
   padding: 15px 0;
   box-sizing: border-box;
+
+  ${(props) =>
+    props.$float &&
+    css`
+      position: fixed;
+      z-index: 100;
+      left: 24px;
+      height: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 8px;
+      border: 1px solid #bae0ff;
+      box-shadow: 0px 0px 3px #bae0ff;
+    `}
+`;
+
+const FooterContainer = styled.div`
+  margin-top: 15px;
 `;
 
 const functions: FunctionProps[] = [
@@ -107,6 +125,7 @@ const functions: FunctionProps[] = [
 
 const Sider: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [float] = useStore((state) => [state.float]);
 
   useResize(containerRef, (rect) => {
     console.log(rect);
@@ -114,7 +133,7 @@ const Sider: React.FC = () => {
 
   return (
     <>
-      <Container ref={containerRef}>
+      <Container ref={containerRef} $float={float}>
         <div>
           <Logo />
           <Space direction="vertical" size={15}>
@@ -125,7 +144,7 @@ const Sider: React.FC = () => {
               ))}
           </Space>
         </div>
-        <div>
+        <FooterContainer>
           <Space direction="vertical" size={15}>
             {functions
               .filter((fn) => fn.position === "bottom")
@@ -133,7 +152,7 @@ const Sider: React.FC = () => {
                 <Function key={fn.link} {...fn} />
               ))}
           </Space>
-        </div>
+        </FooterContainer>
       </Container>
       <FlushDivider type="vertical" $heightBlock />
     </>

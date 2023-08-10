@@ -1,5 +1,6 @@
 import { Space } from "antd";
 import { styled } from "styled-components";
+import A from "../../../components/a";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 
@@ -48,15 +49,6 @@ const BranchIcon = styled(Icon)`
   font-size: 16px;
 `;
 
-const Link = styled.a`
-  text-decoration: none;
-  color: unset;
-
-  &:hover {
-    color: unset;
-  }
-`;
-
 interface VersionProps {
   link?: string;
   number?: string;
@@ -68,13 +60,13 @@ const Version: React.FC<VersionProps> = ({
 }) => {
   return (
     <Container>
-      <Link href={link} target="_blank" rel="noreferrer">
+      <A href={link} target="_blank" rel="noreferrer">
         <Space>
           <BranchIcon type="icon-branch" />
           <Number>{number}</Number>
           <Icon type="icon-arrow-right" />
         </Space>
-      </Link>
+      </A>
     </Container>
   );
 };
