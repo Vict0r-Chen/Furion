@@ -42,7 +42,10 @@ public static class KitWebApplicationExtensions
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
         webApplication.MapGroup("/furion")
-            .MapGetSSE("http-sse", new HttpDiagnosticListener(kitOptions.Capacity).SSEHandler);
+            .MapGetSSE("http-sse", async (HttpContext context, CancellationToken cancellationToken) =>
+            {
+                await new HttpDiagnosticListener(kitOptions.Capacity).SSEHandler(context, cancellationToken);
+            });
 
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
