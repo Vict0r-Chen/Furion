@@ -108,9 +108,11 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     /// 将数据写入诊断订阅器通道
     /// </summary>
     /// <param name="data"><typeparamref name="TData"/></param>
-    internal virtual void Write(TData data)
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns><see cref="Task"/></returns>
+    internal virtual async Task WriteAsync(TData data, CancellationToken cancellationToken = default)
     {
-        _diagnosticChannel.Writer.TryWrite(data);
+        await _diagnosticChannel.Writer.WriteAsync(data, cancellationToken);
     }
 
     /// <summary>

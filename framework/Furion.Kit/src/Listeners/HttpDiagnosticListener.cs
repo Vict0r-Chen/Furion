@@ -93,7 +93,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
 
                 if (_httpDiagnosticModelsCache.TryAdd(httpDiagnosticModel.TraceIdentifier, httpDiagnosticModel))
                 {
-                    Write(httpDiagnosticModel);
+                    _ = WriteAsync(httpDiagnosticModel);
                 }
             }
         }
@@ -113,7 +113,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
 
                     if (_httpDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, httpDiagnosticModel, httpDiagnosticModel))
                     {
-                        Write(httpDiagnosticModel);
+                        _ = WriteAsync(httpDiagnosticModel);
                     }
                 }
             }
@@ -130,7 +130,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                     httpDiagnosticModel.StatusCode = httpContext.Response.StatusCode;
                     httpDiagnosticModel.EndTimestamp = DateTimeOffset.UtcNow;
 
-                    Write(httpDiagnosticModel);
+                    _ = WriteAsync(httpDiagnosticModel);
                 }
             }
         }
