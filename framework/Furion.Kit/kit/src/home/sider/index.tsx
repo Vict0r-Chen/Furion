@@ -1,10 +1,11 @@
 import { Space } from "antd";
-import { useRef } from "react";
+import React, { useRef } from "react";
+import Draggable from "react-draggable";
 import { css, styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
 import SpaceBetween from "../../components/space-between";
 import useResize from "../../hooks/useResize";
-import useStore from "../../stores/store";
+import useSiderStore from "../../stores/sider.store";
 import Function, { FunctionProps } from "../function";
 import Logo from "../logo";
 
@@ -26,8 +27,8 @@ const Container = styled(SpaceBetween)<{ $float?: boolean }>`
       z-index: 100;
       left: 24px;
       height: auto;
-      top: 50%;
-      transform: translateY(-50%);
+      /* top: 50%;
+      transform: translateY(-50%); */
       border-radius: 8px;
       border: 1px solid #bae0ff;
       box-shadow: 0px 0px 3px #bae0ff;
@@ -125,35 +126,56 @@ const functions: FunctionProps[] = [
 
 const Sider: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [float] = useStore((state) => [state.float]);
+  const [float, position, setPosition] = useSiderStore((state) => [
+    state.float,
+    { x: state.floatX, y: state.floatY },
+    state.setPosition,
+  ]);
 
   useResize(containerRef, (rect) => {
     console.log(rect);
   });
 
+  const Element = (
+    <Container ref={containerRef} $float={float}>
+      <div>
+        <Logo />
+        <Space direction="vertical" size={15}>
+          {functions
+            .filter((fn) => fn.position !== "bottom")
+            .map((fn) => (
+              <Function key={fn.link} {...fn} />
+            ))}
+        </Space>
+      </div>
+      <FooterContainer>
+        <Space direction="vertical" size={15}>
+          {functions
+            .filter((fn) => fn.position === "bottom")
+            .map((fn) => (
+              <Function key={fn.link} {...fn} />
+            ))}
+        </Space>
+      </FooterContainer>
+    </Container>
+  );
+
   return (
     <>
-      <Container ref={containerRef} $float={float}>
-        <div>
-          <Logo />
-          <Space direction="vertical" size={15}>
-            {functions
-              .filter((fn) => fn.position !== "bottom")
-              .map((fn) => (
-                <Function key={fn.link} {...fn} />
-              ))}
-          </Space>
-        </div>
-        <FooterContainer>
-          <Space direction="vertical" size={15}>
-            {functions
-              .filter((fn) => fn.position === "bottom")
-              .map((fn) => (
-                <Function key={fn.link} {...fn} />
-              ))}
-          </Space>
-        </FooterContainer>
-      </Container>
+      {float ? (
+        <Draggable
+          bounds="parent"
+          nodeRef={containerRef}
+          defaultPosition={position}
+          onDrag={(ev, data) => {
+            setPosition(data.x, data.y);
+          }}
+        >
+          {Element}
+        </Draggable>
+      ) : (
+        Element
+      )}
       <FlushDivider type="vertical" $heightBlock />
     </>
   );

@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
 import IconFont from "../../components/iconfont";
 import SpaceBetween from "../../components/space-between";
-import useStore from "../../stores/store";
+import useSiderStore from "../../stores/sider.store";
 import Noble from "./noble";
 import NotificationBox from "./notification";
 import SearchBox from "./searchbox";
@@ -33,7 +33,7 @@ const ClearFloatIcon = styled(HeaderIcon)`
 `;
 
 const HeaderDefault: React.FC = () => {
-  const [float, switchFloat] = useStore((state) => [
+  const [float, switchFloat] = useSiderStore((state) => [
     state.float,
     state.switchFloat,
   ]);
