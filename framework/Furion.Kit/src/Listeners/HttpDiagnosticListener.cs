@@ -13,8 +13,6 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -95,7 +93,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
 
                 if (_httpDiagnosticModelsCache.TryAdd(httpDiagnosticModel.TraceIdentifier, httpDiagnosticModel))
                 {
-                    _ = WriteAsync(httpDiagnosticModel);
+                    Write(httpDiagnosticModel);
                 }
             }
         }
@@ -115,7 +113,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
 
                     if (_httpDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, httpDiagnosticModel, httpDiagnosticModel))
                     {
-                        _ = WriteAsync(httpDiagnosticModel);
+                        Write(httpDiagnosticModel);
                     }
                 }
             }
@@ -132,7 +130,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
                     httpDiagnosticModel.StatusCode = httpContext.Response.StatusCode;
                     httpDiagnosticModel.EndTimestamp = DateTimeOffset.UtcNow;
 
-                    _ = WriteAsync(httpDiagnosticModel);
+                    Write(httpDiagnosticModel);
                 }
             }
         }

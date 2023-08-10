@@ -94,13 +94,11 @@
             </summary>
             <param name="data">通知信息</param>
         </member>
-        <member name="M:Furion.Kit.DiagnosticListenerBase`1.WriteAsync(`0,System.Threading.CancellationToken)">
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.Write(`0)">
             <summary>
             将数据写入诊断订阅器通道
             </summary>
             <param name="data"><typeparamref name="TData"/></param>
-            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
-            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.ReadAsync(System.Threading.CancellationToken)">
             <summary>
