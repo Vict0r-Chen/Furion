@@ -8,18 +8,16 @@ const FlushDivider = styled(Divider)<{
   margin: 0;
 
   ${(props) =>
-    props.$heightBlock
-      ? css`
-          height: 100%;
-        `
-      : undefined}
+    props.$heightBlock &&
+    css`
+      height: 100%;
+    `}
 
   ${(props) =>
-    props.$widthBlock
-      ? css`
-          width: 100%;
-        `
-      : undefined}
+    props.$widthBlock &&
+    css`
+      width: 100%;
+    `}
 `;
 
 export { FlushDivider };
