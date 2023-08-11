@@ -1,13 +1,16 @@
-import { Typography } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 
-const { Title } = Typography;
-
 const Container = styled(Flexbox)`
   align-items: center;
   padding: 0 40px;
+`;
+
+const Title = styled.h3`
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: 600;
+  font-size: 24px;
 `;
 
 interface ContentTitleProps {
@@ -18,7 +21,7 @@ interface ContentTitleProps {
 const ContentTitle: React.FC<ContentTitleProps> = ({ children, extra }) => {
   return (
     <Container $spaceBetween>
-      <Title level={3}>{children}</Title>
+      <Title>{children}</Title>
       {extra}
     </Container>
   );
