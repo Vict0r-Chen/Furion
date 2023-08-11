@@ -25,7 +25,7 @@ const Container = styled(Flexbox)`
 
 const Sider = styled.div`
   position: sticky;
-  top: 0;
+  top: 80px;
   width: 200px;
   margin-right: 15px;
 `;
@@ -36,6 +36,7 @@ const Main = styled.div`
 `;
 
 const textColor = "#000000a6";
+const iconSize = 16;
 
 const Setting: React.FC = () => {
   const [advice, setAdvice] = useState("");
@@ -77,7 +78,7 @@ const Setting: React.FC = () => {
                   href: "#setting-account",
                   title: (
                     <Space>
-                      <IconFont type="icon-account" />
+                      <IconFont type="icon-account" $size={iconSize} />
                       <TextBox>账户设置</TextBox>
                     </Space>
                   ),
@@ -87,10 +88,7 @@ const Setting: React.FC = () => {
                   href: "#setting-appearance",
                   title: (
                     <Space>
-                      <IconFont
-                        type="icon-appearance"
-                        style={{ fontSize: 15 }}
-                      />
+                      <IconFont type="icon-appearance" $size={iconSize} />
                       <TextBox>外观</TextBox>
                     </Space>
                   ),
@@ -100,7 +98,7 @@ const Setting: React.FC = () => {
                   href: "#setting-language",
                   title: (
                     <Space>
-                      <IconFont type="icon-language" style={{ fontSize: 15 }} />
+                      <IconFont type="icon-language" $size={iconSize} />
                       <TextBox>语言</TextBox>
                     </Space>
                   ),
@@ -110,7 +108,7 @@ const Setting: React.FC = () => {
                   href: "#setting-backup",
                   title: (
                     <Space>
-                      <IconFont type="icon-backup" style={{ fontSize: 15 }} />
+                      <IconFont type="icon-backup" $size={iconSize} />
                       <TextBox>备份</TextBox>
                     </Space>
                   ),
@@ -120,7 +118,7 @@ const Setting: React.FC = () => {
                   href: "#setting-advice",
                   title: (
                     <Space>
-                      <IconFont type="icon-advice" style={{ fontSize: 15 }} />
+                      <IconFont type="icon-advice" $size={iconSize} />
                       <TextBox>意见反馈</TextBox>
                     </Space>
                   ),
@@ -130,7 +128,7 @@ const Setting: React.FC = () => {
                   href: "#setting-aboutus",
                   title: (
                     <Space>
-                      <IconFont type="icon-aboutus" style={{ fontSize: 15 }} />
+                      <IconFont type="icon-aboutus" $size={iconSize} />
                       <TextBox>关于我们</TextBox>
                     </Space>
                   ),
@@ -142,7 +140,7 @@ const Setting: React.FC = () => {
             <Category
               id="setting-account"
               title="账户设置"
-              icon={<IconFont type="icon-account" $size={16} />}
+              icon={<IconFont type="icon-account" $size={iconSize} />}
             >
               <Space direction="vertical">
                 <Space>
@@ -157,7 +155,7 @@ const Setting: React.FC = () => {
             <Category
               id="setting-appearance"
               title="外观"
-              icon={<IconFont type="icon-appearance" $size={16} />}
+              icon={<IconFont type="icon-appearance" $size={iconSize} />}
             >
               <Space direction="vertical">
                 <Radio.Group
@@ -174,7 +172,7 @@ const Setting: React.FC = () => {
             <Category
               id="setting-language"
               title="语言"
-              icon={<IconFont type="icon-language" $size={16} />}
+              icon={<IconFont type="icon-language" $size={iconSize} />}
             >
               <Space direction="vertical">
                 <Select
@@ -191,7 +189,7 @@ const Setting: React.FC = () => {
             <Category
               id="setting-backup"
               title="备份"
-              icon={<IconFont type="icon-backup" $size={16} />}
+              icon={<IconFont type="icon-backup" $size={iconSize} />}
             >
               <Space direction="vertical">
                 <Space>
@@ -207,7 +205,7 @@ const Setting: React.FC = () => {
             <Category
               id="setting-advice"
               title="意见反馈"
-              icon={<IconFont type="icon-advice" $size={16} />}
+              icon={<IconFont type="icon-advice" $size={iconSize} />}
             >
               <Space direction="vertical">
                 <TextArea
@@ -253,7 +251,7 @@ const Setting: React.FC = () => {
             <Category
               id="setting-aboutus"
               title="关于我们"
-              icon={<IconFont type="icon-aboutus" $size={16} />}
+              icon={<IconFont type="icon-aboutus" $size={iconSize} />}
             >
               <Space direction="vertical" size={15}>
                 <TextBox $color={textColor}>

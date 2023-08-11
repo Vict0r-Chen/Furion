@@ -2,7 +2,7 @@ import { createFromIconfontCN } from "@ant-design/icons";
 import { css, styled } from "styled-components";
 
 const IconFontDefault = createFromIconfontCN({
-  scriptUrl: "//at.alicdn.com/t/c/font_4199075_s92trhjzutm.js",
+  scriptUrl: "//at.alicdn.com/t/c/font_4199075_3rk05uon85o.js",
 });
 
 const IconFont = styled(IconFontDefault)<{ $size?: number; $color?: string }>`
