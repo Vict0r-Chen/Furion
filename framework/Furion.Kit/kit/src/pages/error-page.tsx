@@ -16,8 +16,8 @@ const ErrorPage: React.FC = () => {
     <Layout>
       <Container>
         <Result
-          status={error.status}
-          title={error.status}
+          status={error.status || "warning"}
+          title={error.status || "页面出现未知异常"}
           subTitle={error.statusText || error.message}
           extra={
             <Button type="primary" onClick={() => navigate("/")}>
