@@ -11,6 +11,7 @@ import FloatButton from "./components/float-button";
 import useSiderStore from "./stores/store";
 
 const Container = styled(Flexbox)<{ $float?: boolean }>`
+  position: relative;
   text-align: center;
   align-items: center;
   width: 60px;
@@ -29,7 +30,17 @@ const Container = styled(Flexbox)<{ $float?: boolean }>`
       border-radius: 8px;
       border: 1px solid #bae0ff;
       box-shadow: 0px 0px 8px #bae0ff;
+      max-height: 90%;
     `}
+`;
+
+const FunctionContainer = styled.div`
+  overflow-y: auto;
+  margin-top: 70px;
+  padding-top: 6px;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
 `;
 
 const FooterContainer = styled.div`
@@ -141,8 +152,8 @@ const Sider: React.FC = () => {
       $spaceBetween
       direction="column"
     >
-      <div>
-        <Logo />
+      <Logo />
+      <FunctionContainer>
         <Space direction="vertical" size={15}>
           {functions
             .filter((fn) => fn.position !== "bottom")
@@ -150,7 +161,7 @@ const Sider: React.FC = () => {
               <Function key={fn.link} {...fn} />
             ))}
         </Space>
-      </div>
+      </FunctionContainer>
       <FooterContainer>
         <Space direction="vertical" size={15}>
           {functions
@@ -171,6 +182,7 @@ const Sider: React.FC = () => {
           bounds="parent"
           defaultPosition={position}
           cancel="a"
+          nodeRef={containerRef}
           onStop={(ev, data) => {
             if (data.x === 0) {
               switchFloat();

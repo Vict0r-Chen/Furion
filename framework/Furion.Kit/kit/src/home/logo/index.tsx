@@ -3,7 +3,8 @@ import { styled } from "styled-components";
 import logo from "../../assets/logo.png";
 
 const Container = styled.div`
-  margin-bottom: 40px;
+  position: absolute;
+  z-index: 1;
 `;
 
 const Img = styled.img`

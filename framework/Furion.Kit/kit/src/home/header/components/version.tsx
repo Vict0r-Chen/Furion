@@ -23,7 +23,7 @@ const Container = styled.div`
     position: absolute;
     z-index: -1;
     top: 0;
-    left: -20px;
+    left: -18px;
     width: 100%;
     height: 100%;
     transform: skew(45deg);

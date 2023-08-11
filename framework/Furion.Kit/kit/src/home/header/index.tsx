@@ -29,7 +29,7 @@ const HeaderDefault: React.FC = () => {
           <Space size={15}>
             <SearchBox />
             <NotificationBox />
-            <Version number="Furion 5.0.0.preview.1" />
+            <Version number="Furion 5.0.0" />
           </Space>
         </div>
       </Container>

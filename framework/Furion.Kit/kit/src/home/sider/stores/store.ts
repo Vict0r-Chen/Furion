@@ -12,7 +12,7 @@ const useSiderStore = create<SiderState>((set) => {
   return {
     float: false,
     floatX: 15,
-    floatY: 55,
+    floatY: 100,
     switchFloat: () => set((draft) => ({ ...draft, float: !draft.float })),
     setPosition: (x, y) => set((draft) => ({ ...draft, floatX: x, floatY: y })),
   };
