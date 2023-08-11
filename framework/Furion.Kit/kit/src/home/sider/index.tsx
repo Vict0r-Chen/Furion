@@ -2,12 +2,12 @@ import { Space } from "antd";
 import React, { useRef } from "react";
 import Draggable from "react-draggable";
 import { css, styled } from "styled-components";
-import { FlushDivider } from "../../components/divider";
 import Flexbox from "../../components/flexbox";
+import { FlushDivider } from "../../components/flush-divider";
 import useResize from "../../hooks/useResize";
 import Function, { FunctionProps } from "../function";
 import Logo from "../logo";
-import FloatButton from "./components/float";
+import FloatButton from "./components/float-button";
 import useSiderStore from "./stores/store";
 
 const Container = styled(Flexbox)<{ $float?: boolean }>`

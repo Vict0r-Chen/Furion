@@ -1,8 +1,8 @@
 import React from "react";
 import { styled } from "styled-components";
 import A from "../../components/a";
-import { FlushDivider } from "../../components/divider";
 import Flexbox from "../../components/flexbox";
+import { FlushDivider } from "../../components/flush-divider";
 import TextBox from "../../components/textbox";
 
 const Container = styled(Flexbox)`
