@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const Configuration: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>配置</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

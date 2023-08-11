@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const Generate: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>生成</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

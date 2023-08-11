@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const OpenAPI: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>开放</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const Diagnosis: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>诊断</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

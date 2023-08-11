@@ -3,7 +3,7 @@ import Content from "../../home/content";
 
 const Panel: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title
         extra={
           <Content.Menu
@@ -26,7 +26,7 @@ const Panel: React.FC = () => {
       >
         面板
       </Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

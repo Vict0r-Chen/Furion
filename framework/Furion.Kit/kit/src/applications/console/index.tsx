@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const Console: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>输出</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

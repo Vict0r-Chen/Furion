@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const Starter: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>启动</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

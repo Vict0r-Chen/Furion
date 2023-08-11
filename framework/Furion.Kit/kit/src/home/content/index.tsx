@@ -13,7 +13,7 @@ const Container = styled(Flexbox)`
 
 const ContentDefault: React.FC = () => {
   return (
-    <Container>
+    <Container id="scroll-content">
       <Outlet />
     </Container>
   );
