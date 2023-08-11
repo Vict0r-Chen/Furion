@@ -2,9 +2,9 @@ import Content from "../../home/content";
 
 const Explore: React.FC = () => {
   return (
-    <div>
+    <Content.Main>
       <Content.Title>探索</Content.Title>
-    </div>
+    </Content.Main>
   );
 };
 

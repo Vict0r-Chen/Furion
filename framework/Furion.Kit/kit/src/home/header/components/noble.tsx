@@ -10,13 +10,13 @@ const Container = styled.div`
 
 const Icon = styled(IconFont)`
   font-size: 16px;
-  position: relative;
-  top: 1px;
+  vertical-align: text-top;
 `;
 
 const Category = styled(TextBox)`
   font-weight: 500;
-  display: block;
+  display: inline-block;
+  user-select: none;
 `;
 
 const Noble: React.FC = () => {

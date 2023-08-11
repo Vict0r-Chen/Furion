@@ -17,6 +17,10 @@ const IconFont = styled(IconFontDefault)<{ $size?: number; $color?: string }>`
     css`
       color: ${props.$color}!important;
     `}
+
+    & svg {
+    vertical-align: middle;
+  }
 `;
 
 export default IconFont;
