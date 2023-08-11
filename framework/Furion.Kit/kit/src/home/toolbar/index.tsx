@@ -18,6 +18,10 @@ const Icon = styled(IconFont)`
   cursor: pointer;
   font-size: 18px;
   color: #8c8c8c;
+
+  &:hover {
+    color: #1677ff;
+  }
 `;
 
 interface ToolbarIconProps {

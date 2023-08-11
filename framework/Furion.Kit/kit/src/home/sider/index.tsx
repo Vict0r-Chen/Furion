@@ -1,14 +1,14 @@
-import { Space, Tooltip } from "antd";
+import { Space } from "antd";
 import React, { useRef } from "react";
 import Draggable from "react-draggable";
 import { css, styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
 import Flexbox from "../../components/flexbox";
-import IconFont from "../../components/iconfont";
 import useResize from "../../hooks/useResize";
-import useSiderStore from "../../stores/sider.store";
 import Function, { FunctionProps } from "../function";
 import Logo from "../logo";
+import FloatButton from "./components/float";
+import useSiderStore from "./stores/store";
 
 const Container = styled(Flexbox)<{ $float?: boolean }>`
   text-align: center;
@@ -19,6 +19,7 @@ const Container = styled(Flexbox)<{ $float?: boolean }>`
   max-height: 100%;
   background-color: #f7f8fb;
   padding: 15px 0 0 0;
+  overflow: hidden;
 
   ${(props) =>
     props.$float &&
@@ -35,40 +36,6 @@ const Container = styled(Flexbox)<{ $float?: boolean }>`
 
 const FooterContainer = styled.div`
   margin-top: 15px;
-`;
-
-const FloatContainer = styled(Flexbox)`
-  height: 30px;
-  min-height: 30px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  border-top: 1px solid rgb(240, 240, 240);
-`;
-
-const FloatIcon = styled(IconFont)`
-  font-size: 18px;
-  color: #8c8c8c;
-  cursor: pointer;
-  height: 22px;
-  width: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    color: #69b1ff;
-  }
-`;
-
-const ClearFloatIcon = styled(FloatIcon)`
-  color: #4096ff;
-  background-color: #bae0ff;
-
-  &:hover {
-    color: #001d66;
-  }
 `;
 
 const functions: FunctionProps[] = [
@@ -158,9 +125,8 @@ const functions: FunctionProps[] = [
 
 const Sider: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [float, switchFloat, position, setPosition] = useSiderStore((state) => [
+  const [float, position, setPosition] = useSiderStore((state) => [
     state.float,
-    state.switchFloat,
     { x: state.floatX, y: state.floatY },
     state.setPosition,
   ]);
@@ -194,15 +160,7 @@ const Sider: React.FC = () => {
               <Function key={fn.link} {...fn} />
             ))}
         </Space>
-        <FloatContainer direction="column">
-          <Tooltip title={float ? "吸附" : "浮动"}>
-            {float ? (
-              <ClearFloatIcon type="icon-clear-float" onClick={switchFloat} />
-            ) : (
-              <FloatIcon type="icon-float" onClick={switchFloat} />
-            )}
-          </Tooltip>
-        </FloatContainer>
+        <FloatButton />
       </FooterContainer>
     </Container>
   );

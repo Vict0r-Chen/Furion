@@ -15,7 +15,7 @@ const Container = styled.div`
   height: 35px;
   min-height: 35px;
   margin-left: 35px;
-  color: #001d66;
+  color: #4096ff;
   font-size: 14px;
 
   &::before {
@@ -32,7 +32,7 @@ const Container = styled.div`
 
   &:hover,
   &:hover::before {
-    color: #001d66;
+    color: #1677ff;
     background-color: #bae0ff;
   }
 `;

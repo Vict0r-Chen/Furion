@@ -4,10 +4,10 @@ import { styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
 import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
-import Noble from "./noble";
-import NotificationBox from "./notification";
-import SearchBox from "./searchbox";
-import Version from "./version";
+import Noble from "./components/noble";
+import NotificationBox from "./components/notification";
+import SearchBox from "./components/searchbox";
+import Version from "./components/version";
 
 const Container = styled(Flexbox)`
   height: 35px;
@@ -22,7 +22,7 @@ const HeaderIcon = styled(IconFont)`
   cursor: pointer;
 
   &:hover {
-    color: #69b1ff;
+    color: #1677ff;
   }
 `;
 
