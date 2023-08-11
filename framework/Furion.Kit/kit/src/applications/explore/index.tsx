@@ -1,10 +1,11 @@
-import { Input, Space, Tabs, TabsProps } from "antd";
+import { Button, Dropdown, Input, Space, Tabs, TabsProps } from "antd";
 import { styled } from "styled-components";
-import CategoryList from "../../components/category-list";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
-import Main from "./components/main";
+import Community from "./community";
+import Local from "./local";
+import Official from "./official";
 
 const { Search } = Input;
 
@@ -25,24 +26,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>本地应用</TextBox>
       </Space>
     ),
-    children: (
-      <Main>
-        <div>
-          <Space direction="vertical" size={20}>
-            <CategoryList
-              title="分类"
-              items={[
-                { key: "1", label: "全部" },
-                { key: "2", label: "工具" },
-                { key: "3", label: "文档" },
-              ]}
-            />
-          </Space>
-        </div>
-        <br />
-        本地应用
-      </Main>
-    ),
+    children: <Local />,
   },
   {
     key: "2",
@@ -52,33 +36,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>官方精选</TextBox>
       </Space>
     ),
-    children: (
-      <Main>
-        <div>
-          <Space direction="vertical" size={20}>
-            <CategoryList
-              title="分类"
-              items={[
-                { key: "1", label: "全部" },
-                { key: "2", label: "视频" },
-                { key: "3", label: "智能" },
-                { key: "4", label: "工具" },
-              ]}
-            />
-            <CategoryList
-              title="综合"
-              items={[
-                { key: "1", label: "全部" },
-                { key: "2", label: "最热" },
-                { key: "3", label: "最新" },
-              ]}
-            />
-          </Space>
-        </div>
-        <br />
-        官方精选
-      </Main>
-    ),
+    children: <Official />,
   },
   {
     key: "3",
@@ -88,33 +46,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>社区维护</TextBox>
       </Space>
     ),
-    children: (
-      <Main>
-        <div>
-          <Space direction="vertical" size={20}>
-            <CategoryList
-              title="分类"
-              items={[
-                { key: "1", label: "全部" },
-                { key: "2", label: "视频" },
-                { key: "3", label: "智能" },
-                { key: "4", label: "工具" },
-              ]}
-            />
-            <CategoryList
-              title="综合"
-              items={[
-                { key: "1", label: "全部" },
-                { key: "2", label: "最热" },
-                { key: "3", label: "最新" },
-              ]}
-            />
-          </Space>
-        </div>
-        <br />
-        社区维护
-      </Main>
-    ),
+    children: <Community />,
   },
 ];
 
@@ -126,7 +58,25 @@ const Explore: React.FC = () => {
       </Content.Title>
       <Tabs
         tabBarExtraContent={{
-          right: <Search placeholder="ChatGPT 后台" enterButton />,
+          right: (
+            <Space>
+              <Search placeholder="ChatGPT 后台" />
+              <Dropdown
+                placement="bottomRight"
+                menu={{
+                  items: [
+                    {
+                      key: 1,
+                      label: "选择应用包",
+                      icon: <IconFont type="icon-upload" $size={16} />,
+                    },
+                  ],
+                }}
+              >
+                <Button type="primary">上传</Button>
+              </Dropdown>
+            </Space>
+          ),
         }}
         defaultActiveKey="1"
         items={items}

@@ -33,16 +33,18 @@ interface ContentTitleProps {
   children?: React.ReactNode;
   extra?: React.ReactNode;
   description?: React.ReactNode;
+  spaceBetween?: boolean;
 }
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
   children,
   extra,
   description,
+  spaceBetween,
 }) => {
   return (
     <>
-      <Container>
+      <Container $spaceBetween={spaceBetween}>
         <Title>{children}</Title>
         <ExtraContainer>{extra}</ExtraContainer>
       </Container>

@@ -17,7 +17,7 @@ const Icon = styled(IconFont)`
 
 const ContentMenu: React.FC<DropdownProps> = (props) => {
   return (
-    <Dropdown trigger={["click"]} placement="bottomRight" {...props}>
+    <Dropdown placement="bottomRight" {...props}>
       <Container>
         <Icon type="icon-more-menu" />
       </Container>
