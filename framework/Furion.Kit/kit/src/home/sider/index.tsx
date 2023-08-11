@@ -169,7 +169,6 @@ const Sider: React.FC = () => {
       {float ? (
         <Draggable
           bounds="parent"
-          nodeRef={containerRef}
           defaultPosition={position}
           cancel="a"
           onStop={(ev, data) => {
