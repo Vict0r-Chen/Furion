@@ -1,5 +1,11 @@
+import Content from "../../home/content";
+
 const Panel: React.FC = () => {
-  return <div>面板</div>;
+  return (
+    <div>
+      <Content.Title>面板</Content.Title>
+    </div>
+  );
 };
 
 export default Panel;

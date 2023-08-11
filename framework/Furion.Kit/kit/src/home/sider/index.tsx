@@ -19,18 +19,16 @@ const Container = styled(Flexbox)<{ $float?: boolean }>`
   max-height: 100%;
   background-color: #f7f8fb;
   padding: 15px 0 0 0;
-  overflow: hidden;
 
   ${(props) =>
     props.$float &&
     css`
       position: fixed;
       z-index: 100;
-      left: 24px;
       height: auto;
       border-radius: 8px;
       border: 1px solid #bae0ff;
-      box-shadow: 0px 0px 3px #bae0ff;
+      box-shadow: 0px 0px 8px #bae0ff;
     `}
 `;
 
@@ -70,7 +68,7 @@ const functions: FunctionProps[] = [
   },
   {
     render: (isActive) => (
-      <Function.Icon type="icon-system-info" $active={isActive} />
+      <Function.Icon type="icon-systeminfo" $active={isActive} />
     ),
     link: "/systeminfo",
     title: "系统",
@@ -99,7 +97,7 @@ const functions: FunctionProps[] = [
   },
   {
     render: (isActive) => (
-      <Function.Icon type="icon-code-generate" $active={isActive} />
+      <Function.Icon type="icon-generate" $active={isActive} />
     ),
     link: "/generate",
     title: "代码",
@@ -125,8 +123,9 @@ const functions: FunctionProps[] = [
 
 const Sider: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [float, position, setPosition] = useSiderStore((state) => [
+  const [float, switchFloat, position, setPosition] = useSiderStore((state) => [
     state.float,
+    state.switchFloat,
     { x: state.floatX, y: state.floatY },
     state.setPosition,
   ]);
@@ -172,8 +171,13 @@ const Sider: React.FC = () => {
           bounds="parent"
           nodeRef={containerRef}
           defaultPosition={position}
+          cancel="a"
           onStop={(ev, data) => {
-            setPosition(data.x, data.y);
+            if (data.x === 0) {
+              switchFloat();
+            } else {
+              setPosition(data.x, data.y);
+            }
           }}
         >
           {Element}

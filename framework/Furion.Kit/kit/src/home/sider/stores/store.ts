@@ -11,7 +11,7 @@ interface SiderState {
 const useSiderStore = create<SiderState>((set) => {
   return {
     float: false,
-    floatX: 24,
+    floatX: 15,
     floatY: 55,
     switchFloat: () => set((draft) => ({ ...draft, float: !draft.float })),
     setPosition: (x, y) => set((draft) => ({ ...draft, floatX: x, floatY: y })),
