@@ -14,7 +14,7 @@ const Container = styled.div`
   cursor: pointer;
   height: 35px;
   min-height: 35px;
-  margin-left: 30px;
+  margin-left: 35px;
   color: #001d66;
   font-size: 14px;
 
@@ -38,7 +38,7 @@ const Container = styled.div`
 `;
 
 const Number = styled(TextBox)`
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const Icon = styled(IconFont)`

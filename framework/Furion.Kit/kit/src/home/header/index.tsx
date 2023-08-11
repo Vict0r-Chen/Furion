@@ -4,7 +4,6 @@ import { styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
 import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
-import useSiderStore from "../../stores/sider.store";
 import Noble from "./noble";
 import NotificationBox from "./notification";
 import SearchBox from "./searchbox";
@@ -27,29 +26,12 @@ const HeaderIcon = styled(IconFont)`
   }
 `;
 
-const ClearFloatIcon = styled(HeaderIcon)`
-  color: #001d66;
-`;
-
 const HeaderDefault: React.FC = () => {
-  const [float, switchFloat] = useSiderStore((state) => [
-    state.float,
-    state.switchFloat,
-  ]);
-
   return (
     <>
       <Container $spaceBetween>
         <div>
           <Space size={15} align="center">
-            <div onClick={switchFloat}>
-              {float ? (
-                <ClearFloatIcon type="icon-clear-float" />
-              ) : (
-                <HeaderIcon type="icon-float" />
-              )}
-            </div>
-
             <Noble />
           </Space>
         </div>
