@@ -3,7 +3,11 @@ import { css, styled } from "styled-components";
 
 const { Text } = Typography;
 
-const TextBox = styled(Text)<{ $color?: string; $pointer?: boolean }>`
+const TextBox = styled(Text)<{
+  $color?: string;
+  $pointer?: boolean;
+  $disableSelect?: boolean;
+}>`
   font-size: unset;
   color: unset;
 
@@ -17,6 +21,12 @@ const TextBox = styled(Text)<{ $color?: string; $pointer?: boolean }>`
     props.$pointer === true &&
     css`
       cursor: pointer;
+    `}
+
+  ${(props) =>
+    props.$disableSelect === true &&
+    css`
+      user-select: none;
     `}
 `;
 

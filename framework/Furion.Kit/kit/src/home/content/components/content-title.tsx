@@ -21,17 +21,33 @@ const ExtraContainer = styled.div`
   top: 2px;
 `;
 
+const Description = styled.div`
+  font-size: 14px;
+  color: #000000a6;
+  position: relative;
+  top: -14px;
+  z-index: 1;
+`;
+
 interface ContentTitleProps {
   children?: React.ReactNode;
   extra?: React.ReactNode;
+  description?: React.ReactNode;
 }
 
-const ContentTitle: React.FC<ContentTitleProps> = ({ children, extra }) => {
+const ContentTitle: React.FC<ContentTitleProps> = ({
+  children,
+  extra,
+  description,
+}) => {
   return (
-    <Container>
-      <Title>{children}</Title>
-      <ExtraContainer>{extra}</ExtraContainer>
-    </Container>
+    <>
+      <Container>
+        <Title>{children}</Title>
+        <ExtraContainer>{extra}</ExtraContainer>
+      </Container>
+      {description && <Description>{description}</Description>}
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import { Tooltip } from "antd";
+import { MouseEventHandler } from "react";
 import { styled } from "styled-components";
 import A from "../../../components/a";
 import IconFont from "../../../components/iconfont";
@@ -17,12 +18,18 @@ interface ToolbarIconProps {
   type: string;
   title?: string;
   link?: string;
+  onClick?: MouseEventHandler<HTMLSpanElement>;
 }
 
-const ToolbarIcon: React.FC<ToolbarIconProps> = ({ type, title, link }) => {
+const ToolbarIcon: React.FC<ToolbarIconProps> = ({
+  type,
+  title,
+  link,
+  onClick,
+}) => {
   const Element = (
     <Tooltip title={title} placement="left">
-      <Icon type={type} />
+      <Icon type={type} onClick={onClick} />
     </Tooltip>
   );
   return link ? (
