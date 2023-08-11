@@ -16,7 +16,7 @@ const Title = styled.h3`
 
 const ExtraContainer = styled.div`
   position: relative;
-  top: 1px;
+  top: 2px;
 `;
 
 interface ContentTitleProps {

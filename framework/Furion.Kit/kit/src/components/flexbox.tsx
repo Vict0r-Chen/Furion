@@ -11,6 +11,7 @@ const Flexbox = styled.div<
     $fullscreen?: boolean;
   }
 >`
+  position: relative;
   display: flex;
   box-sizing: border-box;
 
