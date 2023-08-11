@@ -1,6 +1,4 @@
-import { Popover, Space } from "antd";
 import IconFont from "../../components/iconfont";
-import TextBox from "../../components/textbox";
 import Content from "../../home/content";
 
 const Panel: React.FC = () => {
@@ -8,20 +6,22 @@ const Panel: React.FC = () => {
     <div>
       <Content.Title
         extra={
-          <Popover
-            placement="bottomRight"
-            content={
-              <Space direction="vertical">
-                <Space align="baseline">
-                  <IconFont type="icon-uninstall" />
-                  <TextBox>卸载应用</TextBox>
-                </Space>
-              </Space>
-            }
-            trigger="click"
-          >
-            <Content.Menu />
-          </Popover>
+          <Content.Menu
+            menu={{
+              items: [
+                {
+                  key: 1,
+                  label: "卸载",
+                  icon: <IconFont type="icon-uninstall" $size={16} />,
+                },
+                {
+                  key: 2,
+                  label: "配置",
+                  icon: <IconFont type="icon-configuration" $size={16} />,
+                },
+              ],
+            }}
+          />
         }
       >
         面板

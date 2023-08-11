@@ -1,4 +1,5 @@
-import React, { MouseEventHandler } from "react";
+import { Dropdown, DropdownProps } from "antd";
+import React from "react";
 import { styled } from "styled-components";
 import IconFont from "../../../components/iconfont";
 
@@ -14,15 +15,13 @@ const Icon = styled(IconFont)`
   }
 `;
 
-interface ContentMenuProps {
-  onClick?: MouseEventHandler<HTMLDivElement>;
-}
-
-const ContentMenu: React.FC<ContentMenuProps> = ({ onClick }) => {
+const ContentMenu: React.FC<DropdownProps> = (props) => {
   return (
-    <Container onClick={onClick}>
-      <Icon type="icon-more-menu" />
-    </Container>
+    <Dropdown trigger={["click"]} placement="bottomRight" {...props}>
+      <Container>
+        <Icon type="icon-more-menu" />
+      </Container>
+    </Dropdown>
   );
 };
 
