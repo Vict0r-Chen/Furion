@@ -14,6 +14,7 @@ import AnchorBox from "../../components/anchor-box";
 import Category from "../../components/category";
 import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
+import SiderSticky from "../../components/sider-sticky";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
 
@@ -21,13 +22,6 @@ const { TextArea } = Input;
 
 const Container = styled(Flexbox)`
   align-items: flex-start;
-`;
-
-const Sider = styled.div`
-  position: sticky;
-  top: 80px;
-  width: 200px;
-  margin-right: 15px;
 `;
 
 const Main = styled.div`
@@ -70,7 +64,7 @@ const Setting: React.FC = () => {
       <Content.Main>
         <Content.Title>设置</Content.Title>
         <Container>
-          <Sider>
+          <SiderSticky>
             <AnchorBox
               items={[
                 {
@@ -135,7 +129,7 @@ const Setting: React.FC = () => {
                 },
               ]}
             />
-          </Sider>
+          </SiderSticky>
           <Main>
             <Category
               id="setting-account"
