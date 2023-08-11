@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import IconFont from "../../components/iconfont";
 import Content from "../../home/content";
 
@@ -24,7 +25,7 @@ const Panel: React.FC = () => {
           />
         }
       >
-        面板
+        <Trans>面板</Trans>
       </Content.Title>
     </Content.Main>
   );
