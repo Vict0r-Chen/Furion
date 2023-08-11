@@ -3,14 +3,13 @@ import React, { useRef } from "react";
 import Draggable from "react-draggable";
 import { css, styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
-import SpaceBetween from "../../components/space-between";
+import Flexbox from "../../components/flexbox";
 import useResize from "../../hooks/useResize";
 import useSiderStore from "../../stores/sider.store";
 import Function, { FunctionProps } from "../function";
 import Logo from "../logo";
 
-const Container = styled(SpaceBetween)<{ $float?: boolean }>`
-  flex-direction: column;
+const Container = styled(Flexbox)<{ $float?: boolean }>`
   text-align: center;
   align-items: center;
   width: 60px;
@@ -19,7 +18,6 @@ const Container = styled(SpaceBetween)<{ $float?: boolean }>`
   max-height: 100%;
   background-color: #f7f8fb;
   padding: 15px 0;
-  box-sizing: border-box;
 
   ${(props) =>
     props.$float &&
@@ -136,7 +134,12 @@ const Sider: React.FC = () => {
   });
 
   const Element = (
-    <Container ref={containerRef} $float={float}>
+    <Container
+      ref={containerRef}
+      $float={float}
+      $spaceBetween
+      direction="column"
+    >
       <div>
         <Logo />
         <Space direction="vertical" size={15}>

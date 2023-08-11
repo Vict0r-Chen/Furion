@@ -2,18 +2,17 @@ import { Space } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import { FlushDivider } from "../../components/divider";
+import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
-import SpaceBetween from "../../components/space-between";
 import useSiderStore from "../../stores/sider.store";
 import Noble from "./noble";
 import NotificationBox from "./notification";
 import SearchBox from "./searchbox";
 import Version from "./version";
 
-const Container = styled(SpaceBetween)`
+const Container = styled(Flexbox)`
   height: 35px;
   min-height: 35px;
-  flex-direction: row;
   align-items: center;
   padding-left: 15px;
 `;
@@ -40,7 +39,7 @@ const HeaderDefault: React.FC = () => {
 
   return (
     <>
-      <Container>
+      <Container $spaceBetween>
         <div>
           <Space size={15} align="center">
             <div onClick={switchFloat}>

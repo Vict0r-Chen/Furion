@@ -2,10 +2,10 @@ import React from "react";
 import { styled } from "styled-components";
 import A from "../../components/a";
 import { FlushDivider } from "../../components/divider";
-import SpaceBetween from "../../components/space-between";
+import Flexbox from "../../components/flexbox";
 import TextBox from "../../components/textbox";
 
-const Container = styled(SpaceBetween)`
+const Container = styled(Flexbox)`
   height: 30px;
   min-height: 30px;
   padding: 0 15px;
@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
   return (
     <>
       <FlushDivider type="horizontal" $widthBlock />
-      <Container>
+      <Container $spaceBetween>
         <div>
           <TextBox>
             技术支持 © 2020-2023{" "}

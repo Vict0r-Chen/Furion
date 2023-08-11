@@ -1,29 +1,10 @@
 import { Watermark } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import Flexbox from "../../components/flexbox";
 import Footer from "../footer";
 import Header from "../header";
 import Sider from "../sider";
 import Toolbar from "../toolbar";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 100vh;
-`;
-
-const MainLayout = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ContentLayout = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -32,17 +13,17 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Watermark content="Furion">
-      <Container>
+      <Flexbox $fullscreen>
         <Sider />
-        <MainLayout>
+        <Flexbox direction="column" $flex={1}>
           <Header />
-          <ContentLayout>
+          <Flexbox $flex={1}>
             {children}
             <Toolbar />
-          </ContentLayout>
+          </Flexbox>
           <Footer />
-        </MainLayout>
-      </Container>
+        </Flexbox>
+      </Flexbox>
     </Watermark>
   );
 };
