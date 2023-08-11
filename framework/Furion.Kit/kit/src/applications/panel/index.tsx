@@ -26,19 +26,6 @@ const Panel: React.FC = () => {
       >
         面板
       </Content.Title>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
-      <h1>hhh</h1>
     </Content.Main>
   );
 };

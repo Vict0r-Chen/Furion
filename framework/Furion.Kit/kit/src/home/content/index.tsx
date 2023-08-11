@@ -1,12 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { styled } from "styled-components";
-import Flexbox from "../../components/flexbox";
 import ContentMain from "./components/content-main";
 import ContentMenu from "./components/content-menu";
 import ContentTitle from "./components/content-title";
 
-const Container = styled(Flexbox)`
+const Container = styled.div`
   flex: 1;
   overflow-y: auto;
 `;
