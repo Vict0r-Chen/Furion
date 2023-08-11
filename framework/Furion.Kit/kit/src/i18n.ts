@@ -1,10 +1,9 @@
 import { i18n, Messages } from "@lingui/core";
 
-export const locales = {
-  en: "English",
+export const locales: Record<string, string> = {
   "zh-hans": "简体中文",
+  en: "English",
 };
-export const defaultLocale = "zh-hans";
 
 const catalogs: Record<string, () => Promise<Messages>> = {
   en: async () => {
@@ -23,11 +22,15 @@ const catalogs: Record<string, () => Promise<Messages>> = {
   },
 };
 
-/**
- * We do a dynamic import of just the catalog that we need
- * @param locale any locale string
- */
 export async function dynamicActivate(locale: string) {
   const messages = await catalogs[locale as any]();
   i18n.loadAndActivate({ locale, messages });
+}
+
+export async function i18nInit(defaultLocale: string) {
+  for (const local in locales) {
+    await dynamicActivate(local);
+  }
+
+  i18n.activate(defaultLocale);
 }

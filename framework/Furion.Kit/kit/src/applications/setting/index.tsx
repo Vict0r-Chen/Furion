@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react";
 import {
   Button,
   Checkbox,
@@ -17,6 +18,7 @@ import IconFont from "../../components/iconfont";
 import SiderSticky from "../../components/sider-sticky";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
+import { locales } from "../../i18n";
 
 const { TextArea } = Input;
 
@@ -32,7 +34,13 @@ const Main = styled.div`
 const textColor = "#000000a6";
 const iconSize = 16;
 
+const languages = Object.keys(locales).map((key) => ({
+  value: key,
+  label: locales[key],
+}));
+
 const Setting: React.FC = () => {
+  const { i18n } = useLingui();
   const [advice, setAdvice] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -170,16 +178,17 @@ const Setting: React.FC = () => {
             >
               <Space direction="vertical">
                 <Select
-                  defaultValue="zh-CN"
+                  defaultValue={i18n.locale}
                   style={{ width: 120 }}
-                  options={[
-                    { value: "zh-CN", label: "简体中文" },
-                    { value: "en-US", label: "English" },
-                  ]}
-                  onChange={() => success("切换成功")}
+                  options={languages}
+                  onChange={(value) => {
+                    i18n.activate(value);
+                    success("切换成功");
+                  }}
                 />
               </Space>
             </Category>
+            {i18n.t("看板")}
             <Category
               id="setting-backup"
               title="备份"
