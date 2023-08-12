@@ -5,6 +5,7 @@ import Flexbox from "./flexbox";
 
 const Container = styled(Flexbox)`
   align-items: center;
+  padding: 0 0 26px 0;
 `;
 
 const Title = styled.h5`
@@ -13,6 +14,7 @@ const Title = styled.h5`
   font-size: 16px;
   margin-right: 15px;
   user-select: none;
+  margin: 0;
 `;
 
 const ExtraContainer = styled.div`
