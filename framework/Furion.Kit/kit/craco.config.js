@@ -6,6 +6,11 @@ module.exports = {
       addAfterLoader(webpackConfig, loaderByName("babel-loader"), {
         test: /\.mdx?$/,
         loader: require.resolve("@mdx-js/loader"),
+        /** @type {import('@mdx-js/loader').Options} */
+        options: {
+          remarkPlugins: [],
+          rehypePlugins: [],
+        },
       });
       return webpackConfig;
     },

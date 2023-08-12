@@ -28,7 +28,7 @@ const Panel: React.FC = () => {
       >
         <Trans>面板</Trans>
       </Content.Title>
-      <Mdx />
+      <Mdx name="名称" />
     </Content.Main>
   );
 };
