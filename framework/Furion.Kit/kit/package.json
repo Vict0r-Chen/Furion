@@ -6,7 +6,6 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
     "@lingui/react": "^4.4.0",
-    "@mdx-js/loader": "^2.3.0",
     "@types/node": "^20.4.10",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
@@ -23,8 +22,8 @@
     "zustand": "^4.4.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "extract": "lingui extract",
     "compile": "lingui compile"
@@ -50,8 +49,6 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
-    "@craco/types": "^7.1.0",
     "@lingui/cli": "^4.4.0",
     "@lingui/loader": "^4.4.0",
     "@lingui/macro": "^4.4.0"

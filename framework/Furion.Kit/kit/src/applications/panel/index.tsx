@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 import IconFont from "../../components/iconfont";
 import Content from "../../home/content";
-import Mdx from "../../mdxs/index.mdx";
 
 const Panel: React.FC = () => {
   return (
@@ -28,7 +27,6 @@ const Panel: React.FC = () => {
       >
         <Trans>面板</Trans>
       </Content.Title>
-      <Mdx name="名称" />
     </Content.Main>
   );
 };
