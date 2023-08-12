@@ -47,7 +47,8 @@ const Main = styled(Upward)`
   &:hover {
     transform: scale(1.03);
     z-index: 2;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid #69b1ff;
+    box-shadow: 0px 2px 8px #69b1ff;
   }
 `;
 

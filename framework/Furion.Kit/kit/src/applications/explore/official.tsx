@@ -1,4 +1,4 @@
-import { Space } from "antd";
+import { Button, Space } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import banner from "../../assets/banner.png";
@@ -18,6 +18,11 @@ const Container = styled(Flexbox)`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
+`;
+
+const Operation = styled.div`
+  margin-top: 25px;
+  text-align: center;
 `;
 
 const Official: React.FC = () => {
@@ -103,6 +108,9 @@ const Official: React.FC = () => {
           install
         />
       </Container>
+      <Operation>
+        <Button>加载更多</Button>
+      </Operation>
     </Main>
   );
 };

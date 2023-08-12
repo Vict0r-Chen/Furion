@@ -12,7 +12,7 @@ const iconActiveStyle = css`
 const actionStyle = css`
   background-color: #fff;
   border: 1px solid #69b1ff;
-  box-shadow: 0px 0px 3px #69b1ff;
+  box-shadow: 0px 2px 8px #69b1ff;
 `;
 
 const Container = styled.div<{ $active?: boolean }>`

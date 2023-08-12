@@ -13,9 +13,10 @@ const Title = styled.div`
   display: inline-block;
   margin-right: 15px;
   padding: 0 10px;
-  border-radius: 3px;
+  border-radius: 5px;
   color: #595959;
   user-select: none;
+  font-weight: 600;
 `;
 
 const Main = styled.div`
@@ -25,14 +26,16 @@ const Main = styled.div`
 const Item = styled.div<{ $active?: boolean }>`
   cursor: pointer;
   padding: 1px 8px;
-  border-radius: 3px;
+  border-radius: 5px;
   user-select: none;
+  font-weight: 500;
 
   ${(props) =>
     props.$active === true &&
     css`
       background-color: #1677ff;
       color: #fff;
+      font-weight: 600;
     `}
 `;
 

@@ -21,7 +21,7 @@ function useResize<T extends HTMLElement>(
         observer.unobserve(element);
       }
     };
-  }, []);
+  }, [callback, eleRef]);
 }
 
 export default useResize;
