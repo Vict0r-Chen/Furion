@@ -28,9 +28,11 @@ const Official: React.FC = () => {
           title="分类"
           items={[
             { key: "1", label: "全部" },
-            { key: "2", label: "视频" },
-            { key: "3", label: "智能" },
-            { key: "4", label: "工具" },
+            { key: "2", label: "电商" },
+            { key: "3", label: "后台" },
+            { key: "4", label: "视频" },
+            { key: "5", label: "智能" },
+            { key: "6", label: "工具" },
           ]}
         />
         <CategoryList
