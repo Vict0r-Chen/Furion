@@ -59,6 +59,7 @@
     "@craco/types": "^7.1.0",
     "@lingui/cli": "^4.4.0",
     "@lingui/loader": "^4.4.0",
-    "@lingui/macro": "^4.4.0"
+    "@lingui/macro": "^4.4.0",
+    "eslint-plugin-mdx": "^2.2.0"
   }
 }
