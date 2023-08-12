@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
 import IconFont from "../../components/iconfont";
+import MarkdownBody from "../../components/markdown-body";
 import Content from "../../home/content";
 import Mdx from "../../mdxs/index.mdx";
 
@@ -29,7 +30,9 @@ const Panel: React.FC = () => {
         <Trans>面板</Trans>
       </Content.Title>
 
-      <Mdx />
+      <MarkdownBody>
+        <Mdx />
+      </MarkdownBody>
     </Content.Main>
   );
 };

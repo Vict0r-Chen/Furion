@@ -3,6 +3,7 @@ const { addAfterLoader, loaderByName } = require("@craco/craco");
 module.exports = async () => {
   const remarkGfm = (await import("remark-gfm")).default;
   const remarkMath = (await import("remark-math")).default;
+  const remarkFrontmatter = (await import("remark-frontmatter")).default;
   const rehypeKatex = (await import("rehype-katex")).default;
 
   return {
@@ -13,7 +14,7 @@ module.exports = async () => {
           loader: require.resolve("@mdx-js/loader"),
           /** @type {import('@mdx-js/loader').Options} */
           options: {
-            remarkPlugins: [remarkGfm, remarkMath],
+            remarkPlugins: [remarkGfm, remarkMath, remarkFrontmatter],
             rehypePlugins: [rehypeKatex],
           },
         });
