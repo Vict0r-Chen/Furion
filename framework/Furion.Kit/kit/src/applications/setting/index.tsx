@@ -188,7 +188,6 @@ const Setting: React.FC = () => {
                 />
               </Space>
             </Category>
-            {i18n.t("看板")}
             <Category
               id="setting-backup"
               title="备份"
