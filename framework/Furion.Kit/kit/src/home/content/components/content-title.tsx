@@ -14,6 +14,7 @@ const Title = styled.h3`
   font-weight: 600;
   font-size: 24px;
   margin-right: 15px;
+  user-select: none;
 `;
 
 const ExtraContainer = styled.div`
@@ -27,6 +28,7 @@ const Description = styled.div`
   position: relative;
   top: -14px;
   z-index: 1;
+  user-select: none;
 `;
 
 interface ContentTitleProps {

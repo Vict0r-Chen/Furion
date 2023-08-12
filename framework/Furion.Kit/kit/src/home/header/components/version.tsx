@@ -39,6 +39,7 @@ const Container = styled.div`
 
 const Number = styled(TextBox)`
   font-weight: 500;
+  user-select: none;
 `;
 
 const Icon = styled(IconFont)`

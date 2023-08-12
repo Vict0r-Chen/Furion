@@ -61,6 +61,7 @@ const Banner = styled.div`
   border-radius: 8px;
   margin-bottom: 10px;
   overflow: hidden;
+  user-select: none;
 `;
 
 const Content = styled(Flexbox)``;
@@ -86,15 +87,18 @@ const Classify = styled(Tag)`
   position: absolute;
   right: 0;
   top: 0;
+  user-select: none;
 `;
 
 const Title = styled.h4`
   margin: 0;
+  user-select: none;
 `;
 
 const Description = styled.div`
   font-size: 12px;
   color: #000000a6;
+  user-select: none;
 `;
 
 interface AppCardProps {

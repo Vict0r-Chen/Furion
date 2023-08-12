@@ -15,6 +15,7 @@ const Title = styled.div`
   padding: 0 10px;
   border-radius: 3px;
   color: #595959;
+  user-select: none;
 `;
 
 const Main = styled.div`
@@ -25,6 +26,7 @@ const Item = styled.div<{ $active?: boolean }>`
   cursor: pointer;
   padding: 1px 8px;
   border-radius: 3px;
+  user-select: none;
 
   ${(props) =>
     props.$active === true &&

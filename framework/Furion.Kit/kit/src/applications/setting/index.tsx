@@ -81,7 +81,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-account" $size={iconSize} />
-                      <TextBox>账户设置</TextBox>
+                      <TextBox $disableSelect>账户设置</TextBox>
                     </Space>
                   ),
                 },
@@ -91,7 +91,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-appearance" $size={iconSize} />
-                      <TextBox>外观</TextBox>
+                      <TextBox $disableSelect>外观</TextBox>
                     </Space>
                   ),
                 },
@@ -101,7 +101,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-language" $size={iconSize} />
-                      <TextBox>语言</TextBox>
+                      <TextBox $disableSelect>语言</TextBox>
                     </Space>
                   ),
                 },
@@ -111,7 +111,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-backup" $size={iconSize} />
-                      <TextBox>备份</TextBox>
+                      <TextBox $disableSelect>备份</TextBox>
                     </Space>
                   ),
                 },
@@ -121,7 +121,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-advice" $size={iconSize} />
-                      <TextBox>意见反馈</TextBox>
+                      <TextBox $disableSelect>意见反馈</TextBox>
                     </Space>
                   ),
                 },
@@ -131,7 +131,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-aboutus" $size={iconSize} />
-                      <TextBox>关于我们</TextBox>
+                      <TextBox $disableSelect>关于我们</TextBox>
                     </Space>
                   ),
                 },

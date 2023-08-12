@@ -12,6 +12,7 @@ const Title = styled.h5`
   font-weight: 600;
   font-size: 16px;
   margin-right: 15px;
+  user-select: none;
 `;
 
 const ExtraContainer = styled.div`

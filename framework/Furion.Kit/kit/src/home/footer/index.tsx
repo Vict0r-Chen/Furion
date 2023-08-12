@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
       <FlushDivider type="horizontal" $widthBlock />
       <Container $spaceBetween>
         <div>
-          <TextBox>
+          <TextBox $disableSelect>
             技术支持 © 2020-2023{" "}
             <A
               href="https://gitee.com/monksoul"

@@ -11,6 +11,7 @@ const Img = styled.img`
   width: 36px;
   display: block;
   margin: 0 auto;
+  user-select: none;
 `;
 
 const Logo: React.FC = () => (
