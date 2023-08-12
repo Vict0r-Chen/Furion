@@ -1,6 +1,6 @@
 import { Divider, Tooltip } from "antd";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useMatch } from "react-router-dom";
 import { css, styled } from "styled-components";
 import IconFont from "../../components/iconfont";
 import Upward from "../../components/upward";
@@ -66,11 +66,33 @@ const FunctionIcon = styled(IconFont)<{ $active?: boolean }>`
 const Function: React.FC<FunctionProps> & {
   Icon: typeof FunctionIcon;
 } = ({ render, title, link, style, divider = false }) => {
+  const match = useMatch(link);
+  const [isMatch, setMatch] = useState<boolean | undefined>(false);
+  console.log(isMatch);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (match) {
+      setMatch(true);
+
+      timeout = setTimeout(() => {
+        setMatch(undefined);
+      }, 3000);
+    } else {
+      setMatch(undefined);
+    }
+
+    return () => {
+      timeout && clearTimeout(timeout);
+    };
+  }, [match]);
+
   return (
     <>
       <NavLink to={link}>
         {({ isActive, isPending }) => (
-          <Tooltip placement="right" title={title}>
+          <Tooltip placement="right" title={title} open={isMatch}>
             <Upward>
               <Container style={style} $active={isActive}>
                 {typeof render === "function" ? render(isActive) : render}
