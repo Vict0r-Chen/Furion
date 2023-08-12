@@ -3,10 +3,10 @@ import React from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../components/flexbox";
 import { FlushDivider } from "../../components/flush-divider";
+import SearchBox from "../../components/searchbox";
 import HeaderIcon from "./components/header-icon";
 import Noble from "./components/noble";
 import NotificationBox from "./components/notification";
-import SearchBox from "./components/search-box";
 import Version from "./components/version";
 
 const Container = styled(Flexbox)`

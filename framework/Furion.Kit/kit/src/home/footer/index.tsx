@@ -41,6 +41,7 @@ const Footer: React.FC = () => {
             </A>
           </TextBox>
         </div>
+        <div></div>
       </Container>
     </>
   );

@@ -1,6 +1,8 @@
 import { Button, Dropdown, Input, Space, Tabs, TabsProps } from "antd";
+import { useState } from "react";
 import { styled } from "styled-components";
 import IconFont from "../../components/iconfont";
+import SearchBox from "../../components/searchbox";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
 import Community from "./community";
@@ -50,17 +52,36 @@ const items: TabsProps["items"] = [
   },
 ];
 
+const defaultWidth = 180;
+
 const Explore: React.FC = () => {
+  const [width, setWidth] = useState(defaultWidth);
+
   return (
     <Content.Main>
-      <Content.Title description="工具、文档、管理、娱乐，更多应用等你发掘。">
+      <Content.Title
+        description="工具、文档、管理、娱乐，更多应用等你发掘。"
+        extra={
+          <Content.Menu
+            menu={{
+              items: [
+                {
+                  key: 1,
+                  label: "配置",
+                  icon: <IconFont type="icon-configuration" $size={16} />,
+                },
+              ],
+            }}
+          />
+        }
+      >
         探索
       </Content.Title>
       <Tabs
         tabBarExtraContent={{
           right: (
             <Space>
-              <Search placeholder="ChatGPT 后台" />
+              <SearchBox placeholder="ChatGPT 电商" />
               <Dropdown
                 placement="bottomRight"
                 menu={{

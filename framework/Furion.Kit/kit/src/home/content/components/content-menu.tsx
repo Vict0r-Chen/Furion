@@ -6,9 +6,10 @@ import IconFont from "../../../components/iconfont";
 const Container = styled.div``;
 
 const Icon = styled(IconFont)`
-  font-size: 24px;
+  font-size: 22px;
   color: #8c8c8c;
   cursor: pointer;
+  display: block;
 
   &:hover {
     color: #1677ff;
