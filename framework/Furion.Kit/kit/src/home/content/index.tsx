@@ -10,7 +10,11 @@ const Container = styled.div`
   overflow-y: auto;
 `;
 
-const ContentDefault: React.FC = () => {
+const Content: React.FC & {
+  Title: typeof ContentTitle;
+  Menu: typeof ContentMenu;
+  Main: typeof ContentMain;
+} = () => {
   return (
     <Container id="scroll-content">
       <Outlet />
@@ -18,13 +22,6 @@ const ContentDefault: React.FC = () => {
   );
 };
 
-type ContentComponent = typeof ContentDefault & {
-  Title: typeof ContentTitle;
-  Menu: typeof ContentMenu;
-  Main: typeof ContentMain;
-};
-
-const Content = ContentDefault as ContentComponent;
 Content.Title = ContentTitle;
 Content.Menu = ContentMenu;
 Content.Main = ContentMain;

@@ -56,13 +56,16 @@ export interface FunctionProps {
   position?: "top" | "bottom";
 }
 
-const FunctionDefault: React.FC<FunctionProps> = ({
-  render,
-  title,
-  link,
-  style,
-  divider = false,
-}) => {
+const FunctionIcon = styled(IconFont)<{ $active?: boolean }>`
+  font-size: 24px;
+  color: #000000e0;
+
+  ${(props) => props.$active === true && iconActiveStyle}
+`;
+
+const Function: React.FC<FunctionProps> & {
+  Icon: typeof FunctionIcon;
+} = ({ render, title, link, style, divider = false }) => {
   return (
     <>
       <NavLink to={link}>
@@ -85,18 +88,6 @@ const FunctionDefault: React.FC<FunctionProps> = ({
   );
 };
 
-const FunctionIcon = styled(IconFont)<{ $active?: boolean }>`
-  font-size: 24px;
-  color: #000000e0;
-
-  ${(props) => props.$active === true && iconActiveStyle}
-`;
-
-type FunctionComponent = typeof FunctionDefault & {
-  Icon: typeof FunctionIcon;
-};
-
-const Function = FunctionDefault as FunctionComponent;
 Function.Icon = FunctionIcon;
 
 export default Function;

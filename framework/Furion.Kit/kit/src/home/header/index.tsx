@@ -16,7 +16,7 @@ const Container = styled(Flexbox)`
   padding-left: 15px;
 `;
 
-const HeaderDefault: React.FC = () => {
+const Header: React.FC & { Icon: typeof HeaderIcon } = () => {
   return (
     <>
       <Container $spaceBetween>
@@ -38,11 +38,6 @@ const HeaderDefault: React.FC = () => {
   );
 };
 
-type HeaderComponent = typeof HeaderDefault & {
-  Icon: typeof HeaderIcon;
-};
-
-const Header = HeaderDefault as HeaderComponent;
 Header.Icon = HeaderIcon;
 
 export default Header;
