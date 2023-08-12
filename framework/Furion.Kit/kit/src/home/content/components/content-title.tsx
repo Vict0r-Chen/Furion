@@ -6,7 +6,7 @@ const Container = styled(Flexbox)`
   align-items: center;
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: #ffffff;
 `;
 
 const Title = styled.h3`

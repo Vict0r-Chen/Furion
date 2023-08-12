@@ -10,7 +10,7 @@ const iconActiveStyle = css`
 `;
 
 const actionStyle = css`
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #69b1ff;
   box-shadow: 0px 2px 8px #69b1ff;
 `;

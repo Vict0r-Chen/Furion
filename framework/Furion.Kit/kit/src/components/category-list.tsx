@@ -30,12 +30,20 @@ const Item = styled.div<{ $active?: boolean }>`
   user-select: none;
   font-weight: 500;
 
+  &:hover {
+    color: #1677ff;
+  }
+
   ${(props) =>
     props.$active === true &&
     css`
       background-color: #1677ff;
-      color: #fff;
+      color: #ffffff;
       font-weight: 600;
+
+      &:hover {
+        color: #ffffff;
+      }
     `}
 `;
 

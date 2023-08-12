@@ -33,7 +33,7 @@ const Main = styled(Upward)`
   overflow: hidden;
   height: 250px;
   border: 1px solid rgb(240, 240, 240);
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 8px;
   cursor: pointer;
   display: flex;

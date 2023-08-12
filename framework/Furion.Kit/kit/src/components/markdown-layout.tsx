@@ -6,7 +6,7 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const MarkdownBody: React.FC<{
+const Layout: React.FC<{
   children?: React.ReactNode;
   style?: CSS.Properties;
 }> = ({ children, style }) => {
@@ -17,4 +17,4 @@ const MarkdownBody: React.FC<{
   );
 };
 
-export default MarkdownBody;
+export default Layout;
