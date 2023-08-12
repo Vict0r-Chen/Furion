@@ -68,7 +68,6 @@ const Function: React.FC<FunctionProps> & {
 } = ({ render, title, link, style, divider = false }) => {
   const match = useMatch(link);
   const [isMatch, setMatch] = useState<boolean | undefined>(false);
-  console.log(isMatch);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
