@@ -18,6 +18,8 @@ module.exports = async () => {
             rehypePlugins: [rehypeKatex],
           },
         });
+
+        webpackConfig.devtool = false;
         return webpackConfig;
       },
     },
