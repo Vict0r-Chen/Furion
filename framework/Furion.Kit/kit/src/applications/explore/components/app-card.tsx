@@ -1,5 +1,5 @@
-import { Button, Space, Tag } from "antd";
-import React from "react";
+import { Button, Skeleton, Space, Tag } from "antd";
+import React, { MouseEventHandler } from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import Upward from "../../../components/upward";
@@ -102,6 +102,21 @@ const Description = styled.div`
   user-select: none;
 `;
 
+const SkeletonImage = styled(Skeleton.Image)`
+  width: 100% !important;
+  height: 100% !important;
+`;
+
+const SkeletonDescription = styled(Skeleton)`
+  & h3 {
+    margin-top: 2px;
+  }
+
+  & ul {
+    margin-top: 0 !important;
+  }
+`;
+
 interface AppCardProps {
   title?: string;
   description?: React.ReactNode;
@@ -109,7 +124,36 @@ interface AppCardProps {
   logo?: React.ReactNode;
   banner?: React.ReactNode;
   install?: boolean;
+  installClick?: MouseEventHandler<HTMLElement>;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  skeleton?: boolean;
 }
+
+const AppCardSkeleton: React.FC = () => {
+  return (
+    <Container>
+      <Main>
+        <Panel>
+          <Banner>
+            <SkeletonImage active />
+          </Banner>
+          <Content>
+            <Logo>
+              <Skeleton.Avatar active shape="square" size={50} />
+            </Logo>
+            <Introduction>
+              <SkeletonDescription
+                active
+                paragraph={{ rows: 1, width: "100%" }}
+              />
+            </Introduction>
+          </Content>
+        </Panel>
+        <Skeleton.Input active block size="default" />
+      </Main>
+    </Container>
+  );
+};
 
 const AppCard: React.FC<AppCardProps> = ({
   title,
@@ -118,9 +162,14 @@ const AppCard: React.FC<AppCardProps> = ({
   logo,
   banner,
   install = false,
+  installClick,
+  onClick,
+  skeleton,
 }) => {
-  return (
-    <Container>
+  return skeleton ? (
+    <AppCardSkeleton />
+  ) : (
+    <Container onClick={onClick}>
       <Main>
         <Panel>
           <Banner>{banner}</Banner>
@@ -137,7 +186,14 @@ const AppCard: React.FC<AppCardProps> = ({
             </Introduction>
           </Content>
         </Panel>
-        <Button type="primary" disabled={install}>
+        <Button
+          type="primary"
+          disabled={install}
+          onClick={(ev) => {
+            ev.stopPropagation();
+            installClick && installClick(ev);
+          }}
+        >
           {!install ? "安装" : "已安装"}
         </Button>
       </Main>

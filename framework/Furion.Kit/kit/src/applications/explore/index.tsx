@@ -1,12 +1,25 @@
-import { Button, Dropdown, Space, Tabs, TabsProps } from "antd";
+import {
+  Button,
+  Drawer,
+  Dropdown,
+  Space,
+  Tabs,
+  TabsProps,
+  message,
+} from "antd";
+import React, { useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import Fullscreen from "../../components/fullscreen";
 import IconFont from "../../components/iconfont";
 import SearchBox from "../../components/searchbox";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
-import Community from "./community";
-import Local from "./local";
-import Official from "./official";
+import Community from "./components/community";
+import Local from "./components/local";
+import Official from "./components/official";
+import ExploreContext from "./context";
+export { default as ExploreDetail } from "./detail";
 
 const onChange = (key: string) => {
   console.log(key);
@@ -50,53 +63,91 @@ const items: TabsProps["items"] = [
 ];
 
 const Explore: React.FC = () => {
+  const navigate = useNavigate();
+  const { name } = useParams();
+
+  const [, contextHolder] = message.useMessage();
+
+  const [open, setOpen] = useState(name ? true : false);
+  const [fullscreen, setFullscreen] = useState(false);
+
+  const showDrawer = (name: string) => {
+    setOpen(true);
+    navigate(`detail/${name}`);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+    navigate("/explore");
+  };
+
   return (
-    <Content.Main>
-      <Content.Title
-        description="工具、文档、管理、娱乐，更多应用等你发掘。"
+    <ExploreContext.Provider value={{ showDrawer }}>
+      {contextHolder}
+      <Drawer
+        title="面板"
+        placement="right"
+        onClose={onClose}
+        open={open}
+        autoFocus={false}
+        size="large"
+        width={fullscreen ? "100%" : undefined}
         extra={
-          <Content.Menu
-            menu={{
-              items: [
-                {
-                  key: 1,
-                  label: "配置",
-                  icon: <IconFont type="icon-configuration" $size={16} />,
-                },
-              ],
-            }}
+          <Fullscreen
+            fullscreen={fullscreen}
+            onClick={() => setFullscreen((f) => !f)}
           />
         }
       >
-        探索
-      </Content.Title>
-      <Tabs
-        tabBarExtraContent={{
-          right: (
-            <Space>
-              <SearchBox placeholder="ChatGPT 电商" />
-              <Dropdown
-                placement="bottomRight"
-                menu={{
-                  items: [
-                    {
-                      key: 1,
-                      label: "选择应用包",
-                      icon: <IconFont type="icon-upload" $size={16} />,
-                    },
-                  ],
-                }}
-              >
-                <Button type="primary">上传</Button>
-              </Dropdown>
-            </Space>
-          ),
-        }}
-        defaultActiveKey="1"
-        items={items}
-        onChange={onChange}
-      />
-    </Content.Main>
+        <Outlet />
+      </Drawer>
+      <Content.Main>
+        <Content.Title
+          description="工具、文档、管理、娱乐，更多应用等你发掘。"
+          extra={
+            <Content.Menu
+              menu={{
+                items: [
+                  {
+                    key: 1,
+                    label: "配置",
+                    icon: <IconFont type="icon-configuration" $size={16} />,
+                  },
+                ],
+              }}
+            />
+          }
+        >
+          探索
+        </Content.Title>
+        <Tabs
+          tabBarExtraContent={{
+            right: (
+              <Space>
+                <SearchBox placeholder="ChatGPT 电商" />
+                <Dropdown
+                  placement="bottomRight"
+                  menu={{
+                    items: [
+                      {
+                        key: 1,
+                        label: "选择应用包",
+                        icon: <IconFont type="icon-upload" $size={16} />,
+                      },
+                    ],
+                  }}
+                >
+                  <Button type="primary">上传</Button>
+                </Dropdown>
+              </Space>
+            ),
+          }}
+          defaultActiveKey="1"
+          items={items}
+          onChange={onChange}
+        />
+      </Content.Main>
+    </ExploreContext.Provider>
   );
 };
 

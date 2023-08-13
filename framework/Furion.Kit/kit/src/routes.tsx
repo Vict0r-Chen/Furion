@@ -3,7 +3,7 @@ import Component from "./applications/component";
 import Configuration from "./applications/configuration";
 import Console from "./applications/console";
 import Diagnosis from "./applications/diagnosis";
-import Explore from "./applications/explore";
+import Explore, { ExploreDetail } from "./applications/explore";
 import Generate from "./applications/generate";
 import OpenAPI from "./applications/openapi";
 import Panel from "./applications/panel";
@@ -60,6 +60,12 @@ const router = createHashRouter([
           {
             path: "explore",
             element: <Explore />,
+            children: [
+              {
+                path: "detail/:name",
+                element: <ExploreDetail />,
+              },
+            ],
           },
           {
             path: "setting",
