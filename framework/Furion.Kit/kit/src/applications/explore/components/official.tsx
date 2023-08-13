@@ -117,6 +117,8 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard skeleton />
+        <AppCard skeleton />
+        <AppCard skeleton />
       </Container>
       <Operation>
         <Button>加载更多</Button>

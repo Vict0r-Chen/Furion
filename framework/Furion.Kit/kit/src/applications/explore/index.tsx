@@ -78,7 +78,9 @@ const Explore: React.FC = () => {
 
   const onClose = () => {
     setOpen(false);
-    navigate("/explore");
+    setTimeout(() => {
+      navigate("/explore");
+    }, 300);
   };
 
   return (
