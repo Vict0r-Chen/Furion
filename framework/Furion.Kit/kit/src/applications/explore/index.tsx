@@ -1,5 +1,4 @@
-import { Button, Dropdown, Input, Space, Tabs, TabsProps } from "antd";
-import { useState } from "react";
+import { Button, Dropdown, Space, Tabs, TabsProps } from "antd";
 import { styled } from "styled-components";
 import IconFont from "../../components/iconfont";
 import SearchBox from "../../components/searchbox";
@@ -8,8 +7,6 @@ import Content from "../../home/content";
 import Community from "./community";
 import Local from "./local";
 import Official from "./official";
-
-const { Search } = Input;
 
 const onChange = (key: string) => {
   console.log(key);
@@ -24,7 +21,7 @@ const items: TabsProps["items"] = [
     key: "1",
     label: (
       <Space>
-        <Icon type="icon-local" $size={15} />
+        <Icon type="icon-local" $size={16} />
         <TextBox $disableSelect>本地应用</TextBox>
       </Space>
     ),
@@ -34,7 +31,7 @@ const items: TabsProps["items"] = [
     key: "2",
     label: (
       <Space>
-        <Icon type="icon-curated" $size={15} />
+        <Icon type="icon-curated" $size={16} />
         <TextBox $disableSelect>官方精选</TextBox>
       </Space>
     ),
@@ -44,19 +41,15 @@ const items: TabsProps["items"] = [
     key: "3",
     label: (
       <Space>
-        <Icon type="icon-community" $size={15} />
-        <TextBox $disableSelect>社区维护</TextBox>
+        <Icon type="icon-community" $size={16} />
+        <TextBox $disableSelect>社区推荐</TextBox>
       </Space>
     ),
     children: <Community />,
   },
 ];
 
-const defaultWidth = 180;
-
 const Explore: React.FC = () => {
-  const [width, setWidth] = useState(defaultWidth);
-
   return (
     <Content.Main>
       <Content.Title
