@@ -52,6 +52,19 @@ const Main = styled(Upward)`
   }
 `;
 
+const Tip = styled.div`
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0 5px;
+  border-radius: 5px;
+`;
+
 const Panel = styled.div`
   flex: 1;
 `;
@@ -127,6 +140,7 @@ interface AppCardProps {
   installClick?: MouseEventHandler<HTMLElement>;
   onClick?: MouseEventHandler<HTMLDivElement>;
   skeleton?: boolean;
+  tip?: React.ReactNode;
 }
 
 const AppCardSkeleton: React.FC = () => {
@@ -165,12 +179,14 @@ const AppCard: React.FC<AppCardProps> = ({
   installClick,
   onClick,
   skeleton,
+  tip,
 }) => {
   return skeleton ? (
     <AppCardSkeleton />
   ) : (
     <Container onClick={onClick}>
       <Main>
+        {tip && <Tip>{tip}</Tip>}
         <Panel>
           <Banner>{banner}</Banner>
           <Content>

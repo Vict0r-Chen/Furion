@@ -115,6 +115,7 @@ const Official: React.FC = () => {
           banner={<Banner src={banner3} alt="" />}
           onClick={() => showDrawer("panel")}
           installClick={() => message.success("安装成功")}
+          install
         />
         <AppCard skeleton />
         <AppCard skeleton />

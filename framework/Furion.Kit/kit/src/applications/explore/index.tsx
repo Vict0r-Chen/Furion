@@ -112,7 +112,7 @@ const Explore: React.FC = () => {
                 items: [
                   {
                     key: 1,
-                    label: "配置",
+                    label: "应用配置",
                     icon: <IconFont type="icon-configuration" $size={16} />,
                   },
                 ],

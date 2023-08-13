@@ -13,12 +13,12 @@ const Panel: React.FC = () => {
               items: [
                 {
                   key: 1,
-                  label: "卸载",
+                  label: "卸载应用",
                   icon: <IconFont type="icon-uninstall" $size={16} />,
                 },
                 {
                   key: 2,
-                  label: "配置",
+                  label: "应用配置",
                   icon: <IconFont type="icon-configuration" $size={16} />,
                 },
               ],

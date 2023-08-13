@@ -68,6 +68,7 @@ const Local: React.FC = () => {
           banner={<Banner src={banner2} alt="" />}
           onClick={() => showDrawer("panel")}
           installClick={() => message.success("安装成功")}
+          tip="云服务"
         />
         <AppCard
           title="开放"
@@ -104,6 +105,7 @@ const Local: React.FC = () => {
           banner={<Banner src={banner3} alt="" />}
           onClick={() => showDrawer("panel")}
           installClick={() => message.success("安装成功")}
+          install
         />
         <AppCard skeleton />
       </Container>
