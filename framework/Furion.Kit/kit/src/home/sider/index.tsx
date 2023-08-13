@@ -79,13 +79,6 @@ const functions: FunctionProps[] = [
   },
   {
     render: (isActive) => (
-      <Function.Icon type="icon-systeminfo" $active={isActive} />
-    ),
-    link: "/systeminfo",
-    title: "系统",
-  },
-  {
-    render: (isActive) => (
       <Function.Icon type="icon-component" $active={isActive} />
     ),
     link: "/component",
@@ -113,6 +106,14 @@ const functions: FunctionProps[] = [
     link: "/generate",
     title: "代码",
     divider: true,
+  },
+  {
+    render: (isActive) => (
+      <Function.Icon type="icon-discussion" $active={isActive} />
+    ),
+    link: "/discussion",
+    title: "讨论",
+    position: "bottom",
   },
   {
     render: (isActive) => (
