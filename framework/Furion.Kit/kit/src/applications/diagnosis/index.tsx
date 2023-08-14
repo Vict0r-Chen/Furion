@@ -14,7 +14,6 @@ import React, { useContext, useState } from "react";
 import ReactJson from "react-json-view";
 import { styled } from "styled-components";
 import Flexbox from "../../components/flexbox";
-import { FlushDivider } from "../../components/flush-divider";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
@@ -78,7 +77,6 @@ const NewList: React.FC = () => {
         icon={<Function.Icon type="icon-configuration" />}
         onClick={clickHandle}
       />
-      <FlushDivider $size={10} />
       <Function
         badge="Beta"
         title="自定义"
@@ -279,9 +277,7 @@ const Diagnosis: React.FC = () => {
                   <Button
                     type="text"
                     icon={<SettingIcon type="icon-setting" $size={16} />}
-                  >
-                    配置
-                  </Button>
+                  />
                 </Dropdown>
               ),
             }}

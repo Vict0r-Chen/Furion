@@ -1,4 +1,4 @@
-import { Badge, Empty, Popover, Tabs, TabsProps } from "antd";
+import { Badge, Button, Empty, Popover, Tabs, TabsProps } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import Header from "..";
@@ -11,6 +11,11 @@ const Main = styled.div`
   min-height: 200px;
   padding: 0 5px;
   box-sizing: border-box;
+`;
+
+const SettingIcon = styled(IconFont)`
+  position: relative;
+  top: 1px;
 `;
 
 const items: TabsProps["items"] = [
@@ -33,7 +38,12 @@ const Content: React.FC = () => {
         defaultActiveKey="1"
         items={items}
         tabBarExtraContent={{
-          right: <IconFont type="icon-setting" $size={16} />,
+          right: (
+            <Button
+              type="text"
+              icon={<SettingIcon type="icon-setting" $size={16} />}
+            />
+          ),
         }}
       />
     </Main>
