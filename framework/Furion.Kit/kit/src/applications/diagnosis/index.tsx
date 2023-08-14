@@ -283,7 +283,6 @@ const Diagnosis: React.FC = () => {
           <Tabs
             defaultActiveKey="1"
             items={items}
-            centered
             tabBarExtraContent={{
               right: (
                 <Dropdown
