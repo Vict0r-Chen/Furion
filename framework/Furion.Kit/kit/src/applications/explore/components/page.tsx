@@ -6,7 +6,6 @@ import IconFont from "../../../components/iconfont";
 import SearchBox from "../../../components/searchbox";
 import TextBox from "../../../components/textbox";
 import Community from "./community";
-import Local from "./local";
 import My from "./my";
 import Official from "./official";
 
@@ -23,16 +22,6 @@ const items: TabsProps["items"] = [
     key: "1",
     label: (
       <Space>
-        <Icon type="icon-local" $size={16} />
-        <TextBox $disableSelect>本地应用</TextBox>
-      </Space>
-    ),
-    children: <Local />,
-  },
-  {
-    key: "2",
-    label: (
-      <Space>
         <Icon type="icon-curated" $size={16} />
         <TextBox $disableSelect>官方精选</TextBox>
       </Space>
@@ -40,7 +29,7 @@ const items: TabsProps["items"] = [
     children: <Official />,
   },
   {
-    key: "3",
+    key: "2",
     label: (
       <Space>
         <Icon type="icon-community" $size={16} />

@@ -1,4 +1,4 @@
-import { Button, Skeleton, Space, Tag } from "antd";
+import { Button, Skeleton, Tag } from "antd";
 import React, { MouseEventHandler } from "react";
 import { css, styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
@@ -31,7 +31,7 @@ const Main = styled(Upward)<{ $showInstall?: boolean; $skeleton?: boolean }>`
   width: 100%;
   position: relative;
   overflow: hidden;
-  height: ${(props) => (props.$showInstall === true ? 250 : 192)}px;
+  height: ${(props) => (props.$showInstall === true ? 235 : 192)}px;
   border: 1px solid rgb(240, 240, 240);
   background-color: #ffffff;
   border-radius: 8px;
@@ -96,6 +96,7 @@ const Content = styled(Flexbox)``;
 const Logo = styled(Flexbox)`
   height: 50px;
   width: 50px;
+  min-width: 50px;
   border-radius: 8px;
   background-color: rgb(240, 240, 240);
   margin-right: 10px;
@@ -108,6 +109,7 @@ const Logo = styled(Flexbox)`
 const Introduction = styled.div`
   flex: 1;
   position: relative;
+  overflow: hidden;
 `;
 
 const Classify = styled(Tag)`
@@ -126,6 +128,10 @@ const Description = styled.div`
   font-size: 12px;
   color: #000000a6;
   user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 5px;
 `;
 
 const SkeletonImage = styled(Skeleton.Image)`
@@ -143,6 +149,8 @@ const SkeletonDescription = styled(Skeleton)`
   }
 `;
 
+export type AppCardType = "card" | "list";
+
 interface AppCardProps {
   title?: string;
   description?: React.ReactNode;
@@ -155,6 +163,7 @@ interface AppCardProps {
   skeleton?: boolean;
   tip?: React.ReactNode;
   showInstall?: boolean;
+  type?: AppCardType;
 }
 
 const AppCardSkeleton: React.FC<AppCardProps> = ({ showInstall = true }) => {
@@ -195,6 +204,7 @@ const AppCard: React.FC<AppCardProps> = ({
   skeleton,
   tip,
   showInstall = true,
+  type = "card",
 }) => {
   return skeleton ? (
     <AppCardSkeleton showInstall={showInstall} />
@@ -210,10 +220,8 @@ const AppCard: React.FC<AppCardProps> = ({
               <Classify bordered={false} color="cyan">
                 {classify}
               </Classify>
-              <Space direction="vertical" size={5}>
-                <Title>{title}</Title>
-                <Description>{description}</Description>
-              </Space>
+              <Title>{title}</Title>
+              <Description>{description}</Description>
             </Introduction>
           </Content>
         </Panel>

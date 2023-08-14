@@ -11,6 +11,15 @@ const Container = styled.div`
 
 const Main = styled(Flexbox)`
   align-items: center;
+  justify-content: space-between;
+`;
+
+const Master = styled(Flexbox)`
+  align-items: center;
+`;
+
+const More = styled(Flexbox)`
+  align-items: center;
 `;
 
 const Title = styled.h3`
@@ -39,20 +48,23 @@ interface ContentTitleProps {
   children?: React.ReactNode;
   extra?: React.ReactNode;
   description?: React.ReactNode;
-  spaceBetween?: boolean;
+  more?: React.ReactNode;
 }
 
 const ContentTitle: React.FC<ContentTitleProps> = ({
   children,
   extra,
   description,
-  spaceBetween,
+  more,
 }) => {
   return (
     <Container>
-      <Main $spaceBetween={spaceBetween}>
-        <Title>{children}</Title>
-        <ExtraContainer>{extra}</ExtraContainer>
+      <Main>
+        <Master>
+          <Title>{children}</Title>
+          <ExtraContainer>{extra}</ExtraContainer>
+        </Master>
+        <More>{more}</More>
       </Main>
       {description && <Description>{description}</Description>}
     </Container>

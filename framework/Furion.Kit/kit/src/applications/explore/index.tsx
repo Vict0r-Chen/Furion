@@ -1,9 +1,11 @@
-import { Drawer, message } from "antd";
+import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
+import { Drawer, Segmented, message } from "antd";
 import React, { useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Fullscreen from "../../components/fullscreen";
 import IconFont from "../../components/iconfont";
 import Content from "../../home/content";
+import { AppCardType } from "./components/app-card";
 import Page from "./components/page";
 import ExploreContext from "./context";
 export { default as ExploreDetail } from "./detail";
@@ -16,6 +18,7 @@ const Explore: React.FC = () => {
 
   const [open, setOpen] = useState(name ? true : false);
   const [fullscreen, setFullscreen] = useState(false);
+  const [listType, setListType] = useState<AppCardType>("card");
 
   const showDrawer = (name: string) => {
     setOpen(true);
@@ -30,7 +33,7 @@ const Explore: React.FC = () => {
   };
 
   return (
-    <ExploreContext.Provider value={{ showDrawer }}>
+    <ExploreContext.Provider value={{ showDrawer, listType }}>
       {contextHolder}
       <Drawer
         title="面板"
@@ -63,6 +66,23 @@ const Explore: React.FC = () => {
                   },
                 ],
               }}
+            />
+          }
+          more={
+            <Segmented
+              onChange={(value) => {
+                setListType(value as AppCardType);
+              }}
+              options={[
+                {
+                  value: "card",
+                  icon: <AppstoreOutlined />,
+                },
+                {
+                  value: "list",
+                  icon: <BarsOutlined />,
+                },
+              ]}
             />
           }
         >
