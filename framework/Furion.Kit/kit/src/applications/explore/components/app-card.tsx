@@ -1,6 +1,6 @@
 import { Button, Skeleton, Space, Tag } from "antd";
 import React, { MouseEventHandler } from "react";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import Upward from "../../../components/upward";
 
@@ -27,29 +27,42 @@ const Container = styled.div`
   }
 `;
 
-const Main = styled(Upward)`
+const Main = styled(Upward)<{ $showInstall?: boolean; $skeleton?: boolean }>`
   width: 100%;
   position: relative;
   overflow: hidden;
-  height: 250px;
+  height: ${(props) => (props.$showInstall === true ? 250 : 192)}px;
   border: 1px solid rgb(240, 240, 240);
   background-color: #ffffff;
   border-radius: 8px;
-  cursor: pointer;
+
+  ${(props) =>
+    props.$skeleton !== true &&
+    css`
+      cursor: pointer;
+    `}
+
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 
-  transition: transform 0.3s;
+  ${(props) =>
+    props.$skeleton !== true
+      ? css`
+          transition: transform 0.3s;
 
-  &:hover {
-    transform: scale(1.03);
-    z-index: 2;
-    border: 1px solid #69b1ff;
-    box-shadow: 0px 2px 8px #69b1ff;
-  }
+          &:hover {
+            transform: scale(1.03);
+            z-index: 2;
+            border: 1px solid #69b1ff;
+            box-shadow: 0px 2px 8px #69b1ff;
+          }
+        `
+      : css`
+          transform: translateY(0) !important;
+        `}
 `;
 
 const Tip = styled.div`
@@ -141,12 +154,13 @@ interface AppCardProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
   skeleton?: boolean;
   tip?: React.ReactNode;
+  showInstall?: boolean;
 }
 
-const AppCardSkeleton: React.FC = () => {
+const AppCardSkeleton: React.FC<AppCardProps> = ({ showInstall = true }) => {
   return (
     <Container>
-      <Main>
+      <Main $showInstall={showInstall} $skeleton>
         <Panel>
           <Banner>
             <SkeletonImage active />
@@ -163,7 +177,7 @@ const AppCardSkeleton: React.FC = () => {
             </Introduction>
           </Content>
         </Panel>
-        <Skeleton.Input active block size="default" />
+        {showInstall && <Skeleton.Input active block size="default" />}
       </Main>
     </Container>
   );
@@ -180,12 +194,13 @@ const AppCard: React.FC<AppCardProps> = ({
   onClick,
   skeleton,
   tip,
+  showInstall = true,
 }) => {
   return skeleton ? (
-    <AppCardSkeleton />
+    <AppCardSkeleton showInstall={showInstall} />
   ) : (
     <Container onClick={onClick}>
-      <Main>
+      <Main $showInstall={showInstall}>
         {tip && <Tip>{tip}</Tip>}
         <Panel>
           <Banner>{banner}</Banner>
@@ -202,16 +217,18 @@ const AppCard: React.FC<AppCardProps> = ({
             </Introduction>
           </Content>
         </Panel>
-        <Button
-          type="primary"
-          disabled={install}
-          onClick={(ev) => {
-            ev.stopPropagation();
-            installClick && installClick(ev);
-          }}
-        >
-          {!install ? "安装" : "已安装"}
-        </Button>
+        {showInstall && (
+          <Button
+            type="primary"
+            disabled={install}
+            onClick={(ev) => {
+              ev.stopPropagation();
+              installClick && installClick(ev);
+            }}
+          >
+            {!install ? "安装" : "已安装"}
+          </Button>
+        )}
       </Main>
     </Container>
   );

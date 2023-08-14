@@ -2,11 +2,15 @@ import React from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 
-const Container = styled(Flexbox)`
-  align-items: center;
+const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: #ffffff;
+  z-index: 10;
+`;
+
+const Main = styled(Flexbox)`
+  align-items: center;
 `;
 
 const Title = styled.h3`
@@ -45,13 +49,13 @@ const ContentTitle: React.FC<ContentTitleProps> = ({
   spaceBetween,
 }) => {
   return (
-    <>
-      <Container $spaceBetween={spaceBetween}>
+    <Container>
+      <Main $spaceBetween={spaceBetween}>
         <Title>{children}</Title>
         <ExtraContainer>{extra}</ExtraContainer>
-      </Container>
+      </Main>
       {description && <Description>{description}</Description>}
-    </>
+    </Container>
   );
 };
 
