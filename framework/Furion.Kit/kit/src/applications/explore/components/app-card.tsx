@@ -36,10 +36,13 @@ const Main = styled(Upward)<{ $skeleton?: boolean }>`
   border-radius: 8px;
 
   ${(props) =>
-    props.$skeleton !== true &&
-    css`
-      cursor: pointer;
-    `}
+    props.$skeleton !== true
+      ? css`
+          cursor: pointer;
+        `
+      : css`
+          cursor: not-allowed;
+        `}
 
   display: flex;
   flex-direction: column;
