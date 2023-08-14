@@ -1,5 +1,5 @@
 import { Divider, Tooltip } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { NavLink, useMatch } from "react-router-dom";
 import { css, styled } from "styled-components";
 import IconFont from "../../components/iconfont";
@@ -54,6 +54,7 @@ export interface FunctionProps {
   style?: React.CSSProperties;
   divider?: boolean;
   position?: "top" | "bottom";
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 const FunctionIcon = styled(IconFont)<{ $active?: boolean }>`
@@ -65,7 +66,7 @@ const FunctionIcon = styled(IconFont)<{ $active?: boolean }>`
 
 const Function: React.FC<FunctionProps> & {
   Icon: typeof FunctionIcon;
-} = ({ render, title, link, style, divider = false }) => {
+} = ({ render, title, link, style, divider = false, onClick }) => {
   const match = useMatch(link);
   const [isMatch, setMatch] = useState<boolean | undefined>(false);
 
@@ -92,7 +93,7 @@ const Function: React.FC<FunctionProps> & {
       <NavLink to={link}>
         {({ isActive, isPending }) => (
           <Tooltip placement="right" title={title} open={isMatch}>
-            <Upward>
+            <Upward onClick={onClick}>
               <Container style={style} $active={isActive}>
                 {typeof render === "function" ? render(isActive) : render}
               </Container>

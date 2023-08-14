@@ -76,7 +76,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
     <Container>
       <Title>{title}</Title>
       <Main>
-        <Space size={[25, 10]} wrap>
+        <Space size={[15, 10]} wrap>
           {items &&
             items.map((item) => (
               <Item

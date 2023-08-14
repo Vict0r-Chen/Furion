@@ -24,11 +24,11 @@ const { TextArea } = Input;
 
 const Container = styled(Flexbox)`
   align-items: flex-start;
+  margin-top: 15px;
 `;
 
 const Main = styled.div`
   flex: 1;
-  margin-top: -30px;
 `;
 
 const textColor = "#000000a6";
@@ -70,10 +70,13 @@ const Setting: React.FC = () => {
     <>
       {contextHolder}
       <Content.Main>
-        <Content.Title>设置</Content.Title>
+        <Content.Title description="添加云账户、配置多语言、备份数据库，等更多设置。">
+          设置
+        </Content.Title>
         <Container>
-          <SiderSticky>
+          <SiderSticky $top={114}>
             <AnchorBox
+              offsetTop={114}
               items={[
                 {
                   key: "account",
