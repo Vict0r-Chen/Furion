@@ -253,7 +253,7 @@ const AppCard: React.FC<AppCardProps> = ({
               installClick && installClick(ev);
             }}
           >
-            {!install ? "安装" : "已安装"}
+            {!install ? "添加" : "已添加"}
           </InstallButton>
         )}
       </Main>
