@@ -149,6 +149,7 @@ const items: TabsProps["items"] = [
             age: 31,
             version: "5.0.0",
           }}
+          style={{ padding: 10 }}
         />
       </div>
     ),
