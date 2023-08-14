@@ -68,7 +68,6 @@ const functions: FunctionProps[] = [
     ),
     link: "/openapi",
     title: "开放",
-    divider: true,
   },
   {
     render: (isActive) => (
@@ -76,13 +75,6 @@ const functions: FunctionProps[] = [
     ),
     link: "/component",
     title: "组件",
-  },
-  {
-    render: (isActive) => (
-      <Function.Icon type="icon-configuration" $active={isActive} />
-    ),
-    link: "/configuration",
-    title: "配置",
     divider: true,
   },
   {

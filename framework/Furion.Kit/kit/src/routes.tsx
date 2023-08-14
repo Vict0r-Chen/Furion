@@ -1,6 +1,5 @@
 import { createHashRouter } from "react-router-dom";
 import Component from "./applications/component";
-import Configuration from "./applications/configuration";
 import Diagnosis from "./applications/diagnosis";
 import Discussion from "./applications/discussion";
 import Explore, { ExploreDetail } from "./applications/explore";
@@ -35,10 +34,6 @@ const router = createHashRouter([
           {
             path: "component",
             element: <Component />,
-          },
-          {
-            path: "configuration",
-            element: <Configuration />,
           },
           {
             path: "starter",

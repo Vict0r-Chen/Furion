@@ -1,4 +1,14 @@
-import { Button, Dropdown, Modal, Popover, Space, Tabs, TabsProps } from "antd";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Input,
+  Modal,
+  Popover,
+  Space,
+  Tabs,
+  TabsProps,
+} from "antd";
 import React, { useContext, useState } from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../components/flexbox";
@@ -23,6 +33,10 @@ const Icon = styled(IconFont)`
 const SettingIcon = styled(IconFont)`
   position: relative;
   top: 1px;
+`;
+
+const ModalContainer = styled.div`
+  padding: 15px 0;
 `;
 
 const NewContainer = styled(Flexbox)`
@@ -53,8 +67,13 @@ const NewList: React.FC = () => {
         onClick={clickHandle}
       />
       <Function
-        title="控制台"
-        icon={<Function.Icon type="icon-console" />}
+        title="运行日志"
+        icon={<Function.Icon type="icon-logging" />}
+        onClick={clickHandle}
+      />
+      <Function
+        title="系统配置"
+        icon={<Function.Icon type="icon-configuration" />}
         onClick={clickHandle}
       />
       <FlushDivider $size={10} />
@@ -92,13 +111,28 @@ const items: TabsProps["items"] = [
     key: "3",
     label: (
       <Space>
-        <Icon type="icon-console" $size={14} />
-        <TextBox $disableSelect>控制台</TextBox>
+        <Icon type="icon-logging" $size={14} />
+        <TextBox $disableSelect>运行日志</TextBox>
+      </Space>
+    ),
+    children: <div>内容3</div>,
+  },
+  {
+    key: "4",
+    label: (
+      <Space>
+        <Icon type="icon-configuration" $size={14} />
+        <TextBox $disableSelect>系统配置</TextBox>
       </Space>
     ),
     children: <div>内容3</div>,
   },
 ];
+
+type FieldType = {
+  title?: string;
+  address?: string;
+};
 
 const Diagnosis: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -127,14 +161,41 @@ const Diagnosis: React.FC = () => {
   return (
     <DiagnosisContext.Provider value={{ showModal, hidePopover }}>
       <Modal
-        title="诊断配置"
+        title="配置 - 请求侦听"
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
-        cancelText="关闭"
-        okText="确定"
+        maskClosable={false}
+        footer={null}
       >
-        内容
+        <ModalContainer>
+          <Form
+            name="basic"
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            initialValues={{
+              title: "请求侦听",
+              address: "https://localhost:7115/",
+            }}
+            autoComplete="off"
+          >
+            <Form.Item<FieldType> label="标题" name="title">
+              <Input />
+            </Form.Item>
+            <Form.Item<FieldType> label="服务器地址" name="address">
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+              <Space align="center">
+                <Button type="primary" htmlType="submit" onClick={handleOk}>
+                  确定
+                </Button>
+                <Button htmlType="button" onClick={handleCancel}>
+                  取消
+                </Button>
+              </Space>
+            </Form.Item>
+          </Form>
+        </ModalContainer>
       </Modal>
       <Content.Main>
         <Content.Title
