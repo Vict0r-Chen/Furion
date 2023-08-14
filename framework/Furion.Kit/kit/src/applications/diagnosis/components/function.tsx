@@ -26,6 +26,7 @@ const Container = styled(Upward)`
 const Title = styled(TextBox)`
   margin-top: 5px;
   font-size: 14px;
+  user-select: none;
 `;
 
 const Icon = styled(IconFont)`

@@ -7,6 +7,7 @@ const Panel: React.FC = () => {
   return (
     <Content.Main>
       <Content.Title
+        description="系统环境、硬件信息、服务器配置，等信息一览无余。"
         extra={
           <Content.Menu
             menu={{
