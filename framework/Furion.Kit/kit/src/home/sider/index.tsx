@@ -68,13 +68,6 @@ const functions: FunctionProps[] = [
     ),
     link: "/openapi",
     title: "开放",
-  },
-  {
-    render: (isActive) => (
-      <Function.Icon type="icon-component" $active={isActive} />
-    ),
-    link: "/component",
-    title: "组件",
     divider: true,
   },
   {

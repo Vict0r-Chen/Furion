@@ -78,6 +78,11 @@ const NewList: React.FC = () => {
         onClick={clickHandle}
       />
       <Function
+        title="组件依赖"
+        icon={<Function.Icon type="icon-component" />}
+        onClick={clickHandle}
+      />
+      <Function
         badge="Beta"
         title="自定义"
         icon={<Function.Icon type="icon-customize" />}
@@ -151,6 +156,16 @@ const items: TabsProps["items"] = [
         />
       </div>
     ),
+  },
+  {
+    key: "5",
+    label: (
+      <Space>
+        <Icon type="icon-component" $size={15} />
+        <TextBox $disableSelect>组件依赖</TextBox>
+      </Space>
+    ),
+    children: <div>内容5</div>,
   },
 ];
 
@@ -229,7 +244,7 @@ const Diagnosis: React.FC = () => {
       </Modal>
       <Content.Main>
         <Content.Title
-          description="添加请求、路由、控制台，等诊断信息。"
+          description="添加事件、路由、日志、配置，等诊断信息。"
           more={
             <Popover
               placement="bottomRight"

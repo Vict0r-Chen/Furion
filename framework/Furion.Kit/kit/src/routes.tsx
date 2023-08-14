@@ -1,5 +1,4 @@
 import { createHashRouter } from "react-router-dom";
-import Component from "./applications/component";
 import Diagnosis from "./applications/diagnosis";
 import Discussion from "./applications/discussion";
 import Explore, { ExploreDetail } from "./applications/explore";
@@ -30,10 +29,6 @@ const router = createHashRouter([
           {
             path: "openapi",
             element: <OpenAPI />,
-          },
-          {
-            path: "component",
-            element: <Component />,
           },
           {
             path: "starter",
