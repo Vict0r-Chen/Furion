@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Dropdown,
   Form,
@@ -37,7 +38,7 @@ const SettingIcon = styled(IconFont)`
 `;
 
 const ModalContainer = styled.div`
-  padding: 15px 0;
+  padding: 15px 0 0 0;
 `;
 
 const NewContainer = styled(Flexbox)`
@@ -58,8 +59,8 @@ const NewList: React.FC = () => {
   return (
     <NewContainer>
       <Function
-        title="请求侦听"
-        icon={<Function.Icon type="icon-http" />}
+        title="诊断事件"
+        icon={<Function.Icon type="icon-eventlog" />}
         onClick={clickHandle}
       />
       <Function
@@ -73,7 +74,7 @@ const NewList: React.FC = () => {
         onClick={clickHandle}
       />
       <Function
-        title="服务配置"
+        title="项目配置"
         icon={<Function.Icon type="icon-configuration" />}
         onClick={clickHandle}
       />
@@ -93,11 +94,22 @@ const items: TabsProps["items"] = [
     key: "1",
     label: (
       <Space>
-        <Icon type="icon-http" $size={15} />
-        <TextBox $disableSelect>请求侦听</TextBox>
+        <Icon type="icon-eventlog" $size={15} />
+        <TextBox $disableSelect>诊断事件</TextBox>
       </Space>
     ),
-    children: <div>内容</div>,
+    children: (
+      <div>
+        <Alert
+          message="诊断器连接失败，请确保服务器已正常启动。"
+          type="warning"
+          showIcon
+          closable
+        />
+        <br />
+        内容
+      </div>
+    ),
   },
   {
     key: "2",
@@ -124,7 +136,7 @@ const items: TabsProps["items"] = [
     label: (
       <Space>
         <Icon type="icon-configuration" $size={15} />
-        <TextBox $disableSelect>服务配置</TextBox>
+        <TextBox $disableSelect>项目配置</TextBox>
       </Space>
     ),
     children: (
@@ -146,6 +158,7 @@ const items: TabsProps["items"] = [
 type FieldType = {
   title?: string;
   address?: string;
+  category?: string;
 };
 
 const Diagnosis: React.FC = () => {
@@ -189,6 +202,7 @@ const Diagnosis: React.FC = () => {
             initialValues={{
               title: "请求侦听",
               address: "https://localhost:7115/",
+              category: "Microsoft.AspNetCore",
             }}
             autoComplete="off"
           >
@@ -196,6 +210,9 @@ const Diagnosis: React.FC = () => {
               <Input />
             </Form.Item>
             <Form.Item<FieldType> label="服务器地址" name="address">
+              <Input />
+            </Form.Item>
+            <Form.Item<FieldType> label="诊断类别" name="category">
               <Input />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
