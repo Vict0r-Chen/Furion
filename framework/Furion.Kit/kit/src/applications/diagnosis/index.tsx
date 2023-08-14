@@ -10,6 +10,7 @@ import {
   TabsProps,
 } from "antd";
 import React, { useContext, useState } from "react";
+import ReactJson from "react-json-view";
 import { styled } from "styled-components";
 import Flexbox from "../../components/flexbox";
 import { FlushDivider } from "../../components/flush-divider";
@@ -72,12 +73,13 @@ const NewList: React.FC = () => {
         onClick={clickHandle}
       />
       <Function
-        title="系统配置"
+        title="服务配置"
         icon={<Function.Icon type="icon-configuration" />}
         onClick={clickHandle}
       />
       <FlushDivider $size={10} />
       <Function
+        badge="Beta"
         title="自定义"
         icon={<Function.Icon type="icon-customize" />}
         onClick={clickHandle}
@@ -91,7 +93,7 @@ const items: TabsProps["items"] = [
     key: "1",
     label: (
       <Space>
-        <Icon type="icon-http" $size={14} />
+        <Icon type="icon-http" $size={15} />
         <TextBox $disableSelect>请求侦听</TextBox>
       </Space>
     ),
@@ -101,7 +103,7 @@ const items: TabsProps["items"] = [
     key: "2",
     label: (
       <Space>
-        <Icon type="icon-endpoint" $size={14} />
+        <Icon type="icon-endpoint" $size={15} />
         <TextBox $disableSelect>终点路由</TextBox>
       </Space>
     ),
@@ -111,7 +113,7 @@ const items: TabsProps["items"] = [
     key: "3",
     label: (
       <Space>
-        <Icon type="icon-logging" $size={14} />
+        <Icon type="icon-logging" $size={15} />
         <TextBox $disableSelect>运行日志</TextBox>
       </Space>
     ),
@@ -121,11 +123,22 @@ const items: TabsProps["items"] = [
     key: "4",
     label: (
       <Space>
-        <Icon type="icon-configuration" $size={14} />
-        <TextBox $disableSelect>系统配置</TextBox>
+        <Icon type="icon-configuration" $size={15} />
+        <TextBox $disableSelect>服务配置</TextBox>
       </Space>
     ),
-    children: <div>内容3</div>,
+    children: (
+      <div>
+        <ReactJson
+          enableClipboard={false}
+          src={{
+            name: "Furion",
+            age: 31,
+            version: "5.0.0",
+          }}
+        />
+      </div>
+    ),
   },
 ];
 

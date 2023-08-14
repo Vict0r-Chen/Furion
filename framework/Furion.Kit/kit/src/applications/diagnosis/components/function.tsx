@@ -1,3 +1,4 @@
+import { Badge } from "antd";
 import React, { MouseEventHandler } from "react";
 import { styled } from "styled-components";
 import IconFont from "../../../components/iconfont";
@@ -35,14 +36,17 @@ interface FunctionProps {
   title?: string;
   icon?: React.ReactNode;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  badge?: React.ReactNode;
 }
 
 const Function: React.FC<FunctionProps> & {
   Icon: typeof Icon;
-} = ({ title, icon, onClick }) => {
+} = ({ title, icon, onClick, badge }) => {
   return (
     <Container onClick={onClick}>
-      {icon}
+      <Badge count={badge} color="#d9d9d9" offset={[5, 3]}>
+        {icon}
+      </Badge>
       <Title>{title}</Title>
     </Container>
   );
