@@ -130,7 +130,8 @@ const items: TabsProps["items"] = [
     children: (
       <div>
         <ReactJson
-          enableClipboard={false}
+          // enableClipboard={false}
+          theme="apathy:inverted"
           src={{
             name: "Furion",
             age: 31,
