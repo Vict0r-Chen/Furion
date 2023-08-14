@@ -17,6 +17,11 @@ const Icon = styled(IconFont)`
   margin-right: 0 !important;
 `;
 
+const UploadIcon = styled(IconFont)`
+  position: relative;
+  top: 1px;
+`;
+
 const items: TabsProps["items"] = [
   {
     key: "1",
@@ -69,12 +74,23 @@ const Page: React.FC = () => {
                       {
                         key: 1,
                         label: "选择应用包",
-                        icon: <IconFont type="icon-upload" $size={16} />,
+                        icon: (
+                          <IconFont
+                            type="icon-package"
+                            $size={16}
+                            color="#000000A6"
+                          />
+                        ),
                       },
                     ],
                   }}
                 >
-                  <Button type="primary">上传</Button>
+                  <Button
+                    type="primary"
+                    icon={<UploadIcon type="icon-upload" $size={16} />}
+                  >
+                    上传
+                  </Button>
                 </Dropdown>
               </Space>
             ),

@@ -128,7 +128,7 @@ const Official: React.FC = () => {
         <AppCard type={listType} skeleton />
       </Container>
       <Operation>
-        <Button>加载更多</Button>
+        <Button>查看更多</Button>
       </Operation>
     </Main>
   );
