@@ -7,11 +7,12 @@ import Upward from "../../../components/upward";
 const Container = styled.div`
   box-sizing: border-box;
   padding: 0 15px 15px 0;
-  @media only screen and (max-width: 480px) {
+
+  @media only screen and (max-width: 640px) {
     width: 100%;
   }
 
-  @media only screen and (min-width: 481px) and (max-width: 880px) {
+  @media only screen and (min-width: 641px) and (max-width: 880px) {
     width: 50%;
   }
 

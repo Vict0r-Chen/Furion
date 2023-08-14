@@ -35,6 +35,10 @@ const Container = styled.div`
     color: #1677ff;
     background-color: #bae0ff;
   }
+
+  @media only screen and (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const Number = styled(TextBox)`

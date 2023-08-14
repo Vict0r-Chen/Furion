@@ -8,6 +8,10 @@ const ContentMain = styled.div<{ $width?: number; $backgroundColor?: string }>`
   padding: 0 40px;
 
   background-color: ${(props) => props.$backgroundColor || undefined};
+
+  @media only screen and (max-width: 640px) {
+    padding: 0 25px;
+  }
 `;
 
 export default ContentMain;

@@ -15,6 +15,10 @@ const ContentContainer = styled(Flexbox)`
   overflow: hidden;
 `;
 
+const Main = styled(Flexbox)`
+  overflow: hidden;
+`;
+
 interface LayoutProps {
   children?: React.ReactNode;
 }
@@ -24,14 +28,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <Watermark content="Furion">
       <Container $fullscreen>
         <Sider />
-        <Flexbox direction="column" $flex={1}>
+        <Main direction="column" $flex={1}>
           <Header />
           <ContentContainer $flex={1}>
             {children}
             <Toolbar />
           </ContentContainer>
           <Footer />
-        </Flexbox>
+        </Main>
       </Container>
     </Watermark>
   );

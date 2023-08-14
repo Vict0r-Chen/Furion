@@ -5,6 +5,10 @@ const SiderSticky = styled.div<{ $top?: number }>`
   top: ${(props) => props.$top || 80}px;
   width: 200px;
   margin-right: 15px;
+
+  @media only screen and (max-width: 640px) {
+    display: none;
+  }
 `;
 
 export default SiderSticky;

@@ -23,7 +23,7 @@ const SearchBox: React.FC<SearchBoxProps> = (props) => {
           bordered={width !== defaultWidth}
           allowClear
           style={{ width }}
-          onFocus={() => setWidth(250)}
+          onFocus={() => setWidth(220)}
           onBlur={() => setWidth(defaultWidth)}
           suffix={<IconFont type="icon-search" $size={20} $color="#8c8c8c" />}
           {...props}

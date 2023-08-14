@@ -4,7 +4,7 @@ import { css, styled } from "styled-components";
 import Flexbox from "./flexbox";
 
 const Container = styled(Flexbox)`
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Title = styled.div`
@@ -17,6 +17,8 @@ const Title = styled.div`
   color: #595959;
   user-select: none;
   font-weight: 600;
+  white-space: nowrap;
+  margin-top: 2px;
 `;
 
 const Main = styled.div`
@@ -29,6 +31,7 @@ const Item = styled.div<{ $active?: boolean }>`
   border-radius: 5px;
   user-select: none;
   font-weight: 500;
+  white-space: nowrap;
 
   &:hover {
     color: #1677ff;
@@ -73,7 +76,7 @@ const CategoryList: React.FC<CategoryListProps> = ({
     <Container>
       <Title>{title}</Title>
       <Main>
-        <Space size={25}>
+        <Space size={[25, 10]} wrap>
           {items &&
             items.map((item) => (
               <Item

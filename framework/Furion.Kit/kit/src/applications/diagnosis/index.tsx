@@ -83,6 +83,11 @@ const NewList: React.FC = () => {
         onClick={clickHandle}
       />
       <Function
+        title="系统异常"
+        icon={<Function.Icon type="icon-exception" />}
+        onClick={clickHandle}
+      />
+      <Function
         badge="Beta"
         title="自定义"
         icon={<Function.Icon type="icon-customize" />}
@@ -166,6 +171,16 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <div>内容5</div>,
+  },
+  {
+    key: "6",
+    label: (
+      <Space>
+        <Icon type="icon-exception" $size={15} />
+        <TextBox $disableSelect>系统异常</TextBox>
+      </Space>
+    ),
+    children: <div>内容6</div>,
   },
 ];
 
