@@ -1,4 +1,4 @@
-import { Badge, Popover, Tabs, TabsProps } from "antd";
+import { Badge, Empty, Popover, Tabs, TabsProps } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import Header from "..";
@@ -9,7 +9,7 @@ const Container = styled.div``;
 const Main = styled.div`
   width: 350px;
   min-height: 200px;
-  padding: 0 10px;
+  padding: 0 5px;
   box-sizing: border-box;
 `;
 
@@ -17,12 +17,12 @@ const items: TabsProps["items"] = [
   {
     key: "1",
     label: `未读通知`,
-    children: `内容`,
+    children: <Empty description="暂无通知" />,
   },
   {
     key: "2",
     label: `全部通知`,
-    children: `内容2`,
+    children: <Empty description="暂无通知" />,
   },
 ];
 

@@ -16,14 +16,14 @@ const Container = styled.div`
   }
 
   @media only screen and (min-width: 881px) and (max-width: 1200px) {
-    width: 33.33%;
+    width: calc(100% / 3);
   }
 
   @media (min-width: 1201px) and (max-width: 1590px) {
     width: 25%;
   }
   @media (min-width: 1591px) {
-    width: 16.66%;
+    width: calc(100% / 6);
   }
 `;
 

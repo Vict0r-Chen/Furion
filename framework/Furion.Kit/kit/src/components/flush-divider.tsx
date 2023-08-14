@@ -4,6 +4,7 @@ import { css, styled } from "styled-components";
 const FlushDivider = styled(Divider)<{
   $heightBlock?: boolean;
   $widthBlock?: boolean;
+  $size?: number;
 }>`
   margin: 0;
 
@@ -17,6 +18,12 @@ const FlushDivider = styled(Divider)<{
     props.$widthBlock &&
     css`
       width: 100%;
+    `}
+
+  ${(props) =>
+    props.$size &&
+    css`
+      margin: ${props.$size}px 0;
     `}
 `;
 

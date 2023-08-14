@@ -57,13 +57,6 @@ const functions: FunctionProps[] = [
   },
   {
     render: (isActive) => (
-      <Function.Icon type="icon-console" $active={isActive} />
-    ),
-    link: "/console",
-    title: "输出",
-  },
-  {
-    render: (isActive) => (
       <Function.Icon type="icon-diagnosis" $active={isActive} />
     ),
     link: "/diagnosis",
