@@ -153,7 +153,7 @@
         </member>
         <member name="M:Furion.Kit.HttpDiagnosticListener.GetAnonymousHttpContextValue(System.Object)">
             <summary>
-            获取匿名类 httpContext 属性访问器
+            获取匿名类 httpContext 属性访问器（后续这里抽离出一个对象，包括序列化也是，可以针对每一个类型进行序列化配置）
             </summary>
             <param name="anonymousObject">匿名类对象</param>
             <returns><see cref="T:System.Func`2"/></returns>

@@ -12,10 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Microsoft.AspNetCore.Mvc.Controllers;
-using System.ComponentModel;
-using System.Reflection;
-
 namespace Furion.Kit;
 
 /// <summary>
@@ -137,7 +133,7 @@ internal sealed class HttpDiagnosticListener : DiagnosticListenerBase<HttpDiagno
     }
 
     /// <summary>
-    /// 获取匿名类 httpContext 属性访问器
+    /// 获取匿名类 httpContext 属性访问器（后续这里抽离出一个对象，包括序列化也是，可以针对每一个类型进行序列化配置）
     /// </summary>
     /// <param name="anonymousObject">匿名类对象</param>
     /// <returns><see cref="Func{T, TResult}"/></returns>
