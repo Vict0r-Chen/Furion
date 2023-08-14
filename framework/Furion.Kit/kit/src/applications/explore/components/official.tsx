@@ -27,7 +27,7 @@ const Operation = styled.div`
 `;
 
 const Official: React.FC = () => {
-  const { showDrawer } = useContext(ExploreContext);
+  const { showDrawer, listType } = useContext(ExploreContext);
 
   return (
     <Main>
@@ -55,6 +55,7 @@ const Official: React.FC = () => {
       <Container>
         <AppCard
           title="面板"
+          type={listType}
           description="在这里可以查看系统概况"
           classify="工具"
           logo={<IconFont type="icon-panel" $size={26} />}
@@ -63,6 +64,7 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard
+          type={listType}
           title="输出"
           description="在这里可以查看系统概况"
           classify="工具"
@@ -72,6 +74,7 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard
+          type={listType}
           title="诊断"
           description="在这里可以查看系统概况"
           classify="工具"
@@ -81,6 +84,7 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard
+          type={listType}
           title="开放"
           description="在这里可以查看系统概况"
           classify="文档"
@@ -90,6 +94,7 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard
+          type={listType}
           title="输出"
           description="在这里可以查看系统概况"
           classify="工具"
@@ -99,6 +104,7 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard
+          type={listType}
           title="诊断"
           description="在这里可以查看系统概况"
           classify="工具"
@@ -108,6 +114,7 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
         />
         <AppCard
+          type={listType}
           title="开放"
           description="在这里可以查看系统概况"
           classify="文档"
@@ -117,9 +124,8 @@ const Official: React.FC = () => {
           installClick={() => message.success("安装成功")}
           install
         />
-        <AppCard skeleton />
-        <AppCard skeleton />
-        <AppCard skeleton />
+        <AppCard type={listType} skeleton />
+        <AppCard type={listType} skeleton />
       </Container>
       <Operation>
         <Button>加载更多</Button>

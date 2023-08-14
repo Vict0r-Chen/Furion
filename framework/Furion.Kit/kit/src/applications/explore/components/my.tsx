@@ -22,12 +22,13 @@ const Operation = styled.div`
 `;
 
 const My: React.FC = () => {
-  const { showDrawer } = useContext(ExploreContext);
+  const { showDrawer, listType } = useContext(ExploreContext);
 
   return (
     <Main>
       <Container>
         <AppCard
+          type={listType}
           title="面板"
           description="在这里可以查看系统概况"
           classify="工具"
@@ -36,7 +37,7 @@ const My: React.FC = () => {
           onClick={() => showDrawer("panel")}
           showInstall={false}
         />
-        <AppCard skeleton showInstall={false} />
+        <AppCard type={listType} skeleton showInstall={false} />
       </Container>
       <Operation>
         <Button>查看更多</Button>

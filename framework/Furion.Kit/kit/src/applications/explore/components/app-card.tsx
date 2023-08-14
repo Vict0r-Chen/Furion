@@ -27,11 +27,10 @@ const Container = styled.div`
   }
 `;
 
-const Main = styled(Upward)<{ $showInstall?: boolean; $skeleton?: boolean }>`
+const Main = styled(Upward)<{ $skeleton?: boolean }>`
   width: 100%;
   position: relative;
   overflow: hidden;
-  height: ${(props) => (props.$showInstall === true ? 235 : 192)}px;
   border: 1px solid rgb(240, 240, 240);
   background-color: #ffffff;
   border-radius: 8px;
@@ -134,6 +133,10 @@ const Description = styled.div`
   margin-top: 5px;
 `;
 
+const InstallButton = styled(Button)`
+  margin-top: 10px;
+`;
+
 const SkeletonImage = styled(Skeleton.Image)`
   width: 100% !important;
   height: 100% !important;
@@ -146,7 +149,12 @@ const SkeletonDescription = styled(Skeleton)`
 
   & ul {
     margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
+`;
+
+const SkeletonInput = styled(Skeleton.Input)`
+  margin-top: 5px;
 `;
 
 export type AppCardType = "card" | "list";
@@ -166,14 +174,19 @@ interface AppCardProps {
   type?: AppCardType;
 }
 
-const AppCardSkeleton: React.FC<AppCardProps> = ({ showInstall = true }) => {
+const AppCardSkeleton: React.FC<AppCardProps> = ({
+  showInstall = true,
+  type,
+}) => {
   return (
     <Container>
-      <Main $showInstall={showInstall} $skeleton>
+      <Main $skeleton>
         <Panel>
-          <Banner>
-            <SkeletonImage active />
-          </Banner>
+          {type === "card" && (
+            <Banner>
+              <SkeletonImage active />
+            </Banner>
+          )}
           <Content>
             <Logo>
               <Skeleton.Avatar active shape="square" size={50} />
@@ -186,7 +199,7 @@ const AppCardSkeleton: React.FC<AppCardProps> = ({ showInstall = true }) => {
             </Introduction>
           </Content>
         </Panel>
-        {showInstall && <Skeleton.Input active block size="default" />}
+        {showInstall && <SkeletonInput active block size="default" />}
       </Main>
     </Container>
   );
@@ -206,14 +219,16 @@ const AppCard: React.FC<AppCardProps> = ({
   showInstall = true,
   type = "card",
 }) => {
-  return skeleton ? (
-    <AppCardSkeleton showInstall={showInstall} />
-  ) : (
+  if (skeleton) {
+    return <AppCardSkeleton showInstall={showInstall} type={type} />;
+  }
+
+  return (
     <Container onClick={onClick}>
-      <Main $showInstall={showInstall}>
+      <Main>
         {tip && <Tip>{tip}</Tip>}
         <Panel>
-          <Banner>{banner}</Banner>
+          {type === "card" && <Banner>{banner}</Banner>}
           <Content>
             <Logo>{logo}</Logo>
             <Introduction>
@@ -226,7 +241,7 @@ const AppCard: React.FC<AppCardProps> = ({
           </Content>
         </Panel>
         {showInstall && (
-          <Button
+          <InstallButton
             type="primary"
             disabled={install}
             onClick={(ev) => {
@@ -235,7 +250,7 @@ const AppCard: React.FC<AppCardProps> = ({
             }}
           >
             {!install ? "安装" : "已安装"}
-          </Button>
+          </InstallButton>
         )}
       </Main>
     </Container>
