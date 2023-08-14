@@ -1,4 +1,4 @@
-import { Badge, Button, Empty, Popover, Tabs, TabsProps } from "antd";
+import { Badge, Button, Dropdown, Empty, Popover, Tabs, TabsProps } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import Header from "..";
@@ -39,10 +39,25 @@ const Content: React.FC = () => {
         items={items}
         tabBarExtraContent={{
           right: (
-            <Button
-              type="text"
-              icon={<SettingIcon type="icon-setting" $size={16} />}
-            />
+            <Dropdown
+              placement="bottomRight"
+              menu={{
+                items: [
+                  {
+                    key: 1,
+                    label: "全部已读",
+                    icon: (
+                      <IconFont type="icon-read" $size={16} color="#000000A6" />
+                    ),
+                  },
+                ],
+              }}
+            >
+              <Button
+                type="text"
+                icon={<SettingIcon type="icon-setting" $size={16} />}
+              />
+            </Dropdown>
           ),
         }}
       />
