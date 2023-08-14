@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfurion_kit=self.webpackChunkfurion_kit||[]).push([[766],{766:function(e,n,s){s.r(n),s.d(n,{messages:function(){return u}});var u=JSON.parse('{"1sToVz":"Panel"}')}}]);

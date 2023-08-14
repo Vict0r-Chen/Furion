@@ -1,13 +1,17 @@
 {
   "files": {
-    "main.css": "/furion/static/css/main.621825b5.css",
-    "main.js": "/furion/static/js/main.1928c512.js",
-    "index.html": "/furion/index.html",
-    "main.621825b5.css.map": "/furion/static/css/main.621825b5.css.map",
-    "main.1928c512.js.map": "/furion/static/js/main.1928c512.js.map"
+    "main.css": "/furion/static/css/main.c10c5baa.css",
+    "main.js": "/furion/static/js/main.24b977a2.js",
+    "static/js/766.44af79f0.chunk.js": "/furion/static/js/766.44af79f0.chunk.js",
+    "static/js/865.1db9e6ca.chunk.js": "/furion/static/js/865.1db9e6ca.chunk.js",
+    "static/media/banner.png": "/furion/static/media/banner.62c9556440b852cd1bd7.png",
+    "static/media/banner3.png": "/furion/static/media/banner3.1e86b55a4370cc87add9.png",
+    "static/media/banner1.jpeg": "/furion/static/media/banner1.f5039fd387605c3c1c24.jpeg",
+    "static/media/banner2.jpeg": "/furion/static/media/banner2.5bf404bfd7a8ba753683.jpeg",
+    "index.html": "/furion/index.html"
   },
   "entrypoints": [
-    "static/css/main.621825b5.css",
-    "static/js/main.1928c512.js"
+    "static/css/main.c10c5baa.css",
+    "static/js/main.24b977a2.js"
   ]
 }
