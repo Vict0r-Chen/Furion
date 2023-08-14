@@ -1,3 +1,4 @@
+import { FloatButton } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { styled } from "styled-components";
@@ -10,14 +11,17 @@ const Container = styled.div`
   overflow-y: auto;
 `;
 
+const contentId = "scroll-content";
+
 const Content: React.FC & {
   Title: typeof ContentTitle;
   Menu: typeof ContentMenu;
   Main: typeof ContentMain;
 } = () => {
   return (
-    <Container id="scroll-content">
+    <Container id={contentId}>
       <Outlet />
+      <FloatButton.BackTop target={() => document.getElementById(contentId)!} />
     </Container>
   );
 };
