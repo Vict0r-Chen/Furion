@@ -30,6 +30,7 @@ const Title = styled(TextBox)`
 
 const Icon = styled(IconFont)`
   font-size: 30px;
+  height: 32px;
 `;
 
 interface FunctionProps {
