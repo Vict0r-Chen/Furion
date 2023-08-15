@@ -1,5 +1,4 @@
 import {
-  Alert,
   Button,
   Dropdown,
   Form,
@@ -11,14 +10,19 @@ import {
   TabsProps,
 } from "antd";
 import React, { useContext, useState } from "react";
-import ReactJson from "react-json-view";
 import { styled } from "styled-components";
 import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";
 import Content from "../../home/content";
+import Component from "./components/component";
+import Configuration from "./components/configuration";
+import Event from "./components/event";
+import Exception from "./components/exception";
 import Function from "./components/function";
-import DiagnosisContext from "./context";
+import Logging from "./components/logging";
+import Routing from "./components/routing";
+import DiagnosisContext from "./contexts";
 
 const AddIcon = styled(IconFont)`
   position: relative;
@@ -106,18 +110,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>诊断事件</TextBox>
       </Space>
     ),
-    children: (
-      <div>
-        <Alert
-          message="诊断器连接失败，请确保服务器已正常启动。"
-          type="warning"
-          showIcon
-          closable
-        />
-        <br />
-        内容
-      </div>
-    ),
+    children: <Event />,
   },
   {
     key: "2",
@@ -127,7 +120,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>终点路由</TextBox>
       </Space>
     ),
-    children: <div>内容2</div>,
+    children: <Routing />,
   },
   {
     key: "3",
@@ -137,7 +130,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>运行日志</TextBox>
       </Space>
     ),
-    children: <div>内容3</div>,
+    children: <Logging />,
   },
   {
     key: "4",
@@ -147,20 +140,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>项目配置</TextBox>
       </Space>
     ),
-    children: (
-      <div>
-        <ReactJson
-          // enableClipboard={false}
-          theme="apathy:inverted"
-          src={{
-            name: "Furion",
-            age: 31,
-            version: "5.0.0",
-          }}
-          style={{ padding: 10 }}
-        />
-      </div>
-    ),
+    children: <Configuration />,
   },
   {
     key: "5",
@@ -170,7 +150,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>组件依赖</TextBox>
       </Space>
     ),
-    children: <div>内容5</div>,
+    children: <Component />,
   },
   {
     key: "6",
@@ -180,7 +160,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>系统异常</TextBox>
       </Space>
     ),
-    children: <div>内容6</div>,
+    children: <Exception />,
   },
 ];
 

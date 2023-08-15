@@ -7,7 +7,7 @@ import IconFont from "../../components/iconfont";
 import Content from "../../home/content";
 import { AppCardType } from "./components/app-card";
 import Page from "./components/page";
-import ExploreContext from "./context";
+import ExploreContext from "./contexts";
 export { default as ExploreDetail } from "./detail";
 
 const Explore: React.FC = () => {

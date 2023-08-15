@@ -8,7 +8,7 @@ import banner3 from "../../../assets/banner3.png";
 import CategoryList from "../../../components/category-list";
 import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";
-import ExploreContext from "../context";
+import ExploreContext from "../contexts";
 import AppCard from "./app-card";
 import Banner from "./banner";
 import Main from "./main";
