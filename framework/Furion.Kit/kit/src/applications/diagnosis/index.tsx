@@ -90,7 +90,7 @@ const NewList: React.FC = () => {
         title="系统异常"
         icon={<Function.Icon type="icon-exception" />}
         onClick={clickHandle}
-        disabled
+        // disabled
       />
       <Function
         badge="Beta"
@@ -112,6 +112,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Event />,
+    forceRender: true,
   },
   {
     key: "2",
@@ -122,6 +123,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Routing />,
+    forceRender: true,
   },
   {
     key: "3",
@@ -132,6 +134,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Logging />,
+    forceRender: true,
   },
   {
     key: "4",
@@ -142,6 +145,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Configuration />,
+    forceRender: true,
   },
   {
     key: "5",
@@ -152,6 +156,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Component />,
+    forceRender: true,
   },
   {
     key: "6",
@@ -162,6 +167,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Exception />,
+    forceRender: true,
   },
 ];
 
