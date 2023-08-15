@@ -90,6 +90,7 @@ const NewList: React.FC = () => {
         title="系统异常"
         icon={<Function.Icon type="icon-exception" />}
         onClick={clickHandle}
+        disabled
       />
       <Function
         badge="Beta"
