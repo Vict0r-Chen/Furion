@@ -1,5 +1,4 @@
 import { Popover, Space } from "antd";
-import { useState } from "react";
 import ReactJson from "react-json-view";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
@@ -10,8 +9,14 @@ import Mdx from "../../../mdxs/index.mdx";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 
+const isError = (statusCode?: number | null) => {
+  return statusCode && statusCode >= 500 && statusCode <= 599;
+};
+
+const errorColor = "#ff4d4f";
+
 const ItemContainer = styled.div`
-  font-size: 13px;
+  font-size: 14px;
 `;
 
 const Main = styled(Flexbox)`
@@ -36,13 +41,15 @@ const JsonView = styled(Flexbox)`
 `;
 
 const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
-  const [showPopover, setShowPopover] = useState(false);
-
   return (
     <ItemContainer>
       <Main $spaceBetween>
         <Space align="center">
-          <IconFont type="icon-link" />
+          {isError(props.statusCode) ? (
+            <IconFont type="icon-error" $color={errorColor} $size={15} />
+          ) : (
+            <IconFont type="icon-link" $size={15} />
+          )}
           <HttpMethod value={props.httpMethod!} />
           <Popover
             placement="right"
@@ -53,13 +60,10 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
                 <Mdx />
               </div>
             }
-            onOpenChange={(v) => {
-              setShowPopover(v);
-            }}
           >
             <Url
               underline
-              $color={showPopover ? "#1677ff" : "#000000e0"}
+              $color={isError(props.statusCode) ? errorColor : "#000000e0"}
               copyable
             >
               {decodeURIComponent(props.urlAddress!)}

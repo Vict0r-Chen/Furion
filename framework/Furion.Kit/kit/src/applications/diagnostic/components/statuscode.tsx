@@ -1,29 +1,28 @@
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
 import { Space } from "antd";
 import React from "react";
 import { styled } from "styled-components";
+import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 
 const Container = styled.div`
   display: inline-block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
+`;
+
+const Icon = styled(IconFont)`
+  font-size: 15px;
 `;
 
 export const getIconColor = (code: number): [JSX.Element, string] => {
   if (code >= 200 && code <= 299) {
-    return [<CheckCircleOutlined />, "#52c41a"];
+    return [<Icon type="icon-success" />, "#52c41a"];
   } else if (code >= 400 && code <= 499) {
-    return [<ExclamationCircleOutlined />, "#faad14"];
+    return [<Icon type="icon-warning" />, "#faad14"];
   } else if (code >= 500 && code <= 599) {
-    return [<CloseCircleOutlined />, "#ff4d4f"];
+    return [<Icon type="icon-error" />, "#ff4d4f"];
   } else {
-    return [<InfoCircleOutlined />, "#1677ff"];
+    return [<Icon type="icon-information" />, "#1677ff"];
   }
 };
 

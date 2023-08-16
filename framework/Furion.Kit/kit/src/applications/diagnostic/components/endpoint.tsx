@@ -81,7 +81,6 @@ const Endpoint: React.FC = () => {
       <>
         <Skeleton active />
         <Skeleton active />
-        <Skeleton active />
       </>
     );
   }
