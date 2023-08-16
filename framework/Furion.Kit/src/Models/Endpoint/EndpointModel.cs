@@ -28,6 +28,9 @@ internal sealed class EndpointModel
     /// <param name="endpoint"><see cref="Endpoint"/></param>
     internal EndpointModel(Endpoint endpoint)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(endpoint);
+
         _endpoint = endpoint;
 
         // 初始化

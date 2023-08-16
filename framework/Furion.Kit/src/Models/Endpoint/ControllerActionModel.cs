@@ -28,6 +28,9 @@ internal sealed class ControllerActionModel
     /// <param name="controllerActionDescriptor"></param>
     internal ControllerActionModel(ControllerActionDescriptor controllerActionDescriptor)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(controllerActionDescriptor);
+
         _controllerActionDescriptor = controllerActionDescriptor;
 
         // 初始化

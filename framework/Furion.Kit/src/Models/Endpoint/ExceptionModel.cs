@@ -28,6 +28,9 @@ internal sealed class ExceptionModel
     /// <param name="exception"><see cref="Exception"/></param>
     internal ExceptionModel(Exception exception)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exception);
+
         _exception = exception;
 
         // 初始化
@@ -60,6 +63,11 @@ internal sealed class ExceptionModel
     public string? HelpLink { get; internal set; }
 
     /// <summary>
+    /// 异常详细模型集合
+    /// </summary>
+    public List<ExceptionDetailModel> Details { get; internal set; } = new();
+
+    /// <summary>
     /// 初始化
     /// </summary>
     internal void Initialize()
@@ -69,5 +77,25 @@ internal sealed class ExceptionModel
         HResult = _exception.HResult;
         Source = _exception.Source;
         HelpLink = _exception.HelpLink;
+
+        // 初始化堆栈跟踪对象
+        var stackTrace = new StackTrace(_exception, true);
+
+        // 获取所有的堆栈帧
+        var stackFrames = stackTrace.GetFrames();
+
+        // 遍历每个堆栈帧，获取文件路径和行号
+        foreach (var stackFrame in stackFrames)
+        {
+            // 获取文件名和出错代码行号
+            var fileName = stackFrame.GetFileName();
+            var lineNumber = stackFrame.GetFileLineNumber();
+
+            // 空检查
+            if (!string.IsNullOrEmpty(fileName) && lineNumber != 0)
+            {
+                Details.Add(new(stackFrame));
+            }
+        }
     }
 }

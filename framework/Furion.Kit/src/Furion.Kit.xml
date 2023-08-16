@@ -375,6 +375,55 @@
             初始化
             </summary>
         </member>
+        <member name="T:Furion.Kit.ExceptionDetailModel">
+            <summary>
+            异常详细模型
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.ExceptionDetailModel._stackFrame">
+            <inheritdoc cref="T:System.Diagnostics.StackFrame"/>
+        </member>
+        <member name="M:Furion.Kit.ExceptionDetailModel.#ctor(System.Diagnostics.StackFrame)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.ExceptionDetailModel"/>
+            </summary>
+            <param name="stackFrame"><see cref="T:System.Diagnostics.StackFrame"/></param>
+        </member>
+        <member name="P:Furion.Kit.ExceptionDetailModel.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ExceptionDetailModel.LineNumber">
+            <summary>
+            出错行号
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ExceptionDetailModel.SurroundingLinesText">
+            <summary>
+            出错代码行周围内容
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ExceptionDetailModel.TargetLineText">
+            <summary>
+            出错代码行内容
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.ExceptionDetailModel.Initialize">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.ExceptionDetailModel.ReadSurroundingLines(System.String,System.Int32,System.Int32,System.String@)">
+            <summary>
+            读取文件出错代码行周围内容
+            </summary>
+            <param name="filePath">文件路径</param>
+            <param name="targetLine">目标行数</param>
+            <param name="surroundingLines">周围行数</param>
+            <param name="targetLineContent">出错代码行内容</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="T:Furion.Kit.ExceptionModel">
             <summary>
             异常模型
@@ -412,6 +461,11 @@
         <member name="P:Furion.Kit.ExceptionModel.HelpLink">
             <summary>
             帮助文件链接
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ExceptionModel.Details">
+            <summary>
+            异常详细模型集合
             </summary>
         </member>
         <member name="M:Furion.Kit.ExceptionModel.Initialize">

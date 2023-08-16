@@ -28,6 +28,9 @@ internal sealed class EndpointDiagnosticModel
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     internal EndpointDiagnosticModel(HttpContext httpContext)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(httpContext);
+
         _httpContext = httpContext;
 
         // 初始化
