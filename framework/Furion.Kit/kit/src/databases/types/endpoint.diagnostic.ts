@@ -46,6 +46,7 @@ export interface ExceptionModel {
 export interface ExceptionDetailModel {
   fileName?: string;
   lineNumber?: number;
+  startLineNumber?: number;
   surroundingLinesText?: string;
   targetLineText?: string;
 }

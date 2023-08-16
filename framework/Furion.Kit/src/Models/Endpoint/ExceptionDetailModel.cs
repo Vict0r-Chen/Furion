@@ -48,6 +48,11 @@ internal sealed class ExceptionDetailModel
     public int? LineNumber { get; internal set; }
 
     /// <summary>
+    /// 出错行的起始行号
+    /// </summary>
+    public int? StartLineNumber { get; internal set; }
+
+    /// <summary>
     /// 出错代码行周围内容
     /// </summary>
     public string? SurroundingLinesText { get; internal set; }
@@ -73,10 +78,12 @@ internal sealed class ExceptionDetailModel
             var surroundingLinesText = ReadSurroundingLines(fileName
                 , lineNumber
                 , 6
-                , out var targetLineText);
+                , out var targetLineText
+                , out var startLineNumber);
 
             FileName = fileName;
             LineNumber = lineNumber;
+            StartLineNumber = startLineNumber;
             SurroundingLinesText = surroundingLinesText;
             TargetLineText = targetLineText;
         }
@@ -89,17 +96,20 @@ internal sealed class ExceptionDetailModel
     /// <param name="targetLine">目标行数</param>
     /// <param name="surroundingLines">周围行数</param>
     /// <param name="targetLineContent">出错代码行内容</param>
+    /// <param name="startLineNumber">出错行的起始行号</param>
     /// <returns><see cref="string"/></returns>
     internal static string ReadSurroundingLines(string filePath
         , int targetLine
         , int surroundingLines
-        , out string? targetLineContent)
+        , out string? targetLineContent
+        , out int? startLineNumber)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
 
         // 初始化目标行内容
         targetLineContent = default;
+        startLineNumber = default;
 
         // 总共要读取的行数
         var linesToRead = surroundingLines * 2 + 1;
@@ -134,6 +144,9 @@ internal sealed class ExceptionDetailModel
                 if (currentLine >= targetLine - surroundingLines
                     && currentLine <= targetLine + surroundingLines)
                 {
+                    // 设置出错行的起始行号
+                    startLineNumber ??= currentLine;
+
                     // 存储上下行文本
                     lines[currentIndex] = line;
                     currentIndex++;

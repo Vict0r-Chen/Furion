@@ -399,6 +399,11 @@
             出错行号
             </summary>
         </member>
+        <member name="P:Furion.Kit.ExceptionDetailModel.StartLineNumber">
+            <summary>
+            出错行的起始行号
+            </summary>
+        </member>
         <member name="P:Furion.Kit.ExceptionDetailModel.SurroundingLinesText">
             <summary>
             出错代码行周围内容
@@ -414,7 +419,7 @@
             初始化
             </summary>
         </member>
-        <member name="M:Furion.Kit.ExceptionDetailModel.ReadSurroundingLines(System.String,System.Int32,System.Int32,System.String@)">
+        <member name="M:Furion.Kit.ExceptionDetailModel.ReadSurroundingLines(System.String,System.Int32,System.Int32,System.String@,System.Nullable{System.Int32}@)">
             <summary>
             读取文件出错代码行周围内容
             </summary>
@@ -422,6 +427,7 @@
             <param name="targetLine">目标行数</param>
             <param name="surroundingLines">周围行数</param>
             <param name="targetLineContent">出错代码行内容</param>
+            <param name="startLineNumber">出错行的起始行号</param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="T:Furion.Kit.ExceptionModel">

@@ -1,6 +1,10 @@
+import { Highlight, themes } from "prism-react-renderer";
+import Prism from "prismjs";
 import React from "react";
 import { styled } from "styled-components";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
+
+require("prismjs/components/prism-csharp");
 
 const Container = styled.div`
   max-height: 300px;
@@ -84,15 +88,48 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
       </Category>
       <Category title="Stack">
         {props.exception?.details &&
-          props.exception.details.map((item, i) => (
-            <div key={i}>
-              <div>{item.fileName}</div>
-              <div>{item.lineNumber}</div>
+          props.exception.details.map((item, z) => (
+            <div key={z}>
+              <div>
+                {item.fileName} {item.lineNumber}
+              </div>
               <div>{item.targetLineText!}</div>
               <div>
-                {item.surroundingLinesText!.split("\r\n").map((line, j) => (
-                  <div key={j}>{line}</div>
-                ))}
+                <Highlight
+                  theme={themes.vsLight}
+                  code={item.surroundingLinesText!}
+                  language="cs"
+                  prism={Prism}
+                >
+                  {({
+                    className,
+                    style,
+                    tokens,
+                    getLineProps,
+                    getTokenProps,
+                  }) => (
+                    <pre style={style}>
+                      {tokens.map((line, i) => (
+                        <div
+                          key={i}
+                          {...getLineProps({ line })}
+                          style={{
+                            backgroundColor:
+                              i + (item.startLineNumber || 1) ===
+                              item.lineNumber
+                                ? "#ff4d4f"
+                                : undefined,
+                          }}
+                        >
+                          <span>{i + (item.startLineNumber || 1)}</span>
+                          {line.map((token, key) => (
+                            <span key={key} {...getTokenProps({ token })} />
+                          ))}
+                        </div>
+                      ))}
+                    </pre>
+                  )}
+                </Highlight>
               </div>
             </div>
           ))}
