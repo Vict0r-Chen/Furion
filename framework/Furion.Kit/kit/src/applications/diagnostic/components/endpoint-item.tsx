@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
+import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 import Mdx from "../../../mdxs/index.mdx";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
@@ -25,7 +26,7 @@ const Url = styled(TextBox)`
   cursor: pointer;
 
   &:hover {
-    color: #000000e0;
+    color: #1677ff;
   }
 `;
 
@@ -34,12 +35,7 @@ const JsonView = styled(Flexbox)`
   align-items: flex-start;
 `;
 
-interface EndpointItemProps {
-  link: string;
-  httpMethod: string;
-}
-
-const EndpointItem: React.FC<EndpointItemProps> = ({ link, httpMethod }) => {
+const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
@@ -47,7 +43,7 @@ const EndpointItem: React.FC<EndpointItemProps> = ({ link, httpMethod }) => {
       <Main $spaceBetween>
         <Space align="center">
           <IconFont type="icon-link" />
-          <HttpMethod value={httpMethod} />
+          <HttpMethod value={props.httpMethod!} />
           <Popover
             placement="right"
             trigger="click"
@@ -63,29 +59,27 @@ const EndpointItem: React.FC<EndpointItemProps> = ({ link, httpMethod }) => {
           >
             <Url
               underline
-              $color={showPopover ? "#1677ff" : "#000000A6"}
+              $color={showPopover ? "#1677ff" : "#000000e0"}
               copyable
             >
-              {decodeURIComponent(link)}
+              {decodeURIComponent(props.urlAddress!)}
             </Url>
           </Popover>
-          <StatusCode code={200} text="OK" />
-          <TextBox $color="#00000073">HTTP SSE 请求</TextBox>
+          <StatusCode code={props.statusCode!} text={props.statusText} />
+          <TextBox $color="#00000073">
+            {props.controllerAction?.displayName}
+          </TextBox>
         </Space>
         <Space>
-          <TextBox $color="#00000073">100ms</TextBox>
+          {props.beginTimestamp && props.endTimestamp && (
+            <TextBox $color="#00000073">
+              {props.endTimestamp.getTime() - props.beginTimestamp.getTime()}ms
+            </TextBox>
+          )}
         </Space>
       </Main>
       <JsonView $spaceBetween>
-        <ReactJson
-          collapsed
-          src={{
-            name: "Furion",
-            age: 31,
-            version: "0.0.1",
-          }}
-          name="0HMSRFDAEBL6G:0000002B"
-        />
+        <ReactJson collapsed src={props} name={props.traceIdentifier} />
       </JsonView>
     </ItemContainer>
   );

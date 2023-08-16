@@ -1,121 +1,128 @@
-import { Alert } from "antd";
-import React, { useEffect } from "react";
+import { Alert, Button, Empty, Skeleton, Typography } from "antd";
+import { useLiveQuery } from "dexie-react-hooks";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { database } from "../../../databases";
+import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 import EndpointItem from "./endpoint-item";
 
 const Container = styled.div``;
 
-const ItemContainer = styled.div`
-  padding: 15px 0;
+const ItemContainer = styled.div``;
+
+const AlertBox = styled(Alert)`
+  margin-bottom: 15px;
 `;
 
+const Operation = styled.div`
+  text-align: center;
+  margin: 15px 0;
+`;
+
+const pageSize = 5;
+
 const Endpoint: React.FC = () => {
+  const [online, setOnline] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const endpointDiagnostics = useLiveQuery(async () => {
+    var data = await database.endpointDiagnostic
+      .reverse()
+      .limit(pageSize * page)
+      .toArray();
+
+    setLoading(false);
+    return data;
+  }, [page]);
+
+  const count = useLiveQuery(async () => database.endpointDiagnostic.count());
+
   useEffect(() => {
     var eventSource = new EventSource(
       "https://localhost:7115/furion/endpoint-sse"
     );
 
+    const addData = async (data: EndpointDiagnosticModel) => {
+      try {
+        await database.endpointDiagnostic.put(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     eventSource.onopen = (event) => {
-      console.log(event);
+      setOnline(true);
     };
 
     eventSource.onmessage = (event) => {
-      console.log(event);
-      console.log(JSON.parse(event.data));
+      var data = JSON.parse(event.data);
+      if (data.beginTimestamp) {
+        data.beginTimestamp = new Date(data.beginTimestamp);
+      }
+      if (data.endTimestamp) {
+        data.endTimestamp = new Date(data.endTimestamp);
+      }
+
+      addData(data);
     };
 
     eventSource.onerror = (event) => {
-      console.log(event);
+      setOnline(false);
     };
 
     return () => {
-      console.log("eventsouce.onclose");
       eventSource.close();
     };
   }, []);
 
+  if (!endpointDiagnostics) {
+    return (
+      <>
+        <Skeleton active />
+        <Skeleton active />
+        <Skeleton active />
+      </>
+    );
+  }
+
   return (
     <Container>
-      <Alert
-        message="诊断器连接失败，请确保服务器已正常启动。"
-        type="warning"
-        showIcon
-        closable
-      />
+      {!online && (
+        <AlertBox
+          message="诊断器连接失败，请确保服务器已正常启动。"
+          type="warning"
+          showIcon
+          closable
+        />
+      )}
       <ItemContainer>
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="GET"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="POST"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="DELETE"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="PUT"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="HEAD"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="PATCH"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="OPTIONS"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="TRACE"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="CONNECT"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="GET"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="POST"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="DELETE"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="PUT"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="HEAD"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="PATCH"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="OPTIONS"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="TRACE"
-        />
-        <EndpointItem
-          link="https://localhost:7115/furion/http-sse"
-          httpMethod="CONNECT"
-        />
+        {endpointDiagnostics.length === 0 ? (
+          <Empty description="暂无数据" />
+        ) : (
+          endpointDiagnostics &&
+          endpointDiagnostics.map((item) => (
+            <EndpointItem key={item.traceIdentifier} {...item} />
+          ))
+        )}
       </ItemContainer>
+      <Operation
+        onClick={() => {
+          setLoading(true);
+          setPage((p) => p + 1);
+        }}
+      >
+        {count && count > endpointDiagnostics.length ? (
+          <>
+            {loading && <Skeleton active />}
+            <Button>加载更多</Button>
+          </>
+        ) : count ? (
+          <Typography.Text type="secondary">没有更多数据了</Typography.Text>
+        ) : (
+          <></>
+        )}
+      </Operation>
     </Container>
   );
 };

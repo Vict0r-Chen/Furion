@@ -1,8 +1,8 @@
 import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
-    ExclamationCircleOutlined,
-    InfoCircleOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import { Space } from "antd";
 import React from "react";
@@ -12,6 +12,7 @@ import TextBox from "../../../components/textbox";
 const Container = styled.div`
   display: inline-block;
   font-size: 13px;
+  font-weight: 600;
 `;
 
 export const getIconColor = (code: number): [JSX.Element, string] => {

@@ -52,6 +52,6 @@ internal static class HttpContextExtensions
             return null;
         }
 
-        return Helpers.SplitCamelCase(((HttpStatusCode)statusCode).ToString());
+        return ((HttpStatusCode)statusCode).ToString();
     }
 }

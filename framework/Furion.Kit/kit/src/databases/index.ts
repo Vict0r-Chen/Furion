@@ -1,13 +1,16 @@
 import Dexie, { Table } from "dexie";
-import EndpointDiagnostic from "./types/endpoint.diagnostic";
+import { EndpointDiagnosticModel } from "./types/endpoint.diagnostic";
 
 export class FurionKitDexie extends Dexie {
   constructor() {
     super("furion-kit");
-    this.version(1).stores({});
+
+    this.version(1).stores({
+      endpointDiagnostic: "++traceIdentifier",
+    });
   }
 
-  endpointDiagnostic!: Table<EndpointDiagnostic>;
+  endpointDiagnostic!: Table<EndpointDiagnosticModel>;
 }
 
 export const database = new FurionKitDexie();
