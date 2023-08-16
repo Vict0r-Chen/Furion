@@ -9,7 +9,8 @@ export interface EndpointDiagnosticModel {
   endTimestamp?: Date;
   query?: Record<string, string | null>;
   cookies?: Record<string, string | null>;
-  headers?: Record<string, string | null>;
+  requestHeaders?: Record<string, string | null>;
+  responseHeaders?: Record<string, string | null>;
   routeValues?: Record<string, any>;
   endpoint?: EndpointModel;
   exception?: ExceptionModel;

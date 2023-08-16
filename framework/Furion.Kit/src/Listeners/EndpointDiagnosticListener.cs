@@ -154,9 +154,11 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         // 移除终点路由诊断模型缓存
         if (_endpointDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var endpointDiagnosticModel))
         {
-            endpointDiagnosticModel.StatusCode = httpContext.Response.StatusCode;
-            endpointDiagnosticModel.StatusText = httpContext.Response.GetStatusText();
-            endpointDiagnosticModel.EndTimestamp = DateTimeOffset.UtcNow;
+            // 获取响应对象
+            var httpResponse = httpContext.Response;
+
+            // 设置响应信息
+            endpointDiagnosticModel.SetResponseInfo(httpResponse);
 
             // 将终点路由诊断模型写入诊断订阅器通道
             _ = WriteAsync(endpointDiagnosticModel);

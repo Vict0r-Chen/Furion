@@ -80,14 +80,19 @@ internal sealed class EndpointDiagnosticModel
     public IDictionary<string, string>? Query { get; internal set; }
 
     /// <summary>
-    /// 客户端 Cookies 集合
+    /// 请求 Cookies 集合
     /// </summary>
     public IDictionary<string, string>? Cookies { get; internal set; }
 
     /// <summary>
     /// 请求 Headers 集合
     /// </summary>
-    public IDictionary<string, string>? Headers { get; internal set; }
+    public IDictionary<string, string>? RequestHeaders { get; internal set; }
+
+    /// <summary>
+    /// 响应 Headers 集合
+    /// </summary>
+    public IDictionary<string, string>? ResponseHeaders { get; internal set; }
 
     /// <summary>
     /// 路由表集合
@@ -115,11 +120,10 @@ internal sealed class EndpointDiagnosticModel
         HttpMethod = httpRequest.Method;
         BeginTimestamp = DateTimeOffset.UtcNow;
         UrlAddress = httpRequest.GetUrlAddress();
-        ContentType = httpRequest.ContentType;
 
         Query = httpRequest.Query.ToDictionary(u => u.Key, u => u.Value.ToString());
         Cookies = httpRequest.Cookies.ToDictionary(u => u.Key, u => u.Value);
-        Headers = httpRequest.Headers.ToDictionary(u => u.Key, u => u.Value.ToString());
+        RequestHeaders = httpRequest.Headers.ToDictionary(u => u.Key, u => u.Value.ToString());
         RouteValues = httpRequest.RouteValues.ToDictionary(u => u.Key, u => u.Value);
 
         // 获取终点路由
@@ -135,5 +139,18 @@ internal sealed class EndpointDiagnosticModel
                 ControllerAction = new(controllerActionDescriptor);
             }
         }
+    }
+
+    /// <summary>
+    /// 设置响应信息
+    /// </summary>
+    /// <param name="httpResponse"><see cref="HttpResponse"/></param>
+    internal void SetResponseInfo(HttpResponse httpResponse)
+    {
+        StatusCode = httpResponse.StatusCode;
+        StatusText = httpResponse.GetStatusText();
+        ContentType = httpResponse.ContentType;
+        ResponseHeaders = httpResponse.Headers.ToDictionary(u => u.Key, u => u.Value.ToString());
+        EndTimestamp = DateTimeOffset.UtcNow;
     }
 }

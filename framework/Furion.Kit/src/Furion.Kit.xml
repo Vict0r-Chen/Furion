@@ -298,12 +298,17 @@
         </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.Cookies">
             <summary>
-            客户端 Cookies 集合
+            请求 Cookies 集合
             </summary>
         </member>
-        <member name="P:Furion.Kit.EndpointDiagnosticModel.Headers">
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.RequestHeaders">
             <summary>
             请求 Headers 集合
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.ResponseHeaders">
+            <summary>
+            响应 Headers 集合
             </summary>
         </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.RouteValues">
@@ -324,6 +329,12 @@
             <summary>
             初始化
             </summary>
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticModel.SetResponseInfo(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            设置响应信息
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
         </member>
         <member name="T:Furion.Kit.EndpointModel">
             <summary>
