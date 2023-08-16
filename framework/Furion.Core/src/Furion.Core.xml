@@ -351,6 +351,23 @@
             <param name="assembly"><see cref="T:System.Reflection.Assembly"/></param>
             <returns><see cref="T:System.String"/></returns>
         </member>
+        <member name="T:System.Collections.Concurrent.ConcurrentDictionaryExtensions">
+            <summary>
+            <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.Collections.Concurrent.ConcurrentDictionaryExtensions.TryUpdate``2(System.Collections.Concurrent.ConcurrentDictionary{``0,``1},``0,System.Func{``1,``1},``1@)">
+            <summary>
+            根据字典键更新对应的值
+            </summary>
+            <typeparam name="TKey">字典键类型</typeparam>
+            <typeparam name="TValue">字典值类型</typeparam>
+            <param name="dictionary"><see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2"/></param>
+            <param name="key"><typeparamref name="TKey"/></param>
+            <param name="updateFactory">自定义更新委托</param>
+            <param name="value"><typeparamref name="TValue"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
         <member name="T:System.Collections.Generic.ICollectionExtensions">
             <summary>
             <see cref="T:System.Collections.Generic.ICollection`1"/> 拓展类

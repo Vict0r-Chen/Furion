@@ -17,6 +17,25 @@ namespace Furion.Kit;
 /// <summary>
 /// 终点路由诊断监听器
 /// </summary>
-internal sealed class EndpointDiagnosticListener
+internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<EndpointDiagnosticModel>
 {
+    /// <summary>
+    /// 终点路由诊断模型缓存集合
+    /// </summary>
+    internal readonly ConcurrentDictionary<string, EndpointDiagnosticModel> _endpointDiagnosticModelsCache;
+
+    /// <summary>
+    /// <inheritdoc cref="EndpointDiagnosticListener" />
+    /// </summary>
+    /// <param name="capacity"></param>
+    internal EndpointDiagnosticListener(int capacity = 3000)
+        : base("Microsoft.AspNetCore", capacity)
+    {
+        _endpointDiagnosticModelsCache = new(StringComparer.OrdinalIgnoreCase);
+    }
+
+    /// <inheritdoc />
+    internal override void OnSubscribe(KeyValuePair<string, object?> data)
+    {
+    }
 }

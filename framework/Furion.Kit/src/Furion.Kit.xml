@@ -137,6 +137,20 @@
             终点路由诊断监听器
             </summary>
         </member>
+        <member name="F:Furion.Kit.EndpointDiagnosticListener._endpointDiagnosticModelsCache">
+            <summary>
+            终点路由诊断模型缓存集合
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.#ctor(System.Int32)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.EndpointDiagnosticListener" />
+            </summary>
+            <param name="capacity"></param>
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Kit.HttpDiagnosticListener">
             <summary>
             HTTP 诊断监听器
@@ -167,6 +181,11 @@
             </summary>
             <param name="anonymousObject">匿名类对象</param>
             <returns><see cref="T:System.Func`2"/></returns>
+        </member>
+        <member name="T:Furion.Kit.EndpointDiagnosticModel">
+            <summary>
+            终点路由诊断模型
+            </summary>
         </member>
         <member name="T:Furion.Kit.EndpointModel">
             <summary>
