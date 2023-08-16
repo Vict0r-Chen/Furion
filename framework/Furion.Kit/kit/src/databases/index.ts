@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import EndpointDiagnostic from "./types/endpoint.diagnosis";
+import EndpointDiagnostic from "./types/endpoint.diagnostic";
 
 export class FurionKitDexie extends Dexie {
   constructor() {

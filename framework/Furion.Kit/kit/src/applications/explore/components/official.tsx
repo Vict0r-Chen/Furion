@@ -78,7 +78,7 @@ const Official: React.FC = () => {
           title="诊断"
           description="在这里可以查看系统概况"
           classify="工具"
-          logo={<IconFont type="icon-diagnosis" $size={26} />}
+          logo={<IconFont type="icon-diagnostic" $size={26} />}
           banner={<Banner src={banner2} alt="" />}
           onClick={() => showDrawer("panel")}
           installClick={() => message.success("安装成功")}
@@ -108,7 +108,7 @@ const Official: React.FC = () => {
           title="诊断"
           description="在这里可以查看系统概况"
           classify="工具"
-          logo={<IconFont type="icon-diagnosis" $size={26} />}
+          logo={<IconFont type="icon-diagnostic" $size={26} />}
           banner={<Banner src={banner2} alt="" />}
           onClick={() => showDrawer("panel")}
           installClick={() => message.success("安装成功")}

@@ -1,5 +1,5 @@
 import { createHashRouter } from "react-router-dom";
-import Diagnosis from "./applications/diagnosis";
+import Diagnostic from "./applications/diagnostic";
 import Discussion from "./applications/discussion";
 import Explore, { ExploreDetail } from "./applications/explore";
 import Generate from "./applications/generate";
@@ -23,8 +23,8 @@ const router = createHashRouter([
             element: <Panel />,
           },
           {
-            path: "diagnosis",
-            element: <Diagnosis />,
+            path: "diagnostic",
+            element: <Diagnostic />,
           },
           {
             path: "openapi",

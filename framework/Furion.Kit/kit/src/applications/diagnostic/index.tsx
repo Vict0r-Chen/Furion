@@ -171,7 +171,7 @@ type FieldType = {
   category?: string;
 };
 
-const Diagnosis: React.FC = () => {
+const Diagnostic: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -298,4 +298,4 @@ const Diagnosis: React.FC = () => {
   );
 };
 
-export default Diagnosis;
+export default Diagnostic;
