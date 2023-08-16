@@ -4,6 +4,7 @@ export interface EndpointDiagnosticModel {
   urlAddress?: string;
   statusCode?: number;
   statusText?: string;
+  contentType?: string;
   beginTimestamp?: Date;
   endTimestamp?: Date;
   query?: Record<string, string | null>;

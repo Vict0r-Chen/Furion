@@ -122,6 +122,7 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Endpoint />,
+    forceRender: true,
   },
   {
     key: "3",

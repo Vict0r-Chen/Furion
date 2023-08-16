@@ -276,6 +276,11 @@
             状态文本
             </summary>
         </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.ContentType">
+            <summary>
+            Content-Type
+            </summary>
+        </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.BeginTimestamp">
             <summary>
             开始时间戳

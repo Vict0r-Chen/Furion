@@ -60,6 +60,11 @@ internal sealed class EndpointDiagnosticModel
     public string? StatusText { get; internal set; }
 
     /// <summary>
+    /// Content-Type
+    /// </summary>
+    public string? ContentType { get; internal set; }
+
+    /// <summary>
     /// 开始时间戳
     /// </summary>
     public DateTimeOffset? BeginTimestamp { get; internal set; }
@@ -110,6 +115,7 @@ internal sealed class EndpointDiagnosticModel
         HttpMethod = httpRequest.Method;
         BeginTimestamp = DateTimeOffset.UtcNow;
         UrlAddress = httpRequest.GetUrlAddress();
+        ContentType = httpRequest.ContentType;
 
         Query = httpRequest.Query.ToDictionary(u => u.Key, u => u.Value.ToString());
         Cookies = httpRequest.Cookies.ToDictionary(u => u.Key, u => u.Value);
