@@ -17,6 +17,7 @@ import TextBox from "../../components/textbox";
 import Content from "../../home/content";
 import Component from "./components/component";
 import Configuration from "./components/configuration";
+import EFCore from "./components/efcore";
 import Endpoint from "./components/endpoint";
 import Event from "./components/event";
 import Exception from "./components/exception";
@@ -93,6 +94,11 @@ const NewList: React.FC = () => {
         // disabled
       />
       <Function
+        title="EFCore"
+        icon={<Function.Icon type="icon-efcore" />}
+        onClick={clickHandle}
+      />
+      <Function
         badge="Beta"
         title="自定义"
         icon={<Function.Icon type="icon-customize" />}
@@ -163,6 +169,16 @@ const items: TabsProps["items"] = [
       </Space>
     ),
     children: <Exception />,
+  },
+  {
+    key: "7",
+    label: (
+      <Space>
+        <Icon type="icon-efcore" $size={15} />
+        <TextBox $disableSelect>EFCore</TextBox>
+      </Space>
+    ),
+    children: <EFCore />,
   },
 ];
 
