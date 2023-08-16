@@ -74,7 +74,11 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
               {decodeURIComponent(props.urlAddress!)}
             </Url>
           </Popover>
-          <StatusCode code={props.statusCode!} text={props.statusText} />
+          <StatusCode
+            code={props.statusCode!}
+            text={props.statusText}
+            message={props.exception?.message}
+          />
           <TextBox $color="#00000073">
             {props.controllerAction?.displayName}
           </TextBox>

@@ -1,4 +1,4 @@
-import { Space } from "antd";
+import { Space, Tooltip } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import IconFont from "../../../components/iconfont";
@@ -29,20 +29,27 @@ export const getIconColor = (code: number): [JSX.Element, string] => {
 interface StatusCodeProps {
   code: number;
   text?: string;
+  message?: string;
 }
 
-const StatusCode: React.FC<StatusCodeProps> = ({ code, text = "" }) => {
+const StatusCode: React.FC<StatusCodeProps> = ({
+  code,
+  text = "",
+  message,
+}) => {
   const [icon, color] = getIconColor(code);
   const IconColor = React.cloneElement<any>(icon, { style: { color } });
 
   return (
     <Container>
-      <Space align="center" size={5}>
-        {IconColor}
-        <TextBox $color={color}>
-          {code} {text}
-        </TextBox>
-      </Space>
+      <Tooltip title={message} color="#ff4d4f">
+        <Space align="center" size={5}>
+          {IconColor}
+          <TextBox $color={color}>
+            {code} {text}
+          </TextBox>
+        </Space>
+      </Tooltip>
     </Container>
   );
 };
