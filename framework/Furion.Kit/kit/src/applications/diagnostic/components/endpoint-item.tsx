@@ -85,7 +85,9 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
             <Url
               underline
               $color={isError(props.statusCode) ? errorColor : "#000000e0"}
-              copyable
+              copyable={{
+                tooltips: ["复制", "复制成功"],
+              }}
             >
               {decodeURIComponent(props.urlAddress!)}
             </Url>
