@@ -30,7 +30,6 @@ interface HttpMethodProps {
 }
 
 const Value = styled(TextBox)`
-  font-weight: 600;
   display: inline-block;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   font-size: 13px;

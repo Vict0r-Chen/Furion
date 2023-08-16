@@ -11,6 +11,7 @@ import TextBox from "../../../components/textbox";
 
 const Container = styled.div`
   display: inline-block;
+  font-size: 13px;
 `;
 
 export const getIconColor = (code: number): [JSX.Element, string] => {
@@ -36,7 +37,7 @@ const StatusCode: React.FC<StatusCodeProps> = ({ code, text = "" }) => {
 
   return (
     <Container>
-      <Space align="center">
+      <Space align="center" size={5}>
         {IconColor}
         <TextBox $color={color}>
           {code} {text}

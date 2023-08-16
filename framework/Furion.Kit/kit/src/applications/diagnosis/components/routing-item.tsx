@@ -8,7 +8,7 @@ import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 
 const ItemContainer = styled.div`
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const Main = styled(Flexbox)`
@@ -16,6 +16,11 @@ const Main = styled(Flexbox)`
   align-items: center;
   padding: 5px 10px 5px 5px;
   border-radius: 5px;
+`;
+
+const Url = styled(TextBox)`
+  font-size: 14px;
+  cursor: pointer;
 `;
 
 const JsonView = styled(Flexbox)`
@@ -35,11 +40,11 @@ const RoutingItem: React.FC<RoutingItemProps> = ({ link, httpMethod }) => {
         <Space align="center">
           <IconFont type="icon-link" />
           <HttpMethod value={httpMethod} />
-          <TextBox underline $color="#000000E0">
+          <Url underline $color="#000000E0" copyable>
             {link}
-          </TextBox>
+          </Url>
           <StatusCode code={200} text="OK" />
-          <TextBox>HTTP SSE 请求</TextBox>
+          <TextBox $color="#00000073">HTTP SSE 请求</TextBox>
         </Space>
         <Space>
           <TextBox $color="#00000073">100ms</TextBox>

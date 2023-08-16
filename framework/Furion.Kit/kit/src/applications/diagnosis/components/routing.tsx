@@ -5,6 +5,10 @@ import RoutingItem from "./routing-item";
 
 const Container = styled.div``;
 
+const ItemContainer = styled.div`
+  padding: 15px 0;
+`;
+
 const Routing: React.FC = () => {
   useEffect(() => {
     var eventSource = new EventSource("https://localhost:7115/furion/http-sse");
@@ -35,79 +39,80 @@ const Routing: React.FC = () => {
         showIcon
         closable
       />
-      <br />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="GET"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="POST"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="DELETE"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="PUT"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="HEAD"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="PATCH"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="OPTIONS"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="TRACE"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="CONNECT"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="GET"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="POST"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="DELETE"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="PUT"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="HEAD"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="PATCH"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="OPTIONS"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="TRACE"
-      />
-      <RoutingItem
-        link="https://localhost:7115/furion/http-sse"
-        httpMethod="CONNECT"
-      />
+      <ItemContainer>
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="GET"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="POST"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="DELETE"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="PUT"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="HEAD"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="PATCH"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="OPTIONS"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="TRACE"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="CONNECT"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="GET"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="POST"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="DELETE"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="PUT"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="HEAD"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="PATCH"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="OPTIONS"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="TRACE"
+        />
+        <RoutingItem
+          link="https://localhost:7115/furion/http-sse"
+          httpMethod="CONNECT"
+        />
+      </ItemContainer>
     </Container>
   );
 };
