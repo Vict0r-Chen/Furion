@@ -17,15 +17,27 @@ const isError = (statusCode?: number | null): boolean => {
   return statusCode >= 500 && statusCode <= 599;
 };
 
+const isWarn = (statusCode?: number | null): boolean => {
+  if (!statusCode) {
+    return false;
+  }
+
+  return statusCode >= 400 && statusCode <= 499;
+};
+
 const errorColor = "#ff4d4f";
 
 const ItemContainer = styled.div`
   font-size: 14px;
 `;
 
-const Main = styled(Flexbox)<{ $error?: boolean }>`
+const Main = styled(Flexbox)<{ $error?: boolean; $warn?: boolean }>`
   background-color: ${(props) =>
-    props.$error ? "rgb(255, 240, 240)" : "#f7f8fb"};
+    props.$error
+      ? "rgb(255, 240, 240)"
+      : props.$warn
+      ? "rgb(255, 251, 230)"
+      : "#f7f8fb"};
   align-items: center;
   padding: 5px 10px 5px 5px;
   border-radius: 5px;
@@ -48,7 +60,11 @@ const JsonView = styled(Flexbox)`
 const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
   return (
     <ItemContainer>
-      <Main $spaceBetween $error={isError(props.statusCode)}>
+      <Main
+        $spaceBetween
+        $error={isError(props.statusCode)}
+        $warn={isWarn(props.statusCode)}
+      >
         <Space align="center">
           <IconFont
             type="icon-link"
