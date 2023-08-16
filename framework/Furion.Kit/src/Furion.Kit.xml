@@ -156,11 +156,6 @@
             终点路由诊断模型缓存集合
             </summary>
         </member>
-        <member name="F:Furion.Kit.EndpointDiagnosticListener._httpContextGetter">
-            <summary>
-            httpContext 属性值访问器
-            </summary>
-        </member>
         <member name="M:Furion.Kit.EndpointDiagnosticListener.#ctor(System.Int32)">
             <summary>
             <inheritdoc cref="T:Furion.Kit.EndpointDiagnosticListener" />
@@ -182,9 +177,9 @@
             </summary>
             <param name="value">事件负载值</param>
         </member>
-        <member name="M:Furion.Kit.EndpointDiagnosticListener.HostingEndRequestHandle(System.Object)">
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.HostingHttpRequestInStopHandle(System.Object)">
             <summary>
-            Microsoft.AspNetCore.Hosting.EndRequest 事件处理
+            Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop 事件处理
             </summary>
             <param name="value">事件负载值</param>
         </member>

@@ -25,11 +25,6 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     internal readonly ConcurrentDictionary<string, EndpointDiagnosticModel> _endpointDiagnosticModelsCache;
 
     /// <summary>
-    /// httpContext 属性值访问器
-    /// </summary>
-    internal Func<object, object?>? _httpContextGetter;
-
-    /// <summary>
     /// <inheritdoc cref="EndpointDiagnosticListener" />
     /// </summary>
     /// <param name="capacity">诊断订阅器通道容量</param>
@@ -52,9 +47,9 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
             MvcAfterOnActionExecutedHandle(data.Value);
         }
 
-        if (data.Key == "Microsoft.AspNetCore.Hosting.EndRequest")
+        if (data.Key == "Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop")
         {
-            HostingEndRequestHandle(data.Value);
+            HostingHttpRequestInStopHandle(data.Value);
         }
     }
 
@@ -122,36 +117,13 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     }
 
     /// <summary>
-    /// Microsoft.AspNetCore.Hosting.EndRequest 事件处理
+    /// Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop 事件处理
     /// </summary>
     /// <param name="value">事件负载值</param>
-    internal void HostingEndRequestHandle(object? value)
+    internal void HostingHttpRequestInStopHandle(object? value)
     {
         // 空检查
-        if (value is null)
-        {
-            return;
-        }
-
-        // 空检查
-        if (_httpContextGetter is null)
-        {
-            // 获取值类型和 httpContext 属性
-            var dataType = value.GetType();
-            var propertyInfo = dataType.GetProperty("httpContext");
-
-            // 空检查
-            if (propertyInfo is null)
-            {
-                return;
-            }
-
-            // 获取 httpContext 属性值访问器
-            _httpContextGetter = dataType.CreatePropertyGetter(propertyInfo);
-        }
-
-        // 获取 httpContext 属性值
-        if (_httpContextGetter(value) is not HttpContext httpContext)
+        if (value is not HttpContext httpContext)
         {
             return;
         }
