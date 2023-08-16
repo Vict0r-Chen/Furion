@@ -88,7 +88,12 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
         </Space>
       </Main>
       <JsonView $spaceBetween>
-        <ReactJson collapsed src={props} name={props.traceIdentifier} />
+        <ReactJson
+          collapsed
+          src={props}
+          name={props.traceIdentifier}
+          sortKeys
+        />
       </JsonView>
     </ItemContainer>
   );
