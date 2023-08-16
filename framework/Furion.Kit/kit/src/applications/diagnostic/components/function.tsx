@@ -26,6 +26,10 @@ const Container = styled(Upward)<{ $disabled?: boolean }>`
             background-color: rgb(245, 245, 245);
             color: rgb(22, 119, 255);
           }
+
+          &:hover svg {
+            color: rgb(22, 119, 255);
+          }
         `
       : css`
           cursor: not-allowed;
