@@ -32,7 +32,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     /// <summary>
     /// <inheritdoc cref="EndpointDiagnosticListener" />
     /// </summary>
-    /// <param name="capacity"></param>
+    /// <param name="capacity">诊断订阅器通道容量</param>
     internal EndpointDiagnosticListener(int capacity = 3000)
         : base("Microsoft.AspNetCore", capacity)
     {
@@ -93,16 +93,12 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
             return;
         }
 
-        // 空检查
+        // 获取 HttpContext 对象和异常对象
         var httpContext = eventData.ActionExecutedContext.HttpContext;
-        if (httpContext is null)
-        {
-            return;
-        }
+        var exception = eventData.ActionExecutedContext.Exception;
 
         // 空检查
-        var exception = eventData.ActionExecutedContext.Exception;
-        if (exception is null)
+        if (httpContext is null || exception is null)
         {
             return;
         }
@@ -159,7 +155,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         if (_endpointDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var endpointDiagnosticModel))
         {
             endpointDiagnosticModel.StatusCode = httpContext.Response.StatusCode;
-            endpointDiagnosticModel.StatusText = Helpers.SplitCamelCase(((HttpStatusCode)httpContext.Response.StatusCode).ToString());
+            endpointDiagnosticModel.StatusText = httpContext.Response.GetStatusText();
             endpointDiagnosticModel.EndTimestamp = DateTimeOffset.UtcNow;
 
             // 将终点路由诊断模型写入诊断订阅器通道

@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.Http;
 internal static class HttpContextExtensions
 {
     /// <summary>
-    /// 获取完整的请求 URL 地址
+    /// 获取请求对象 URL 地址
     /// </summary>
     /// <param name="httpRequest"><see cref="HttpRequest"/></param>
     /// <returns><see cref="string"/></returns>
@@ -34,5 +34,24 @@ internal static class HttpContextExtensions
             .Append(httpRequest.Path)
             .Append(httpRequest.QueryString)
             .ToString();
+    }
+
+    /// <summary>
+    /// 获取响应对象状态文本
+    /// </summary>
+    /// <param name="httpResponse"><see cref="HttpResponse"/></param>
+    /// <returns><see cref="string"/></returns>
+    internal static string? GetStatusText(this HttpResponse httpResponse)
+    {
+        // 获取响应状态码
+        var statusCode = httpResponse.StatusCode;
+
+        // 检查响应状态码是否是预设的 HttpStatusCode 值
+        if (!Enum.IsDefined(typeof(HttpStatusCode), statusCode))
+        {
+            return null;
+        }
+
+        return Helpers.SplitCamelCase(((HttpStatusCode)statusCode).ToString());
     }
 }

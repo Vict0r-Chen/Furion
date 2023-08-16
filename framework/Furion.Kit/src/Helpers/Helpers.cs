@@ -20,7 +20,7 @@ namespace Furion.Kit;
 internal static partial class Helpers
 {
     /// <summary>
-    /// 分割大驼峰命名字符串
+    /// 分割大驼峰字符串值
     /// </summary>
     /// <param name="str">字符串</param>
     /// <returns><see cref="string"/></returns>

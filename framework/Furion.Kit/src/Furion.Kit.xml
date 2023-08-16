@@ -11,9 +11,16 @@
         </member>
         <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
             <summary>
-            获取完整的请求 URL 地址
+            获取请求对象 URL 地址
             </summary>
             <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            获取响应对象状态文本
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions">
@@ -58,7 +65,7 @@
         </member>
         <member name="M:Furion.Kit.Helpers.SplitCamelCase(System.String)">
             <summary>
-            分割大驼峰命名字符串
+            分割大驼峰字符串值
             </summary>
             <param name="str">字符串</param>
             <returns><see cref="T:System.String"/></returns>
@@ -183,7 +190,7 @@
             <summary>
             <inheritdoc cref="T:Furion.Kit.EndpointDiagnosticListener" />
             </summary>
-            <param name="capacity"></param>
+            <param name="capacity">诊断订阅器通道容量</param>
         </member>
         <member name="M:Furion.Kit.EndpointDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
             <inheritdoc />
