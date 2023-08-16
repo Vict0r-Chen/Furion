@@ -1,9 +1,11 @@
-import { Space } from "antd";
+import { Popover, Space } from "antd";
+import { useState } from "react";
 import ReactJson from "react-json-view";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
+import Mdx from "../../../mdxs/index.mdx";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 
@@ -21,6 +23,10 @@ const Main = styled(Flexbox)`
 const Url = styled(TextBox)`
   font-size: 14px;
   cursor: pointer;
+
+  &:hover {
+    color: #000000e0;
+  }
 `;
 
 const JsonView = styled(Flexbox)`
@@ -34,15 +40,35 @@ interface RoutingItemProps {
 }
 
 const RoutingItem: React.FC<RoutingItemProps> = ({ link, httpMethod }) => {
+  const [showPopover, setShowPopover] = useState(false);
+
   return (
     <ItemContainer>
       <Main $spaceBetween>
         <Space align="center">
           <IconFont type="icon-link" />
           <HttpMethod value={httpMethod} />
-          <Url underline $color="#000000E0" copyable>
-            {link}
-          </Url>
+          <Popover
+            placement="right"
+            trigger="click"
+            destroyTooltipOnHide
+            content={
+              <div style={{ width: 400, height: 300, overflowY: "auto" }}>
+                <Mdx />
+              </div>
+            }
+            onOpenChange={(v) => {
+              setShowPopover(v);
+            }}
+          >
+            <Url
+              underline
+              $color={showPopover ? "#1677ff" : "#000000A6"}
+              copyable
+            >
+              {link}
+            </Url>
+          </Popover>
           <StatusCode code={200} text="OK" />
           <TextBox $color="#00000073">HTTP SSE 请求</TextBox>
         </Space>

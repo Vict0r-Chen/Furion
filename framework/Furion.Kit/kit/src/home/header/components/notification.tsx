@@ -68,7 +68,7 @@ const Content: React.FC = () => {
 const NotificationBox: React.FC = () => {
   return (
     <Container>
-      <Popover placement="bottom" content={<Content />} trigger="click">
+      <Popover placement="bottom" trigger="click" content={<Content />}>
         <Badge count={5} size="small">
           <Header.Icon type="icon-notification" />
         </Badge>
