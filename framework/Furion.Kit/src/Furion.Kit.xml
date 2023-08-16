@@ -325,6 +325,11 @@
         <member name="P:Furion.Kit.EndpointDiagnosticModel.ControllerAction">
             <inheritdoc cref="T:Furion.Kit.ControllerActionModel"/>
         </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Filters">
+            <summary>
+            筛选器集合
+            </summary>
+        </member>
         <member name="M:Furion.Kit.EndpointDiagnosticModel.Initialize">
             <summary>
             初始化

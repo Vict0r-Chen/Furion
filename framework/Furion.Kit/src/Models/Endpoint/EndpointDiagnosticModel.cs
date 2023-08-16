@@ -109,6 +109,11 @@ internal sealed class EndpointDiagnosticModel
     public ControllerActionModel? ControllerAction { get; internal set; }
 
     /// <summary>
+    /// 筛选器集合
+    /// </summary>
+    public List<string?> Filters { get; internal set; } = new();
+
+    /// <summary>
     /// 初始化
     /// </summary>
     internal void Initialize()

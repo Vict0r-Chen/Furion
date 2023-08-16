@@ -15,6 +15,7 @@ export interface EndpointDiagnosticModel {
   endpoint?: EndpointModel;
   exception?: ExceptionModel;
   controllerAction?: ControllerActionModel;
+  filters?: string[];
 }
 
 export interface ControllerActionModel {

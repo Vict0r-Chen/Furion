@@ -93,20 +93,25 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
             return;
         }
 
-        // 获取 HttpContext 对象和异常对象
-        var httpContext = eventData.ActionExecutedContext.HttpContext;
-        var exception = eventData.ActionExecutedContext.Exception;
-
         // 空检查
-        if (httpContext is null || exception is null)
+        var httpContext = eventData.ActionExecutedContext.HttpContext;
+        if (httpContext is null)
         {
             return;
         }
 
+        // 获取执行异常
+        var exception = eventData.ActionExecutedContext.Exception;
+
         // 更新终点路由诊断模型缓存
         if (_endpointDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, endpointDiagnosticModel =>
         {
-            endpointDiagnosticModel.Exception = new ExceptionModel(exception);
+            endpointDiagnosticModel.Exception = exception is not null
+                ? new(exception)
+                : null;
+
+            // 添加执行的筛选器名称
+            endpointDiagnosticModel.Filters.Add(eventData.Filter.ToString());
 
             return endpointDiagnosticModel;
         }, out var updatedEndpointDiagnosticModel))
