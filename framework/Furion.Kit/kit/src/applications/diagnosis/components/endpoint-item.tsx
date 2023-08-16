@@ -34,12 +34,12 @@ const JsonView = styled(Flexbox)`
   align-items: flex-start;
 `;
 
-interface RoutingItemProps {
+interface EndpointItemProps {
   link: string;
   httpMethod: string;
 }
 
-const RoutingItem: React.FC<RoutingItemProps> = ({ link, httpMethod }) => {
+const EndpointItem: React.FC<EndpointItemProps> = ({ link, httpMethod }) => {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
@@ -66,7 +66,7 @@ const RoutingItem: React.FC<RoutingItemProps> = ({ link, httpMethod }) => {
               $color={showPopover ? "#1677ff" : "#000000A6"}
               copyable
             >
-              {link}
+              {decodeURIComponent(link)}
             </Url>
           </Popover>
           <StatusCode code={200} text="OK" />
@@ -91,4 +91,4 @@ const RoutingItem: React.FC<RoutingItemProps> = ({ link, httpMethod }) => {
   );
 };
 
-export default RoutingItem;
+export default EndpointItem;

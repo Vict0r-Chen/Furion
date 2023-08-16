@@ -132,6 +132,11 @@
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.Dispose">
             <inheritdoc />
         </member>
+        <member name="T:Furion.Kit.EndpointDiagnosticListener">
+            <summary>
+            终点路由诊断监听器
+            </summary>
+        </member>
         <member name="T:Furion.Kit.HttpDiagnosticListener">
             <summary>
             HTTP 诊断监听器

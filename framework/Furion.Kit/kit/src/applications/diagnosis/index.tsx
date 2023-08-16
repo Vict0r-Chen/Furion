@@ -17,11 +17,11 @@ import TextBox from "../../components/textbox";
 import Content from "../../home/content";
 import Component from "./components/component";
 import Configuration from "./components/configuration";
+import Endpoint from "./components/endpoint";
 import Event from "./components/event";
 import Exception from "./components/exception";
 import Function from "./components/function";
 import Logging from "./components/logging";
-import Routing from "./components/routing";
 import DiagnosisContext from "./contexts";
 
 const AddIcon = styled(IconFont)`
@@ -121,7 +121,7 @@ const items: TabsProps["items"] = [
         <TextBox $disableSelect>终点路由</TextBox>
       </Space>
     ),
-    children: <Routing />,
+    children: <Endpoint />,
   },
   {
     key: "3",

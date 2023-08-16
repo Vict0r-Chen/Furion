@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import { RoutingDiagnosis } from "./types/routingDiagnosis";
+import EndpointDiagnostic from "./types/endpoint.diagnosis";
 
 export class FurionKitDexie extends Dexie {
   constructor() {
@@ -7,7 +7,7 @@ export class FurionKitDexie extends Dexie {
     this.version(1).stores({});
   }
 
-  routingDiagnosis!: Table<RoutingDiagnosis>;
+  endpointDiagnostic!: Table<EndpointDiagnostic>;
 }
 
 export const database = new FurionKitDexie();

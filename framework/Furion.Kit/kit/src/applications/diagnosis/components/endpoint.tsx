@@ -1,7 +1,7 @@
 import { Alert } from "antd";
 import React, { useEffect } from "react";
 import { styled } from "styled-components";
-import RoutingItem from "./routing-item";
+import EndpointItem from "./endpoint-item";
 
 const Container = styled.div``;
 
@@ -9,7 +9,7 @@ const ItemContainer = styled.div`
   padding: 15px 0;
 `;
 
-const Routing: React.FC = () => {
+const Endpoint: React.FC = () => {
   useEffect(() => {
     var eventSource = new EventSource("https://localhost:7115/furion/http-sse");
 
@@ -40,75 +40,75 @@ const Routing: React.FC = () => {
         closable
       />
       <ItemContainer>
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="GET"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="POST"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="DELETE"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="PUT"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="HEAD"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="PATCH"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="OPTIONS"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="TRACE"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="CONNECT"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="GET"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="POST"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="DELETE"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="PUT"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="HEAD"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="PATCH"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="OPTIONS"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="TRACE"
         />
-        <RoutingItem
+        <EndpointItem
           link="https://localhost:7115/furion/http-sse"
           httpMethod="CONNECT"
         />
@@ -117,4 +117,4 @@ const Routing: React.FC = () => {
   );
 };
 
-export default Routing;
+export default Endpoint;
