@@ -14,7 +14,7 @@
             添加 SSE 请求终点路由
             </summary>
             <param name="endpoints"><see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/></param>
-            <param name="pattern">路由</param>
+            <param name="pattern">路由模板</param>
             <param name="handler">处理程序</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.RouteHandlerBuilder"/></returns>
         </member>
@@ -38,6 +38,11 @@
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <param name="kitOptions"></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="T:Furion.Kit.Helpers">
+            <summary>
+            Kit 模块帮助类
+            </summary>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
@@ -271,6 +276,11 @@
         <member name="T:Furion.Kit.KitOptions">
             <summary>
             Kit 模块选项
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.KitOptions.Root">
+            <summary>
+            根地址
             </summary>
         </member>
         <member name="P:Furion.Kit.KitOptions.Capacity">

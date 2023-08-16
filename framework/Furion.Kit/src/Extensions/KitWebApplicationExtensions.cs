@@ -41,7 +41,7 @@ public static class KitWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
-        webApplication.MapGroup("/furion")
+        webApplication.MapGroup(kitOptions.Root)
             .MapGetSSE("http-sse", async (HttpContext context, CancellationToken cancellationToken) =>
             {
                 await new HttpDiagnosticListener(kitOptions.Capacity).SSEHandler(context, cancellationToken);
@@ -54,7 +54,7 @@ public static class KitWebApplicationExtensions
         webApplication.UseFileServer(new FileServerOptions
         {
             FileProvider = new EmbeddedFileProvider(currentAssembly, $"{currentAssembly.GetName().Name}.Assets"),
-            RequestPath = "/furion",
+            RequestPath = kitOptions.Root,
             EnableDirectoryBrowsing = false
         });
 

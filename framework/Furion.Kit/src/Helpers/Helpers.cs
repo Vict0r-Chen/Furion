@@ -12,24 +12,11 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Microsoft.AspNetCore.Builder;
+namespace Furion.Kit;
 
 /// <summary>
-/// Kit 模块 <see cref="IEndpointRouteBuilder"/> 拓展类
+/// Kit 模块帮助类
 /// </summary>
-internal static class KitEndpointRouteBuilderExtensions
+internal static class Helpers
 {
-    /// <summary>
-    /// 添加 SSE 请求终点路由
-    /// </summary>
-    /// <param name="endpoints"><see cref="IEndpointRouteBuilder"/></param>
-    /// <param name="pattern">路由模板</param>
-    /// <param name="handler">处理程序</param>
-    /// <returns><see cref="RouteHandlerBuilder"/></returns>
-    internal static RouteHandlerBuilder MapGetSSE(this IEndpointRouteBuilder endpoints, [StringSyntax("Route")] string pattern, Delegate handler)
-    {
-        return endpoints.MapGet(pattern, handler)
-            .Accepts<NoContent>("text/event-stream")
-            .ExcludeFromDescription();
-    }
 }
