@@ -56,7 +56,6 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         ArgumentException.ThrowIfNullOrWhiteSpace(listenerCategory);
 
         _listenerCategory = listenerCategory;
-
         _diagnosticChannel = Channel.CreateBounded<TData>(new BoundedChannelOptions(capacity)
         {
             FullMode = BoundedChannelFullMode.Wait
