@@ -103,19 +103,18 @@ internal sealed class EndpointDiagnosticModel
     /// </summary>
     internal void Initialize()
     {
-        TraceIdentifier = _httpContext.TraceIdentifier;
-        HttpMethod = _httpContext.Request.Method;
-        BeginTimestamp = DateTimeOffset.UtcNow;
-        UrlAddress = _httpContext.Request.GetUrlAddress();
+        // 获取请求对象
+        var httpRequest = _httpContext.Request;
 
-        Query = _httpContext.Request.Query
-            .ToDictionary(u => u.Key, u => u.Value.ToString());
-        Cookies = _httpContext.Request.Cookies
-            .ToDictionary(u => u.Key, u => u.Value);
-        Headers = _httpContext.Request.Headers
-            .ToDictionary(u => u.Key, u => u.Value.ToString());
-        RouteValues = _httpContext.Request.RouteValues
-            .ToDictionary(u => u.Key, u => u.Value);
+        TraceIdentifier = _httpContext.TraceIdentifier;
+        HttpMethod = httpRequest.Method;
+        BeginTimestamp = DateTimeOffset.UtcNow;
+        UrlAddress = httpRequest.GetUrlAddress();
+
+        Query = httpRequest.Query.ToDictionary(u => u.Key, u => u.Value.ToString());
+        Cookies = httpRequest.Cookies.ToDictionary(u => u.Key, u => u.Value);
+        Headers = httpRequest.Headers.ToDictionary(u => u.Key, u => u.Value.ToString());
+        RouteValues = httpRequest.RouteValues.ToDictionary(u => u.Key, u => u.Value);
 
         // 获取终点路由
         if (_httpContext.GetEndpoint() is Endpoint endpoint)
@@ -126,7 +125,7 @@ internal sealed class EndpointDiagnosticModel
             // 获取控制器操作描述器
             if (endpoint.Metadata.GetMetadata<ControllerActionDescriptor>() is ControllerActionDescriptor controllerActionDescriptor)
             {
-                // 设置终点路由模型
+                // 设置操作控制器模型
                 ControllerAction = new(controllerActionDescriptor);
             }
         }
