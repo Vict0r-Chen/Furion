@@ -4,6 +4,18 @@
         <name>Furion.Kit</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            获取完整的请求 URL 地址
+            </summary>
+            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="T:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions">
             <summary>
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> 拓展类
@@ -43,6 +55,26 @@
             <summary>
             Kit 模块帮助类
             </summary>
+        </member>
+        <member name="M:Furion.Kit.Helpers.SplitCamelCase(System.String)">
+            <summary>
+            分割大驼峰命名字符串
+            </summary>
+            <param name="str">字符串</param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Furion.Kit.Helpers.SplitCamelCaseRegex">
+            <remarks>
+            Pattern:<br/>
+            <code>(?&lt;!^)([A-Z])</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Zero-width negative lookbehind.<br/>
+                ○ Match if at the beginning of the string.<br/>
+            ○ 1st capture group.<br/>
+                ○ Match a character in the set [A-Z].<br/>
+            </code>
+            </remarks>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
@@ -142,6 +174,11 @@
             终点路由诊断模型缓存集合
             </summary>
         </member>
+        <member name="F:Furion.Kit.EndpointDiagnosticListener._httpContextGetter">
+            <summary>
+            httpContext 属性值访问器
+            </summary>
+        </member>
         <member name="M:Furion.Kit.EndpointDiagnosticListener.#ctor(System.Int32)">
             <summary>
             <inheritdoc cref="T:Furion.Kit.EndpointDiagnosticListener" />
@@ -151,46 +188,169 @@
         <member name="M:Furion.Kit.EndpointDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
             <inheritdoc />
         </member>
-        <member name="T:Furion.Kit.HttpDiagnosticListener">
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.RoutingEndpointMatchedHandle(System.Object)">
             <summary>
-            HTTP 诊断监听器
+            Microsoft.AspNetCore.Routing.EndpointMatched 事件处理
+            </summary>
+            <param name="value">事件负载值</param>
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.MvcAfterOnActionExecutedHandle(System.Object)">
+            <summary>
+            Microsoft.AspNetCore.Mvc.AfterOnActionExecuted 事件处理
+            </summary>
+            <param name="value">事件负载值</param>
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.HostingEndRequestHandle(System.Object)">
+            <summary>
+            Microsoft.AspNetCore.Hosting.EndRequest 事件处理
+            </summary>
+            <param name="value">事件负载值</param>
+        </member>
+        <member name="T:Furion.Kit.ControllerActionModel">
+            <summary>
+            控制器操作模型
             </summary>
         </member>
-        <member name="F:Furion.Kit.HttpDiagnosticListener._httpDiagnosticModelsCache">
+        <member name="F:Furion.Kit.ControllerActionModel._controllerActionDescriptor">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor"/>
+        </member>
+        <member name="M:Furion.Kit.ControllerActionModel.#ctor(Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)">
             <summary>
-            HTTP 诊断模型缓存集合
+            <inheritdoc cref="T:Furion.Kit.ControllerActionModel"/>
+            </summary>
+            <param name="controllerActionDescriptor"></param>
+        </member>
+        <member name="P:Furion.Kit.ControllerActionModel.ControllerName">
+            <summary>
+            控制器名称
             </summary>
         </member>
-        <member name="F:Furion.Kit.HttpDiagnosticListener._anonymousHttpContextGetter">
+        <member name="P:Furion.Kit.ControllerActionModel.ActionName">
             <summary>
-            匿名类 httpContext 属性访问器
+            操作名称
             </summary>
         </member>
-        <member name="M:Furion.Kit.HttpDiagnosticListener.#ctor(System.Int32)">
+        <member name="P:Furion.Kit.ControllerActionModel.ControllerType">
             <summary>
-            <inheritdoc cref="T:Furion.Kit.HttpDiagnosticListener"/>
+            控制器类型
             </summary>
-            <param name="capacity">诊断订阅器通道容量</param>
         </member>
-        <member name="M:Furion.Kit.HttpDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
-            <inheritdoc />
-        </member>
-        <member name="M:Furion.Kit.HttpDiagnosticListener.GetAnonymousHttpContextValue(System.Object)">
+        <member name="P:Furion.Kit.ControllerActionModel.MethodName">
             <summary>
-            获取匿名类 httpContext 属性访问器（后续这里抽离出一个对象，包括序列化也是，可以针对每一个类型进行序列化配置）
+            方法名称
             </summary>
-            <param name="anonymousObject">匿名类对象</param>
-            <returns><see cref="T:System.Func`2"/></returns>
+        </member>
+        <member name="P:Furion.Kit.ControllerActionModel.Signature">
+            <summary>
+            方法签名
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ControllerActionModel.DisplayName">
+            <summary>
+            显示名称
+            </summary>
+        </member>
+        <member name="M:Furion.Kit.ControllerActionModel.Initialize">
+            <summary>
+            初始化
+            </summary>
         </member>
         <member name="T:Furion.Kit.EndpointDiagnosticModel">
             <summary>
             终点路由诊断模型
             </summary>
         </member>
+        <member name="F:Furion.Kit.EndpointDiagnosticModel._httpContext">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Http.HttpContext" />
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticModel.#ctor(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.EndpointDiagnosticModel"/>
+            </summary>
+            <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.TraceIdentifier">
+            <summary>
+            请求标识
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.HttpMethod">
+            <summary>
+            请求方式
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.UrlAddress">
+            <summary>
+            请求地址
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.StatusCode">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.StatusText">
+            <summary>
+            状态文本
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.BeginTimestamp">
+            <summary>
+            开始时间戳
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.EndTimestamp">
+            <summary>
+            结束时间戳
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Query">
+            <summary>
+            URL 参数集合
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Cookies">
+            <summary>
+            客户端 Cookies 集合
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Headers">
+            <summary>
+            请求 Headers 集合
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.RouteValues">
+            <summary>
+            路由表集合
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Endpoint">
+            <inheritdoc cref="T:Furion.Kit.EndpointModel"/>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Exception">
+            <inheritdoc cref="T:Furion.Kit.ExceptionModel"/>
+        </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.ControllerAction">
+            <inheritdoc cref="T:Furion.Kit.ControllerActionModel"/>
+        </member>
+        <member name="M:Furion.Kit.EndpointDiagnosticModel.Initialize">
+            <summary>
+            初始化
+            </summary>
+        </member>
         <member name="T:Furion.Kit.EndpointModel">
             <summary>
             终点路由模型
             </summary>
+        </member>
+        <member name="F:Furion.Kit.EndpointModel._endpoint">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Http.Endpoint"/>
+        </member>
+        <member name="M:Furion.Kit.EndpointModel.#ctor(Microsoft.AspNetCore.Http.Endpoint)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.EndpointModel"/>
+            </summary>
+            <param name="endpoint"><see cref="T:Microsoft.AspNetCore.Http.Endpoint"/></param>
         </member>
         <member name="P:Furion.Kit.EndpointModel.DisplayName">
             <summary>
@@ -212,57 +372,53 @@
             请求方式集合
             </summary>
         </member>
-        <member name="T:Furion.Kit.HttpDiagnosticModel">
+        <member name="M:Furion.Kit.EndpointModel.Initialize">
             <summary>
-            HTTP 诊断模型
+            初始化
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.DisplayName">
+        <member name="T:Furion.Kit.ExceptionModel">
             <summary>
-            [DisplayName] 特性名称
+            异常模型
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.TraceIdentifier">
+        <member name="F:Furion.Kit.ExceptionModel._exception">
+            <inheritdoc cref="T:System.Exception"/>
+        </member>
+        <member name="M:Furion.Kit.ExceptionModel.#ctor(System.Exception)">
             <summary>
-            连接标识
+            <inheritdoc cref="T:System.Exception"/>
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+        </member>
+        <member name="P:Furion.Kit.ExceptionModel.Message">
+            <summary>
+            异常信息
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.RequestMethod">
+        <member name="P:Furion.Kit.ExceptionModel.StackTrace">
             <summary>
-            请求方式
+            异常堆栈
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.RequestPath">
+        <member name="P:Furion.Kit.ExceptionModel.HResult">
             <summary>
-            请求路径
+            异常编码数字值
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.Endpoint">
-            <inheritdoc cref="T:Furion.Kit.EndpointModel"/>
-        </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.StatusCode">
+        <member name="P:Furion.Kit.ExceptionModel.Source">
             <summary>
-            状态码
+            异常对象名称
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.StartTimestamp">
+        <member name="P:Furion.Kit.ExceptionModel.HelpLink">
             <summary>
-            请求时间
+            帮助文件链接
             </summary>
         </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.EndTimestamp">
+        <member name="M:Furion.Kit.ExceptionModel.Initialize">
             <summary>
-            请求结束时间
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.ControllerType">
-            <summary>
-            控制器类型
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.HttpDiagnosticModel.MethodName">
-            <summary>
-            方法签名
+            初始化
             </summary>
         </member>
         <member name="T:Furion.Kit.DiagnosticObserver`1">
@@ -311,6 +467,47 @@
             <summary>
             容量
             </summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the SplitCamelCaseRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.SplitCamelCaseRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
         </member>
     </members>
 </doc>

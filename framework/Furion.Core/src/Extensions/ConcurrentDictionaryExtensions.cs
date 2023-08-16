@@ -31,7 +31,7 @@ internal static class ConcurrentDictionaryExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool TryUpdate<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary
         , TKey key
-        , Func<TValue?, TValue> updateFactory
+        , Func<TValue, TValue> updateFactory
         , out TValue? value)
         where TKey : notnull
     {
@@ -39,7 +39,7 @@ internal static class ConcurrentDictionaryExtensions
         ArgumentNullException.ThrowIfNull(key);
         ArgumentNullException.ThrowIfNull(updateFactory);
 
-        // 查找键值
+        // 查找字典值
         if (!dictionary.TryGetValue(key, out var oldValue))
         {
             value = default;
@@ -47,11 +47,11 @@ internal static class ConcurrentDictionaryExtensions
         }
 
         // 调用自定义更新委托
-        var newValue = updateFactory(oldValue);
+        var updatedValue = updateFactory(oldValue);
 
-        // 更新键值
-        var result = dictionary.TryUpdate(key, newValue, oldValue);
-        value = result ? newValue : oldValue;
+        // 更新字典值
+        var result = dictionary.TryUpdate(key, updatedValue, oldValue);
+        value = result ? updatedValue : oldValue;
 
         return result;
     }

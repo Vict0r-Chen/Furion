@@ -17,6 +17,25 @@ namespace Furion.Kit;
 /// <summary>
 /// Kit 模块帮助类
 /// </summary>
-internal static class Helpers
+internal static partial class Helpers
 {
+    /// <summary>
+    /// 分割大驼峰命名字符串
+    /// </summary>
+    /// <param name="str">字符串</param>
+    /// <returns><see cref="string"/></returns>
+    internal static string SplitCamelCase(string str)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(str);
+
+        return SplitCamelCaseRegex().Replace(str, " $1");
+    }
+
+    /// <summary>
+    /// 大驼峰正则表达式
+    /// </summary>
+    /// <returns><see cref="Regex"/></returns>
+    [GeneratedRegex("(?<!^)([A-Z])")]
+    private static partial Regex SplitCamelCaseRegex();
 }

@@ -12,11 +12,27 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Kit;
+namespace Microsoft.AspNetCore.Http;
 
 /// <summary>
-/// 终点路由诊断模型
+/// <see cref="HttpContext"/> 拓展类
 /// </summary>
-internal sealed class EndpointDiagnosticModel
+internal static class HttpContextExtensions
 {
+    /// <summary>
+    /// 获取完整的请求 URL 地址
+    /// </summary>
+    /// <param name="httpRequest"><see cref="HttpRequest"/></param>
+    /// <returns><see cref="string"/></returns>
+    internal static string GetUrlAddress(this HttpRequest httpRequest)
+    {
+        return new StringBuilder()
+            .Append(httpRequest.Scheme)
+            .Append("://")
+            .Append(httpRequest.Host)
+            .Append(httpRequest.PathBase)
+            .Append(httpRequest.Path)
+            .Append(httpRequest.QueryString)
+            .ToString();
+    }
 }

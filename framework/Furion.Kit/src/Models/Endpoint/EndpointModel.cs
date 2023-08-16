@@ -19,6 +19,21 @@ namespace Furion.Kit;
 /// </summary>
 internal sealed class EndpointModel
 {
+    /// <inheritdoc cref="Endpoint"/>
+    internal readonly Endpoint _endpoint;
+
+    /// <summary>
+    /// <inheritdoc cref="EndpointModel"/>
+    /// </summary>
+    /// <param name="endpoint"><see cref="Endpoint"/></param>
+    internal EndpointModel(Endpoint endpoint)
+    {
+        _endpoint = endpoint;
+
+        // 初始化
+        Initialize();
+    }
+
     /// <summary>
     /// 显示名称
     /// </summary>
@@ -38,4 +53,28 @@ internal sealed class EndpointModel
     /// 请求方式集合
     /// </summary>
     public string? HttpMethods { get; internal set; }
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    internal void Initialize()
+    {
+        DisplayName = _endpoint.DisplayName;
+
+        // 判断终点路由是否是 RouteEndpoint 类型
+        if (_endpoint is not RouteEndpoint routeEndpoint)
+        {
+            return;
+        }
+
+        RoutePattern = routeEndpoint.RoutePattern.RawText;
+        Order = routeEndpoint.Order;
+
+        // 拼接路由 HttpMethod 集合
+        var httpMethods = routeEndpoint.Metadata.GetMetadata<IHttpMethodMetadata>()?.HttpMethods;
+        if (httpMethods != null)
+        {
+            HttpMethods = string.Join(", ", httpMethods);
+        }
+    }
 }

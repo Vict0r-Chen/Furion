@@ -15,63 +15,59 @@
 namespace Furion.Kit;
 
 /// <summary>
-/// HTTP 诊断模型
+/// 异常模型
 /// </summary>
-internal sealed class HttpDiagnosticModel
+internal sealed class ExceptionModel
 {
-    /// <summary>
-    /// [DisplayName] 特性名称
-    /// </summary>
-    public string? DisplayName { get; internal set; }
+    /// <inheritdoc cref="Exception"/>
+    internal readonly Exception _exception;
 
     /// <summary>
-    /// 连接标识
+    /// <inheritdoc cref="Exception"/>
     /// </summary>
-    public string? TraceIdentifier { get; internal set; }
+    /// <param name="exception"><see cref="Exception"/></param>
+    internal ExceptionModel(Exception exception)
+    {
+        _exception = exception;
+
+        // 初始化
+        Initialize();
+    }
 
     /// <summary>
-    /// 请求方式
+    /// 异常信息
     /// </summary>
-    public string? RequestMethod { get; internal set; }
+    public string? Message { get; internal set; }
 
     /// <summary>
-    /// 请求路径
+    /// 异常堆栈
     /// </summary>
-    public string? RequestPath { get; internal set; }
-
-    /// <inheritdoc cref="EndpointModel"/>
-    public EndpointModel? Endpoint { get; internal set; }
-
-    public string? Exception { get; internal set; }
+    public string? StackTrace { get; internal set; }
 
     /// <summary>
-    /// 状态码
+    /// 异常编码数字值
     /// </summary>
-    public int? StatusCode { get; internal set; }
+    public int HResult { get; internal set; }
 
     /// <summary>
-    /// 请求时间
+    /// 异常对象名称
     /// </summary>
-    public DateTimeOffset? StartTimestamp { get; internal set; }
+    public string? Source { get; internal set; }
 
     /// <summary>
-    /// 请求结束时间
+    /// 帮助文件链接
     /// </summary>
-    public DateTimeOffset? EndTimestamp { get; internal set; }
+    public string? HelpLink { get; internal set; }
 
     /// <summary>
-    /// 控制器类型
+    /// 初始化
     /// </summary>
-    public string? ControllerType { get; internal set; }
-
-    /// <summary>
-    /// 方法签名
-    /// </summary>
-    public string? MethodName { get; internal set; }
-
-    public List<KeyValueModel>? Query { get; internal set; }
-
-    public List<KeyValueModel>? Cookies { get; internal set; }
-
-    public List<KeyValueModel>? Headers { get; internal set; }
+    internal void Initialize()
+    {
+        Message = _exception.Message;
+        StackTrace = _exception.StackTrace;
+        HResult = _exception.HResult;
+        Source = _exception.Source;
+        HelpLink = _exception.HelpLink;
+    }
 }

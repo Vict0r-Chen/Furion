@@ -25,6 +25,11 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     internal readonly ConcurrentDictionary<string, EndpointDiagnosticModel> _endpointDiagnosticModelsCache;
 
     /// <summary>
+    /// httpContext 属性值访问器
+    /// </summary>
+    internal Func<object, object?>? _httpContextGetter;
+
+    /// <summary>
     /// <inheritdoc cref="EndpointDiagnosticListener" />
     /// </summary>
     /// <param name="capacity"></param>
@@ -37,5 +42,128 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     /// <inheritdoc />
     internal override void OnSubscribe(KeyValuePair<string, object?> data)
     {
+        if (data.Key == "Microsoft.AspNetCore.Routing.EndpointMatched")
+        {
+            RoutingEndpointMatchedHandle(data.Value);
+        }
+
+        if (data.Key == "Microsoft.AspNetCore.Mvc.AfterOnActionExecuted")
+        {
+            MvcAfterOnActionExecutedHandle(data.Value);
+        }
+
+        if (data.Key == "Microsoft.AspNetCore.Hosting.EndRequest")
+        {
+            HostingEndRequestHandle(data.Value);
+        }
+    }
+
+    /// <summary>
+    /// Microsoft.AspNetCore.Routing.EndpointMatched 事件处理
+    /// </summary>
+    /// <param name="value">事件负载值</param>
+    internal void RoutingEndpointMatchedHandle(object? value)
+    {
+        // 空检查
+        if (value is not HttpContext httpContext)
+        {
+            return;
+        }
+
+        // 初始化终点路由诊断模型
+        var endpointDiagnosticModel = new EndpointDiagnosticModel(httpContext);
+
+        // 将终点路由诊断模型缓存到集合中
+        if (_endpointDiagnosticModelsCache.TryAdd(httpContext.TraceIdentifier, endpointDiagnosticModel))
+        {
+            // 将终点路由诊断模型写入诊断订阅器通道
+            _ = WriteAsync(endpointDiagnosticModel);
+        }
+    }
+
+    /// <summary>
+    /// Microsoft.AspNetCore.Mvc.AfterOnActionExecuted 事件处理
+    /// </summary>
+    /// <param name="value">事件负载值</param>
+    internal void MvcAfterOnActionExecutedHandle(object? value)
+    {
+        // 空检查
+        if (value is not AfterActionFilterOnActionExecutedEventData eventData)
+        {
+            return;
+        }
+
+        // 空检查
+        var httpContext = eventData.ActionExecutedContext.HttpContext;
+        if (httpContext is null)
+        {
+            return;
+        }
+
+        // 空检查
+        var exception = eventData.ActionExecutedContext.Exception;
+        if (exception is null)
+        {
+            return;
+        }
+
+        // 更新终点路由诊断模型缓存
+        if (_endpointDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, endpointDiagnosticModel =>
+        {
+            endpointDiagnosticModel.Exception = new ExceptionModel(exception);
+
+            return endpointDiagnosticModel;
+        }, out var updatedEndpointDiagnosticModel))
+        {
+            // 将终点路由诊断模型写入诊断订阅器通道
+            _ = WriteAsync(updatedEndpointDiagnosticModel!);
+        }
+    }
+
+    /// <summary>
+    /// Microsoft.AspNetCore.Hosting.EndRequest 事件处理
+    /// </summary>
+    /// <param name="value">事件负载值</param>
+    internal void HostingEndRequestHandle(object? value)
+    {
+        // 空检查
+        if (value is null)
+        {
+            return;
+        }
+
+        // 空检查
+        if (_httpContextGetter is null)
+        {
+            // 获取值类型和 httpContext 属性
+            var dataType = value.GetType();
+            var propertyInfo = dataType.GetProperty("httpContext");
+
+            // 空检查
+            if (propertyInfo is null)
+            {
+                return;
+            }
+
+            // 获取 httpContext 属性值访问器
+            _httpContextGetter = dataType.CreatePropertyGetter(propertyInfo);
+        }
+
+        // 获取 httpContext 属性值
+        if (_httpContextGetter(value) is not HttpContext httpContext)
+        {
+            return;
+        }
+
+        // 移除终点路由诊断模型缓存
+        if (_endpointDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var endpointDiagnosticModel))
+        {
+            endpointDiagnosticModel.StatusCode = httpContext.Response.StatusCode;
+            endpointDiagnosticModel.StatusText = Helpers.SplitCamelCase(((HttpStatusCode)httpContext.Response.StatusCode).ToString());
+            endpointDiagnosticModel.EndTimestamp = DateTimeOffset.UtcNow;
+
+            // 将终点路由诊断模型写入诊断订阅器通道
+            _ = WriteAsync(endpointDiagnosticModel);
+        }
     }
 }

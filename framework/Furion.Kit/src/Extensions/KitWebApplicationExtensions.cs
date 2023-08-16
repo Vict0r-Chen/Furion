@@ -42,9 +42,10 @@ public static class KitWebApplicationExtensions
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
         webApplication.MapGroup(kitOptions.Root)
-            .MapGetSSE("http-sse", async (HttpContext context, CancellationToken cancellationToken) =>
+            .MapGetSSE("endpoint-sse", async (HttpContext context, CancellationToken cancellationToken) =>
             {
-                await new HttpDiagnosticListener(kitOptions.Capacity).SSEHandler(context, cancellationToken);
+                await new EndpointDiagnosticListener(kitOptions.Capacity)
+                .SSEHandler(context, cancellationToken);
             });
 
         // 获取当前类型所在程序集

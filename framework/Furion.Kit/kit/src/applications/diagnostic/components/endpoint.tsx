@@ -11,7 +11,9 @@ const ItemContainer = styled.div`
 
 const Endpoint: React.FC = () => {
   useEffect(() => {
-    var eventSource = new EventSource("https://localhost:7115/furion/http-sse");
+    var eventSource = new EventSource(
+      "https://localhost:7115/furion/endpoint-sse"
+    );
 
     eventSource.onopen = (event) => {
       console.log(event);
@@ -19,6 +21,7 @@ const Endpoint: React.FC = () => {
 
     eventSource.onmessage = (event) => {
       console.log(event);
+      console.log(JSON.parse(event.data));
     };
 
     eventSource.onerror = (event) => {
