@@ -298,6 +298,17 @@ const Diagnostic: React.FC = () => {
                           />
                         ),
                       },
+                      {
+                        key: 2,
+                        label: "清空数据",
+                        icon: (
+                          <IconFont
+                            type="icon-clear"
+                            $size={16}
+                            color="#000000A6"
+                          />
+                        ),
+                      },
                     ],
                   }}
                 >
