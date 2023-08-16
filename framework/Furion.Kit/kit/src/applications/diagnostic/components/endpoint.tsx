@@ -19,7 +19,7 @@ const Operation = styled.div`
   margin: 15px 0;
 `;
 
-const pageSize = 5;
+const pageSize = 15;
 
 const Endpoint: React.FC = () => {
   const [online, setOnline] = useState(true);

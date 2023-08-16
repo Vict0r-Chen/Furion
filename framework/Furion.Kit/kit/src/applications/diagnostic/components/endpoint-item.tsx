@@ -9,8 +9,12 @@ import Mdx from "../../../mdxs/index.mdx";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 
-const isError = (statusCode?: number | null) => {
-  return statusCode && statusCode >= 500 && statusCode <= 599;
+const isError = (statusCode?: number | null): boolean => {
+  if (!statusCode) {
+    return false;
+  }
+
+  return statusCode >= 500 && statusCode <= 599;
 };
 
 const errorColor = "#ff4d4f";
@@ -19,8 +23,9 @@ const ItemContainer = styled.div`
   font-size: 14px;
 `;
 
-const Main = styled(Flexbox)`
-  background-color: #f7f8fb;
+const Main = styled(Flexbox)<{ $error?: boolean }>`
+  background-color: ${(props) =>
+    props.$error ? "rgb(255, 240, 240)" : "#f7f8fb"};
   align-items: center;
   padding: 5px 10px 5px 5px;
   border-radius: 5px;
@@ -43,13 +48,13 @@ const JsonView = styled(Flexbox)`
 const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
   return (
     <ItemContainer>
-      <Main $spaceBetween>
+      <Main $spaceBetween $error={isError(props.statusCode)}>
         <Space align="center">
-          {isError(props.statusCode) ? (
-            <IconFont type="icon-error" $color={errorColor} $size={15} />
-          ) : (
-            <IconFont type="icon-link" $size={15} />
-          )}
+          <IconFont
+            type="icon-link"
+            $size={15}
+            $color={isError(props.statusCode) ? errorColor : undefined}
+          />
           <HttpMethod value={props.httpMethod!} />
           <Popover
             placement="right"

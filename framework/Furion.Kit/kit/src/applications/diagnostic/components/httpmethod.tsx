@@ -33,6 +33,7 @@ const Value = styled(TextBox)`
   display: inline-block;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   font-size: 14px;
+  white-space: nowrap;
 `;
 
 const HttpMethod: React.FC<HttpMethodProps> = ({ value }) => {
