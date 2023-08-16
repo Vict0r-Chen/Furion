@@ -5,7 +5,7 @@ import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
-import Mdx from "../../../mdxs/index.mdx";
+import EndpointDetail from "./endpoint-detail";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 
@@ -76,11 +76,7 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
             placement="right"
             trigger="click"
             destroyTooltipOnHide
-            content={
-              <div style={{ width: 400, height: 300, overflowY: "auto" }}>
-                <Mdx />
-              </div>
-            }
+            content={<EndpointDetail {...props} />}
           >
             <Url
               underline

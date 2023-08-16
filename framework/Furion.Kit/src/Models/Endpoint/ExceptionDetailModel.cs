@@ -145,7 +145,7 @@ internal sealed class ExceptionDetailModel
             // 构建结果字符串
             foreach (var line in lines)
             {
-                if (line != null)
+                if (line is not null)
                 {
                     stringBuilder.AppendLine(line);
                 }

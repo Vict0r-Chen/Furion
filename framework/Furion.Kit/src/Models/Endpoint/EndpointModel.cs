@@ -75,7 +75,7 @@ internal sealed class EndpointModel
 
         // 拼接路由 HttpMethod 集合
         var httpMethods = routeEndpoint.Metadata.GetMetadata<IHttpMethodMetadata>()?.HttpMethods;
-        if (httpMethods != null)
+        if (httpMethods is not null)
         {
             HttpMethods = string.Join(", ", httpMethods);
         }
