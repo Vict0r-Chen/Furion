@@ -97,7 +97,7 @@ const Endpoint: React.FC = () => {
       )}
       <ItemContainer>
         {endpointDiagnostics.length === 0 ? (
-          <Empty description="暂无数据" />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
         ) : (
           endpointDiagnostics &&
           endpointDiagnostics.map((item) => (

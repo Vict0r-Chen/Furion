@@ -22,12 +22,16 @@ const items: TabsProps["items"] = [
   {
     key: "1",
     label: `未读通知`,
-    children: <Empty description="暂无通知" />,
+    children: (
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无通知" />
+    ),
   },
   {
     key: "2",
     label: `全部通知`,
-    children: <Empty description="暂无通知" />,
+    children: (
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无通知" />
+    ),
   },
 ];
 

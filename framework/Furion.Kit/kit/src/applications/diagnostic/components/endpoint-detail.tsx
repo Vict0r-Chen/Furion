@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Empty, Typography } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import CodeHighlight from "../../../components/code-highlight";
@@ -33,7 +33,9 @@ const Category: React.FC<{
   return (
     <CategoryContainer>
       <CategoryTitle>{title}</CategoryTitle>
-      <CategoryContent>{children}</CategoryContent>
+      <CategoryContent>
+        {children ? children : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+      </CategoryContent>
     </CategoryContainer>
   );
 };
@@ -60,7 +62,7 @@ const ListItem: React.FC<{
 }> = ({ title, content }) => {
   return (
     <ItemContainer>
-      {title && <ItemTitle>{title}: </ItemTitle>}
+      {title && <ItemTitle>{title}</ItemTitle>}
       <ItemContent>{content}</ItemContent>
     </ItemContainer>
   );

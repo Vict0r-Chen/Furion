@@ -9,7 +9,10 @@ const Community: React.FC = () => {
   return (
     <Main>
       <Container>
-        <Empty description="更多社区应用集成中..." />
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="更多社区应用集成中..."
+        />
       </Container>
     </Main>
   );
