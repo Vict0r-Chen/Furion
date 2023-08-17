@@ -51,7 +51,7 @@ public sealed class ExceptionSourceCodeParser
     }
 
     /// <summary>
-    /// 堆栈帧集合
+    /// 堆栈帧数组
     /// </summary>
     public StackFrame[] StackFrames { get; init; }
 
@@ -68,6 +68,12 @@ public sealed class ExceptionSourceCodeParser
     /// <returns><see cref="List{T}"/></returns>
     public static List<ExceptionSourceCode> Parse(System.Exception exception, int surroundingLines = 6)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exception);
+
+        // 检查行号合法性
+        ExceptionSourceCode.EnsureLegalLineNumber(surroundingLines);
+
         return new ExceptionSourceCodeParser(exception, surroundingLines)
             .ParseStackFrames()
             .ToList();
@@ -101,6 +107,12 @@ public sealed class ExceptionSourceCodeParser
                 , out var targetLineText
                 , out var startingLineNumber);
 
+            // 如果没读到任何行信息跳过
+            if (surroundingLinesText is null)
+            {
+                continue;
+            }
+
             // 初始化异常源码对象
             var exceptionSourceCode = new ExceptionSourceCode(fileName
                 , lineNumber
@@ -123,7 +135,7 @@ public sealed class ExceptionSourceCodeParser
     /// <param name="targetLineText">目标行内容</param>
     /// <param name="startingLineNumber">起始行号</param>
     /// <returns><see cref="string"/></returns>
-    internal static string ReadSurroundingLines(string fileName, int lineNumber, int surroundingLines
+    internal static string? ReadSurroundingLines(string fileName, int lineNumber, int surroundingLines
         , out string? targetLineText
         , out int? startingLineNumber)
     {
@@ -136,6 +148,12 @@ public sealed class ExceptionSourceCodeParser
 
         // 初始化 out 返回值参数
         (targetLineText, startingLineNumber) = (default, default);
+
+        // 检查文件是否存在
+        if (!File.Exists(fileName))
+        {
+            return null;
+        }
 
         // 初始化当前行号和索引值
         int currentLine = 1, currentIndex = 0;

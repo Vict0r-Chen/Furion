@@ -333,7 +333,7 @@
         </member>
         <member name="P:Furion.Exception.ExceptionSourceCodeParser.StackFrames">
             <summary>
-            堆栈帧集合
+            堆栈帧数组
             </summary>
         </member>
         <member name="P:Furion.Exception.ExceptionSourceCodeParser.SurroundingLines">
