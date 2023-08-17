@@ -101,7 +101,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         // 更新终点路由诊断模型缓存
         if (_endpointDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, endpointDiagnosticModel =>
         {
-            endpointDiagnosticModel.Exception = exception is not null
+            endpointDiagnosticModel.Exception ??= exception is not null
                 ? new(exception)
                 : null;
 

@@ -31,7 +31,7 @@ public sealed class ExceptionSourceCode
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
-        // 检查代码行号合法性
+        // 检查行号合法性
         EnsureLegalLineNumber(lineNumber);
         EnsureLegalLineNumber(startingLineNumber);
 
@@ -72,7 +72,7 @@ public sealed class ExceptionSourceCode
     public string? SurroundingLinesText { get; set; }
 
     /// <summary>
-    /// 检查代码行号合法性
+    /// 检查行号合法性
     /// </summary>
     /// <param name="lineNumber">代码行号</param>
     /// <param name="paramName">参数名</param>

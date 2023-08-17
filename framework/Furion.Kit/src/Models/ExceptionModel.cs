@@ -65,7 +65,7 @@ internal sealed class ExceptionModel
     /// <summary>
     /// 异常详细模型集合
     /// </summary>
-    public IEnumerable<ExceptionSourceCode>? Details { get; internal set; }
+    public List<ExceptionSourceCode>? Details { get; internal set; }
 
     /// <summary>
     /// 初始化
@@ -78,10 +78,7 @@ internal sealed class ExceptionModel
         Source = _exception.Source;
         HelpLink = _exception.HelpLink;
 
-        // 初始化异常源码解析器
-        var exceptionSourceCodeParser = new ExceptionSourceCodeParser(_exception);
-
         // 解析异常并返回异常源码详细信息
-        Details = exceptionSourceCodeParser.Parse();
+        Details = ExceptionSourceCodeParser.Parse(_exception);
     }
 }

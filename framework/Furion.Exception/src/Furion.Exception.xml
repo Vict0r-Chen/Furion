@@ -265,7 +265,7 @@
         </member>
         <member name="M:Furion.Exception.ExceptionSourceCode.EnsureLegalLineNumber(System.Int32,System.String)">
             <summary>
-            检查代码行号合法性
+            检查行号合法性
             </summary>
             <param name="lineNumber">代码行号</param>
             <param name="paramName">参数名</param>
@@ -341,9 +341,17 @@
             目标行号上下行数
             </summary>
         </member>
-        <member name="M:Furion.Exception.ExceptionSourceCodeParser.Parse">
+        <member name="M:Furion.Exception.ExceptionSourceCodeParser.Parse(System.Exception,System.Int32)">
             <summary>
-            解析异常并返回异常源码详细信息
+            解析异常并返回异常源码集合
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+            <param name="surroundingLines">目标行号上下行数</param>
+            <returns><see cref="T:System.Collections.Generic.List`1"/></returns>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeParser.ParseStackFrames">
+            <summary>
+            解析堆栈帧集合并创建异常源码集合
             </summary>
             <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>

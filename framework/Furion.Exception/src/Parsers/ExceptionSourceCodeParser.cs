@@ -44,7 +44,7 @@ public sealed class ExceptionSourceCodeParser
     public ExceptionSourceCodeParser(System.Exception exception, int surroundingLines)
         : this(exception)
     {
-        // 检查代码行号合法性
+        // 检查行号合法性
         ExceptionSourceCode.EnsureLegalLineNumber(surroundingLines);
 
         SurroundingLines = surroundingLines;
@@ -61,20 +61,34 @@ public sealed class ExceptionSourceCodeParser
     public int SurroundingLines { get; set; } = 6;
 
     /// <summary>
-    /// 解析异常并返回异常源码详细信息
+    /// 解析异常并返回异常源码集合
+    /// </summary>
+    /// <param name="exception"><see cref="System.Exception"/></param>
+    /// <param name="surroundingLines">目标行号上下行数</param>
+    /// <returns><see cref="List{T}"/></returns>
+    public static List<ExceptionSourceCode> Parse(System.Exception exception, int surroundingLines = 6)
+    {
+        return new ExceptionSourceCodeParser(exception, surroundingLines)
+            .ParseStackFrames()
+            .ToList();
+    }
+
+    /// <summary>
+    /// 解析堆栈帧集合并创建异常源码集合
     /// </summary>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    public IEnumerable<ExceptionSourceCode> Parse()
+    public IEnumerable<ExceptionSourceCode> ParseStackFrames()
     {
-        // 检查代码行号合法性
+        // 检查行号合法性
         ExceptionSourceCode.EnsureLegalLineNumber(SurroundingLines);
 
+        // 遍历堆栈帧集合并创建异常源码集合
         foreach (var stackFrame in StackFrames)
         {
-            // 获取异常文件名和行号
-            var fileName = stackFrame.GetFileName();
-            var lineNumber = stackFrame.GetFileLineNumber();
+            // 获取文件名和目标行号
+            var (fileName, lineNumber) = (stackFrame.GetFileName(), stackFrame.GetFileLineNumber());
 
+            // 空检查
             if (string.IsNullOrWhiteSpace(fileName) || lineNumber <= 0)
             {
                 continue;
@@ -87,11 +101,16 @@ public sealed class ExceptionSourceCodeParser
                 , out var targetLineText
                 , out var startingLineNumber);
 
-            yield return new(fileName, lineNumber, startingLineNumber!.Value)
+            // 初始化异常源码对象
+            var exceptionSourceCode = new ExceptionSourceCode(fileName
+                , lineNumber
+                , startingLineNumber!.Value)
             {
                 SurroundingLinesText = surroundingLinesText,
                 TargetLineText = targetLineText
             };
+
+            yield return exceptionSourceCode;
         }
     }
 
@@ -104,21 +123,15 @@ public sealed class ExceptionSourceCodeParser
     /// <param name="targetLineText">目标行内容</param>
     /// <param name="startingLineNumber">起始行号</param>
     /// <returns><see cref="string"/></returns>
-    internal static string ReadSurroundingLines(string fileName
-        , int lineNumber
-        , int surroundingLines
+    internal static string ReadSurroundingLines(string fileName, int lineNumber, int surroundingLines
         , out string? targetLineText
         , out int? startingLineNumber)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
-        // 初始化目标行内容
-        targetLineText = default;
-        startingLineNumber = default;
-
-        // 总共要读取的行数
-        var linesToRead = surroundingLines * 2 + 1;
+        // 初始化 out 返回值参数
+        (targetLineText, startingLineNumber) = (default, default);
 
         // 初始化字符串构建器
         var stringBuilder = new StringBuilder();
@@ -130,7 +143,7 @@ public sealed class ExceptionSourceCodeParser
             var currentLine = 1;
 
             // 存储上下行文本
-            var lines = new string?[linesToRead];
+            var lines = new string?[surroundingLines * 2 + 1];
 
             // 当前行的索引
             var currentIndex = 0;
@@ -156,6 +169,11 @@ public sealed class ExceptionSourceCodeParser
                     // 存储上下行文本
                     lines[currentIndex] = line;
                     currentIndex++;
+                }
+
+                if (currentLine == lineNumber + surroundingLines)
+                {
+                    break;
                 }
 
                 currentLine++;
