@@ -152,7 +152,6 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
           props.exception.details.map((item, i) => (
             <div key={i}>
               <ListItem
-                title="fileName"
                 content={
                   <Typography.Link
                     underline
