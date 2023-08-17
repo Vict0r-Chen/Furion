@@ -137,7 +137,9 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.exception && (
           <>
             {Object.keys(props.exception)
-              .filter((k) => k !== "details" && k !== "stackTrace")
+              .filter(
+                (k) => k !== "details" && k !== "stackTrace" && k !== "rawText"
+              )
               .map((item) => (
                 <ListItem
                   key={item}
@@ -145,7 +147,10 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
                   content={(props.exception as Record<string, any>)![item]}
                 />
               ))}
-            <CodeHighlight language="cs" code={props.exception?.stackTrace!} />
+            <CodeHighlight
+              language="cs"
+              code={(props.exception?.rawText || props.exception.stackTrace)!}
+            />
           </>
         )}
       </Category>
@@ -176,16 +181,19 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
       </Category>
       <Category title="Filters">
         {props.filters &&
+          props.filters.length > 0 &&
           props.filters.map((item) => <ListItem key={item} content={item} />)}
       </Category>
       <Category title="Query">
         {props.query &&
+          Object.keys(props.query).length > 0 &&
           Object.keys(props.query).map((item) => (
             <ListItem key={item} title={item} content={props.query![item]} />
           ))}
       </Category>
       <Category title="Request Headers">
         {props.requestHeaders &&
+          Object.keys(props.requestHeaders).length > 0 &&
           Object.keys(props.requestHeaders).map((item) => (
             <ListItem
               key={item}
@@ -196,6 +204,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
       </Category>
       <Category title="Response Headers">
         {props.responseHeaders &&
+          Object.keys(props.responseHeaders).length > 0 &&
           Object.keys(props.responseHeaders).map((item) => (
             <ListItem
               key={item}
@@ -206,6 +215,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
       </Category>
       <Category title="Route Values">
         {props.routeValues &&
+          Object.keys(props.routeValues).length > 0 &&
           Object.keys(props.routeValues).map((item) => (
             <ListItem
               key={item}

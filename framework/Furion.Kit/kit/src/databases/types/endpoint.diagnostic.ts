@@ -41,6 +41,7 @@ export interface ExceptionModel {
   source?: string;
   helpLink?: string;
   type?: string;
+  rawText?: string;
   details?: ExceptionSourceCode[];
 }
 

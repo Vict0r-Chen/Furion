@@ -419,6 +419,11 @@
             异常类型
             </summary>
         </member>
+        <member name="P:Furion.Kit.ExceptionModel.RawText">
+            <summary>
+            原始异常内容
+            </summary>
+        </member>
         <member name="P:Furion.Kit.ExceptionModel.Details">
             <summary>
             异常详细模型集合

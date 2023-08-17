@@ -68,6 +68,11 @@ internal sealed class ExceptionModel
     public string? Type { get; internal set; }
 
     /// <summary>
+    /// 原始异常内容
+    /// </summary>
+    public string? RawText { get; internal set; }
+
+    /// <summary>
     /// 异常详细模型集合
     /// </summary>
     public List<ExceptionSourceCode>? Details { get; internal set; }
@@ -83,6 +88,7 @@ internal sealed class ExceptionModel
         Source = _exception.Source;
         HelpLink = _exception.HelpLink;
         Type = _exception.GetType().ToString();
+        RawText = _exception.ToString();
 
         // 解析异常并返回异常源码详细信息
         Details = ExceptionSourceCodeParser.Parse(_exception);
