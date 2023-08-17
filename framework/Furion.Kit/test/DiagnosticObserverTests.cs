@@ -43,7 +43,7 @@ public class DiagnosticObserverTests
     public void OnError_ReturnOK()
     {
         var diagnosticObserver = new DiagnosticObserver<int>(null!, null);
-        diagnosticObserver.OnError(new Exception("出错啦"));
+        diagnosticObserver.OnError(new System.Exception("出错啦"));
     }
 
     [Fact]

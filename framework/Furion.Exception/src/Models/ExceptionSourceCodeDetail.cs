@@ -48,17 +48,17 @@ public sealed class ExceptionSourceCodeDetail
     /// <summary>
     /// 异常文件名
     /// </summary>
-    public string FileName { get; }
+    public string FileName { get; init; }
 
     /// <summary>
     /// 异常代码行号
     /// </summary>
-    public int LineNumber { get; }
+    public int LineNumber { get; init; }
 
     /// <summary>
     /// 异常代码起始行号
     /// </summary>
-    public int StartingLineNumber { get; }
+    public int StartingLineNumber { get; init; }
 
     /// <summary>
     /// 异常代码行内容

@@ -20,13 +20,13 @@ namespace Furion.Kit;
 internal sealed class ExceptionModel
 {
     /// <inheritdoc cref="Exception"/>
-    internal readonly Exception _exception;
+    internal readonly System.Exception _exception;
 
     /// <summary>
     /// <inheritdoc cref="Exception"/>
     /// </summary>
     /// <param name="exception"><see cref="Exception"/></param>
-    internal ExceptionModel(Exception exception)
+    internal ExceptionModel(System.Exception exception)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(exception);
@@ -65,7 +65,7 @@ internal sealed class ExceptionModel
     /// <summary>
     /// 异常详细模型集合
     /// </summary>
-    public List<ExceptionDetailModel> Details { get; internal set; } = new();
+    public IEnumerable<ExceptionSourceCodeDetail>? Details { get; internal set; }
 
     /// <summary>
     /// 初始化
@@ -78,24 +78,10 @@ internal sealed class ExceptionModel
         Source = _exception.Source;
         HelpLink = _exception.HelpLink;
 
-        // 初始化堆栈跟踪对象
-        var stackTrace = new StackTrace(_exception, true);
+        // 初始化异常源码解析器
+        var exceptionSourceCodeParser = new ExceptionSourceCodeParser(_exception);
 
-        // 获取所有的堆栈帧
-        var stackFrames = stackTrace.GetFrames();
-
-        // 遍历每个堆栈帧，获取文件路径和行号
-        foreach (var stackFrame in stackFrames)
-        {
-            // 获取文件名和出错代码行号
-            var fileName = stackFrame.GetFileName();
-            var lineNumber = stackFrame.GetFileLineNumber();
-
-            // 空检查
-            if (!string.IsNullOrEmpty(fileName) && lineNumber != 0)
-            {
-                Details.Add(new(stackFrame));
-            }
-        }
+        // 解析异常并返回异常源码详细信息
+        Details = exceptionSourceCodeParser.Parse();
     }
 }

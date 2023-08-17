@@ -48,7 +48,7 @@ internal sealed class DiagnosticObserver<T> : IObserver<T>
     }
 
     /// <inheritdoc />
-    public void OnError(Exception exception)
+    public void OnError(System.Exception exception)
     {
     }
 

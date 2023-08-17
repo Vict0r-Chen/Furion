@@ -71,10 +71,8 @@ public sealed class ExceptionSourceCodeParser
 
         foreach (var stackFrame in StackFrames)
         {
-            // 获取异常文件名
+            // 获取异常文件名和行号
             var fileName = stackFrame.GetFileName();
-
-            // 获取异常代码行号
             var lineNumber = stackFrame.GetFileLineNumber();
 
             if (string.IsNullOrWhiteSpace(fileName) || lineNumber <= 0)

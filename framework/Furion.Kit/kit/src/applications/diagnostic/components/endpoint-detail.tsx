@@ -115,13 +115,13 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
                           {...getLineProps({ line })}
                           style={{
                             backgroundColor:
-                              i + (item.startLineNumber || 1) ===
+                              i + (item.startingLineNumber || 1) ===
                               item.lineNumber
                                 ? "#ff4d4f"
                                 : undefined,
                           }}
                         >
-                          <span>{i + (item.startLineNumber || 1)}</span>
+                          <span>{i + (item.startingLineNumber || 1)}</span>
                           {line.map((token, key) => (
                             <span key={key} {...getTokenProps({ token })} />
                           ))}
