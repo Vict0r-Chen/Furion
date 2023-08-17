@@ -40,6 +40,7 @@ export interface ExceptionModel {
   hResult?: number;
   source?: string;
   helpLink?: string;
+  type?: string;
   details?: ExceptionSourceCode[];
 }
 

@@ -414,6 +414,11 @@
             帮助文件链接
             </summary>
         </member>
+        <member name="P:Furion.Kit.ExceptionModel.Type">
+            <summary>
+            异常类型
+            </summary>
+        </member>
         <member name="P:Furion.Kit.ExceptionModel.Details">
             <summary>
             异常详细模型集合
