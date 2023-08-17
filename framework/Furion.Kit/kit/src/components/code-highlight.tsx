@@ -8,6 +8,8 @@ require("prismjs/components/prism-csharp");
 const Container = styled.div``;
 
 const LineContainer = styled.div<{ $highlight?: boolean }>`
+  white-space: pre-wrap;
+
   ${(props) =>
     props.$highlight === true &&
     css`
