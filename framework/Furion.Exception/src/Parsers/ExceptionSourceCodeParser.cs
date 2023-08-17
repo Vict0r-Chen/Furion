@@ -130,63 +130,74 @@ public sealed class ExceptionSourceCodeParser
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
+        // 检查行号合法性
+        ExceptionSourceCode.EnsureLegalLineNumber(lineNumber);
+        ExceptionSourceCode.EnsureLegalLineNumber(surroundingLines);
+
         // 初始化 out 返回值参数
         (targetLineText, startingLineNumber) = (default, default);
 
-        // 初始化字符串构建器
-        var stringBuilder = new StringBuilder();
+        // 初始化当前行号和索引值
+        int currentLine = 1, currentIndex = 0;
 
-        // 通过流的方式读取文件
-        using (var streamReader = new StreamReader(fileName))
+        // 初始化最小和最大可读行号
+        int minLineNumber = lineNumber - surroundingLines
+            , maxLineNumber = lineNumber + surroundingLines;
+
+        // 初始化上下行内容数组
+        var lines = new string?[surroundingLines * 2 + 1];
+
+        // 初始化文件流读写器
+        using var streamReader = new StreamReader(fileName);
+
+        // 循环读取文件每一行内容直至结尾
+        while (!streamReader.EndOfStream)
         {
-            // 当前行号
-            var currentLine = 1;
+            // 读取当前行内容
+            var line = streamReader.ReadLine();
 
-            // 存储上下行文本
-            var lines = new string?[surroundingLines * 2 + 1];
-
-            // 当前行的索引
-            var currentIndex = 0;
-
-            while (!streamReader.EndOfStream)
+            // 检查当前行号是否在可读行号范围内
+            if (currentLine >= minLineNumber && currentLine <= maxLineNumber)
             {
-                // 读取当前行内容
-                var line = streamReader.ReadLine();
+                // 设置起始行号
+                startingLineNumber ??= currentLine;
 
-                // 设置目标行的内容
+                // 存储当前行内容
+                lines[currentIndex] = line;
+
+                // 设置目标行内容
                 if (currentLine == lineNumber)
                 {
                     targetLineText = line;
                 }
 
-                // 检查目标行周围行数边界
-                if (currentLine >= lineNumber - surroundingLines
-                    && currentLine <= lineNumber + surroundingLines)
-                {
-                    // 设置出错行的起始行号
-                    startingLineNumber ??= currentLine;
-
-                    // 存储上下行文本
-                    lines[currentIndex] = line;
-                    currentIndex++;
-                }
-
-                if (currentLine == lineNumber + surroundingLines)
+                // 检查是否达到最大可读行
+                if (currentLine == maxLineNumber)
                 {
                     break;
                 }
 
-                currentLine++;
+                // 递增数组索引值
+                currentIndex++;
             }
 
-            // 构建结果字符串
-            foreach (var line in lines)
+            // 递增当前行数
+            currentLine++;
+        }
+
+        // 初始化字符串构建器
+        var stringBuilder = new StringBuilder();
+
+        // 构建目标上下行（含目标行）内容字符串
+        foreach (var line in lines)
+        {
+            // 空检查
+            if (line is null)
             {
-                if (line is not null)
-                {
-                    stringBuilder.AppendLine(line);
-                }
+                break;
             }
+
+            stringBuilder.AppendLine(line);
         }
 
         return stringBuilder.ToString();
