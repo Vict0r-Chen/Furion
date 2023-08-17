@@ -41,6 +41,7 @@ const ItemContainer = styled.div`
 const ItemTitle = styled.span`
   color: #000000e0;
   font-weight: 600;
+  margin-right: 2px;
 `;
 
 const ItemContent = styled.span`
