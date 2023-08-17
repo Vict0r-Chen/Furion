@@ -224,6 +224,53 @@
             <param name="paramName">参数名称</param>
             <exception cref="T:Furion.Exception.UserFriendlyException"></exception>
         </member>
+        <member name="T:Furion.Exception.ExceptionSourceCodeDetail">
+            <summary>
+            异常源码详细信息
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeDetail.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ExceptionSourceCodeDetail"/>
+            </summary>
+            <param name="fileName">异常文件名</param>
+            <param name="lineNumber">异常代码行号</param>
+            <param name="startingLineNumber">异常代码起始行号</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeDetail.FileName">
+            <summary>
+            异常文件名
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeDetail.LineNumber">
+            <summary>
+            异常代码行号
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeDetail.StartingLineNumber">
+            <summary>
+            异常代码起始行号
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeDetail.TargetLineText">
+            <summary>
+            异常代码行内容
+            </summary>
+        </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeDetail.SurroundingLinesText">
+            <summary>
+            异常代码行上下行内容
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeDetail.EnsureLegalLineNumber(System.Int32,System.String)">
+            <summary>
+            检查行号合法性
+            </summary>
+            <param name="lineNumber">行号</param>
+            <param name="paramName">参数名</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:Furion.Exception.ExceptionCodeParser">
             <summary>
             异常编码解析器
@@ -261,6 +308,39 @@
             </summary>
             <param name="code">异常编码</param>
             <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:Furion.Exception.ExceptionSourceCodeParser">
+            <summary>
+            异常源码解析器
+            </summary>
+        </member>
+        <member name="F:Furion.Exception.ExceptionSourceCodeParser._exception">
+            <inheritdoc cref="T:System.Exception"/>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeParser.#ctor(System.Exception)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ExceptionCodeParser"/>
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeParser.#ctor(System.Exception,System.Int32)">
+            <summary>
+            <inheritdoc cref="T:Furion.Exception.ExceptionCodeParser"/>
+            </summary>
+            <param name="exception"><see cref="T:System.Exception"/></param>
+            <param name="surroundingLines">异常代码行上下行行数</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeParser.SurroundingLines">
+            <summary>
+            异常代码行上下行行数
+            </summary>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeParser.Parse">
+            <summary>
+            解析异常并返回异常源码详细信息
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Furion.Component.ExceptionComponent">
             <summary>
