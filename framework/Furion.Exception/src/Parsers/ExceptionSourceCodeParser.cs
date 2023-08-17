@@ -101,9 +101,7 @@ public sealed class ExceptionSourceCodeParser
             }
 
             // 读取目标上下行（含目标行）内容
-            var surroundingLinesText = ReadSurroundingLines(fileName
-                , lineNumber
-                , SurroundingLines
+            var surroundingLinesText = ReadSurroundingLines(fileName, lineNumber, SurroundingLines
                 , out var targetLineText
                 , out var startingLineNumber);
 
@@ -203,21 +201,6 @@ public sealed class ExceptionSourceCodeParser
             currentLine++;
         }
 
-        // 初始化字符串构建器
-        var stringBuilder = new StringBuilder();
-
-        // 构建目标上下行（含目标行）内容字符串
-        foreach (var line in lines)
-        {
-            // 空检查
-            if (line is null)
-            {
-                break;
-            }
-
-            stringBuilder.AppendLine(line);
-        }
-
-        return stringBuilder.ToString();
+        return string.Join("\r\n", lines.Where(line => line is not null));
     }
 }

@@ -44,8 +44,7 @@ public static class KitWebApplicationExtensions
         webApplication.MapGroup(kitOptions.Root)
             .MapGetSSE("endpoint-sse", async (HttpContext context, CancellationToken cancellationToken) =>
             {
-                await new EndpointDiagnosticListener(kitOptions.Capacity)
-                .SSEHandler(context, cancellationToken);
+                await new EndpointDiagnosticListener(kitOptions.Capacity).SSEHandler(context, cancellationToken);
             });
 
         // 获取当前类型所在程序集

@@ -144,7 +144,7 @@ public class ExceptionSourceCodeParserTests
         Assert.Equal(21, firstSourceCode.LineNumber);
         Assert.Equal(20, firstSourceCode.StartingLineNumber);
         Assert.Equal("        throw new NotImplementedException();", firstSourceCode.TargetLineText);
-        Assert.Equal("    {\r\n        throw new NotImplementedException();\r\n    }\r\n", firstSourceCode.SurroundingLinesText);
+        Assert.Equal("    {\r\n        throw new NotImplementedException();\r\n    }", firstSourceCode.SurroundingLinesText);
     }
 
     [Fact]
@@ -185,7 +185,7 @@ public class ExceptionSourceCodeParserTests
         Assert.Equal(21, firstSourceCode.LineNumber);
         Assert.Equal(20, firstSourceCode.StartingLineNumber);
         Assert.Equal("        throw new NotImplementedException();", firstSourceCode.TargetLineText);
-        Assert.Equal("    {\r\n        throw new NotImplementedException();\r\n    }\r\n", firstSourceCode.SurroundingLinesText);
+        Assert.Equal("    {\r\n        throw new NotImplementedException();\r\n    }", firstSourceCode.SurroundingLinesText);
     }
 
     [Fact]
@@ -204,13 +204,13 @@ public class ExceptionSourceCodeParserTests
         Assert.NotNull(result);
         Assert.Equal(20, startingLineNumber);
         Assert.Equal("        throw new NotImplementedException();", targetLineText);
-        Assert.Equal("    {\r\n        throw new NotImplementedException();\r\n    }\r\n", result);
+        Assert.Equal("    {\r\n        throw new NotImplementedException();\r\n    }", result);
 
         var result2 = ExceptionSourceCodeParser.ReadSurroundingLines("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Exception\\test\\ExceptionSourceCodeParserModels.cs", 21, 30, out var targetLineText2, out var startingLineNumber2);
 
         Assert.NotNull(result2);
         Assert.Equal(1, startingLineNumber2);
         Assert.Equal("        throw new NotImplementedException();", targetLineText2);
-        Assert.Equal("// 麻省理工学院许可证\r\n//\r\n// 版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司\r\n//\r\n// 特此免费授予获得本软件及其相关文档文件（以下简称“软件”）副本的任何人以处理本软件的权利，\r\n// 包括但不限于使用、复制、修改、合并、发布、分发、再许可、销售软件的副本，\r\n// 以及允许拥有软件副本的个人进行上述行为，但须遵守以下条件：\r\n//\r\n// 在所有副本或重要部分的软件中必须包括上述版权声明和本许可声明。\r\n//\r\n// 软件按“原样”提供，不提供任何形式的明示或暗示的保证，包括但不限于对适销性、适用性和非侵权的保证。\r\n// 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，\r\n// 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。\r\n\r\nnamespace Furion.Exception.Tests;\r\n\r\npublic class ExceptionSourceCodeParserModels\r\n{\r\n    public void TestThrow()\r\n    {\r\n        throw new NotImplementedException();\r\n    }\r\n}\r\n", result2);
+        Assert.Equal("// 麻省理工学院许可证\r\n//\r\n// 版权所有 © 2020-2023 百小僧，百签科技（广东）有限公司\r\n//\r\n// 特此免费授予获得本软件及其相关文档文件（以下简称“软件”）副本的任何人以处理本软件的权利，\r\n// 包括但不限于使用、复制、修改、合并、发布、分发、再许可、销售软件的副本，\r\n// 以及允许拥有软件副本的个人进行上述行为，但须遵守以下条件：\r\n//\r\n// 在所有副本或重要部分的软件中必须包括上述版权声明和本许可声明。\r\n//\r\n// 软件按“原样”提供，不提供任何形式的明示或暗示的保证，包括但不限于对适销性、适用性和非侵权的保证。\r\n// 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，\r\n// 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。\r\n\r\nnamespace Furion.Exception.Tests;\r\n\r\npublic class ExceptionSourceCodeParserModels\r\n{\r\n    public void TestThrow()\r\n    {\r\n        throw new NotImplementedException();\r\n    }\r\n}", result2);
     }
 }
