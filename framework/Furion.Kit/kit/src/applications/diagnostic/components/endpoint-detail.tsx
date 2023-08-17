@@ -1,7 +1,6 @@
-import { Highlight, themes } from "prism-react-renderer";
-import Prism from "prismjs";
 import React from "react";
 import { styled } from "styled-components";
+import CodeHighlight from "../../../components/code-highlight";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 
 require("prismjs/components/prism-csharp");
@@ -95,41 +94,12 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
               </div>
               <div>{item.targetLineText!}</div>
               <div>
-                <Highlight
-                  theme={themes.vsLight}
-                  code={item.surroundingLinesText!}
+                <CodeHighlight
                   language="cs"
-                  prism={Prism}
-                >
-                  {({
-                    className,
-                    style,
-                    tokens,
-                    getLineProps,
-                    getTokenProps,
-                  }) => (
-                    <pre style={style}>
-                      {tokens.map((line, i) => (
-                        <div
-                          key={i}
-                          {...getLineProps({ line })}
-                          style={{
-                            backgroundColor:
-                              i + (item.startingLineNumber || 1) ===
-                              item.lineNumber
-                                ? "#ff4d4f"
-                                : undefined,
-                          }}
-                        >
-                          <span>{i + (item.startingLineNumber || 1)}</span>
-                          {line.map((token, key) => (
-                            <span key={key} {...getTokenProps({ token })} />
-                          ))}
-                        </div>
-                      ))}
-                    </pre>
-                  )}
-                </Highlight>
+                  code={item.surroundingLinesText!}
+                  lineNumber={item.lineNumber}
+                  startingLineNumber={item.startingLineNumber}
+                />
               </div>
             </div>
           ))}

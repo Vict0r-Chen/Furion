@@ -33,11 +33,7 @@ const ItemContainer = styled.div`
 
 const Main = styled(Flexbox)<{ $error?: boolean; $warn?: boolean }>`
   background-color: ${(props) =>
-    props.$error
-      ? "rgb(255, 240, 240)"
-      : props.$warn
-      ? "rgb(255, 251, 230)"
-      : "#f7f8fb"};
+    props.$error ? "#fff0f0" : props.$warn ? "#fffbe6" : "#f7f8fb"};
   align-items: center;
   padding: 5px 10px 5px 5px;
   border-radius: 5px;
