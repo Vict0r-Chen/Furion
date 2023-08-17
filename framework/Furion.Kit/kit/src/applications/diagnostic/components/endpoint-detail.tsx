@@ -3,10 +3,8 @@ import { styled } from "styled-components";
 import CodeHighlight from "../../../components/code-highlight";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 
-require("prismjs/components/prism-csharp");
-
 const Container = styled.div`
-  max-height: 300px;
+  max-height: calc(100vh - 300px);
   overflow-y: auto;
 `;
 
@@ -16,7 +14,14 @@ const Category: React.FC<{
 }> = ({ title, children }) => {
   return (
     <div>
-      <div style={{ fontWeight: 600, backgroundColor: "rgb(255, 251, 230)" }}>
+      <div
+        style={{
+          fontWeight: 600,
+          backgroundColor: "rgb(255, 251, 230)",
+          padding: "5px 10px",
+          marginBottom: 15,
+        }}
+      >
         {title}
       </div>
       <div style={{ padding: "0 10px" }}>{children}</div>
@@ -31,7 +36,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.controllerAction &&
           Object.keys(props.controllerAction).map((item) => (
             <div key={item}>
-              {item} {(props.controllerAction as Record<string, any>)![item]}
+              {item}: {(props.controllerAction as Record<string, any>)![item]}
             </div>
           ))}
       </Category>
@@ -39,7 +44,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.endpoint &&
           Object.keys(props.endpoint).map((item) => (
             <div key={item}>
-              {item} {(props.endpoint as Record<string, any>)![item]}
+              {item}: {(props.endpoint as Record<string, any>)![item]}
             </div>
           ))}
       </Category>
@@ -47,7 +52,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.query &&
           Object.keys(props.query).map((item) => (
             <div key={item}>
-              {item} {props.query![item]}
+              {item}: {props.query![item]}
             </div>
           ))}
       </Category>
@@ -55,7 +60,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.requestHeaders &&
           Object.keys(props.requestHeaders).map((item) => (
             <div key={item}>
-              {item} {props.requestHeaders![item]}
+              {item}: {props.requestHeaders![item]}
             </div>
           ))}
       </Category>
@@ -63,7 +68,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.cookies &&
           Object.keys(props.cookies).map((item) => (
             <div key={item}>
-              {item} {props.cookies![item]}
+              {item}: {props.cookies![item]}
             </div>
           ))}
       </Category>
@@ -71,7 +76,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
         {props.routeValues &&
           Object.keys(props.routeValues).map((item) => (
             <div key={item}>
-              {item} {props.routeValues![item]}
+              {item}: {props.routeValues![item]}
             </div>
           ))}
       </Category>
@@ -81,7 +86,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
             .filter((k) => k !== "details")
             .map((item) => (
               <div key={item}>
-                {item} {(props.exception as Record<string, any>)![item]}
+                {item}: {(props.exception as Record<string, any>)![item]}
               </div>
             ))}
       </Category>

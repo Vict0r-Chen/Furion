@@ -20,6 +20,7 @@ const LineContainer = styled.div<{ $highlight?: boolean }>`
 
 const LineNumber = styled.span<{ $highlight?: boolean }>`
   color: #00000073;
+  margin-right: 15px;
 
   ${(props) =>
     props.$highlight === true &&
