@@ -256,6 +256,11 @@
             请求方式
             </summary>
         </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.Path">
+            <summary>
+            请求路径
+            </summary>
+        </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.UrlAddress">
             <summary>
             请求地址

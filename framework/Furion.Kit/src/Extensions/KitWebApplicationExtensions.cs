@@ -50,7 +50,7 @@ public static class KitWebApplicationExtensions
             });
 
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("configuration", (HttpContext httpContext, IConfiguration configuration) =>
+            .MapGet("configuration", async (HttpContext httpContext, IConfiguration configuration) =>
             {
                 var jsonString = ConfigurationToJson(configuration);
 
@@ -62,8 +62,8 @@ public static class KitWebApplicationExtensions
 
                 httpContext.Response.Headers.CacheControl = "no-cache";
 
-                return httpContext.Response.WriteAsync(jsonString);
-            });
+                await httpContext.Response.WriteAsync(jsonString);
+            }).ExcludeFromDescription();
 
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;

@@ -43,6 +43,7 @@ const Main = styled(Flexbox)<{ $error?: boolean; $warn?: boolean }>`
 const JsonView = styled(Flexbox)`
   padding: 5px 25px;
   align-items: flex-start;
+  word-break: break-all;
 `;
 
 const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {

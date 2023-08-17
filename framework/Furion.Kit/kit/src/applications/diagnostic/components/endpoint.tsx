@@ -28,6 +28,11 @@ const Endpoint: React.FC = () => {
 
   const endpointDiagnostics = useLiveQuery(async () => {
     var data = await database.endpointDiagnostic
+      .filter(
+        (u) =>
+          u.path !== "/furion/configuration" &&
+          u.path !== "/furion/endpoint-sse"
+      )
       .reverse()
       .limit(pageSize * page)
       .toArray();
@@ -36,7 +41,15 @@ const Endpoint: React.FC = () => {
     return data;
   }, [page]);
 
-  const count = useLiveQuery(async () => database.endpointDiagnostic.count());
+  const count = useLiveQuery(async () =>
+    database.endpointDiagnostic
+      .filter(
+        (u) =>
+          u.path !== "/furion/configuration" &&
+          u.path !== "/furion/endpoint-sse"
+      )
+      .count()
+  );
 
   useEffect(() => {
     var eventSource = new EventSource(

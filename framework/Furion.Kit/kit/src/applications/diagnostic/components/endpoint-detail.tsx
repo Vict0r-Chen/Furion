@@ -92,6 +92,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
           }
         />
         <ListItem title="traceIdentifier" content={props.traceIdentifier} />
+        <ListItem title="path" content={props.path} />
         <ListItem
           title="urlAddress"
           content={

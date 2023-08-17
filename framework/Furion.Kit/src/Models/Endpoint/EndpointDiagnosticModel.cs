@@ -48,6 +48,11 @@ internal sealed class EndpointDiagnosticModel
     public string? HttpMethod { get; internal set; }
 
     /// <summary>
+    /// 请求路径
+    /// </summary>
+    public string? Path { get; internal set; }
+
+    /// <summary>
     /// 请求地址
     /// </summary>
     public string? UrlAddress { get; internal set; }
@@ -127,6 +132,7 @@ internal sealed class EndpointDiagnosticModel
         TraceIdentifier = _httpContext.TraceIdentifier;
         HttpMethod = httpRequest.Method;
         BeginTimestamp = DateTimeOffset.UtcNow;
+        Path = httpRequest.Path;
         UrlAddress = httpRequest.GetUrlAddress();
 
         Query = httpRequest.Query.ToDictionary(u => u.Key, u => u.Value.ToString());
