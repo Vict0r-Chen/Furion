@@ -23,7 +23,7 @@ const CategoryTitle = styled.div`
 `;
 
 const CategoryContent = styled.div`
-  padding: 10px 15px;
+  padding: 10px 20px;
 `;
 
 const Category: React.FC<{
@@ -69,7 +69,7 @@ const ListItem: React.FC<{
 const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
   return (
     <Container>
-      <Category title="Basics">
+      <Category title="Basic">
         <ListItem
           title="beginTimestamp"
           content={props.beginTimestamp?.toLocaleString()}
