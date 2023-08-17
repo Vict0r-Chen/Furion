@@ -323,6 +323,11 @@
             </summary>
             <param name="exception"><see cref="T:System.Exception"/></param>
         </member>
+        <member name="P:Furion.Exception.ExceptionSourceCodeParser.StackFrames">
+            <summary>
+            堆栈帧集合
+            </summary>
+        </member>
         <member name="M:Furion.Exception.ExceptionSourceCodeParser.#ctor(System.Exception,System.Int32)">
             <summary>
             <inheritdoc cref="T:Furion.Exception.ExceptionCodeParser"/>
@@ -341,6 +346,17 @@
             解析异常并返回异常源码详细信息
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Furion.Exception.ExceptionSourceCodeParser.ReadSurroundingLines(System.String,System.Int32,System.Int32,System.String@,System.Nullable{System.Int32}@)">
+            <summary>
+            读取文件出错代码行周围内容
+            </summary>
+            <param name="fileName">文件路径</param>
+            <param name="lineNumber">目标行数</param>
+            <param name="surroundingLines">周围行数</param>
+            <param name="targetLineText">出错代码行内容</param>
+            <param name="startingLineNumber">出错行的起始行号</param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="T:Furion.Component.ExceptionComponent">
             <summary>

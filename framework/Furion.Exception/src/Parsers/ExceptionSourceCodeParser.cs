@@ -28,8 +28,17 @@ public sealed class ExceptionSourceCodeParser
     /// <param name="exception"><see cref="System.Exception"/></param>
     public ExceptionSourceCodeParser(System.Exception exception)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(exception);
+
         _exception = exception;
+        StackFrames = new StackTrace(exception, true).GetFrames();
     }
+
+    /// <summary>
+    /// 堆栈帧集合
+    /// </summary>
+    internal StackFrame[] StackFrames { get; init; }
 
     /// <summary>
     /// <inheritdoc cref="ExceptionCodeParser"/>
@@ -57,6 +66,112 @@ public sealed class ExceptionSourceCodeParser
     /// <returns></returns>
     public IEnumerable<ExceptionSourceCodeDetail> Parse()
     {
-        return null!;
+        // 检查行号合法性
+        ExceptionSourceCodeDetail.EnsureLegalLineNumber(SurroundingLines);
+
+        foreach (var stackFrame in StackFrames)
+        {
+            // 获取异常文件名
+            var fileName = stackFrame.GetFileName();
+
+            // 获取异常代码行号
+            var lineNumber = stackFrame.GetFileLineNumber();
+
+            if (string.IsNullOrWhiteSpace(fileName) || lineNumber <= 0)
+            {
+                continue;
+            }
+
+            var surroundingLinesText = ReadSurroundingLines(fileName
+                , lineNumber
+                , SurroundingLines
+                , out var targetLineText
+                , out var startingLineNumber);
+
+            yield return new(fileName, lineNumber, startingLineNumber!.Value)
+            {
+                SurroundingLinesText = surroundingLinesText,
+                TargetLineText = targetLineText
+            };
+        }
+    }
+
+    /// <summary>
+    /// 读取文件出错代码行周围内容
+    /// </summary>
+    /// <param name="fileName">文件路径</param>
+    /// <param name="lineNumber">目标行数</param>
+    /// <param name="surroundingLines">周围行数</param>
+    /// <param name="targetLineText">出错代码行内容</param>
+    /// <param name="startingLineNumber">出错行的起始行号</param>
+    /// <returns><see cref="string"/></returns>
+    internal static string ReadSurroundingLines(string fileName
+        , int lineNumber
+        , int surroundingLines
+        , out string? targetLineText
+        , out int? startingLineNumber)
+    {
+        // 空检查
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+
+        // 初始化目标行内容
+        targetLineText = default;
+        startingLineNumber = default;
+
+        // 总共要读取的行数
+        var linesToRead = surroundingLines * 2 + 1;
+
+        // 初始化字符串构建器
+        var stringBuilder = new StringBuilder();
+
+        // 通过流的方式读取文件
+        using (var streamReader = new StreamReader(fileName))
+        {
+            // 当前行号
+            var currentLine = 1;
+
+            // 存储上下行文本
+            var lines = new string?[linesToRead];
+
+            // 当前行的索引
+            var currentIndex = 0;
+
+            while (!streamReader.EndOfStream)
+            {
+                // 读取当前行内容
+                var line = streamReader.ReadLine();
+
+                // 设置目标行的内容
+                if (currentLine == lineNumber)
+                {
+                    targetLineText = line;
+                }
+
+                // 检查目标行周围行数边界
+                if (currentLine >= lineNumber - surroundingLines
+                    && currentLine <= lineNumber + surroundingLines)
+                {
+                    // 设置出错行的起始行号
+                    startingLineNumber ??= currentLine;
+
+                    // 存储上下行文本
+                    lines[currentIndex] = line;
+                    currentIndex++;
+                }
+
+                currentLine++;
+            }
+
+            // 构建结果字符串
+            foreach (var line in lines)
+            {
+                if (line is not null)
+                {
+                    stringBuilder.AppendLine(line);
+                }
+            }
+        }
+
+        return stringBuilder.ToString();
     }
 }
