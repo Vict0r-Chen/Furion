@@ -15,26 +15,27 @@
 namespace Furion.Exception;
 
 /// <summary>
-/// 异常源码详细信息
+/// 异常源码
 /// </summary>
-public sealed class ExceptionSourceCodeDetail
+public sealed class ExceptionSourceCode
 {
     /// <summary>
-    /// <inheritdoc cref="ExceptionSourceCodeDetail"/>
+    /// <inheritdoc cref="ExceptionSourceCode"/>
     /// </summary>
-    /// <param name="fileName">异常文件名</param>
-    /// <param name="lineNumber">异常代码行号</param>
-    /// <param name="startingLineNumber">异常代码起始行号</param>
+    /// <param name="fileName">文件名</param>
+    /// <param name="lineNumber">目标行号</param>
+    /// <param name="startingLineNumber">起始行号</param>
     /// <exception cref="ArgumentException"></exception>
-    public ExceptionSourceCodeDetail(string fileName, int lineNumber, int startingLineNumber)
+    public ExceptionSourceCode(string fileName, int lineNumber, int startingLineNumber)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
-        // 检查行号合法性
+        // 检查代码行号合法性
         EnsureLegalLineNumber(lineNumber);
         EnsureLegalLineNumber(startingLineNumber);
 
+        // 检查起始行号是否大于等于目标行号
         if (startingLineNumber >= lineNumber)
         {
             throw new ArgumentException("The starting line number cannot be greater than or equal to the line number.", nameof(startingLineNumber));
@@ -46,34 +47,34 @@ public sealed class ExceptionSourceCodeDetail
     }
 
     /// <summary>
-    /// 异常文件名
+    /// 文件名
     /// </summary>
     public string FileName { get; init; }
 
     /// <summary>
-    /// 异常代码行号
+    /// 目标行号
     /// </summary>
     public int LineNumber { get; init; }
 
     /// <summary>
-    /// 异常代码起始行号
+    /// 起始行号
     /// </summary>
     public int StartingLineNumber { get; init; }
 
     /// <summary>
-    /// 异常代码行内容
+    /// 目标行内容
     /// </summary>
     public string? TargetLineText { get; set; }
 
     /// <summary>
-    /// 异常代码行上下行内容
+    /// 目标上下行（含目标行）内容
     /// </summary>
     public string? SurroundingLinesText { get; set; }
 
     /// <summary>
-    /// 检查行号合法性
+    /// 检查代码行号合法性
     /// </summary>
-    /// <param name="lineNumber">行号</param>
+    /// <param name="lineNumber">代码行号</param>
     /// <param name="paramName">参数名</param>
     /// <exception cref="ArgumentException"></exception>
     internal static void EnsureLegalLineNumber(int lineNumber, [CallerArgumentExpression(nameof(lineNumber))] string? paramName = null)

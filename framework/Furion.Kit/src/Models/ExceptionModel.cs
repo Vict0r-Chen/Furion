@@ -65,7 +65,7 @@ internal sealed class ExceptionModel
     /// <summary>
     /// 异常详细模型集合
     /// </summary>
-    public IEnumerable<ExceptionSourceCodeDetail>? Details { get; internal set; }
+    public IEnumerable<ExceptionSourceCode>? Details { get; internal set; }
 
     /// <summary>
     /// 初始化

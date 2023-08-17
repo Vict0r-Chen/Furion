@@ -36,38 +36,38 @@ public sealed class ExceptionSourceCodeParser
     }
 
     /// <summary>
-    /// 堆栈帧集合
-    /// </summary>
-    internal StackFrame[] StackFrames { get; init; }
-
-    /// <summary>
     /// <inheritdoc cref="ExceptionCodeParser"/>
     /// </summary>
     /// <param name="exception"><see cref="System.Exception"/></param>
-    /// <param name="surroundingLines">异常代码行上下行行数</param>
+    /// <param name="surroundingLines">目标行号上下行数</param>
     /// <exception cref="ArgumentException"></exception>
     public ExceptionSourceCodeParser(System.Exception exception, int surroundingLines)
         : this(exception)
     {
-        // 检查行号合法性
-        ExceptionSourceCodeDetail.EnsureLegalLineNumber(surroundingLines);
+        // 检查代码行号合法性
+        ExceptionSourceCode.EnsureLegalLineNumber(surroundingLines);
 
         SurroundingLines = surroundingLines;
     }
 
     /// <summary>
-    /// 异常代码行上下行行数
+    /// 堆栈帧集合
+    /// </summary>
+    public StackFrame[] StackFrames { get; init; }
+
+    /// <summary>
+    /// 目标行号上下行数
     /// </summary>
     public int SurroundingLines { get; set; } = 6;
 
     /// <summary>
     /// 解析异常并返回异常源码详细信息
     /// </summary>
-    /// <returns></returns>
-    public IEnumerable<ExceptionSourceCodeDetail> Parse()
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    public IEnumerable<ExceptionSourceCode> Parse()
     {
-        // 检查行号合法性
-        ExceptionSourceCodeDetail.EnsureLegalLineNumber(SurroundingLines);
+        // 检查代码行号合法性
+        ExceptionSourceCode.EnsureLegalLineNumber(SurroundingLines);
 
         foreach (var stackFrame in StackFrames)
         {
@@ -80,6 +80,7 @@ public sealed class ExceptionSourceCodeParser
                 continue;
             }
 
+            // 读取目标上下行（含目标行）内容
             var surroundingLinesText = ReadSurroundingLines(fileName
                 , lineNumber
                 , SurroundingLines
@@ -95,13 +96,13 @@ public sealed class ExceptionSourceCodeParser
     }
 
     /// <summary>
-    /// 读取文件出错代码行周围内容
+    /// 读取目标上下行（含目标行）内容
     /// </summary>
-    /// <param name="fileName">文件路径</param>
-    /// <param name="lineNumber">目标行数</param>
-    /// <param name="surroundingLines">周围行数</param>
-    /// <param name="targetLineText">出错代码行内容</param>
-    /// <param name="startingLineNumber">出错行的起始行号</param>
+    /// <param name="fileName">文件名</param>
+    /// <param name="lineNumber">目标行号</param>
+    /// <param name="surroundingLines">目标上下行（含目标行）内容</param>
+    /// <param name="targetLineText">目标行内容</param>
+    /// <param name="startingLineNumber">起始行号</param>
     /// <returns><see cref="string"/></returns>
     internal static string ReadSurroundingLines(string fileName
         , int lineNumber

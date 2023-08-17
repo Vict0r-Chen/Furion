@@ -40,10 +40,10 @@ export interface ExceptionModel {
   hResult?: number;
   source?: string;
   helpLink?: string;
-  details?: ExceptionSourceCodeDetail[];
+  details?: ExceptionSourceCode[];
 }
 
-export interface ExceptionSourceCodeDetail {
+export interface ExceptionSourceCode {
   fileName?: string;
   lineNumber?: number;
   startingLineNumber?: number;
