@@ -2,7 +2,11 @@ import { Typography } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import CodeHighlight from "../../../components/code-highlight";
+import TextBox from "../../../components/textbox";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
+import HttpMethod from "./httpmethod";
+import StatusCode from "./statuscode";
+import Url from "./url";
 
 const Container = styled.div`
   max-height: calc(100vh - 300px);
@@ -42,9 +46,11 @@ const ItemTitle = styled.span`
   color: #000000e0;
   font-weight: 600;
   margin-right: 2px;
+  display: inline-block;
+  width: 200px;
 `;
 
-const ItemContent = styled.span`
+const ItemContent = styled(TextBox)`
   color: #595959;
 `;
 
@@ -73,13 +79,31 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
           title="endTimestamp"
           content={props.endTimestamp?.toLocaleString()}
         />
-        <ListItem title="httpMethod" content={props.httpMethod} />
+        <ListItem
+          title="httpMethod"
+          content={<HttpMethod value={props.httpMethod!} />}
+        />
         <ListItem
           title="status"
-          content={props.statusCode + " " + props.statusText}
+          content={
+            <StatusCode code={props.statusCode!} text={props.statusText} />
+          }
         />
         <ListItem title="traceIdentifier" content={props.traceIdentifier} />
-        <ListItem title="urlAddress" content={props.urlAddress} />
+        <ListItem
+          title="urlAddress"
+          content={
+            <Url
+              underline
+              $color={"#000000e0"}
+              copyable={{
+                tooltips: ["复制", "复制成功"],
+              }}
+            >
+              {decodeURIComponent(props.urlAddress!)}
+            </Url>
+          }
+        />
       </Category>
       <Category title="ControllerAction">
         {props.controllerAction &&

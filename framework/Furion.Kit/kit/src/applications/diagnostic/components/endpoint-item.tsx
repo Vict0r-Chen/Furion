@@ -8,6 +8,7 @@ import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagn
 import EndpointDetail from "./endpoint-detail";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
+import Url from "./url";
 
 const isError = (statusCode?: number | null): boolean => {
   if (!statusCode) {
@@ -37,15 +38,6 @@ const Main = styled(Flexbox)<{ $error?: boolean; $warn?: boolean }>`
   align-items: center;
   padding: 5px 10px 5px 5px;
   border-radius: 5px;
-`;
-
-const Url = styled(TextBox)`
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    color: #1677ff;
-  }
 `;
 
 const JsonView = styled(Flexbox)`
