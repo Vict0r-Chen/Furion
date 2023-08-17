@@ -283,40 +283,51 @@ const Diagnostic: React.FC = () => {
             items={items}
             tabBarExtraContent={{
               right: (
-                <Dropdown
-                  placement="bottomRight"
-                  menu={{
-                    items: [
-                      {
-                        key: 1,
-                        label: "移除此项",
-                        icon: (
-                          <IconFont
-                            type="icon-uninstall"
-                            $size={16}
-                            color="#000000A6"
-                          />
-                        ),
-                      },
-                      {
-                        key: 2,
-                        label: "清空数据",
-                        icon: (
-                          <IconFont
-                            type="icon-clear"
-                            $size={16}
-                            color="#000000A6"
-                          />
-                        ),
-                      },
-                    ],
-                  }}
-                >
-                  <Button
-                    type="text"
-                    icon={<SettingIcon type="icon-setting" $size={16} />}
-                  />
-                </Dropdown>
+                <Space size={10}>
+                  <Popover
+                    trigger="click"
+                    placement="bottomLeft"
+                    content={
+                      <div style={{ width: 200, height: 200 }}>筛选</div>
+                    }
+                  >
+                    <IconFont type="icon-filter" $size={16} />
+                  </Popover>
+                  <Dropdown
+                    placement="bottomRight"
+                    menu={{
+                      items: [
+                        {
+                          key: 1,
+                          label: "移除此项",
+                          icon: (
+                            <IconFont
+                              type="icon-uninstall"
+                              $size={16}
+                              color="#000000A6"
+                            />
+                          ),
+                        },
+                        {
+                          key: 2,
+                          label: "清空数据",
+                          icon: (
+                            <IconFont
+                              type="icon-clear"
+                              $size={16}
+                              color="#000000A6"
+                            />
+                          ),
+                        },
+                      ],
+                    }}
+                  >
+                    <Button
+                      type="text"
+                      icon={<SettingIcon type="icon-setting" $size={16} />}
+                    />
+                  </Dropdown>
+                </Space>
               ),
             }}
           />
