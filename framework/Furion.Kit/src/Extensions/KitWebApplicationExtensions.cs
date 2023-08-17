@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using System.Net.Mime;
+
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -47,6 +49,22 @@ public static class KitWebApplicationExtensions
                 await new EndpointDiagnosticListener(kitOptions.Capacity).SSEHandler(context, cancellationToken);
             });
 
+        webApplication.MapGroup(kitOptions.Root)
+            .MapGet("configuration", (HttpContext httpContext, IConfiguration configuration) =>
+            {
+                var jsonString = ConfigurationToJson(configuration);
+
+                httpContext.Response.Headers.AccessControlAllowOrigin = "*";
+                httpContext.Response.Headers.AccessControlAllowHeaders = "*";
+
+                httpContext.Response.ContentType = MediaTypeNames.Application.Json;
+                httpContext.Response.ContentLength = Encoding.UTF8.GetByteCount(jsonString);
+
+                httpContext.Response.Headers.CacheControl = "no-cache";
+
+                return httpContext.Response.WriteAsync(jsonString);
+            });
+
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
 
@@ -59,5 +77,52 @@ public static class KitWebApplicationExtensions
         });
 
         return webApplication;
+    }
+
+    public static string ConfigurationToJson(IConfiguration configuration)
+    {
+        using var stream = new MemoryStream();
+        using (var jsonWriter = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true }))
+        {
+            jsonWriter.WriteStartObject();
+
+            foreach (var section in configuration.GetChildren())
+            {
+                if (section.GetChildren().Any())
+                {
+                    jsonWriter.WritePropertyName(section.Key);
+                    BuildJson(section, jsonWriter);
+                }
+                else
+                {
+                    jsonWriter.WriteString(section.Key, section.Value);
+                }
+            }
+
+            jsonWriter.WriteEndObject();
+        }
+
+        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
+        return jsonString;
+    }
+
+    private static void BuildJson(IConfiguration configuration, Utf8JsonWriter jsonWriter)
+    {
+        jsonWriter.WriteStartObject();
+
+        foreach (var section in configuration.GetChildren())
+        {
+            if (section.GetChildren().Any())
+            {
+                jsonWriter.WritePropertyName(section.Key);
+                BuildJson(section, jsonWriter);
+            }
+            else
+            {
+                jsonWriter.WriteString(section.Key, section.Value);
+            }
+        }
+
+        jsonWriter.WriteEndObject();
     }
 }

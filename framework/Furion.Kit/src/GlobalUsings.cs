@@ -19,6 +19,7 @@ global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc.Controllers;
 global using Microsoft.AspNetCore.Mvc.Diagnostics;
 global using Microsoft.AspNetCore.Routing;
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.FileProviders;
 global using System.Collections.Concurrent;
 global using System.ComponentModel;

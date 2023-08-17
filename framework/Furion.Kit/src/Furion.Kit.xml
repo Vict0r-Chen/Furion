@@ -132,7 +132,7 @@
             <summary>
             构建 SSE 请求处理程序
             </summary>
-            <param name="context"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+            <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
