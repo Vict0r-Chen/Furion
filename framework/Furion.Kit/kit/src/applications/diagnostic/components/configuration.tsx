@@ -12,10 +12,12 @@ const Configuration: React.FC = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const response = await axios.get(
-        "https://localhost:7115/furion/configuration"
-      );
-      setData(response.data);
+      try {
+        const response = await axios.get(
+          "https://localhost:7115/furion/configuration"
+        );
+        setData(response.data);
+      } catch (error) {}
     };
 
     loadData();
