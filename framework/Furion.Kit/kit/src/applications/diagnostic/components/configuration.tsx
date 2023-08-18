@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReactJson from "react-json-view";
 import { styled } from "styled-components";
+import Page from "./page";
 
-const Container = styled.div`
+const Container = styled(Page)`
   word-break: break-all;
 `;
 

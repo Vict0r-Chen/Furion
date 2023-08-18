@@ -1,8 +1,9 @@
 import { Alert } from "antd";
 import React from "react";
 import { styled } from "styled-components";
+import Page from "./page";
 
-const Container = styled.div``;
+const Container = styled(Page)``;
 
 const Event: React.FC = () => {
   return (

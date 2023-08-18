@@ -5,8 +5,9 @@ import { styled } from "styled-components";
 import { database } from "../../../databases";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 import EndpointItem from "./endpoint-item";
+import Page from "./page";
 
-const Container = styled.div``;
+const Container = styled(Page)``;
 
 const ItemContainer = styled.div``;
 
