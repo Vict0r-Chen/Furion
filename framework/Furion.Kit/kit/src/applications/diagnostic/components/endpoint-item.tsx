@@ -41,7 +41,7 @@ const Main = styled(Flexbox)<{ $error?: boolean; $warn?: boolean }>`
   border-radius: 5px;
 `;
 
-const JsonViewContainer = styled(Flexbox)`
+const ExtraContainer = styled(Flexbox)`
   padding: 5px 25px;
   align-items: flex-start;
 `;
@@ -94,9 +94,9 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
           )}
         </Space>
       </Main>
-      <JsonViewContainer $spaceBetween>
+      <ExtraContainer $spaceBetween>
         <JsonViewr value={props} keyName={props.traceIdentifier} />
-      </JsonViewContainer>
+      </ExtraContainer>
     </ItemContainer>
   );
 };
