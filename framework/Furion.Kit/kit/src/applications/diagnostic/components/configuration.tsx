@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ReactJson from "react-json-view";
 import { styled } from "styled-components";
+import JsonViewer from "../../../components/json-viewer";
 import Page from "./page";
 
 const Container = styled(Page)`
-  word-break: break-all;
 `;
 
 const Configuration: React.FC = () => {
@@ -26,7 +25,7 @@ const Configuration: React.FC = () => {
 
   return (
     <Container>
-      <ReactJson src={data} name={false} sortKeys />
+      <JsonViewer value={data} collapsed />
     </Container>
   );
 };

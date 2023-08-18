@@ -1,5 +1,4 @@
 import { Popover, Space } from "antd";
-import ReactJson from "react-json-view";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";
@@ -9,6 +8,8 @@ import EndpointDetail from "./endpoint-detail";
 import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 import Url from "./url";
+
+import JsonViewr from "../../../components/json-viewer";
 
 const isError = (statusCode?: number | null): boolean => {
   if (!statusCode) {
@@ -40,10 +41,9 @@ const Main = styled(Flexbox)<{ $error?: boolean; $warn?: boolean }>`
   border-radius: 5px;
 `;
 
-const JsonView = styled(Flexbox)`
+const JsonViewContainer = styled(Flexbox)`
   padding: 5px 25px;
   align-items: flex-start;
-  word-break: break-all;
 `;
 
 const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
@@ -94,14 +94,9 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
           )}
         </Space>
       </Main>
-      <JsonView $spaceBetween>
-        <ReactJson
-          collapsed
-          src={props}
-          name={props.traceIdentifier}
-          sortKeys
-        />
-      </JsonView>
+      <JsonViewContainer $spaceBetween>
+        <JsonViewr value={props} keyName={props.traceIdentifier} />
+      </JsonViewContainer>
     </ItemContainer>
   );
 };

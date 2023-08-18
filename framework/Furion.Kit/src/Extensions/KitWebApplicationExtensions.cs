@@ -82,24 +82,13 @@ public static class KitWebApplicationExtensions
     public static string ConfigurationToJson(IConfiguration configuration)
     {
         using var stream = new MemoryStream();
-        using (var jsonWriter = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true }))
+        using (var jsonWriter = new Utf8JsonWriter(stream, new JsonWriterOptions
         {
-            jsonWriter.WriteStartObject();
-
-            foreach (var section in configuration.GetChildren())
-            {
-                if (section.GetChildren().Any())
-                {
-                    jsonWriter.WritePropertyName(section.Key);
-                    BuildJson(section, jsonWriter);
-                }
-                else
-                {
-                    jsonWriter.WriteString(section.Key, section.Value);
-                }
-            }
-
-            jsonWriter.WriteEndObject();
+            Indented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        }))
+        {
+            BuildJson(configuration, jsonWriter);
         }
 
         var jsonString = Encoding.UTF8.GetString(stream.ToArray());
