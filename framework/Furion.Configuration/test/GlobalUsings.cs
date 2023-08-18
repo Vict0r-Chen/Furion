@@ -15,4 +15,5 @@
 global using Microsoft.Extensions.Configuration.Ini;
 global using Microsoft.Extensions.Configuration.Json;
 global using Microsoft.Extensions.Configuration.Xml;
+global using System.Text.Json;
 global using Xunit;

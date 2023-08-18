@@ -12,8 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using System.Net.Mime;
-
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -52,7 +50,7 @@ public static class KitWebApplicationExtensions
         webApplication.MapGroup(kitOptions.Root)
             .MapGet("configuration", async (HttpContext httpContext, IConfiguration configuration) =>
             {
-                var jsonString = ConfigurationToJson(configuration);
+                var jsonString = configuration.ConvertToJson();
 
                 httpContext.Response.Headers.AccessControlAllowOrigin = "*";
                 httpContext.Response.Headers.AccessControlAllowHeaders = "*";
@@ -77,41 +75,5 @@ public static class KitWebApplicationExtensions
         });
 
         return webApplication;
-    }
-
-    public static string ConfigurationToJson(IConfiguration configuration)
-    {
-        using var stream = new MemoryStream();
-        using (var jsonWriter = new Utf8JsonWriter(stream, new JsonWriterOptions
-        {
-            Indented = true,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        }))
-        {
-            BuildJson(configuration, jsonWriter);
-        }
-
-        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
-        return jsonString;
-    }
-
-    private static void BuildJson(IConfiguration configuration, Utf8JsonWriter jsonWriter)
-    {
-        jsonWriter.WriteStartObject();
-
-        foreach (var section in configuration.GetChildren())
-        {
-            if (section.GetChildren().Any())
-            {
-                jsonWriter.WritePropertyName(section.Key);
-                BuildJson(section, jsonWriter);
-            }
-            else
-            {
-                jsonWriter.WriteString(section.Key, section.Value);
-            }
-        }
-
-        jsonWriter.WriteEndObject();
     }
 }

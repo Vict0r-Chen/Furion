@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Configuration;
 /// <summary>
 /// <see cref="IConfiguration"/> 拓展类
 /// </summary>
-public static class ConfigurationExtensions
+public static class IConfigurationExtensions
 {
     /// <summary>
     /// 判断配置节点是否存在
@@ -123,5 +123,64 @@ public static class ConfigurationExtensions
 
         // 重载所有配置提供程序
         configurationRoot.Reload();
+    }
+
+    /// <summary>
+    /// 转为为 JSON 字符串
+    /// </summary>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="jsonWriterOptions"><see cref="JsonWriterOptions"/></param>
+    /// <returns><see cref="string"/></returns>
+    public static string ConvertToJson(this IConfiguration configuration, JsonWriterOptions jsonWriterOptions = default)
+    {
+        // 创建一个内存流，用于存储生成的 JSON 数据
+        using var stream = new MemoryStream();
+
+        // 创建一个 Utf8JsonWriter 对象来写入 JSON 数据到内存流中
+        using (var jsonWriter = new Utf8JsonWriter(stream, jsonWriterOptions))
+        {
+            // 生成 JSON 数据
+            BuildJson(configuration, jsonWriter);
+        }
+
+        // 将内存流中的数据转换为字符串并返回
+        return Encoding.UTF8.GetString(stream.ToArray());
+    }
+
+    /// <summary>
+    /// 生成 JSON 数据
+    /// </summary>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="jsonWriter"><see cref="Utf8JsonWriter"/></param>
+    internal static void BuildJson(IConfiguration configuration, Utf8JsonWriter jsonWriter)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(configuration);
+        ArgumentNullException.ThrowIfNull(jsonWriter);
+
+        // 写入 JSON 对象的起始括号
+        jsonWriter.WriteStartObject();
+
+        // 遍历配置的每个子节点
+        foreach (var section in configuration.GetChildren())
+        {
+            // 如果子节点有子节点，说明是一个嵌套的配置节点
+            if (section.GetChildren().Any())
+            {
+                // 写入嵌套节点的名称
+                jsonWriter.WritePropertyName(section.Key);
+
+                // 递归调用生成嵌套节点的 JSON 数据
+                BuildJson(section, jsonWriter);
+            }
+            else
+            {
+                // 如果子节点没有子节点，说明是一个键值对
+                jsonWriter.WriteString(section.Key, section.Value);
+            }
+        }
+
+        // 写入 JSON 对象的结束括号
+        jsonWriter.WriteEndObject();
     }
 }

@@ -12,9 +12,12 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using System.Text;
+using System.Text.Encodings.Web;
+
 namespace Furion.Configuration.Tests;
 
-public class ConfigurationExtensionTests
+public class IConfigurationExtensionsTests
 {
     [Fact]
     public void Exists_Invalid_Parameters()
@@ -528,7 +531,7 @@ public class ConfigurationExtensionTests
     }
 
     [Fact]
-    public void Reload()
+    public void Reload_ReturnOK()
     {
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.Add(new ReloadConfigurationSource());
@@ -539,5 +542,96 @@ public class ConfigurationExtensionTests
         configuration.Reload();
 
         Assert.Equal("2", configuration["Count"]);
+    }
+
+    [Fact]
+    public void ConvertToJson_ReturnOK()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var data = new Dictionary<string, string?>
+        {
+            {"Furion:Name", "Furion" },
+            {"Furion:Version", "5.0.0" },
+            {"Furion:Homepage", "https://furion.net" },
+            {"Furion:Age", "3" },
+            {"Furion:Price", "0.00" },
+            {"Furion:IsMIT", "true" },
+
+            {"Furion:Tags:0", "Furion" },
+            {"Furion:Tags:1", "MonkSoul" },
+
+            {"Furion:Properties:Gitee", "https://gitee.com/dotnetchina/Furion" },
+            {"Furion:Properties:Github", "https://github.com/MonkSoul/Furion" },
+
+            {"Furion:Author:Name", "百小僧" },
+            {"Furion:Author:Age", "31" },
+
+            {"Furion:NotPublic", "NotPublic" }
+        };
+        configurationBuilder.AddInMemoryCollection(data);
+        var configuration = configurationBuilder.Build();
+
+        var jsonString = configuration.ConvertToJson();
+        Assert.Equal("{\"Furion\":{\"Age\":\"3\",\"Author\":{\"Age\":\"31\",\"Name\":\"\\u767E\\u5C0F\\u50E7\"},\"Homepage\":\"https://furion.net\",\"IsMIT\":\"true\",\"Name\":\"Furion\",\"NotPublic\":\"NotPublic\",\"Price\":\"0.00\",\"Properties\":{\"Gitee\":\"https://gitee.com/dotnetchina/Furion\",\"Github\":\"https://github.com/MonkSoul/Furion\"},\"Tags\":{\"0\":\"Furion\",\"1\":\"MonkSoul\"},\"Version\":\"5.0.0\"}}", jsonString);
+
+        var jsonString2 = configuration.ConvertToJson(new JsonWriterOptions
+        {
+            Indented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        });
+        Assert.Equal("{\r\n  \"Furion\": {\r\n    \"Age\": \"3\",\r\n    \"Author\": {\r\n      \"Age\": \"31\",\r\n      \"Name\": \"百小僧\"\r\n    },\r\n    \"Homepage\": \"https://furion.net\",\r\n    \"IsMIT\": \"true\",\r\n    \"Name\": \"Furion\",\r\n    \"NotPublic\": \"NotPublic\",\r\n    \"Price\": \"0.00\",\r\n    \"Properties\": {\r\n      \"Gitee\": \"https://gitee.com/dotnetchina/Furion\",\r\n      \"Github\": \"https://github.com/MonkSoul/Furion\"\r\n    },\r\n    \"Tags\": {\r\n      \"0\": \"Furion\",\r\n      \"1\": \"MonkSoul\"\r\n    },\r\n    \"Version\": \"5.0.0\"\r\n  }\r\n}", jsonString2);
+    }
+
+    [Fact]
+    public void BuildJson_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            IConfigurationExtensions.BuildJson(null!, null!);
+        });
+
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            IConfigurationExtensions.BuildJson(new ConfigurationManager(), null!);
+        });
+    }
+
+    [Fact]
+    public void BuildJson_ReturnOK()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+
+        var data = new Dictionary<string, string?>
+        {
+            {"Furion:Name", "Furion" },
+            {"Furion:Version", "5.0.0" },
+            {"Furion:Homepage", "https://furion.net" },
+            {"Furion:Age", "3" },
+            {"Furion:Price", "0.00" },
+            {"Furion:IsMIT", "true" },
+
+            {"Furion:Tags:0", "Furion" },
+            {"Furion:Tags:1", "MonkSoul" },
+
+            {"Furion:Properties:Gitee", "https://gitee.com/dotnetchina/Furion" },
+            {"Furion:Properties:Github", "https://github.com/MonkSoul/Furion" },
+
+            {"Furion:Author:Name", "百小僧" },
+            {"Furion:Author:Age", "31" },
+
+            {"Furion:NotPublic", "NotPublic" }
+        };
+        configurationBuilder.AddInMemoryCollection(data);
+        var configuration = configurationBuilder.Build();
+
+        using var stream = new MemoryStream();
+        using (var jsonWriter = new Utf8JsonWriter(stream))
+        {
+            IConfigurationExtensions.BuildJson(configuration, jsonWriter);
+        }
+
+        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
+        Assert.Equal("{\"Furion\":{\"Age\":\"3\",\"Author\":{\"Age\":\"31\",\"Name\":\"\\u767E\\u5C0F\\u50E7\"},\"Homepage\":\"https://furion.net\",\"IsMIT\":\"true\",\"Name\":\"Furion\",\"NotPublic\":\"NotPublic\",\"Price\":\"0.00\",\"Properties\":{\"Gitee\":\"https://gitee.com/dotnetchina/Furion\",\"Github\":\"https://github.com/MonkSoul/Furion\"},\"Tags\":{\"0\":\"Furion\",\"1\":\"MonkSoul\"},\"Version\":\"5.0.0\"}}", jsonString);
     }
 }

@@ -10,6 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Furion.Configuration\src\Furion.Configuration.csproj" />
 		<ProjectReference Include="..\..\Furion.Exception\src\Furion.Exception.csproj" />
 	</ItemGroup>
 
