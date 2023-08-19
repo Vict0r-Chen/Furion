@@ -57,11 +57,16 @@ internal static class KitEndpoints
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <param name="hostEnvironment"><see cref="IHostEnvironment"/></param>
     /// <returns><see cref="Task"/></returns>
-    internal static async Task ConfigurationDiagnostic(HttpContext httpContext, IConfiguration configuration)
+    internal static async Task ConfigurationDiagnostic(HttpContext httpContext, IConfiguration configuration, IHostEnvironment hostEnvironment)
     {
         // 将配置转换为 JSON 字符串
         var jsonString = configuration.ConvertToJson();
+
+        // 将环境名称写入响应头
+        httpContext.Response.Headers.AccessControlExposeHeaders = Constants.ENVIRONMENT_NAME_KEY;
+        httpContext.Response.Headers.Append(Constants.ENVIRONMENT_NAME_KEY, hostEnvironment.EnvironmentName);
 
         // 写入 Body 流
         await httpContext.Response.WriteAsJsonAsync(jsonString);

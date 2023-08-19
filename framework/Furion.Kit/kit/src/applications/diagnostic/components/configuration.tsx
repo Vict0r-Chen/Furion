@@ -1,5 +1,13 @@
 import { SyncOutlined } from "@ant-design/icons";
-import { Empty, FloatButton, Space, Tabs, TabsProps, message } from "antd";
+import {
+  Alert,
+  Empty,
+  FloatButton,
+  Space,
+  Tabs,
+  TabsProps,
+  message,
+} from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
@@ -11,6 +19,10 @@ import Page from "./page";
 
 const Container = styled(Page)``;
 
+const AlertBox = styled(Alert)`
+  margin-bottom: 15px;
+`;
+
 interface Metadata {
   id: number;
   provider: string;
@@ -21,6 +33,7 @@ interface Metadata {
 const Configuration: React.FC = () => {
   const [items, setItems] = useState<TabsProps["items"]>();
   const [messageApi, contextHolder] = message.useMessage();
+  const [environmentName, setEnvironmentName] = useState<string>("Unknown");
 
   const loadConfiguration = async () => {
     messageApi.open({
@@ -47,6 +60,8 @@ const Configuration: React.FC = () => {
         ),
         children: <ConfigurationProvider data={response.data} />,
       });
+
+      setEnvironmentName(response.headers["environment-name"]);
     } catch (error) {}
 
     try {
@@ -96,6 +111,7 @@ const Configuration: React.FC = () => {
     <>
       {contextHolder}
       <Container>
+        <AlertBox message={"当前配置环境：" + environmentName} type="warning" />
         <Tabs tabPosition="right" items={items} tabBarGutter={0} />
         <FloatButton
           icon={<SyncOutlined />}

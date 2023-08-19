@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 
 const Container = styled.div`
   overflow-y: auto;
-  height: calc(100vh - 245px);
+  height: calc(100vh - 242px);
   box-sizing: border-box;
   position: relative;
 `;

@@ -12,26 +12,15 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Exception;
-global using Furion.Kit;
-global using Microsoft.AspNetCore.Builder;
-global using Microsoft.AspNetCore.Http;
-global using Microsoft.AspNetCore.Http.HttpResults;
-global using Microsoft.AspNetCore.Mvc.Controllers;
-global using Microsoft.AspNetCore.Mvc.Diagnostics;
-global using Microsoft.AspNetCore.Routing;
-global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.FileProviders;
-global using Microsoft.Extensions.Hosting;
-global using System.Collections.Concurrent;
-global using System.ComponentModel;
-global using System.Diagnostics;
-global using System.Diagnostics.CodeAnalysis;
-global using System.Net;
-global using System.Net.Mime;
-global using System.Reflection;
-global using System.Runtime.CompilerServices;
-global using System.Text;
-global using System.Text.Encodings.Web;
-global using System.Text.Json;
-global using System.Threading.Channels;
+namespace Furion.Kit;
+
+/// <summary>
+/// Kit 模块常量配置
+/// </summary>
+internal static class Constants
+{
+    /// <summary>
+    /// 环境变量名响应头 Key
+    /// </summary>
+    internal const string ENVIRONMENT_NAME_KEY = "Environment-Name";
+}

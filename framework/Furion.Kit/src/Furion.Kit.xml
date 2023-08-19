@@ -4,6 +4,16 @@
         <name>Furion.Kit</name>
     </assembly>
     <members>
+        <member name="T:Furion.Kit.Constants">
+            <summary>
+            Kit 模块常量配置
+            </summary>
+        </member>
+        <member name="F:Furion.Kit.Constants.ENVIRONMENT_NAME_KEY">
+            <summary>
+            环境变量名响应头 Key
+            </summary>
+        </member>
         <member name="T:Furion.Kit.KitEndpoints">
             <summary>
             Kit 模块终点路由配置
@@ -24,12 +34,13 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
-        <member name="M:Furion.Kit.KitEndpoints.ConfigurationDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Kit.KitEndpoints.ConfigurationDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
             <summary>
             配置诊断处理程序
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <param name="hostEnvironment"><see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
         <member name="M:Furion.Kit.KitEndpoints.ConfigurationProviderDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration)">

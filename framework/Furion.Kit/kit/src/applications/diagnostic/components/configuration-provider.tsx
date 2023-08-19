@@ -1,12 +1,19 @@
 import React from "react";
+import { styled } from "styled-components";
 import JsonViewer from "../../../components/json-viewer";
-import Page from "./page";
+
+const ScrollContainer = styled.div`
+  overflow-y: auto;
+  height: calc(100vh - 297px);
+  box-sizing: border-box;
+  position: relative;
+`;
 
 const ConfigurationProvider: React.FC<{ data?: object }> = ({ data }) => {
   return (
-    <Page>
+    <ScrollContainer>
       <JsonViewer value={data} collapsed objectSortKeys={false} />
-    </Page>
+    </ScrollContainer>
   );
 };
 
