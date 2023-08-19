@@ -83,6 +83,11 @@ const functions: FunctionProps[] = [
     ),
     link: "/generate",
     title: "代码",
+  },
+  {
+    render: (isActive) => <Function.Icon type="icon-test" $active={isActive} />,
+    link: "/test",
+    title: "测试",
     divider: true,
   },
   {

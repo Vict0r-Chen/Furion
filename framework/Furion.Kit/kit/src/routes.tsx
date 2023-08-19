@@ -7,6 +7,7 @@ import OpenAPI from "./applications/openapi";
 import Panel from "./applications/panel";
 import Setting from "./applications/setting";
 import Starter from "./applications/starter";
+import Test from "./applications/test";
 import Home from "./home";
 import ErrorPage from "./pages/error-page";
 
@@ -37,6 +38,10 @@ const router = createHashRouter([
           {
             path: "generate",
             element: <Generate />,
+          },
+          {
+            path: "test",
+            element: <Test />,
           },
           {
             path: "discussion",
