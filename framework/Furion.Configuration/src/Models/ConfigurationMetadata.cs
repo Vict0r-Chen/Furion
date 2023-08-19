@@ -166,7 +166,7 @@ public sealed class ConfigurationMetadata
             nestedDict![keys[^1]] = value;
         }
 
-        // 使用 JsonSerializer 对嵌套 Dictionary 进行序列化，并返回 JSON 字符串
+        // 使用 JsonSerializer 对嵌套数据字典进行序列化，并返回 JSON 字符串
         return JsonSerializer.Serialize(nestedDictionary, jsonSerializerOptions);
     }
 }
