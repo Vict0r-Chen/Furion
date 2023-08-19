@@ -23,6 +23,12 @@ const Operation = styled.div`
 
 const pageSize = 15;
 
+const excludeUrls = [
+  "/furion/configuration-diagnostic",
+  "/furion/endpoint-diagnostic-sse",
+  "/furion/configuration-provider-diagnostic",
+];
+
 const Endpoint: React.FC = () => {
   const [online, setOnline] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -30,11 +36,7 @@ const Endpoint: React.FC = () => {
 
   const endpointDiagnostics = useLiveQuery(async () => {
     var data = await database.endpointDiagnostic
-      .filter(
-        (u) =>
-          u.path !== "/furion/configuration-diagnostic" &&
-          u.path !== "/furion/endpoint-diagnostic-sse"
-      )
+      .filter((u) => excludeUrls.indexOf(u.path!) === -1)
       .reverse()
       .limit(pageSize * page)
       .toArray();
@@ -45,11 +47,7 @@ const Endpoint: React.FC = () => {
 
   const count = useLiveQuery(async () =>
     database.endpointDiagnostic
-      .filter(
-        (u) =>
-          u.path !== "/furion/configuration-diagnostic" &&
-          u.path !== "/furion/endpoint-diagnostic-sse"
-      )
+      .filter((u) => excludeUrls.indexOf(u.path!) === -1)
       .count()
   );
 
