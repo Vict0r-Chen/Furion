@@ -1,13 +1,5 @@
 import { SyncOutlined } from "@ant-design/icons";
-import {
-  Alert,
-  Empty,
-  FloatButton,
-  Space,
-  Tabs,
-  TabsProps,
-  message,
-} from "antd";
+import { Alert, Empty, FloatButton, Space, Spin, Tabs, TabsProps } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
@@ -38,15 +30,11 @@ const getAppsettingsColor = (provider: string) => {
 
 const Configuration: React.FC = () => {
   const [items, setItems] = useState<TabsProps["items"]>();
-  const [messageApi, contextHolder] = message.useMessage();
   const [environmentName, setEnvironmentName] = useState<string>("Unknown");
+  const [loading, setLoading] = useState(false);
 
   const loadConfiguration = async () => {
-    messageApi.open({
-      type: "loading",
-      content: "同步配置中...",
-      duration: 0,
-    });
+    setLoading(true);
 
     const tabItems: TabsProps["items"] = [];
 
@@ -104,8 +92,8 @@ const Configuration: React.FC = () => {
       );
     } catch (error) {}
 
-    messageApi.destroy();
     setItems(tabItems);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -114,21 +102,19 @@ const Configuration: React.FC = () => {
 
   if (!items || items.length === 0) {
     return (
-      <>
-        {contextHolder}
+      <Spin spinning={loading}>
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
         <FloatButton
           icon={<SyncOutlined />}
           onClick={() => loadConfiguration()}
           style={{ bottom: 100 }}
         />
-      </>
+      </Spin>
     );
   }
 
   return (
-    <>
-      {contextHolder}
+    <Spin spinning={loading}>
       <Container>
         <AlertBox message={"当前配置环境：" + environmentName} type="warning" />
         <Tabs tabPosition="right" items={items} tabBarGutter={0} />
@@ -138,7 +124,7 @@ const Configuration: React.FC = () => {
           style={{ bottom: 100 }}
         />
       </Container>
-    </>
+    </Spin>
   );
 };
 
