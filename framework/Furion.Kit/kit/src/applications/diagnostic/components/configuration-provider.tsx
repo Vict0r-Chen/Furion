@@ -1,4 +1,5 @@
-import React from "react";
+import { FloatButton } from "antd";
+import React, { useId } from "react";
 import { styled } from "styled-components";
 import JsonViewer from "../../../components/json-viewer";
 
@@ -10,9 +11,12 @@ const ScrollContainer = styled.div`
 `;
 
 const ConfigurationProvider: React.FC<{ data?: object }> = ({ data }) => {
+  const id = useId();
+
   return (
-    <ScrollContainer>
+    <ScrollContainer id={id}>
       <JsonViewer value={data} collapsed objectSortKeys={false} />
+      <FloatButton.BackTop target={() => document.getElementById(id)!} />
     </ScrollContainer>
   );
 };
