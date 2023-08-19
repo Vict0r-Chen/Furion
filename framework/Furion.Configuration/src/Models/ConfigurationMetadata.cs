@@ -118,78 +118,55 @@ public sealed class ConfigurationMetadata
     /// <summary>
     /// 转换为 JSON 字符串
     /// </summary>
-    /// <param name="jsonWriterOptions"><see cref="JsonWriterOptions"/></param>
+    /// <param name="jsonSerializerOptions"><see cref="JsonSerializerOptions"/></param>
     /// <returns><see cref="string"/></returns>
-    public string ConvertToJson(JsonWriterOptions jsonWriterOptions = default)
-    {
-        // 创建一个内存流，用于存储生成的 JSON 数据
-        using var stream = new MemoryStream();
-
-        // 创建一个 Utf8JsonWriter 对象来写入 JSON 数据到内存流中
-        using (var jsonWriter = new Utf8JsonWriter(stream, jsonWriterOptions))
-        {
-            // 生成 JSON 数据
-            BuildJson(Data, jsonWriter);
-        }
-
-        // 将内存流中的数据转换为字符串并返回
-        return Encoding.UTF8.GetString(stream.ToArray());
-    }
-
-    /// <summary>
-    /// 生成 JSON 数据
-    /// </summary>
-    /// <param name="data">数据字典</param>
-    /// <param name="jsonWriter"><see cref="Utf8JsonWriter"/></param>
-    internal static void BuildJson(IDictionary<string, string?>? data, Utf8JsonWriter jsonWriter)
+    public string ConvertToJson(JsonSerializerOptions? jsonSerializerOptions = default)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(jsonWriter);
-
-        // 空检查
-        if (data is null)
+        if (Data is null)
         {
-            jsonWriter.WriteNullValue();
-            return;
+            return "null";
         }
 
         // 空集合检查
-        if (data.Count == 0)
+        if (Data.Count == 0)
         {
-            jsonWriter.WriteStartObject();
-            jsonWriter.WriteEndObject();
-            return;
+            return "{}";
         }
 
-        // 写入 JSON 对象的起始括号
-        jsonWriter.WriteStartObject();
+        // 创建一个嵌套的数据字典对象，用于保存层级结构的键值对
+        var nestedDictionary = new Dictionary<string, object?>();
 
-        // 遍历配置的每个子节点
-        foreach (var key in data.Keys)
+        // 遍历数据字典每一项
+        foreach (var entry in Data)
         {
-            // 将节点 Key 进行 : 分割
-            var children = key.Split(':');
+            // 将键按照 ":" 进行分割，以获取层级结构的键数组
+            var keys = entry.Key.Split(':');
 
-            // 如果子节点有子节点，说明是一个嵌套的配置节点
-            if (children.Length > 1)
+            // 获取当前键对应的值
+            var value = entry.Value;
+
+            // 创建一个指向嵌套数据字典的引用
+            var nestedDict = nestedDictionary;
+
+            // 根据层级结构遍历键数组
+            for (var i = 0; i < keys.Length - 1; i++)
             {
-                // 写入嵌套节点的名称
-                jsonWriter.WritePropertyName(children[0]);
-
-                // 递归调用生成嵌套节点的 JSON 数据
-                BuildJson(new Dictionary<string, string?>
+                // 如果当前键不存在于嵌套数据字典，则添加一个新的嵌套数据字典
+                if (!nestedDict!.ContainsKey(keys[i]))
                 {
-                    { string.Join(':', children.Skip(1)), data[key] }
-                }, jsonWriter);
+                    nestedDict[keys[i]] = new Dictionary<string, object?>();
+                }
+
+                // 将嵌套数据字典的引用指向当前键对应的值，进入下一层级
+                nestedDict = (Dictionary<string, object?>)nestedDict[keys[i]]!;
             }
-            else
-            {
-                // 如果子节点没有子节点，说明是一个键值对
-                jsonWriter.WriteString(key, data[key]);
-            }
+
+            // 将最后一级键和对应的值添加到嵌套数据字典中
+            nestedDict![keys[^1]] = value;
         }
 
-        // 写入 JSON 对象的结束括号
-        jsonWriter.WriteEndObject();
+        // 使用 JsonSerializer 对嵌套 Dictionary 进行序列化，并返回 JSON 字符串
+        return JsonSerializer.Serialize(nestedDictionary, jsonSerializerOptions);
     }
 }

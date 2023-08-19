@@ -82,19 +82,12 @@
             初始化属性
             </summary>
         </member>
-        <member name="M:Furion.Configuration.ConfigurationMetadata.ConvertToJson(System.Text.Json.JsonWriterOptions)">
+        <member name="M:Furion.Configuration.ConfigurationMetadata.ConvertToJson(System.Text.Json.JsonSerializerOptions)">
             <summary>
             转换为 JSON 字符串
             </summary>
-            <param name="jsonWriterOptions"><see cref="T:System.Text.Json.JsonWriterOptions"/></param>
+            <param name="jsonSerializerOptions"><see cref="T:System.Text.Json.JsonSerializerOptions"/></param>
             <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Furion.Configuration.ConfigurationMetadata.BuildJson(System.Collections.Generic.IDictionary{System.String,System.String},System.Text.Json.Utf8JsonWriter)">
-            <summary>
-            生成 JSON 数据
-            </summary>
-            <param name="data">数据字典</param>
-            <param name="jsonWriter"><see cref="T:System.Text.Json.Utf8JsonWriter"/></param>
         </member>
         <member name="T:Furion.Configuration.FileConfigurationParser">
             <summary>

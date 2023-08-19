@@ -92,70 +92,13 @@ public class ConfigurationMetadataTests
         var configurationMetadata = new ConfigurationMetadata(configuration.Providers.First());
 
         var jsonString = configurationMetadata.ConvertToJson();
-        Assert.Equal("{\"Furion\":{\"Name\":\"Furion\"},\"Furion\":{\"Version\":\"5.0.0\"},\"Furion\":{\"Homepage\":\"https://furion.net\"}}", jsonString);
+        Assert.Equal("{\"Furion\":{\"Name\":\"Furion\",\"Version\":\"5.0.0\",\"Homepage\":\"https://furion.net\"}}", jsonString);
 
-        var jsonString2 = configuration.ConvertToJson(new JsonWriterOptions
+        var jsonString2 = configurationMetadata.ConvertToJson(new JsonSerializerOptions
         {
-            Indented = true,
+            WriteIndented = true,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         });
-        Assert.Equal("{\r\n  \"Furion\": {\r\n    \"Homepage\": \"https://furion.net\",\r\n    \"Name\": \"Furion\",\r\n    \"Version\": \"5.0.0\"\r\n  }\r\n}", jsonString2);
-    }
-
-    [Fact]
-    public void BuildJson_Invalid_Parameters()
-    {
-        Assert.Throws<ArgumentNullException>(() =>
-        {
-            ConfigurationMetadata.BuildJson(new Dictionary<string, string?>(), null!);
-        });
-    }
-
-    [Fact]
-    public void BuildJson_NullData_ReturnOK()
-    {
-        using var stream = new MemoryStream();
-        using (var jsonWriter = new Utf8JsonWriter(stream))
-        {
-            ConfigurationMetadata.BuildJson(null, jsonWriter);
-        }
-
-        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
-        Assert.Equal("null", jsonString);
-    }
-
-    [Fact]
-    public void BuildJson_EmptyData_ReturnOK()
-    {
-        var data = new Dictionary<string, string?>();
-
-        using var stream = new MemoryStream();
-        using (var jsonWriter = new Utf8JsonWriter(stream))
-        {
-            ConfigurationMetadata.BuildJson(data, jsonWriter);
-        }
-
-        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
-        Assert.Equal("{}", jsonString);
-    }
-
-    [Fact]
-    public void BuildJson_ReturnOK()
-    {
-        var data = new Dictionary<string, string?>
-        {
-            {"Furion:Name", "Furion" },
-            {"Furion:Version", "5.0.0" },
-            {"Furion:Homepage", "https://furion.net" }
-        };
-
-        using var stream = new MemoryStream();
-        using (var jsonWriter = new Utf8JsonWriter(stream))
-        {
-            ConfigurationMetadata.BuildJson(data, jsonWriter);
-        }
-
-        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
-        Assert.Equal("{\"Furion\":{\"Name\":\"Furion\"},\"Furion\":{\"Version\":\"5.0.0\"},\"Furion\":{\"Homepage\":\"https://furion.net\"}}", jsonString);
+        Assert.Equal("{\r\n  \"Furion\": {\r\n    \"Name\": \"Furion\",\r\n    \"Version\": \"5.0.0\",\r\n    \"Homepage\": \"https://furion.net\"\r\n  }\r\n}", jsonString2);
     }
 }
