@@ -39,7 +39,9 @@ const Configuration: React.FC = () => {
         label: (
           <Space size={0}>
             <IconFont type="icon-configuration" $size={16} />
-            <TextBox style={{ fontWeight: 600 }}>Global Configuration</TextBox>
+            <TextBox style={{ fontWeight: 600 }} $disableSelect>
+              Global Configuration
+            </TextBox>
           </Space>
         ),
         children: <ConfigurationProvider data={response.data} />,
@@ -54,7 +56,7 @@ const Configuration: React.FC = () => {
       metadata.forEach((item) =>
         tabItems.push({
           key: item.id.toString(),
-          label: item.provider,
+          label: <TextBox $disableSelect>{item.provider}</TextBox>,
           children: <ConfigurationProvider data={item.metadata} />,
         })
       );
