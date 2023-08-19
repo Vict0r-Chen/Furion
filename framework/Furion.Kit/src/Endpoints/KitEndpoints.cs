@@ -26,13 +26,18 @@ internal static class KitEndpoints
     /// <param name="kitOptions"><see cref="KitOptions"/></param>
     internal static void Map(WebApplication webApplication, KitOptions kitOptions)
     {
-        // 配置终点路由诊断路由
+        // 终点路由诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
             .MapGetSSE("endpoint-diagnostic-sse", EndpointDiagnosticSSE);
 
-        // 配置配置诊断路由
+        // 配置诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
             .MapGet("configuration-diagnostic", ConfigurationDiagnostic)
+            .ExcludeFromDescription();
+
+        // 配置提供器诊断路由配置
+        webApplication.MapGroup(kitOptions.Root)
+            .MapGet("configuration-provider-diagnostic", ConfigurationProviderDiagnostic)
             .ExcludeFromDescription();
     }
 
@@ -55,19 +60,58 @@ internal static class KitEndpoints
     /// <returns><see cref="Task"/></returns>
     internal static async Task ConfigurationDiagnostic(HttpContext httpContext, IConfiguration configuration)
     {
+        // 将配置转换为 JSON 字符串
         var jsonString = configuration.ConvertToJson();
 
-        // 设置响应头，允许跨域请求
-        httpContext.Response.AllowCors();
+        // 写入 Body 流
+        await httpContext.Response.WriteAsJsonAsync(jsonString);
+    }
 
-        // 设置响应头，指定 Content-Type 和 Content-Length
-        httpContext.Response.ContentType = MediaTypeNames.Application.Json;
-        httpContext.Response.ContentLength = Encoding.UTF8.GetByteCount(jsonString);
+    /// <summary>
+    /// 配置提供器诊断处理程序
+    /// </summary>
+    /// <param name="httpContext"><see cref="HttpContext"/></param>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <returns><see cref="Task"/></returns>
+    internal static async Task ConfigurationProviderDiagnostic(HttpContext httpContext, IConfiguration configuration)
+    {
+        // 获取配置元数据集合
+        var metadatas = configuration.GetMetadata();
 
-        // 设置响应头，不缓存请求
-        httpContext.Response.Headers.CacheControl = "no-cache";
+        // 创建一个内存流，用于存储生成的 JSON 数据
+        using var stream = new MemoryStream();
+
+        // 创建一个 Utf8JsonWriter 对象来写入 JSON 数据到内存流中
+        using (var jsonWriter = new Utf8JsonWriter(stream))
+        {
+            // 写入 JSON 数组的起始括号
+            jsonWriter.WriteStartArray();
+
+            // 遍历配置原始集合构建 JSON 字符串
+            foreach (var metadata in metadatas)
+            {
+                // 写入 JSON 对象的起始括号
+                jsonWriter.WriteStartObject();
+
+                // 输出配置提供器名称
+                jsonWriter.WriteString("provider", metadata.Provider.ToString());
+
+                // 输出配置元数据 JSON 字符串
+                jsonWriter.WritePropertyName("metadata");
+                jsonWriter.WriteRawValue(metadata.ConvertToJson());
+
+                // 写入 JSON 对象的结束括号
+                jsonWriter.WriteEndObject();
+            }
+
+            // 写入 JSON 数组的结束括号
+            jsonWriter.WriteEndArray();
+        }
+
+        // 将内存流中的数据转换为字符串
+        var jsonString = Encoding.UTF8.GetString(stream.ToArray());
 
         // 写入 Body 流
-        await httpContext.Response.WriteAsync(jsonString);
+        await httpContext.Response.WriteAsJsonAsync(jsonString);
     }
 }

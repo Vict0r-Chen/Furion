@@ -32,6 +32,14 @@
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
+        <member name="M:Furion.Kit.KitEndpoints.ConfigurationProviderDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            配置提供器诊断处理程序
+            </summary>
+            <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
             诊断监听器抽象基类
@@ -514,6 +522,13 @@
             配置允许跨域响应头
             </summary>
             <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.WriteAsJsonAsync(Microsoft.AspNetCore.Http.HttpResponse,System.String)">
+            <summary>
+            向响应流中写入 JSON 字符串
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
+            <param name="jsonString">JSON 字符串</param>
         </member>
     </members>
 </doc>

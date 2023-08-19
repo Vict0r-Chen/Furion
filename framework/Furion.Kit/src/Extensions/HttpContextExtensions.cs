@@ -65,4 +65,25 @@ internal static class HttpContextExtensions
         httpResponse.Headers.AccessControlAllowOrigin = "*";
         httpResponse.Headers.AccessControlAllowHeaders = "*";
     }
+
+    /// <summary>
+    /// 向响应流中写入 JSON 字符串
+    /// </summary>
+    /// <param name="httpResponse"><see cref="HttpResponse"/></param>
+    /// <param name="jsonString">JSON 字符串</param>
+    internal static async Task WriteAsJsonAsync(this HttpResponse httpResponse, string jsonString)
+    {
+        // 设置响应头，允许跨域请求
+        httpResponse.AllowCors();
+
+        // 设置响应头，指定 Content-Type 和 Content-Length
+        httpResponse.ContentType = MediaTypeNames.Application.Json;
+        httpResponse.ContentLength = Encoding.UTF8.GetByteCount(jsonString);
+
+        // 设置响应头，不缓存请求
+        httpResponse.Headers.CacheControl = "no-cache";
+
+        // 写入 Body 流
+        await httpResponse.WriteAsync(jsonString);
+    }
 }
