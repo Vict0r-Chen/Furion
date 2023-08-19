@@ -405,6 +405,15 @@
             <param name="dictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
             <param name="concatDictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
         </member>
+        <member name="M:System.Collections.Generic.IDictionaryExtensions.AddOrUpdate``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>
+            添加或更新
+            </summary>
+            <typeparam name="TKey">字典键类型</typeparam>
+            <typeparam name="TValue">字典值类型</typeparam>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
+            <param name="concatDictionary"><see cref="T:System.Collections.Generic.IDictionary`2"/></param>
+        </member>
         <member name="T:System.Linq.Expressions.LinqExpressionExtensions">
             <summary>
             <see cref="T:System.Linq.Expressions.Expression"/> 拓展类

@@ -115,7 +115,7 @@ public static class IConfigurationExtensions
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     public static void Reload(this IConfiguration configuration)
     {
-        // 转换为 IConfigurationRoot 接口
+        // 获取配置根对象
         var configurationRoot = configuration as IConfigurationRoot;
 
         // 空检查
@@ -126,7 +126,22 @@ public static class IConfigurationExtensions
     }
 
     /// <summary>
-    /// 转为为 JSON 字符串
+    /// 获取配置元数据集合
+    /// </summary>
+    /// <param name="configuration"><see cref="IConfiguration"/></param>
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    public static IEnumerable<ConfigurationMetadata> GetMetadata(this IConfiguration configuration)
+    {
+        // 获取配置根对象
+        var configurationRoot = (IConfigurationRoot)configuration;
+
+        // 生成配置元数据集合
+        return configurationRoot.Providers
+            .Select(provider => new ConfigurationMetadata(provider));
+    }
+
+    /// <summary>
+    /// 转换为 JSON 字符串
     /// </summary>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <param name="jsonWriterOptions"><see cref="JsonWriterOptions"/></param>

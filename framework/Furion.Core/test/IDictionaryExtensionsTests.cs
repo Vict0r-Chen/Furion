@@ -73,4 +73,38 @@ public class IDictionaryExtensionsTests
         Assert.Equal(new List<object> { 1, 2 }, dic["key2"]);
         Assert.Equal(new List<object> { 1 }, dic["key3"]);
     }
+
+    [Fact]
+    public void AddOrUpdateDictionary2_Invalid_Parameters()
+    {
+        var dic = new Dictionary<string, string>();
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            dic.AddOrUpdate(null!);
+        });
+    }
+
+    [Fact]
+    public void AddOrUpdateDictionary2_ReturnOK()
+    {
+        var dic = new Dictionary<string, string>
+        {
+            {"key1", "1" },
+            {"key2", "2" },
+        };
+
+        var dic2 = new Dictionary<string, string>
+        {
+            {"key1", "3" },
+            {"key2", "4" },
+            {"key3", "5" },
+        };
+
+        dic.AddOrUpdate(dic2);
+
+        Assert.Equal(3, dic.Count);
+        Assert.Equal("3", dic["key1"]);
+        Assert.Equal("4", dic["key2"]);
+        Assert.Equal("5", dic["key3"]);
+    }
 }

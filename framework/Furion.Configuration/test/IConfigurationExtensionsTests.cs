@@ -12,9 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using System.Text;
-using System.Text.Encodings.Web;
-
 namespace Furion.Configuration.Tests;
 
 public class IConfigurationExtensionsTests
@@ -633,5 +630,22 @@ public class IConfigurationExtensionsTests
 
         var jsonString = Encoding.UTF8.GetString(stream.ToArray());
         Assert.Equal("{\"Furion\":{\"Age\":\"3\",\"Author\":{\"Age\":\"31\",\"Name\":\"\\u767E\\u5C0F\\u50E7\"},\"Homepage\":\"https://furion.net\",\"IsMIT\":\"true\",\"Name\":\"Furion\",\"NotPublic\":\"NotPublic\",\"Price\":\"0.00\",\"Properties\":{\"Gitee\":\"https://gitee.com/dotnetchina/Furion\",\"Github\":\"https://github.com/MonkSoul/Furion\"},\"Tags\":{\"0\":\"Furion\",\"1\":\"MonkSoul\"},\"Version\":\"5.0.0\"}}", jsonString);
+    }
+
+    [Fact]
+    public void GetMetadata_ReturnOK()
+    {
+        var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            {"Furion:Name", "Furion" },
+            {"Furion:Version", "5.0.0" },
+            {"Furion:Homepage", "https://furion.net" }
+        });
+        var configuration = configurationBuilder.Build();
+
+        var metadata = configuration.GetMetadata();
+        Assert.NotNull(metadata);
+        Assert.Single(metadata);
     }
 }
