@@ -152,7 +152,7 @@ public sealed class ConfigurationMetadata
             // 根据层级结构遍历键数组
             for (var i = 0; i < keys.Length - 1; i++)
             {
-                // 获取当前的键
+                // 获取当前键
                 var currentKey = keys[i];
 
                 // 如果当前键不存在于嵌套数据字典，则添加一个新的嵌套数据字典
