@@ -30,6 +30,12 @@ interface Metadata {
   isFileConfiguration: boolean;
 }
 
+const providerTipColor = "#52c41a";
+
+const getAppsettingsColor = (provider: string) => {
+  return provider.indexOf("appsettings.") > -1 ? providerTipColor : undefined;
+};
+
 const Configuration: React.FC = () => {
   const [items, setItems] = useState<TabsProps["items"]>();
   const [messageApi, contextHolder] = message.useMessage();
@@ -52,8 +58,12 @@ const Configuration: React.FC = () => {
         key: "Global Configuration",
         label: (
           <Space size={0}>
-            <IconFont type="icon-configuration" $size={16} />
-            <TextBox $disableSelect $color="#1677ff">
+            <IconFont
+              type="icon-configuration"
+              $size={16}
+              $color={providerTipColor}
+            />
+            <TextBox $disableSelect $color={providerTipColor}>
               Global Configuration
             </TextBox>
           </Space>
@@ -76,8 +86,17 @@ const Configuration: React.FC = () => {
             <TextBox $disableSelect>{item.provider}</TextBox>
           ) : (
             <Space size={0}>
-              <IconFont type="icon-file-configuration" $size={16} />
-              <TextBox $disableSelect>{item.provider}</TextBox>
+              <IconFont
+                type="icon-file-configuration"
+                $color={getAppsettingsColor(item.provider)}
+                $size={16}
+              />
+              <TextBox
+                $disableSelect
+                $color={getAppsettingsColor(item.provider)}
+              >
+                {item.provider}
+              </TextBox>
             </Space>
           ),
           children: <ConfigurationProvider data={item.metadata} />,
