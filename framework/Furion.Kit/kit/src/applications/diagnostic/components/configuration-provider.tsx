@@ -5,7 +5,7 @@ import Page from "./page";
 const ConfigurationProvider: React.FC<{ data?: object }> = ({ data }) => {
   return (
     <Page>
-      <JsonViewer value={data} collapsed />
+      <JsonViewer value={data} collapsed objectSortKeys={false} />
     </Page>
   );
 };
