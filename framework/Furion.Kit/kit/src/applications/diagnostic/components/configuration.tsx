@@ -1,8 +1,10 @@
 import { SyncOutlined } from "@ant-design/icons";
-import { FloatButton, Tabs, TabsProps, message } from "antd";
+import { FloatButton, Space, Tabs, TabsProps, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import IconFont from "../../../components/iconfont";
+import TextBox from "../../../components/textbox";
 import projectConfig from "../../../project.config";
 import ConfigurationProvider from "./configuration-provider";
 import Page from "./page";
@@ -34,7 +36,12 @@ const Configuration: React.FC = () => {
       );
       tabItems.push({
         key: "Global Configuration",
-        label: "Global Configuration",
+        label: (
+          <Space size={0}>
+            <IconFont type="icon-configuration" $size={16} />
+            <TextBox style={{ fontWeight: 600 }}>Global Configuration</TextBox>
+          </Space>
+        ),
         children: <ConfigurationProvider data={response.data} />,
       });
     } catch (error) {}
