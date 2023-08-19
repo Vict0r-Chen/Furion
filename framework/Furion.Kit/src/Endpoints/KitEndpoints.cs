@@ -93,6 +93,9 @@ internal static class KitEndpoints
                 // 写入 JSON 对象的起始括号
                 jsonWriter.WriteStartObject();
 
+                // 输出唯一标识
+                jsonWriter.WriteNumber("id", metadata.Provider.GetHashCode());
+
                 // 输出配置提供器名称
                 jsonWriter.WriteString("provider", metadata.Provider.ToString());
 
