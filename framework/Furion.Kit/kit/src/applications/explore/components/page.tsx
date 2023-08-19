@@ -54,7 +54,7 @@ const onChange = (key: string) => {
 };
 
 const BannerImg = styled.img`
-  height: 280px;
+  height: 180px;
   width: 100%;
   /* object-fit: contain; */
   background-color: #f0f0f0;
