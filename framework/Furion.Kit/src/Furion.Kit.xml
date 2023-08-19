@@ -455,37 +455,12 @@
             根地址
             </summary>
         </member>
-        <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
-            <summary>
-            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
-            <summary>
-            获取请求对象 URL 地址
-            </summary>
-            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
-            <summary>
-            获取响应对象状态文本
-            </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AllowCors(Microsoft.AspNetCore.Http.HttpResponse)">
-            <summary>
-            配置允许跨域响应头
-            </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
-        </member>
-        <member name="T:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions">
+        <member name="T:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions">
             <summary>
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions.MapGetSSE(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.Delegate)">
+        <member name="M:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapGetSSE(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.Delegate)">
             <summary>
             添加 SSE 请求终点路由
             </summary>
@@ -514,6 +489,31 @@
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <param name="kitOptions"></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            获取请求对象 URL 地址
+            </summary>
+            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            获取响应对象状态文本
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AllowCors(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            配置允许跨域响应头
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
         </member>
     </members>
 </doc>

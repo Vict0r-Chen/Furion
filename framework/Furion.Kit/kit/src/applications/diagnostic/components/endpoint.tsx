@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { database } from "../../../databases";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
+import projectConfig from "../../../project.config";
 import EndpointItem from "./endpoint-item";
 import Page from "./page";
 
@@ -54,7 +55,7 @@ const Endpoint: React.FC = () => {
 
   useEffect(() => {
     var eventSource = new EventSource(
-      "https://localhost:7115/furion/endpoint-diagnostic-sse"
+      `${projectConfig.serverAddress}/endpoint-diagnostic-sse`
     );
 
     const addData = async (data: EndpointDiagnosticModel) => {

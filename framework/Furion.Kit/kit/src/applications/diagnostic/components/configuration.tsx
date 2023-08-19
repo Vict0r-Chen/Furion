@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import JsonViewer from "../../../components/json-viewer";
+import projectConfig from "../../../project.config";
 import Page from "./page";
 
-const Container = styled(Page)`
-`;
+const Container = styled(Page)``;
 
 const Configuration: React.FC = () => {
   const [data, setData] = useState<object>({});
@@ -14,7 +14,7 @@ const Configuration: React.FC = () => {
     const loadData = async () => {
       try {
         const response = await axios.get(
-          "https://localhost:7115/furion/configuration-diagnostic"
+          `${projectConfig.serverAddress}/configuration-diagnostic`
         );
         setData(response.data);
       } catch (error) {}

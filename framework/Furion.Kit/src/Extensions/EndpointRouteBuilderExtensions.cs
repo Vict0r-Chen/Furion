@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Builder;
 /// <summary>
 /// Kit 模块 <see cref="IEndpointRouteBuilder"/> 拓展类
 /// </summary>
-internal static class KitEndpointRouteBuilderExtensions
+internal static class EndpointRouteBuilderExtensions
 {
     /// <summary>
     /// 添加 SSE 请求终点路由
