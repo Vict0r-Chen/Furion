@@ -186,6 +186,9 @@
         <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.Load">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Configuration.ManifestResourceConfigurationProvider.ToString">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Configuration.ManifestResourceConfigurationSource">
             <summary>
             嵌入资源配置源

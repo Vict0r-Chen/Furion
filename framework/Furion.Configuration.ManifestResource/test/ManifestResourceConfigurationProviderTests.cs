@@ -42,7 +42,7 @@ public class ManifestResourceConfigurationProviderTests
     }
 
     [Fact]
-    public void Load()
+    public void Load_ReturnOK()
     {
         var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(GetType().Assembly, "Furion.Configuration.ManifestResource.Tests.embed.json");
 
@@ -59,5 +59,19 @@ public class ManifestResourceConfigurationProviderTests
 
         Assert.Equal("Age", keys.ElementAt(0));
         Assert.Equal("Name", keys.ElementAt(1));
+    }
+
+    [Fact]
+    public void ToString_ReturnOK()
+    {
+        var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(GetType().Assembly, "Furion.Configuration.ManifestResource.Tests.embed.json");
+
+        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(new()
+        {
+            manifestResourceConfigurationModel
+        }, new(new()));
+
+        var output = manifestResourceConfigurationProvider.ToString();
+        Assert.Equal("ManifestResourceConfigurationProvider for 'Furion.Configuration.ManifestResource.Tests'", output);
     }
 }

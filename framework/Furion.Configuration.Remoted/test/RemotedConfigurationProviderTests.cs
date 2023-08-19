@@ -42,7 +42,7 @@ public class RemotedConfigurationProviderTests
     }
 
     [Fact]
-    public async Task Load()
+    public async Task Load_ReturnOK()
     {
         var port = Helpers.GetIdlePort();
         var urls = new[] { "--urls", $"http://localhost:{port}" };
@@ -75,5 +75,19 @@ public class RemotedConfigurationProviderTests
 
         Assert.Equal("age", keys.ElementAt(0));
         Assert.Equal("name", keys.ElementAt(1));
+    }
+
+    [Fact]
+    public void ToString_ReturnOK()
+    {
+        var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:7115/return-json", HttpMethod.Get);
+
+        var remotedConfigurationProvider = new RemotedConfigurationProvider(new()
+        {
+            remotedConfigurationModel
+        }, new(new(), new Dictionary<string, string>()));
+
+        var output = remotedConfigurationProvider.ToString();
+        Assert.Equal("RemotedConfigurationProvider for 'http://localhost:7115/return-json'", output);
     }
 }

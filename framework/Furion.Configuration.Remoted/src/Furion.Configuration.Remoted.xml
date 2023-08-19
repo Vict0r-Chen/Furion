@@ -231,6 +231,9 @@
         <member name="M:Furion.Configuration.RemotedConfigurationProvider.Load">
             <inheritdoc />
         </member>
+        <member name="M:Furion.Configuration.RemotedConfigurationProvider.ToString">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.Configuration.RemotedConfigurationSource">
             <summary>
             远程配置源

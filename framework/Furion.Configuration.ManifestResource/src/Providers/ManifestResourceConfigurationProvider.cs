@@ -54,4 +54,16 @@ internal sealed class ManifestResourceConfigurationProvider : ConfigurationProvi
 
         Data = data;
     }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        // 获取所有嵌入程序集名称
+        var assembleNames = _manifestResourceConfigurationModels
+            .Select(model => model.Assembly)
+            .Distinct()
+            .Select(ass => ass.GetName().Name);
+
+        return nameof(ManifestResourceConfigurationProvider) + " for '" + string.Join("; ", assembleNames) + "'";
+    }
 }

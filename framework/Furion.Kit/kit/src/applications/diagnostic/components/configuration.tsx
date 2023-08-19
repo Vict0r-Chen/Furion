@@ -1,5 +1,5 @@
 import { SyncOutlined } from "@ant-design/icons";
-import { FloatButton, Space, Tabs, TabsProps, message } from "antd";
+import { Empty, FloatButton, Space, Tabs, TabsProps, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
@@ -67,6 +67,20 @@ const Configuration: React.FC = () => {
   useEffect(() => {
     loadConfiguration();
   }, []);
+
+  if (!items || items.length === 0) {
+    return (
+      <>
+        {contextHolder}
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
+        <FloatButton
+          icon={<SyncOutlined />}
+          onClick={() => loadConfiguration()}
+          style={{ bottom: 100 }}
+        />
+      </>
+    );
+  }
 
   return (
     <>

@@ -54,4 +54,16 @@ internal sealed class RemotedConfigurationProvider : ConfigurationProvider
 
         Data = data;
     }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        // 获取所有请求地址
+        var urls = _remotedConfigurationModels
+            .Select(model => model.RequestUri)
+            .Distinct()
+            .Select(uri => uri.ToString());
+
+        return nameof(RemotedConfigurationProvider) + " for '" + string.Join("; ", urls) + "'";
+    }
 }
