@@ -24,7 +24,7 @@ const Configuration: React.FC = () => {
   const loadConfiguration = async () => {
     messageApi.open({
       type: "loading",
-      content: "加载中...",
+      content: "同步配置中...",
       duration: 0,
     });
 
