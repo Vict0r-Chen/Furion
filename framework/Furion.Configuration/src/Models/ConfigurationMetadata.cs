@@ -152,14 +152,17 @@ public sealed class ConfigurationMetadata
             // 根据层级结构遍历键数组
             for (var i = 0; i < keys.Length - 1; i++)
             {
+                // 获取当前的键
+                var currentKey = keys[i];
+
                 // 如果当前键不存在于嵌套数据字典，则添加一个新的嵌套数据字典
-                if (!nestedDict!.ContainsKey(keys[i]))
+                if (!nestedDict!.ContainsKey(currentKey))
                 {
-                    nestedDict[keys[i]] = new Dictionary<string, object?>();
+                    nestedDict[currentKey] = new Dictionary<string, object?>();
                 }
 
                 // 将嵌套数据字典的引用指向当前键对应的值，进入下一层级
-                nestedDict = (Dictionary<string, object?>)nestedDict[keys[i]]!;
+                nestedDict = (Dictionary<string, object?>)nestedDict[currentKey]!;
             }
 
             // 将最后一级键和对应的值添加到嵌套数据字典中
