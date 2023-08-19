@@ -34,6 +34,7 @@ public sealed class ConfigurationMetadata
         ArgumentNullException.ThrowIfNull(provider);
 
         Provider = provider;
+        IsFileConfiguration = provider is FileConfigurationProvider;
 
         // 初始化属性
         InitializeProperties();
@@ -54,6 +55,11 @@ public sealed class ConfigurationMetadata
     /// 子配置元数据集合
     /// </summary>
     public IEnumerable<ConfigurationMetadata>? Metadata { get; private set; }
+
+    /// <summary>
+    /// 是否是文件配置
+    /// </summary>
+    public bool IsFileConfiguration { get; init; }
 
     /// <summary>
     /// 初始化属性

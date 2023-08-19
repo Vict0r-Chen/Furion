@@ -50,6 +50,7 @@ public class ConfigurationMetadataTests
         Assert.Equal(3, configurationMetadata.Data.Count);
         Assert.Null(configurationMetadata.Source);
         Assert.Null(configurationMetadata.Metadata);
+        Assert.False(configurationMetadata.IsFileConfiguration);
     }
 
     [Fact]

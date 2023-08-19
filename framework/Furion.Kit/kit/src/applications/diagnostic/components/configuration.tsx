@@ -15,6 +15,7 @@ interface Metadata {
   id: number;
   provider: string;
   metadata: object;
+  isFileConfiguration: boolean;
 }
 
 const Configuration: React.FC = () => {
@@ -39,7 +40,7 @@ const Configuration: React.FC = () => {
         label: (
           <Space size={0}>
             <IconFont type="icon-configuration" $size={16} />
-            <TextBox style={{ fontWeight: 600 }} $disableSelect>
+            <TextBox $disableSelect $color="#1677ff">
               Global Configuration
             </TextBox>
           </Space>
@@ -56,7 +57,14 @@ const Configuration: React.FC = () => {
       metadata.forEach((item) =>
         tabItems.push({
           key: item.id.toString(),
-          label: <TextBox $disableSelect>{item.provider}</TextBox>,
+          label: !item.isFileConfiguration ? (
+            <TextBox $disableSelect>{item.provider}</TextBox>
+          ) : (
+            <Space size={0}>
+              <IconFont type="icon-file-configuration" $size={16} />
+              <TextBox $disableSelect>{item.provider}</TextBox>
+            </Space>
+          ),
           children: <ConfigurationProvider data={item.metadata} />,
         })
       );

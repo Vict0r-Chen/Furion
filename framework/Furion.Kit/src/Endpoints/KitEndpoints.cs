@@ -99,6 +99,9 @@ internal static class KitEndpoints
                 // 输出配置提供器名称
                 jsonWriter.WriteString("provider", metadata.Provider.ToString());
 
+                // 输出文件配置标识
+                jsonWriter.WriteBoolean("isFileConfiguration", metadata.IsFileConfiguration);
+
                 // 输出配置元数据 JSON 字符串
                 jsonWriter.WritePropertyName("metadata");
                 jsonWriter.WriteRawValue(metadata.ConvertToJson());

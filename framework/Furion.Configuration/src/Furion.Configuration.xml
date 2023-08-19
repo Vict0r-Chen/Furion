@@ -77,6 +77,11 @@
             子配置元数据集合
             </summary>
         </member>
+        <member name="P:Furion.Configuration.ConfigurationMetadata.IsFileConfiguration">
+            <summary>
+            是否是文件配置
+            </summary>
+        </member>
         <member name="M:Furion.Configuration.ConfigurationMetadata.InitializeProperties">
             <summary>
             初始化属性
