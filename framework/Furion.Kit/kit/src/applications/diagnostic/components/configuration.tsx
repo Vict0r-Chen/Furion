@@ -14,7 +14,7 @@ const Configuration: React.FC = () => {
     const loadData = async () => {
       try {
         const response = await axios.get(
-          "https://localhost:7115/furion/configuration"
+          "https://localhost:7115/furion/configuration-diagnostic"
         );
         setData(response.data);
       } catch (error) {}

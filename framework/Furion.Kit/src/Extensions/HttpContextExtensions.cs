@@ -54,4 +54,15 @@ internal static class HttpContextExtensions
 
         return ((HttpStatusCode)statusCode).ToString();
     }
+
+    /// <summary>
+    /// 配置允许跨域响应头
+    /// </summary>
+    /// <param name="httpResponse"><see cref="HttpResponse"/></param>
+    internal static void AllowCors(this HttpResponse httpResponse)
+    {
+        // 设置响应头，允许跨域请求
+        httpResponse.Headers.AccessControlAllowOrigin = "*";
+        httpResponse.Headers.AccessControlAllowHeaders = "*";
+    }
 }

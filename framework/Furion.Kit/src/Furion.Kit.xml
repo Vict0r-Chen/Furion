@@ -4,59 +4,33 @@
         <name>Furion.Kit</name>
     </assembly>
     <members>
-        <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
+        <member name="T:Furion.Kit.KitEndpoints">
             <summary>
-            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
+            Kit 模块终点路由配置
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
+        <member name="M:Furion.Kit.KitEndpoints.Map(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
             <summary>
-            获取请求对象 URL 地址
-            </summary>
-            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
-            <summary>
-            获取响应对象状态文本
-            </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="T:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions">
-            <summary>
-            Kit 模块 <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions.MapGetSSE(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.Delegate)">
-            <summary>
-            添加 SSE 请求终点路由
-            </summary>
-            <param name="endpoints"><see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/></param>
-            <param name="pattern">路由模板</param>
-            <param name="handler">处理程序</param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.RouteHandlerBuilder"/></returns>
-        </member>
-        <member name="T:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions">
-            <summary>
-            Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
-            </summary>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Kit.KitOptions})">
-            <summary>
-            添加 Kit 中间件
+            Kit 模块终点路由配置入口
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="configure"></param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+            <param name="kitOptions"><see cref="T:Furion.Kit.KitOptions"/></param>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
+        <member name="M:Furion.Kit.KitEndpoints.EndpointDiagnosticSSE(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
             <summary>
-            添加 Kit 中间件
+            终点路由诊断 SSE 处理程序
             </summary>
-            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="kitOptions"></param>
-            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+            <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:Furion.Kit.KitEndpoints.ConfigurationDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            配置诊断处理程序
+            </summary>
+            <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+            <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
@@ -481,10 +455,65 @@
             根地址
             </summary>
         </member>
-        <member name="P:Furion.Kit.KitOptions.Capacity">
+        <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
             <summary>
-            容量
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
             </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            获取请求对象 URL 地址
+            </summary>
+            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            获取响应对象状态文本
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AllowCors(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            配置允许跨域响应头
+            </summary>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions">
+            <summary>
+            Kit 模块 <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitEndpointRouteBuilderExtensions.MapGetSSE(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.Delegate)">
+            <summary>
+            添加 SSE 请求终点路由
+            </summary>
+            <param name="endpoints"><see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/></param>
+            <param name="pattern">路由模板</param>
+            <param name="handler">处理程序</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.RouteHandlerBuilder"/></returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions">
+            <summary>
+            Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Kit.KitOptions})">
+            <summary>
+            添加 Kit 中间件
+            </summary>
+            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <param name="configure"></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
+            <summary>
+            添加 Kit 中间件
+            </summary>
+            <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
+            <param name="kitOptions"></param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
     </members>
 </doc>

@@ -139,8 +139,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         cancellationToken.Register(Dispose);
 
         // 设置响应头，允许跨域请求
-        httpContext.Response.Headers.AccessControlAllowOrigin = "*";
-        httpContext.Response.Headers.AccessControlAllowHeaders = "*";
+        httpContext.Response.AllowCors();
 
         // 设置响应头，指定 Content-Type
         httpContext.Response.ContentType = "text/event-stream";

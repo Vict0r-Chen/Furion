@@ -14,6 +14,7 @@
 
 global using Furion.Exception;
 global using Furion.Kit;
+global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc.Controllers;

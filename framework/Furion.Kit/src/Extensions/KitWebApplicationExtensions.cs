@@ -41,27 +41,8 @@ public static class KitWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
-        webApplication.MapGroup(kitOptions.Root)
-            .MapGetSSE("endpoint-sse", async (HttpContext context, CancellationToken cancellationToken) =>
-            {
-                await new EndpointDiagnosticListener(kitOptions.Capacity).SSEHandler(context, cancellationToken);
-            });
-
-        webApplication.MapGroup(kitOptions.Root)
-            .MapGet("configuration", async (HttpContext httpContext, IConfiguration configuration) =>
-            {
-                var jsonString = configuration.ConvertToJson();
-
-                httpContext.Response.Headers.AccessControlAllowOrigin = "*";
-                httpContext.Response.Headers.AccessControlAllowHeaders = "*";
-
-                httpContext.Response.ContentType = MediaTypeNames.Application.Json;
-                httpContext.Response.ContentLength = Encoding.UTF8.GetByteCount(jsonString);
-
-                httpContext.Response.Headers.CacheControl = "no-cache";
-
-                await httpContext.Response.WriteAsync(jsonString);
-            }).ExcludeFromDescription();
+        // 配置 Kit 模块终点路由
+        KitEndpoints.Map(webApplication, kitOptions);
 
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;

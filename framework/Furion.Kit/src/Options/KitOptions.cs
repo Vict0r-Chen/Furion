@@ -23,9 +23,4 @@ public sealed class KitOptions
     /// 根地址
     /// </summary>
     public string Root { get; init; } = "/furion";
-
-    /// <summary>
-    /// 容量
-    /// </summary>
-    public int Capacity { get; set; } = 3000;
 }

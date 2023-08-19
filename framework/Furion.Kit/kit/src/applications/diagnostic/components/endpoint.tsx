@@ -31,8 +31,8 @@ const Endpoint: React.FC = () => {
     var data = await database.endpointDiagnostic
       .filter(
         (u) =>
-          u.path !== "/furion/configuration" &&
-          u.path !== "/furion/endpoint-sse"
+          u.path !== "/furion/configuration-diagnostic" &&
+          u.path !== "/furion/endpoint-diagnostic-sse"
       )
       .reverse()
       .limit(pageSize * page)
@@ -46,15 +46,15 @@ const Endpoint: React.FC = () => {
     database.endpointDiagnostic
       .filter(
         (u) =>
-          u.path !== "/furion/configuration" &&
-          u.path !== "/furion/endpoint-sse"
+          u.path !== "/furion/configuration-diagnostic" &&
+          u.path !== "/furion/endpoint-diagnostic-sse"
       )
       .count()
   );
 
   useEffect(() => {
     var eventSource = new EventSource(
-      "https://localhost:7115/furion/endpoint-sse"
+      "https://localhost:7115/furion/endpoint-diagnostic-sse"
     );
 
     const addData = async (data: EndpointDiagnosticModel) => {
