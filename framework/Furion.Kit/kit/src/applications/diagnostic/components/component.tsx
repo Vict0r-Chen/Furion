@@ -17,6 +17,14 @@ import Page from "./page";
 
 const Container = styled(Page)``;
 
+const Dot = styled.span<{ $bgColor: string }>`
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${(props) => props.$bgColor};
+`;
+
 interface ComponentDiagnosticModel {
   components: ComponentModel[];
 }
@@ -24,6 +32,7 @@ interface ComponentDiagnosticModel {
 interface ComponentModel {
   guid?: string;
   name?: string;
+  fullName?: string;
   assemblyName?: string;
   assemblyDescription?: string;
   assemblyVersion?: string;
@@ -51,7 +60,7 @@ const ComponentItem: React.FC<ComponentModel> = (model) => {
         <Space direction="vertical" size={5}>
           <Space direction="vertical" size={5}>
             <ItemLabel>类型：</ItemLabel>
-            <ItemText>{model.name}</ItemText>
+            <ItemText>{model.fullName}</ItemText>
           </Space>
           <Space direction="vertical" size={5}>
             <ItemLabel>程序集：</ItemLabel>
@@ -73,7 +82,15 @@ const ComponentItem: React.FC<ComponentModel> = (model) => {
   );
 };
 
-const themeColor = "#73B3D1";
+const getColor = (node: any) => {
+  return node.id === "root"
+    ? "#52c41a"
+    : node.isEntry === true
+    ? "#faad14"
+    : themeColor;
+};
+
+const themeColor = "#91caff";
 const config: Omit<CommonConfig<DendrogramLayout>, "data"> = {
   menuCfg: {
     show: false,
@@ -91,22 +108,17 @@ const config: Omit<CommonConfig<DendrogramLayout>, "data"> = {
       },
     },
     style: (node: any) => ({
-      fill:
-        node.id === "root"
-          ? "#52c41a"
-          : node.isEntry === true
-          ? "#faad14"
-          : themeColor,
+      fill: getColor(node),
       stroke: "#0E1155",
-      lineWidth: 2,
+      lineWidth: 1,
       strokeOpacity: 0.45,
-      shadowColor: themeColor,
-      shadowBlur: 25,
+      shadowColor: getColor(node),
+      shadowBlur: 10,
     }),
     nodeStateStyles: {
       hover: {
         stroke: themeColor,
-        lineWidth: 2,
+        lineWidth: 1,
         strokeOpacity: 1,
       },
     },
@@ -126,7 +138,7 @@ const config: Omit<CommonConfig<DendrogramLayout>, "data"> = {
     edgeStateStyles: {
       hover: {
         stroke: themeColor,
-        lineWidth: 2,
+        lineWidth: 1,
       },
     },
   },
@@ -151,7 +163,7 @@ const createModel = (model: ComponentModel) => {
     ...model,
     id: model.guid,
     value: {
-      title: model.name,
+      title: model.fullName,
     },
     children: model.dependencies?.map((sub) => createModel(sub)),
   };
@@ -193,6 +205,22 @@ const Component: React.FC = () => {
   return (
     <Spin spinning={loading || !data}>
       <Container>
+        <div style={{ textAlign: "right" }}>
+          <Space>
+            <Space>
+              <Dot $bgColor="#52c41a" />
+              <TextBox $color="#000000a6">启动项目</TextBox>
+            </Space>
+            <Space>
+              <Dot $bgColor="#faad14" />
+              <TextBox $color="#000000a6">入口组件</TextBox>
+            </Space>
+            <Space>
+              <Dot $bgColor={themeColor} />
+              <TextBox $color="#000000a6">依赖组件</TextBox>
+            </Space>
+          </Space>
+        </div>
         {data && <RadialTreeGraph data={data} {...config} />}
         <FloatButton
           icon={<SyncOutlined />}

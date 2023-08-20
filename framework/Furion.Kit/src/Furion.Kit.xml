@@ -225,7 +225,12 @@
         </member>
         <member name="P:Furion.Kit.ComponentModel.Name">
             <summary>
-            名称
+            类型名称
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentModel.FullName">
+            <summary>
+            类型完全限定名
             </summary>
         </member>
         <member name="P:Furion.Kit.ComponentModel.AssemblyName">

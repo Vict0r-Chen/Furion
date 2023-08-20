@@ -31,7 +31,8 @@ internal sealed class ComponentModel
         // 获取组件所在程序集
         var assembly = componentType.Assembly;
 
-        Name = componentType.FullName;
+        Name = componentType.Name;
+        FullName = componentType.FullName;
         AssemblyName = assembly.GetName().Name;
         AssemblyDescription = assembly.GetDescription();
         AssemblyVersion = assembly.GetVersion()?.ToString();
@@ -39,9 +40,14 @@ internal sealed class ComponentModel
     }
 
     /// <summary>
-    /// 名称
+    /// 类型名称
     /// </summary>
     public string? Name { get; init; }
+
+    /// <summary>
+    /// 类型完全限定名
+    /// </summary>
+    public string? FullName { get; init; }
 
     /// <summary>
     /// 程序集名称
