@@ -19,7 +19,8 @@ namespace Furion.Tests;
     , RemotedConfigurationComponent
     , TypeScanningDependencyInjectionComponent
     , NamedDependencyInjectionComponent
-    , AspNetCoreValidationComponent>]
+    , AspNetCoreValidationComponent
+    , TestA>]
 public class ServiceComponent : ComponentBase
 {
     public override void PreConfigureServices(ServiceComponentContext context)
@@ -65,4 +66,9 @@ public class ApplicationComponent : WebComponent
 
         app.MapControllers();
     }
+}
+
+[DependsOn<FileScanningConfigurationComponent>]
+public class TestA : ComponentBase
+{
 }

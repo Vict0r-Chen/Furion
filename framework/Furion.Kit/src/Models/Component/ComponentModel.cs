@@ -35,6 +35,7 @@ internal sealed class ComponentModel
         AssemblyName = assembly.GetName().Name;
         AssemblyDescription = assembly.GetDescription();
         AssemblyVersion = assembly.GetVersion()?.ToString();
+        Guid = Guid.NewGuid();
     }
 
     /// <summary>
@@ -56,6 +57,8 @@ internal sealed class ComponentModel
     /// 程序集版本号
     /// </summary>
     public string? AssemblyVersion { get; init; }
+
+    public Guid Guid { get; init; }
 
     /// <summary>
     /// 依赖组件集合
