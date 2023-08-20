@@ -58,6 +58,7 @@ const BannerImg = styled.img`
   width: 100%;
   /* object-fit: contain; */
   background-color: #f0f0f0;
+  border-radius: 8px;
 `;
 
 const Page: React.FC = () => {
