@@ -17,7 +17,7 @@ namespace Furion.Validation.Fluent.Tests;
 public class AbstractValidatorTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new TestModelValidator();
 

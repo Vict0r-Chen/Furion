@@ -37,7 +37,7 @@ public class ValueAnnotationValidatorTests
     }
 
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new ValueAnnotationValidator();
 

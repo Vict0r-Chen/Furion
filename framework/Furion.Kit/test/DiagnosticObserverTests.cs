@@ -17,7 +17,7 @@ namespace Furion.Kit.Tests;
 public class DiagnosticObserverTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var diagnosticObserver = new DiagnosticObserver<int>(null!, null);
 

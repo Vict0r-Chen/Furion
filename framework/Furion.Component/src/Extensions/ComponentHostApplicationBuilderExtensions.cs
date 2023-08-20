@@ -90,6 +90,10 @@ public static class ComponentHostApplicationBuilderExtensions
         new EntryComponent(componentType, new ServiceComponentContext(hostApplicationBuilder))
             .Start();
 
+        // 记录入口服务组件类型
+        hostApplicationBuilder.Services.GetCoreOptions()
+            .EntryServiceComponentTypes.Add(componentType);
+
         return hostApplicationBuilder;
     }
 

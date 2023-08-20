@@ -15,6 +15,7 @@
 // 配置框架友元程序集
 [assembly: InternalsVisibleTo("Furion.Component.AspNetCore")]
 [assembly: InternalsVisibleTo("Furion.Component.Hosting")]
+[assembly: InternalsVisibleTo("Furion.Kit")]
 
 // 配置测试友元程序集
 [assembly: InternalsVisibleTo("Furion.Component.Tests")]

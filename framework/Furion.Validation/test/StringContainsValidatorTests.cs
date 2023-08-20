@@ -26,7 +26,7 @@ public class StringContainsValidatorTests
     }
 
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new StringContainsValidator('f');
 

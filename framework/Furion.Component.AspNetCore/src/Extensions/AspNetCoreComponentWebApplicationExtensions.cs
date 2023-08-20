@@ -53,6 +53,10 @@ public static class AspNetCoreComponentWebApplicationExtensions
         new EntryComponent(componentType, new ApplicationComponentContext(webApplication))
             .Start();
 
+        // 记录入口应用组件类型
+        webApplication.Services.GetRequiredService<CoreOptions>()
+            .EntryApplicationComponentTypes.Add(componentType);
+
         return webApplication;
     }
 

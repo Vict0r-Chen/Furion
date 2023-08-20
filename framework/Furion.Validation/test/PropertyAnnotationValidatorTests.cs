@@ -31,7 +31,7 @@ public class PropertyAnnotationValidatorTests
     }
 
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new PropertyAnnotationValidator<PropertyModel>(u => u.Name);
 

@@ -17,7 +17,7 @@ namespace Furion.Validation.Tests;
 public class PostalCodeValidatorTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new PostalCodeValidator();
 

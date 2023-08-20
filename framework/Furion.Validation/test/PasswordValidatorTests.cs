@@ -17,7 +17,7 @@ namespace Furion.Validation.Tests;
 public class PasswordValidatorTests
 {
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new PasswordValidator();
 

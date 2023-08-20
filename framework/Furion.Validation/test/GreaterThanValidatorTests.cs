@@ -26,7 +26,7 @@ public class GreaterThanValidatorTests
     }
 
     [Fact]
-    public void New_Default()
+    public void New_ReturnOK()
     {
         var validator = new GreaterThanValidator(30);
 
