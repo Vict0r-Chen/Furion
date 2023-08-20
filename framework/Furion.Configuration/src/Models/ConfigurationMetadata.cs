@@ -102,10 +102,8 @@ public sealed class ConfigurationMetadata
         var dataProperty = providerType.GetProperty(nameof(Data), _bindingAttr);
         if (dataProperty is not null)
         {
-            // 获取 Data 属性值访问器
+            // 创建 Data 属性值访问器并获取其值
             var dataGetter = providerType.CreatePropertyGetter(dataProperty);
-
-            // 解析 Data 属性值并设置
             Data = dataGetter(Provider) as IDictionary<string, string?>;
         }
 
@@ -113,10 +111,8 @@ public sealed class ConfigurationMetadata
         var sourceProperty = providerType.GetProperty(nameof(Source), _bindingAttr);
         if (sourceProperty is not null)
         {
-            // 获取 Source 属性值访问器
+            // 创建 Source 属性值访问器并获取其值
             var sourceGetter = providerType.CreatePropertyGetter(sourceProperty);
-
-            // 解析 Source 属性值并设置
             Source = sourceGetter(Provider) as IConfigurationSource;
         }
     }
