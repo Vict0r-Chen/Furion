@@ -14,6 +14,11 @@
             环境变量名响应头 Key
             </summary>
         </member>
+        <member name="F:Furion.Kit.Constants.START_PROJECT_NAME_KEY">
+            <summary>
+            启动项目名响应头 Key
+            </summary>
+        </member>
         <member name="T:Furion.Kit.KitEndpoints">
             <summary>
             Kit 模块终点路由配置
@@ -58,6 +63,14 @@
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:Furion.Kit.KitEndpoints.CreateComponentModel(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
+            <summary>
+            创建组件模型
+            </summary>
+            <param name="componentType">组件类型</param>
+            <param name="dependencies">组件依赖关系集合</param>
+            <returns><see cref="T:Furion.Kit.ComponentModel"/></returns>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
@@ -189,14 +202,14 @@
             组件诊断模型
             </summary>
         </member>
-        <member name="P:Furion.Kit.ComponentDiagnosticModel.Services">
+        <member name="M:Furion.Kit.ComponentDiagnosticModel.#ctor">
             <summary>
-            入口服务组件集合
+            <inheritdoc cref="T:Furion.Kit.ComponentDiagnosticModel"/>
             </summary>
         </member>
-        <member name="P:Furion.Kit.ComponentDiagnosticModel.Applications">
+        <member name="P:Furion.Kit.ComponentDiagnosticModel.Components">
             <summary>
-            入口应用组件集合
+            入口组件集合
             </summary>
         </member>
         <member name="T:Furion.Kit.ComponentModel">
@@ -204,19 +217,30 @@
             组件模型
             </summary>
         </member>
+        <member name="M:Furion.Kit.ComponentModel.#ctor(System.Type)">
+            <summary>
+            <inheritdoc cref="T:Furion.Kit.ComponentModel"/>
+            </summary>
+            <param name="componentType">组件类型</param>
+        </member>
         <member name="P:Furion.Kit.ComponentModel.Name">
             <summary>
             名称
             </summary>
         </member>
-        <member name="P:Furion.Kit.ComponentModel.Description">
+        <member name="P:Furion.Kit.ComponentModel.AssemblyName">
             <summary>
-            描述
+            程序集名称
             </summary>
         </member>
-        <member name="P:Furion.Kit.ComponentModel.Version">
+        <member name="P:Furion.Kit.ComponentModel.AssemblyDescription">
             <summary>
-            版本号
+            程序集描述
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentModel.AssemblyVersion">
+            <summary>
+            程序集版本号
             </summary>
         </member>
         <member name="P:Furion.Kit.ComponentModel.Dependencies">

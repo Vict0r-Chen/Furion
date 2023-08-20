@@ -27,6 +27,7 @@ const excludeUrls = [
   "/furion/configuration-diagnostic",
   "/furion/endpoint-diagnostic-sse",
   "/furion/configuration-provider-diagnostic",
+  "/furion/component-diagnostic"
 ];
 
 const Endpoint: React.FC = () => {

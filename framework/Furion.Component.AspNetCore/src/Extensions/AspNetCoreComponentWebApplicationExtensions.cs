@@ -55,7 +55,7 @@ public static class AspNetCoreComponentWebApplicationExtensions
 
         // 记录入口应用组件类型
         webApplication.Services.GetRequiredService<CoreOptions>()
-            .EntryApplicationComponentTypes.Add(componentType);
+            .EntryComponentTypes.Add(componentType);
 
         return webApplication;
     }

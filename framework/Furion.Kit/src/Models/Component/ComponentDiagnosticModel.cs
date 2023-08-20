@@ -20,12 +20,15 @@ namespace Furion.Kit;
 internal sealed class ComponentDiagnosticModel
 {
     /// <summary>
-    /// 入口服务组件集合
+    /// <inheritdoc cref="ComponentDiagnosticModel"/>
     /// </summary>
-    public List<ComponentModel>? Services { get; internal set; }
+    internal ComponentDiagnosticModel()
+    {
+        Components = new();
+    }
 
     /// <summary>
-    /// 入口应用组件集合
+    /// 入口组件集合
     /// </summary>
-    public List<ComponentModel>? Applications { get; internal set; }
+    public List<ComponentModel> Components { get; init; }
 }

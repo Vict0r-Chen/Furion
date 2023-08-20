@@ -92,7 +92,7 @@ public static class ComponentHostApplicationBuilderExtensions
 
         // 记录入口服务组件类型
         hostApplicationBuilder.Services.GetCoreOptions()
-            .EntryServiceComponentTypes.Add(componentType);
+            .EntryComponentTypes.Add(componentType);
 
         return hostApplicationBuilder;
     }

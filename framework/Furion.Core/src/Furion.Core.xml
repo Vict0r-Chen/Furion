@@ -90,14 +90,9 @@
             <inheritdoc cref="T:Furion.CoreOptions"/>
             </summary>
         </member>
-        <member name="P:Furion.CoreOptions.EntryServiceComponentTypes">
+        <member name="P:Furion.CoreOptions.EntryComponentTypes">
             <summary>
-            入口服务组件类型集合
-            </summary>
-        </member>
-        <member name="P:Furion.CoreOptions.EntryApplicationComponentTypes">
-            <summary>
-            入口应用组件类型集合
+            入口组件类型集合
             </summary>
         </member>
         <member name="M:Furion.CoreOptions.GetOrAdd``1">

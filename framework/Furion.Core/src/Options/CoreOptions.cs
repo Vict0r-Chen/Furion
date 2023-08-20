@@ -37,19 +37,13 @@ internal sealed class CoreOptions
         _optionsInstances = new();
         _metadataOfRegistered = new(StringComparer.OrdinalIgnoreCase);
 
-        EntryServiceComponentTypes = new();
-        EntryApplicationComponentTypes = new();
+        EntryComponentTypes = new();
     }
 
     /// <summary>
-    /// 入口服务组件类型集合
+    /// 入口组件类型集合
     /// </summary>
-    internal HashSet<Type> EntryServiceComponentTypes { get; init; }
-
-    /// <summary>
-    /// 入口应用组件类型集合
-    /// </summary>
-    internal HashSet<Type> EntryApplicationComponentTypes { get; init; }
+    internal HashSet<Type> EntryComponentTypes { get; init; }
 
     /// <summary>
     /// 获取子选项

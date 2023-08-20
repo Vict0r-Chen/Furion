@@ -42,8 +42,8 @@ internal static class KitEndpoints
 
         // 组件诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("component-diagnostic", ComponentDiagnostic);
-        //.ExcludeFromDescription();
+            .MapGet("component-diagnostic", ComponentDiagnostic)
+            .ExcludeFromDescription();
     }
 
     /// <summary>
@@ -137,15 +137,45 @@ internal static class KitEndpoints
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="coreOptions"><see cref="CoreOptions"/></param>
     /// <returns><see cref="Task"/></returns>
-    internal static async Task ComponentDiagnostic(HttpContext httpContext, CoreOptions coreOptions)
+    internal static IResult ComponentDiagnostic(HttpContext httpContext, CoreOptions coreOptions)
     {
-        // 获取入口组件类型集合
-        var entryServiceComponentTypes = coreOptions.EntryServiceComponentTypes;
-        var entryApplicationComponentTypes = coreOptions.EntryApplicationComponentTypes;
-
         // 初始化组件诊断模型
         var componentDiagnosticModel = new ComponentDiagnosticModel();
 
-        await Task.CompletedTask;
+        // 遍历组件类型集合
+        foreach (var componentType in coreOptions.EntryComponentTypes)
+        {
+            componentDiagnosticModel.Components.Add(
+                CreateComponentModel(componentType, DependencyGraph.Create(componentType)));
+        }
+
+        // 设置响应头，允许跨域请求
+        httpContext.Response.AllowCors();
+
+        // 设置响应头，不缓存请求
+        httpContext.Response.Headers.CacheControl = "no-cache";
+
+        // 将项目名称写入响应头
+        httpContext.Response.Headers.AccessControlExposeHeaders = Constants.START_PROJECT_NAME_KEY;
+        httpContext.Response.Headers.Append(Constants.START_PROJECT_NAME_KEY, Assembly.GetEntryAssembly()?.GetName()?.Name ?? "Furion");
+
+        // 返回 application/json 响应流数据
+        return Results.Json(componentDiagnosticModel);
+    }
+
+    /// <summary>
+    /// 创建组件模型
+    /// </summary>
+    /// <param name="componentType">组件类型</param>
+    /// <param name="dependencies">组件依赖关系集合</param>
+    /// <returns><see cref="ComponentModel"/></returns>
+    internal static ComponentModel CreateComponentModel(Type componentType, Dictionary<Type, Type[]> dependencies)
+    {
+        return new(componentType)
+        {
+            Dependencies = dependencies[componentType]
+                .Select(type => CreateComponentModel(type, dependencies))
+                .ToList()
+        };
     }
 }

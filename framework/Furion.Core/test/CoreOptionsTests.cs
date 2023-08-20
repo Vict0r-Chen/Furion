@@ -26,10 +26,8 @@ public class CoreOptionsTests
         Assert.Empty(coreOptions._optionsInstances);
         Assert.NotNull(coreOptions._metadataOfRegistered);
         Assert.Empty(coreOptions._metadataOfRegistered);
-        Assert.NotNull(coreOptions.EntryServiceComponentTypes);
-        Assert.Empty(coreOptions.EntryServiceComponentTypes);
-        Assert.NotNull(coreOptions.EntryApplicationComponentTypes);
-        Assert.Empty(coreOptions.EntryApplicationComponentTypes);
+        Assert.NotNull(coreOptions.EntryComponentTypes);
+        Assert.Empty(coreOptions.EntryComponentTypes);
     }
 
     [Fact]

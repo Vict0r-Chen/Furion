@@ -20,19 +20,42 @@ namespace Furion.Kit;
 internal sealed class ComponentModel
 {
     /// <summary>
+    /// <inheritdoc cref="ComponentModel"/>
+    /// </summary>
+    /// <param name="componentType">组件类型</param>
+    internal ComponentModel(Type componentType)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(componentType);
+
+        // 获取组件所在程序集
+        var assembly = componentType.Assembly;
+
+        Name = componentType.FullName;
+        AssemblyName = assembly.GetName().Name;
+        AssemblyDescription = assembly.GetDescription();
+        AssemblyVersion = assembly.GetVersion()?.ToString();
+    }
+
+    /// <summary>
     /// 名称
     /// </summary>
-    public string? Name { get; internal set; }
+    public string? Name { get; init; }
 
     /// <summary>
-    /// 描述
+    /// 程序集名称
     /// </summary>
-    public string? Description { get; internal set; }
+    public string? AssemblyName { get; init; }
 
     /// <summary>
-    /// 版本号
+    /// 程序集描述
     /// </summary>
-    public string? Version { get; set; }
+    public string? AssemblyDescription { get; init; }
+
+    /// <summary>
+    /// 程序集版本号
+    /// </summary>
+    public string? AssemblyVersion { get; init; }
 
     /// <summary>
     /// 依赖组件集合

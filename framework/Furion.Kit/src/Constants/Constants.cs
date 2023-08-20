@@ -23,4 +23,9 @@ internal static class Constants
     /// 环境变量名响应头 Key
     /// </summary>
     internal const string ENVIRONMENT_NAME_KEY = "Environment-Name";
+
+    /// <summary>
+    /// 启动项目名响应头 Key
+    /// </summary>
+    internal const string START_PROJECT_NAME_KEY = "Project-Name";
 }
