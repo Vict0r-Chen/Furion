@@ -39,6 +39,11 @@ internal static class KitEndpoints
         webApplication.MapGroup(kitOptions.Root)
             .MapGet("configuration-provider-diagnostic", ConfigurationProviderDiagnostic)
             .ExcludeFromDescription();
+
+        // 组件诊断路由配置
+        webApplication.MapGroup(kitOptions.Root)
+            .MapGet("component-diagnostic", ComponentDiagnostic);
+        //.ExcludeFromDescription();
     }
 
     /// <summary>
@@ -124,5 +129,23 @@ internal static class KitEndpoints
 
         // 写入 Body 流
         await httpContext.Response.WriteAsJsonAsync(jsonString);
+    }
+
+    /// <summary>
+    /// 组件诊断处理程序
+    /// </summary>
+    /// <param name="httpContext"><see cref="HttpContext"/></param>
+    /// <param name="coreOptions"><see cref="CoreOptions"/></param>
+    /// <returns><see cref="Task"/></returns>
+    internal static async Task ComponentDiagnostic(HttpContext httpContext, CoreOptions coreOptions)
+    {
+        // 获取入口组件类型集合
+        var entryServiceComponentTypes = coreOptions.EntryServiceComponentTypes;
+        var entryApplicationComponentTypes = coreOptions.EntryApplicationComponentTypes;
+
+        // 初始化组件诊断模型
+        var componentDiagnosticModel = new ComponentDiagnosticModel();
+
+        await Task.CompletedTask;
     }
 }

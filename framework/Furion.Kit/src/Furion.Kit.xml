@@ -51,6 +51,14 @@
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
+        <member name="M:Furion.Kit.KitEndpoints.ComponentDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Furion.CoreOptions)">
+            <summary>
+            组件诊断处理程序
+            </summary>
+            <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
+            <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
             <summary>
             诊断监听器抽象基类
@@ -175,6 +183,46 @@
             Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop 事件处理
             </summary>
             <param name="value">事件负载值</param>
+        </member>
+        <member name="T:Furion.Kit.ComponentDiagnosticModel">
+            <summary>
+            组件诊断模型
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentDiagnosticModel.Services">
+            <summary>
+            入口服务组件集合
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentDiagnosticModel.Applications">
+            <summary>
+            入口应用组件集合
+            </summary>
+        </member>
+        <member name="T:Furion.Kit.ComponentModel">
+            <summary>
+            组件模型
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentModel.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentModel.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentModel.Version">
+            <summary>
+            版本号
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.ComponentModel.Dependencies">
+            <summary>
+            依赖组件集合
+            </summary>
         </member>
         <member name="T:Furion.Kit.ControllerActionModel">
             <summary>

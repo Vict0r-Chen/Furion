@@ -893,12 +893,6 @@
             启动
             </summary>
         </member>
-        <member name="M:Furion.Component.EntryComponent.CreateDependencies">
-            <summary>
-            创建依赖关系集合
-            </summary>
-            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
-        </member>
         <member name="M:Furion.Component.EntryComponent.InvokeMethod(Furion.Component.ComponentBase,System.String)">
             <summary>
             调用组件方法
@@ -952,6 +946,13 @@
             <inheritdoc cref="T:Furion.Component.DependencyGraph"/>
             </summary>
             <param name="dependencies">依赖关系集合</param>
+        </member>
+        <member name="M:Furion.Component.DependencyGraph.Create(System.Type)">
+            <summary>
+            创建依赖关系集合
+            </summary>
+            <param name="type">入口类型</param>
+            <returns><see cref="T:System.Collections.Generic.Dictionary`2"/></returns>
         </member>
         <member name="M:Furion.Component.DependencyGraph.BuildAncestorsAndDescendantsNodes">
             <summary>

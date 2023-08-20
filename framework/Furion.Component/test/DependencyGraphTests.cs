@@ -47,6 +47,31 @@ public class DependencyGraphTests
     }
 
     [Fact]
+    public void Create_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var dependencies = DependencyGraph.Create(null!);
+        });
+    }
+
+    [Fact]
+    public void Create_ReturnOK()
+    {
+        var dependencies = DependencyGraph.Create(typeof(AComponent));
+        Assert.NotNull(dependencies);
+        Assert.Equal(new Dictionary<Type, Type[]>
+        {
+            { typeof(AComponent), new[]{ typeof(BComponent), typeof(CComponent), typeof(DComponent) } },
+            { typeof(BComponent), new[]{ typeof(CComponent), typeof(FComponent) } },
+            { typeof(CComponent), new[]{ typeof(EComponent), typeof(DComponent) } },
+            { typeof(DComponent), Array.Empty<Type>() },
+            { typeof(FComponent), Array.Empty<Type>() },
+            { typeof(EComponent), new[]{ typeof(FComponent) } },
+        }, dependencies);
+    }
+
+    [Fact]
     public void BuildAncestorsAndDescendantsNodes_ReturnOK()
     {
         var dependencies = new Dictionary<Type, Type[]>

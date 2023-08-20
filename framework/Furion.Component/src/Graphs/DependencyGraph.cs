@@ -52,6 +52,51 @@ internal sealed class DependencyGraph
     }
 
     /// <summary>
+    /// 创建依赖关系集合
+    /// </summary>
+    /// <param name="type">入口类型</param>
+    /// <returns><see cref="Dictionary{TKey, TValue}"/></returns>
+    internal static Dictionary<Type, Type[]> Create(Type type)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(type);
+
+        // 初始化依赖关系集合
+        var dependencies = new Dictionary<Type, Type[]>();
+
+        // 初始化未访问类型集合
+        var toVisit = new List<Type> { type };
+
+        // 循环检查未访问的类型集合中的数量直至为 0
+        while (toVisit.Count > 0)
+        {
+            // 取出未访问类型集合中的第一项
+            var currentType = toVisit[0];
+
+            // 标记当前取出的项已被访问
+            toVisit.RemoveAt(0);
+
+            // 检查类型是否已生成依赖关系集合
+            if (dependencies.ContainsKey(currentType))
+            {
+                continue;
+            }
+
+            // 检查类型是否贴有 [DependsOn] 特性，如果有则取出所有依赖关系集合
+            var dependedTypes = currentType.GetDefinedCustomAttribute<DependsOnAttribute>(false)?.DependedTypes
+                ?? Array.Empty<Type>();
+
+            // 将依赖关系集合添加到依赖关系集合中
+            dependencies.Add(currentType, dependedTypes);
+
+            // 将依赖关系集合配置添加到未访问类型集合中
+            toVisit.AddRange(dependedTypes);
+        }
+
+        return dependencies;
+    }
+
+    /// <summary>
     /// 构建祖先节点和后代节点集合
     /// </summary>
     internal void BuildAncestorsAndDescendantsNodes()
