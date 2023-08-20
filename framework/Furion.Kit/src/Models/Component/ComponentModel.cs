@@ -64,6 +64,9 @@ internal sealed class ComponentModel
     /// </summary>
     public string? AssemblyVersion { get; init; }
 
+    /// <summary>
+    /// 唯一标识
+    /// </summary>
     public Guid Guid { get; init; }
 
     /// <summary>

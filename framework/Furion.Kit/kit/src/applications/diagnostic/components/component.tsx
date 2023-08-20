@@ -7,7 +7,7 @@ import {
   TreeGraphData,
 } from "@ant-design/graphs";
 import { SyncOutlined } from "@ant-design/icons";
-import { FloatButton, Space, Spin } from "antd";
+import { Empty, FloatButton, Space, Spin } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
@@ -59,24 +59,29 @@ const ComponentItem: React.FC<ComponentModel> = (model) => {
       {model.guid ? (
         <Space direction="vertical" size={5}>
           <Space direction="vertical" size={5}>
-            <ItemLabel>类型：</ItemLabel>
+            <ItemLabel>类型</ItemLabel>
             <ItemText>{model.fullName}</ItemText>
           </Space>
           <Space direction="vertical" size={5}>
-            <ItemLabel>程序集：</ItemLabel>
+            <ItemLabel>程序集</ItemLabel>
             <ItemText>
               {model.assemblyName} {model.assemblyVersion}
             </ItemText>
           </Space>
           {model.assemblyDescription && (
             <Space direction="vertical" size={5}>
-              <ItemLabel>说明：</ItemLabel>
+              <ItemLabel>说明</ItemLabel>
               <ItemText>{model.assemblyDescription}</ItemText>
             </Space>
           )}
         </Space>
       ) : (
-        <TextBox>启动项目</TextBox>
+        <Space direction="vertical" size={5}>
+          <Space direction="vertical" size={5}>
+            <ItemLabel>启动项目</ItemLabel>
+            <ItemText>{(model as any).value}</ItemText>
+          </Space>
+        </Space>
       )}
     </ItemContainer>
   );
@@ -202,8 +207,21 @@ const Component: React.FC = () => {
     loadData();
   }, []);
 
+  if (!data) {
+    return (
+      <>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
+        <FloatButton
+          icon={<SyncOutlined />}
+          onClick={() => loadData()}
+          style={{ bottom: 100 }}
+        />
+      </>
+    );
+  }
+
   return (
-    <Spin spinning={loading || !data}>
+    <Spin spinning={loading}>
       <Container>
         <div style={{ textAlign: "right" }}>
           <Space>

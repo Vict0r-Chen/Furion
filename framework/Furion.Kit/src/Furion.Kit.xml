@@ -248,6 +248,11 @@
             程序集版本号
             </summary>
         </member>
+        <member name="P:Furion.Kit.ComponentModel.Guid">
+            <summary>
+            唯一标识
+            </summary>
+        </member>
         <member name="P:Furion.Kit.ComponentModel.Dependencies">
             <summary>
             依赖组件集合
