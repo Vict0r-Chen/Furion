@@ -30,18 +30,46 @@ interface ComponentModel {
   dependencies?: ComponentModel[];
 }
 
+const ItemContainer = styled.div`
+  font-size: 13px;
+  color: #595959;
+`;
+
+const ItemLabel = styled(TextBox)`
+  color: #000000e0;
+  font-weight: 600;
+`;
+
+const ItemText = styled(TextBox)`
+  margin-left: 5px;
+`;
+
 const ComponentItem: React.FC<ComponentModel> = (model) => {
-  return model.guid ? (
-    <Space direction="vertical">
-      <TextBox>{model.name}</TextBox>
-      <TextBox>{model.assemblyName}</TextBox>
-      <TextBox>{model.assemblyVersion}</TextBox>
-      {model.assemblyDescription && (
-        <TextBox>{model.assemblyDescription}</TextBox>
+  return (
+    <ItemContainer>
+      {model.guid ? (
+        <Space direction="vertical" size={5}>
+          <Space direction="vertical" size={5}>
+            <ItemLabel>类型：</ItemLabel>
+            <ItemText>{model.name}</ItemText>
+          </Space>
+          <Space direction="vertical" size={5}>
+            <ItemLabel>程序集：</ItemLabel>
+            <ItemText>
+              {model.assemblyName} {model.assemblyVersion}
+            </ItemText>
+          </Space>
+          {model.assemblyDescription && (
+            <Space direction="vertical" size={5}>
+              <ItemLabel>说明：</ItemLabel>
+              <ItemText>{model.assemblyDescription}</ItemText>
+            </Space>
+          )}
+        </Space>
+      ) : (
+        <TextBox>启动项目</TextBox>
       )}
-    </Space>
-  ) : (
-    <TextBox>启动项目</TextBox>
+    </ItemContainer>
   );
 };
 
@@ -63,7 +91,12 @@ const config: Omit<CommonConfig<DendrogramLayout>, "data"> = {
       },
     },
     style: (node: any) => ({
-      fill: node.id === "root" ? "#52c41a" : themeColor,
+      fill:
+        node.id === "root"
+          ? "#52c41a"
+          : node.isEntry === true
+          ? "#faad14"
+          : themeColor,
       stroke: "#0E1155",
       lineWidth: 2,
       strokeOpacity: 0.45,
@@ -104,7 +137,10 @@ const convertJson = (componentDiagnosticModel: ComponentDiagnosticModel) => {
   var list: NodeData<CardItem>[] = [];
 
   for (const cmp of componentDiagnosticModel.components) {
-    list.push(createModel(cmp));
+    var model = createModel(cmp) as any;
+    model.isEntry = true;
+
+    list.push(model);
   }
 
   return list;
