@@ -25,7 +25,7 @@ internal sealed class ControllerActionModel
     /// <summary>
     /// <inheritdoc cref="ControllerActionModel"/>
     /// </summary>
-    /// <param name="controllerActionDescriptor"></param>
+    /// <param name="controllerActionDescriptor"><see cref="ControllerActionDescriptor"/></param>
     internal ControllerActionModel(ControllerActionDescriptor controllerActionDescriptor)
     {
         // 空检查

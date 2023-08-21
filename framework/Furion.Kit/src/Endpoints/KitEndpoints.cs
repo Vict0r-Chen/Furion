@@ -70,8 +70,7 @@ internal static class KitEndpoints
         var jsonString = configuration.ConvertToJson();
 
         // 将环境名称写入响应头
-        httpContext.Response.Headers.AccessControlExposeHeaders = Constants.ENVIRONMENT_NAME_KEY;
-        httpContext.Response.Headers.Append(Constants.ENVIRONMENT_NAME_KEY, hostEnvironment.EnvironmentName);
+        httpContext.Response.Headers.AppendExpose(Constants.ENVIRONMENT_NAME_KEY, hostEnvironment.EnvironmentName);
 
         // 写入 Body 流
         await httpContext.Response.WriteAsJsonAsync(jsonString);
@@ -152,8 +151,7 @@ internal static class KitEndpoints
         httpContext.Response.Headers.CacheControl = "no-cache";
 
         // 将项目名称写入响应头
-        httpContext.Response.Headers.AccessControlExposeHeaders = Constants.START_PROJECT_NAME_KEY;
-        httpContext.Response.Headers.Append(Constants.START_PROJECT_NAME_KEY, Assembly.GetEntryAssembly()?.GetName()?.Name ?? nameof(Furion));
+        httpContext.Response.Headers.AppendExpose(Constants.PROJECT_NAME_KEY, Assembly.GetEntryAssembly()?.GetName()?.Name ?? nameof(Furion));
 
         // 返回 application/json 响应流数据
         return Results.Json(componentDiagnosticModel);

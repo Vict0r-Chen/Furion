@@ -14,9 +14,9 @@
             环境变量名响应头 Key
             </summary>
         </member>
-        <member name="F:Furion.Kit.Constants.START_PROJECT_NAME_KEY">
+        <member name="F:Furion.Kit.Constants.PROJECT_NAME_KEY">
             <summary>
-            启动项目名响应头 Key
+            项目名响应头 Key
             </summary>
         </member>
         <member name="T:Furion.Kit.KitEndpoints">
@@ -270,7 +270,7 @@
             <summary>
             <inheritdoc cref="T:Furion.Kit.ControllerActionModel"/>
             </summary>
-            <param name="controllerActionDescriptor"></param>
+            <param name="controllerActionDescriptor"><see cref="T:Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor"/></param>
         </member>
         <member name="P:Furion.Kit.ControllerActionModel.ControllerName">
             <summary>
@@ -622,6 +622,14 @@
             </summary>
             <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
             <param name="jsonString">JSON 字符串</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AppendExpose(Microsoft.AspNetCore.Http.IHeaderDictionary,System.String,System.String)">
+            <summary>
+            添加导出的响应头
+            </summary>
+            <param name="headers"><see cref="T:Microsoft.AspNetCore.Http.IHeaderDictionary"/></param>
+            <param name="key">键</param>
+            <param name="value">值</param>
         </member>
     </members>
 </doc>

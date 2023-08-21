@@ -86,4 +86,16 @@ internal static class HttpContextExtensions
         // 写入 Body 流
         await httpResponse.WriteAsync(jsonString);
     }
+
+    /// <summary>
+    /// 添加导出的响应头
+    /// </summary>
+    /// <param name="headers"><see cref="IHeaderDictionary"/></param>
+    /// <param name="key">键</param>
+    /// <param name="value">值</param>
+    internal static void AppendExpose(this IHeaderDictionary headers, string key, string value)
+    {
+        headers.AccessControlExposeHeaders = key;
+        headers.Append(key, value);
+    }
 }
