@@ -14,7 +14,9 @@
 
 global using Microsoft.Extensions.Configuration.Ini;
 global using Microsoft.Extensions.Configuration.Json;
+global using Microsoft.Extensions.Configuration.Memory;
 global using Microsoft.Extensions.Configuration.Xml;
+global using System.Reflection;
 global using System.Text;
 global using System.Text.Encodings.Web;
 global using System.Text.Json;
