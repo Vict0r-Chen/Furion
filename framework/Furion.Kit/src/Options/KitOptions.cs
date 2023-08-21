@@ -20,7 +20,7 @@ namespace Furion.Kit;
 public sealed class KitOptions
 {
     /// <summary>
-    /// 根地址
+    /// 入口地址
     /// </summary>
     public string Root { get; init; } = "/furion";
 }

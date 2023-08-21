@@ -23,10 +23,11 @@ public static class KitWebApplicationExtensions
     /// 添加 Kit 中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="configure"></param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication, Action<KitOptions>? configure = null)
     {
+        // 初始化Kit 模块选项
         var kitOptions = new KitOptions();
         configure?.Invoke(kitOptions);
 
@@ -37,7 +38,7 @@ public static class KitWebApplicationExtensions
     /// 添加 Kit 中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="kitOptions"></param>
+    /// <param name="kitOptions"><see cref="KitOptions"/></param>
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
@@ -47,7 +48,7 @@ public static class KitWebApplicationExtensions
         // 获取当前类型所在程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
 
-        // 添加 Kit 静态资源
+        // 配置静态资源文件服务
         webApplication.UseFileServer(new FileServerOptions
         {
             FileProvider = new EmbeddedFileProvider(currentAssembly, $"{currentAssembly.GetName().Name}.Assets"),

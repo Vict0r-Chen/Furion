@@ -103,7 +103,7 @@ internal static class KitEndpoints
                 // 写入 JSON 对象的起始括号
                 jsonWriter.WriteStartObject();
 
-                // 输出基础属性 JSON 配置
+                // 输出基础属性 JSON 字符串
                 jsonWriter.WriteNumber("id", metadata.Provider.GetHashCode());
                 jsonWriter.WriteString("provider", metadata.Provider.ToString());
                 jsonWriter.WriteBoolean("isFileConfiguration", metadata.IsFileConfiguration);
@@ -153,7 +153,7 @@ internal static class KitEndpoints
 
         // 将项目名称写入响应头
         httpContext.Response.Headers.AccessControlExposeHeaders = Constants.START_PROJECT_NAME_KEY;
-        httpContext.Response.Headers.Append(Constants.START_PROJECT_NAME_KEY, Assembly.GetEntryAssembly()?.GetName()?.Name ?? "Furion");
+        httpContext.Response.Headers.Append(Constants.START_PROJECT_NAME_KEY, Assembly.GetEntryAssembly()?.GetName()?.Name ?? nameof(Furion));
 
         // 返回 application/json 响应流数据
         return Results.Json(componentDiagnosticModel);

@@ -553,7 +553,7 @@
         </member>
         <member name="P:Furion.Kit.KitOptions.Root">
             <summary>
-            根地址
+            入口地址
             </summary>
         </member>
         <member name="T:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions">
@@ -580,7 +580,7 @@
             添加 Kit 中间件
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="configure"></param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
@@ -588,7 +588,7 @@
             添加 Kit 中间件
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="kitOptions"></param>
+            <param name="kitOptions"><see cref="T:Furion.Kit.KitOptions"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
         <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
