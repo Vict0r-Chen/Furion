@@ -1,5 +1,6 @@
 import { Space, Tag } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
@@ -22,12 +23,14 @@ const Category = styled(TextBox)`
 const Noble: React.FC = () => {
   return (
     <Container>
-      <Tag color="gold">
-        <Space align="center" size={5}>
-          <Icon type="icon-noble" />
-          <Category>旗舰版</Category>
-        </Space>
-      </Tag>
+      <Link to="/equity">
+        <Tag color="gold">
+          <Space align="center" size={5}>
+            <Icon type="icon-noble" />
+            <Category>旗舰版</Category>
+          </Space>
+        </Tag>
+      </Link>
     </Container>
   );
 };

@@ -1,10 +1,6 @@
 import { Button, Carousel, Dropdown, Space, Tabs, TabsProps } from "antd";
 import React from "react";
 import { styled } from "styled-components";
-import banner from "../../../assets/banner.png";
-import banner1 from "../../../assets/banner1.jpeg";
-import banner2 from "../../../assets/banner2.jpeg";
-import banner3 from "../../../assets/banner3.png";
 import Category from "../../../components/category";
 import IconFont from "../../../components/iconfont";
 import SearchBox from "../../../components/searchbox";
@@ -66,16 +62,16 @@ const Page: React.FC = () => {
     <>
       <Carousel autoplay autoplaySpeed={10000}>
         <div>
-          <BannerImg src={banner} alt="" />
+          <BannerImg src="http://furion.baiqian.ltd/img/crmeb.jpg" alt="" />
         </div>
         <div>
-          <BannerImg src={banner1} alt="" />
+          <BannerImg src="http://furion.baiqian.ltd/img/tpflow.png" alt="" />
         </div>
         <div>
-          <BannerImg src={banner2} alt="" />
+          <BannerImg src="http://furion.baiqian.ltd/img/lk.jpg" alt="" />
         </div>
         <div>
-          <BannerImg src={banner3} alt="" />
+          <BannerImg src="http://furion.baiqian.ltd/img/weishen.jpg" alt="" />
         </div>
       </Carousel>
       <Container>

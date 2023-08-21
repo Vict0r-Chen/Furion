@@ -1,6 +1,7 @@
 import { createHashRouter } from "react-router-dom";
 import Diagnostic from "./applications/diagnostic";
 import Discussion from "./applications/discussion";
+import Equity from "./applications/equity";
 import Explore, { ExploreDetail } from "./applications/explore";
 import Generate from "./applications/generate";
 import OpenAPI from "./applications/openapi";
@@ -60,6 +61,10 @@ const router = createHashRouter([
           {
             path: "setting",
             element: <Setting />,
+          },
+          {
+            path: "equity",
+            element: <Equity />,
           },
         ],
       },

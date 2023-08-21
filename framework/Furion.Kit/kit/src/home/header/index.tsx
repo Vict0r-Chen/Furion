@@ -16,6 +16,10 @@ const Container = styled(Flexbox)`
   padding-left: 15px;
 `;
 
+const HomeIcon = styled(HeaderIcon)`
+  margin-right: 10px;
+`;
+
 const Header: React.FC & { Icon: typeof HeaderIcon } = () => {
   return (
     <>
@@ -28,6 +32,9 @@ const Header: React.FC & { Icon: typeof HeaderIcon } = () => {
         <div>
           <Space size={15}>
             <SearchBox />
+            <a href="/" target="_blank">
+              <HomeIcon type="icon-home" />
+            </a>
             <NotificationBox />
             <Version number="Furion 5.0.0" />
           </Space>
