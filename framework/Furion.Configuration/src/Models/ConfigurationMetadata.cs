@@ -48,9 +48,6 @@ public sealed class ConfigurationMetadata
     /// </summary>
     public IDictionary<string, string?>? Data { get; private set; }
 
-    /// <inheritdoc cref="IConfigurationSource" />
-    public IConfigurationSource? Source { get; private set; }
-
     /// <summary>
     /// 子配置元数据集合
     /// </summary>
@@ -105,15 +102,6 @@ public sealed class ConfigurationMetadata
             // 创建 Data 属性值访问器并获取其值
             var dataGetter = providerType.CreatePropertyGetter(dataProperty);
             Data = dataGetter(Provider) as IDictionary<string, string?>;
-        }
-
-        // 检查是否定义了 Source 属性
-        var sourceProperty = providerType.GetProperty(nameof(Source), _bindingAttr);
-        if (sourceProperty is not null)
-        {
-            // 创建 Source 属性值访问器并获取其值
-            var sourceGetter = providerType.CreatePropertyGetter(sourceProperty);
-            Source = sourceGetter(Provider) as IConfigurationSource;
         }
     }
 

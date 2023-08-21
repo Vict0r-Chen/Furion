@@ -69,9 +69,6 @@
             数据字典
             </summary>
         </member>
-        <member name="P:Furion.Configuration.ConfigurationMetadata.Source">
-            <inheritdoc cref="T:Microsoft.Extensions.Configuration.IConfigurationSource" />
-        </member>
         <member name="P:Furion.Configuration.ConfigurationMetadata.Metadata">
             <summary>
             子配置元数据集合
