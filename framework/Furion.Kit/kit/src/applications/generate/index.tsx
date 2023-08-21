@@ -34,16 +34,18 @@ const Generate: React.FC = () => {
         loading={<Spin />}
         options={{
           readOnly: true,
+          contextmenu: false,
         }}
       />
       <DiffEditor
         height="350px"
         language="javascript"
-        original="// the original code"
-        modified="// the modified code"
+        original="// Furion v4"
+        modified="// Furion v5"
         loading={<Spin />}
         options={{
           readOnly: true,
+          contextmenu: false,
         }}
       />
     </Content.Main>
