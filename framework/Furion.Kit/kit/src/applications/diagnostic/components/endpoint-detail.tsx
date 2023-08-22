@@ -73,13 +73,13 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
     <Container>
       <Category title="Basic">
         <ListItem
-          title="beginTimestamp"
-          content={props.beginTimestamp?.toLocaleString()}
+          title="requestStartTime"
+          content={props.requestStartTime?.toLocaleString()}
         />
         <ListItem title="contentType" content={props.contentType} />
         <ListItem
-          title="endTimestamp"
-          content={props.endTimestamp?.toLocaleString()}
+          title="requestEndTime"
+          content={props.requestEndTime?.toLocaleString()}
         />
         <ListItem
           title="httpMethod"

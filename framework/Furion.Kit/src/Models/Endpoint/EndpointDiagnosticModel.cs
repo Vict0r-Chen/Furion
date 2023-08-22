@@ -33,6 +33,8 @@ internal sealed class EndpointDiagnosticModel
 
         _httpContext = httpContext;
 
+        Filters = new();
+
         // 初始化
         Initialize();
     }
@@ -58,32 +60,12 @@ internal sealed class EndpointDiagnosticModel
     public string? UrlAddress { get; private set; }
 
     /// <summary>
-    /// 状态码
+    /// 请求开始时间
     /// </summary>
-    public int? StatusCode { get; private set; }
+    public DateTimeOffset? RequestStartTime { get; private set; }
 
     /// <summary>
-    /// 状态文本
-    /// </summary>
-    public string? StatusText { get; private set; }
-
-    /// <summary>
-    /// Content-Type
-    /// </summary>
-    public string? ContentType { get; private set; }
-
-    /// <summary>
-    /// 开始时间戳
-    /// </summary>
-    public DateTimeOffset? BeginTimestamp { get; private set; }
-
-    /// <summary>
-    /// 结束时间戳
-    /// </summary>
-    public DateTimeOffset? EndTimestamp { get; private set; }
-
-    /// <summary>
-    /// URL 参数集合
+    /// 请求 URL 参数集合
     /// </summary>
     public IDictionary<string, string>? Query { get; private set; }
 
@@ -98,28 +80,48 @@ internal sealed class EndpointDiagnosticModel
     public IDictionary<string, string>? RequestHeaders { get; private set; }
 
     /// <summary>
-    /// 响应 Headers 集合
-    /// </summary>
-    public IDictionary<string, string>? ResponseHeaders { get; private set; }
-
-    /// <summary>
-    /// 路由表集合
+    /// 路由信息集合
     /// </summary>
     public IDictionary<string, object?>? RouteValues { get; private set; }
 
     /// <inheritdoc cref="EndpointModel"/>
     public EndpointModel? Endpoint { get; private set; }
 
-    /// <inheritdoc cref="ExceptionModel"/>
-    public ExceptionModel? Exception { get; internal set; }
-
     /// <inheritdoc cref="ControllerActionModel"/>
     public ControllerActionModel? ControllerAction { get; private set; }
 
     /// <summary>
+    /// 请求结束时间
+    /// </summary>
+    public DateTimeOffset? RequestEndTime { get; private set; }
+
+    /// <summary>
+    /// 状态码
+    /// </summary>
+    public int? StatusCode { get; private set; }
+
+    /// <summary>
+    /// 状态文本
+    /// </summary>
+    public string? StatusText { get; private set; }
+
+    /// <summary>
+    /// 内容类型
+    /// </summary>
+    public string? ContentType { get; private set; }
+
+    /// <summary>
+    /// 响应 Headers 集合
+    /// </summary>
+    public IDictionary<string, string>? ResponseHeaders { get; private set; }
+
+    /// <summary>
     /// 筛选器集合
     /// </summary>
-    public List<string?> Filters { get; private set; } = new();
+    public List<string?> Filters { get; init; }
+
+    /// <inheritdoc cref="ExceptionModel"/>
+    public ExceptionModel? Exception { get; internal set; }
 
     /// <summary>
     /// 初始化
@@ -130,10 +132,10 @@ internal sealed class EndpointDiagnosticModel
         var httpRequest = _httpContext.Request;
 
         TraceIdentifier = _httpContext.TraceIdentifier;
-        HttpMethod = httpRequest.Method;
-        BeginTimestamp = DateTimeOffset.UtcNow;
         Path = httpRequest.Path;
         UrlAddress = httpRequest.GetUrlAddress();
+        HttpMethod = httpRequest.Method;
+        RequestStartTime = DateTimeOffset.UtcNow;
 
         Query = httpRequest.Query.ToDictionary(u => u.Key, u => u.Value.ToString());
         Cookies = httpRequest.Cookies.ToDictionary(u => u.Key, u => u.Value);
@@ -164,10 +166,10 @@ internal sealed class EndpointDiagnosticModel
         // 空检查
         ArgumentNullException.ThrowIfNull(httpResponse);
 
+        RequestEndTime = DateTimeOffset.UtcNow;
         StatusCode = httpResponse.StatusCode;
         StatusText = httpResponse.GetStatusText();
         ContentType = httpResponse.ContentType;
         ResponseHeaders = httpResponse.Headers.ToDictionary(u => u.Key, u => u.Value.ToString());
-        EndTimestamp = DateTimeOffset.UtcNow;
     }
 }

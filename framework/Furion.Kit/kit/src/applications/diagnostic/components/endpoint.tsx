@@ -27,7 +27,7 @@ const excludeUrls = [
   "/furion/configuration-diagnostic",
   "/furion/endpoint-diagnostic-sse",
   "/furion/configuration-provider-diagnostic",
-  "/furion/component-diagnostic"
+  "/furion/component-diagnostic",
 ];
 
 const Endpoint: React.FC = () => {
@@ -71,11 +71,11 @@ const Endpoint: React.FC = () => {
 
     eventSource.onmessage = (event) => {
       var data = JSON.parse(event.data);
-      if (data.beginTimestamp) {
-        data.beginTimestamp = new Date(data.beginTimestamp);
+      if (data.requestStartTime) {
+        data.requestStartTime = new Date(data.requestStartTime);
       }
-      if (data.endTimestamp) {
-        data.endTimestamp = new Date(data.endTimestamp);
+      if (data.requestEndTime) {
+        data.requestEndTime = new Date(data.requestEndTime);
       }
 
       addData(data);

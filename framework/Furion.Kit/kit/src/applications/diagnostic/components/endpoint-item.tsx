@@ -87,9 +87,9 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
           </TextBox>
         </Space>
         <Space>
-          {props.beginTimestamp && props.endTimestamp && (
+          {props.requestStartTime && props.requestEndTime && (
             <TextBox $color="#00000073">
-              {props.endTimestamp.getTime() - props.beginTimestamp.getTime()}ms
+              {props.requestEndTime.getTime() - props.requestStartTime.getTime()}ms
             </TextBox>
           )}
         </Space>

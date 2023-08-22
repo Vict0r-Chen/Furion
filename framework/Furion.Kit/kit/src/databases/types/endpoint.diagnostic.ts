@@ -6,8 +6,8 @@ export interface EndpointDiagnosticModel {
   statusCode?: number;
   statusText?: string;
   contentType?: string;
-  beginTimestamp?: Date;
-  endTimestamp?: Date;
+  requestStartTime?: Date;
+  requestEndTime?: Date;
   query?: Record<string, string | null>;
   cookies?: Record<string, string | null>;
   requestHeaders?: Record<string, string | null>;

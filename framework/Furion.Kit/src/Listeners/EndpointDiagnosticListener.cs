@@ -101,12 +101,12 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         // 更新终点路由诊断模型缓存
         if (_endpointDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, endpointDiagnosticModel =>
         {
+            // 添加执行的筛选器名称
+            endpointDiagnosticModel.Filters.Add(eventData.Filter.ToString());
+
             endpointDiagnosticModel.Exception ??= exception is not null
                 ? new(exception)
                 : null;
-
-            // 添加执行的筛选器名称
-            endpointDiagnosticModel.Filters.Add(eventData.Filter.ToString());
 
             return endpointDiagnosticModel;
         }, out var updatedEndpointDiagnosticModel))
