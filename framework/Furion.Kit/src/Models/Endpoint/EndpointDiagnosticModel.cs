@@ -161,6 +161,9 @@ internal sealed class EndpointDiagnosticModel
     /// <param name="httpResponse"><see cref="HttpResponse"/></param>
     internal void SetResponseInfo(HttpResponse httpResponse)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(httpResponse);
+
         StatusCode = httpResponse.StatusCode;
         StatusText = httpResponse.GetStatusText();
         ContentType = httpResponse.ContentType;

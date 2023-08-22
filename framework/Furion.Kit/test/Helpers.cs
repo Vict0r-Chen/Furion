@@ -14,12 +14,19 @@
 
 namespace Furion.Kit.Tests;
 
-[ApiController]
-[Route("[controller]/[action]")]
-public class TestController : ControllerBase
+public class Helpers
 {
-    [HttpGet, HttpPost, DisplayName("测试")]
-    public void Test()
+    public static int GetIdlePort()
     {
+        var fromPort = 10000;
+        var toPort = 65535;
+        var randomPort = RandomNumberGenerator.GetInt32(fromPort, toPort);
+
+        while (IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners().Any(p => p.Port == randomPort))
+        {
+            randomPort = RandomNumberGenerator.GetInt32(fromPort, toPort);
+        }
+
+        return randomPort;
     }
 }

@@ -17,4 +17,6 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Controllers;
 global using Microsoft.AspNetCore.Mvc.Infrastructure;
 global using System.ComponentModel;
+global using System.Net.NetworkInformation;
+global using System.Security.Cryptography;
 global using Xunit;

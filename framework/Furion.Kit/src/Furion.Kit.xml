@@ -439,7 +439,7 @@
         </member>
         <member name="P:Furion.Kit.EndpointModel.HttpMethods">
             <summary>
-            请求方式集合
+            受支持的请求方式
             </summary>
         </member>
         <member name="M:Furion.Kit.EndpointModel.Initialize">

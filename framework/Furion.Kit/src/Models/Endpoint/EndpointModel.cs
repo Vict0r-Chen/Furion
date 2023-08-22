@@ -53,7 +53,7 @@ internal sealed class EndpointModel
     public int? Order { get; private set; }
 
     /// <summary>
-    /// 请求方式集合
+    /// 受支持的请求方式
     /// </summary>
     public string? HttpMethods { get; private set; }
 
@@ -73,7 +73,7 @@ internal sealed class EndpointModel
         RoutePattern = routeEndpoint.RoutePattern.RawText;
         Order = routeEndpoint.Order;
 
-        // 拼接路由 HttpMethod 集合
+        // 拼接受支持的请求方式
         var httpMethods = routeEndpoint.Metadata.GetMetadata<IHttpMethodMetadata>()?.HttpMethods;
         if (httpMethods is not null)
         {
