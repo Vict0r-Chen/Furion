@@ -42,32 +42,32 @@ internal sealed class ComponentModel
     /// <summary>
     /// 类型名称
     /// </summary>
-    public string? Name { get; init; }
+    public string? Name { get; private set; }
 
     /// <summary>
     /// 类型完全限定名
     /// </summary>
-    public string? FullName { get; init; }
+    public string? FullName { get; private set; }
 
     /// <summary>
     /// 程序集名称
     /// </summary>
-    public string? AssemblyName { get; init; }
+    public string? AssemblyName { get; private set; }
 
     /// <summary>
     /// 程序集描述
     /// </summary>
-    public string? AssemblyDescription { get; init; }
+    public string? AssemblyDescription { get; private set; }
 
     /// <summary>
     /// 程序集版本号
     /// </summary>
-    public string? AssemblyVersion { get; init; }
+    public string? AssemblyVersion { get; private set; }
 
     /// <summary>
     /// 唯一标识
     /// </summary>
-    public Guid Guid { get; init; }
+    public Guid Guid { get; private set; }
 
     /// <summary>
     /// 依赖组件集合

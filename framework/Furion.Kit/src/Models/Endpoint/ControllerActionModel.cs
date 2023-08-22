@@ -40,32 +40,32 @@ internal sealed class ControllerActionModel
     /// <summary>
     /// 控制器名称
     /// </summary>
-    public string? ControllerName { get; internal set; }
+    public string? ControllerName { get; private set; }
 
     /// <summary>
     /// 操作名称
     /// </summary>
-    public string? ActionName { get; internal set; }
+    public string? ActionName { get; private set; }
 
     /// <summary>
     /// 控制器类型
     /// </summary>
-    public string? ControllerType { get; internal set; }
+    public string? ControllerType { get; private set; }
 
     /// <summary>
     /// 方法名称
     /// </summary>
-    public string? MethodName { get; internal set; }
+    public string? MethodName { get; private set; }
 
     /// <summary>
     /// 方法签名
     /// </summary>
-    public string? Signature { get; internal set; }
+    public string? Signature { get; private set; }
 
     /// <summary>
     /// 显示名称
     /// </summary>
-    public string? DisplayName { get; internal set; }
+    public string? DisplayName { get; private set; }
 
     /// <summary>
     /// 初始化

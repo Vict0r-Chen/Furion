@@ -22,5 +22,5 @@ public sealed class KitOptions
     /// <summary>
     /// 入口地址
     /// </summary>
-    public string Root { get; init; } = "/furion";
+    public string Root { get; } = "/furion";
 }

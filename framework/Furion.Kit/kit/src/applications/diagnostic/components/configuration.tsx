@@ -116,7 +116,7 @@ const Configuration: React.FC = () => {
   return (
     <Spin spinning={loading}>
       <Container>
-        <AlertBox message={"当前配置环境：" + environmentName} type="warning" />
+        <AlertBox message={"当前运行环境：" + environmentName} type="warning" />
         <Tabs tabPosition="right" items={items} tabBarGutter={0} />
         <FloatButton
           icon={<SyncOutlined />}

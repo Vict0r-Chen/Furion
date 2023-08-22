@@ -11,7 +11,7 @@
         </member>
         <member name="F:Furion.Kit.Constants.ENVIRONMENT_NAME_KEY">
             <summary>
-            环境变量名响应头 Key
+            运行环境名响应头 Key
             </summary>
         </member>
         <member name="F:Furion.Kit.Constants.PROJECT_NAME_KEY">
@@ -461,13 +461,13 @@
             </summary>
         </member>
         <member name="F:Furion.Kit.ExceptionModel._exception">
-            <inheritdoc cref="N:Furion.Exception"/>
+            <inheritdoc cref="T:System.Exception"/>
         </member>
         <member name="M:Furion.Kit.ExceptionModel.#ctor(System.Exception)">
             <summary>
             <inheritdoc cref="N:Furion.Exception"/>
             </summary>
-            <param name="exception"><see cref="N:Furion.Exception"/></param>
+            <param name="exception"><see cref="T:System.Exception"/></param>
         </member>
         <member name="P:Furion.Kit.ExceptionModel.Message">
             <summary>

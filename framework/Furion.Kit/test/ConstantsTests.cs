@@ -12,20 +12,19 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Kit;
+namespace Furion.Kit.Tests;
 
-/// <summary>
-/// Kit 模块常量配置
-/// </summary>
-internal static class Constants
+public class ConstantsTests
 {
-    /// <summary>
-    /// 运行环境名响应头 Key
-    /// </summary>
-    internal const string ENVIRONMENT_NAME_KEY = "Environment-Name";
+    [Fact]
+    public void ENVIRONMENT_NAME_KEY()
+    {
+        Assert.Equal("Environment-Name", Constants.ENVIRONMENT_NAME_KEY);
+    }
 
-    /// <summary>
-    /// 项目名响应头 Key
-    /// </summary>
-    internal const string PROJECT_NAME_KEY = "Project-Name";
+    [Fact]
+    public void PROJECT_NAME_KEY()
+    {
+        Assert.Equal("Project-Name", Constants.PROJECT_NAME_KEY);
+    }
 }

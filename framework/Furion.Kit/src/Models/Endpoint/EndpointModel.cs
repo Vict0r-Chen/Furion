@@ -40,22 +40,22 @@ internal sealed class EndpointModel
     /// <summary>
     /// 显示名称
     /// </summary>
-    public string? DisplayName { get; internal set; }
+    public string? DisplayName { get; private set; }
 
     /// <summary>
     /// 路由格式
     /// </summary>
-    public string? RoutePattern { get; internal set; }
+    public string? RoutePattern { get; private set; }
 
     /// <summary>
     /// 排序
     /// </summary>
-    public int? Order { get; internal set; }
+    public int? Order { get; private set; }
 
     /// <summary>
     /// 请求方式集合
     /// </summary>
-    public string? HttpMethods { get; internal set; }
+    public string? HttpMethods { get; private set; }
 
     /// <summary>
     /// 初始化

@@ -69,7 +69,7 @@ internal static class KitEndpoints
         // 将配置转换为 JSON 字符串
         var jsonString = configuration.ConvertToJson();
 
-        // 将环境名称写入响应头
+        // 将运行环境名写入响应头
         httpContext.Response.Headers.AppendExpose(Constants.ENVIRONMENT_NAME_KEY, hostEnvironment.EnvironmentName);
 
         // 写入 Body 流

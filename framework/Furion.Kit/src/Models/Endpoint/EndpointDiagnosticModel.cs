@@ -40,86 +40,86 @@ internal sealed class EndpointDiagnosticModel
     /// <summary>
     /// 请求标识
     /// </summary>
-    public string? TraceIdentifier { get; internal set; }
+    public string? TraceIdentifier { get; private set; }
 
     /// <summary>
     /// 请求方式
     /// </summary>
-    public string? HttpMethod { get; internal set; }
+    public string? HttpMethod { get; private set; }
 
     /// <summary>
     /// 请求路径
     /// </summary>
-    public string? Path { get; internal set; }
+    public string? Path { get; private set; }
 
     /// <summary>
     /// 请求地址
     /// </summary>
-    public string? UrlAddress { get; internal set; }
+    public string? UrlAddress { get; private set; }
 
     /// <summary>
     /// 状态码
     /// </summary>
-    public int? StatusCode { get; internal set; }
+    public int? StatusCode { get; private set; }
 
     /// <summary>
     /// 状态文本
     /// </summary>
-    public string? StatusText { get; internal set; }
+    public string? StatusText { get; private set; }
 
     /// <summary>
     /// Content-Type
     /// </summary>
-    public string? ContentType { get; internal set; }
+    public string? ContentType { get; private set; }
 
     /// <summary>
     /// 开始时间戳
     /// </summary>
-    public DateTimeOffset? BeginTimestamp { get; internal set; }
+    public DateTimeOffset? BeginTimestamp { get; private set; }
 
     /// <summary>
     /// 结束时间戳
     /// </summary>
-    public DateTimeOffset? EndTimestamp { get; internal set; }
+    public DateTimeOffset? EndTimestamp { get; private set; }
 
     /// <summary>
     /// URL 参数集合
     /// </summary>
-    public IDictionary<string, string>? Query { get; internal set; }
+    public IDictionary<string, string>? Query { get; private set; }
 
     /// <summary>
     /// 请求 Cookies 集合
     /// </summary>
-    public IDictionary<string, string>? Cookies { get; internal set; }
+    public IDictionary<string, string>? Cookies { get; private set; }
 
     /// <summary>
     /// 请求 Headers 集合
     /// </summary>
-    public IDictionary<string, string>? RequestHeaders { get; internal set; }
+    public IDictionary<string, string>? RequestHeaders { get; private set; }
 
     /// <summary>
     /// 响应 Headers 集合
     /// </summary>
-    public IDictionary<string, string>? ResponseHeaders { get; internal set; }
+    public IDictionary<string, string>? ResponseHeaders { get; private set; }
 
     /// <summary>
     /// 路由表集合
     /// </summary>
-    public IDictionary<string, object?>? RouteValues { get; internal set; }
+    public IDictionary<string, object?>? RouteValues { get; private set; }
 
     /// <inheritdoc cref="EndpointModel"/>
-    public EndpointModel? Endpoint { get; internal set; }
+    public EndpointModel? Endpoint { get; private set; }
 
     /// <inheritdoc cref="ExceptionModel"/>
     public ExceptionModel? Exception { get; internal set; }
 
     /// <inheritdoc cref="ControllerActionModel"/>
-    public ControllerActionModel? ControllerAction { get; internal set; }
+    public ControllerActionModel? ControllerAction { get; private set; }
 
     /// <summary>
     /// 筛选器集合
     /// </summary>
-    public List<string?> Filters { get; internal set; } = new();
+    public List<string?> Filters { get; private set; } = new();
 
     /// <summary>
     /// 初始化

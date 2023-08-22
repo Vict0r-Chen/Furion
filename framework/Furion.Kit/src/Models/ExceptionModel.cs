@@ -19,13 +19,13 @@ namespace Furion.Kit;
 /// </summary>
 internal sealed class ExceptionModel
 {
-    /// <inheritdoc cref="Exception"/>
+    /// <inheritdoc cref="System.Exception"/>
     internal readonly System.Exception _exception;
 
     /// <summary>
     /// <inheritdoc cref="Exception"/>
     /// </summary>
-    /// <param name="exception"><see cref="Exception"/></param>
+    /// <param name="exception"><see cref="System.Exception"/></param>
     internal ExceptionModel(System.Exception exception)
     {
         // 空检查
@@ -40,42 +40,42 @@ internal sealed class ExceptionModel
     /// <summary>
     /// 异常信息
     /// </summary>
-    public string? Message { get; internal set; }
+    public string? Message { get; private set; }
 
     /// <summary>
     /// 异常堆栈
     /// </summary>
-    public string? StackTrace { get; internal set; }
+    public string? StackTrace { get; private set; }
 
     /// <summary>
     /// 异常编码数字值
     /// </summary>
-    public int HResult { get; internal set; }
+    public int HResult { get; private set; }
 
     /// <summary>
     /// 异常对象名称
     /// </summary>
-    public string? Source { get; internal set; }
+    public string? Source { get; private set; }
 
     /// <summary>
     /// 帮助文件链接
     /// </summary>
-    public string? HelpLink { get; internal set; }
+    public string? HelpLink { get; private set; }
 
     /// <summary>
     /// 异常类型
     /// </summary>
-    public string? Type { get; internal set; }
+    public string? Type { get; private set; }
 
     /// <summary>
     /// 原始异常内容
     /// </summary>
-    public string? RawText { get; internal set; }
+    public string? RawText { get; private set; }
 
     /// <summary>
     /// 异常详细模型集合
     /// </summary>
-    public List<ExceptionSourceCode>? Details { get; internal set; }
+    public List<ExceptionSourceCode>? Details { get; private set; }
 
     /// <summary>
     /// 初始化
