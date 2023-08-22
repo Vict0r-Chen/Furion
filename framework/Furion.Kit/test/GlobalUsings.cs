@@ -19,4 +19,5 @@ global using Microsoft.AspNetCore.Mvc.Infrastructure;
 global using System.ComponentModel;
 global using System.Net.NetworkInformation;
 global using System.Security.Cryptography;
+global using System.Text.Json;
 global using Xunit;

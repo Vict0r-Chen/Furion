@@ -12,6 +12,21 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using System.Net.NetworkInformation;
-global using System.Security.Cryptography;
-global using Xunit;
+namespace Furioin.AspNetCore.Tests;
+
+public class Helpers
+{
+    public static int GetIdlePort()
+    {
+        var fromPort = 10000;
+        var toPort = 65535;
+        var randomPort = RandomNumberGenerator.GetInt32(fromPort, toPort);
+
+        while (IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners().Any(p => p.Port == randomPort))
+        {
+            randomPort = RandomNumberGenerator.GetInt32(fromPort, toPort);
+        }
+
+        return randomPort;
+    }
+}

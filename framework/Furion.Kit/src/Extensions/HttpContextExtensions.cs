@@ -20,82 +20,27 @@ namespace Microsoft.AspNetCore.Http;
 internal static class HttpContextExtensions
 {
     /// <summary>
-    /// 获取请求对象 URL 地址
-    /// </summary>
-    /// <param name="httpRequest"><see cref="HttpRequest"/></param>
-    /// <returns><see cref="string"/></returns>
-    internal static string GetUrlAddress(this HttpRequest httpRequest)
-    {
-        return new StringBuilder()
-            .Append(httpRequest.Scheme)
-            .Append("://")
-            .Append(httpRequest.Host)
-            .Append(httpRequest.PathBase)
-            .Append(httpRequest.Path)
-            .Append(httpRequest.QueryString)
-            .ToString();
-    }
-
-    /// <summary>
-    /// 获取响应对象状态文本
-    /// </summary>
-    /// <param name="httpResponse"><see cref="HttpResponse"/></param>
-    /// <returns><see cref="string"/></returns>
-    internal static string? GetStatusText(this HttpResponse httpResponse)
-    {
-        // 获取响应状态码
-        var statusCode = httpResponse.StatusCode;
-
-        // 检查响应状态码是否是预设的 HttpStatusCode 值
-        if (!Enum.IsDefined(typeof(HttpStatusCode), statusCode))
-        {
-            return null;
-        }
-
-        return ((HttpStatusCode)statusCode).ToString();
-    }
-
-    /// <summary>
-    /// 配置允许跨域响应头
-    /// </summary>
-    /// <param name="httpResponse"><see cref="HttpResponse"/></param>
-    internal static void AllowCors(this HttpResponse httpResponse)
-    {
-        // 设置响应头，允许跨域请求
-        httpResponse.Headers.AccessControlAllowOrigin = "*";
-        httpResponse.Headers.AccessControlAllowHeaders = "*";
-    }
-
-    /// <summary>
     /// 向响应流中写入 JSON 字符串
     /// </summary>
     /// <param name="httpResponse"><see cref="HttpResponse"/></param>
-    /// <param name="jsonString">JSON 字符串</param>
-    internal static async Task WriteAsJsonAsync(this HttpResponse httpResponse, string jsonString)
+    /// <param name="output">JSON 字符串</param>
+    /// <returns><see cref="Task"/></returns>
+    internal static async Task WriteAsJsonAsync(this HttpResponse httpResponse, string output)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(output);
+
         // 设置响应头，允许跨域请求
         httpResponse.AllowCors();
 
         // 设置响应头，指定 Content-Type 和 Content-Length
         httpResponse.ContentType = MediaTypeNames.Application.Json;
-        httpResponse.ContentLength = Encoding.UTF8.GetByteCount(jsonString);
+        httpResponse.ContentLength = Encoding.UTF8.GetByteCount(output);
 
         // 设置响应头，不缓存请求
         httpResponse.Headers.CacheControl = "no-cache";
 
         // 写入 Body 流
-        await httpResponse.WriteAsync(jsonString);
-    }
-
-    /// <summary>
-    /// 添加导出的响应头
-    /// </summary>
-    /// <param name="headers"><see cref="IHeaderDictionary"/></param>
-    /// <param name="key">键</param>
-    /// <param name="value">值</param>
-    internal static void AppendExpose(this IHeaderDictionary headers, string key, string value)
-    {
-        headers.AccessControlExposeHeaders = key;
-        headers.Append(key, value);
+        await httpResponse.WriteAsync(output);
     }
 }

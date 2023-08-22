@@ -529,40 +529,13 @@
             <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
-            <summary>
-            获取请求对象 URL 地址
-            </summary>
-            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
-            <summary>
-            获取响应对象状态文本
-            </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AllowCors(Microsoft.AspNetCore.Http.HttpResponse)">
-            <summary>
-            配置允许跨域响应头
-            </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
-        </member>
         <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.WriteAsJsonAsync(Microsoft.AspNetCore.Http.HttpResponse,System.String)">
             <summary>
             向响应流中写入 JSON 字符串
             </summary>
             <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
-            <param name="jsonString">JSON 字符串</param>
-        </member>
-        <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AppendExpose(Microsoft.AspNetCore.Http.IHeaderDictionary,System.String,System.String)">
-            <summary>
-            添加导出的响应头
-            </summary>
-            <param name="headers"><see cref="T:Microsoft.AspNetCore.Http.IHeaderDictionary"/></param>
-            <param name="key">键</param>
-            <param name="value">值</param>
+            <param name="output">JSON 字符串</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
     </members>
 </doc>
