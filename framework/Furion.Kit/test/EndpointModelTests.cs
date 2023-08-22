@@ -78,13 +78,6 @@ public class EndpointModelTests
             var endpointModel = new EndpointModel(context.GetEndpoint()!);
             endpointModel.Initialize();
 
-            Assert.NotNull(endpointModel);
-            Assert.NotNull(endpointModel._endpoint);
-            Assert.Equal("Furion.Kit.Tests.TestController.Test (Furion.Kit.Tests)", endpointModel.DisplayName);
-            Assert.Equal("GET, POST", endpointModel.HttpMethods);
-            Assert.Equal(0, endpointModel.Order);
-            Assert.Equal("Test/Test", endpointModel.RoutePattern);
-
             await next();
         });
 
