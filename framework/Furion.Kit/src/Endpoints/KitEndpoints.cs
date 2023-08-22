@@ -131,7 +131,7 @@ internal static class KitEndpoints
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="coreOptions"><see cref="CoreOptions"/></param>
-    /// <returns><see cref="Task"/></returns>
+    /// <returns><see cref="IResult"/></returns>
     internal static IResult ComponentDiagnostic(HttpContext httpContext, CoreOptions coreOptions)
     {
         // 初始化组件诊断模型

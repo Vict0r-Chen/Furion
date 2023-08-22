@@ -12,5 +12,31 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Component;
-global using Xunit;
+namespace Furion.Kit.Tests;
+
+public class ComponentModelTests
+{
+    [Fact]
+    public void New_Invalid_Parameters()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var componentModel = new ComponentModel(null!);
+        });
+    }
+
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var componentModel = new ComponentModel(typeof(AComponent));
+
+        Assert.NotNull(componentModel);
+        Assert.Equal("AComponent", componentModel.Name);
+        Assert.Equal("Furion.Kit.Tests.AComponent", componentModel.FullName);
+        Assert.Equal("Furion.Kit.Tests", componentModel.AssemblyName);
+        Assert.Null(componentModel.AssemblyDescription);
+        Assert.Equal("1.0.0.0", componentModel.AssemblyVersion);
+        Assert.NotEqual(Guid.Empty, componentModel.Unique);
+        Assert.Null(componentModel.Dependencies);
+    }
+}

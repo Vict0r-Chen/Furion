@@ -48,7 +48,7 @@ public static class KitWebApplicationExtensions
         // 配置 Kit 模块终点路由
         KitEndpoints.Map(webApplication, kitOptions);
 
-        // 获取当前类型所在程序集
+        // 获取当前类型所属程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
 
         // 配置静态资源文件服务

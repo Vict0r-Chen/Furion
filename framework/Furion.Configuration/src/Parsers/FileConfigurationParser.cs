@@ -194,7 +194,7 @@ internal sealed partial class FileConfigurationParser
             return _jsonParser;
         }
 
-        // 获取 JsonConfigurationProvider 所在程序集
+        // 获取 JsonConfigurationProvider 所属程序集
         var assembly = typeof(JsonConfigurationProvider).Assembly;
 
         // 查找 JsonConfigurationFileParser.Parse 静态方法

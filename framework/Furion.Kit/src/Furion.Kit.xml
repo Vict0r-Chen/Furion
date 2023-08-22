@@ -62,7 +62,7 @@
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
-            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+            <returns><see cref="T:Microsoft.AspNetCore.Http.IResult"/></returns>
         </member>
         <member name="M:Furion.Kit.KitEndpoints.CreateComponentModel(System.Type,System.Collections.Generic.Dictionary{System.Type,System.Type[]})">
             <summary>
@@ -248,7 +248,7 @@
             程序集版本号
             </summary>
         </member>
-        <member name="P:Furion.Kit.ComponentModel.Guid">
+        <member name="P:Furion.Kit.ComponentModel.Unique">
             <summary>
             唯一标识
             </summary>

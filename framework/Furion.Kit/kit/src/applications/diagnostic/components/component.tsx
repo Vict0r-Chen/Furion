@@ -30,7 +30,7 @@ interface ComponentDiagnosticModel {
 }
 
 interface ComponentModel {
-  guid?: string;
+  unique?: string;
   name?: string;
   fullName?: string;
   assemblyName?: string;
@@ -56,7 +56,7 @@ const ItemText = styled(TextBox)`
 const ComponentItem: React.FC<ComponentModel> = (model) => {
   return (
     <ItemContainer>
-      {model.guid ? (
+      {model.unique ? (
         <Space direction="vertical" size={5}>
           <Space direction="vertical" size={5}>
             <ItemLabel>类型</ItemLabel>
@@ -166,7 +166,7 @@ const convertJson = (componentDiagnosticModel: ComponentDiagnosticModel) => {
 const createModel = (model: ComponentModel) => {
   const item: any = {
     ...model,
-    id: model.guid,
+    id: model.unique,
     value: {
       title: model.fullName,
     },
