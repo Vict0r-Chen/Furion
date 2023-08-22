@@ -12,9 +12,17 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion.Component;
-global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.AspNetCore.Mvc.Controllers;
-global using Microsoft.AspNetCore.Mvc.Infrastructure;
-global using System.ComponentModel;
-global using Xunit;
+namespace Furion.Kit.Tests;
+
+public class ComponentDiagnosticModelTests
+{
+    [Fact]
+    public void New_ReturnOK()
+    {
+        var componentDiagnosticModel = new ComponentDiagnosticModel();
+
+        Assert.NotNull(componentDiagnosticModel);
+        Assert.NotNull(componentDiagnosticModel.Components);
+        Assert.Empty(componentDiagnosticModel.Components);
+    }
+}

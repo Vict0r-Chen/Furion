@@ -209,7 +209,7 @@
         </member>
         <member name="P:Furion.Kit.ComponentDiagnosticModel.Components">
             <summary>
-            入口组件集合
+            入口组件模型集合
             </summary>
         </member>
         <member name="T:Furion.Kit.ComponentModel">
@@ -263,14 +263,16 @@
             控制器操作模型
             </summary>
         </member>
-        <member name="F:Furion.Kit.ControllerActionModel._controllerActionDescriptor">
-            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor"/>
-        </member>
         <member name="M:Furion.Kit.ControllerActionModel.#ctor(Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)">
             <summary>
             <inheritdoc cref="T:Furion.Kit.ControllerActionModel"/>
             </summary>
             <param name="controllerActionDescriptor"><see cref="T:Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor"/></param>
+        </member>
+        <member name="P:Furion.Kit.ControllerActionModel.ControllerType">
+            <summary>
+            控制器类型
+            </summary>
         </member>
         <member name="P:Furion.Kit.ControllerActionModel.ControllerName">
             <summary>
@@ -280,11 +282,6 @@
         <member name="P:Furion.Kit.ControllerActionModel.ActionName">
             <summary>
             操作名称
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ControllerActionModel.ControllerType">
-            <summary>
-            控制器类型
             </summary>
         </member>
         <member name="P:Furion.Kit.ControllerActionModel.MethodName">
@@ -300,11 +297,6 @@
         <member name="P:Furion.Kit.ControllerActionModel.DisplayName">
             <summary>
             显示名称
-            </summary>
-        </member>
-        <member name="M:Furion.Kit.ControllerActionModel.Initialize">
-            <summary>
-            初始化
             </summary>
         </member>
         <member name="T:Furion.Kit.EndpointDiagnosticModel">

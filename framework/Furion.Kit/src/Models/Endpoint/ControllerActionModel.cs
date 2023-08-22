@@ -19,9 +19,6 @@ namespace Furion.Kit;
 /// </summary>
 internal sealed class ControllerActionModel
 {
-    /// <inheritdoc cref="ControllerActionDescriptor"/>
-    internal readonly ControllerActionDescriptor _controllerActionDescriptor;
-
     /// <summary>
     /// <inheritdoc cref="ControllerActionModel"/>
     /// </summary>
@@ -31,54 +28,44 @@ internal sealed class ControllerActionModel
         // 空检查
         ArgumentNullException.ThrowIfNull(controllerActionDescriptor);
 
-        _controllerActionDescriptor = controllerActionDescriptor;
+        ControllerType = controllerActionDescriptor.ControllerTypeInfo.ToString();
+        ControllerName = controllerActionDescriptor.ControllerName;
+        ActionName = controllerActionDescriptor.ActionName;
+        MethodName = controllerActionDescriptor.MethodInfo.Name;
+        Signature = controllerActionDescriptor.MethodInfo.ToString();
 
-        // 初始化
-        Initialize();
+        // 获取 [DisplayName] 特性
+        DisplayName = controllerActionDescriptor.MethodInfo
+            .GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
     }
-
-    /// <summary>
-    /// 控制器名称
-    /// </summary>
-    public string? ControllerName { get; private set; }
-
-    /// <summary>
-    /// 操作名称
-    /// </summary>
-    public string? ActionName { get; private set; }
 
     /// <summary>
     /// 控制器类型
     /// </summary>
-    public string? ControllerType { get; private set; }
+    public string? ControllerType { get; init; }
+
+    /// <summary>
+    /// 控制器名称
+    /// </summary>
+    public string? ControllerName { get; init; }
+
+    /// <summary>
+    /// 操作名称
+    /// </summary>
+    public string? ActionName { get; init; }
 
     /// <summary>
     /// 方法名称
     /// </summary>
-    public string? MethodName { get; private set; }
+    public string? MethodName { get; init; }
 
     /// <summary>
     /// 方法签名
     /// </summary>
-    public string? Signature { get; private set; }
+    public string? Signature { get; init; }
 
     /// <summary>
     /// 显示名称
     /// </summary>
-    public string? DisplayName { get; private set; }
-
-    /// <summary>
-    /// 初始化
-    /// </summary>
-    internal void Initialize()
-    {
-        ControllerName = _controllerActionDescriptor.ControllerName;
-        ActionName = _controllerActionDescriptor.ActionName;
-        ControllerType = _controllerActionDescriptor.ControllerTypeInfo.ToString();
-        MethodName = _controllerActionDescriptor.MethodInfo.Name;
-        Signature = _controllerActionDescriptor.MethodInfo.ToString();
-
-        DisplayName = _controllerActionDescriptor.MethodInfo
-            .GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
-    }
+    public string? DisplayName { get; init; }
 }

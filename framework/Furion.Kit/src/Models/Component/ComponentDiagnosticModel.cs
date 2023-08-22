@@ -28,7 +28,7 @@ internal sealed class ComponentDiagnosticModel
     }
 
     /// <summary>
-    /// 入口组件集合
+    /// 入口组件模型集合
     /// </summary>
     public List<ComponentModel> Components { get; init; }
 }
