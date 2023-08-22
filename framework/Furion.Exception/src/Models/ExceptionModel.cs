@@ -12,85 +12,71 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Kit;
+namespace Furion.Exception;
 
 /// <summary>
 /// 异常模型
 /// </summary>
-internal sealed class ExceptionModel
+public sealed class ExceptionModel
 {
-    /// <inheritdoc cref="System.Exception"/>
-    internal readonly System.Exception _exception;
-
     /// <summary>
-    /// <inheritdoc cref="Exception"/>
+    /// <inheritdoc cref="ExceptionModel"/>
     /// </summary>
     /// <param name="exception"><see cref="System.Exception"/></param>
-    internal ExceptionModel(System.Exception exception)
+    public ExceptionModel(System.Exception exception)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(exception);
 
-        _exception = exception;
+        Message = exception.Message;
+        StackTrace = exception.StackTrace;
+        HResult = exception.HResult;
+        Source = exception.Source;
+        HelpLink = exception.HelpLink;
+        Type = exception.GetType().ToString();
+        RawText = exception.ToString();
 
-        // 初始化
-        Initialize();
+        // 解析异常并返回异常源码集合
+        Details = ExceptionSourceCodeParser.Parse(exception);
     }
 
     /// <summary>
     /// 异常信息
     /// </summary>
-    public string? Message { get; private set; }
+    public string? Message { get; init; }
 
     /// <summary>
     /// 异常堆栈
     /// </summary>
-    public string? StackTrace { get; private set; }
+    public string? StackTrace { get; init; }
 
     /// <summary>
     /// 异常编码数字值
     /// </summary>
-    public int HResult { get; private set; }
+    public int HResult { get; init; }
 
     /// <summary>
     /// 异常对象名称
     /// </summary>
-    public string? Source { get; private set; }
+    public string? Source { get; init; }
 
     /// <summary>
     /// 帮助文件链接
     /// </summary>
-    public string? HelpLink { get; private set; }
+    public string? HelpLink { get; init; }
 
     /// <summary>
-    /// 异常类型
+    /// 异常类型限定名
     /// </summary>
-    public string? Type { get; private set; }
+    public string? Type { get; init; }
 
     /// <summary>
     /// 原始异常内容
     /// </summary>
-    public string? RawText { get; private set; }
+    public string? RawText { get; init; }
 
     /// <summary>
-    /// 异常详细模型集合
+    /// 异常源码集合
     /// </summary>
-    public List<ExceptionSourceCode>? Details { get; private set; }
-
-    /// <summary>
-    /// 初始化
-    /// </summary>
-    internal void Initialize()
-    {
-        Message = _exception.Message;
-        StackTrace = _exception.StackTrace;
-        HResult = _exception.HResult;
-        Source = _exception.Source;
-        HelpLink = _exception.HelpLink;
-        Type = _exception.GetType().ToString();
-        RawText = _exception.ToString();
-
-        // 解析异常并返回异常源码详细信息
-        Details = ExceptionSourceCodeParser.Parse(_exception);
-    }
+    public List<ExceptionSourceCode>? Details { get; init; }
 }

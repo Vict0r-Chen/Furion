@@ -395,7 +395,7 @@
             <inheritdoc cref="T:Furion.Kit.EndpointModel"/>
         </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.Exception">
-            <inheritdoc cref="T:Furion.Kit.ExceptionModel"/>
+            <inheritdoc cref="T:Furion.Exception.ExceptionModel"/>
         </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.ControllerAction">
             <inheritdoc cref="T:Furion.Kit.ControllerActionModel"/>
@@ -451,65 +451,6 @@
             </summary>
         </member>
         <member name="M:Furion.Kit.EndpointModel.Initialize">
-            <summary>
-            初始化
-            </summary>
-        </member>
-        <member name="T:Furion.Kit.ExceptionModel">
-            <summary>
-            异常模型
-            </summary>
-        </member>
-        <member name="F:Furion.Kit.ExceptionModel._exception">
-            <inheritdoc cref="T:System.Exception"/>
-        </member>
-        <member name="M:Furion.Kit.ExceptionModel.#ctor(System.Exception)">
-            <summary>
-            <inheritdoc cref="N:Furion.Exception"/>
-            </summary>
-            <param name="exception"><see cref="T:System.Exception"/></param>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.Message">
-            <summary>
-            异常信息
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.StackTrace">
-            <summary>
-            异常堆栈
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.HResult">
-            <summary>
-            异常编码数字值
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.Source">
-            <summary>
-            异常对象名称
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.HelpLink">
-            <summary>
-            帮助文件链接
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.Type">
-            <summary>
-            异常类型
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.RawText">
-            <summary>
-            原始异常内容
-            </summary>
-        </member>
-        <member name="P:Furion.Kit.ExceptionModel.Details">
-            <summary>
-            异常详细模型集合
-            </summary>
-        </member>
-        <member name="M:Furion.Kit.ExceptionModel.Initialize">
             <summary>
             初始化
             </summary>

@@ -42,6 +42,9 @@ public static class KitWebApplicationExtensions
     /// <returns><see cref="WebApplication"/></returns>
     public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(kitOptions);
+
         // 配置 Kit 模块终点路由
         KitEndpoints.Map(webApplication, kitOptions);
 
