@@ -88,7 +88,7 @@
             <summary>
             诊断监听器抽象基类
             </summary>
-            <typeparam name="TData">诊断订阅器数据类型</typeparam>
+            <typeparam name="TData">诊断数据通道数据类型</typeparam>
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._lockObject">
             <summary>
@@ -97,7 +97,7 @@
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._diagnosticChannel">
             <summary>
-            诊断订阅器通道
+            诊断数据通道
             </summary>
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._subscription">
@@ -112,19 +112,19 @@
         </member>
         <member name="F:Furion.Kit.DiagnosticListenerBase`1._listenerCategory">
             <summary>
-            监听类别
+            诊断监听类别
             </summary>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.#ctor(System.String,System.Int32)">
             <summary>
             <inheritdoc cref="T:Furion.Kit.DiagnosticListenerBase`1" />
             </summary>
-            <param name="listenerCategory">监听类别</param>
-            <param name="capacity">诊断订阅器通道容量</param>
+            <param name="listenerCategory">诊断监听类别</param>
+            <param name="capacity">诊断数据通道容量</param>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.Listening">
             <summary>
-            开始观察
+            开始监听
             </summary>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.AddSubscription(System.Diagnostics.DiagnosticListener)">
@@ -133,15 +133,20 @@
             </summary>
             <param name="diagnosticListener"><see cref="T:System.Diagnostics.DiagnosticListener"/></param>
         </member>
-        <member name="M:Furion.Kit.DiagnosticListenerBase`1.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.OnNext(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
             <summary>
-            订阅诊断通知信息
+            监听生产者发布新消息
             </summary>
             <param name="data">通知信息</param>
         </member>
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.OnCompleted">
+            <summary>
+            监听生产者停止发送消息
+            </summary>
+        </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.WriteAsync(`0,System.Threading.CancellationToken)">
             <summary>
-            将数据写入诊断订阅器通道
+            将数据写入诊断数据通道
             </summary>
             <param name="data"><typeparamref name="TData"/></param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
@@ -149,14 +154,14 @@
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.ReadAsync(System.Threading.CancellationToken)">
             <summary>
-            读取诊断订阅器通道数据
+            读取诊断数据通道数据
             </summary>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
-        <member name="M:Furion.Kit.DiagnosticListenerBase`1.SSEHandler(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
+        <member name="M:Furion.Kit.DiagnosticListenerBase`1.BuildSSEEndpointRouteHandler(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
             <summary>
-            构建 SSE 请求处理程序
+            构建 SSE 终点路由处理程序
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
@@ -179,9 +184,9 @@
             <summary>
             <inheritdoc cref="T:Furion.Kit.EndpointDiagnosticListener" />
             </summary>
-            <param name="capacity">诊断订阅器通道容量</param>
+            <param name="capacity">诊断数据通道容量</param>
         </member>
-        <member name="M:Furion.Kit.EndpointDiagnosticListener.OnSubscribe(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+        <member name="M:Furion.Kit.EndpointDiagnosticListener.OnNext(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
             <inheritdoc />
         </member>
         <member name="M:Furion.Kit.EndpointDiagnosticListener.RoutingEndpointMatchedHandle(System.Object)">

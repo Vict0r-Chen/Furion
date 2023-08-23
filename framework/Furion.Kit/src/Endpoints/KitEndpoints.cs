@@ -56,7 +56,7 @@ internal static class KitEndpoints
     /// <returns><see cref="Task"/></returns>
     internal static async Task EndpointDiagnosticSSE(HttpContext httpContext, CancellationToken cancellationToken)
     {
-        await new EndpointDiagnosticListener().SSEHandler(httpContext, cancellationToken);
+        await new EndpointDiagnosticListener().BuildSSEEndpointRouteHandler(httpContext, cancellationToken);
     }
 
     /// <summary>

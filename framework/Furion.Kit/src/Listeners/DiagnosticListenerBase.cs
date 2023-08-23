@@ -17,7 +17,7 @@ namespace Furion.Kit;
 /// <summary>
 /// 诊断监听器抽象基类
 /// </summary>
-/// <typeparam name="TData">诊断订阅器数据类型</typeparam>
+/// <typeparam name="TData">诊断数据通道数据类型</typeparam>
 internal abstract class DiagnosticListenerBase<TData> : IDisposable
 {
     /// <summary>
@@ -26,7 +26,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     internal readonly object _lockObject = new();
 
     /// <summary>
-    /// 诊断订阅器通道
+    /// 诊断数据通道
     /// </summary>
     internal readonly Channel<TData> _diagnosticChannel;
 
@@ -41,21 +41,22 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     internal IDisposable? _listenerSubscription;
 
     /// <summary>
-    /// 监听类别
+    /// 诊断监听类别
     /// </summary>
     internal readonly string _listenerCategory;
 
     /// <summary>
     /// <inheritdoc cref="DiagnosticListenerBase{T}" />
     /// </summary>
-    /// <param name="listenerCategory">监听类别</param>
-    /// <param name="capacity">诊断订阅器通道容量</param>
+    /// <param name="listenerCategory">诊断监听类别</param>
+    /// <param name="capacity">诊断数据通道容量</param>
     internal DiagnosticListenerBase(string listenerCategory, int capacity = 3000)
     {
         // 空检查
         ArgumentException.ThrowIfNullOrWhiteSpace(listenerCategory);
 
         _listenerCategory = listenerCategory;
+
         _diagnosticChannel = Channel.CreateBounded<TData>(new BoundedChannelOptions(capacity)
         {
             FullMode = BoundedChannelFullMode.Wait
@@ -63,12 +64,12 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     }
 
     /// <summary>
-    /// 开始观察
+    /// 开始监听
     /// </summary>
     public void Listening()
     {
         // 初始化诊断观察者
-        var diagnosticObserver = new DiagnosticObserver<DiagnosticListener>(AddSubscription, null);
+        var diagnosticObserver = new DiagnosticObserver<DiagnosticListener>(AddSubscription, OnCompleted);
 
         // 注册诊断观察者
         _listenerSubscription = DiagnosticListener.AllListeners.Subscribe(diagnosticObserver);
@@ -83,7 +84,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         // 空检查
         ArgumentNullException.ThrowIfNull(diagnosticListener);
 
-        // 检查诊断监听器类别
+        // 检查诊断监听器类别是否一致
         if (diagnosticListener.Name != _listenerCategory)
         {
             return;
@@ -93,18 +94,25 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         lock (_lockObject)
         {
             _subscription?.Dispose();
-            _subscription = diagnosticListener.Subscribe(new DiagnosticObserver<KeyValuePair<string, object?>>(OnSubscribe, null));
+            _subscription = diagnosticListener.Subscribe(new DiagnosticObserver<KeyValuePair<string, object?>>(OnNext, OnCompleted));
         }
     }
 
     /// <summary>
-    /// 订阅诊断通知信息
+    /// 监听生产者发布新消息
     /// </summary>
     /// <param name="data">通知信息</param>
-    internal abstract void OnSubscribe(KeyValuePair<string, object?> data);
+    internal abstract void OnNext(KeyValuePair<string, object?> data);
 
     /// <summary>
-    /// 将数据写入诊断订阅器通道
+    /// 监听生产者停止发送消息
+    /// </summary>
+    protected virtual void OnCompleted()
+    {
+    }
+
+    /// <summary>
+    /// 将数据写入诊断数据通道
     /// </summary>
     /// <param name="data"><typeparamref name="TData"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
@@ -115,7 +123,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     }
 
     /// <summary>
-    /// 读取诊断订阅器通道数据
+    /// 读取诊断数据通道数据
     /// </summary>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><see cref="Task{TResult}"/></returns>
@@ -125,17 +133,20 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     }
 
     /// <summary>
-    /// 构建 SSE 请求处理程序
+    /// 构建 SSE 终点路由处理程序
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><see cref="Task"/></returns>
-    internal virtual async Task SSEHandler(HttpContext httpContext, CancellationToken cancellationToken)
+    internal virtual async Task BuildSSEEndpointRouteHandler(HttpContext httpContext, CancellationToken cancellationToken)
     {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(httpContext);
+
         // 开始观察
         Listening();
 
-        // 检查请求是否终止
+        // 检查请求是否已终止并释放诊断观察者
         cancellationToken.Register(Dispose);
 
         // 设置响应头，允许跨域请求
@@ -153,10 +164,10 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         {
             try
             {
-                // 读取诊断订阅器通道数据
+                // 读取诊断数据通道数据
                 var data = await ReadAsync(cancellationToken);
 
-                // 持续推送至客户端
+                // 持续推送至连接客户端
                 await httpContext.Response.WriteAsync("data: " + Helpers.SerializeObject(data) + "\n\n", cancellationToken);
             }
             catch { }

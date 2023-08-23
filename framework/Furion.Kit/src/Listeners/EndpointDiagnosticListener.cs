@@ -27,7 +27,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     /// <summary>
     /// <inheritdoc cref="EndpointDiagnosticListener" />
     /// </summary>
-    /// <param name="capacity">诊断订阅器通道容量</param>
+    /// <param name="capacity">诊断数据通道容量</param>
     internal EndpointDiagnosticListener(int capacity = 3000)
         : base("Microsoft.AspNetCore", capacity)
     {
@@ -35,7 +35,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
     }
 
     /// <inheritdoc />
-    internal override void OnSubscribe(KeyValuePair<string, object?> data)
+    internal override void OnNext(KeyValuePair<string, object?> data)
     {
         if (data.Key == "Microsoft.AspNetCore.Routing.EndpointMatched")
         {
@@ -71,7 +71,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         // 将终点路由诊断模型缓存到集合中
         if (_endpointDiagnosticModelsCache.TryAdd(httpContext.TraceIdentifier, endpointDiagnosticModel))
         {
-            // 将终点路由诊断模型写入诊断订阅器通道
+            // 将终点路由诊断模型数据写入诊断数据通道
             _ = WriteAsync(endpointDiagnosticModel);
         }
     }
@@ -111,7 +111,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
             return endpointDiagnosticModel;
         }, out var updatedEndpointDiagnosticModel))
         {
-            // 将终点路由诊断模型写入诊断订阅器通道
+            // 将终点路由诊断模型数据写入诊断数据通道
             _ = WriteAsync(updatedEndpointDiagnosticModel!);
         }
     }
@@ -131,13 +131,10 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         // 移除终点路由诊断模型缓存
         if (_endpointDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var endpointDiagnosticModel))
         {
-            // 获取响应对象
-            var httpResponse = httpContext.Response;
-
             // 设置响应信息
-            endpointDiagnosticModel.SetResponseInfo(httpResponse);
+            endpointDiagnosticModel.SetResponseInfo(httpContext.Response);
 
-            // 将终点路由诊断模型写入诊断订阅器通道
+            // 将终点路由诊断模型数据写入诊断数据通道
             _ = WriteAsync(endpointDiagnosticModel);
         }
     }
