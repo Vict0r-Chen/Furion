@@ -17,6 +17,7 @@ import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
 import SiderSticky from "../../components/sider-sticky";
 import TextBox from "../../components/textbox";
+import { database } from "../../databases";
 import Content from "../../home/content";
 import { locales } from "../../i18n";
 
@@ -64,6 +65,11 @@ const Setting: React.FC = () => {
         content: "备份成功",
       });
     }, 2000);
+  };
+
+  const clearData = async () => {
+    await database.delete();
+    message.success("操作成功");
   };
 
   return (
@@ -114,7 +120,7 @@ const Setting: React.FC = () => {
                   title: (
                     <Space>
                       <IconFont type="icon-backup" $size={iconSize} />
-                      <TextBox $disableSelect>备份</TextBox>
+                      <TextBox $disableSelect>数据</TextBox>
                     </Space>
                   ),
                 },
@@ -193,7 +199,7 @@ const Setting: React.FC = () => {
             </Category>
             <Category
               id="setting-backup"
-              title="备份"
+              title="数据"
               icon={<IconFont type="icon-backup" $size={iconSize} />}
             >
               <Space direction="vertical">
@@ -201,6 +207,20 @@ const Setting: React.FC = () => {
                   <Button type="primary" onClick={() => openBackupMessage()}>
                     立即备份
                   </Button>
+                  <Popconfirm
+                    placement="topLeft"
+                    title="您确定要清空数据吗？"
+                    onConfirm={() => clearData()}
+                    okText="确定"
+                    cancelText="取消"
+                    okButtonProps={{
+                      style: { backgroundColor: "#ff4d4f" },
+                    }}
+                  >
+                    <TextBox $color={textColor} $pointer underline>
+                      清空数据
+                    </TextBox>
+                  </Popconfirm>
                   <TextBox $color={textColor}>
                     最近备份：2023.08.05 12:23:11
                   </TextBox>

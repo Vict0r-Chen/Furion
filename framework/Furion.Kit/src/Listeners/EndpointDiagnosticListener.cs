@@ -68,7 +68,7 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
         // 初始化终点路由诊断模型
         var endpointDiagnosticModel = new EndpointDiagnosticModel(httpContext);
 
-        // 将终点路由诊断模型缓存到集合中
+        // 将终点路由诊断模型添加到缓存集合中
         if (_endpointDiagnosticModelsCache.TryAdd(httpContext.TraceIdentifier, endpointDiagnosticModel))
         {
             // 将终点路由诊断模型数据写入诊断数据通道
@@ -95,15 +95,14 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
             return;
         }
 
-        // 获取执行异常
-        var exception = eventData.ActionExecutedContext.Exception;
-
-        // 更新终点路由诊断模型缓存
+        // 更新终点路由诊断模型缓存数据
         if (_endpointDiagnosticModelsCache.TryUpdate(httpContext.TraceIdentifier, endpointDiagnosticModel =>
         {
-            // 添加执行的筛选器名称
+            // 添加中间执行的筛选器名称
             endpointDiagnosticModel.Filters.Add(eventData.Filter.ToString());
 
+            // 检查是否存在执行异常，如果有则更新
+            var exception = eventData.ActionExecutedContext.Exception;
             endpointDiagnosticModel.Exception ??= exception is not null
                 ? new(exception)
                 : null;
@@ -128,11 +127,11 @@ internal sealed class EndpointDiagnosticListener : DiagnosticListenerBase<Endpoi
             return;
         }
 
-        // 移除终点路由诊断模型缓存
+        // 移除终点路由诊断模型缓存数据
         if (_endpointDiagnosticModelsCache.TryRemove(httpContext.TraceIdentifier, out var endpointDiagnosticModel))
         {
-            // 设置响应信息
-            endpointDiagnosticModel.SetResponseInfo(httpContext.Response);
+            // 同步响应数据
+            endpointDiagnosticModel.SyncResponseData(httpContext.Response);
 
             // 将终点路由诊断模型数据写入诊断数据通道
             _ = WriteAsync(endpointDiagnosticModel);

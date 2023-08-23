@@ -31,34 +31,34 @@
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
             <param name="kitOptions"><see cref="T:Furion.Kit.KitOptions"/></param>
         </member>
-        <member name="M:Furion.Kit.KitEndpoints.EndpointDiagnosticSSE(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
+        <member name="M:Furion.Kit.KitEndpoints.EndpointDiagnosticHandler(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
             <summary>
-            终点路由诊断 SSE 处理程序
+            终点路由诊断处理程序
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
-        <member name="M:Furion.Kit.KitEndpoints.ConfigurationDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
+        <member name="M:Furion.Kit.KitEndpoints.ConfigurationDiagnosticHandler(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Hosting.IHostEnvironment)">
             <summary>
-            配置诊断处理程序
+            配置诊断路由处理程序
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <param name="hostEnvironment"><see cref="T:Microsoft.Extensions.Hosting.IHostEnvironment"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
-        <member name="M:Furion.Kit.KitEndpoints.ConfigurationProviderDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Furion.Kit.KitEndpoints.ConfigurationProviderDiagnosticHandler(Microsoft.AspNetCore.Http.HttpContext,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            配置提供器诊断处理程序
+            配置提供器诊断路由处理程序
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="configuration"><see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/></param>
             <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
         </member>
-        <member name="M:Furion.Kit.KitEndpoints.ComponentDiagnostic(Microsoft.AspNetCore.Http.HttpContext,Furion.CoreOptions)">
+        <member name="M:Furion.Kit.KitEndpoints.ComponentDiagnosticHandler(Microsoft.AspNetCore.Http.HttpContext,Furion.CoreOptions)">
             <summary>
-            组件诊断处理程序
+            组件诊断路由处理程序
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
             <param name="coreOptions"><see cref="T:Furion.CoreOptions"/></param>
@@ -412,9 +412,9 @@
             初始化
             </summary>
         </member>
-        <member name="M:Furion.Kit.EndpointDiagnosticModel.SetResponseInfo(Microsoft.AspNetCore.Http.HttpResponse)">
+        <member name="M:Furion.Kit.EndpointDiagnosticModel.SyncResponseData(Microsoft.AspNetCore.Http.HttpResponse)">
             <summary>
-            设置响应信息
+            同步响应数据
             </summary>
             <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
         </member>

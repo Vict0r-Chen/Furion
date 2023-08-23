@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/furion/static/css/main.c10c5baa.css",
-    "main.js": "/furion/static/js/main.628adcf4.js",
+    "main.js": "/furion/static/js/main.b98c82cf.js",
     "static/js/766.673d411e.chunk.js": "/furion/static/js/766.673d411e.chunk.js",
     "static/js/865.8f9129ae.chunk.js": "/furion/static/js/865.8f9129ae.chunk.js",
     "static/media/banner.png": "/furion/static/media/banner.62c9556440b852cd1bd7.png",
@@ -12,6 +12,6 @@
   },
   "entrypoints": [
     "static/css/main.c10c5baa.css",
-    "static/js/main.628adcf4.js"
+    "static/js/main.b98c82cf.js"
   ]
 }

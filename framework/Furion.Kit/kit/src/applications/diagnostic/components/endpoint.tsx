@@ -35,6 +35,10 @@ const Endpoint: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
+  if (!database.isOpen()) {
+    database.open();
+  }
+
   const endpointDiagnostics = useLiveQuery(async () => {
     var data = await database.endpointDiagnostic
       .filter((u) => excludeUrls.indexOf(u.path!) === -1)

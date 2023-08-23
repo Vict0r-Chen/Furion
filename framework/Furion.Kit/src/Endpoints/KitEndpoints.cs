@@ -28,63 +28,60 @@ internal static class KitEndpoints
     {
         // 终点路由诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("endpoint-diagnostic-sse", EndpointDiagnosticSSE)
+            .MapGet("endpoint-diagnostic-sse", EndpointDiagnosticHandler)
             .Accepts<NoContent>("text/event-stream")
             .ExcludeFromDescription();
 
         // 配置诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("configuration-diagnostic", ConfigurationDiagnostic)
+            .MapGet("configuration-diagnostic", ConfigurationDiagnosticHandler)
             .ExcludeFromDescription();
 
         // 配置提供器诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("configuration-provider-diagnostic", ConfigurationProviderDiagnostic)
+            .MapGet("configuration-provider-diagnostic", ConfigurationProviderDiagnosticHandler)
             .ExcludeFromDescription();
 
         // 组件诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("component-diagnostic", ComponentDiagnostic)
+            .MapGet("component-diagnostic", ComponentDiagnosticHandler)
             .ExcludeFromDescription();
     }
 
     /// <summary>
-    /// 终点路由诊断 SSE 处理程序
+    /// 终点路由诊断处理程序
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns><see cref="Task"/></returns>
-    internal static async Task EndpointDiagnosticSSE(HttpContext httpContext, CancellationToken cancellationToken)
+    internal static async Task EndpointDiagnosticHandler(HttpContext httpContext, CancellationToken cancellationToken)
     {
         await new EndpointDiagnosticListener().BuildSSEEndpointRouteHandler(httpContext, cancellationToken);
     }
 
     /// <summary>
-    /// 配置诊断处理程序
+    /// 配置诊断路由处理程序
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <param name="hostEnvironment"><see cref="IHostEnvironment"/></param>
     /// <returns><see cref="Task"/></returns>
-    internal static async Task ConfigurationDiagnostic(HttpContext httpContext, IConfiguration configuration, IHostEnvironment hostEnvironment)
+    internal static async Task ConfigurationDiagnosticHandler(HttpContext httpContext, IConfiguration configuration, IHostEnvironment hostEnvironment)
     {
-        // 将配置转换为 JSON 字符串
-        var jsonString = configuration.ConvertToJson();
-
-        // 将运行环境名写入响应头
+        // 添加运行环境响应头导出
         httpContext.Response.Headers.AppendExpose(Constants.ENVIRONMENT_NAME_KEY, hostEnvironment.EnvironmentName);
 
         // 写入 Body 流
-        await httpContext.Response.WriteAsJsonAsync(jsonString);
+        await httpContext.Response.WriteAsJsonAsync(configuration.ConvertToJson());
     }
 
     /// <summary>
-    /// 配置提供器诊断处理程序
+    /// 配置提供器诊断路由处理程序
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns><see cref="Task"/></returns>
-    internal static async Task ConfigurationProviderDiagnostic(HttpContext httpContext, IConfiguration configuration)
+    internal static async Task ConfigurationProviderDiagnosticHandler(HttpContext httpContext, IConfiguration configuration)
     {
         // 获取配置元数据集合
         var metadatas = configuration.GetMetadata();
@@ -129,30 +126,30 @@ internal static class KitEndpoints
     }
 
     /// <summary>
-    /// 组件诊断处理程序
+    /// 组件诊断路由处理程序
     /// </summary>
     /// <param name="httpContext"><see cref="HttpContext"/></param>
     /// <param name="coreOptions"><see cref="CoreOptions"/></param>
     /// <returns><see cref="IResult"/></returns>
-    internal static IResult ComponentDiagnostic(HttpContext httpContext, CoreOptions coreOptions)
+    internal static IResult ComponentDiagnosticHandler(HttpContext httpContext, CoreOptions coreOptions)
     {
         // 初始化组件诊断模型
         var componentDiagnosticModel = new ComponentDiagnosticModel();
 
-        // 遍历组件类型集合
+        // 遍历入口组件类型集合
         foreach (var componentType in coreOptions.EntryComponentTypes)
         {
             componentDiagnosticModel.Components.Add(
                 CreateComponentModel(componentType, DependencyGraph.Create(componentType)));
         }
 
-        // 设置响应头，允许跨域请求
+        // 配置允许跨域响应头
         httpContext.Response.AllowCors();
 
         // 设置响应头，不缓存请求
         httpContext.Response.Headers.CacheControl = "no-cache";
 
-        // 将项目名称写入响应头
+        // 添加项目名称响应头导出
         httpContext.Response.Headers.AppendExpose(Constants.PROJECT_NAME_KEY, Assembly.GetEntryAssembly()?.GetName()?.Name ?? nameof(Furion));
 
         // 返回 application/json 响应流数据

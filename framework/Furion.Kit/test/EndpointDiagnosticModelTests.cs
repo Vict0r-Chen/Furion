@@ -109,7 +109,7 @@ public class EndpointDiagnosticModelTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            endpointDiagnosticModel.SetResponseInfo(null!);
+            endpointDiagnosticModel.SyncResponseData(null!);
         });
     }
 
@@ -130,7 +130,7 @@ public class EndpointDiagnosticModelTests
             await next();
 
             var endpointDiagnosticModel = new EndpointDiagnosticModel(context);
-            endpointDiagnosticModel.SetResponseInfo(context.Response);
+            endpointDiagnosticModel.SyncResponseData(context.Response);
             Assert.NotEqual(new DateTimeOffset(), endpointDiagnosticModel.RequestEndTime);
             Assert.Equal(200, endpointDiagnosticModel.StatusCode);
             Assert.Equal("OK", endpointDiagnosticModel.StatusText);

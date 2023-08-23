@@ -158,10 +158,10 @@ internal sealed class EndpointDiagnosticModel
     }
 
     /// <summary>
-    /// 设置响应信息
+    /// 同步响应数据
     /// </summary>
     /// <param name="httpResponse"><see cref="HttpResponse"/></param>
-    internal void SetResponseInfo(HttpResponse httpResponse)
+    internal void SyncResponseData(HttpResponse httpResponse)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(httpResponse);
