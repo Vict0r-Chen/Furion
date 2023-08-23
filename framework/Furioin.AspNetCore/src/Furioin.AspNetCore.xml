@@ -6,34 +6,34 @@
     <members>
         <member name="T:Microsoft.AspNetCore.Http.HttpContextExtensions">
             <summary>
-            <see cref="T:Microsoft.AspNetCore.Http.HttpContext" /> 拓展类
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> 拓展类
             </summary>
         </member>
         <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
             <summary>
             获取请求 URL 地址
             </summary>
-            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest" /></param>
-            <returns><see cref="T:System.String" /></returns>
+            <param name="httpRequest"><see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/></param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.GetStatusText(Microsoft.AspNetCore.Http.HttpResponse)">
             <summary>
             获取响应状态文本
             </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse" /></param>
-            <returns><see cref="T:System.String" /></returns>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
+            <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AllowCors(Microsoft.AspNetCore.Http.HttpResponse)">
             <summary>
             配置允许跨域响应头
             </summary>
-            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse" /></param>
+            <param name="httpResponse"><see cref="T:Microsoft.AspNetCore.Http.HttpResponse"/></param>
         </member>
         <member name="M:Microsoft.AspNetCore.Http.HttpContextExtensions.AppendExpose(Microsoft.AspNetCore.Http.IHeaderDictionary,System.String,Microsoft.Extensions.Primitives.StringValues)">
             <summary>
             添加响应头导出
             </summary>
-            <param name="headers"><see cref="T:Microsoft.AspNetCore.Http.IHeaderDictionary" /></param>
+            <param name="headers"><see cref="T:Microsoft.AspNetCore.Http.IHeaderDictionary"/></param>
             <param name="key">键</param>
             <param name="value">值</param>
         </member>

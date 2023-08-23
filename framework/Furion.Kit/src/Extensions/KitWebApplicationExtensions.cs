@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.Builder;
 public static class KitWebApplicationExtensions
 {
     /// <summary>
-    /// 添加 Kit 中间件
+    /// 添加 Kit 模块中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="configure">自定义配置委托</param>
@@ -35,7 +35,7 @@ public static class KitWebApplicationExtensions
     }
 
     /// <summary>
-    /// 添加 Kit 中间件
+    /// 添加 Kit 模块中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="kitOptions"><see cref="KitOptions"/></param>

@@ -28,7 +28,9 @@ internal static class KitEndpoints
     {
         // 终点路由诊断路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGetSSE("endpoint-diagnostic-sse", EndpointDiagnosticSSE);
+            .MapGet("endpoint-diagnostic-sse", EndpointDiagnosticSSE)
+            .Accepts<NoContent>("text/event-stream")
+            .ExcludeFromDescription();
 
         // 配置诊断路由配置
         webApplication.MapGroup(kitOptions.Root)

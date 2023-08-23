@@ -151,33 +151,16 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         // 在请求未终止前持续推送
         while (!cancellationToken.IsCancellationRequested)
         {
-            // 读取诊断订阅器通道数据
-            var data = await ReadAsync(cancellationToken);
+            try
+            {
+                // 读取诊断订阅器通道数据
+                var data = await ReadAsync(cancellationToken);
 
-            // 持续推送至客户端
-            await httpContext.Response.WriteAsync("data: " + SerializeData(data) + "\n\n", cancellationToken);
+                // 持续推送至客户端
+                await httpContext.Response.WriteAsync("data: " + Helpers.SerializeObject(data) + "\n\n", cancellationToken);
+            }
+            catch { }
         }
-
-        // 关闭连接
-        httpContext.Response.ContentType = "text/event-stream";
-        httpContext.Response.StatusCode = StatusCodes.Status204NoContent;
-
-        // 清空 Body 流
-        await httpContext.Response.Body.FlushAsync(cancellationToken);
-    }
-
-    /// <summary>
-    /// 序列化诊断订阅器通道数据
-    /// </summary>
-    /// <param name="data"><typeparamref name="TData"/></param>
-    /// <returns><see cref="string"/></returns>
-    internal static string SerializeData(TData data)
-    {
-        return JsonSerializer.Serialize(data, new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        });
     }
 
     /// <inheritdoc />

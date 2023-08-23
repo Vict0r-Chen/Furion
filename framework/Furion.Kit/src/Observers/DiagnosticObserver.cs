@@ -21,20 +21,20 @@ namespace Furion.Kit;
 internal sealed class DiagnosticObserver<T> : IObserver<T>
 {
     /// <summary>
-    /// 向观察者提供新数据
+    /// 生产者发布新消息处理委托
     /// </summary>
     internal readonly Action<T> _onNext;
 
     /// <summary>
-    /// 通知观察者推送已完成
+    /// 生产者停止发送消息处理委托
     /// </summary>
     internal readonly Action _onCompleted;
 
     /// <summary>
     /// <inheritdoc cref="DiagnosticObserver{T}"/>
     /// </summary>
-    /// <param name="onNext">向观察者提供新数据</param>
-    /// <param name="onCompleted">通知观察者推送已完成</param>
+    /// <param name="onNext">生产者发布新消息处理委托</param>
+    /// <param name="onCompleted">生产者停止发送消息处理委托</param>
     internal DiagnosticObserver(Action<T>? onNext, Action? onCompleted)
     {
         _onNext = onNext ?? new(_ => { });

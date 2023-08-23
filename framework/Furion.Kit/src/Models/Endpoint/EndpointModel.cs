@@ -43,7 +43,7 @@ internal sealed class EndpointModel
     public string? DisplayName { get; private set; }
 
     /// <summary>
-    /// 路由格式
+    /// 路由样本
     /// </summary>
     public string? RoutePattern { get; private set; }
 
