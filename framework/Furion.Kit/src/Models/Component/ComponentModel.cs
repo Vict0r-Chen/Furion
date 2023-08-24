@@ -45,7 +45,7 @@ internal sealed class ComponentModel
     public string? Name { get; init; }
 
     /// <summary>
-    /// 类型完全限定名
+    /// 完全限定类型名称
     /// </summary>
     public string? FullName { get; init; }
 

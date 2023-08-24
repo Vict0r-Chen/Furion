@@ -240,7 +240,7 @@
         </member>
         <member name="P:Furion.Kit.ComponentModel.FullName">
             <summary>
-            类型完全限定名
+            完全限定类型名称
             </summary>
         </member>
         <member name="P:Furion.Kit.ComponentModel.AssemblyName">
