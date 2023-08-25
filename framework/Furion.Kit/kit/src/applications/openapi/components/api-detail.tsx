@@ -14,6 +14,7 @@ const Path = styled(TextBox)`
   font-size: 18px;
   letter-spacing: 0.5px;
   font-weight: 600;
+  user-select: none;
 `;
 
 const ApiDetail: React.FC = () => {
@@ -22,7 +23,13 @@ const ApiDetail: React.FC = () => {
       <TitleContainer>
         <Space size={15}>
           <HttpMethod value="POST" fontSize={18} />
-          <Path>{"/Hello/Get/{id}"}</Path>
+          <Path
+            copyable={{
+              tooltips: ["复制", "复制成功"],
+            }}
+          >
+            {"/Hello/Get/{id}"}
+          </Path>
         </Space>
       </TitleContainer>
       <br />

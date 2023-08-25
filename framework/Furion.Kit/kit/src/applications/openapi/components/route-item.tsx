@@ -13,6 +13,7 @@ const Container = styled(Flexbox)<{ $active?: boolean }>`
   margin-bottom: 10px;
   color: #000000e0;
   letter-spacing: 0.5px;
+  user-select: none;
 
   &:last-child {
     margin-bottom: 0;
@@ -31,10 +32,6 @@ const Container = styled(Flexbox)<{ $active?: boolean }>`
 `;
 
 const Path = styled(TextBox)`
-  font-size: 14px;
-  cursor: pointer;
-  user-select: none;
-
   &:hover {
     text-decoration: underline;
   }
