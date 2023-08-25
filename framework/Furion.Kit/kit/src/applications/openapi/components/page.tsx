@@ -1,13 +1,14 @@
-import { DownOutlined } from "@ant-design/icons";
-import { FloatButton, Space, Tree } from "antd";
-import type { DataNode } from "antd/es/tree";
+import { FloatButton, Space } from "antd";
 import React, { useId } from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import { FlushDivider } from "../../../components/flush-divider";
 import HttpMethod from "../../../components/http-method";
+import SearchBox from "../../../components/searchbox";
 import SiderSticky from "../../../components/sider-sticky";
 import TextBox from "../../../components/textbox";
+import RouteCategory from "./route-category";
+import RouteItem from "./route-item";
 
 const Container = styled(Flexbox)`
   overflow-y: auto;
@@ -17,204 +18,68 @@ const Container = styled(Flexbox)`
   align-items: flex-start;
 `;
 
+const Directory = styled(SiderSticky)`
+  height: 100%;
+  overflow-y: auto;
+`;
+
 const Main = styled.div`
   flex: 1;
   box-sizing: border-box;
   padding: 0 15px;
 `;
 
-const httpMethodWidth = 70;
-
-const treeData: DataNode[] = [
-  {
-    title: "Hello-Controller",
-    key: "0-0",
-    children: [
-      {
-        title: (
-          <Space>
-            <HttpMethod value="GET" width={httpMethodWidth} />
-            <TextBox>/v1/hello/get</TextBox>
-          </Space>
-        ),
-        key: "0-0-0",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="POST" width={httpMethodWidth} />
-            <TextBox>/v1/hello/post</TextBox>
-          </Space>
-        ),
-        key: "0-0-1",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="DELETE" width={httpMethodWidth} />
-            <TextBox>/v1/hello/delete</TextBox>
-          </Space>
-        ),
-        key: "0-0-2",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="PUT" width={httpMethodWidth} />
-            <TextBox>/v1/hello/put</TextBox>
-          </Space>
-        ),
-        key: "0-0-3",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="HEAD" width={httpMethodWidth} />
-            <TextBox>/v1/hello/head</TextBox>
-          </Space>
-        ),
-        key: "0-0-4",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="PATCH" width={httpMethodWidth} />
-            <TextBox>/v1/hello/patch</TextBox>
-          </Space>
-        ),
-        key: "0-0-5",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="OPTIONS" width={httpMethodWidth} />
-            <TextBox>/v1/hello/options</TextBox>
-          </Space>
-        ),
-        key: "0-0-6",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="TRACE" width={httpMethodWidth} />
-            <TextBox>/v1/hello/trace</TextBox>
-          </Space>
-        ),
-        key: "0-0-7",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="CONNECT" width={httpMethodWidth} />
-            <TextBox>/v1/hello/connect</TextBox>
-          </Space>
-        ),
-        key: "0-0-8",
-      },
-    ],
-  },
-  {
-    title: "Home-Controller",
-    key: "0-1",
-    children: [
-      {
-        title: (
-          <Space>
-            <HttpMethod value="GET" width={httpMethodWidth} />
-            <TextBox>/v1/home/get</TextBox>
-          </Space>
-        ),
-        key: "0-1-0",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="POST" width={httpMethodWidth} />
-            <TextBox>/v1/home/post</TextBox>
-          </Space>
-        ),
-        key: "0-1-1",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="DELETE" width={httpMethodWidth} />
-            <TextBox>/v1/home/delete</TextBox>
-          </Space>
-        ),
-        key: "0-1-2",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="PUT" width={httpMethodWidth} />
-            <TextBox>/v1/home/put</TextBox>
-          </Space>
-        ),
-        key: "0-1-3",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="HEAD" width={httpMethodWidth} />
-            <TextBox>/v1/home/head</TextBox>
-          </Space>
-        ),
-        key: "0-1-4",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="PATCH" width={httpMethodWidth} />
-            <TextBox>/v1/home/patch</TextBox>
-          </Space>
-        ),
-        key: "0-1-5",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="OPTIONS" width={httpMethodWidth} />
-            <TextBox>/v1/home/options</TextBox>
-          </Space>
-        ),
-        key: "0-1-6",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="TRACE" width={httpMethodWidth} />
-            <TextBox>/v1/home/trace</TextBox>
-          </Space>
-        ),
-        key: "0-1-7",
-      },
-      {
-        title: (
-          <Space>
-            <HttpMethod value="CONNECT" width={httpMethodWidth} />
-            <TextBox>/v1/home/connect</TextBox>
-          </Space>
-        ),
-        key: "0-1-8",
-      },
-    ],
-  },
-];
-
 const Page: React.FC = () => {
   const id = useId();
 
   return (
     <Container id={id}>
-      <SiderSticky $width={280}>
-        <Tree
-          showLine
-          switcherIcon={<DownOutlined />}
-          defaultExpandAll
-          treeData={treeData}
-        />
-      </SiderSticky>
+      <Directory $width={280}>
+        <div
+          style={{
+            marginBottom: 15,
+            position: "sticky",
+            top: 0,
+            backgroundColor: "#ffffff",
+            zIndex: 2,
+          }}
+        >
+          <SearchBox bordered defaultWidth={280} maxWidth={280} />
+        </div>
+        <RouteCategory title="Hello" description="测试接口">
+          <RouteItem httpMethod="GET" path="/furion/openapi" />
+          <RouteItem httpMethod="POST" path="/Hello/Get" />
+          <RouteItem httpMethod="DELETE" path="/Hello/Post" />
+          <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
+          <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
+          <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
+          <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
+          <RouteItem httpMethod="TRACE" path="/Hello/TestThrow" />
+          <RouteItem httpMethod="CONNECT" path="/Hello/TestThrow" />
+        </RouteCategory>
+        <RouteCategory title="Furion.Tests" description="最小 API">
+          <RouteItem httpMethod="GET" path="/furion/openapi" />
+          <RouteItem httpMethod="POST" path="/Hello/Get" />
+          <RouteItem httpMethod="DELETE" path="/Hello/Post" />
+          <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
+          <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
+          <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
+          <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
+          <RouteItem httpMethod="TRACE" path="/Hello/TestThrow" />
+          <RouteItem httpMethod="CONNECT" path="/Hello/TestThrow" />
+        </RouteCategory>
+        <RouteCategory title="User Management" description="用户管理">
+          <RouteItem httpMethod="GET" path="/furion/openapi" />
+          <RouteItem httpMethod="POST" path="/Hello/Get" />
+          <RouteItem httpMethod="DELETE" path="/Hello/Post" />
+          <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
+          <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
+          <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
+          <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
+          <RouteItem httpMethod="TRACE" path="/Hello/TestThrow" />
+          <RouteItem httpMethod="CONNECT" path="/Hello/TestThrow" />
+        </RouteCategory>
+      </Directory>
       <FlushDivider type="vertical" $heightBlock />
       <Main>
         <div>

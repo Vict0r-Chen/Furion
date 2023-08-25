@@ -8,11 +8,17 @@ const Container = styled.div`
   display: inline-block;
 `;
 
-const defaultWidth = 180;
+type SearchBoxProps = InputProps &
+  React.RefAttributes<InputRef> & {
+    defaultWidth?: number | string;
+    maxWidth?: number | string;
+  };
 
-type SearchBoxProps = InputProps & React.RefAttributes<InputRef>;
-
-const SearchBox: React.FC<SearchBoxProps> = (props) => {
+const SearchBox: React.FC<SearchBoxProps> = ({
+  defaultWidth = 180,
+  maxWidth = 220,
+  ...props
+}) => {
   const [width, setWidth] = useState(defaultWidth);
 
   return (
@@ -23,7 +29,7 @@ const SearchBox: React.FC<SearchBoxProps> = (props) => {
           bordered={width !== defaultWidth}
           allowClear
           style={{ width }}
-          onFocus={() => setWidth(220)}
+          onFocus={() => setWidth(maxWidth)}
           onBlur={() => setWidth(defaultWidth)}
           suffix={<IconFont type="icon-search" $size={20} $color="#8c8c8c" />}
           {...props}
