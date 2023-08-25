@@ -13,8 +13,6 @@ import RouteItem from "./route-item";
 const Container = styled(Flexbox)`
   overflow-y: auto;
   height: calc(100vh - 242px);
-  box-sizing: border-box;
-  position: relative;
   align-items: flex-start;
 `;
 
@@ -34,7 +32,7 @@ const Page: React.FC = () => {
 
   return (
     <Container id={id}>
-      <Directory $width={280}>
+      <Directory $width={300}>
         <div
           style={{
             marginBottom: 15,
@@ -44,11 +42,11 @@ const Page: React.FC = () => {
             zIndex: 2,
           }}
         >
-          <SearchBox bordered defaultWidth={280} maxWidth={280} />
+          <SearchBox bordered defaultWidth={300} maxWidth={300} />
         </div>
         <RouteCategory title="Hello" description="测试接口">
-          <RouteItem httpMethod="GET" path="/furion/openapi" />
-          <RouteItem httpMethod="POST" path="/Hello/Get" />
+          <RouteItem httpMethod="GET" path="/Furion/OpenApi" />
+          <RouteItem httpMethod="POST" path="/Hello/Get" active />
           <RouteItem httpMethod="DELETE" path="/Hello/Post" />
           <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
           <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />

@@ -36,6 +36,7 @@ const Default = styled(TextBox)`
   font-size: 14px;
   white-space: nowrap;
   user-select: none;
+  letter-spacing: 0.5px;
 `;
 
 const HttpMethod: React.FC<HttpMethodProps> = ({ value, width }) => {

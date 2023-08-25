@@ -8,6 +8,7 @@ const Container = styled.div`
   display: inline-block;
   font-size: 14px;
   font-weight: 600;
+  letter-spacing: 0.5px;
 `;
 
 const Icon = styled(IconFont)`

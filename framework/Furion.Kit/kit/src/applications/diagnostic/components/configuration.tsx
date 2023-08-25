@@ -9,7 +9,9 @@ import projectConfig from "../../../project.config";
 import ConfigurationProvider from "./configuration-provider";
 import Page from "./page";
 
-const Container = styled(Page)``;
+const Container = styled(Page)`
+  letter-spacing: 0.5px;
+`;
 
 const AlertBox = styled(Alert)`
   margin-bottom: 15px;

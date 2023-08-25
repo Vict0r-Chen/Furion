@@ -1,16 +1,18 @@
 import { Space } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";
 import TextBox from "../../../components/textbox";
 
-const Container = styled(Flexbox)`
+const Container = styled(Flexbox)<{ $active?: boolean }>`
   align-items: center;
   cursor: pointer;
   border-radius: 3px;
-  padding: 2px 10px 2px 20px;
+  padding: 3px 10px 3px 22px;
   margin-bottom: 10px;
+  color: #000000e0;
+  letter-spacing: 0.5px;
 
   &:last-child {
     margin-bottom: 0;
@@ -19,6 +21,13 @@ const Container = styled(Flexbox)`
   &:hover {
     background-color: #e6f4ff;
   }
+
+  ${(props) =>
+    props.$active === true &&
+    css`
+      background-color: #e6f4ff;
+      color: #1677ff;
+    `}
 `;
 
 const Path = styled(TextBox)`
@@ -27,22 +36,26 @@ const Path = styled(TextBox)`
   user-select: none;
 
   &:hover {
-    color: #1677ff;
+    text-decoration: underline;
   }
 `;
 
 interface RouteItemProps {
   httpMethod: string;
   path: string;
+  active?: boolean;
 }
 
-const RouteItem: React.FC<RouteItemProps> = ({ httpMethod, path }) => {
+const RouteItem: React.FC<RouteItemProps> = ({
+  httpMethod,
+  path,
+  active = false,
+}) => {
   return (
-    <Container $spaceBetween>
-      <Space align="center">
-        <HttpMethod value={httpMethod} width={70} />
+    <Container $spaceBetween $active={active}>
+      <Space align="center" size={15}>
+        <HttpMethod value={httpMethod} />
         <Path
-          $color="#000000e0"
           copyable={{
             tooltips: ["复制", "复制成功"],
           }}

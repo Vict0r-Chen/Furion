@@ -15,12 +15,12 @@ const Container = styled.div``;
 const items: TabsProps["items"] = [
   {
     key: "1",
-    label: <TextBox $disableSelect>用户管理</TextBox>,
+    label: <TextBox $disableSelect>Web 端</TextBox>,
     children: <Page />,
   },
   {
     key: "2",
-    label: <TextBox $disableSelect>订单管理</TextBox>,
+    label: <TextBox $disableSelect>小程序端</TextBox>,
     children: <Page />,
   },
 ];

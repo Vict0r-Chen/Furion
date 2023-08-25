@@ -13,7 +13,9 @@ const Container = styled.div`
   overflow-y: auto;
 `;
 
-const CategoryContainer = styled.div``;
+const CategoryContainer = styled.div`
+  letter-spacing: 0.5px;
+`;
 
 const CategoryTitle = styled.div`
   font-weight: 600;

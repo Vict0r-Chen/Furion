@@ -23,6 +23,7 @@ const Title = styled(Flexbox)`
 
 const Description = styled(TextBox)`
   font-weight: normal;
+  font-size: 14px;
 `;
 
 const Main = styled.div`
@@ -54,7 +55,7 @@ const RouteCategory: React.FC<RouteCategoryProps> = ({
           <IconFont
             $size={16}
             type={expand ? "icon-folder-open" : "icon-folder-close"}
-            $color="#8c8c8c"
+            $color="#4096ff"
           />
           <TextBox $color="#000000E0">{title}</TextBox>
           <Description $color="#00000073">{description}</Description>
