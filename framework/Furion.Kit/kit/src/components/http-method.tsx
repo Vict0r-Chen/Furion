@@ -28,7 +28,6 @@ export const getColor = (value: string) => {
 interface HttpMethodProps {
   value: string;
   width?: number | string;
-  type?: "default" | "tag";
 }
 
 const Default = styled(TextBox)`
@@ -38,31 +37,11 @@ const Default = styled(TextBox)`
   white-space: nowrap;
 `;
 
-const Tag = styled.span<{ $bgColor?: string }>`
-  display: inline-block;
-  background-color: ${(props) => props.$bgColor};
-  color: #ffffff;
-  font-size: 13px;
-  width: 70px;
-  border-radius: 3px;
-  text-align: center;
-  height: 20px;
-  line-height: 20px;
-  font-weight: 600;
-`;
-
-const HttpMethod: React.FC<HttpMethodProps> = ({
-  value,
-  width,
-  type = "default",
-}) => {
+const HttpMethod: React.FC<HttpMethodProps> = ({ value, width }) => {
   const style: React.CSSProperties = {
     width,
+    textAlign: width ? "left" : undefined,
   };
-
-  if (type === "tag") {
-    return <Tag $bgColor={getColor(value)}>{value}</Tag>;
-  }
 
   return (
     <Default $color={getColor(value)} style={style}>

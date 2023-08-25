@@ -33,7 +33,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="GET" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="GET" width={httpMethodWidth} />
             <TextBox>/v1/hello/get</TextBox>
           </Space>
         ),
@@ -42,7 +42,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="POST" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="POST" width={httpMethodWidth} />
             <TextBox>/v1/hello/post</TextBox>
           </Space>
         ),
@@ -51,7 +51,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="DELETE" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="DELETE" width={httpMethodWidth} />
             <TextBox>/v1/hello/delete</TextBox>
           </Space>
         ),
@@ -60,7 +60,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="PUT" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="PUT" width={httpMethodWidth} />
             <TextBox>/v1/hello/put</TextBox>
           </Space>
         ),
@@ -69,7 +69,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="HEAD" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="HEAD" width={httpMethodWidth} />
             <TextBox>/v1/hello/head</TextBox>
           </Space>
         ),
@@ -78,7 +78,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="PATCH" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="PATCH" width={httpMethodWidth} />
             <TextBox>/v1/hello/patch</TextBox>
           </Space>
         ),
@@ -87,7 +87,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="OPTIONS" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="OPTIONS" width={httpMethodWidth} />
             <TextBox>/v1/hello/options</TextBox>
           </Space>
         ),
@@ -96,7 +96,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="TRACE" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="TRACE" width={httpMethodWidth} />
             <TextBox>/v1/hello/trace</TextBox>
           </Space>
         ),
@@ -105,7 +105,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="CONNECT" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="CONNECT" width={httpMethodWidth} />
             <TextBox>/v1/hello/connect</TextBox>
           </Space>
         ),
@@ -120,7 +120,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="GET" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="GET" width={httpMethodWidth} />
             <TextBox>/v1/home/get</TextBox>
           </Space>
         ),
@@ -129,7 +129,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="POST" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="POST" width={httpMethodWidth} />
             <TextBox>/v1/home/post</TextBox>
           </Space>
         ),
@@ -138,7 +138,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="DELETE" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="DELETE" width={httpMethodWidth} />
             <TextBox>/v1/home/delete</TextBox>
           </Space>
         ),
@@ -147,7 +147,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="PUT" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="PUT" width={httpMethodWidth} />
             <TextBox>/v1/home/put</TextBox>
           </Space>
         ),
@@ -156,7 +156,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="HEAD" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="HEAD" width={httpMethodWidth} />
             <TextBox>/v1/home/head</TextBox>
           </Space>
         ),
@@ -165,7 +165,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="PATCH" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="PATCH" width={httpMethodWidth} />
             <TextBox>/v1/home/patch</TextBox>
           </Space>
         ),
@@ -174,7 +174,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="OPTIONS" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="OPTIONS" width={httpMethodWidth} />
             <TextBox>/v1/home/options</TextBox>
           </Space>
         ),
@@ -183,7 +183,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="TRACE" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="TRACE" width={httpMethodWidth} />
             <TextBox>/v1/home/trace</TextBox>
           </Space>
         ),
@@ -192,7 +192,7 @@ const treeData: DataNode[] = [
       {
         title: (
           <Space>
-            <HttpMethod value="CONNECT" width={httpMethodWidth} type="tag" />
+            <HttpMethod value="CONNECT" width={httpMethodWidth} />
             <TextBox>/v1/home/connect</TextBox>
           </Space>
         ),
