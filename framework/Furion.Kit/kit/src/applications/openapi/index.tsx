@@ -1,4 +1,4 @@
-import { Button, Tabs, TabsProps } from "antd";
+import { Button, Space, Tabs, TabsProps } from "antd";
 import { styled } from "styled-components";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";
@@ -12,15 +12,31 @@ const AddIcon = styled(IconFont)`
 
 const Container = styled.div``;
 
+const Icon = styled(IconFont)`
+  margin-right: 0 !important;
+  position: relative;
+  top: 1px;
+`;
+
 const items: TabsProps["items"] = [
   {
     key: "1",
-    label: <TextBox $disableSelect>Web 端</TextBox>,
+    label: (
+      <Space>
+        <Icon type="icon-api" $size={16} />
+        <TextBox $disableSelect>Web 端</TextBox>
+      </Space>
+    ),
     children: <Page />,
   },
   {
     key: "2",
-    label: <TextBox $disableSelect>小程序端</TextBox>,
+    label: (
+      <Space>
+        <Icon type="icon-api" $size={16} />
+        <TextBox $disableSelect>小程序端</TextBox>
+      </Space>
+    ),
     children: <Page />,
   },
 ];
