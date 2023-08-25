@@ -48,6 +48,7 @@
 [assembly: InternalsVisibleTo("Furion.Mail.Imap")]
 [assembly: InternalsVisibleTo("Furion.Mail.Pop3")]
 [assembly: InternalsVisibleTo("Furion.ObjectMapper")]
+[assembly: InternalsVisibleTo("Furion.OpenApi")]
 [assembly: InternalsVisibleTo("Furion.Options")]
 [assembly: InternalsVisibleTo("Furion.Redis")]
 [assembly: InternalsVisibleTo("Furion.Reflection")]
