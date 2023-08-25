@@ -28,6 +28,7 @@ export const getColor = (value: string) => {
 interface HttpMethodProps {
   value: string;
   width?: number | string;
+  fontSize?: number | string;
 }
 
 const Default = styled(TextBox)`
@@ -39,10 +40,11 @@ const Default = styled(TextBox)`
   letter-spacing: 0.5px;
 `;
 
-const HttpMethod: React.FC<HttpMethodProps> = ({ value, width }) => {
+const HttpMethod: React.FC<HttpMethodProps> = ({ value, width, fontSize }) => {
   const style: React.CSSProperties = {
     width,
     textAlign: width ? "left" : undefined,
+    fontSize,
   };
 
   return (
