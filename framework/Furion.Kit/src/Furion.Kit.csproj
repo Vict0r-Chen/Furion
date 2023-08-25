@@ -13,6 +13,7 @@
 		<ProjectReference Include="..\..\Furioin.AspNetCore\src\Furioin.AspNetCore.csproj" />
 		<ProjectReference Include="..\..\Furion.Configuration\src\Furion.Configuration.csproj" />
 		<ProjectReference Include="..\..\Furion.Exception\src\Furion.Exception.csproj" />
+		<ProjectReference Include="..\..\Furion.OpenApi\src\Furion.OpenApi.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

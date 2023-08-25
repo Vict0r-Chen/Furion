@@ -1,11 +1,11 @@
 import { Popover, Space } from "antd";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
+import HttpMethod from "../../../components/http-method";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 import EndpointDetail from "./endpoint-detail";
-import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 import Url from "./url";
 

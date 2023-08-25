@@ -1,12 +1,29 @@
-import { Button } from "antd";
+import { Button, Tabs, TabsProps } from "antd";
 import { styled } from "styled-components";
 import IconFont from "../../components/iconfont";
+import TextBox from "../../components/textbox";
 import Content from "../../home/content";
+import Page from "./components/page";
 
 const AddIcon = styled(IconFont)`
   position: relative;
   top: 1px;
 `;
+
+const Container = styled.div``;
+
+const items: TabsProps["items"] = [
+  {
+    key: "1",
+    label: <TextBox $disableSelect>用户管理</TextBox>,
+    children: <Page />,
+  },
+  {
+    key: "2",
+    label: <TextBox $disableSelect>订单管理</TextBox>,
+    children: <Page />,
+  },
+];
 
 const OpenAPI: React.FC = () => {
   return (
@@ -21,6 +38,9 @@ const OpenAPI: React.FC = () => {
       >
         开放
       </Content.Title>
+      <Container>
+        <Tabs defaultActiveKey="1" items={items} />
+      </Container>
     </Content.Main>
   );
 };

@@ -183,4 +183,9 @@ public class HelloController
     public void TestDisplayName()
     {
     }
+
+    [HttpGet, ApiExplorerSettings(GroupName = "groupName")]
+    public void TestGroup()
+    {
+    }
 }

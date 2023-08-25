@@ -2,9 +2,9 @@ import { Empty, Typography } from "antd";
 import React from "react";
 import { styled } from "styled-components";
 import CodeHighlight from "../../../components/code-highlight";
+import HttpMethod from "../../../components/http-method";
 import TextBox from "../../../components/textbox";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
-import HttpMethod from "./httpmethod";
 import StatusCode from "./statuscode";
 import Url from "./url";
 
