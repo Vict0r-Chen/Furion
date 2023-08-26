@@ -41,18 +41,19 @@ public sealed class ApiDescriptionParser
     public OpenApiModel Parse()
     {
         var openApiModel = new OpenApiModel();
+        var projectName = Assembly.GetEntryAssembly()?.GetName()?.Name;
 
         foreach (var group in _provider.ApiDescriptionGroups.Items)
         {
             var openApiGroup = new OpenApiGroup
             {
-                Name = group.GroupName
+                Name = group.GroupName ?? projectName
             };
 
             foreach (var item in group.Items)
             {
-                var controllerName = (item.ActionDescriptor as ControllerActionDescriptor)?.ControllerName
-                    ?? Assembly.GetEntryAssembly()?.GetName()?.Name;
+                var actionDescriptor = item.ActionDescriptor;
+                var controllerName = (actionDescriptor as ControllerActionDescriptor)?.ControllerName ?? projectName;
 
                 var openApiTag = openApiGroup.Tags.FirstOrDefault(u => u.Name == controllerName);
                 if (openApiTag is null)
@@ -66,10 +67,11 @@ public sealed class ApiDescriptionParser
 
                 openApiTag.Descriptions.Add(new OpenApiDescription
                 {
-                    GroupName = item.GroupName,
+                    Id = actionDescriptor.Id,
+                    GroupName = item.GroupName ?? projectName,
                     HttpMethod = item.HttpMethod,
                     RelativePath = item.RelativePath,
-                    AllowAnonymous = item.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any()
+                    AllowAnonymous = actionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any()
                 });
             }
 

@@ -56,6 +56,9 @@ internal static class KitEndpoints
             {
                 var apiDescriptionParser = new ApiDescriptionParser(provider);
 
+                httpContext.Response.AllowCors();
+                httpContext.Response.Headers.CacheControl = "no-cache";
+
                 return Results.Json(apiDescriptionParser.Parse());
             });
     }

@@ -1,8 +1,12 @@
 import { Button, Space, Tabs, TabsProps } from "antd";
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
 import { styled } from "styled-components";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";
+import { OpenApiModel } from "../../databases/types/openapi";
 import Content from "../../home/content";
+import projectConfig from "../../project.config";
 import Page from "./components/page";
 
 const AddIcon = styled(IconFont)`
@@ -18,30 +22,50 @@ const Icon = styled(IconFont)`
   top: 1px;
 `;
 
-const items: TabsProps["items"] = [
-  {
-    key: "1",
-    label: (
-      <Space>
-        <Icon type="icon-api" $size={16} />
-        <TextBox $disableSelect>Web 端</TextBox>
-      </Space>
-    ),
-    children: <Page />,
-  },
-  {
-    key: "2",
-    label: (
-      <Space>
-        <Icon type="icon-api" $size={16} />
-        <TextBox $disableSelect>小程序端</TextBox>
-      </Space>
-    ),
-    children: <Page />,
-  },
-];
-
 const OpenAPI: React.FC = () => {
+  const [data, setData] = useState<OpenApiModel>();
+  const [loading, setLoading] = useState(false);
+
+  const items = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+
+    const _items: TabsProps["items"] = [];
+    for (const group of data.groups!) {
+      _items.push({
+        key: group.name!,
+        label: (
+          <Space>
+            <Icon type="icon-api" $size={16} />
+            <TextBox $disableSelect>{group.name}</TextBox>
+          </Space>
+        ),
+        children: <Page {...group} />,
+      });
+    }
+
+    return _items;
+  }, [data]);
+
+  const loadData = async () => {
+    setLoading(true);
+
+    try {
+      const response = await axios.get(
+        `${projectConfig.serverAddress}/openapi`
+      );
+
+      setData(response.data);
+    } catch (error) {}
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <Content.Main>
       <Content.Title

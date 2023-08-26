@@ -9,6 +9,11 @@
             开放接口描述器
             </summary>
         </member>
+        <member name="P:Furion.OpenApi.OpenApiDescription.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
         <member name="P:Furion.OpenApi.OpenApiDescription.GroupName">
             <summary>
             分组名

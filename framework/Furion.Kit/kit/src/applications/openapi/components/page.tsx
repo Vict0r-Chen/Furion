@@ -3,6 +3,7 @@ import React, { useId } from "react";
 import { styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import { FlushDivider } from "../../../components/flush-divider";
+import { OpenApiGroup } from "../../../databases/types/openapi";
 import ApiDetail from "./api-detail";
 import PathList from "./path-list";
 
@@ -18,12 +19,12 @@ const Main = styled.div`
   padding: 0 15px;
 `;
 
-const Page: React.FC = () => {
+const Page: React.FC<OpenApiGroup> = (group) => {
   const id = useId();
 
   return (
     <Container id={id}>
-      <PathList />
+      <PathList {...group} />
       <FlushDivider type="vertical" $heightBlock />
       <Main>
         <ApiDetail />

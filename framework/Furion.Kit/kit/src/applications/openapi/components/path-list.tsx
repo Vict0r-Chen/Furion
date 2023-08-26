@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import IconFont from "../../../components/iconfont";
 import SearchBox from "../../../components/searchbox";
 import SiderSticky from "../../../components/sider-sticky";
+import { OpenApiGroup } from "../../../databases/types/openapi";
 import RouteCategory from "./route-category";
 import RouteItem from "./route-item";
 
@@ -11,7 +12,7 @@ const Directory = styled(SiderSticky)`
   overflow-y: auto;
 `;
 
-const PathList: React.FC = () => {
+const PathList: React.FC<OpenApiGroup> = (group) => {
   return (
     <Directory $width={300}>
       <div
@@ -33,39 +34,18 @@ const PathList: React.FC = () => {
           icon={<IconFont type="icon-arrow-left" />}
         />
       </div>
-      <RouteCategory title="Hello" description="测试接口">
-        <RouteItem httpMethod="GET" path="/Furion/OpenApi" />
-        <RouteItem httpMethod="POST" path="/Hello/Get/{id}" active />
-        <RouteItem httpMethod="DELETE" path="/Hello/Post" />
-        <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" anonymous />
-        <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
-        <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
-        <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
-        <RouteItem httpMethod="TRACE" path="/Hello/TestThrow" />
-        <RouteItem httpMethod="CONNECT" path="/Hello/TestThrow" />
-      </RouteCategory>
-      <RouteCategory title="Furion.Tests" description="最小 API">
-        <RouteItem httpMethod="GET" path="/furion/openapi" />
-        <RouteItem httpMethod="POST" path="/Hello/Get" />
-        <RouteItem httpMethod="DELETE" path="/Hello/Post" anonymous />
-        <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
-        <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
-        <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
-        <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
-        <RouteItem httpMethod="TRACE" path="/Hello/TestThrow" />
-        <RouteItem httpMethod="CONNECT" path="/Hello/TestThrow" />
-      </RouteCategory>
-      <RouteCategory title="User Management" description="用户管理">
-        <RouteItem httpMethod="GET" path="/furion/openapi" />
-        <RouteItem httpMethod="POST" path="/Hello/Get" />
-        <RouteItem httpMethod="DELETE" path="/Hello/Post" />
-        <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
-        <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
-        <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
-        <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
-        <RouteItem httpMethod="TRACE" path="/Hello/TestThrow" />
-        <RouteItem httpMethod="CONNECT" path="/Hello/TestThrow" />
-      </RouteCategory>
+      {group.tags?.map((item) => (
+        <RouteCategory key={item.name} title={item.name}>
+          {item.descriptions?.map((desc) => (
+            <RouteItem
+              key={desc.id}
+              httpMethod={desc.httpMethod!}
+              path={desc.relativePath!}
+              anonymous={desc.allowAnonymous}
+            />
+          ))}
+        </RouteCategory>
+      ))}
     </Directory>
   );
 };

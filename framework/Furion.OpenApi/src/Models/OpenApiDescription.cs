@@ -20,6 +20,11 @@ namespace Furion.OpenApi;
 public sealed class OpenApiDescription
 {
     /// <summary>
+    /// 标识
+    /// </summary>
+    public string? Id { get; set; }
+
+    /// <summary>
     /// 分组名
     /// </summary>
     public string? GroupName { get; set; }

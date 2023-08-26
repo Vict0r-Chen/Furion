@@ -189,4 +189,9 @@ public class HelloController
     public void TestGroup()
     {
     }
+
+    [HttpPut("{path}")]
+    public void TestPath(int path)
+    {
+    }
 }
