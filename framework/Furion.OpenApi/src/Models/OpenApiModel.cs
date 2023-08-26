@@ -12,5 +12,27 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Microsoft.AspNetCore.Mvc.ApiExplorer;
-global using System.Runtime.CompilerServices;
+namespace Furion.OpenApi;
+
+/// <summary>
+/// 开放接口模型
+/// </summary>
+public sealed class OpenApiModel
+{
+    /// <inheritdoc cref="IApiDescriptionGroupCollectionProvider"/>
+    internal readonly IApiDescriptionGroupCollectionProvider _provider;
+
+    /// <summary>
+    /// <inheritdoc cref="OpenApiModel"/>
+    /// </summary>
+    /// <param name="provider"><see cref="IApiDescriptionGroupCollectionProvider"/></param>
+    public OpenApiModel(IApiDescriptionGroupCollectionProvider provider)
+    {
+        _provider = provider;
+    }
+
+    /// <summary>
+    /// 开放接口分组模型集合
+    /// </summary>
+    public List<OpenApiGroup>? Groups { get; internal set; }
+}

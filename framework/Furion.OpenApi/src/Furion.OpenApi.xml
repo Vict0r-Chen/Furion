@@ -4,5 +4,34 @@
         <name>Furion.OpenApi</name>
     </assembly>
     <members>
+        <member name="T:Furion.OpenApi.OpenApiGroup">
+            <summary>
+            开放接口分组模型
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiGroup.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="T:Furion.OpenApi.OpenApiModel">
+            <summary>
+            开放接口模型
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.OpenApiModel._provider">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiModel.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider)">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiModel"/>
+            </summary>
+            <param name="provider"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/></param>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiModel.Groups">
+            <summary>
+            开放接口分组模型集合
+            </summary>
+        </member>
     </members>
 </doc>
