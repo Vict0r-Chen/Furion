@@ -1,10 +1,11 @@
-import { Space } from "antd";
-import React from "react";
+import { Empty, Space } from "antd";
+import React, { useContext } from "react";
 import { styled } from "styled-components";
 import Category from "../../../components/category";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";
 import TextBox from "../../../components/textbox";
+import OpenApiGroupContext from "../contexts";
 
 const Container = styled.div``;
 
@@ -23,17 +24,25 @@ const Path = styled(TextBox)`
 `;
 
 const ApiDetail: React.FC = () => {
+  const { apiDescription } = useContext(OpenApiGroupContext);
+
+  if (!apiDescription) {
+    return (
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
+    );
+  }
+
   return (
     <Container>
       <TitleContainer>
         <Space size={15}>
-          <HttpMethod value="POST" fontSize={18} />
+          <HttpMethod value={apiDescription.httpMethod!} fontSize={18} />
           <Path
             copyable={{
               tooltips: ["复制", "复制成功"],
             }}
           >
-            {"/Hello/Get/{id}"}
+            {apiDescription.relativePath}
           </Path>
         </Space>
       </TitleContainer>

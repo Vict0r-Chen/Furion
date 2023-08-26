@@ -1,5 +1,5 @@
 import { Space, Tooltip } from "antd";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { css, styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";
@@ -48,6 +48,7 @@ interface RouteItemProps {
   path: string;
   active?: boolean;
   anonymous?: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 const RouteItem: React.FC<RouteItemProps> = ({
@@ -55,9 +56,10 @@ const RouteItem: React.FC<RouteItemProps> = ({
   path,
   active = false,
   anonymous = false,
+  onClick,
 }) => {
   return (
-    <Container $spaceBetween $active={active}>
+    <Container $spaceBetween $active={active} onClick={onClick}>
       <Space align="center" size={15}>
         <HttpMethod value={httpMethod} />
         <Path
