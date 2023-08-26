@@ -19,20 +19,16 @@ namespace Furion.OpenApi;
 /// </summary>
 public sealed class OpenApiModel
 {
-    /// <inheritdoc cref="IApiDescriptionGroupCollectionProvider"/>
-    internal readonly IApiDescriptionGroupCollectionProvider _provider;
-
     /// <summary>
     /// <inheritdoc cref="OpenApiModel"/>
     /// </summary>
-    /// <param name="provider"><see cref="IApiDescriptionGroupCollectionProvider"/></param>
-    public OpenApiModel(IApiDescriptionGroupCollectionProvider provider)
+    public OpenApiModel()
     {
-        _provider = provider;
+        Groups = new();
     }
 
     /// <summary>
     /// 开放接口分组模型集合
     /// </summary>
-    public List<OpenApiGroup>? Groups { get; internal set; }
+    public List<OpenApiGroup> Groups { get; init; }
 }

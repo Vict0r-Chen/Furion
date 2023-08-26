@@ -13,6 +13,7 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Furion.Tests.Models;
+using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel;
 
 namespace Furion.Tests.Controllers;
@@ -184,7 +185,7 @@ public class HelloController
     {
     }
 
-    [HttpGet, ApiExplorerSettings(GroupName = "groupName")]
+    [HttpGet, ApiExplorerSettings(GroupName = "groupName"), AllowAnonymous]
     public void TestGroup()
     {
     }

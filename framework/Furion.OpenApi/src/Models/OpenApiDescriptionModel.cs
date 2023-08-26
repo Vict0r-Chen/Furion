@@ -15,25 +15,27 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口分组模型
+/// 开放接口描述器模型
 /// </summary>
-public sealed class OpenApiGroup
+public sealed class OpenApiDescriptionModel
 {
     /// <summary>
-    /// <inheritdoc cref="OpenApiGroup"/>
+    /// 分组名
     /// </summary>
-    public OpenApiGroup()
-    {
-        Descriptions = new();
-    }
+    public string? GroupName { get; set; }
 
     /// <summary>
-    /// 名称
+    /// 请求方式
     /// </summary>
-    public string? Name { get; internal set; }
+    public string? HttpMethod { get; set; }
 
     /// <summary>
-    /// 开放接口描述器模型集合
+    /// 相对地址
     /// </summary>
-    public List<OpenApiDescriptionModel> Descriptions { get; init; }
+    public string? RelativePath { get; set; }
+
+    /// <summary>
+    /// 允许匿名
+    /// </summary>
+    public bool AllowAnonymous { get; set; }
 }

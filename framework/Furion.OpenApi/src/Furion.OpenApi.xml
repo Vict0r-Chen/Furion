@@ -4,9 +4,39 @@
         <name>Furion.OpenApi</name>
     </assembly>
     <members>
+        <member name="T:Furion.OpenApi.OpenApiDescriptionModel">
+            <summary>
+            开放接口描述器模型
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.GroupName">
+            <summary>
+            分组名
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.HttpMethod">
+            <summary>
+            请求方式
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.RelativePath">
+            <summary>
+            相对地址
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.AllowAnonymous">
+            <summary>
+            允许匿名
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiGroup">
             <summary>
             开放接口分组模型
+            </summary>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiGroup.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiGroup"/>
             </summary>
         </member>
         <member name="P:Furion.OpenApi.OpenApiGroup.Name">
@@ -14,24 +44,45 @@
             名称
             </summary>
         </member>
+        <member name="P:Furion.OpenApi.OpenApiGroup.Descriptions">
+            <summary>
+            开放接口描述器模型集合
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiModel">
             <summary>
             开放接口模型
             </summary>
         </member>
-        <member name="F:Furion.OpenApi.OpenApiModel._provider">
-            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/>
-        </member>
-        <member name="M:Furion.OpenApi.OpenApiModel.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider)">
+        <member name="M:Furion.OpenApi.OpenApiModel.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.OpenApi.OpenApiModel"/>
             </summary>
-            <param name="provider"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/></param>
         </member>
         <member name="P:Furion.OpenApi.OpenApiModel.Groups">
             <summary>
             开放接口分组模型集合
             </summary>
+        </member>
+        <member name="T:Furion.OpenApi.ApiDescriptionParser">
+            <summary>
+            API 描述器解析器
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.ApiDescriptionParser._provider">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/>
+        </member>
+        <member name="M:Furion.OpenApi.ApiDescriptionParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider)">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.ApiDescriptionParser"/>
+            </summary>
+            <param name="provider"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/></param>
+        </member>
+        <member name="M:Furion.OpenApi.ApiDescriptionParser.Parse">
+            <summary>
+            解析 API 描述器并返回开放接口模型
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>
