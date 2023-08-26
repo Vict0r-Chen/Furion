@@ -4,34 +4,34 @@
         <name>Furion.OpenApi</name>
     </assembly>
     <members>
-        <member name="T:Furion.OpenApi.OpenApiDescriptionModel">
+        <member name="T:Furion.OpenApi.OpenApiDescription">
             <summary>
-            开放接口描述器模型
+            开放接口描述器
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.GroupName">
+        <member name="P:Furion.OpenApi.OpenApiDescription.GroupName">
             <summary>
             分组名
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.HttpMethod">
+        <member name="P:Furion.OpenApi.OpenApiDescription.HttpMethod">
             <summary>
             请求方式
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.RelativePath">
+        <member name="P:Furion.OpenApi.OpenApiDescription.RelativePath">
             <summary>
             相对地址
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiDescriptionModel.AllowAnonymous">
+        <member name="P:Furion.OpenApi.OpenApiDescription.AllowAnonymous">
             <summary>
             允许匿名
             </summary>
         </member>
         <member name="T:Furion.OpenApi.OpenApiGroup">
             <summary>
-            开放接口分组模型
+            开放接口分组
             </summary>
         </member>
         <member name="M:Furion.OpenApi.OpenApiGroup.#ctor">
@@ -44,7 +44,7 @@
             名称
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiGroup.Descriptions">
+        <member name="P:Furion.OpenApi.OpenApiGroup.Tags">
             <summary>
             开放接口描述器模型集合
             </summary>
@@ -62,6 +62,26 @@
         <member name="P:Furion.OpenApi.OpenApiModel.Groups">
             <summary>
             开放接口分组模型集合
+            </summary>
+        </member>
+        <member name="T:Furion.OpenApi.OpenApiTag">
+            <summary>
+            开放接口标签
+            </summary>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiTag.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiTag"/>
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiTag.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiTag.Descriptions">
+            <summary>
+            开放接口描述器模型集合
             </summary>
         </member>
         <member name="T:Furion.OpenApi.ApiDescriptionParser">

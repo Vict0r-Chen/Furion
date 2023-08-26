@@ -13,6 +13,7 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Microsoft.AspNetCore.Mvc.Controllers;
+using System.Reflection;
 
 namespace Furion.OpenApi;
 
@@ -41,9 +42,7 @@ public sealed class ApiDescriptionParser
     {
         var openApiModel = new OpenApiModel();
 
-        var groups = _provider.ApiDescriptionGroups.Items;
-
-        foreach (var group in groups)
+        foreach (var group in _provider.ApiDescriptionGroups.Items)
         {
             var openApiGroup = new OpenApiGroup
             {
@@ -52,18 +51,26 @@ public sealed class ApiDescriptionParser
 
             foreach (var item in group.Items)
             {
-                var actionDescriptor = item.ActionDescriptor;
-                var controllerActionDescriptor = actionDescriptor as ControllerActionDescriptor;
+                var controllerName = (item.ActionDescriptor as ControllerActionDescriptor)?.ControllerName
+                    ?? Assembly.GetEntryAssembly()?.GetName()?.Name;
 
-                var openApiDescriptionModel = new OpenApiDescriptionModel
+                var openApiTag = openApiGroup.Tags.FirstOrDefault(u => u.Name == controllerName);
+                if (openApiTag is null)
+                {
+                    openApiTag = new OpenApiTag
+                    {
+                        Name = controllerName
+                    };
+                    openApiGroup.Tags.Add(openApiTag);
+                }
+
+                openApiTag.Descriptions.Add(new OpenApiDescription
                 {
                     GroupName = item.GroupName,
                     HttpMethod = item.HttpMethod,
                     RelativePath = item.RelativePath,
-                    AllowAnonymous = actionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any()
-                };
-
-                openApiGroup.Descriptions.Add(openApiDescriptionModel);
+                    AllowAnonymous = item.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any()
+                });
             }
 
             openApiModel.Groups.Add(openApiGroup);

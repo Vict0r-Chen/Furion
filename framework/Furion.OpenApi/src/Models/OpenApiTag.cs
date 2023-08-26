@@ -15,16 +15,16 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口分组
+/// 开放接口标签
 /// </summary>
-public sealed class OpenApiGroup
+public sealed class OpenApiTag
 {
     /// <summary>
-    /// <inheritdoc cref="OpenApiGroup"/>
+    /// <inheritdoc cref="OpenApiTag"/>
     /// </summary>
-    public OpenApiGroup()
+    public OpenApiTag()
     {
-        Tags = new();
+        Descriptions = new();
     }
 
     /// <summary>
@@ -35,5 +35,5 @@ public sealed class OpenApiGroup
     /// <summary>
     /// 开放接口描述器模型集合
     /// </summary>
-    public List<OpenApiTag> Tags { get; init; }
+    public List<OpenApiDescription> Descriptions { get; init; }
 }

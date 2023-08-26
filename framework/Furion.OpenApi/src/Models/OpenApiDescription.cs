@@ -15,9 +15,9 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口描述器模型
+/// 开放接口描述器
 /// </summary>
-public sealed class OpenApiDescriptionModel
+public sealed class OpenApiDescription
 {
     /// <summary>
     /// 分组名
