@@ -8,7 +8,7 @@
     "@ant-design/icons": "^5.2.5",
     "@lingui/react": "^4.4.0",
     "@mdx-js/loader": "^2.3.0",
-    "@monaco-editor/react": "^4.5.1",
+    "@monaco-editor/react": "^4.5.2",
     "@types/node": "^20.5.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",

@@ -8,7 +8,12 @@ import TextBox from "../../../components/textbox";
 
 const Container = styled.div``;
 
-const TitleContainer = styled.div``;
+const TitleContainer = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 2;
+`;
 
 const Path = styled(TextBox)`
   font-size: 18px;
@@ -45,6 +50,7 @@ const ApiDetail: React.FC = () => {
       <Category title="请求参数"></Category>
       <Category title="请求信息"></Category>
       <Category title="请求代码"></Category>
+      <Category title="请求历史"></Category>
       <Category title="响应码"></Category>
       <Category title="响应主体"></Category>
       <Category title="响应头部"></Category>

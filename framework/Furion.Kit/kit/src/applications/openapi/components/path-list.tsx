@@ -26,7 +26,7 @@ const PathList: React.FC = () => {
           justifyContent: "space-between",
         }}
       >
-        <SearchBox bordered defaultWidth={250} maxWidth={250} />
+        <SearchBox bordered defaultWidth={260} maxWidth={260} />
         <Button
           type="primary"
           size="small"
@@ -37,7 +37,7 @@ const PathList: React.FC = () => {
         <RouteItem httpMethod="GET" path="/Furion/OpenApi" />
         <RouteItem httpMethod="POST" path="/Hello/Get/{id}" active />
         <RouteItem httpMethod="DELETE" path="/Hello/Post" />
-        <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
+        <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" anonymous />
         <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
         <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />
         <RouteItem httpMethod="OPTIONS" path="/Hello/TestThrow" />
@@ -47,7 +47,7 @@ const PathList: React.FC = () => {
       <RouteCategory title="Furion.Tests" description="最小 API">
         <RouteItem httpMethod="GET" path="/furion/openapi" />
         <RouteItem httpMethod="POST" path="/Hello/Get" />
-        <RouteItem httpMethod="DELETE" path="/Hello/Post" />
+        <RouteItem httpMethod="DELETE" path="/Hello/Post" anonymous />
         <RouteItem httpMethod="PUT" path="/Hello/TestRetryPolicy" />
         <RouteItem httpMethod="HEAD" path="/Hello/TestFallbackPolicy" />
         <RouteItem httpMethod="PATCH" path="/Hello/TestTimeoutPolicy" />

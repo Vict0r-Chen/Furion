@@ -1,8 +1,9 @@
-import { Space } from "antd";
+import { Space, Tooltip } from "antd";
 import React from "react";
 import { css, styled } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";
+import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 
 const Container = styled(Flexbox)<{ $active?: boolean }>`
@@ -37,16 +38,23 @@ const Path = styled(TextBox)`
   }
 `;
 
+const AnonymousIcon = styled(IconFont)`
+  position: relative;
+  top: 1px;
+`;
+
 interface RouteItemProps {
   httpMethod: string;
   path: string;
   active?: boolean;
+  anonymous?: boolean;
 }
 
 const RouteItem: React.FC<RouteItemProps> = ({
   httpMethod,
   path,
   active = false,
+  anonymous = false,
 }) => {
   return (
     <Container $spaceBetween $active={active}>
@@ -59,6 +67,11 @@ const RouteItem: React.FC<RouteItemProps> = ({
         >
           {path}
         </Path>
+        {anonymous && (
+          <Tooltip title="允许匿名访问">
+            <AnonymousIcon $size={16} type="icon-anonymous" $color="#faad14" />
+          </Tooltip>
+        )}
       </Space>
     </Container>
   );
