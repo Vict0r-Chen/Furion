@@ -12,9 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Microsoft.AspNetCore.Mvc.Controllers;
-using System.Reflection;
-
 namespace Furion.OpenApi;
 
 /// <summary>
@@ -37,7 +34,7 @@ public sealed class ApiDescriptionParser
     /// <summary>
     /// 解析 API 描述器并返回开放接口模型
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="OpenApiModel"/></returns>
     public OpenApiModel Parse()
     {
         var openApiModel = new OpenApiModel();

@@ -107,7 +107,7 @@
             <summary>
             解析 API 描述器并返回开放接口模型
             </summary>
-            <returns></returns>
+            <returns><see cref="T:Furion.OpenApi.OpenApiModel"/></returns>
         </member>
     </members>
 </doc>

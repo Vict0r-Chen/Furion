@@ -12,9 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.OpenApi;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-
 namespace Furion.Kit;
 
 /// <summary>
@@ -52,15 +49,7 @@ internal static class KitEndpoints
 
         // 开放接口路由配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("openapi", (HttpContext httpContext, IApiDescriptionGroupCollectionProvider provider) =>
-            {
-                var apiDescriptionParser = new ApiDescriptionParser(provider);
-
-                httpContext.Response.AllowCors();
-                httpContext.Response.Headers.CacheControl = "no-cache";
-
-                return Results.Json(apiDescriptionParser.Parse());
-            });
+            .MapGet("openapi", OpenApiHandler);
     }
 
     /// <summary>
@@ -185,5 +174,29 @@ internal static class KitEndpoints
                 .Select(type => CreateComponentModel(type, dependencies))
                 .ToList()
         };
+    }
+
+    /// <summary>
+    /// 开放接口处理程序
+    /// </summary>
+    /// <param name="httpContext"><see cref="HttpContext"/></param>
+    /// <param name="provider"><see cref="IApiDescriptionGroupCollectionProvider"/></param>
+    /// <returns><see cref="IResult"/></returns>
+    internal static IResult OpenApiHandler(HttpContext httpContext, IApiDescriptionGroupCollectionProvider provider)
+    {
+        // 初始化 API 描述器解析器
+        var apiDescriptionParser = new ApiDescriptionParser(provider);
+
+        // 解析 API 描述器并返回开放接口模型
+        var openModel = apiDescriptionParser.Parse();
+
+        // 配置允许跨域响应头
+        httpContext.Response.AllowCors();
+
+        // 设置响应头，不缓存请求
+        httpContext.Response.Headers.CacheControl = "no-cache";
+
+        // 返回 application/json 响应流数据
+        return Results.Json(openModel);
     }
 }

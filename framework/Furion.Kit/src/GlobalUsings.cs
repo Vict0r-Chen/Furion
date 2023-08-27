@@ -15,9 +15,11 @@
 global using Furion.Component;
 global using Furion.Exception;
 global using Furion.Kit;
+global using Furion.OpenApi;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Http.HttpResults;
+global using Microsoft.AspNetCore.Mvc.ApiExplorer;
 global using Microsoft.AspNetCore.Mvc.Controllers;
 global using Microsoft.AspNetCore.Mvc.Diagnostics;
 global using Microsoft.AspNetCore.Routing;

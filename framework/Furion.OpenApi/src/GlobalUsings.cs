@@ -14,4 +14,6 @@
 
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc.ApiExplorer;
+global using Microsoft.AspNetCore.Mvc.Controllers;
+global using System.Reflection;
 global using System.Runtime.CompilerServices;
