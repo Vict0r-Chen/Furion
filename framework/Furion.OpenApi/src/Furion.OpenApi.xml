@@ -69,6 +69,31 @@
             开放接口分组模型集合
             </summary>
         </member>
+        <member name="T:Furion.OpenApi.OpenApiParameter">
+            <summary>
+            开放接口参数
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiParameter.Name">
+            <summary>
+            参数名
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiParameter.Type">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiParameter.In">
+            <summary>
+            位置
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiParameter.Required">
+            <summary>
+            必填
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiTag">
             <summary>
             开放接口标签
