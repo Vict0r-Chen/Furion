@@ -69,6 +69,11 @@
             开放接口分组模型集合
             </summary>
         </member>
+        <member name="T:Furion.OpenApi.OpenApiParameter">
+            <summary>
+            开放接口参数
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiSchema">
             <summary>
             开放接口架构
