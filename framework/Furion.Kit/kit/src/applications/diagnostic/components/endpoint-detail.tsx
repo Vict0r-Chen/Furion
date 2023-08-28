@@ -122,6 +122,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
       </Category>
       <Category title="Cookies">
         {props.cookies &&
+          Object.keys(props.cookies).length > 0 &&
           Object.keys(props.cookies).map((item) => (
             <ListItem key={item} title={item} content={props.cookies![item]} />
           ))}
