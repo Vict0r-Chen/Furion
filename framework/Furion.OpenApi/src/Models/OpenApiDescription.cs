@@ -43,4 +43,9 @@ public sealed class OpenApiDescription
     /// 允许匿名
     /// </summary>
     public bool AllowAnonymous { get; set; }
+
+    /// <summary>
+    /// 参数
+    /// </summary>
+    public List<OpenApiParameter>? Parameters { get; set; }
 }

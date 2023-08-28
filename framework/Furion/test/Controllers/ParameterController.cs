@@ -12,40 +12,46 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.OpenApi;
+using Furion.Tests.Models;
 
-/// <summary>
-/// 开放接口参数
-/// </summary>
-public sealed class OpenApiParameter
+namespace Furion.Tests.Controllers;
+
+[ApiController]
+[Route("[controller]/[action]")]
+public class ParameterController
 {
-    /// <summary>
-    /// 参数名称
-    /// </summary>
-    public string? Name { get; set; }
+    [HttpGet]
+    public void FromQuery([FromQuery] string name, [FromQuery] int id)
+    {
+    }
 
-    /// <summary>
-    /// 参数类型
-    /// </summary>
-    public string? Type { get; set; }
+    [HttpGet]
+    public void FromRoute([FromRoute] string name, [FromRoute] int id)
+    {
+    }
 
-    /// <summary>
-    /// 参数输入方式
-    /// </summary>
-    public string? From { get; set; }
+    [HttpGet("{name}/{id}")]
+    public void FromRoute2([FromRoute] string name, [FromRoute] int id)
+    {
+    }
 
-    /// <summary>
-    /// 默认值
-    /// </summary>
-    public object? DefaultValue { get; set; }
+    [HttpPost("{name}/{cid}")]
+    public void FromRoute3(string name, int cid)
+    {
+    }
 
-    /// <summary>
-    /// 架构标识
-    /// </summary>
-    public string? SchemaId { get; set; }
+    [HttpGet]
+    public void FromQuery2(Student stu)
+    {
+    }
 
-    /// <summary>
-    /// 是否在路由地址上
-    /// </summary>
-    public bool InRoute { get; set; }
+    [HttpGet]
+    public void FromQuery3([FromQuery] Student stu)
+    {
+    }
+
+    [HttpGet("stu")]
+    public void FromRoute4([FromRoute] Student stu)
+    {
+    }
 }

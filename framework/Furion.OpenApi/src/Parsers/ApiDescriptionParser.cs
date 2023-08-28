@@ -62,19 +62,48 @@ public sealed class ApiDescriptionParser
                     openApiGroup.Tags.Add(openApiTag);
                 }
 
-                openApiTag.Descriptions.Add(new OpenApiDescription
+                var openApiDescription = new OpenApiDescription
                 {
                     Id = actionDescriptor.Id,
                     GroupName = item.GroupName ?? projectName,
                     HttpMethod = item.HttpMethod,
                     RelativePath = item.RelativePath,
                     AllowAnonymous = actionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any()
-                });
+                };
+
+                ParseParameters(item.ParameterDescriptions, openApiDescription);
+
+                openApiTag.Descriptions.Add(openApiDescription);
             }
 
             openApiModel.Groups.Add(openApiGroup);
         }
 
         return openApiModel;
+    }
+
+    public void ParseParameters(IList<ApiParameterDescription> parameterDescriptions, OpenApiDescription openApiDescription)
+    {
+        if (parameterDescriptions is null or { Count: 0 })
+        {
+            return;
+        }
+
+        var openApiParameters = new List<OpenApiParameter>();
+        foreach (var parameterDescription in parameterDescriptions)
+        {
+            var openApiParameter = new OpenApiParameter
+            {
+                Name = parameterDescription.Name,
+                From = parameterDescription.Source.Id,
+                DefaultValue = parameterDescription.DefaultValue,
+                Type = parameterDescription.Type.ToString(),
+                InRoute = parameterDescription.RouteInfo is not null
+            };
+
+            openApiParameters.Add(openApiParameter);
+        }
+
+        openApiDescription.Parameters = openApiParameters;
     }
 }
