@@ -22,13 +22,18 @@ public sealed class ApiDescriptionParser
     /// <inheritdoc cref="IApiDescriptionGroupCollectionProvider"/>
     internal readonly IApiDescriptionGroupCollectionProvider _provider;
 
+    internal readonly JsonOptions _jsonOptions;
+
     /// <summary>
     /// <inheritdoc cref="ApiDescriptionParser"/>
     /// </summary>
     /// <param name="provider"><see cref="IApiDescriptionGroupCollectionProvider"/></param>
-    public ApiDescriptionParser(IApiDescriptionGroupCollectionProvider provider)
+    /// <param name="options"><see cref="IOptions{TOptions}"/></param>
+    public ApiDescriptionParser(IApiDescriptionGroupCollectionProvider provider
+        , IOptions<JsonOptions> options)
     {
         _provider = provider;
+        _jsonOptions = options.Value;
     }
 
     /// <summary>
@@ -50,7 +55,7 @@ public sealed class ApiDescriptionParser
             foreach (var item in group.Items)
             {
                 var actionDescriptor = item.ActionDescriptor;
-                var controllerName = (actionDescriptor as ControllerActionDescriptor)?.ControllerName ?? projectName;
+                var controllerName = (actionDescriptor as ControllerActionDescriptor)?.ControllerName ?? actionDescriptor.RouteValues["controller"] ?? projectName;
 
                 var openApiTag = openApiGroup.Tags.FirstOrDefault(u => u.Name == controllerName);
                 if (openApiTag is null)
@@ -107,7 +112,15 @@ public sealed class ApiDescriptionParser
             }
             else
             {
+                var properties = parameterDescription.ModelMetadata.Properties;
 
+                foreach (var property in properties)
+                {
+                    if (property.ContainerMetadata?.ModelType == parameterDescription.ModelMetadata.ModelType)
+                    {
+
+                    }
+                }
             }
         }
 

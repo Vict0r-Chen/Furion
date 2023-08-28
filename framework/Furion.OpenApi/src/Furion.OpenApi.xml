@@ -162,11 +162,12 @@
         <member name="F:Furion.OpenApi.ApiDescriptionParser._provider">
             <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/>
         </member>
-        <member name="M:Furion.OpenApi.ApiDescriptionParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider)">
+        <member name="M:Furion.OpenApi.ApiDescriptionParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider,Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Mvc.JsonOptions})">
             <summary>
             <inheritdoc cref="T:Furion.OpenApi.ApiDescriptionParser"/>
             </summary>
             <param name="provider"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/></param>
+            <param name="options"><see cref="T:Microsoft.Extensions.Options.IOptions`1"/></param>
         </member>
         <member name="M:Furion.OpenApi.ApiDescriptionParser.Parse">
             <summary>
