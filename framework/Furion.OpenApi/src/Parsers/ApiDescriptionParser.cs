@@ -92,16 +92,23 @@ public sealed class ApiDescriptionParser
         var openApiParameters = new List<OpenApiParameter>();
         foreach (var parameterDescription in parameterDescriptions)
         {
-            var openApiParameter = new OpenApiParameter
+            if (parameterDescription.Source.Id != "Body" && parameterDescription.ModelMetadata.IsBindingAllowed)
             {
-                Name = parameterDescription.Name,
-                From = parameterDescription.Source.Id,
-                DefaultValue = parameterDescription.DefaultValue,
-                Type = parameterDescription.Type.ToString(),
-                InRoute = parameterDescription.RouteInfo is not null
-            };
+                var openApiParameter = new OpenApiParameter
+                {
+                    Name = parameterDescription.Name,
+                    From = parameterDescription.Source.Id,
+                    DefaultValue = parameterDescription.DefaultValue,
+                    Type = parameterDescription.Type.ToString(),
+                    InRoute = parameterDescription.RouteInfo is not null
+                };
 
-            openApiParameters.Add(openApiParameter);
+                openApiParameters.Add(openApiParameter);
+            }
+            else
+            {
+
+            }
         }
 
         openApiDescription.Parameters = openApiParameters;
