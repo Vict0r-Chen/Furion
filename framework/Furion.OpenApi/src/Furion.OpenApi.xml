@@ -51,12 +51,12 @@
         </member>
         <member name="F:Furion.OpenApi.DataTypes.Record">
             <summary>
-            记录类型（字典）
+            记录值（字典）
             </summary>
         </member>
         <member name="F:Furion.OpenApi.DataTypes.Tuple">
             <summary>
-            元组
+            元组值
             </summary>
         </member>
         <member name="F:Furion.OpenApi.DataTypes.Array">

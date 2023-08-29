@@ -34,19 +34,43 @@ public static class DataTypeParser
 
         return type switch
         {
-            _ when typeof(string).IsAssignableFrom(type) || typeof(char).IsAssignableFrom(type) => DataTypes.String,
+            // 字符串
+            _ when typeof(string).IsAssignableFrom(type)
+                || typeof(char).IsAssignableFrom(type) => DataTypes.String,
+            // 数值
             _ when type.IsNumeric() => DataTypes.Number,
+            // 布尔值
             _ when typeof(bool).IsAssignableFrom(type) => DataTypes.Boolean,
-            _ when typeof(DateTime).IsAssignableFrom(type) || typeof(DateTimeOffset).IsAssignableFrom(type) || typeof(DateOnly).IsAssignableFrom(type) => DataTypes.Date,
+            // 日期
+            _ when typeof(DateTime).IsAssignableFrom(type)
+                || typeof(DateTimeOffset).IsAssignableFrom(type)
+                || typeof(DateOnly).IsAssignableFrom(type) => DataTypes.Date,
+            // 时间
             _ when typeof(TimeOnly).IsAssignableFrom(type) => DataTypes.Time,
+            // 枚举
             _ when type.IsEnum => DataTypes.Enum,
+            // 二进制
             _ when typeof(IFormFile).IsAssignableFrom(type) => DataTypes.Binary,
+            // 二进制集合
             _ when IsFormFileCollection(type) => DataTypes.BinaryCollection,
+            // 记录值
             _ when type.IsDictionary() => DataTypes.Record,
+            // 元组值
             _ when typeof(ITuple).IsAssignableFrom(type) => DataTypes.Tuple,
-            _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
-            _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
-            _ when type.IsValueType && !type.IsPrimitive && !type.IsEnum => DataTypes.Struct,
+            // 数组
+            _ when type.IsArray
+                || (typeof(IEnumerable).IsAssignableFrom(type)
+                    && type.IsGenericType
+                    && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
+            // 对象
+            _ when type != typeof(object)
+                && type.IsClass
+                && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
+            // 结构
+            _ when type.IsValueType
+                && !type.IsPrimitive
+                && !type.IsEnum => DataTypes.Struct,
+            // 缺省值
             _ => DataTypes.Any
         };
     }

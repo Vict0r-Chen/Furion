@@ -60,12 +60,12 @@ public enum DataTypes
     BinaryCollection,
 
     /// <summary>
-    /// 记录类型（字典）
+    /// 记录值（字典）
     /// </summary>
     Record,
 
     /// <summary>
-    /// 元组
+    /// 元组值
     /// </summary>
     Tuple,
 
