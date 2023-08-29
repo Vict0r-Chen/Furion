@@ -12,11 +12,32 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.OpenApi;
+namespace System;
 
 /// <summary>
-/// 开放接口参数
+/// <see cref="string"/> 拓展类
 /// </summary>
-public sealed class OpenApiParameter : OpenApiProperty
+internal static class StringExtensions
 {
+    /// <summary>
+    /// 将字符串首字母转换为小写
+    /// </summary>
+    /// <param name="input"><see cref="string"/></param>
+    /// <returns><see cref="string"/></returns>
+    internal static string? ToLowerFirstLetter(this string? input)
+    {
+        // 空检查
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return input;
+        }
+
+        // 初始化字符串构建器
+        var stringBuilder = new StringBuilder(input);
+
+        // 设置字符串构建器首个字符为小写
+        stringBuilder[0] = char.ToLower(stringBuilder[0]);
+
+        return stringBuilder.ToString();
+    }
 }

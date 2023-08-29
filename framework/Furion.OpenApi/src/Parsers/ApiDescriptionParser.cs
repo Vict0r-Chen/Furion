@@ -94,34 +94,19 @@ public sealed class ApiDescriptionParser
             return;
         }
 
-        var openApiParameters = new List<OpenApiProperty>();
+        var openApiRouteParameters = new List<OpenApiRouteParameter>();
         foreach (var parameterDescription in parameterDescriptions)
         {
-            if (parameterDescription.ModelMetadata is null)
+            var openApiRouteParameter = new OpenApiRouteParameterParser(parameterDescription).Parse();
+
+            if (openApiRouteParameter is null)
             {
                 continue;
             }
 
-            if (parameterDescription.Source.Id != "Body" && parameterDescription.ModelMetadata.IsBindingAllowed)
-            {
-                var openApiParameter = new ModelMetadataParser(parameterDescription.ModelMetadata, parameterDescription);
-
-                openApiParameters.Add(openApiParameter.Parse()!);
-            }
-            else
-            {
-                var properties = parameterDescription.ModelMetadata.Properties;
-
-                foreach (var property in properties)
-                {
-                    if (property.ContainerMetadata?.ModelType == parameterDescription.ModelMetadata.ModelType)
-                    {
-
-                    }
-                }
-            }
+            openApiRouteParameters.Add(openApiRouteParameter);
         }
 
-        openApiDescription.Parameters = openApiParameters;
+        openApiDescription.Parameters = openApiRouteParameters;
     }
 }

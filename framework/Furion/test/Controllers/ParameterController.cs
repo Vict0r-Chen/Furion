@@ -13,6 +13,8 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 using Furion.Tests.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel;
 
 namespace Furion.Tests.Controllers;
 
@@ -52,6 +54,16 @@ public class ParameterController
 
     [HttpGet("{stu.Name}")]
     public void FromRoute4([FromRoute] Student stu)
+    {
+    }
+
+    [HttpGet]
+    public void FromNullable([FromQuery, Required] string name, [FromQuery] int? id, [FromQuery] int cid)
+    {
+    }
+
+    [HttpDelete]
+    public void FromObject([FromQuery, Description("这里是描述")] object value)
     {
     }
 }

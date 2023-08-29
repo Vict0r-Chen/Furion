@@ -104,6 +104,9 @@
             参数
             </summary>
         </member>
+        <member name="M:Furion.OpenApi.OpenApiDescription.ToString">
+            <inheritdoc />
+        </member>
         <member name="T:Furion.OpenApi.OpenApiGroup">
             <summary>
             开放接口分组
@@ -137,11 +140,6 @@
         <member name="P:Furion.OpenApi.OpenApiModel.Groups">
             <summary>
             开放接口分组模型集合
-            </summary>
-        </member>
-        <member name="T:Furion.OpenApi.OpenApiParameter">
-            <summary>
-            开放接口参数
             </summary>
         </member>
         <member name="T:Furion.OpenApi.OpenApiProperty">
@@ -207,6 +205,62 @@
         <member name="P:Furion.OpenApi.OpenApiProperty.Properties">
             <summary>
             子属性集合
+            </summary>
+        </member>
+        <member name="T:Furion.OpenApi.OpenApiRouteParameter">
+            <summary>
+            开放接口路由参数
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.DefaultValue">
+            <summary>
+            默认值
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.AllowNullValue">
+            <summary>
+            允许空值
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.IsRequired">
+            <summary>
+            必填
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.DataType">
+            <inheritdoc cref="T:Furion.OpenApi.DataTypes"/>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.RuntimeType">
+            <summary>
+            运行时类型
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.TypeCode">
+            <inheritdoc cref="P:Furion.OpenApi.OpenApiRouteParameter.TypeCode"/>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.BindingSource">
+            <summary>
+            绑定来源
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.Patterns">
+            <summary>
+            验证格式
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiRouteParameter.Properties">
+            <summary>
+            附加数据
             </summary>
         </member>
         <member name="T:Furion.OpenApi.OpenApiSchema">
@@ -332,6 +386,26 @@
         <member name="M:Furion.OpenApi.ModelMetadataParser.ParseForm">
             <summary>
             解析 Form 模型元数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Furion.OpenApi.OpenApiRouteParameterParser">
+            <summary>
+            开放接口路由参数解析器
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.OpenApiRouteParameterParser._apiParameterDescription">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiRouteParameterParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription)">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiRouteParameterParser"/>
+            </summary>
+            <param name="apiParameterDescription"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/></param>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiRouteParameterParser.Parse">
+            <summary>
+            解析 <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/> 并返回开放接口路由参数
             </summary>
             <returns></returns>
         </member>

@@ -12,9 +12,6 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-
 namespace Furion.Kit;
 
 /// <summary>
@@ -200,7 +197,16 @@ internal static class KitEndpoints
         // 设置响应头，不缓存请求
         httpContext.Response.Headers.CacheControl = "no-cache";
 
+        // 初始化 JSON 序列化选项
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+            // DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
+        jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
         // 返回 application/json 响应流数据
-        return Results.Json(openModel);
+        return Results.Json(openModel, jsonSerializerOptions);
     }
 }

@@ -24,8 +24,14 @@ public static class DataTypeParser
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="DataTypes"/></returns>
-    public static DataTypes Parse(Type type)
+    public static DataTypes Parse(Type? type)
     {
+        // 空检查
+        if (type is null)
+        {
+            return DataTypes.Any;
+        }
+
         return type switch
         {
             _ when typeof(string).IsAssignableFrom(type) || typeof(char).IsAssignableFrom(type) => DataTypes.String,
@@ -38,7 +44,7 @@ public static class DataTypeParser
             _ when typeof(IFormCollection).IsAssignableFrom(type) => DataTypes.BinaryCollection,
             _ when type.IsDictionary() => DataTypes.Record,
             _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
-            _ when type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
+            _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
             _ => DataTypes.Any
         };
     }

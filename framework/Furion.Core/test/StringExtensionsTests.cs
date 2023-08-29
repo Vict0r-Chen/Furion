@@ -12,13 +12,19 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-global using Furion;
-global using Microsoft.Extensions.DependencyInjection.Extensions;
-global using System.Collections;
-global using System.Collections.Concurrent;
-global using System.ComponentModel;
-global using System.Diagnostics;
-global using System.Reflection;
-global using System.Reflection.Emit;
-global using System.Runtime.CompilerServices;
-global using System.Text;
+namespace Furion.Core.Tests;
+
+public class StringExtensionsTests
+{
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData("", "")]
+    [InlineData("   ", "   ")]
+    [InlineData("Furion", "furion")]
+    [InlineData("furion", "furion")]
+    [InlineData("1furion", "1furion")]
+    public void ToLowerFirstLetter_ReturnOK(string? value, string? expected)
+    {
+        Assert.Equal(expected, value.ToLowerFirstLetter());
+    }
+}

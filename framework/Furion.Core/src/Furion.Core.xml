@@ -456,6 +456,18 @@
             <param name="count">数量</param>
             <returns><see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="T:System.StringExtensions">
+            <summary>
+            <see cref="T:System.String"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:System.StringExtensions.ToLowerFirstLetter(System.String)">
+            <summary>
+            将字符串首字母转换为小写
+            </summary>
+            <param name="input"><see cref="T:System.String"/></param>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="T:System.TypeExtensions">
             <summary>
             <see cref="T:System.Type"/> 拓展类
