@@ -168,8 +168,8 @@ internal static class TypeExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool IsInteger(this Type type)
     {
-        // 如果是浮点类型则直接返回
-        if (type.IsDecimal())
+        // 如果是枚举或浮点类型则直接返回
+        if (type.IsEnum || type.IsDecimal())
         {
             return false;
         }
@@ -214,6 +214,48 @@ internal static class TypeExtensions
     {
         return type.IsInteger()
             || type.IsDecimal();
+    }
+
+    /// <summary>
+    /// 检查类型是否是字典类型
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsDictionary(this Type type)
+    {
+        // 检查是否是 IDictionary<,> 派生类型
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>)
+            || type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
+        {
+            return true;
+        }
+
+        // 检查 KeyValuePair<,> 集合类型
+        if (typeof(IEnumerable).IsAssignableFrom(type))
+        {
+            // 检查是否是 KeyValuePair<,> 数组类型
+            if (type.IsArray)
+            {
+                var elementType = type.GetElementType();
+                if (elementType is not null
+                    && elementType.IsGenericType
+                    && elementType.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+                {
+                    return true;
+                }
+            }
+            // 检查是否是 KeyValuePair<,> 集合类型
+            else
+            {
+                if (type is { IsGenericType: true, GenericTypeArguments.Length: 1 }
+                    && type.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

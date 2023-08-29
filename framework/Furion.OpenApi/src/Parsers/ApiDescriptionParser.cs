@@ -94,21 +94,14 @@ public sealed class ApiDescriptionParser
             return;
         }
 
-        var openApiParameters = new List<OpenApiParameter>();
+        var openApiParameters = new List<OpenApiProperty>();
         foreach (var parameterDescription in parameterDescriptions)
         {
             if (parameterDescription.Source.Id != "Body" && parameterDescription.ModelMetadata.IsBindingAllowed)
             {
-                var openApiParameter = new OpenApiParameter
-                {
-                    Name = parameterDescription.Name,
-                    From = parameterDescription.Source.Id,
-                    DefaultValue = parameterDescription.DefaultValue,
-                    Type = parameterDescription.Type.ToString(),
-                    InRoute = parameterDescription.RouteInfo is not null
-                };
+                var openApiParameter = new ModelMetadataParser(parameterDescription.ModelMetadata, parameterDescription);
 
-                openApiParameters.Add(openApiParameter);
+                openApiParameters.Add(openApiParameter.Parse()!);
             }
             else
             {

@@ -13,9 +13,13 @@
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.ApiExplorer;
 global using Microsoft.AspNetCore.Mvc.Controllers;
+global using Microsoft.AspNetCore.Mvc.ModelBinding;
 global using Microsoft.Extensions.Options;
+global using System.Collections;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
+global using System.Text.Json.Serialization;

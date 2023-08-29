@@ -27,7 +27,9 @@ public abstract class AbstractType
 { }
 
 public enum EnumType
-{ }
+{
+    None
+}
 
 public record RecordType { }
 

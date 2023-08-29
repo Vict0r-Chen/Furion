@@ -244,6 +244,7 @@ public class TypeExtensionsTests
     [InlineData((byte)1, true)]
     [InlineData(-1, true)]
     [InlineData(0, true)]
+    [InlineData(EnumType.None, false)]
     public void IsInteger_ReturnOK(object value, bool isInteger)
     {
         var result = value.GetType().IsInteger();
@@ -261,6 +262,7 @@ public class TypeExtensionsTests
     [InlineData(-1, false)]
     [InlineData(0, false)]
     [InlineData(-123.33, true)]
+    [InlineData(EnumType.None, false)]
     public void IsDecimal_ReturnOK(object value, bool isDecimal)
     {
         var result = value.GetType().IsDecimal();
@@ -277,10 +279,30 @@ public class TypeExtensionsTests
     [InlineData((byte)1, true)]
     [InlineData(-1, true)]
     [InlineData(0, true)]
+    [InlineData(EnumType.None, false)]
     public void IsNumeric_ReturnOK(object value, bool isNumeric)
     {
         var result = value.GetType().IsNumeric();
         Assert.Equal(isNumeric, result);
+    }
+
+    [Fact]
+    public void IsDictionary_ReturnOK()
+    {
+        var dictionary = new Dictionary<string, string>();
+        IDictionary<string, string> dictionary2 = new Dictionary<string, string>();
+        IDictionary<string, string> dictionary3 = new ConcurrentDictionary<string, string>();
+
+        var keyValuePairs = new List<KeyValuePair<string, string>>();
+        var keyValuePairs2 = new KeyValuePair<string, string>[1];
+        ICollection<KeyValuePair<string, string>> keyValuePairs3 = new List<KeyValuePair<string, string>>();
+
+        Assert.True(dictionary.GetType().IsDictionary());
+        Assert.True(dictionary2.GetType().IsDictionary());
+        Assert.True(dictionary3.GetType().IsDictionary());
+        Assert.True(keyValuePairs.GetType().IsDictionary());
+        Assert.True(keyValuePairs2.GetType().IsDictionary());
+        Assert.True(keyValuePairs3.GetType().IsDictionary());
     }
 
     [Fact]

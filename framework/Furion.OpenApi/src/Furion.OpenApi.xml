@@ -4,6 +4,71 @@
         <name>Furion.OpenApi</name>
     </assembly>
     <members>
+        <member name="T:Furion.OpenApi.DataTypes">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.String">
+            <summary>
+            字符串
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Number">
+            <summary>
+            数值
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Boolean">
+            <summary>
+            布尔值
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Date">
+            <summary>
+            日期
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Time">
+            <summary>
+            时间
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Array">
+            <summary>
+            数组
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Enum">
+            <summary>
+            枚举
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Binary">
+            <summary>
+            二进制（如文件）
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.BinaryCollection">
+            <summary>
+            二进制集合
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Record">
+            <summary>
+            记录类型（字典）
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Object">
+            <summary>
+            对象
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Any">
+            <summary>
+            Any
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiDescription">
             <summary>
             开放接口描述器
@@ -109,6 +174,71 @@
             是否在路由地址上
             </summary>
         </member>
+        <member name="T:Furion.OpenApi.OpenApiProperty">
+            <summary>
+            开放接口属性
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.DefaultValue">
+            <summary>
+            默认值
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.AllowNullValue">
+            <summary>
+            允许空值
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.IsRequired">
+            <summary>
+            是否必填
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.AsPathParameter">
+            <summary>
+            作为路径参数
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.DataType">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.Format">
+            <summary>
+            格式化
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.SourceId">
+            <summary>
+            绑定源 Id
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.RuntimeType">
+            <summary>
+            运行时类型
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.Patterns">
+            <summary>
+            正则表达式集合
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiProperty.Properties">
+            <summary>
+            子属性集合
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiSchema">
             <summary>
             开放接口架构
@@ -174,6 +304,66 @@
             解析 API 描述器并返回开放接口模型
             </summary>
             <returns><see cref="T:Furion.OpenApi.OpenApiModel"/></returns>
+        </member>
+        <member name="T:Furion.OpenApi.DataTypeParser">
+            <summary>
+            数据类型解析器
+            </summary>
+        </member>
+        <member name="M:Furion.OpenApi.DataTypeParser.Parse(System.Type)">
+            <summary>
+            解析数据类型
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:Furion.OpenApi.DataTypes"/></returns>
+        </member>
+        <member name="T:Furion.OpenApi.ModelMetadataParser">
+            <summary>
+            模型元数据解析器
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.ModelMetadataParser._modelMetadata">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/>
+        </member>
+        <member name="F:Furion.OpenApi.ModelMetadataParser._apiParameterDescription">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/>
+        </member>
+        <member name="M:Furion.OpenApi.ModelMetadataParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription)">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.ModelMetadataParser"/>
+            </summary>
+            <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+            <param name="apiParameterDescription"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/></param>
+        </member>
+        <member name="M:Furion.OpenApi.ModelMetadataParser.Parse">
+            <summary>
+            解析模型元数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseQueryAndPath">
+            <summary>
+            解析 Query 和 Path 模型元数据
+            </summary>
+            <returns><see cref="T:Furion.OpenApi.OpenApiProperty"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseBody">
+            <summary>
+            解析 Body 模型元数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseHeader">
+            <summary>
+            解析 Header 模型元数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseForm">
+            <summary>
+            解析 Form 模型元数据
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

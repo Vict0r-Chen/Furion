@@ -15,37 +15,67 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口描述器
+/// 数据类型
 /// </summary>
-public sealed class OpenApiDescription
+public enum DataTypes
 {
     /// <summary>
-    /// 标识
+    /// 字符串
     /// </summary>
-    public string? Id { get; set; }
+    String,
 
     /// <summary>
-    /// 分组名
+    /// 数值
     /// </summary>
-    public string? GroupName { get; set; }
+    Number,
 
     /// <summary>
-    /// 请求方式
+    /// 布尔值
     /// </summary>
-    public string? HttpMethod { get; set; }
+    Boolean,
 
     /// <summary>
-    /// 相对地址
+    /// 日期
     /// </summary>
-    public string? RelativePath { get; set; }
+    Date,
 
     /// <summary>
-    /// 允许匿名
+    /// 时间
     /// </summary>
-    public bool AllowAnonymous { get; set; }
+    Time,
 
     /// <summary>
-    /// 参数
+    /// 数组
     /// </summary>
-    public List<OpenApiProperty>? Parameters { get; set; }
+    Array,
+
+    /// <summary>
+    /// 枚举
+    /// </summary>
+    Enum,
+
+    /// <summary>
+    /// 二进制（如文件）
+    /// </summary>
+    Binary,
+
+    /// <summary>
+    /// 二进制集合
+    /// </summary>
+    BinaryCollection,
+
+    /// <summary>
+    /// 记录类型（字典）
+    /// </summary>
+    Record,
+
+    /// <summary>
+    /// 对象
+    /// </summary>
+    Object,
+
+    /// <summary>
+    /// Any
+    /// </summary>
+    Any
 }

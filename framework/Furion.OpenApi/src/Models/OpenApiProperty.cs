@@ -15,37 +15,68 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口描述器
+/// 开放接口属性
 /// </summary>
-public sealed class OpenApiDescription
+public sealed class OpenApiProperty
 {
     /// <summary>
-    /// 标识
+    /// 名称
     /// </summary>
-    public string? Id { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
-    /// 分组名
+    /// 描述
     /// </summary>
-    public string? GroupName { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
-    /// 请求方式
+    /// 默认值
     /// </summary>
-    public string? HttpMethod { get; set; }
+    public object? DefaultValue { get; set; }
 
     /// <summary>
-    /// 相对地址
+    /// 允许空值
     /// </summary>
-    public string? RelativePath { get; set; }
+    public bool AllowNullValue { get; set; }
 
     /// <summary>
-    /// 允许匿名
+    /// 是否必填
     /// </summary>
-    public bool AllowAnonymous { get; set; }
+    public bool IsRequired { get; set; }
 
     /// <summary>
-    /// 参数
+    /// 作为路径参数
     /// </summary>
-    public List<OpenApiProperty>? Parameters { get; set; }
+    public bool AsPathParameter { get; set; }
+
+    /// <summary>
+    /// 数据类型
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public DataTypes DataType { get; set; }
+
+    /// <summary>
+    /// 格式化
+    /// </summary>
+    public string? Format { get; set; }
+
+    /// <summary>
+    /// 绑定源 Id
+    /// </summary>
+    public string? SourceId { get; set; }
+
+    /// <summary>
+    /// 运行时类型
+    /// </summary>
+    public string? RuntimeType { get; set; }
+
+    /// <summary>
+    /// 正则表达式集合
+    /// </summary>
+    public IList<string>? Patterns { get; set; }
+
+    /// <summary>
+    /// 子属性集合
+    /// </summary>
+    public IList<OpenApiProperty>? Properties { get; set; }
 }
