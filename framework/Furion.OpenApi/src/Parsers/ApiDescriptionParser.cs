@@ -54,6 +54,8 @@ public sealed class ApiDescriptionParser
 
             foreach (var item in group.Items)
             {
+                ArgumentNullException.ThrowIfNull(item.HttpMethod);
+
                 var actionDescriptor = item.ActionDescriptor;
                 var controllerName = (actionDescriptor as ControllerActionDescriptor)?.ControllerName ?? actionDescriptor.RouteValues["controller"] ?? projectName;
 
