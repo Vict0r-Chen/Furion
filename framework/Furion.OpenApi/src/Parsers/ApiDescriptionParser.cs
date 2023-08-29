@@ -97,6 +97,11 @@ public sealed class ApiDescriptionParser
         var openApiParameters = new List<OpenApiProperty>();
         foreach (var parameterDescription in parameterDescriptions)
         {
+            if (parameterDescription.ModelMetadata is null)
+            {
+                continue;
+            }
+
             if (parameterDescription.Source.Id != "Body" && parameterDescription.ModelMetadata.IsBindingAllowed)
             {
                 var openApiParameter = new ModelMetadataParser(parameterDescription.ModelMetadata, parameterDescription);

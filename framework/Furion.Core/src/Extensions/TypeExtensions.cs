@@ -223,20 +223,23 @@ internal static class TypeExtensions
     /// <returns><see cref="bool"/></returns>
     internal static bool IsDictionary(this Type type)
     {
-        // 检查是否是 IDictionary<,> 派生类型
+        // 如果是 IDictionary<,> 类型则直接返回
         if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IDictionary<,>)
             || type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
         {
             return true;
         }
 
-        // 检查 KeyValuePair<,> 集合类型
+        // 处理 KeyValuePair<,> 集合类型
         if (typeof(IEnumerable).IsAssignableFrom(type))
         {
             // 检查是否是 KeyValuePair<,> 数组类型
             if (type.IsArray)
             {
+                // 获取数组元素类型
                 var elementType = type.GetElementType();
+
+                // 检查元素类型是否是 KeyValuePair<,> 类型
                 if (elementType is not null
                     && elementType.IsGenericType
                     && elementType.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
@@ -247,6 +250,7 @@ internal static class TypeExtensions
             // 检查是否是 KeyValuePair<,> 集合类型
             else
             {
+                // 检查集合项类型是否是 KeyValuePair<,> 类型
                 if (type is { IsGenericType: true, GenericTypeArguments.Length: 1 }
                     && type.GenericTypeArguments[0].GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
                 {
