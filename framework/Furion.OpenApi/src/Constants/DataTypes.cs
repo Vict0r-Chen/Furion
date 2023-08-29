@@ -45,11 +45,6 @@ public enum DataTypes
     Time,
 
     /// <summary>
-    /// 数组
-    /// </summary>
-    Array,
-
-    /// <summary>
     /// 枚举
     /// </summary>
     Enum,
@@ -68,6 +63,11 @@ public enum DataTypes
     /// 记录类型（字典）
     /// </summary>
     Record,
+
+    /// <summary>
+    /// 数组
+    /// </summary>
+    Array,
 
     /// <summary>
     /// 对象

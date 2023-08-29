@@ -20,7 +20,7 @@ namespace Furion.OpenApi;
 public static class DataTypeParser
 {
     /// <summary>
-    /// 解析数据类型
+    /// 根据类型解析对应的数据类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="DataTypes"/></returns>
@@ -28,16 +28,16 @@ public static class DataTypeParser
     {
         return type switch
         {
-            _ when type == typeof(string) || type == typeof(char) => DataTypes.String,
+            _ when typeof(string).IsAssignableFrom(type) || typeof(char).IsAssignableFrom(type) => DataTypes.String,
             _ when type.IsNumeric() => DataTypes.Number,
-            _ when type == typeof(bool) => DataTypes.Boolean,
-            _ when type == typeof(DateTime) || type == typeof(DateTimeOffset) || type == typeof(DateOnly) => DataTypes.Date,
-            _ when type == typeof(TimeOnly) => DataTypes.Time,
-            _ when type.IsArray || typeof(IEnumerable).IsAssignableFrom(type) => DataTypes.Array,
+            _ when typeof(bool).IsAssignableFrom(type) => DataTypes.Boolean,
+            _ when typeof(DateTime).IsAssignableFrom(type) || typeof(DateTimeOffset).IsAssignableFrom(type) || typeof(DateOnly).IsAssignableFrom(type) => DataTypes.Date,
+            _ when typeof(TimeOnly).IsAssignableFrom(type) => DataTypes.Time,
             _ when type.IsEnum => DataTypes.Enum,
-            _ when type == typeof(IFormFile) => DataTypes.Binary,
-            _ when type == typeof(IFormFileCollection) => DataTypes.BinaryCollection,
+            _ when typeof(IFormFile).IsAssignableFrom(type) => DataTypes.Binary,
+            _ when typeof(IFormCollection).IsAssignableFrom(type) => DataTypes.BinaryCollection,
             _ when type.IsDictionary() => DataTypes.Record,
+            _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
             _ when type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
             _ => DataTypes.Any
         };
