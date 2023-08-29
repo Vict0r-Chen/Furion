@@ -66,7 +66,7 @@ public sealed class OpenApiRouteParameterParser
             IsRequired = modelMetadata?.Attributes?.Attributes?.OfType<RequiredAttribute>()?.Any() is true,
             DataType = DataTypeParser.Parse(_apiParameterDescription.Type),
             RuntimeType = _apiParameterDescription.Type?.ToString(),
-            TypeCode = _apiParameterDescription.Type is null ? null : Type.GetTypeCode(_apiParameterDescription.Type),
+            TypeCode = Type.GetTypeCode(_apiParameterDescription.Type),
             BindingSource = _apiParameterDescription.Source.DisplayName.ToLowerFirstLetter(),
             Patterns = null,
         };
