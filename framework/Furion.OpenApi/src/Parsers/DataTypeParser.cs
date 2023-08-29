@@ -41,11 +41,60 @@ public static class DataTypeParser
             _ when typeof(TimeOnly).IsAssignableFrom(type) => DataTypes.Time,
             _ when type.IsEnum => DataTypes.Enum,
             _ when typeof(IFormFile).IsAssignableFrom(type) => DataTypes.Binary,
-            _ when typeof(IFormCollection).IsAssignableFrom(type) => DataTypes.BinaryCollection,
+            _ when IsFormFileCollection(type) => DataTypes.BinaryCollection,
             _ when type.IsDictionary() => DataTypes.Record,
+            _ when typeof(ITuple).IsAssignableFrom(type) => DataTypes.Tuple,
             _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
             _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
+            _ when type.IsValueType && !type.IsPrimitive && !type.IsEnum => DataTypes.Struct,
             _ => DataTypes.Any
         };
+    }
+
+    /// <summary>
+    /// 检查类型是否是 IFormFileCollection 类型
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="bool"/></returns>
+    internal static bool IsFormFileCollection(Type type)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(type);
+
+        // 如果是 IFormFileCollection 类型则直接返回
+        if (typeof(IFormFileCollection).IsAssignableFrom(type))
+        {
+            return true;
+        }
+
+        // 处理 IFormFile 集合类型
+        if (typeof(IEnumerable).IsAssignableFrom(type))
+        {
+            // 检查是否是 IFormFile 数组类型
+            if (type.IsArray)
+            {
+                // 获取数组元素类型
+                var elementType = type.GetElementType();
+
+                // 检查元素类型是否是 IFormFile 类型
+                if (elementType is not null
+                    && typeof(IFormFile).IsAssignableFrom(elementType))
+                {
+                    return true;
+                }
+            }
+            // 检查是否是 IFormFile 集合类型
+            else
+            {
+                // 检查集合项类型是否是 IFormFile 类型
+                if (type is { IsGenericType: true, GenericTypeArguments.Length: 1 }
+                    && typeof(IFormFile).IsAssignableFrom(type.GenericTypeArguments[0]))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -54,6 +54,11 @@
             记录类型（字典）
             </summary>
         </member>
+        <member name="F:Furion.OpenApi.DataTypes.Tuple">
+            <summary>
+            元组
+            </summary>
+        </member>
         <member name="F:Furion.OpenApi.DataTypes.Array">
             <summary>
             数组
@@ -62,6 +67,11 @@
         <member name="F:Furion.OpenApi.DataTypes.Object">
             <summary>
             对象
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.DataTypes.Struct">
+            <summary>
+            结构
             </summary>
         </member>
         <member name="F:Furion.OpenApi.DataTypes.Any">
@@ -341,53 +351,12 @@
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:Furion.OpenApi.DataTypes"/></returns>
         </member>
-        <member name="T:Furion.OpenApi.ModelMetadataParser">
+        <member name="M:Furion.OpenApi.DataTypeParser.IsFormFileCollection(System.Type)">
             <summary>
-            模型元数据解析器
+            检查类型是否是 IFormFileCollection 类型
             </summary>
-        </member>
-        <member name="F:Furion.OpenApi.ModelMetadataParser._modelMetadata">
-            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/>
-        </member>
-        <member name="F:Furion.OpenApi.ModelMetadataParser._apiParameterDescription">
-            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/>
-        </member>
-        <member name="M:Furion.OpenApi.ModelMetadataParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription)">
-            <summary>
-            <inheritdoc cref="T:Furion.OpenApi.ModelMetadataParser"/>
-            </summary>
-            <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
-            <param name="apiParameterDescription"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/></param>
-        </member>
-        <member name="M:Furion.OpenApi.ModelMetadataParser.Parse">
-            <summary>
-            解析模型元数据
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseQueryAndPath">
-            <summary>
-            解析 Query 和 Path 模型元数据
-            </summary>
-            <returns><see cref="T:Furion.OpenApi.OpenApiProperty"/></returns>
-        </member>
-        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseBody">
-            <summary>
-            解析 Body 模型元数据
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseHeader">
-            <summary>
-            解析 Header 模型元数据
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Furion.OpenApi.ModelMetadataParser.ParseForm">
-            <summary>
-            解析 Form 模型元数据
-            </summary>
-            <returns></returns>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="T:Furion.OpenApi.OpenApiRouteParameterParser">
             <summary>

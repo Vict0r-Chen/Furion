@@ -12,21 +12,32 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Validation.Tests;
+namespace Furion.OpenApi.Tests;
 
-public class ValidatorCascadeModeTests
+public class DataTypesTests
 {
     [Fact]
     public void Definition_ReturnOK()
     {
-        var names = Enum.GetNames(typeof(ValidatorCascadeMode));
-        Assert.Equal(3, names.Length);
+        var names = Enum.GetNames(typeof(DataTypes));
+        Assert.Equal(14, names.Length);
 
         var strings = new[]
         {
-            nameof(ValidatorCascadeMode.Continue)
-            , nameof(ValidatorCascadeMode.UsingFirstSuccess)
-            , nameof(ValidatorCascadeMode.StopOnFirstFailure)
+            nameof(DataTypes.String)
+            , nameof(DataTypes.Number)
+            , nameof(DataTypes.Boolean)
+            , nameof(DataTypes.Date)
+            , nameof(DataTypes.Time)
+            , nameof(DataTypes.Enum)
+            , nameof(DataTypes.Binary)
+            , nameof(DataTypes.BinaryCollection)
+            , nameof(DataTypes.Record)
+            , nameof(DataTypes.Tuple)
+            , nameof(DataTypes.Array)
+            , nameof(DataTypes.Object)
+            , nameof(DataTypes.Struct)
+            , nameof(DataTypes.Any)
         };
         Assert.True(strings.SequenceEqual(names));
     }

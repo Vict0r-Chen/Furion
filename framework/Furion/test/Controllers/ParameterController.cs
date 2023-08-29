@@ -66,4 +66,27 @@ public class ParameterController
     public void FromObject([FromQuery, Description("这里是描述")] object value)
     {
     }
+
+    [HttpGet]
+    public void FromTuple([FromQuery] (string name, string id)? value)
+    {
+    }
+
+    [HttpGet]
+    public void FromRecord([FromQuery] Person record)
+    {
+    }
+
+    [HttpGet]
+    public void FromStruct([FromQuery] StructObject obj)
+    {
+    }
+}
+
+public record Person(string FirstName, string LastName);
+
+public struct StructObject
+{
+    public string title;
+    public string author;
 }

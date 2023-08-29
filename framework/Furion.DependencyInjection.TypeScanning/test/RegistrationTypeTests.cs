@@ -17,12 +17,18 @@ namespace Furion.DependencyInjection.TypeScanning.Tests;
 public class RegistrationTypeTests
 {
     [Fact]
-    public void Definition()
+    public void Definition_ReturnOK()
     {
         var names = Enum.GetNames(typeof(RegistrationType));
         Assert.Equal(4, names.Length);
 
-        var strings = new[] { nameof(RegistrationType.Add), nameof(RegistrationType.TryAdd), nameof(RegistrationType.TryAddEnumerable), nameof(RegistrationType.Replace) };
+        var strings = new[]
+        {
+            nameof(RegistrationType.Add)
+            , nameof(RegistrationType.TryAdd)
+            , nameof(RegistrationType.TryAddEnumerable)
+            , nameof(RegistrationType.Replace)
+        };
         Assert.True(strings.SequenceEqual(names));
     }
 }

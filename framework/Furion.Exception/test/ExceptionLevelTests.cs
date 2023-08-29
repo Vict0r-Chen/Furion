@@ -17,12 +17,16 @@ namespace Furion.Exception.Tests;
 public class ExceptionLevelTests
 {
     [Fact]
-    public void Definition()
+    public void Definition_ReturnOK()
     {
         var names = Enum.GetNames(typeof(ExceptionLevel));
         Assert.Equal(2, names.Length);
 
-        var strings = new[] { nameof(ExceptionLevel.Service), nameof(ExceptionLevel.System) };
+        var strings = new[]
+        {
+            nameof(ExceptionLevel.Service)
+            , nameof(ExceptionLevel.System)
+        };
         Assert.True(strings.SequenceEqual(names));
     }
 }

@@ -65,6 +65,11 @@ public enum DataTypes
     Record,
 
     /// <summary>
+    /// 元组
+    /// </summary>
+    Tuple,
+
+    /// <summary>
     /// 数组
     /// </summary>
     Array,
@@ -73,6 +78,11 @@ public enum DataTypes
     /// 对象
     /// </summary>
     Object,
+
+    /// <summary>
+    /// 结构
+    /// </summary>
+    Struct,
 
     /// <summary>
     /// Any
