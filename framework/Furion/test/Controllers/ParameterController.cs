@@ -50,7 +50,7 @@ public class ParameterController
     {
     }
 
-    [HttpGet("stu")]
+    [HttpGet("{stu.Name}")]
     public void FromRoute4([FromRoute] Student stu)
     {
     }

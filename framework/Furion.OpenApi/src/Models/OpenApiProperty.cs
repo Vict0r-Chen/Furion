@@ -17,7 +17,7 @@ namespace Furion.OpenApi;
 /// <summary>
 /// 开放接口属性
 /// </summary>
-public sealed class OpenApiProperty
+public class OpenApiProperty
 {
     /// <summary>
     /// 名称

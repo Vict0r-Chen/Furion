@@ -17,35 +17,6 @@ namespace Furion.OpenApi;
 /// <summary>
 /// 开放接口参数
 /// </summary>
-public sealed class OpenApiParameter
+public sealed class OpenApiParameter : OpenApiProperty
 {
-    /// <summary>
-    /// 参数名称
-    /// </summary>
-    public string? Name { get; set; }
-
-    /// <summary>
-    /// 参数类型
-    /// </summary>
-    public string? Type { get; set; }
-
-    /// <summary>
-    /// 参数输入方式
-    /// </summary>
-    public string? From { get; set; }
-
-    /// <summary>
-    /// 默认值
-    /// </summary>
-    public object? DefaultValue { get; set; }
-
-    /// <summary>
-    /// 架构标识
-    /// </summary>
-    public string? SchemaId { get; set; }
-
-    /// <summary>
-    /// 是否在路由地址上
-    /// </summary>
-    public bool InRoute { get; set; }
 }

@@ -144,36 +144,6 @@
             开放接口参数
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.Name">
-            <summary>
-            参数名称
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.Type">
-            <summary>
-            参数类型
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.From">
-            <summary>
-            参数输入方式
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.DefaultValue">
-            <summary>
-            默认值
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.SchemaId">
-            <summary>
-            架构标识
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.InRoute">
-            <summary>
-            是否在路由地址上
-            </summary>
-        </member>
         <member name="T:Furion.OpenApi.OpenApiProperty">
             <summary>
             开放接口属性
