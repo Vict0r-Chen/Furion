@@ -40,9 +40,10 @@ public sealed class OpenApiParameterParser
     /// <returns></returns>
     public OpenApiParameter? Parse()
     {
-        // 检查参数绑定来源是否是 Query 或 Path
+        // 检查参数绑定来源是否是 Query 或 Path 或 Header
         if (_apiParameterDescription.Source != BindingSource.Query
-            && _apiParameterDescription.Source != BindingSource.Path)
+            && _apiParameterDescription.Source != BindingSource.Path
+            && _apiParameterDescription.Source != BindingSource.Header)
         {
             return null;
         }
