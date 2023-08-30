@@ -81,6 +81,11 @@ public class ParameterController
     public void FromStruct([FromQuery] StructObject obj)
     {
     }
+
+    [HttpDelete]
+    public void FromHeader([FromHeader] string clientName)
+    {
+    }
 }
 
 public record Person(string FirstName, string LastName);

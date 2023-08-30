@@ -47,7 +47,7 @@ internal static class KitEndpoints
             .MapGet("component-diagnostic", ComponentDiagnosticHandler)
             .ExcludeFromDescription();
 
-        // 开放接口路由配置
+        // 开放接口配置
         webApplication.MapGroup(kitOptions.Root)
             .MapGet("openapi", OpenApiHandler);
     }

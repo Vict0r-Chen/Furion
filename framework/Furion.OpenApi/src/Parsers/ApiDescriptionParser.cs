@@ -96,19 +96,19 @@ public sealed class ApiDescriptionParser
             return;
         }
 
-        var openApiRouteParameters = new List<OpenApiRouteParameter>();
+        var openApiParameters = new List<OpenApiParameter>();
         foreach (var parameterDescription in parameterDescriptions)
         {
-            var openApiRouteParameter = new OpenApiRouteParameterParser(parameterDescription).Parse();
+            var openApiParameter = new OpenApiParameterParser(parameterDescription).Parse();
 
-            if (openApiRouteParameter is null)
+            if (openApiParameter is null)
             {
                 continue;
             }
 
-            openApiRouteParameters.Add(openApiRouteParameter);
+            openApiParameters.Add(openApiParameter);
         }
 
-        openApiDescription.Parameters = openApiRouteParameters;
+        openApiDescription.Parameters = openApiParameters;
     }
 }

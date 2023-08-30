@@ -15,9 +15,9 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口路由参数
+/// 开放接口参数
 /// </summary>
-public sealed class OpenApiRouteParameter
+public sealed class OpenApiParameter
 {
     /// <summary>
     /// 名称

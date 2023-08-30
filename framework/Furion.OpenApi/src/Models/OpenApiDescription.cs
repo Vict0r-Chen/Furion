@@ -47,7 +47,7 @@ public sealed class OpenApiDescription
     /// <summary>
     /// 参数
     /// </summary>
-    public List<OpenApiRouteParameter>? Parameters { get; set; }
+    public List<OpenApiParameter>? Parameters { get; set; }
 
     /// <inheritdoc />
     public override string? ToString()

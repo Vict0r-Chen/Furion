@@ -15,18 +15,18 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口路由参数解析器
+/// 开放接口参数解析器
 /// </summary>
-public sealed class OpenApiRouteParameterParser
+public sealed class OpenApiParameterParser
 {
     /// <inheritdoc cref="ApiParameterDescription"/>
     internal readonly ApiParameterDescription _apiParameterDescription;
 
     /// <summary>
-    /// <inheritdoc cref="OpenApiRouteParameterParser"/>
+    /// <inheritdoc cref="OpenApiParameterParser"/>
     /// </summary>
     /// <param name="apiParameterDescription"><see cref="ApiParameterDescription"/></param>
-    public OpenApiRouteParameterParser(ApiParameterDescription apiParameterDescription)
+    public OpenApiParameterParser(ApiParameterDescription apiParameterDescription)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(apiParameterDescription);
@@ -35,10 +35,10 @@ public sealed class OpenApiRouteParameterParser
     }
 
     /// <summary>
-    /// 解析 <see cref="ApiParameterDescription"/> 并返回开放接口路由参数
+    /// 解析 <see cref="ApiParameterDescription"/> 并返回开放接口参数
     /// </summary>
     /// <returns></returns>
-    public OpenApiRouteParameter? Parse()
+    public OpenApiParameter? Parse()
     {
         // 检查参数绑定来源是否是 Query 或 Path
         if (_apiParameterDescription.Source != BindingSource.Query
@@ -56,8 +56,8 @@ public sealed class OpenApiRouteParameterParser
         // 获取默认模型元数据
         var modelMetadata = _apiParameterDescription.ModelMetadata as DefaultModelMetadata;
 
-        // 初始化开放接口路由参数
-        var openApiRouteParameter = new OpenApiRouteParameter
+        // 初始化开放接口参数
+        var openApiRouteParameter = new OpenApiParameter
         {
             Name = _apiParameterDescription.Name,
             Description = modelMetadata?.Description ?? modelMetadata?.Attributes?.Attributes?.OfType<DescriptionAttribute>()?.FirstOrDefault()?.Description,
@@ -71,7 +71,7 @@ public sealed class OpenApiRouteParameterParser
             Patterns = null,
         };
 
-        // 检查路由上的路径参数是否存在
+        // 检查参数是否在路由中定义
         if (_apiParameterDescription.Source == BindingSource.Path
             && _apiParameterDescription.RouteInfo is not null)
         {
