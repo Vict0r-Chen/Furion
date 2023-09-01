@@ -40,7 +40,7 @@ public sealed class OpenApiParameterParser
     /// <returns></returns>
     public OpenApiParameter? Parse()
     {
-        // 检查参数绑定来源是否是 Query 或 Path 或 Header
+        // 检查参数绑定源是否是 Query 或 Path 或 Header
         if (_apiParameterDescription.Source != BindingSource.Query
             && _apiParameterDescription.Source != BindingSource.Path
             && _apiParameterDescription.Source != BindingSource.Header)
@@ -57,20 +57,27 @@ public sealed class OpenApiParameterParser
         // 获取默认模型元数据
         var modelMetadata = _apiParameterDescription.ModelMetadata as DefaultModelMetadata;
 
+        // 获取模型类型
+        var modelType = modelMetadata?.ModelType ?? _apiParameterDescription.Type;
+
         // 初始化开放接口参数
         var openApiRouteParameter = new OpenApiParameter
         {
             Name = _apiParameterDescription.Name,
-            Description = modelMetadata?.Description ?? modelMetadata?.Attributes?.Attributes?.OfType<DescriptionAttribute>()?.FirstOrDefault()?.Description,
+            Description = modelMetadata?.Description ?? GetMetadataAttribute<DescriptionAttribute>(modelMetadata)?.Description,
             DefaultValue = _apiParameterDescription.DefaultValue,
-            AllowNullValue = modelMetadata?.IsReferenceOrNullableType is true,
-            IsRequired = modelMetadata?.Attributes?.Attributes?.OfType<RequiredAttribute>()?.Any() is true,
-            DataType = DataTypeParser.Parse(_apiParameterDescription.Type),
-            RuntimeType = _apiParameterDescription.Type?.ToString(),
-            TypeCode = Type.GetTypeCode(_apiParameterDescription.Type),
+            IsRequired = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
+            DataType = DataTypeParser.Parse(modelType),
+            ItemType = GetCollectionItemType(modelType),
+            RuntimeType = modelType?.ToString(),
+            TypeCode = Type.GetTypeCode(modelType),
             BindingSource = _apiParameterDescription.Source.DisplayName.ToLowerFirstLetter(),
             Patterns = null,
         };
+
+        // 处理可空类型和 [Required] 特性关系
+        openApiRouteParameter.AllowNullValue = !openApiRouteParameter.IsRequired
+            && modelMetadata?.IsReferenceOrNullableType is true;
 
         // 检查参数是否在路由中定义
         if (_apiParameterDescription.Source == BindingSource.Path
@@ -83,5 +90,47 @@ public sealed class OpenApiParameterParser
         }
 
         return openApiRouteParameter;
+    }
+
+    /// <summary>
+    /// 获取模型元数据定义的特性
+    /// </summary>
+    /// <typeparam name="TAttribute"><see cref="Attribute"/></typeparam>
+    /// <param name="modelMetadata"><see cref="DefaultModelMetadata"/></param>
+    /// <returns><typeparamref name="TAttribute"/></returns>
+    internal static TAttribute? GetMetadataAttribute<TAttribute>(DefaultModelMetadata? modelMetadata)
+        where TAttribute : Attribute
+    {
+        return modelMetadata?.Attributes?.Attributes?.OfType<TAttribute>()?.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// 获取集合类型项类型
+    /// </summary>
+    /// <param name="type"><see cref="Type"/></param>
+    /// <returns><see cref="DataTypes"/></returns>
+    internal static DataTypes? GetCollectionItemType(Type? type)
+    {
+        // 空检查
+        if (type is null)
+        {
+            return null;
+        }
+
+        // 检查是否是数组类型
+        if (type.IsArray)
+        {
+            return DataTypeParser.Parse(type.GetElementType());
+        }
+
+        // 检查是否是集合类型
+        if (type.IsGenericType
+            && type.GenericTypeArguments.Length == 1
+            && typeof(IEnumerable).IsAssignableFrom(type))
+        {
+            return DataTypeParser.Parse(type.GenericTypeArguments[0]);
+        }
+
+        return null;
     }
 }

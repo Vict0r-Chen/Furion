@@ -185,6 +185,9 @@
         <member name="P:Furion.OpenApi.OpenApiParameter.DataType">
             <inheritdoc cref="T:Furion.OpenApi.DataTypes"/>
         </member>
+        <member name="P:Furion.OpenApi.OpenApiParameter.ItemType">
+            <inheritdoc cref="T:Furion.OpenApi.DataTypes"/>
+        </member>
         <member name="P:Furion.OpenApi.OpenApiParameter.RuntimeType">
             <summary>
             运行时类型
@@ -195,7 +198,7 @@
         </member>
         <member name="P:Furion.OpenApi.OpenApiParameter.BindingSource">
             <summary>
-            绑定来源
+            绑定源
             </summary>
         </member>
         <member name="P:Furion.OpenApi.OpenApiParameter.Patterns">
@@ -377,6 +380,21 @@
             解析 <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/> 并返回开放接口参数
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiParameterParser.GetMetadataAttribute``1(Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.DefaultModelMetadata)">
+            <summary>
+            获取模型元数据定义的特性
+            </summary>
+            <typeparam name="TAttribute"><see cref="T:System.Attribute"/></typeparam>
+            <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.DefaultModelMetadata"/></param>
+            <returns><typeparamref name="TAttribute"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiParameterParser.GetCollectionItemType(System.Type)">
+            <summary>
+            获取集合类型项类型
+            </summary>
+            <param name="type"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:Furion.OpenApi.DataTypes"/></returns>
         </member>
     </members>
 </doc>

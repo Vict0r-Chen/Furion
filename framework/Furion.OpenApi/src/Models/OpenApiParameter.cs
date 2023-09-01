@@ -47,6 +47,9 @@ public sealed class OpenApiParameter
     /// <inheritdoc cref="DataTypes"/>
     public DataTypes DataType { get; set; }
 
+    /// <inheritdoc cref="DataTypes"/>
+    public DataTypes? ItemType { get; set; }
+
     /// <summary>
     /// 运行时类型
     /// </summary>
@@ -56,7 +59,7 @@ public sealed class OpenApiParameter
     public TypeCode? TypeCode { get; set; }
 
     /// <summary>
-    /// 绑定来源
+    /// 绑定源
     /// </summary>
     public string? BindingSource { get; set; }
 
