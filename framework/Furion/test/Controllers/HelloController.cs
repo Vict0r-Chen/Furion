@@ -12,186 +12,189 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+using Furion.DependencyInjection;
+using Furion.Exception;
 using Furion.Tests.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel;
 
 namespace Furion.Tests.Controllers;
 
-//[ApiController]
-//[Route("[controller]/[action]")]
-//public class HelloController
-//{
-//    public HelloController(IServiceProvider _)  // 构造函数注入
-//    {
-//    }
+[ApiController]
+[Route("[controller]/[action]")]
+[ApiExplorerSettings(IgnoreApi = true)]
+public class HelloController
+{
+    public HelloController(IServiceProvider _)  // 构造函数注入
+    {
+    }
 
-//    [AutowiredService]  // 属性注入
-//    private IConfiguration Configuration { get; set; } = null!;
+    [AutowiredService]  // 属性注入
+    private IConfiguration Configuration { get; set; } = null!;
 
-//    [HttpGet]
-//    public string? Get([FromServices] IConfiguration configuration) // 参数注入
-//    {
-//        return configuration["Name"] + "Embed: " + Configuration["Embed:Name"];
-//    }
+    [HttpGet]
+    public string? Get([FromServices] IConfiguration configuration) // 参数注入
+    {
+        return configuration["Name"] + "Embed: " + Configuration["Embed:Name"];
+    }
 
-//    [HttpPost]
-//    public Student Post([FromServices] IObjectValidator<Student> validator, [CustomizeValidator] Student stu)
-//    {
-//        var validationResults = validator.GetValidationResults(new Student
-//        {
-//            Name = "Furion",
-//            NickName = "Furion",
-//            Teacher = new() { Name = "Furion" }
-//        });
+    [HttpPost]
+    public Student Post([FromServices] IObjectValidator<Student> validator, [CustomizeValidator] Student stu)
+    {
+        var validationResults = validator.GetValidationResults(new Student
+        {
+            Name = "Furion",
+            NickName = "Furion",
+            Teacher = new() { Name = "Furion" }
+        });
 
-//        return stu;
-//    }
+        return stu;
+    }
 
-//    [HttpGet]
-//    public void TestRetryPolicy()
-//    {
-//        Policy.Retry(3)
-//            .Handle<System.Exception>()
-//            .OnWaitRetry((context, delay) =>
-//            {
-//                Console.WriteLine($"等待 {delay.TotalSeconds} 秒后进入重试操作.");
-//            })
-//            .OnRetrying(context =>
-//            {
-//                Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
-//            })
-//            .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3))
-//            .Execute(() =>
-//            {
-//                Console.WriteLine("我正在执行操作...");
-//                throw new System.InvalidOperationException("我出错了");
-//            });
-//    }
+    [HttpGet]
+    public void TestRetryPolicy()
+    {
+        Policy.Retry(3)
+            .Handle<System.Exception>()
+            .OnWaitRetry((context, delay) =>
+            {
+                Console.WriteLine($"等待 {delay.TotalSeconds} 秒后进入重试操作.");
+            })
+            .OnRetrying(context =>
+            {
+                Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
+            })
+            .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3))
+            .Execute(() =>
+            {
+                Console.WriteLine("我正在执行操作...");
+                throw new System.InvalidOperationException("我出错了");
+            });
+    }
 
-//    [HttpGet]
-//    public void TestTimeoutPolicy([FromQuery] int timeout = 3000)
-//    {
-//        Policy.Timeout(timeout)
-//            .OnTimeout(context =>
-//            {
-//                Console.WriteLine("不好意思，超时了.");
-//            })
-//            .Execute(() =>
-//            {
-//                Console.WriteLine("我正在执行操作...");
-//                Task.Delay(TimeSpan.FromSeconds(5)).Wait();
-//            });
-//    }
+    [HttpGet]
+    public void TestTimeoutPolicy([FromQuery] int timeout = 3000)
+    {
+        Policy.Timeout(timeout)
+            .OnTimeout(context =>
+            {
+                Console.WriteLine("不好意思，超时了.");
+            })
+            .Execute(() =>
+            {
+                Console.WriteLine("我正在执行操作...");
+                Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+            });
+    }
 
-//    [HttpGet]
-//    public string? TestFallbackPolicy([FromQuery] string? name = null)
-//    {
-//        return Policy<string>.Fallback()
-//            .Handle<System.Exception>()
-//            .HandleResult(context => name is null || context.Exception is not null)
-//            .OnFallback(context =>
-//            {
-//                return "百小僧";
-//            })
-//            .Execute(() =>
-//            {
-//                if (name == "furion")
-//                {
-//                    throw new System.Exception("出错了");
-//                }
+    [HttpGet]
+    public string? TestFallbackPolicy([FromQuery] string? name = null)
+    {
+        return Policy<string>.Fallback()
+            .Handle<System.Exception>()
+            .HandleResult(context => name is null || context.Exception is not null)
+            .OnFallback(context =>
+            {
+                return "百小僧";
+            })
+            .Execute(() =>
+            {
+                if (name == "furion")
+                {
+                    throw new System.Exception("出错了");
+                }
 
-//                return name;
-//            });
-//    }
+                return name;
+            });
+    }
 
-//    [HttpGet]
-//    public void TestCompositePolicy([FromQuery] int timeout = 5000)
-//    {
-//        var timeoutPolicy = Policy.Timeout(timeout)
-//            .OnTimeout(context =>
-//            {
-//                Console.WriteLine("不好意思，超时了.");
-//            });
+    [HttpGet]
+    public void TestCompositePolicy([FromQuery] int timeout = 5000)
+    {
+        var timeoutPolicy = Policy.Timeout(timeout)
+            .OnTimeout(context =>
+            {
+                Console.WriteLine("不好意思，超时了.");
+            });
 
-//        var retryPolicy = Policy.Retry(3)
-//            .Handle<System.Exception>()
-//            .OnWaitRetry((context, delay) =>
-//            {
-//                Console.WriteLine($"等待 {delay.TotalSeconds} 秒后进入重试操作.");
-//            })
-//            .OnRetrying(context =>
-//            {
-//                Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
-//            })
-//            .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
+        var retryPolicy = Policy.Retry(3)
+            .Handle<System.Exception>()
+            .OnWaitRetry((context, delay) =>
+            {
+                Console.WriteLine($"等待 {delay.TotalSeconds} 秒后进入重试操作.");
+            })
+            .OnRetrying(context =>
+            {
+                Console.WriteLine($"正在重试第 {context.RetryCount} 次...");
+            })
+            .WaitAndRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
 
-//        Policy.Composite(timeoutPolicy, retryPolicy)
-//            .OnExecutionFailure(context =>
-//            {
-//                Console.WriteLine($"策略 {context.Policy} 执行失败了.");
-//            })
-//            .Execute(() =>
-//            {
-//                Console.WriteLine("我正在执行组合操作...");
-//                throw new System.InvalidOperationException("我出错了");
-//            });
-//    }
+        Policy.Composite(timeoutPolicy, retryPolicy)
+            .OnExecutionFailure(context =>
+            {
+                Console.WriteLine($"策略 {context.Policy} 执行失败了.");
+            })
+            .Execute(() =>
+            {
+                Console.WriteLine("我正在执行组合操作...");
+                throw new System.InvalidOperationException("我出错了");
+            });
+    }
 
-//    [HttpGet]
-//    public void TestThrow([FromQuery] string? name = null)
-//    {
-//        var z = name is null ? UserFriendlyException.Throw<string>("字符串不能为空") : name;
-//        var c = name ?? UserFriendlyException.Throw<string>("字符串不能为空");
-//    }
+    [HttpGet]
+    public void TestThrow([FromQuery] string? name = null)
+    {
+        var z = name is null ? UserFriendlyException.Throw<string>("字符串不能为空") : name;
+        var c = name ?? UserFriendlyException.Throw<string>("字符串不能为空");
+    }
 
-//    [HttpGet]
-//    public void TestGet()
-//    {
-//    }
+    [HttpGet]
+    public void TestGet()
+    {
+    }
 
-//    [HttpPost]
-//    public void TestPost()
-//    {
-//    }
+    [HttpPost]
+    public void TestPost()
+    {
+    }
 
-//    [HttpDelete]
-//    public void TestDelete()
-//    {
-//    }
+    [HttpDelete]
+    public void TestDelete()
+    {
+    }
 
-//    [HttpPut]
-//    public void TestPut()
-//    {
-//    }
+    [HttpPut]
+    public void TestPut()
+    {
+    }
 
-//    [HttpHead]
-//    public void TestHead()
-//    {
-//    }
+    [HttpHead]
+    public void TestHead()
+    {
+    }
 
-//    [HttpPatch]
-//    public void TestPath()
-//    {
-//    }
+    [HttpPatch]
+    public void TestPath()
+    {
+    }
 
-//    [HttpOptions]
-//    public void TestOptions()
-//    {
-//    }
+    [HttpOptions]
+    public void TestOptions()
+    {
+    }
 
-//    [HttpGet, DisplayName("测试显示名称")]
-//    public void TestDisplayName()
-//    {
-//    }
+    [HttpGet, DisplayName("测试显示名称")]
+    public void TestDisplayName()
+    {
+    }
 
-//    [HttpGet, ApiExplorerSettings(GroupName = "groupName"), AllowAnonymous]
-//    public void TestGroup()
-//    {
-//    }
+    [HttpGet, ApiExplorerSettings(GroupName = "groupName"), AllowAnonymous]
+    public void TestGroup()
+    {
+    }
 
-//    [HttpPut("{path}")]
-//    public void TestPath(int path)
-//    {
-//    }
-//}
+    [HttpPut("{path}")]
+    public void TestPath(int path)
+    {
+    }
+}
