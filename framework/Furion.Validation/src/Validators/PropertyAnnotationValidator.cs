@@ -80,11 +80,11 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
     /// </summary>
     internal string PropertyName { get; init; }
 
-    /// <inheritdoc cref="Property"/>
+    /// <inheritdoc cref="PropertyInfo"/>
     internal PropertyInfo Property { get; init; }
 
     /// <summary>
-    /// 属性别名
+    /// 显示名称
     /// </summary>
     internal string? DisplayName { get; init; }
 

@@ -195,7 +195,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyInfo Property { get; init; }
 
     /// <summary>
-    /// 属性别名
+    /// 显示名称
     /// </summary>
     public string? DisplayName { get; private set; }
 
@@ -251,9 +251,9 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
-    /// 设置属性别名
+    /// 设置显示名称
     /// </summary>
-    /// <param name="displayName">属性别名</param>
+    /// <param name="displayName">显示名称</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
     public PropertyValidator<T, TProperty> WithDisplayName(string displayName)
     {

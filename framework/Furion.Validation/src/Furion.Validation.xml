@@ -2306,11 +2306,11 @@
             </summary>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.Property">
-            <inheritdoc cref="P:Furion.Validation.PropertyAnnotationValidator`1.Property"/>
+            <inheritdoc cref="T:System.Reflection.PropertyInfo"/>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.DisplayName">
             <summary>
-            属性别名
+            显示名称
             </summary>
         </member>
         <member name="P:Furion.Validation.PropertyAnnotationValidator`1.Getter">
