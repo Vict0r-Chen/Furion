@@ -71,7 +71,8 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
 
         PropertyName = propertyExpression.GetPropertyName();
         Property = typeof(T).GetProperty(PropertyName, _bindingAttr)!;
-        DisplayName = Property.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
+        DisplayName = Property.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName
+            ?? Property.GetCustomAttribute<DisplayAttribute>(false)?.Name;
     }
 
     /// <summary>

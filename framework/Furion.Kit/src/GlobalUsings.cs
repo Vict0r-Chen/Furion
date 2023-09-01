@@ -30,6 +30,7 @@ global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Options;
 global using System.Collections.Concurrent;
 global using System.ComponentModel;
+global using System.ComponentModel.DataAnnotations;
 global using System.Diagnostics;
 global using System.Net.Mime;
 global using System.Reflection;

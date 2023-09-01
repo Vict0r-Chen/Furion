@@ -34,9 +34,9 @@ internal sealed class ControllerActionModel
         MethodName = controllerActionDescriptor.MethodInfo.Name;
         Signature = controllerActionDescriptor.MethodInfo.ToString();
 
-        // 获取 [DisplayName] 特性
-        DisplayName = controllerActionDescriptor.MethodInfo
-            .GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName;
+        // 获取 [DisplayName] 或 [Display] 特性
+        DisplayName = controllerActionDescriptor.MethodInfo.GetCustomAttribute<DisplayNameAttribute>(false)?.DisplayName
+            ?? controllerActionDescriptor.MethodInfo.GetCustomAttribute<DisplayAttribute>(false)?.Name;
     }
 
     /// <summary>
