@@ -40,6 +40,11 @@ internal sealed class EndpointDiagnosticModel
     }
 
     /// <summary>
+    /// 活动标识
+    /// </summary>
+    public string? TraceId { get; private set; }
+
+    /// <summary>
     /// 请求标识
     /// </summary>
     public string? TraceIdentifier { get; private set; }
@@ -131,6 +136,7 @@ internal sealed class EndpointDiagnosticModel
         // 获取请求对象
         var httpRequest = _httpContext.Request;
 
+        TraceId = Activity.Current?.Id ?? _httpContext?.TraceIdentifier;
         TraceIdentifier = _httpContext.TraceIdentifier;
         Path = httpRequest.Path;
         UrlAddress = httpRequest.GetUrlAddress();

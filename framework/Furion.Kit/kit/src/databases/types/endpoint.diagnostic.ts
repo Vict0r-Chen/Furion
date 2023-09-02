@@ -1,4 +1,5 @@
 export interface EndpointDiagnosticModel {
+  traceId?: string;
   traceIdentifier?: string;
   httpMethod?: string;
   path?: string;

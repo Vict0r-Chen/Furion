@@ -93,6 +93,7 @@ const EndpointDetail: React.FC<EndpointDiagnosticModel> = (props) => {
             <StatusCode code={props.statusCode!} text={props.statusText} />
           }
         />
+        <ListItem title="traceId" content={props.traceId} />
         <ListItem title="traceIdentifier" content={props.traceIdentifier} />
         <ListItem title="path" content={props.path} />
         <ListItem

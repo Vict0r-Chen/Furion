@@ -89,13 +89,18 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
         <Space>
           {props.requestStartTime && props.requestEndTime && (
             <TextBox $color="#00000073">
-              {props.requestEndTime.getTime() - props.requestStartTime.getTime()}ms
+              {props.requestEndTime.getTime() -
+                props.requestStartTime.getTime()}
+              ms
             </TextBox>
           )}
         </Space>
       </Main>
       <ExtraContainer $spaceBetween>
-        <JsonViewr value={props} keyName={props.traceIdentifier} />
+        <JsonViewr
+          value={props}
+          keyName={props.traceId ?? props.traceIdentifier}
+        />
       </ExtraContainer>
     </ItemContainer>
   );

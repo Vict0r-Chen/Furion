@@ -332,6 +332,11 @@
             </summary>
             <param name="httpContext"><see cref="T:Microsoft.AspNetCore.Http.HttpContext"/></param>
         </member>
+        <member name="P:Furion.Kit.EndpointDiagnosticModel.TraceId">
+            <summary>
+            活动标识
+            </summary>
+        </member>
         <member name="P:Furion.Kit.EndpointDiagnosticModel.TraceIdentifier">
             <summary>
             请求标识
