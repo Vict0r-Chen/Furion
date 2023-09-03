@@ -18,6 +18,7 @@ namespace Furion.Tests.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
+[ApiExplorerSettings(IgnoreApi = true)]
 public class FromRouteController
 {
     [HttpGet("{a}/{b}/{c}/{d}/{e}/{f}/{g}/{h}")]

@@ -157,6 +157,11 @@
             开放接口参数
             </summary>
         </member>
+        <member name="M:Furion.OpenApi.OpenApiParameter.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiParameter" />
+            </summary>
+        </member>
         <member name="P:Furion.OpenApi.OpenApiParameter.Name">
             <summary>
             名称

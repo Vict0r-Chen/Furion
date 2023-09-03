@@ -75,13 +75,99 @@ public sealed class OpenApiParameterParser
         if (_apiParameterDescription.Source == BindingSource.Path
             && _apiParameterDescription.RouteInfo is not null)
         {
-            openApiRouteParameter.Properties = new Dictionary<string, object?>
+            openApiRouteParameter.Properties.Add(nameof(_apiParameterDescription.RouteInfo), _apiParameterDescription.RouteInfo);
+        }
+
+        // 检查枚举类型
+        if (modelType?.IsEnum == true)
+        {
+            var keyValues = ParseEnum(modelType);
+            openApiRouteParameter.Properties.Add(keyValues.Key, keyValues.Value);
+        }
+
+        if (modelMetadata is not null && openApiRouteParameter.DataType is DataTypes.Object)
+        {
+            var keyValues = ParseModel(modelMetadata);
+            if (keyValues.Key is not null)
             {
-                { nameof(_apiParameterDescription.RouteInfo), _apiParameterDescription.RouteInfo }
-            };
+                openApiRouteParameter.Properties.Add(keyValues.Key, keyValues.Value);
+            }
         }
 
         return openApiRouteParameter;
+    }
+
+    internal static KeyValuePair<string, object?> ParseEnum(Type type)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(type);
+
+        // 检查类型是否是枚举类型
+        if (!type.IsEnum)
+        {
+            throw new ArgumentException("The `type` parameter is not a valid enumeration type.", nameof(type));
+        }
+
+        // 获取枚举项名称集合
+        var names = Enum.GetNames(type);
+
+        // 获取枚举项值集合
+        var values = Enum.GetValues(type).Cast<int>().ToArray();
+
+        return new KeyValuePair<string, object?>("items", new
+        {
+            names,
+            values
+        });
+    }
+
+    internal static KeyValuePair<string, object?> ParseModel(DefaultModelMetadata modelMetadata)
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(modelMetadata);
+
+        if (modelMetadata.ModelType is null || DataTypeParser.Parse(modelMetadata.ModelType) is not DataTypes.Object)
+        {
+            return default;
+        }
+
+        var openApiParameters = new List<OpenApiParameter>();
+
+        foreach (var propertyModelMetadata in modelMetadata.Properties.Cast<DefaultModelMetadata>())
+        {
+            if (propertyModelMetadata is null)
+            {
+                continue;
+            }
+
+            var propertyType = propertyModelMetadata.ModelType;
+            var apiParameter = new OpenApiParameter
+            {
+                Name = propertyModelMetadata.Name,
+                Description = propertyModelMetadata?.Description ?? GetMetadataAttribute<DescriptionAttribute>(propertyModelMetadata)?.Description,
+                //DefaultValue = propertyModelMetadata.DefaultValue,
+                IsRequired = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
+                DataType = DataTypeParser.Parse(propertyType),
+                ItemType = GetCollectionItemType(propertyType),
+                RuntimeType = propertyType?.ToString(),
+                TypeCode = Type.GetTypeCode(propertyType),
+                //BindingSource = null,
+                Patterns = null,
+            };
+
+            var keyValues = ParseModel(propertyModelMetadata!);
+            if (keyValues.Key is not null)
+            {
+                apiParameter.Properties.Add(keyValues);
+            }
+
+            openApiParameters.Add(apiParameter);
+        }
+
+        return new KeyValuePair<string, object?>("items", new
+        {
+            properties = openApiParameters
+        });
     }
 
     /// <summary>

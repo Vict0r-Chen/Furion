@@ -18,6 +18,7 @@ namespace Furion.Tests.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
+[ApiExplorerSettings(IgnoreApi = true)]
 public class FromFormController
 {
     [HttpPost]
@@ -52,6 +53,12 @@ public class FromFormController
 
     [HttpPost]
     public void Case7([FromForm] IFormFileCollection files)
+    {
+    }
+
+    // 不支持元组
+    [HttpPost]
+    public void Case8([FromForm] (string Name, int Age) tuple)
     {
     }
 }

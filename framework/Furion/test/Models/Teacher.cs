@@ -20,6 +20,8 @@ public class Teacher
     public string? Name { get; set; }
 
     public string? NickName { get; set; }
+
+    public int Age { get; set; } = 10;
 }
 
 public class TeacherValidator : AbstractValidator<Teacher>

@@ -18,41 +18,25 @@ namespace Furion.Tests.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = true)]
-public class FromHeaderController
+public class FromBodyController
 {
-    [HttpGet]
-    public void Case1([FromHeader] int a, [FromHeader] bool b, [FromHeader] string c, [FromHeader] decimal d, [FromHeader] float e, [FromHeader] char f, [FromHeader] long g, [FromHeader] byte h)
+    //[HttpPost]
+    //public void Case1(Teacher teacher)
+    //{
+    //}
+
+    //[HttpPost]
+    //public void Case2([FromQuery] Student stu)
+    //{
+    //}
+
+    [HttpPost]
+    public void Case3([FromBody] Student stu)
     {
     }
 
-    [HttpGet]
-    public void Case2([FromHeader, Required] int[] a, [FromHeader] string[] b)
-    {
-    }
-
-    [HttpGet]
-    public void Case3([FromHeader] object a, [FromHeader] object[] b)
-    {
-    }
-
-    [HttpGet]
-    public void Case4([FromHeader] TypeCode a)
-    {
-    }
-
-    [HttpGet]
-    public void Case5([FromHeader] Student stu, [FromHeader] Student stu1)
-    {
-    }
-
-    [HttpGet]
-    public void Case6([FromHeader] IFormFile file)
-    {
-    }
-
-    [HttpGet]
-    public void Case7([FromHeader] IFormFileCollection files)
-    {
-    }
+    //[HttpPost]
+    //public void Case4(TypeCode code)
+    //{
+    //}
 }

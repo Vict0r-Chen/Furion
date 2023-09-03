@@ -20,6 +20,14 @@ namespace Furion.OpenApi;
 public sealed class OpenApiParameter
 {
     /// <summary>
+    /// <inheritdoc cref="OpenApiParameter" />
+    /// </summary>
+    public OpenApiParameter()
+    {
+        Properties = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
     /// 名称
     /// </summary>
     public string? Name { get; set; }
@@ -71,5 +79,5 @@ public sealed class OpenApiParameter
     /// <summary>
     /// 附加数据
     /// </summary>
-    public IDictionary<string, object?>? Properties { get; set; }
+    public IDictionary<string, object?> Properties { get; init; }
 }
