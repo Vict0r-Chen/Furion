@@ -182,8 +182,7 @@ internal static class TypeExtensions
             or TypeCode.Int64
             or TypeCode.UInt16
             or TypeCode.UInt32
-            or TypeCode.UInt64
-            or TypeCode.Single;
+            or TypeCode.UInt64;
     }
 
     /// <summary>
