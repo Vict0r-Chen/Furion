@@ -44,4 +44,14 @@ public class FromQueryController
     public void Case5([FromQuery] Student stu, [FromQuery] Student stu1)
     {
     }
+
+    [HttpGet]
+    public void Case6([FromQuery] IFormFile file)
+    {
+    }
+
+    [HttpGet]
+    public void Case7([FromQuery] IFormFileCollection files)
+    {
+    }
 }

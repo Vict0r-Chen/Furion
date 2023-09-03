@@ -18,45 +18,40 @@ namespace Furion.Tests.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class FromRouteController
+public class FromHeaderController
 {
-    [HttpGet("{a}/{b}/{c}/{d}/{e}/{f}/{g}/{h}")]
-    public void Case1([FromRoute] int a, [FromRoute] bool b, [FromRoute] string c, [FromRoute] decimal d, [FromRoute] float e, [FromRoute] char f, [FromRoute] long g, [FromRoute] byte h)
+    [HttpGet]
+    public void Case1([FromHeader] int a, [FromHeader] bool b, [FromHeader] string c, [FromHeader] decimal d, [FromHeader] float e, [FromHeader] char f, [FromHeader] long g, [FromHeader] byte h)
     {
     }
 
-    [HttpGet("{a}/{b}")]
-    public void Case2([FromRoute, Required] int[] a, [FromRoute] string[] b)
+    [HttpGet]
+    public void Case2([FromHeader, Required] int[] a, [FromHeader] string[] b)
     {
     }
 
-    [HttpGet("test/{a}/{b}")]
-    public void Case3([FromRoute] object a, [FromRoute] object[] b)
+    [HttpGet]
+    public void Case3([FromHeader] object a, [FromHeader] object[] b)
     {
     }
 
-    [HttpGet("{a}")]
-    public void Case4([FromRoute] TypeCode a)
+    [HttpGet]
+    public void Case4([FromHeader] TypeCode a)
     {
     }
 
-    [HttpGet("test2/{stu}")]
-    public void Case5([FromRoute] Student stu)
+    [HttpGet]
+    public void Case5([FromHeader] Student stu, [FromHeader] Student stu1)
     {
     }
 
-    [HttpGet("test3/{stu.Name}/{stu.Teacher.Name}/{Teacher.NickName}")]
-    public void Case6([FromRoute] Student stu)
+    [HttpGet]
+    public void Case6([FromHeader] IFormFile file)
     {
     }
 
-    [HttpGet("test4/{file}")]
-    public void Case7([FromRoute] IFormFile file)
-    {
-    }
-
-    [HttpGet("test5/{files}")]
-    public void Case8([FromRoute] IFormFileCollection files)
+    [HttpGet]
+    public void Case7([FromHeader] IFormFileCollection files)
     {
     }
 }
