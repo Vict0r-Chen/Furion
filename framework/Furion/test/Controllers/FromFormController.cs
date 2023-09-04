@@ -61,4 +61,9 @@ public class FromFormController
     public void Case8([FromForm] (string Name, int Age) tuple)
     {
     }
+
+    [HttpGet]
+    public void Case9([FromForm] DateTime date)
+    {
+    }
 }

@@ -25,10 +25,16 @@ public sealed class OpenApiModel
     public OpenApiModel()
     {
         Groups = new();
+        Definitions = new();
     }
 
     /// <summary>
     /// 开放接口分组模型集合
     /// </summary>
     public List<OpenApiGroup> Groups { get; init; }
+
+    /// <summary>
+    /// 模型定义
+    /// </summary>
+    public List<object> Definitions { get; init; }
 }

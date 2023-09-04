@@ -45,12 +45,12 @@ public sealed class OpenApiParameter
     /// <summary>
     /// 允许空值
     /// </summary>
-    public bool AllowNullValue { get; set; }
+    public bool Nullable { get; set; }
 
     /// <summary>
     /// 必填
     /// </summary>
-    public bool IsRequired { get; set; }
+    public bool Required { get; set; }
 
     /// <inheritdoc cref="DataTypes"/>
     public DataTypes DataType { get; set; }

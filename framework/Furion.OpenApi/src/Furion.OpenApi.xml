@@ -109,6 +109,11 @@
             允许匿名
             </summary>
         </member>
+        <member name="P:Furion.OpenApi.OpenApiDescription.Obsolete">
+            <summary>
+            弃用标识
+            </summary>
+        </member>
         <member name="P:Furion.OpenApi.OpenApiDescription.Parameters">
             <summary>
             参数
@@ -152,6 +157,11 @@
             开放接口分组模型集合
             </summary>
         </member>
+        <member name="P:Furion.OpenApi.OpenApiModel.Definitions">
+            <summary>
+            模型定义
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiParameter">
             <summary>
             开放接口参数
@@ -177,12 +187,12 @@
             默认值
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.AllowNullValue">
+        <member name="P:Furion.OpenApi.OpenApiParameter.Nullable">
             <summary>
             允许空值
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.IsRequired">
+        <member name="P:Furion.OpenApi.OpenApiParameter.Required">
             <summary>
             必填
             </summary>

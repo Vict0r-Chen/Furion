@@ -20,23 +20,23 @@ namespace Furion.Tests.Controllers;
 [Route("[controller]/[action]")]
 public class FromBodyController
 {
-    //[HttpPost]
-    //public void Case1(Teacher teacher)
-    //{
-    //}
-
-    //[HttpPost]
-    //public void Case2([FromQuery] Student stu)
-    //{
-    //}
+    [HttpPost]
+    public void Case1(Teacher teacher)
+    {
+    }
 
     [HttpPost]
+    public void Case2([FromQuery] Student stu)
+    {
+    }
+
+    [HttpPost, Obsolete]
     public void Case3([FromBody] Student stu)
     {
     }
 
-    //[HttpPost]
-    //public void Case4(TypeCode code)
-    //{
-    //}
+    [HttpPost]
+    public void Case4(TypeCode code)
+    {
+    }
 }

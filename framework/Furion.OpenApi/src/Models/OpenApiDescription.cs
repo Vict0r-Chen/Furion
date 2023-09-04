@@ -45,6 +45,11 @@ public sealed class OpenApiDescription
     public bool AllowAnonymous { get; set; }
 
     /// <summary>
+    /// 弃用标识
+    /// </summary>
+    public bool Obsolete { get; set; }
+
+    /// <summary>
     /// 参数
     /// </summary>
     public List<OpenApiParameter>? Parameters { get; set; }

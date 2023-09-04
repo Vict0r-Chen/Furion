@@ -55,4 +55,9 @@ public class FromQueryController
     public void Case7([FromQuery] IFormFileCollection files)
     {
     }
+
+    [HttpGet]
+    public void Case8([FromQuery] DateTime date)
+    {
+    }
 }

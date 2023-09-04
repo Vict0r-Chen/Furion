@@ -75,7 +75,8 @@ public sealed class ApiDescriptionParser
                     GroupName = item.GroupName ?? projectName,
                     HttpMethod = item.HttpMethod,
                     RelativePath = item.RelativePath,
-                    AllowAnonymous = actionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any()
+                    AllowAnonymous = actionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any(),
+                    Obsolete = actionDescriptor.EndpointMetadata.OfType<ObsoleteAttribute>().Any()
                 };
 
                 ParseParameters(item.ParameterDescriptions, openApiDescription);

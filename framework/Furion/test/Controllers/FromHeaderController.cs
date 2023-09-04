@@ -55,4 +55,9 @@ public class FromHeaderController
     public void Case7([FromHeader] IFormFileCollection files)
     {
     }
+
+    [HttpGet]
+    public void Case9([FromHeader] DateTime date)
+    {
+    }
 }

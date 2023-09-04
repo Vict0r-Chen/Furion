@@ -60,4 +60,9 @@ public class FromRouteController
     public void Case8([FromRoute] IFormFileCollection files)
     {
     }
+
+    [HttpGet]
+    public void Case9([FromRoute] DateTime date)
+    {
+    }
 }

@@ -58,7 +58,7 @@ public sealed class OpenApiParameterParser
             Name = _apiParameterDescription.Name,
             Description = modelMetadata?.Description ?? GetMetadataAttribute<DescriptionAttribute>(modelMetadata)?.Description,
             DefaultValue = _apiParameterDescription.DefaultValue,
-            IsRequired = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
+            Required = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
             DataType = DataTypeParser.Parse(modelType),
             ItemType = GetCollectionItemType(modelType),
             RuntimeType = modelType?.ToString(),
@@ -68,7 +68,7 @@ public sealed class OpenApiParameterParser
         };
 
         // 处理可空类型和 [Required] 特性关系
-        openApiRouteParameter.AllowNullValue = !openApiRouteParameter.IsRequired
+        openApiRouteParameter.Nullable = !openApiRouteParameter.Required
             && modelMetadata?.IsReferenceOrNullableType is true;
 
         // 检查参数是否在路由中定义
@@ -146,7 +146,7 @@ public sealed class OpenApiParameterParser
                 Name = propertyModelMetadata.Name,
                 Description = propertyModelMetadata?.Description ?? GetMetadataAttribute<DescriptionAttribute>(propertyModelMetadata)?.Description,
                 //DefaultValue = propertyModelMetadata.DefaultValue,
-                IsRequired = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
+                Required = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
                 DataType = DataTypeParser.Parse(propertyType),
                 ItemType = GetCollectionItemType(propertyType),
                 RuntimeType = propertyType?.ToString(),
