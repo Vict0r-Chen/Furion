@@ -35,16 +35,13 @@ public static class DataTypeParser
         return type switch
         {
             // 字符串
-            _ when typeof(string).IsAssignableFrom(type)
-                || typeof(char).IsAssignableFrom(type) => DataTypes.String,
+            _ when typeof(string).IsAssignableFrom(type) || typeof(char).IsAssignableFrom(type) => DataTypes.String,
             // 数值
             _ when type.IsNumeric() => DataTypes.Number,
             // 布尔值
             _ when typeof(bool).IsAssignableFrom(type) => DataTypes.Boolean,
             // 日期
-            _ when typeof(DateTime).IsAssignableFrom(type)
-                || typeof(DateTimeOffset).IsAssignableFrom(type)
-                || typeof(DateOnly).IsAssignableFrom(type) => DataTypes.Date,
+            _ when typeof(DateTime).IsAssignableFrom(type) || typeof(DateTimeOffset).IsAssignableFrom(type) || typeof(DateOnly).IsAssignableFrom(type) => DataTypes.Date,
             // 时间
             _ when typeof(TimeOnly).IsAssignableFrom(type) => DataTypes.Time,
             // 枚举
@@ -58,18 +55,11 @@ public static class DataTypeParser
             // 元组值
             _ when typeof(ITuple).IsAssignableFrom(type) => DataTypes.Tuple,
             // 数组
-            _ when type.IsArray
-                || (typeof(IEnumerable).IsAssignableFrom(type)
-                    && type.IsGenericType
-                    && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
+            _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
             // 对象
-            _ when type != typeof(object)
-                && type.IsClass
-                && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
+            _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
             // 结构
-            _ when type.IsValueType
-                && !type.IsPrimitive
-                && !type.IsEnum => DataTypes.Struct,
+            _ when type.IsValueType && !type.IsPrimitive && !type.IsEnum => DataTypes.Struct,
             // 缺省值
             _ => DataTypes.Any
         };

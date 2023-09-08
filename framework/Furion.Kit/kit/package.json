@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/graphs": "^1.4.0",
-    "@ant-design/icons": "^5.2.5",
+    "@ant-design/icons": "^5.2.6",
     "@lingui/react": "^4.4.0",
     "@mdx-js/loader": "^2.3.0",
     "@monaco-editor/react": "^4.5.2",
@@ -13,7 +13,7 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@uiw/react-json-view": "^1.8.5",
-    "antd": "^5.8.5",
+    "antd": "^5.8.6",
     "axios": "^1.5.0",
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.6",
