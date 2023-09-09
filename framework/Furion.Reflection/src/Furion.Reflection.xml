@@ -10,6 +10,11 @@
             </summary>
             <remarks>用于生成接口代理</remarks>
         </member>
+        <member name="F:Furion.Reflection.DispatchProxyDecorator._invokeAsyncOfTMethod">
+            <summary>
+            <see cref="M:Furion.Reflection.DispatchProxyDecorator.InvokeAsync``1(Furion.Reflection.Invocation)"/>
+            </summary>
+        </member>
         <member name="M:Furion.Reflection.DispatchProxyDecorator.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.Reflection.DispatchProxyDecorator"/>
@@ -81,11 +86,6 @@
             <param name="targetMethod">接口方法</param>
             <param name="args">方法传递参数</param>
             <returns><see cref="T:System.Object"/></returns>
-        </member>
-        <member name="F:Furion.Reflection.DispatchProxyDecorator._invokeAsyncOfTMethod">
-            <summary>
-            <see cref="M:Furion.Reflection.DispatchProxyDecorator.InvokeAsync``1(Furion.Reflection.Invocation)"/>
-            </summary>
         </member>
         <member name="T:Furion.Reflection.Invocation">
             <summary>

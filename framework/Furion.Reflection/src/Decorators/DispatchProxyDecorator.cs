@@ -21,6 +21,11 @@ namespace Furion.Reflection;
 public abstract class DispatchProxyDecorator : DispatchProxy
 {
     /// <summary>
+    /// <see cref="InvokeAsync{T}(Invocation)"/>
+    /// </summary>
+    internal static readonly MethodInfo? _invokeAsyncOfTMethod = typeof(DispatchProxyDecorator).GetMethod(nameof(InvokeAsync), 1, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, new[] { typeof(Invocation) }, null);
+
+    /// <summary>
     /// <inheritdoc cref="DispatchProxyDecorator"/>
     /// </summary>
     public DispatchProxyDecorator()
@@ -167,9 +172,4 @@ public abstract class DispatchProxyDecorator : DispatchProxy
             return Invoke(invocation);
         }
     }
-
-    /// <summary>
-    /// <see cref="InvokeAsync{T}(Invocation)"/>
-    /// </summary>
-    internal static readonly MethodInfo? _invokeAsyncOfTMethod = typeof(DispatchProxyDecorator).GetMethod(nameof(InvokeAsync), 1, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, new[] { typeof(Invocation) }, null);
 }
