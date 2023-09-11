@@ -49,7 +49,8 @@ internal static class KitEndpoints
 
         // 开放接口配置
         webApplication.MapGroup(kitOptions.Root)
-            .MapGet("openapi", OpenApiHandler);
+            .MapGet("openapi", OpenApiHandler)
+            .ExcludeFromDescription();
     }
 
     /// <summary>
