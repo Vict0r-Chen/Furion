@@ -198,14 +198,17 @@ internal static class KitEndpoints
         // 设置响应头，不缓存请求
         httpContext.Response.Headers.CacheControl = "no-cache";
 
+        // 小驼峰命名策略
+        var camelCaseJsonNamingPolicy = JsonNamingPolicy.CamelCase;
+
         // 初始化 JSON 序列化选项
         var jsonSerializerOptions = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNamingPolicy = camelCaseJsonNamingPolicy,
+            DictionaryKeyPolicy = camelCaseJsonNamingPolicy,
             // DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
-        jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+        jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(camelCaseJsonNamingPolicy));
 
         // 返回 application/json 响应流数据
         return Results.Json(openModel, jsonSerializerOptions);
