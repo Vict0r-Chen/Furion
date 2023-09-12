@@ -1055,41 +1055,59 @@
             <param name="maximumLength">最大长度</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Range(System.Int32,System.Int32)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Range(System.Int32,System.Int32,System.Action{System.ComponentModel.DataAnnotations.RangeAttribute})">
             <summary>
             添加范围验证器
             </summary>
             <param name="minimum">最小值</param>
             <param name="maximum">最大值</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.Range(System.Double,System.Double)">
+        <member name="M:Furion.Validation.PropertyValidator`2.Range(System.Double,System.Double,System.Action{System.ComponentModel.DataAnnotations.RangeAttribute})">
             <summary>
             添加范围验证器
             </summary>
             <param name="minimum">最小值</param>
             <param name="maximum">最大值</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.RegularExpression(System.String)">
+        <member name="M:Furion.Validation.PropertyValidator`2.RegularExpression(System.String,System.Action{System.ComponentModel.DataAnnotations.RegularExpressionAttribute})">
             <summary>
             添加正则表达式验证器
             </summary>
             <param name="pattern">正则表达式</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
-        <member name="M:Furion.Validation.PropertyValidator`2.RegularExpression(System.String,System.Int32)">
+        <member name="M:Furion.Validation.PropertyValidator`2.RegularExpression(System.String,System.Int32,System.Action{System.ComponentModel.DataAnnotations.RegularExpressionAttribute})">
             <summary>
             添加正则表达式验证器
             </summary>
             <param name="pattern">正则表达式</param>
             <param name="matchTimeoutInMilliseconds">匹配超时毫秒数</param>
+            <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.EmailAddress">
             <summary>
             添加邮箱地址验证器
             </summary>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.AllowedValues(System.Object[])">
+            <summary>
+            添加可选值验证器
+            </summary>
+            <param name="values">可选值集合</param>
+            <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
+        </member>
+        <member name="M:Furion.Validation.PropertyValidator`2.DeniedValues(System.Object[])">
+            <summary>
+            添加禁用值验证器
+            </summary>
+            <param name="values">禁用值集合</param>
             <returns><see cref="T:Furion.Validation.PropertyValidator`2"/></returns>
         </member>
         <member name="M:Furion.Validation.PropertyValidator`2.Add(Furion.Validation.ValidatorBase)">

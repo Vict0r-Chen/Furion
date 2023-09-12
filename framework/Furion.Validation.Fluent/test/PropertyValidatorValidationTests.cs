@@ -961,6 +961,38 @@ public class PropertyValidatorValidationTests
     }
 
     [Fact]
+    public void AllowedValues_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+        propertyValidator.AllowedValues("Furion", "Fur", "百小僧");
+
+        Assert.Single(propertyValidator.Validators);
+
+        var validator = propertyValidator.Validators.ElementAt(0) as ValueAnnotationValidator;
+        Assert.NotNull(validator);
+
+        var attribute = validator.Attributes.First() as AllowedValuesAttribute;
+        Assert.NotNull(attribute);
+    }
+
+    [Fact]
+    public void DeniedValues_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+        propertyValidator.DeniedValues("Furion", "Fur", "百小僧");
+
+        Assert.Single(propertyValidator.Validators);
+
+        var validator = propertyValidator.Validators.ElementAt(0) as ValueAnnotationValidator;
+        Assert.NotNull(validator);
+
+        var attribute = validator.Attributes.First() as DeniedValuesAttribute;
+        Assert.NotNull(attribute);
+    }
+
+    [Fact]
     public void Add_Invalid_Parameters()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();

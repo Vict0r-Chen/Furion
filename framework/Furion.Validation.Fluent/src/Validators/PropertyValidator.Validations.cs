@@ -811,10 +811,15 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="minimum">最小值</param>
     /// <param name="maximum">最大值</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Range(int minimum, int maximum)
+    public PropertyValidator<T, TProperty> Range(int minimum, int maximum, Action<RangeAttribute>? configure = default)
     {
-        Validators.Add(new ValueAnnotationValidator(new RangeAttribute(minimum, maximum)));
+        // 初始化范围验证特性
+        var rangeAttribute = new RangeAttribute(minimum, maximum);
+        configure?.Invoke(rangeAttribute);
+
+        Validators.Add(new ValueAnnotationValidator(rangeAttribute));
 
         return this;
     }
@@ -824,10 +829,15 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="minimum">最小值</param>
     /// <param name="maximum">最大值</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> Range(double minimum, double maximum)
+    public PropertyValidator<T, TProperty> Range(double minimum, double maximum, Action<RangeAttribute>? configure = default)
     {
-        Validators.Add(new ValueAnnotationValidator(new RangeAttribute(minimum, maximum)));
+        // 初始化范围验证特性
+        var rangeAttribute = new RangeAttribute(minimum, maximum);
+        configure?.Invoke(rangeAttribute);
+
+        Validators.Add(new ValueAnnotationValidator(rangeAttribute));
 
         return this;
     }
@@ -836,10 +846,15 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// 添加正则表达式验证器
     /// </summary>
     /// <param name="pattern">正则表达式</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> RegularExpression(string pattern)
+    public PropertyValidator<T, TProperty> RegularExpression(string pattern, Action<RegularExpressionAttribute>? configure = default)
     {
-        Validators.Add(new ValueAnnotationValidator(new RegularExpressionAttribute(pattern)));
+        // 初始化正则表达式验证特性
+        var regularExpressionAttribute = new RegularExpressionAttribute(pattern);
+        configure?.Invoke(regularExpressionAttribute);
+
+        Validators.Add(new ValueAnnotationValidator(regularExpressionAttribute));
 
         return this;
     }
@@ -849,13 +864,18 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     /// </summary>
     /// <param name="pattern">正则表达式</param>
     /// <param name="matchTimeoutInMilliseconds">匹配超时毫秒数</param>
+    /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
-    public PropertyValidator<T, TProperty> RegularExpression(string pattern, int matchTimeoutInMilliseconds)
+    public PropertyValidator<T, TProperty> RegularExpression(string pattern, int matchTimeoutInMilliseconds, Action<RegularExpressionAttribute>? configure = default)
     {
-        Validators.Add(new ValueAnnotationValidator(new RegularExpressionAttribute(pattern)
+        // 初始化正则表达式验证特性
+        var regularExpressionAttribute = new RegularExpressionAttribute(pattern)
         {
             MatchTimeoutInMilliseconds = matchTimeoutInMilliseconds
-        }));
+        };
+        configure?.Invoke(regularExpressionAttribute);
+
+        Validators.Add(new ValueAnnotationValidator(regularExpressionAttribute));
 
         return this;
     }
@@ -867,6 +887,30 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     public PropertyValidator<T, TProperty> EmailAddress()
     {
         Validators.Add(new ValueAnnotationValidator(new EmailAddressAttribute()));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加可选值验证器
+    /// </summary>
+    /// <param name="values">可选值集合</param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> AllowedValues(params object?[] values)
+    {
+        Validators.Add(new ValueAnnotationValidator(new AllowedValuesAttribute(values)));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 添加禁用值验证器
+    /// </summary>
+    /// <param name="values">禁用值集合</param>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> DeniedValues(params object?[] values)
+    {
+        Validators.Add(new ValueAnnotationValidator(new DeniedValuesAttribute(values)));
 
         return this;
     }
