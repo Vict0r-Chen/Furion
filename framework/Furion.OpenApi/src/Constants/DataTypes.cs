@@ -50,12 +50,12 @@ public enum DataTypes
     Enum,
 
     /// <summary>
-    /// 二进制（如文件）
+    /// 二进制（文件）
     /// </summary>
     Binary,
 
     /// <summary>
-    /// 二进制集合
+    /// 二进制（文件）集合
     /// </summary>
     BinaryCollection,
 

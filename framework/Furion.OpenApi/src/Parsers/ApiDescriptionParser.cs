@@ -100,7 +100,7 @@ public sealed class ApiDescriptionParser
         var openApiParameters = new List<OpenApiParameter>();
         foreach (var parameterDescription in parameterDescriptions)
         {
-            var openApiParameter = new OpenApiParameterParser(parameterDescription).Parse();
+            var openApiParameter = new OpenApiModelParser(parameterDescription).Parse();
 
             if (openApiParameter is null)
             {

@@ -15,18 +15,18 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口参数解析器
+/// 开放接口模型解析器
 /// </summary>
-public sealed class OpenApiParameterParser
+public sealed class OpenApiModelParser
 {
     /// <inheritdoc cref="ApiParameterDescription"/>
     internal readonly ApiParameterDescription _apiParameterDescription;
 
     /// <summary>
-    /// <inheritdoc cref="OpenApiParameterParser"/>
+    /// <inheritdoc cref="OpenApiModelParser"/>
     /// </summary>
     /// <param name="apiParameterDescription"><see cref="ApiParameterDescription"/></param>
-    public OpenApiParameterParser(ApiParameterDescription apiParameterDescription)
+    public OpenApiModelParser(ApiParameterDescription apiParameterDescription)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(apiParameterDescription);
