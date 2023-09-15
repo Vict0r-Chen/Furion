@@ -817,6 +817,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     {
         // 初始化范围验证特性
         var rangeAttribute = new RangeAttribute(minimum, maximum);
+
+        // 调用自定义配置委托
         configure?.Invoke(rangeAttribute);
 
         Validators.Add(new ValueAnnotationValidator(rangeAttribute));
@@ -835,6 +837,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     {
         // 初始化范围验证特性
         var rangeAttribute = new RangeAttribute(minimum, maximum);
+
+        // 调用自定义配置委托
         configure?.Invoke(rangeAttribute);
 
         Validators.Add(new ValueAnnotationValidator(rangeAttribute));
@@ -852,6 +856,8 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     {
         // 初始化正则表达式验证特性
         var regularExpressionAttribute = new RegularExpressionAttribute(pattern);
+
+        // 调用自定义配置委托
         configure?.Invoke(regularExpressionAttribute);
 
         Validators.Add(new ValueAnnotationValidator(regularExpressionAttribute));
