@@ -68,12 +68,12 @@ public class ManifestResourceConfigurationBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            manifestResourceConfigurationBuilder.AddAssemblies(new Assembly[] { null! });
+            manifestResourceConfigurationBuilder.AddAssemblies([null!]);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            manifestResourceConfigurationBuilder.AddAssemblies(new Assembly[] { GetType().Assembly, null! });
+            manifestResourceConfigurationBuilder.AddAssemblies([GetType().Assembly, null!]);
         });
     }
 
@@ -123,12 +123,12 @@ public class ManifestResourceConfigurationBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            manifestResourceConfigurationBuilder.AddGlobbings(new string[] { null! });
+            manifestResourceConfigurationBuilder.AddGlobbings([null!]);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            manifestResourceConfigurationBuilder.AddGlobbings(new string[] { "*.xml", null! });
+            manifestResourceConfigurationBuilder.AddGlobbings(["*.xml", null!]);
         });
     }
 
@@ -178,12 +178,12 @@ public class ManifestResourceConfigurationBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            manifestResourceConfigurationBuilder.AddBlacklistGlobbings(new string[] { null! });
+            manifestResourceConfigurationBuilder.AddBlacklistGlobbings([null!]);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            manifestResourceConfigurationBuilder.AddBlacklistGlobbings(new string[] { "*.xml", null! });
+            manifestResourceConfigurationBuilder.AddBlacklistGlobbings(["*.xml", null!]);
         });
     }
 

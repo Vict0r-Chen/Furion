@@ -22,6 +22,7 @@ public class OpenApiProperty
     /// <summary>
     /// 名称
     /// </summary>
+    [JsonIgnore]
     public string? Name { get; set; }
 
     /// <summary>
@@ -35,19 +36,14 @@ public class OpenApiProperty
     public object? DefaultValue { get; set; }
 
     /// <summary>
-    /// 允许空值
-    /// </summary>
-    public bool AllowNullValue { get; set; }
-
-    /// <summary>
     /// 是否必填
     /// </summary>
     public bool IsRequired { get; set; }
 
     /// <summary>
-    /// 作为路径参数
+    /// 允许空值
     /// </summary>
-    public bool AsPathParameter { get; set; }
+    public bool AllowNullValue { get; set; }
 
     /// <summary>
     /// 数据类型
@@ -56,27 +52,15 @@ public class OpenApiProperty
     public DataTypes DataType { get; set; }
 
     /// <summary>
-    /// 格式化
-    /// </summary>
-    public string? Format { get; set; }
-
-    /// <summary>
-    /// 绑定源 Id
-    /// </summary>
-    public string? SourceId { get; set; }
-
-    /// <summary>
     /// 运行时类型
     /// </summary>
     public string? RuntimeType { get; set; }
 
-    /// <summary>
-    /// 正则表达式集合
-    /// </summary>
-    public IList<string>? Patterns { get; set; }
+    /// <inheritdoc cref="TypeCode"/>
+    public TypeCode? TypeCode { get; set; }
 
     /// <summary>
     /// 子属性集合
     /// </summary>
-    public IList<OpenApiProperty>? Properties { get; set; }
+    public IDictionary<string, object>? Properties { get; set; }
 }

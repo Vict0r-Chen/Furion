@@ -44,7 +44,7 @@ public sealed class ManifestResourceConfigurationBuilder : ConfigurationBuilderB
     /// </summary>
     public ManifestResourceConfigurationBuilder()
     {
-        _assemblies = new();
+        _assemblies = [];
 
         _fileGlobbing = new(StringComparer.OrdinalIgnoreCase)
         {

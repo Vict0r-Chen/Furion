@@ -91,11 +91,14 @@
             <summary>
             代理方法调用器
             </summary>
-            <remarks>负责动态调用方法</remarks>
+            <param name="targetMethod">接口方法</param>
+            <param name="args">调用参数</param>
+            <param name="target">目标实例对象</param>
+            <param name="properties">额外数据</param>
         </member>
         <member name="M:Furion.Reflection.Invocation.#ctor(System.Reflection.MethodInfo,System.Object[],System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            <inheritdoc cref="T:Furion.Reflection.Invocation"/>
+            代理方法调用器
             </summary>
             <param name="targetMethod">接口方法</param>
             <param name="args">调用参数</param>

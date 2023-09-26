@@ -306,21 +306,21 @@ internal sealed class FileScanningConfigurationScanner
         // 若文件路径以 baseDirectory 开头，则直接返回
         if (originalFile.StartsWith(baseDirectory, StringComparison.OrdinalIgnoreCase))
         {
-            return new[] { originalFile };
+            return [originalFile];
         }
 
         // 若应用程序内容目录不为空
         if (string.IsNullOrWhiteSpace(ContentRoot)
             || !originalFile.StartsWith(ContentRoot, StringComparison.OrdinalIgnoreCase))
         {
-            return new[] { originalFile };
+            return [originalFile];
         }
 
         // 生成发布后的文件路径
         var publicationFile = Path.Combine(baseDirectory, originalFile[ContentRoot.Length..]
             .TrimStart(Path.DirectorySeparatorChar));
 
-        return new[] { originalFile, publicationFile };
+        return [originalFile, publicationFile];
     }
 
     /// <summary>

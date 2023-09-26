@@ -19,18 +19,10 @@ namespace Furion.Validation;
 /// </summary>
 /// <typeparam name="T">对象类型</typeparam>
 /// <typeparam name="TProperty">属性类型</typeparam>
-public class PropertyAnnotationValidator<T, TProperty> : PropertyAnnotationValidator<T>
+/// <param name="propertyExpression">属性选择器</param>
+public class PropertyAnnotationValidator<T, TProperty>(Expression<Func<T, TProperty?>> propertyExpression) : PropertyAnnotationValidator<T>(Convert(propertyExpression))
     where T : class
 {
-    /// <summary>
-    /// <inheritdoc cref="PropertyAnnotationValidator{T, TProperty}"/>
-    /// </summary>
-    /// <param name="propertyExpression">属性选择器</param>
-    public PropertyAnnotationValidator(Expression<Func<T, TProperty?>> propertyExpression)
-        : base(Convert(propertyExpression))
-    {
-    }
-
     /// <summary>
     /// 转换表达式
     /// </summary>
@@ -140,7 +132,7 @@ public class PropertyAnnotationValidator<T> : ValidatorBase<T>
         {
             MemberName = GetDisplayName(name)
         };
-        validationResults = new();
+        validationResults = [];
 
         // 调用 Validator.TryValidateProperty 静态方法验证
         return Validator.TryValidateProperty(GetPropertyValue(instance), validationContext, validationResults);

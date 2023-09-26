@@ -94,12 +94,12 @@ public class TypeScanningDependencyBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            typeScanningDependencyBuilder.AddAssemblies(new Assembly[] { null! });
+            typeScanningDependencyBuilder.AddAssemblies([null!]);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            typeScanningDependencyBuilder.AddAssemblies(new Assembly[] { GetType().Assembly, null! });
+            typeScanningDependencyBuilder.AddAssemblies([GetType().Assembly, null!]);
         });
     }
 
@@ -139,12 +139,12 @@ public class TypeScanningDependencyBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            typeScanningDependencyBuilder.AddBlacklistTypes(new Type[] { null! });
+            typeScanningDependencyBuilder.AddBlacklistTypes([null!]);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            typeScanningDependencyBuilder.AddBlacklistTypes(new Type[] { typeof(ExportService1), null! });
+            typeScanningDependencyBuilder.AddBlacklistTypes([typeof(ExportService1), null!]);
         });
     }
 

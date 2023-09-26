@@ -150,6 +150,17 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
     }
 
     /// <summary>
+    /// 添加日期时间格式验证器
+    /// </summary>
+    /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>
+    public PropertyValidator<T, TProperty> DateTimeFormat()
+    {
+        Validators.Add(new DateTimeFormatValidator());
+
+        return this;
+    }
+
+    /// <summary>
     /// 添加域名验证器
     /// </summary>
     /// <returns><see cref="PropertyValidator{T, TProperty}"/></returns>

@@ -101,6 +101,19 @@
         <member name="M:System.ComponentModel.DataAnnotations.ComparableAttribute`1.FormatErrorMessage(System.String)">
             <inheritdoc />
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.DateTimeFormatAttribute">
+            <summary>
+            日期时间格式验证特性
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DateTimeFormatAttribute.#ctor">
+            <summary>
+            <inheritdoc cref="T:System.ComponentModel.DataAnnotations.DateTimeFormatAttribute"/>
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DateTimeFormatAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.DomainAttribute">
             <summary>
             域名验证特性
@@ -1133,6 +1146,11 @@
               查找类似 The field {0} is not a valid color value. 的本地化字符串。
             </summary>
         </member>
+        <member name="P:Furion.Validation.Resources.Strings.DateTimeFormatValidator_Invalid">
+            <summary>
+              查找类似 The field {0} is not a valid date time format. 的本地化字符串。
+            </summary>
+        </member>
         <member name="P:Furion.Validation.Resources.Strings.DomainValidator_Invalid">
             <summary>
               查找类似 The field {0} is not a valid domain format. 的本地化字符串。
@@ -1655,6 +1673,19 @@
             </summary>
             <param name="validators">验证器集合</param>
             <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:Furion.Validation.DateTimeFormatValidator">
+            <summary>
+            日期时间格式验证器
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.DateTimeFormatValidator.#ctor">
+            <summary>
+            <inheritdoc cref="T:Furion.Validation.DateTimeFormatValidator"/>
+            </summary>
+        </member>
+        <member name="M:Furion.Validation.DateTimeFormatValidator.IsValid(System.Object)">
+            <inheritdoc />
         </member>
         <member name="T:Furion.Validation.DomainValidator">
             <summary>
@@ -2269,11 +2300,14 @@
             </summary>
             <typeparam name="T">对象类型</typeparam>
             <typeparam name="TProperty">属性类型</typeparam>
+            <param name="propertyExpression">属性选择器</param>
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
             <summary>
-            <inheritdoc cref="T:Furion.Validation.PropertyAnnotationValidator`2"/>
+            属性注解（特性）验证器
             </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <typeparam name="TProperty">属性类型</typeparam>
             <param name="propertyExpression">属性选择器</param>
         </member>
         <member name="M:Furion.Validation.PropertyAnnotationValidator`2.Convert(System.Linq.Expressions.Expression{System.Func{`0,`1}})">

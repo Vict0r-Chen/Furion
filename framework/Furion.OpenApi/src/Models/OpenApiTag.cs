@@ -24,7 +24,7 @@ public sealed class OpenApiTag
     /// </summary>
     public OpenApiTag()
     {
-        Descriptions = new();
+        Descriptions = [];
     }
 
     /// <summary>

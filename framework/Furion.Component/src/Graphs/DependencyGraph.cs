@@ -44,8 +44,8 @@ internal sealed class DependencyGraph
         ArgumentNullException.ThrowIfNull(dependencies);
 
         _dependencies = dependencies;
-        _ancestorsNodes = new();
-        _descendantsNodes = new();
+        _ancestorsNodes = [];
+        _descendantsNodes = [];
 
         // 构建祖先节点和后代节点集合
         BuildAncestorsAndDescendantsNodes();
@@ -84,7 +84,7 @@ internal sealed class DependencyGraph
 
             // 检查类型是否贴有 [DependsOn] 特性，如果有则取出所有依赖关系集合
             var dependedTypes = currentType.GetDefinedCustomAttribute<DependsOnAttribute>(false)?.DependedTypes
-                ?? Array.Empty<Type>();
+                ?? [];
 
             // 将依赖关系集合添加到依赖关系集合中
             dependencies.Add(currentType, dependedTypes);
@@ -110,7 +110,7 @@ internal sealed class DependencyGraph
                 // 查找当前节点祖先节点集合
                 if (!_ancestorsNodes.TryGetValue(currentNode, out var ancestorsNode))
                 {
-                    ancestorsNode = new();
+                    ancestorsNode = [];
                     _ancestorsNodes[currentNode] = ancestorsNode;
                 }
 
@@ -120,7 +120,7 @@ internal sealed class DependencyGraph
                 // 查找当前节点后代节点集合
                 if (!_descendantsNodes.TryGetValue(nodeType, out var descendantsNode))
                 {
-                    descendantsNode = new();
+                    descendantsNode = [];
                     _descendantsNodes[nodeType] = descendantsNode;
                 }
 

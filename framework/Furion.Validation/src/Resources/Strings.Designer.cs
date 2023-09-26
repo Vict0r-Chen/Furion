@@ -106,6 +106,15 @@ namespace Furion.Validation.Resources {
         }
         
         /// <summary>
+        ///   查找类似 The field {0} is not a valid date time format. 的本地化字符串。
+        /// </summary>
+        internal static string DateTimeFormatValidator_Invalid {
+            get {
+                return ResourceManager.GetString("DateTimeFormatValidator_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The field {0} is not a valid domain format. 的本地化字符串。
         /// </summary>
         internal static string DomainValidator_Invalid {

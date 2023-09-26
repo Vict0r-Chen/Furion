@@ -246,19 +246,14 @@
             默认值
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiProperty.AllowNullValue">
-            <summary>
-            允许空值
-            </summary>
-        </member>
         <member name="P:Furion.OpenApi.OpenApiProperty.IsRequired">
             <summary>
             是否必填
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiProperty.AsPathParameter">
+        <member name="P:Furion.OpenApi.OpenApiProperty.AllowNullValue">
             <summary>
-            作为路径参数
+            允许空值
             </summary>
         </member>
         <member name="P:Furion.OpenApi.OpenApiProperty.DataType">
@@ -266,25 +261,13 @@
             数据类型
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiProperty.Format">
-            <summary>
-            格式化
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiProperty.SourceId">
-            <summary>
-            绑定源 Id
-            </summary>
-        </member>
         <member name="P:Furion.OpenApi.OpenApiProperty.RuntimeType">
             <summary>
             运行时类型
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiProperty.Patterns">
-            <summary>
-            正则表达式集合
-            </summary>
+        <member name="P:Furion.OpenApi.OpenApiProperty.TypeCode">
+            <inheritdoc cref="P:Furion.OpenApi.OpenApiProperty.TypeCode"/>
         </member>
         <member name="P:Furion.OpenApi.OpenApiProperty.Properties">
             <summary>
@@ -340,22 +323,31 @@
             <summary>
             API 描述器解析器
             </summary>
-        </member>
-        <member name="F:Furion.OpenApi.ApiDescriptionParser._provider">
-            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/>
+            <param name="provider"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/></param>
+            <param name="options"><see cref="T:Microsoft.Extensions.Options.IOptions`1"/></param>
         </member>
         <member name="M:Furion.OpenApi.ApiDescriptionParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider,Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Mvc.JsonOptions})">
             <summary>
-            <inheritdoc cref="T:Furion.OpenApi.ApiDescriptionParser"/>
+            API 描述器解析器
             </summary>
             <param name="provider"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/></param>
             <param name="options"><see cref="T:Microsoft.Extensions.Options.IOptions`1"/></param>
+        </member>
+        <member name="F:Furion.OpenApi.ApiDescriptionParser._provider">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiDescriptionGroupCollectionProvider"/>
         </member>
         <member name="M:Furion.OpenApi.ApiDescriptionParser.Parse">
             <summary>
             解析 API 描述器并返回开放接口模型
             </summary>
             <returns><see cref="T:Furion.OpenApi.OpenApiModel"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.ApiDescriptionParser.ParseParameters(System.Collections.Generic.IList{Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription},Furion.OpenApi.OpenApiDescription)">
+            <summary>
+            解析参数
+            </summary>
+            <param name="parameterDescriptions"></param>
+            <param name="openApiDescription"></param>
         </member>
         <member name="T:Furion.OpenApi.DataTypeParser">
             <summary>
@@ -410,6 +402,48 @@
             </summary>
             <param name="type"><see cref="T:System.Type"/></param>
             <returns><see cref="T:Furion.OpenApi.DataTypes"/></returns>
+        </member>
+        <member name="T:Furion.OpenApi.OpenApiPropertyParser">
+            <summary>
+            开放接口属性解析器
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.OpenApiPropertyParser._modelMetadata">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.DefaultModelMetadata"/>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiPropertyParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata)">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiPropertyParser"/>
+            </summary>
+            <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiPropertyParser.Parser">
+            <summary>
+            解析模型元数据并返回开放接口属性
+            </summary>
+            <returns><see cref="T:Furion.OpenApi.OpenApiProperty"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiPropertyParser.ParseEnum(System.Type)">
+            <summary>
+            解析枚举类型模型数据
+            </summary>
+            <param name="modelType"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiPropertyParser.ParseObject(System.Type)">
+            <summary>
+            解析对象类型属性模型数据
+            </summary>
+            <param name="modelType"><see cref="T:System.Type"/></param>
+            <returns><see cref="T:System.Collections.Generic.IDictionary`2"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiPropertyParser.GetMetadataAttribute``1">
+            <summary>
+            获取模型元数据定义的特性
+            </summary>
+            <typeparam name="TAttribute"><see cref="T:System.Attribute"/></typeparam>
+            <returns><typeparamref name="TAttribute"/></returns>
         </member>
     </members>
 </doc>

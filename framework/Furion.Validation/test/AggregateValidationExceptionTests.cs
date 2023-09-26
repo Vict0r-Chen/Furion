@@ -20,10 +20,10 @@ public class AggregateValidationExceptionTests
     public void New_ReturnOK()
     {
         var exception1 = new AggregateValidationException();
-        var exception2 = new AggregateValidationException(new List<ValidationException> { new ValidationException() });
+        var exception2 = new AggregateValidationException(new List<ValidationException> { new() });
         var exception3 = new AggregateValidationException(new ValidationException());
         var exception4 = new AggregateValidationException("验证失败");
-        var exception5 = new AggregateValidationException("验证失败", new List<ValidationException> { new ValidationException() });
+        var exception5 = new AggregateValidationException("验证失败", new List<ValidationException> { new() });
         var exception6 = new AggregateValidationException("验证失败", new ValidationException());
         var exception7 = new AggregateValidationException("验证失败", new ValidationException(), new ValidationException());
 

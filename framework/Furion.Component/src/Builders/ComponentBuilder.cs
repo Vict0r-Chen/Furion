@@ -29,7 +29,7 @@ public sealed class ComponentBuilder
     /// </summary>
     public ComponentBuilder()
     {
-        _propsActions = new();
+        _propsActions = [];
     }
 
     /// <summary>

@@ -8,17 +8,18 @@
             <summary>
             依赖关系配置特性
             </summary>
+            <param name="addition"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
+        </member>
+        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.RegistrationType)">
+            <summary>
+            依赖关系配置特性
+            </summary>
+            <param name="addition"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
         </member>
         <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor">
             <summary>
             <inheritdoc cref="T:Furion.DependencyInjection.DependencyAttribute"/>
             </summary>
-        </member>
-        <member name="M:Furion.DependencyInjection.DependencyAttribute.#ctor(Furion.DependencyInjection.RegistrationType)">
-            <summary>
-            <inheritdoc cref="T:Furion.DependencyInjection.DependencyAttribute"/>
-            </summary>
-            <param name="addition"><see cref="T:Furion.DependencyInjection.RegistrationType"/></param>
         </member>
         <member name="P:Furion.DependencyInjection.DependencyAttribute.Registration">
             <inheritdoc cref="T:Furion.DependencyInjection.RegistrationType"/>

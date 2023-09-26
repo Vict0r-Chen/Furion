@@ -177,7 +177,7 @@ public sealed partial class PropertyValidator<T, TProperty> : IObjectValidator<T
         Property = _annotationValidator.Property;
         DisplayName = _annotationValidator.DisplayName;
 
-        Validators = new();
+        Validators = [];
         Options = new();
     }
 

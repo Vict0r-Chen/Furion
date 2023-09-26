@@ -29,7 +29,7 @@ internal sealed class ComponentOptions
     /// </summary>
     public ComponentOptions()
     {
-        PropsActions = new();
+        PropsActions = [];
         Components = new();
 
         _getPropsActionMethod = GetType().GetMethod(nameof(GetPropsAction)

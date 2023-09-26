@@ -44,16 +44,21 @@ public sealed class TypeScanningDependencyBuilder
     /// </summary>
     public TypeScanningDependencyBuilder()
     {
-        _assemblies = new();
+        _assemblies = [];
 
-        _blacklistServiceTypes = new()
-        {
-            typeof(IDisposable), typeof(IAsyncDisposable),
-            typeof(IDependency), typeof(IEnumerator),
-            typeof(IEnumerable), typeof(ICollection),
-            typeof(IDictionary), typeof(IComparable),
-            typeof(object), typeof(DynamicObject)
-        };
+        _blacklistServiceTypes =
+        [
+            typeof(IDisposable),
+            typeof(IAsyncDisposable),
+            typeof(IDependency),
+            typeof(IEnumerator),
+            typeof(IEnumerable),
+            typeof(ICollection),
+            typeof(IDictionary),
+            typeof(IComparable),
+            typeof(object),
+            typeof(DynamicObject)
+        ];
     }
 
     /// <summary>

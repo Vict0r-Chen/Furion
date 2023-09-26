@@ -199,7 +199,7 @@ internal sealed partial class FileConfigurationParser
 
         // 查找 JsonConfigurationFileParser.Parse 静态方法
         var parseStaticMethodInfo = assembly.GetType($"{assembly.GetName().Name}.JsonConfigurationFileParser")
-            ?.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static, new[] { typeof(Stream) });
+            ?.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static, [typeof(Stream)]);
 
         // 空检查
         ArgumentNullException.ThrowIfNull(parseStaticMethodInfo);

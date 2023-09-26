@@ -46,11 +46,11 @@ public static class DataTypeParser
             _ when typeof(TimeOnly).IsAssignableFrom(type) => DataTypes.Time,
             // 枚举
             _ when type.IsEnum => DataTypes.Enum,
-            // 二进制
+            // 二进制（文件）
             _ when typeof(IFormFile).IsAssignableFrom(type) => DataTypes.Binary,
-            // 二进制集合
+            // 二进制（文件）集合
             _ when IsFormFileCollection(type) => DataTypes.BinaryCollection,
-            // 记录值
+            // 记录值（字典）
             _ when type.IsDictionary() => DataTypes.Record,
             // 元组值
             _ when typeof(ITuple).IsAssignableFrom(type) => DataTypes.Tuple,
@@ -60,7 +60,7 @@ public static class DataTypeParser
             _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
             // 结构
             _ when type.IsValueType && !type.IsPrimitive && !type.IsEnum => DataTypes.Struct,
-            // 缺省值
+            // Any
             _ => DataTypes.Any
         };
     }

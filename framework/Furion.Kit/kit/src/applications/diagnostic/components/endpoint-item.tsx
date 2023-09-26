@@ -9,7 +9,7 @@ import EndpointDetail from "./endpoint-detail";
 import StatusCode from "./statuscode";
 import Url from "./url";
 
-import JsonViewr from "../../../components/json-viewer";
+import JsonViewer from "../../../components/json-viewer";
 
 const isError = (statusCode?: number | null): boolean => {
   if (!statusCode) {
@@ -97,7 +97,8 @@ const EndpointItem: React.FC<EndpointDiagnosticModel> = (props) => {
         </Space>
       </Main>
       <ExtraContainer $spaceBetween>
-        <JsonViewr
+        <JsonViewer
+          collapsed
           value={props}
           keyName={props.traceId ?? props.traceIdentifier}
         />

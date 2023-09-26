@@ -39,8 +39,8 @@ public sealed class FluentValidationBuilder
     /// </summary>
     public FluentValidationBuilder()
     {
-        _assemblies = new();
-        _validatorTypes = new();
+        _assemblies = [];
+        _validatorTypes = [];
     }
 
     /// <summary>

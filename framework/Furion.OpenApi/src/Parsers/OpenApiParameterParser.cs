@@ -49,6 +49,8 @@ public sealed class OpenApiParameterParser
         // 获取默认模型元数据
         var modelMetadata = _apiParameterDescription.ModelMetadata as DefaultModelMetadata;
 
+        var x = new OpenApiPropertyParser(modelMetadata!).Parser();
+
         // 获取模型类型
         var modelType = modelMetadata?.ModelType ?? _apiParameterDescription.Type;
 

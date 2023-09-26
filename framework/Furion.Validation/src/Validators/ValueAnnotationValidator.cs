@@ -92,10 +92,10 @@ public class ValueAnnotationValidator : ValidatorBase
         var requiredAttribute = Attributes.OfType<RequiredAttribute>().FirstOrDefault();
         if (requiredAttribute is not null && value is null)
         {
-            validationResults = new()
-            {
-                new (requiredAttribute.FormatErrorMessage(name),new[]{ name })
-            };
+            validationResults =
+            [
+                new(requiredAttribute.FormatErrorMessage(name), new[] { name })
+            ];
 
             return false;
         }
@@ -108,7 +108,7 @@ public class ValueAnnotationValidator : ValidatorBase
         {
             MemberName = name ?? "Value"
         };
-        validationResults = new();
+        validationResults = [];
 
         // 调用 Validator.TryValidateValue 静态方法验证
         return Validator.TryValidateValue(value, validationContext, validationResults, Attributes);

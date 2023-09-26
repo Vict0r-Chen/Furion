@@ -24,7 +24,7 @@ internal sealed class ComponentDiagnosticModel
     /// </summary>
     internal ComponentDiagnosticModel()
     {
-        Components = new();
+        Components = [];
     }
 
     /// <summary>

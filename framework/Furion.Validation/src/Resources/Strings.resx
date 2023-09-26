@@ -132,6 +132,9 @@
   <data name="ColorValueValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid color value.</value>
   </data>
+  <data name="DateTimeFormatValidator_Invalid" xml:space="preserve">
+    <value>The field {0} is not a valid date time format.</value>
+  </data>
   <data name="DomainValidator_Invalid" xml:space="preserve">
     <value>The field {0} is not a valid domain format.</value>
   </data>

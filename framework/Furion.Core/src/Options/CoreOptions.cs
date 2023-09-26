@@ -37,7 +37,7 @@ internal sealed class CoreOptions
         _optionsInstances = new();
         _metadataOfRegistered = new(StringComparer.OrdinalIgnoreCase);
 
-        EntryComponentTypes = new();
+        EntryComponentTypes = [];
     }
 
     /// <summary>

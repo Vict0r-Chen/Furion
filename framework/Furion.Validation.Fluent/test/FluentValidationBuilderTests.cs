@@ -63,12 +63,12 @@ public class FluentValidationBuilderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fluentValidationBuilder.AddAssemblies(new Assembly[] { null! });
+            fluentValidationBuilder.AddAssemblies([null!]);
         });
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            fluentValidationBuilder.AddAssemblies(new Assembly[] { GetType().Assembly, null! });
+            fluentValidationBuilder.AddAssemblies([GetType().Assembly, null!]);
         });
     }
 

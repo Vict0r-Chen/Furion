@@ -78,7 +78,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Trace_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "跟踪事件信息 {0}-{1}";
         Debugging.Trace(message, args);
 
@@ -101,7 +101,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Info_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "信息事件信息 {0}-{1}";
         Debugging.Info(message, args);
 
@@ -124,7 +124,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Warn_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "警告事件信息 {0}-{1}";
         Debugging.Warn(message, args);
 
@@ -147,7 +147,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Error_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "错误事件信息 {0}-{1}";
         Debugging.Error(message, args);
 
@@ -170,7 +170,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void File_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "文件事件信息 {0}-{1}";
         Debugging.File(message, args);
 
@@ -193,7 +193,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Tip_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "提示事件信息 {0}-{1}";
         Debugging.Tip(message, args);
 
@@ -216,7 +216,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Search_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "搜索事件信息 {0}-{1}";
         Debugging.Search(message, args);
 
@@ -239,7 +239,7 @@ public class DebuggingTests : IDisposable
     [Fact]
     public void Clock_OutputFormatString()
     {
-        string[] args = { "one", "two" };
+        string[] args = ["one", "two"];
         var message = "时钟事件信息 {0}-{1}";
         Debugging.Clock(message, args);
 

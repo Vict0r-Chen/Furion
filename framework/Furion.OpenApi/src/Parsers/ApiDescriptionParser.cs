@@ -17,24 +17,15 @@ namespace Furion.OpenApi;
 /// <summary>
 /// API 描述器解析器
 /// </summary>
-public sealed class ApiDescriptionParser
+/// <param name="provider"><see cref="IApiDescriptionGroupCollectionProvider"/></param>
+/// <param name="options"><see cref="IOptions{TOptions}"/></param>
+public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider provider
+        , IOptions<JsonOptions> options)
 {
     /// <inheritdoc cref="IApiDescriptionGroupCollectionProvider"/>
-    internal readonly IApiDescriptionGroupCollectionProvider _provider;
+    internal readonly IApiDescriptionGroupCollectionProvider _provider = provider;
 
-    internal readonly JsonOptions _jsonOptions;
-
-    /// <summary>
-    /// <inheritdoc cref="ApiDescriptionParser"/>
-    /// </summary>
-    /// <param name="provider"><see cref="IApiDescriptionGroupCollectionProvider"/></param>
-    /// <param name="options"><see cref="IOptions{TOptions}"/></param>
-    public ApiDescriptionParser(IApiDescriptionGroupCollectionProvider provider
-        , IOptions<JsonOptions> options)
-    {
-        _provider = provider;
-        _jsonOptions = options.Value;
-    }
+    internal readonly JsonOptions _jsonOptions = options.Value;
 
     /// <summary>
     /// 解析 API 描述器并返回开放接口模型
@@ -90,7 +81,12 @@ public sealed class ApiDescriptionParser
         return openApiModel;
     }
 
-    public void ParseParameters(IList<ApiParameterDescription> parameterDescriptions, OpenApiDescription openApiDescription)
+    /// <summary>
+    /// 解析参数
+    /// </summary>
+    /// <param name="parameterDescriptions"></param>
+    /// <param name="openApiDescription"></param>
+    public static void ParseParameters(IList<ApiParameterDescription> parameterDescriptions, OpenApiDescription openApiDescription)
     {
         if (parameterDescriptions is null or { Count: 0 })
         {

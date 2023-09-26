@@ -12,28 +12,30 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.OpenApi;
+namespace Furion.Validation;
 
 /// <summary>
-/// 开放接口分组
+/// 日期时间格式验证器
 /// </summary>
-public sealed class OpenApiGroup
+public partial class DateTimeFormatValidator : ValidatorBase
 {
     /// <summary>
-    /// <inheritdoc cref="OpenApiGroup"/>
+    /// <inheritdoc cref="DateTimeFormatValidator"/>
     /// </summary>
-    public OpenApiGroup()
+    public DateTimeFormatValidator()
+        : base(() => Strings.DateTimeFormatValidator_Invalid)
     {
-        Tags = [];
     }
 
-    /// <summary>
-    /// 名称
-    /// </summary>
-    public string? Name { get; internal set; }
-
-    /// <summary>
-    /// 开放接口描述器模型集合
-    /// </summary>
-    public List<OpenApiTag> Tags { get; init; }
+    /// <inheritdoc />
+    public override bool IsValid(object? value)
+    {
+        return value switch
+        {
+            null => true,
+            DateTime or DateTimeOffset or DateOnly => true,
+            string text => DateTime.TryParse(text, out _),
+            _ => false
+        };
+    }
 }

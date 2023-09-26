@@ -35,7 +35,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
     public ObjectValidator()
     {
         _annotationValidator = new();
-        _propertyValidators = new();
+        _propertyValidators = [];
 
         Options = new();
 

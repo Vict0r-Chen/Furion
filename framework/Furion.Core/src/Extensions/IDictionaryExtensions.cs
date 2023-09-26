@@ -38,7 +38,7 @@ internal static class IDictionaryExtensions
         // 检查键是否存在
         if (!dictionary.TryGetValue(key, out var values))
         {
-            values = new();
+            values = [];
             dictionary.Add(key, values);
         }
 
@@ -64,7 +64,7 @@ internal static class IDictionaryExtensions
             // 检查键是否存在
             if (!dictionary.TryGetValue(key, out var values))
             {
-                values = new();
+                values = [];
                 dictionary.Add(key, values);
             }
 

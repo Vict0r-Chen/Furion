@@ -22,6 +22,7 @@ public class ValidationAttributeTests
     [InlineData(typeof(ChineseAttribute))]
     [InlineData(typeof(ChineseNameAttribute))]
     [InlineData(typeof(ColorValueAttribute))]
+    [InlineData(typeof(DateTimeFormatAttribute))]
     [InlineData(typeof(DomainAttribute))]
     [InlineData(typeof(EndsWithAttribute))]
     [InlineData(typeof(EqualAttribute))]

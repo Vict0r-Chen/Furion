@@ -12,10 +12,6 @@ const customTheme = {
   "--w-rjv-color": "rgb(0, 43, 54)",
 };
 
-export const defaultJsonViewComponents = {
-  arrow: <TriangleSolidArrow />,
-};
-
 const JsonViewr: React.FC<
   Omit<JsonViewProps<object>, "ref"> & React.RefAttributes<HTMLDivElement>
 > = (props) => {
@@ -30,9 +26,12 @@ const JsonViewr: React.FC<
           opacity: 0.85,
           ...customTheme,
         }}
-        components={defaultJsonViewComponents}
         {...props}
-      />
+      >
+        <JsonView.Arrow>
+          <TriangleSolidArrow />
+        </JsonView.Arrow>
+      </JsonView>
     </Container>
   );
 };

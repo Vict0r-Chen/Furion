@@ -23,12 +23,8 @@ namespace Furion.Tests.Controllers;
 [ApiController]
 [Route("[controller]/[action]")]
 [ApiExplorerSettings(IgnoreApi = true)]
-public class HelloController
+public class HelloController(IServiceProvider _)
 {
-    public HelloController(IServiceProvider _)  // 构造函数注入
-    {
-    }
-
     [AutowiredService]  // 属性注入
     private IConfiguration Configuration { get; set; } = null!;
 

@@ -33,7 +33,7 @@ internal sealed class EndpointDiagnosticModel
 
         _httpContext = httpContext;
 
-        Filters = new();
+        Filters = [];
 
         // 初始化
         Initialize();
@@ -137,7 +137,7 @@ internal sealed class EndpointDiagnosticModel
         var httpRequest = _httpContext.Request;
 
         TraceId = Activity.Current?.Id ?? _httpContext?.TraceIdentifier;
-        TraceIdentifier = _httpContext.TraceIdentifier;
+        TraceIdentifier = _httpContext?.TraceIdentifier;
         Path = httpRequest.Path;
         UrlAddress = httpRequest.GetUrlAddress();
         HttpMethod = httpRequest.Method;
@@ -149,7 +149,7 @@ internal sealed class EndpointDiagnosticModel
         RouteValues = httpRequest.RouteValues.ToDictionary(u => u.Key, u => u.Value);
 
         // 获取终点路由
-        if (_httpContext.GetEndpoint() is Endpoint endpoint)
+        if (_httpContext?.GetEndpoint() is Endpoint endpoint)
         {
             // 设置终点路由模型
             Endpoint = new(endpoint);

@@ -12,6 +12,8 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
+#pragma warning disable
+
 namespace Furion.Core.Tests;
 
 public class InstanceType
@@ -76,11 +78,8 @@ public class PrivateConstructClass
     }
 }
 
-public class WithParameterConstructClass
+public class WithParameterConstructClass(string _)
 {
-    public WithParameterConstructClass(string _)
-    {
-    }
 }
 
 public class WithParameterAndParameterlessConstructClass
@@ -191,14 +190,9 @@ public class GenericType<T, U> : IGenericType<T, U>, IGenericType<T>
 { }
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public class CheckAttribute : Attribute
+public class CheckAttribute(Type type) : Attribute
 {
-    public CheckAttribute(Type type)
-    {
-        Type = type;
-    }
-
-    public Type Type { get; set; }
+    public Type Type { get; set; } = type;
 }
 
 public class CheckAttribute<T> : CheckAttribute

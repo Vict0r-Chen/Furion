@@ -17,53 +17,40 @@ namespace Furion.Reflection;
 /// <summary>
 /// 代理方法调用器
 /// </summary>
-/// <remarks>负责动态调用方法</remarks>
-public sealed class Invocation
-{
-    /// <summary>
-    /// <inheritdoc cref="Invocation"/>
-    /// </summary>
-    /// <param name="targetMethod">接口方法</param>
-    /// <param name="args">调用参数</param>
-    /// <param name="target">目标实例对象</param>
-    /// <param name="properties">额外数据</param>
-    public Invocation(MethodInfo targetMethod
+/// <param name="targetMethod">接口方法</param>
+/// <param name="args">调用参数</param>
+/// <param name="target">目标实例对象</param>
+/// <param name="properties">额外数据</param>
+public sealed class Invocation(MethodInfo targetMethod
         , object?[]? args
         , object? target = null
         , Dictionary<object, object?>? properties = null)
-    {
-        Args = args;
-        TargetMethod = targetMethod;
-        Target = target;
-        Properties = properties;
-
-        Method = GetRealMethod(targetMethod, target);
-    }
+{
 
     /// <summary>
     /// 目标实例对象
     /// </summary>
-    public object? Target { get; }
+    public object? Target { get; } = target;
 
     /// <summary>
     /// 被代理方法
     /// </summary>
-    public MethodInfo Method { get; }
+    public MethodInfo Method { get; } = GetRealMethod(targetMethod, target);
 
     /// <summary>
     /// 接口方法
     /// </summary>
-    private MethodInfo TargetMethod { get; }
+    private MethodInfo TargetMethod { get; } = targetMethod;
 
     /// <summary>
     /// 调用参数
     /// </summary>
-    public object?[]? Args { get; }
+    public object?[]? Args { get; } = args;
 
     /// <summary>
     /// 额外数据
     /// </summary>
-    public Dictionary<object, object?>? Properties { get; }
+    public Dictionary<object, object?>? Properties { get; } = properties;
 
     /// <summary>
     /// 调用同步方法

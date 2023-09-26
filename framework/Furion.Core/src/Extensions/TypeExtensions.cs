@@ -276,7 +276,7 @@ internal static class TypeExtensions
         var setterMethod = new DynamicMethod(
             $"{type.FullName}_Set_{propertyInfo.Name}",
             null,
-            new Type[] { typeof(object), typeof(object) },
+            [typeof(object), typeof(object)],
             typeof(TypeExtensions).Module
         );
 
@@ -333,7 +333,7 @@ internal static class TypeExtensions
         var setterMethod = new DynamicMethod(
             $"{type.FullName}_Set_{fieldInfo.Name}",
             null,
-            new Type[] { typeof(object), typeof(object) },
+            [typeof(object), typeof(object)],
             typeof(TypeExtensions).Module
         );
 
@@ -385,7 +385,7 @@ internal static class TypeExtensions
         var dynamicMethod = new DynamicMethod(
             $"{type.FullName}_Get_{propertyInfo.Name}",
             typeof(object),
-            new[] { typeof(object) },
+            [typeof(object)],
             typeof(TypeExtensions).Module,
             true
         );
@@ -435,7 +435,7 @@ internal static class TypeExtensions
         var dynamicMethod = new DynamicMethod(
             $"{type.FullName}_Get_{fieldInfo.Name}",
             typeof(object),
-            new[] { typeof(object) },
+            [typeof(object)],
             typeof(TypeExtensions).Module,
             true
         );

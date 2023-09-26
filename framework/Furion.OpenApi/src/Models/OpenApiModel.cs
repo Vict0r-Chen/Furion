@@ -24,8 +24,8 @@ public sealed class OpenApiModel
     /// </summary>
     public OpenApiModel()
     {
-        Groups = new();
-        Definitions = new();
+        Groups = [];
+        Definitions = [];
     }
 
     /// <summary>

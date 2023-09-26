@@ -57,7 +57,7 @@ public class CompositePolicy<TResult> : PolicyBase<TResult>
     /// </summary>
     public CompositePolicy()
     {
-        Policies = new();
+        Policies = [];
     }
 
     /// <summary>

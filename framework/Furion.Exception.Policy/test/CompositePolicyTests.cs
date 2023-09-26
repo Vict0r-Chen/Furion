@@ -76,12 +76,12 @@ public class CompositePolicyTests
 
         Assert.Throws<ArgumentException>(() =>
         {
-            policy.Join(new PolicyBase<object>[] { null! });
+            policy.Join([null!]);
         });
 
         Assert.Throws<ArgumentException>(() =>
         {
-            policy.Join(new PolicyBase<object>[] { new RetryPolicy(), null! });
+            policy.Join([new RetryPolicy(), null!]);
         });
     }
 

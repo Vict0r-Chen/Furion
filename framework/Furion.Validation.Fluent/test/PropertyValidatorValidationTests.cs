@@ -156,6 +156,19 @@ public class PropertyValidatorValidationTests
     }
 
     [Fact]
+    public void DateTimeFormat_ReturnOK()
+    {
+        var objectValidator = new ObjectValidator<PropertyModel>();
+        var propertyValidator = new PropertyValidator<PropertyModel, string?>(objectValidator, u => u.Name);
+        propertyValidator.DateTimeFormat();
+
+        Assert.Single(propertyValidator.Validators);
+
+        var validator = propertyValidator.Validators.ElementAt(0) as DateTimeFormatValidator;
+        Assert.NotNull(validator);
+    }
+
+    [Fact]
     public void Domain_ReturnOK()
     {
         var objectValidator = new ObjectValidator<PropertyModel>();

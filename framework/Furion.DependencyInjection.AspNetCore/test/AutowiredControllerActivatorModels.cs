@@ -16,14 +16,9 @@ namespace Furion.DependencyInjection.AspNetCore.Tests;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class AutowiredController : ControllerBase, IDisposable, IAsyncDisposable
+public class AutowiredController(IServiceProvider serviceProvider) : ControllerBase, IDisposable, IAsyncDisposable
 {
-    internal readonly IServiceProvider _serviceProvider;
-
-    public AutowiredController(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    internal readonly IServiceProvider _serviceProvider = serviceProvider;
 
     [AutowiredService, MaybeNull]
     public IServiceProvider Services { get; set; }

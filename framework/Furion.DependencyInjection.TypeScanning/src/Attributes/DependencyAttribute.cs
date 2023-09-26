@@ -17,8 +17,9 @@ namespace Furion.DependencyInjection;
 /// <summary>
 /// 依赖关系配置特性
 /// </summary>
+/// <param name="addition"><see cref="RegistrationType"/></param>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-public sealed class DependencyAttribute : Attribute
+public sealed class DependencyAttribute(RegistrationType addition) : Attribute
 {
     /// <summary>
     /// <inheritdoc cref="DependencyAttribute"/>
@@ -28,17 +29,8 @@ public sealed class DependencyAttribute : Attribute
     {
     }
 
-    /// <summary>
-    /// <inheritdoc cref="DependencyAttribute"/>
-    /// </summary>
-    /// <param name="addition"><see cref="RegistrationType"/></param>
-    public DependencyAttribute(RegistrationType addition)
-    {
-        Registration = addition;
-    }
-
     /// <inheritdoc cref="RegistrationType"/>
-    public RegistrationType Registration { get; init; }
+    public RegistrationType Registration { get; init; } = addition;
 
     /// <summary>
     /// 忽略注册

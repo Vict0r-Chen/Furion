@@ -23,7 +23,7 @@ public abstract class DispatchProxyDecorator : DispatchProxy
     /// <summary>
     /// <see cref="InvokeAsync{T}(Invocation)"/>
     /// </summary>
-    internal static readonly MethodInfo? _invokeAsyncOfTMethod = typeof(DispatchProxyDecorator).GetMethod(nameof(InvokeAsync), 1, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, new[] { typeof(Invocation) }, null);
+    internal static readonly MethodInfo? _invokeAsyncOfTMethod = typeof(DispatchProxyDecorator).GetMethod(nameof(InvokeAsync), 1, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, [typeof(Invocation)], null);
 
     /// <summary>
     /// <inheritdoc cref="DispatchProxyDecorator"/>

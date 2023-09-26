@@ -15,7 +15,7 @@ const ConfigurationProvider: React.FC<{ data?: object }> = ({ data }) => {
 
   return (
     <ScrollContainer id={id}>
-      <JsonViewer value={data} collapsed objectSortKeys={false} />
+      <JsonViewer value={data} objectSortKeys={false} />
       <FloatButton.BackTop target={() => document.getElementById(id)!} />
     </ScrollContainer>
   );
