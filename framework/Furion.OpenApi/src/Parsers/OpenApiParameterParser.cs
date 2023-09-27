@@ -15,9 +15,9 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口模型解析器
+/// 开放接口参数解析器
 /// </summary>
-public sealed class OpenApiParameterParser
+internal sealed class OpenApiParameterParser
 {
     /// <inheritdoc cref="ApiParameterDescription"/>
     internal readonly ApiParameterDescription _apiParameterDescription;
@@ -26,7 +26,7 @@ public sealed class OpenApiParameterParser
     /// <inheritdoc cref="OpenApiParameterParser"/>
     /// </summary>
     /// <param name="apiParameterDescription"><see cref="ApiParameterDescription"/></param>
-    public OpenApiParameterParser(ApiParameterDescription apiParameterDescription)
+    internal OpenApiParameterParser(ApiParameterDescription apiParameterDescription)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(apiParameterDescription);
@@ -35,182 +35,37 @@ public sealed class OpenApiParameterParser
     }
 
     /// <summary>
-    /// 解析 <see cref="ApiParameterDescription"/> 并返回开放接口参数
+    /// 解析接口参数描述器并返回开放接口参数
     /// </summary>
-    /// <returns></returns>
-    public OpenApiParameter? Parse()
+    /// <returns><see cref="OpenApiParameter"/></returns>
+    internal OpenApiParameter? Parse()
     {
-        // 检查是否允许模型绑定
-        if (_apiParameterDescription.ModelMetadata is { IsBindingAllowed: false })
+        // 检查参数模型元数据是否为空或禁止模型绑定
+        if (_apiParameterDescription.ModelMetadata is null or { IsBindingAllowed: false })
         {
             return null;
         }
 
-        // 获取默认模型元数据
-        var modelMetadata = _apiParameterDescription.ModelMetadata as DefaultModelMetadata;
+        // 解析参数模型元数据并返回开放接口参数
+        var openApiParameter = new OpenApiModelParser(_apiParameterDescription.ModelMetadata)
+            .Parser<OpenApiParameter>();
 
-        var x = new OpenApiPropertyParser(modelMetadata!).Parser();
+        // 设置实际参数名
+        openApiParameter.Name = _apiParameterDescription.Name;
 
-        // 获取模型类型
-        var modelType = modelMetadata?.ModelType ?? _apiParameterDescription.Type;
+        // 设置开放接口参数其他属性
+        openApiParameter.DefaultValue = _apiParameterDescription.DefaultValue;
+        openApiParameter.BindingSource = _apiParameterDescription.Source.DisplayName.ToLowerFirstLetter();
+        openApiParameter.Patterns = default;
 
-        // 初始化开放接口参数
-        var openApiRouteParameter = new OpenApiParameter
-        {
-            Name = _apiParameterDescription.Name,
-            Description = modelMetadata?.Description ?? GetMetadataAttribute<DescriptionAttribute>(modelMetadata)?.Description,
-            DefaultValue = _apiParameterDescription.DefaultValue,
-            Required = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
-            DataType = DataTypeParser.Parse(modelType),
-            ItemType = GetCollectionItemType(modelType),
-            RuntimeType = modelType?.ToString(),
-            TypeCode = Type.GetTypeCode(modelType),
-            BindingSource = _apiParameterDescription.Source.DisplayName.ToLowerFirstLetter(),
-            Patterns = null,
-        };
-
-        // 处理可空类型和 [Required] 特性关系
-        openApiRouteParameter.Nullable = !openApiRouteParameter.Required
-            && modelMetadata?.IsReferenceOrNullableType is true;
-
-        // 检查参数是否在路由中定义
+        // 检查参数是否在路由中存在定义
         if (_apiParameterDescription.Source == BindingSource.Path
             && _apiParameterDescription.RouteInfo is not null)
         {
-            openApiRouteParameter.Properties.Add(nameof(_apiParameterDescription.RouteInfo), _apiParameterDescription.RouteInfo);
+            openApiParameter.Additionals ??= new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
+            openApiParameter.Additionals.Add(nameof(_apiParameterDescription.RouteInfo), _apiParameterDescription.RouteInfo);
         }
 
-        // 检查枚举类型
-        if (modelType?.IsEnum == true)
-        {
-            var keyValues = ParseEnum(modelType);
-            openApiRouteParameter.Properties.Add(keyValues.Key, keyValues.Value);
-        }
-
-        if (modelMetadata is not null && openApiRouteParameter.DataType is DataTypes.Object)
-        {
-            var keyValues = ParseModel(modelMetadata);
-            if (keyValues.Key is not null)
-            {
-                openApiRouteParameter.Properties.Add(keyValues.Key, keyValues.Value);
-            }
-        }
-
-        return openApiRouteParameter;
-    }
-
-    internal static KeyValuePair<string, object?> ParseEnum(Type type)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(type);
-
-        // 检查类型是否是枚举类型
-        if (!type.IsEnum)
-        {
-            throw new ArgumentException("The `type` parameter is not a valid enumeration type.", nameof(type));
-        }
-
-        // 获取枚举项名称集合
-        var names = Enum.GetNames(type);
-
-        // 获取枚举项值集合
-        var values = Enum.GetValues(type).Cast<int>().ToArray();
-
-        return new KeyValuePair<string, object?>("items", new
-        {
-            names,
-            values
-        });
-    }
-
-    internal static KeyValuePair<string, object?> ParseModel(DefaultModelMetadata modelMetadata)
-    {
-        // 空检查
-        ArgumentNullException.ThrowIfNull(modelMetadata);
-
-        if (modelMetadata.ModelType is null || DataTypeParser.Parse(modelMetadata.ModelType) is not DataTypes.Object)
-        {
-            return default;
-        }
-
-        var openApiParameters = new List<OpenApiParameter>();
-
-        foreach (var propertyModelMetadata in modelMetadata.Properties.Cast<DefaultModelMetadata>())
-        {
-            if (propertyModelMetadata is null)
-            {
-                continue;
-            }
-
-            var propertyType = propertyModelMetadata.ModelType;
-            var apiParameter = new OpenApiParameter
-            {
-                Name = propertyModelMetadata.Name,
-                Description = propertyModelMetadata?.Description ?? GetMetadataAttribute<DescriptionAttribute>(propertyModelMetadata)?.Description,
-                //DefaultValue = propertyModelMetadata.DefaultValue,
-                Required = GetMetadataAttribute<RequiredAttribute>(modelMetadata) is not null,
-                DataType = DataTypeParser.Parse(propertyType),
-                ItemType = GetCollectionItemType(propertyType),
-                RuntimeType = propertyType?.ToString(),
-                TypeCode = Type.GetTypeCode(propertyType),
-                //BindingSource = null,
-                Patterns = null,
-            };
-
-            var keyValues = ParseModel(propertyModelMetadata!);
-            if (keyValues.Key is not null)
-            {
-                apiParameter.Properties.Add(keyValues);
-            }
-
-            openApiParameters.Add(apiParameter);
-        }
-
-        return new KeyValuePair<string, object?>("items", new
-        {
-            properties = openApiParameters
-        });
-    }
-
-    /// <summary>
-    /// 获取模型元数据定义的特性
-    /// </summary>
-    /// <typeparam name="TAttribute"><see cref="Attribute"/></typeparam>
-    /// <param name="modelMetadata"><see cref="DefaultModelMetadata"/></param>
-    /// <returns><typeparamref name="TAttribute"/></returns>
-    internal static TAttribute? GetMetadataAttribute<TAttribute>(DefaultModelMetadata? modelMetadata)
-        where TAttribute : Attribute
-    {
-        return modelMetadata?.Attributes?.Attributes?.OfType<TAttribute>()?.FirstOrDefault();
-    }
-
-    /// <summary>
-    /// 获取集合类型项类型
-    /// </summary>
-    /// <param name="type"><see cref="Type"/></param>
-    /// <returns><see cref="DataTypes"/></returns>
-    internal static DataTypes? GetCollectionItemType(Type? type)
-    {
-        // 空检查
-        if (type is null)
-        {
-            return null;
-        }
-
-        // 检查是否是数组类型
-        if (type.IsArray)
-        {
-            return DataTypeParser.Parse(type.GetElementType());
-        }
-
-        // 检查是否是集合类型
-        if (type.IsGenericType
-            && type.GenericTypeArguments.Length == 1
-            && typeof(IEnumerable).IsAssignableFrom(type))
-        {
-            return DataTypeParser.Parse(type.GenericTypeArguments[0]);
-        }
-
-        return null;
+        return openApiParameter;
     }
 }

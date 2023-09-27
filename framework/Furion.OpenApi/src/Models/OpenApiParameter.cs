@@ -17,55 +17,8 @@ namespace Furion.OpenApi;
 /// <summary>
 /// 开放接口参数
 /// </summary>
-public sealed class OpenApiParameter
+public sealed class OpenApiParameter : OpenApiModel
 {
-    /// <summary>
-    /// <inheritdoc cref="OpenApiParameter" />
-    /// </summary>
-    public OpenApiParameter()
-    {
-        Properties = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
-    }
-
-    /// <summary>
-    /// 名称
-    /// </summary>
-    public string? Name { get; set; }
-
-    /// <summary>
-    /// 描述
-    /// </summary>
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// 默认值
-    /// </summary>
-    public object? DefaultValue { get; set; }
-
-    /// <summary>
-    /// 允许空值
-    /// </summary>
-    public bool Nullable { get; set; }
-
-    /// <summary>
-    /// 必填
-    /// </summary>
-    public bool Required { get; set; }
-
-    /// <inheritdoc cref="DataTypes"/>
-    public DataTypes DataType { get; set; }
-
-    /// <inheritdoc cref="DataTypes"/>
-    public DataTypes? ItemType { get; set; }
-
-    /// <summary>
-    /// 运行时类型
-    /// </summary>
-    public string? RuntimeType { get; set; }
-
-    /// <inheritdoc cref="TypeCode"/>
-    public TypeCode? TypeCode { get; set; }
-
     /// <summary>
     /// 绑定源
     /// </summary>
@@ -77,7 +30,7 @@ public sealed class OpenApiParameter
     public IList<string>? Patterns { get; set; }
 
     /// <summary>
-    /// 附加数据
+    /// 额外属性集合
     /// </summary>
-    public IDictionary<string, object?> Properties { get; init; }
+    public IDictionary<string, object?>? Additionals { get; set; }
 }

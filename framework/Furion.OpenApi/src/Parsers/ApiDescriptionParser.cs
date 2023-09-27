@@ -30,10 +30,10 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
     /// <summary>
     /// 解析 API 描述器并返回开放接口模型
     /// </summary>
-    /// <returns><see cref="OpenApiModel"/></returns>
-    public OpenApiModel Parse()
+    /// <returns><see cref="OpenApiDocument"/></returns>
+    public OpenApiDocument Parse()
     {
-        var openApiModel = new OpenApiModel();
+        var openApiModel = new OpenApiDocument();
         var projectName = Assembly.GetEntryAssembly()?.GetName()?.Name;
 
         foreach (var group in _provider.ApiDescriptionGroups.Items)
@@ -106,6 +106,9 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
             openApiParameters.Add(openApiParameter);
         }
 
-        openApiDescription.Parameters = openApiParameters;
+        if (openApiParameters.Count > 0)
+        {
+            openApiDescription.Parameters = openApiParameters;
+        }
     }
 }

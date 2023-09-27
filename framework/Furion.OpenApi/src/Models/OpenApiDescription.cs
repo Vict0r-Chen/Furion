@@ -52,7 +52,7 @@ public sealed class OpenApiDescription
     /// <summary>
     /// 参数
     /// </summary>
-    public List<OpenApiParameter>? Parameters { get; set; }
+    public IList<OpenApiParameter>? Parameters { get; set; }
 
     /// <inheritdoc />
     public override string? ToString()

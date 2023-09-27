@@ -15,18 +15,18 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口属性解析器
+/// 开放接口模型解析器
 /// </summary>
-internal sealed class OpenApiPropertyParser
+internal sealed class OpenApiModelParser
 {
     /// <inheritdoc cref="DefaultModelMetadata"/>
     internal readonly DefaultModelMetadata _modelMetadata;
 
     /// <summary>
-    /// <inheritdoc cref="OpenApiPropertyParser"/>
+    /// <inheritdoc cref="OpenApiModelParser"/>
     /// </summary>
     /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
-    internal OpenApiPropertyParser(ModelMetadata modelMetadata)
+    internal OpenApiModelParser(ModelMetadata modelMetadata)
     {
         // 获取默认模型元数据
         var defaultModelMetadata = modelMetadata as DefaultModelMetadata;
@@ -38,46 +38,48 @@ internal sealed class OpenApiPropertyParser
     }
 
     /// <summary>
-    /// 解析模型元数据并返回开放接口属性
+    /// 解析模型元数据并返回开放接口模型
     /// </summary>
-    /// <returns><see cref="OpenApiProperty"/></returns>
-    internal OpenApiProperty Parser()
+    /// <typeparam name="TOpenApiModel"><see cref="OpenApiModel"/></typeparam>
+    /// <returns><typeparamref name="TOpenApiModel"/></returns>
+    internal TOpenApiModel Parser<TOpenApiModel>()
+        where TOpenApiModel : OpenApiModel, new()
     {
         // 获取模型类型
         var modelType = _modelMetadata.ModelType;
 
-        // 初始化开放接口属性
-        var openApiProperty = new OpenApiProperty
+        // 初始化开放接口模型
+        var openApiModel = new TOpenApiModel
         {
             Name = _modelMetadata.Name,
-            Description = _modelMetadata.Description ?? GetMetadataAttribute<DescriptionAttribute>()?.Description,
+            Description = _modelMetadata.Description ?? GetMetadataAttributes<DescriptionAttribute>().FirstOrDefault()?.Description,
             DefaultValue = default,
-            IsRequired = GetMetadataAttribute<RequiredAttribute>() is not null,
-            AllowNullValue = GetMetadataAttribute<RequiredAttribute>() is null && _modelMetadata.IsReferenceOrNullableType is true,
+            IsRequired = GetMetadataAttributes<RequiredAttribute>().Any(),
+            AllowNullValue = !GetMetadataAttributes<RequiredAttribute>().Any() && _modelMetadata.IsReferenceOrNullableType is true,
             DataType = DataTypeParser.Parse(modelType),
             RuntimeType = modelType?.ToString(),
             TypeCode = Type.GetTypeCode(modelType),
         };
 
-        // 解析枚举类型模型数据
+        // 解析枚举类型模型元数据
         if (modelType?.IsEnum is true)
         {
-            openApiProperty.Properties = ParseEnum(modelType);
+            openApiModel.Properties = ParseEnum(modelType);
         }
 
-        // 解析对象类型属性模型数据
-        if (openApiProperty.DataType is DataTypes.Object)
+        // 解析对象类型模型元数据
+        if (openApiModel.DataType is DataTypes.Object)
         {
-            openApiProperty.Properties = ParseObject(modelType!);
+            openApiModel.Properties = ParseObject(modelType!);
         }
 
-        return openApiProperty;
+        return openApiModel;
     }
 
     /// <summary>
-    /// 解析枚举类型模型数据
+    /// 解析枚举类型模型元数据
     /// </summary>
-    /// <param name="modelType"><see cref="Type"/></param>
+    /// <param name="modelType">模型类型</param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
     /// <exception cref="ArgumentException"></exception>
     internal static IDictionary<string, object>? ParseEnum(Type modelType)
@@ -85,61 +87,67 @@ internal sealed class OpenApiPropertyParser
         // 空检查
         ArgumentNullException.ThrowIfNull(modelType);
 
-        // 检查类型是否是枚举类型
+        // 检查模型类型是否是枚举类型
         if (!modelType.IsEnum)
         {
             throw new ArgumentException("The `modelType` parameter is not a valid enumeration type.", nameof(modelType));
         }
 
-        // 转换枚举类型为字典类型
-        return Enum.GetValues(modelType)
+        // 将枚举项转换为字典集合
+        var properties = Enum.GetValues(modelType)
             .Cast<object>()
-            .ToDictionary(u => u.ToString()!, u => (object)((int)u), StringComparer.OrdinalIgnoreCase);
+            .ToDictionary(u => u.ToString()!, u => (object)(int)u, StringComparer.OrdinalIgnoreCase);
+
+        return properties;
     }
 
     /// <summary>
-    /// 解析对象类型属性模型数据
+    /// 解析对象类型模型元数据
     /// </summary>
-    /// <param name="modelType"><see cref="Type"/></param>
+    /// <param name="modelType">模型类型</param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
     internal IDictionary<string, object>? ParseObject(Type modelType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(modelType);
 
-        // 检查是否是对象类型
+        // 检查模型类型是否是对象类型
         if (DataTypeParser.Parse(modelType) is not DataTypes.Object)
         {
             return null;
         }
 
-        // 初始化对象类型属性模型集合
+        // 获取对象类型模型属性模型元数据集合
+        var propertyModelMetadata = _modelMetadata.Properties
+            .Cast<DefaultModelMetadata>();
+
+        // 初始化属性开放接口模型字典集合
         var properties = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-        // 获取对象类型属性模型元数据集合
-        var propertyModelMetadatas = _modelMetadata.Properties.Cast<DefaultModelMetadata>();
-
-        // 遍历对象类型属性模型元数据集合
-        foreach (var propertyModelMetadata in propertyModelMetadatas)
+        // 遍历属性模型元数据集合
+        foreach (var modelMetadata in propertyModelMetadata)
         {
-            // 解析模型元数据并返回开放接口属性
-            var openApiProperty = new OpenApiPropertyParser(propertyModelMetadata)
-                .Parser();
+            // 解析属性模型元数据并返回开放接口模型
+            var openApiModel = new OpenApiModelParser(modelMetadata)
+                .Parser<OpenApiModel>();
 
-            properties.Add(openApiProperty.Name!, openApiProperty);
+            // 添加到属性模型元数据集合
+            properties.Add(openApiModel.Name!, openApiModel);
         }
 
         return properties;
     }
 
     /// <summary>
-    /// 获取模型元数据定义的特性
+    /// 获取模型元数据定义的特性集合
     /// </summary>
     /// <typeparam name="TAttribute"><see cref="Attribute"/></typeparam>
-    /// <returns><typeparamref name="TAttribute"/></returns>
-    internal TAttribute? GetMetadataAttribute<TAttribute>()
+    /// <returns><see cref="IEnumerable{T}"/></returns>
+    internal IEnumerable<TAttribute> GetMetadataAttributes<TAttribute>()
         where TAttribute : Attribute
     {
-        return _modelMetadata.Attributes.Attributes.OfType<TAttribute>().FirstOrDefault();
+        return _modelMetadata.Attributes
+            .Attributes
+            .OfType<TAttribute>();
     }
 }

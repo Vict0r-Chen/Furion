@@ -15,52 +15,26 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口属性
+/// 开放接口模型
 /// </summary>
-public class OpenApiProperty
+public sealed class OpenApiDocument
 {
     /// <summary>
-    /// 名称
+    /// <inheritdoc cref="OpenApiDocument"/>
     /// </summary>
-    [JsonIgnore]
-    public string? Name { get; set; }
+    public OpenApiDocument()
+    {
+        Groups = [];
+        Definitions = [];
+    }
 
     /// <summary>
-    /// 描述
+    /// 开放接口分组模型集合
     /// </summary>
-    public string? Description { get; set; }
+    public List<OpenApiGroup> Groups { get; init; }
 
     /// <summary>
-    /// 默认值
+    /// 模型定义
     /// </summary>
-    public object? DefaultValue { get; set; }
-
-    /// <summary>
-    /// 是否必填
-    /// </summary>
-    public bool IsRequired { get; set; }
-
-    /// <summary>
-    /// 允许空值
-    /// </summary>
-    public bool AllowNullValue { get; set; }
-
-    /// <summary>
-    /// 数据类型
-    /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public DataTypes DataType { get; set; }
-
-    /// <summary>
-    /// 运行时类型
-    /// </summary>
-    public string? RuntimeType { get; set; }
-
-    /// <inheritdoc cref="TypeCode"/>
-    public TypeCode? TypeCode { get; set; }
-
-    /// <summary>
-    /// 子属性集合
-    /// </summary>
-    public IDictionary<string, object>? Properties { get; set; }
+    public List<object> Definitions { get; init; }
 }
