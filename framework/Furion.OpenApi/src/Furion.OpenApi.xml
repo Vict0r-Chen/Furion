@@ -338,7 +338,22 @@
             </summary>
             <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiModelParser.Parser``1">
+        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata)">
+            <summary>
+            解析模型元数据并返回开放接口模型
+            </summary>
+            <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+            <returns><see cref="T:Furion.OpenApi.OpenApiModel"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse``1(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata)">
+            <summary>
+            解析模型元数据并返回开放接口模型
+            </summary>
+            <typeparam name="TOpenApiModel"><see cref="T:Furion.OpenApi.OpenApiModel"/></typeparam>
+            <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+            <returns><typeparamref name="TOpenApiModel"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiModelParser.ParseModel``1">
             <summary>
             解析模型元数据并返回开放接口模型
             </summary>

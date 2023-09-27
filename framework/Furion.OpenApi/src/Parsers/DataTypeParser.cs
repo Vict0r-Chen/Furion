@@ -17,14 +17,14 @@ namespace Furion.OpenApi;
 /// <summary>
 /// 数据类型解析器
 /// </summary>
-public static class DataTypeParser
+internal static class DataTypeParser
 {
     /// <summary>
     /// 根据类型解析对应的数据类型
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
     /// <returns><see cref="DataTypes"/></returns>
-    public static DataTypes Parse(Type? type)
+    internal static DataTypes Parse(Type? type)
     {
         // 空检查
         if (type is null)

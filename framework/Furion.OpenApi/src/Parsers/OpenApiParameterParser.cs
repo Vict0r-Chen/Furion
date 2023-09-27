@@ -47,8 +47,7 @@ internal sealed class OpenApiParameterParser
         }
 
         // 解析参数模型元数据并返回开放接口参数
-        var openApiParameter = new OpenApiModelParser(_apiParameterDescription.ModelMetadata)
-            .Parser<OpenApiParameter>();
+        var openApiParameter = OpenApiModelParser.Parse<OpenApiParameter>(_apiParameterDescription.ModelMetadata);
 
         // 设置实际参数名
         openApiParameter.Name = _apiParameterDescription.Name;

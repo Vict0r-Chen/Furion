@@ -40,9 +40,35 @@ internal sealed class OpenApiModelParser
     /// <summary>
     /// 解析模型元数据并返回开放接口模型
     /// </summary>
+    /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
+    /// <returns><see cref="OpenApiModel"/></returns>
+    internal static OpenApiModel Parse(ModelMetadata modelMetadata)
+    {
+        return Parse<OpenApiModel>(modelMetadata);
+    }
+
+    /// <summary>
+    /// 解析模型元数据并返回开放接口模型
+    /// </summary>
+    /// <typeparam name="TOpenApiModel"><see cref="OpenApiModel"/></typeparam>
+    /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
+    /// <returns><typeparamref name="TOpenApiModel"/></returns>
+    internal static TOpenApiModel Parse<TOpenApiModel>(ModelMetadata modelMetadata)
+        where TOpenApiModel : OpenApiModel, new()
+    {
+        // 空检查
+        ArgumentNullException.ThrowIfNull(modelMetadata);
+
+        return new OpenApiModelParser(modelMetadata)
+            .ParseModel<TOpenApiModel>();
+    }
+
+    /// <summary>
+    /// 解析模型元数据并返回开放接口模型
+    /// </summary>
     /// <typeparam name="TOpenApiModel"><see cref="OpenApiModel"/></typeparam>
     /// <returns><typeparamref name="TOpenApiModel"/></returns>
-    internal TOpenApiModel Parser<TOpenApiModel>()
+    internal TOpenApiModel ParseModel<TOpenApiModel>()
         where TOpenApiModel : OpenApiModel, new()
     {
         // 获取模型类型
@@ -128,8 +154,7 @@ internal sealed class OpenApiModelParser
         foreach (var modelMetadata in propertyModelMetadata)
         {
             // 解析属性模型元数据并返回开放接口模型
-            var openApiModel = new OpenApiModelParser(modelMetadata)
-                .Parser<OpenApiModel>();
+            var openApiModel = Parse(modelMetadata);
 
             // 添加到属性模型元数据集合
             properties.Add(openApiModel.Name!, openApiModel);
