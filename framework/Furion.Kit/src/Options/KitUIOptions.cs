@@ -12,32 +12,15 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.Tests.Models;
+namespace Furion.Kit;
 
-namespace Furion.Tests.Controllers;
-
-[ApiController]
-[Route("[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = false)]
-public class FromBodyController
+/// <summary>
+/// Kit UI 模块选项
+/// </summary>
+public sealed class KitUIOptions
 {
-    [HttpPost]
-    public void Case1(Teacher teacher)
-    {
-    }
-
-    [HttpPost]
-    public void Case2([FromQuery] Student stu)
-    {
-    }
-
-    [HttpPost, Obsolete]
-    public void Case3([FromBody] Student stu)
-    {
-    }
-
-    [HttpPost]
-    public void Case4(Gender code)
-    {
-    }
+    /// <summary>
+    /// 入口地址
+    /// </summary>
+    public string Root { get; } = "/furion";
 }

@@ -21,6 +21,7 @@ global using Microsoft.AspNetCore.Mvc.ModelBinding;
 global using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 global using Microsoft.Extensions.Options;
 global using System.Collections;
+global using System.Collections.Concurrent;
 global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
 global using System.Reflection;

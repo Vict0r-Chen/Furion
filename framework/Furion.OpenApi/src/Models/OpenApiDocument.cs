@@ -36,5 +36,5 @@ public sealed class OpenApiDocument
     /// <summary>
     /// 模型定义
     /// </summary>
-    public List<object> Definitions { get; init; }
+    public ConcurrentDictionary<string, object> Definitions { get; init; }
 }

@@ -25,28 +25,28 @@ public static class KitWebApplicationExtensions
     /// <param name="webApplication"><see cref="WebApplication"/></param>
     /// <param name="configure">自定义配置委托</param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseKit(this WebApplication webApplication, Action<KitOptions>? configure = null)
+    public static WebApplication UseKit(this WebApplication webApplication, Action<KitUIOptions>? configure = null)
     {
-        // 初始化Kit 模块选项
-        var kitOptions = new KitOptions();
-        configure?.Invoke(kitOptions);
+        // 初始化 Kit UI 模块选项
+        var kitUIOptions = new KitUIOptions();
+        configure?.Invoke(kitUIOptions);
 
-        return webApplication.UseKit(kitOptions);
+        return webApplication.UseKit(kitUIOptions);
     }
 
     /// <summary>
     /// 添加 Kit 模块中间件
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="kitOptions"><see cref="KitOptions"/></param>
+    /// <param name="kitUIOptions"><see cref="KitUIOptions"/></param>
     /// <returns><see cref="WebApplication"/></returns>
-    public static WebApplication UseKit(this WebApplication webApplication, KitOptions kitOptions)
+    public static WebApplication UseKit(this WebApplication webApplication, KitUIOptions kitUIOptions)
     {
         // 空检查
-        ArgumentNullException.ThrowIfNull(kitOptions);
+        ArgumentNullException.ThrowIfNull(kitUIOptions);
 
         // 配置 Kit 模块终点路由
-        KitEndpoints.Map(webApplication, kitOptions);
+        KitEndpoints.Map(webApplication, kitUIOptions);
 
         // 获取当前类型所属程序集
         var currentAssembly = typeof(KitWebApplicationExtensions).Assembly;
@@ -55,7 +55,7 @@ public static class KitWebApplicationExtensions
         webApplication.UseFileServer(new FileServerOptions
         {
             FileProvider = new EmbeddedFileProvider(currentAssembly, $"{currentAssembly.GetName().Name}.Assets"),
-            RequestPath = kitOptions.Root,
+            RequestPath = kitUIOptions.Root,
             EnableDirectoryBrowsing = false
         });
 

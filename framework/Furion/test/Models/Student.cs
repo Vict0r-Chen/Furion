@@ -22,7 +22,7 @@ public class Student
     [Required]
     public string? Name { get; set; }
 
-    [Age, BindNever]
+    [Age, BindNever, Obsolete("已过时")]
     public int Age { get; set; }
 
     [Length(3, 10), JsonIgnore]

@@ -23,15 +23,24 @@ internal sealed class OpenApiParameterParser
     internal readonly ApiParameterDescription _apiParameterDescription;
 
     /// <summary>
+    /// 开放接口架构定义集合
+    /// </summary>
+    internal readonly ConcurrentDictionary<string, object> _definitions;
+
+    /// <summary>
     /// <inheritdoc cref="OpenApiParameterParser"/>
     /// </summary>
     /// <param name="apiParameterDescription"><see cref="ApiParameterDescription"/></param>
-    internal OpenApiParameterParser(ApiParameterDescription apiParameterDescription)
+    /// <param name="definitions">开放接口架构定义集合</param>
+    internal OpenApiParameterParser(ApiParameterDescription apiParameterDescription
+        , ConcurrentDictionary<string, object> definitions)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(apiParameterDescription);
+        ArgumentNullException.ThrowIfNull(definitions);
 
         _apiParameterDescription = apiParameterDescription;
+        _definitions = definitions;
     }
 
     /// <summary>
@@ -47,22 +56,22 @@ internal sealed class OpenApiParameterParser
         }
 
         // 解析参数模型元数据并返回开放接口参数
-        var openApiParameter = OpenApiModelParser.Parse<OpenApiParameter>(_apiParameterDescription.ModelMetadata);
+        var openApiParameter = OpenApiModelParser.Parse<OpenApiParameter>(_apiParameterDescription.ModelMetadata, _definitions);
 
         // 设置实际参数名
         openApiParameter.Name = _apiParameterDescription.Name;
 
         // 设置开放接口参数其他属性
-        openApiParameter.DefaultValue = _apiParameterDescription.DefaultValue;
+        openApiParameter.Default = _apiParameterDescription.DefaultValue;
         openApiParameter.BindingSource = _apiParameterDescription.Source.DisplayName.ToLowerFirstLetter();
         openApiParameter.Patterns = default;
 
         // 检查参数是否在路由中存在定义
         if (_apiParameterDescription.Source == BindingSource.Path
-            && _apiParameterDescription.RouteInfo is not null)
+            && _apiParameterDescription.RouteInfo is null)
         {
             openApiParameter.Additionals ??= new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
-            openApiParameter.Additionals.Add(nameof(_apiParameterDescription.RouteInfo), _apiParameterDescription.RouteInfo);
+            openApiParameter.Additionals.Add("onRoute", false);
         }
 
         return openApiParameter;

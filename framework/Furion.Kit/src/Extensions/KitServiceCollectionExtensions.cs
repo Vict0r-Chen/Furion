@@ -12,32 +12,20 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-using Furion.Tests.Models;
+namespace Microsoft.Extensions.DependencyInjection;
 
-namespace Furion.Tests.Controllers;
-
-[ApiController]
-[Route("[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = false)]
-public class FromBodyController
+/// <summary>
+/// Kit 模块 <see cref="IServiceCollection"/> 拓展类
+/// </summary>
+public static class KitServiceCollectionExtensions
 {
-    [HttpPost]
-    public void Case1(Teacher teacher)
+    /// <summary>
+    /// 添加 Kit 模块服务
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddKit(this IServiceCollection services)
     {
-    }
-
-    [HttpPost]
-    public void Case2([FromQuery] Student stu)
-    {
-    }
-
-    [HttpPost, Obsolete]
-    public void Case3([FromBody] Student stu)
-    {
-    }
-
-    [HttpPost]
-    public void Case4(Gender code)
-    {
+        return services;
     }
 }

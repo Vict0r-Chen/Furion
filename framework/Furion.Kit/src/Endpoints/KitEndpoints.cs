@@ -23,32 +23,32 @@ internal static class KitEndpoints
     /// Kit 模块终点路由配置入口
     /// </summary>
     /// <param name="webApplication"><see cref="WebApplication"/></param>
-    /// <param name="kitOptions"><see cref="KitOptions"/></param>
-    internal static void Map(WebApplication webApplication, KitOptions kitOptions)
+    /// <param name="kitUIOptions"><see cref="KitUIOptions"/></param>
+    internal static void Map(WebApplication webApplication, KitUIOptions kitUIOptions)
     {
         // 终点路由诊断路由配置
-        webApplication.MapGroup(kitOptions.Root)
+        webApplication.MapGroup(kitUIOptions.Root)
             .MapGet("endpoint-diagnostic-sse", EndpointDiagnosticHandler)
             .Accepts<NoContent>("text/event-stream")
             .ExcludeFromDescription();
 
         // 配置诊断路由配置
-        webApplication.MapGroup(kitOptions.Root)
+        webApplication.MapGroup(kitUIOptions.Root)
             .MapGet("configuration-diagnostic", ConfigurationDiagnosticHandler)
             .ExcludeFromDescription();
 
         // 配置提供器诊断路由配置
-        webApplication.MapGroup(kitOptions.Root)
+        webApplication.MapGroup(kitUIOptions.Root)
             .MapGet("configuration-provider-diagnostic", ConfigurationProviderDiagnosticHandler)
             .ExcludeFromDescription();
 
         // 组件诊断路由配置
-        webApplication.MapGroup(kitOptions.Root)
+        webApplication.MapGroup(kitUIOptions.Root)
             .MapGet("component-diagnostic", ComponentDiagnosticHandler)
             .ExcludeFromDescription();
 
         // 开放接口配置
-        webApplication.MapGroup(kitOptions.Root)
+        webApplication.MapGroup(kitUIOptions.Root)
             .MapGet("openapi", OpenApiHandler);
         //.ExcludeFromDescription();
     }
@@ -205,8 +205,8 @@ internal static class KitEndpoints
         var jsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = camelCaseJsonNamingPolicy,
-            DictionaryKeyPolicy = camelCaseJsonNamingPolicy,
-            // DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            //DictionaryKeyPolicy = camelCaseJsonNamingPolicy,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
         jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(camelCaseJsonNamingPolicy));
 

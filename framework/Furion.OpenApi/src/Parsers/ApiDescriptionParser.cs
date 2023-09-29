@@ -33,7 +33,7 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
     /// <returns><see cref="OpenApiDocument"/></returns>
     public OpenApiDocument Parse()
     {
-        var openApiModel = new OpenApiDocument();
+        var openApiDocument = new OpenApiDocument();
         var projectName = Assembly.GetEntryAssembly()?.GetName()?.Name;
 
         foreach (var group in _provider.ApiDescriptionGroups.Items)
@@ -70,15 +70,15 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
                     Obsolete = actionDescriptor.EndpointMetadata.OfType<ObsoleteAttribute>().Any()
                 };
 
-                ParseParameters(item.ParameterDescriptions, openApiDescription);
+                ParseParameters(item.ParameterDescriptions, openApiDescription, openApiDocument);
 
                 openApiTag.Descriptions.Add(openApiDescription);
             }
 
-            openApiModel.Groups.Add(openApiGroup);
+            openApiDocument.Groups.Add(openApiGroup);
         }
 
-        return openApiModel;
+        return openApiDocument;
     }
 
     /// <summary>
@@ -86,7 +86,8 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
     /// </summary>
     /// <param name="parameterDescriptions"></param>
     /// <param name="openApiDescription"></param>
-    public static void ParseParameters(IList<ApiParameterDescription> parameterDescriptions, OpenApiDescription openApiDescription)
+    /// <param name="openApiDocument"></param>
+    public static void ParseParameters(IList<ApiParameterDescription> parameterDescriptions, OpenApiDescription openApiDescription, OpenApiDocument openApiDocument)
     {
         if (parameterDescriptions is null or { Count: 0 })
         {
@@ -96,7 +97,7 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
         var openApiParameters = new List<OpenApiParameter>();
         foreach (var parameterDescription in parameterDescriptions)
         {
-            var openApiParameter = new OpenApiParameterParser(parameterDescription).Parse();
+            var openApiParameter = new OpenApiParameterParser(parameterDescription, openApiDocument.Definitions).Parse();
 
             if (openApiParameter is null)
             {

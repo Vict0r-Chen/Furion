@@ -79,6 +79,16 @@
             Any
             </summary>
         </member>
+        <member name="T:Furion.OpenApi.OpenApiDeprecated">
+            <summary>
+            开放接口过时信息
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiDeprecated.Message">
+            <summary>
+            消息
+            </summary>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiDescription">
             <summary>
             开放接口描述器
@@ -174,23 +184,26 @@
         </member>
         <member name="P:Furion.OpenApi.OpenApiModel.Description">
             <summary>
-            描述
+            描述/注释
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiModel.DefaultValue">
+        <member name="P:Furion.OpenApi.OpenApiModel.Default">
             <summary>
             默认值
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiModel.IsRequired">
+        <member name="P:Furion.OpenApi.OpenApiModel.Required">
             <summary>
             是否必填
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiModel.AllowNullValue">
+        <member name="P:Furion.OpenApi.OpenApiModel.Nullable">
             <summary>
             允许空值
             </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiModel.Deprecated">
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiDeprecated"/>/>
         </member>
         <member name="P:Furion.OpenApi.OpenApiModel.DataType">
             <summary>
@@ -203,11 +216,11 @@
             </summary>
         </member>
         <member name="P:Furion.OpenApi.OpenApiModel.TypeCode">
-            <inheritdoc cref="P:Furion.OpenApi.OpenApiModel.TypeCode"/>
+            <inheritdoc cref="T:System.TypeCode"/>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiModel.Properties">
+        <member name="P:Furion.OpenApi.OpenApiModel.Schema">
             <summary>
-            子项集合
+            模型架构
             </summary>
         </member>
         <member name="T:Furion.OpenApi.OpenApiParameter">
@@ -298,12 +311,13 @@
             </summary>
             <returns><see cref="T:Furion.OpenApi.OpenApiDocument"/></returns>
         </member>
-        <member name="M:Furion.OpenApi.ApiDescriptionParser.ParseParameters(System.Collections.Generic.IList{Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription},Furion.OpenApi.OpenApiDescription)">
+        <member name="M:Furion.OpenApi.ApiDescriptionParser.ParseParameters(System.Collections.Generic.IList{Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription},Furion.OpenApi.OpenApiDescription,Furion.OpenApi.OpenApiDocument)">
             <summary>
             解析参数
             </summary>
             <param name="parameterDescriptions"></param>
             <param name="openApiDescription"></param>
+            <param name="openApiDocument"></param>
         </member>
         <member name="T:Furion.OpenApi.DataTypeParser">
             <summary>
@@ -332,25 +346,33 @@
         <member name="F:Furion.OpenApi.OpenApiModelParser._modelMetadata">
             <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.Metadata.DefaultModelMetadata"/>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiModelParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata)">
+        <member name="F:Furion.OpenApi.OpenApiModelParser._definitions">
+            <summary>
+            开放接口架构定义集合
+            </summary>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiModelParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
             <summary>
             <inheritdoc cref="T:Furion.OpenApi.OpenApiModelParser"/>
             </summary>
             <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+            <param name="definitions">开放接口架构定义集合</param>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata)">
+        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
             <summary>
             解析模型元数据并返回开放接口模型
             </summary>
             <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+            <param name="definitions">开放接口架构定义集合</param>
             <returns><see cref="T:Furion.OpenApi.OpenApiModel"/></returns>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse``1(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata)">
+        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse``1(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
             <summary>
             解析模型元数据并返回开放接口模型
             </summary>
             <typeparam name="TOpenApiModel"><see cref="T:Furion.OpenApi.OpenApiModel"/></typeparam>
             <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
+            <param name="definitions">开放接口架构定义集合</param>
             <returns><typeparamref name="TOpenApiModel"/></returns>
         </member>
         <member name="M:Furion.OpenApi.OpenApiModelParser.ParseModel``1">
@@ -390,11 +412,17 @@
         <member name="F:Furion.OpenApi.OpenApiParameterParser._apiParameterDescription">
             <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiParameterParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription)">
+        <member name="F:Furion.OpenApi.OpenApiParameterParser._definitions">
+            <summary>
+            开放接口架构定义集合
+            </summary>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiParameterParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
             <summary>
             <inheritdoc cref="T:Furion.OpenApi.OpenApiParameterParser"/>
             </summary>
             <param name="apiParameterDescription"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/></param>
+            <param name="definitions">开放接口架构定义集合</param>
         </member>
         <member name="M:Furion.OpenApi.OpenApiParameterParser.Parse">
             <summary>

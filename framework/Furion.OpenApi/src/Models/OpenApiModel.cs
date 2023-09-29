@@ -25,41 +25,45 @@ public class OpenApiModel
     public string? Name { get; set; }
 
     /// <summary>
-    /// 描述
+    /// 描述/注释
     /// </summary>
     public string? Description { get; set; }
 
     /// <summary>
     /// 默认值
     /// </summary>
-    public object? DefaultValue { get; set; }
+    public object? Default { get; set; }
 
     /// <summary>
     /// 是否必填
     /// </summary>
-    public bool IsRequired { get; set; }
+    public bool Required { get; set; }
 
     /// <summary>
     /// 允许空值
     /// </summary>
-    public bool AllowNullValue { get; set; }
+    public bool Nullable { get; set; }
+
+    /// <inheritdoc cref="OpenApiDeprecated"/>/>
+    public OpenApiDeprecated? Deprecated { get; set; }
 
     /// <summary>
     /// 数据类型
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public DataTypes DataType { get; set; }
+    public DataTypes DataType { get; internal set; }
 
     /// <summary>
     /// 运行时类型
     /// </summary>
-    public string? RuntimeType { get; set; }
+    public string? RuntimeType { get; internal set; }
 
-    /// <inheritdoc cref="TypeCode"/>
-    public TypeCode? TypeCode { get; set; }
+    /// <inheritdoc cref="System.TypeCode"/>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public TypeCode? TypeCode { get; internal set; }
 
     /// <summary>
-    /// 子项集合
+    /// 模型架构
     /// </summary>
-    public IDictionary<string, object>? Properties { get; set; }
+    public IDictionary<string, object>? Schema { get; internal set; }
 }

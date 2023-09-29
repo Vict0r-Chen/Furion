@@ -12,16 +12,18 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Kit.Tests;
+using System.ComponentModel;
 
-public class KitOptionsTests
+namespace Furion.Tests.Models;
+
+public enum Gender
 {
-    [Fact]
-    public void New_ReturnOK()
-    {
-        var options = new KitOptions();
+    [Obsolete("过时了")]
+    None,
 
-        Assert.NotNull(options);
-        Assert.Equal("/furion", options.Root);
-    }
+    [Description("男")]
+    Male,
+
+    [Description("女")]
+    Female
 }

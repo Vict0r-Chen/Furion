@@ -24,12 +24,12 @@
             Kit 模块终点路由配置
             </summary>
         </member>
-        <member name="M:Furion.Kit.KitEndpoints.Map(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
+        <member name="M:Furion.Kit.KitEndpoints.Map(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitUIOptions)">
             <summary>
             Kit 模块终点路由配置入口
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="kitOptions"><see cref="T:Furion.Kit.KitOptions"/></param>
+            <param name="kitUIOptions"><see cref="T:Furion.Kit.KitUIOptions"/></param>
         </member>
         <member name="M:Furion.Kit.KitEndpoints.EndpointDiagnosticHandler(Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken)">
             <summary>
@@ -508,7 +508,12 @@
             Kit 模块选项
             </summary>
         </member>
-        <member name="P:Furion.Kit.KitOptions.Root">
+        <member name="T:Furion.Kit.KitUIOptions">
+            <summary>
+            Kit UI 模块选项
+            </summary>
+        </member>
+        <member name="P:Furion.Kit.KitUIOptions.Root">
             <summary>
             入口地址
             </summary>
@@ -531,7 +536,7 @@
             Kit 模块 <see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/> 拓展类
             </summary>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Kit.KitOptions})">
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,System.Action{Furion.Kit.KitUIOptions})">
             <summary>
             添加 Kit 模块中间件
             </summary>
@@ -539,13 +544,25 @@
             <param name="configure">自定义配置委托</param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
         </member>
-        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitOptions)">
+        <member name="M:Microsoft.AspNetCore.Builder.KitWebApplicationExtensions.UseKit(Microsoft.AspNetCore.Builder.WebApplication,Furion.Kit.KitUIOptions)">
             <summary>
             添加 Kit 模块中间件
             </summary>
             <param name="webApplication"><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></param>
-            <param name="kitOptions"><see cref="T:Furion.Kit.KitOptions"/></param>
+            <param name="kitUIOptions"><see cref="T:Furion.Kit.KitUIOptions"/></param>
             <returns><see cref="T:Microsoft.AspNetCore.Builder.WebApplication"/></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.KitServiceCollectionExtensions">
+            <summary>
+            Kit 模块 <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> 拓展类
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.KitServiceCollectionExtensions.AddKit(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加 Kit 模块服务
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></param>
+            <returns><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/></returns>
         </member>
     </members>
 </doc>
