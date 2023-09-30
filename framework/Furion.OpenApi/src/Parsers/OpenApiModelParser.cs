@@ -23,38 +23,27 @@ internal sealed class OpenApiModelParser
     internal readonly DefaultModelMetadata _modelMetadata;
 
     /// <summary>
-    /// 开放接口架构定义集合
+    /// 开放接口架构缓存集合
     /// </summary>
-    internal readonly ConcurrentDictionary<string, object> _definitions;
+    internal readonly ConcurrentDictionary<string, object> _schemas;
 
     /// <summary>
     /// <inheritdoc cref="OpenApiModelParser"/>
     /// </summary>
     /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
-    /// <param name="definitions">开放接口架构定义集合</param>
+    /// <param name="schemas">开放接口架构缓存集合</param>
     internal OpenApiModelParser(ModelMetadata modelMetadata
-        , ConcurrentDictionary<string, object> definitions)
+        , ConcurrentDictionary<string, object> schemas)
     {
         // 获取默认模型元数据
         var defaultModelMetadata = modelMetadata as DefaultModelMetadata;
 
         // 空检查
         ArgumentNullException.ThrowIfNull(defaultModelMetadata);
-        ArgumentNullException.ThrowIfNull(definitions);
+        ArgumentNullException.ThrowIfNull(schemas);
 
         _modelMetadata = defaultModelMetadata;
-        _definitions = definitions;
-    }
-
-    /// <summary>
-    /// 解析模型元数据并返回开放接口模型
-    /// </summary>
-    /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
-    /// <param name="definitions">开放接口架构定义集合</param>
-    /// <returns><see cref="OpenApiModel"/></returns>
-    internal static OpenApiModel Parse(ModelMetadata modelMetadata, ConcurrentDictionary<string, object> definitions)
-    {
-        return Parse<OpenApiModel>(modelMetadata, definitions);
+        _schemas = schemas;
     }
 
     /// <summary>
@@ -62,15 +51,16 @@ internal sealed class OpenApiModelParser
     /// </summary>
     /// <typeparam name="TOpenApiModel"><see cref="OpenApiModel"/></typeparam>
     /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
-    /// <param name="definitions">开放接口架构定义集合</param>
+    /// <param name="schemas">开放接口架构缓存集合</param>
     /// <returns><typeparamref name="TOpenApiModel"/></returns>
-    internal static TOpenApiModel Parse<TOpenApiModel>(ModelMetadata modelMetadata, ConcurrentDictionary<string, object> definitions)
+    internal static TOpenApiModel Parse<TOpenApiModel>(ModelMetadata modelMetadata, ConcurrentDictionary<string, object> schemas)
         where TOpenApiModel : OpenApiModel, new()
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(modelMetadata);
+        ArgumentNullException.ThrowIfNull(schemas);
 
-        return new OpenApiModelParser(modelMetadata, definitions)
+        return new OpenApiModelParser(modelMetadata, schemas)
             .ParseModel<TOpenApiModel>();
     }
 
@@ -85,36 +75,31 @@ internal sealed class OpenApiModelParser
         // 获取模型类型
         var modelType = _modelMetadata.ModelType;
 
+        // 获取必填标识
+        var required = GetMetadataAttribute<RequiredAttribute>() is not null;
+
         // 初始化开放接口模型
         var openApiModel = new TOpenApiModel
         {
             Name = _modelMetadata.Name,
-            Description = _modelMetadata.Description ?? GetMetadataAttributes<DescriptionAttribute>().FirstOrDefault()?.Description,
+            Description = _modelMetadata.Description ?? GetMetadataAttribute<DescriptionAttribute>()?.Description,
             Default = default,
-            Required = GetMetadataAttributes<RequiredAttribute>().Any(),
-            Nullable = !GetMetadataAttributes<RequiredAttribute>().Any() && _modelMetadata.IsReferenceOrNullableType is true,
-            DataType = DataTypeParser.Parse(modelType),
-            RuntimeType = modelType?.ToString(),
+            Required = required,
+            Nullable = !required && _modelMetadata.IsReferenceOrNullableType is true,
+            Obsolete = GetObsoleteOrNull(GetMetadataAttribute<ObsoleteAttribute>()),
+            TypeName = TypeNameParser.Parse(modelType),
             TypeCode = Type.GetTypeCode(modelType),
+            RuntimeType = modelType?.ToString(),
         };
 
-        // 检查并获取模型过时标识
-        var obsoleteAttribute = GetMetadataAttributes<ObsoleteAttribute>().FirstOrDefault();
-        openApiModel.Deprecated = obsoleteAttribute is null
-            ? null
-            : new()
-            {
-                Message = obsoleteAttribute.Message
-            };
-
-        // 解析枚举类型模型元数据
-        if (modelType?.IsEnum is true)
+        // 解析并生成枚举类型架构
+        if (openApiModel.TypeName is TypeName.Enum)
         {
-            openApiModel.Schema = ParseEnum(modelType);
+            openApiModel.Schema = ParseEnum(modelType!);
         }
 
-        // 解析对象类型模型元数据
-        if (openApiModel.DataType is DataTypes.Object)
+        // 解析并生成对象类型架构
+        if (openApiModel.TypeName is TypeName.Object)
         {
             openApiModel.Schema = ParseObject(modelType!);
         }
@@ -123,7 +108,7 @@ internal sealed class OpenApiModelParser
     }
 
     /// <summary>
-    /// 解析枚举类型模型元数据
+    /// 解析并生成枚举类型架构
     /// </summary>
     /// <param name="modelType">模型类型</param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
@@ -139,112 +124,143 @@ internal sealed class OpenApiModelParser
             throw new ArgumentException("The `modelType` parameter is not a valid enumeration type.", nameof(modelType));
         }
 
-        _definitions.GetOrAdd(modelType.FullName!, _ =>
+        // 获取架构标识
+        var schemaId = modelType.FullName!;
+
+        // 获取或添加枚举类型缓存
+        _schemas.GetOrAdd(schemaId, _ =>
         {
-            // 将枚举项转换为字典集合
+            // 获取枚举定义集合
             var values = Enum.GetValues(modelType)
                 .Cast<object>();
 
-            // 初始化枚举开放接口模型字典集合
+            // 初始化枚举开放接口属性集合
             var properties = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-            // 遍历枚举模型元数据集合
-            foreach (var enumValue in values)
+            // 遍历枚举定义集合
+            foreach (var item in values)
             {
-                var name = enumValue.ToString()!;
-                var value = (object)(int)enumValue;
+                // 获取枚举名称、枚举值和枚举字段成员
+                var name = item.ToString()!;
+                var value = (object)(int)item;
                 var field = modelType.GetField(name)!;
 
-                // 检查并获取模型过时标识
-                var obsoleteAttribute = field.GetCustomAttribute<ObsoleteAttribute>();
-                OpenApiDeprecated? deprecated = obsoleteAttribute is null
-                    ? null
-                    : new()
-                    {
-                        Message = obsoleteAttribute.Message
-                    };
-
-                // 添加到枚举模型元数据集合
+                // 添加到枚举开放接口属性集合中
                 properties.Add(name, new
                 {
                     value,
-                    deprecated,
+                    Obsolete = GetObsoleteOrNull(field.GetCustomAttribute<ObsoleteAttribute>()),
                     field.GetCustomAttribute<DescriptionAttribute>()?.Description
                 });
             }
 
             return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
             {
-                { "dataType", $"{DataTypes.Enum}" },
+                { "dataType", $"{TypeName.Enum}" },
                 { "properties", properties }
             };
         });
 
         return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
         {
-            { "$ref", $"#/definitions/{modelType.FullName}" }
+            { "$ref", $"#/schemas/{schemaId}" }
         };
     }
 
     /// <summary>
-    /// 解析对象类型模型元数据
+    /// 解析并生成对象类型架构
     /// </summary>
     /// <param name="modelType">模型类型</param>
     /// <returns><see cref="IDictionary{TKey, TValue}"/></returns>
+    /// <exception cref="ArgumentException"></exception>
     internal IDictionary<string, object>? ParseObject(Type modelType)
     {
         // 空检查
         ArgumentNullException.ThrowIfNull(modelType);
 
         // 检查模型类型是否是对象类型
-        if (DataTypeParser.Parse(modelType) is not DataTypes.Object)
+        if (TypeNameParser.Parse(modelType) is not TypeName.Object)
         {
-            return null;
+            throw new ArgumentException("The `modelType` parameter is not a valid object type.", nameof(modelType));
         }
 
-        _definitions.GetOrAdd(modelType.FullName!, _ =>
+        // 获取架构标识
+        var schemaId = modelType.FullName!;
+
+        // 获取或添加对象类型缓存
+        _schemas.GetOrAdd(schemaId, _ =>
         {
-            // 获取对象类型模型属性模型元数据集合
+            // 获取模型元数据的属性模型元数据集合，同时排除贴有 [JsonIgnore] 特性的属性
             var propertyModelMetadata = _modelMetadata.Properties
                 .Cast<DefaultModelMetadata>()
-                .Where(m => !m.Attributes.Attributes.OfType<JsonIgnoreAttribute>().Any());
+                .Where(m => !GetMetadataAttributes<JsonIgnoreAttribute>(m).Any());
 
-            // 初始化属性开放接口模型字典集合
+            // 初始化对象开放接口属性集合
             var properties = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
             // 遍历属性模型元数据集合
             foreach (var modelMetadata in propertyModelMetadata)
             {
-                // 解析属性模型元数据并返回开放接口模型
-                var openApiModel = Parse(modelMetadata, _definitions);
+                // 解析模型元数据并返回开放接口模型
+                var openApiModel = Parse<OpenApiModel>(modelMetadata, _schemas);
 
-                // 添加到属性模型元数据集合
+                // 添加到对象开放接口属性集合中
                 properties.Add(openApiModel.Name.ToLowerFirstLetter()!, openApiModel);
             }
 
             return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
             {
-                { "dataType", $"{DataTypes.Object}" },
+                { "dataType", $"{TypeName.Object}" },
                 { "properties", properties }
             };
         });
 
         return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
         {
-            { "$ref", $"#/definitions/{modelType.FullName}" }
+            { "$ref", $"#/schemas/{schemaId}" }
         };
+    }
+
+    /// <summary>
+    /// 获取模型元数据定义的特性
+    /// </summary>
+    /// <typeparam name="TAttribute"><see cref="Attribute"/></typeparam>
+    /// <returns><typeparamref name="TAttribute"/></returns>
+    internal TAttribute? GetMetadataAttribute<TAttribute>()
+        where TAttribute : Attribute
+    {
+        return GetMetadataAttributes<TAttribute>(_modelMetadata).FirstOrDefault();
     }
 
     /// <summary>
     /// 获取模型元数据定义的特性集合
     /// </summary>
     /// <typeparam name="TAttribute"><see cref="Attribute"/></typeparam>
+    /// <param name="modelMetadata"><see cref="DefaultModelMetadata"/></param>
     /// <returns><see cref="IEnumerable{T}"/></returns>
-    internal IEnumerable<TAttribute> GetMetadataAttributes<TAttribute>()
+    internal static IEnumerable<TAttribute> GetMetadataAttributes<TAttribute>(DefaultModelMetadata modelMetadata)
         where TAttribute : Attribute
     {
-        return _modelMetadata.Attributes
+        // 空检查
+        ArgumentNullException.ThrowIfNull(modelMetadata);
+
+        return modelMetadata.Attributes
             .Attributes
             .OfType<TAttribute>();
+    }
+
+    /// <summary>
+    /// 获取开放接口已过时信息
+    /// </summary>
+    /// <param name="obsoleteAttribute"><see cref="ObsoleteAttribute"/></param>
+    /// <returns><see cref="OpenApiObsolete"/></returns>
+    internal static OpenApiObsolete? GetObsoleteOrNull(ObsoleteAttribute? obsoleteAttribute)
+    {
+        return obsoleteAttribute is null
+            ? null
+            : new()
+            {
+                Message = obsoleteAttribute.Message
+            };
     }
 }

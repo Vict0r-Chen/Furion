@@ -12,33 +12,15 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.OpenApi.Tests;
+namespace Furion.OpenApi;
 
-public class DataTypesTests
+/// <summary>
+/// 开放接口已过时
+/// </summary>
+public sealed class OpenApiObsolete
 {
-    [Fact]
-    public void Definition_ReturnOK()
-    {
-        var names = Enum.GetNames(typeof(DataTypes));
-        Assert.Equal(14, names.Length);
-
-        var strings = new[]
-        {
-            nameof(DataTypes.String)
-            , nameof(DataTypes.Number)
-            , nameof(DataTypes.Boolean)
-            , nameof(DataTypes.Date)
-            , nameof(DataTypes.Time)
-            , nameof(DataTypes.Enum)
-            , nameof(DataTypes.Binary)
-            , nameof(DataTypes.BinaryCollection)
-            , nameof(DataTypes.Record)
-            , nameof(DataTypes.Tuple)
-            , nameof(DataTypes.Array)
-            , nameof(DataTypes.Object)
-            , nameof(DataTypes.Struct)
-            , nameof(DataTypes.Any)
-        };
-        Assert.True(strings.SequenceEqual(names));
-    }
+    /// <summary>
+    /// 信息
+    /// </summary>
+    public string? Message { get; set; }
 }

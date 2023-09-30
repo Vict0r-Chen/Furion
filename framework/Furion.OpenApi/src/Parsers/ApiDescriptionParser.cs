@@ -97,7 +97,7 @@ public sealed class ApiDescriptionParser(IApiDescriptionGroupCollectionProvider 
         var openApiParameters = new List<OpenApiParameter>();
         foreach (var parameterDescription in parameterDescriptions)
         {
-            var openApiParameter = new OpenApiParameterParser(parameterDescription, openApiDocument.Definitions).Parse();
+            var openApiParameter = new OpenApiParameterParser(parameterDescription, openApiDocument.Schemas).Parse();
 
             if (openApiParameter is null)
             {

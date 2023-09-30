@@ -25,7 +25,7 @@ public class OpenApiModel
     public string? Name { get; set; }
 
     /// <summary>
-    /// 描述/注释
+    /// 注释/备注/描述
     /// </summary>
     public string? Description { get; set; }
 
@@ -35,7 +35,7 @@ public class OpenApiModel
     public object? Default { get; set; }
 
     /// <summary>
-    /// 是否必填
+    /// 必填
     /// </summary>
     public bool Required { get; set; }
 
@@ -44,26 +44,24 @@ public class OpenApiModel
     /// </summary>
     public bool Nullable { get; set; }
 
-    /// <inheritdoc cref="OpenApiDeprecated"/>/>
-    public OpenApiDeprecated? Deprecated { get; set; }
+    /// <inheritdoc cref="OpenApiObsolete"/>/>
+    public OpenApiObsolete? Obsolete { get; set; }
 
-    /// <summary>
-    /// 数据类型
-    /// </summary>
+    /// <inheritdoc cref="OpenApi.TypeName"/>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public DataTypes DataType { get; internal set; }
+    public TypeName TypeName { get; set; }
+
+    /// <inheritdoc cref="System.TypeCode"/>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public TypeCode TypeCode { get; set; }
 
     /// <summary>
     /// 运行时类型
     /// </summary>
-    public string? RuntimeType { get; internal set; }
-
-    /// <inheritdoc cref="System.TypeCode"/>
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public TypeCode? TypeCode { get; internal set; }
+    public string? RuntimeType { get; set; }
 
     /// <summary>
-    /// 模型架构
+    /// 架构
     /// </summary>
-    public IDictionary<string, object>? Schema { get; internal set; }
+    public IDictionary<string, object>? Schema { get; set; }
 }

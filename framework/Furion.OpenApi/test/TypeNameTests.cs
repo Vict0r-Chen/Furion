@@ -12,29 +12,33 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.OpenApi;
+namespace Furion.OpenApi.Tests;
 
-/// <summary>
-/// 开放接口模型
-/// </summary>
-public sealed class OpenApiDocument
+public class TypeNameTests
 {
-    /// <summary>
-    /// <inheritdoc cref="OpenApiDocument"/>
-    /// </summary>
-    public OpenApiDocument()
+    [Fact]
+    public void Definition_ReturnOK()
     {
-        Groups = [];
-        Schemas = [];
+        var names = Enum.GetNames(typeof(TypeName));
+        Assert.Equal(14, names.Length);
+
+        var strings = new[]
+        {
+            nameof(TypeName.String)
+            , nameof(TypeName.Number)
+            , nameof(TypeName.Boolean)
+            , nameof(TypeName.Date)
+            , nameof(TypeName.Time)
+            , nameof(TypeName.Enum)
+            , nameof(TypeName.Binary)
+            , nameof(TypeName.BinaryCollection)
+            , nameof(TypeName.Record)
+            , nameof(TypeName.Tuple)
+            , nameof(TypeName.Array)
+            , nameof(TypeName.Object)
+            , nameof(TypeName.Struct)
+            , nameof(TypeName.Any)
+        };
+        Assert.True(strings.SequenceEqual(names));
     }
-
-    /// <summary>
-    /// 开放接口分组模型集合
-    /// </summary>
-    public List<OpenApiGroup> Groups { get; init; }
-
-    /// <summary>
-    /// 模型定义
-    /// </summary>
-    public ConcurrentDictionary<string, object> Schemas { get; init; }
 }

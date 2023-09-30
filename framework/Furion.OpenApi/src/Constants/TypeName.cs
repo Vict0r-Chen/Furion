@@ -15,12 +15,77 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口过时信息
+/// 类型名
 /// </summary>
-public sealed class OpenApiDeprecated
+public enum TypeName
 {
     /// <summary>
-    /// 消息
+    /// 字符串
     /// </summary>
-    public string? Message { get; set; }
+    String,
+
+    /// <summary>
+    /// 数值
+    /// </summary>
+    Number,
+
+    /// <summary>
+    /// 布尔值
+    /// </summary>
+    Boolean,
+
+    /// <summary>
+    /// 日期
+    /// </summary>
+    Date,
+
+    /// <summary>
+    /// 时间
+    /// </summary>
+    Time,
+
+    /// <summary>
+    /// 枚举
+    /// </summary>
+    Enum,
+
+    /// <summary>
+    /// 二进制（文件）
+    /// </summary>
+    Binary,
+
+    /// <summary>
+    /// 二进制（文件）集合
+    /// </summary>
+    BinaryCollection,
+
+    /// <summary>
+    /// 记录值（字典）
+    /// </summary>
+    Record,
+
+    /// <summary>
+    /// 元组值
+    /// </summary>
+    Tuple,
+
+    /// <summary>
+    /// 数组
+    /// </summary>
+    Array,
+
+    /// <summary>
+    /// 对象
+    /// </summary>
+    Object,
+
+    /// <summary>
+    /// 结构
+    /// </summary>
+    Struct,
+
+    /// <summary>
+    /// Any
+    /// </summary>
+    Any
 }

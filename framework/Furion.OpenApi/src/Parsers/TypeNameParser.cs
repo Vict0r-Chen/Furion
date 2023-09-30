@@ -15,53 +15,53 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 数据类型解析器
+/// 类型名解析器
 /// </summary>
-internal static class DataTypeParser
+internal static class TypeNameParser
 {
     /// <summary>
-    /// 根据类型解析对应的数据类型
+    /// 根据类型解析对应的类型名
     /// </summary>
     /// <param name="type"><see cref="Type"/></param>
-    /// <returns><see cref="DataTypes"/></returns>
-    internal static DataTypes Parse(Type? type)
+    /// <returns><see cref="TypeName"/></returns>
+    internal static TypeName Parse(Type? type)
     {
         // 空检查
         if (type is null)
         {
-            return DataTypes.Any;
+            return TypeName.Any;
         }
 
         return type switch
         {
             // 字符串
-            _ when typeof(string).IsAssignableFrom(type) || typeof(char).IsAssignableFrom(type) => DataTypes.String,
+            _ when typeof(string).IsAssignableFrom(type) || typeof(char).IsAssignableFrom(type) => TypeName.String,
             // 数值
-            _ when type.IsNumeric() => DataTypes.Number,
+            _ when type.IsNumeric() => TypeName.Number,
             // 布尔值
-            _ when typeof(bool).IsAssignableFrom(type) => DataTypes.Boolean,
+            _ when typeof(bool).IsAssignableFrom(type) => TypeName.Boolean,
             // 日期
-            _ when typeof(DateTime).IsAssignableFrom(type) || typeof(DateTimeOffset).IsAssignableFrom(type) || typeof(DateOnly).IsAssignableFrom(type) => DataTypes.Date,
+            _ when typeof(DateTime).IsAssignableFrom(type) || typeof(DateTimeOffset).IsAssignableFrom(type) || typeof(DateOnly).IsAssignableFrom(type) => TypeName.Date,
             // 时间
-            _ when typeof(TimeOnly).IsAssignableFrom(type) => DataTypes.Time,
+            _ when typeof(TimeOnly).IsAssignableFrom(type) => TypeName.Time,
             // 枚举
-            _ when type.IsEnum => DataTypes.Enum,
+            _ when type.IsEnum => TypeName.Enum,
             // 二进制（文件）
-            _ when typeof(IFormFile).IsAssignableFrom(type) => DataTypes.Binary,
+            _ when typeof(IFormFile).IsAssignableFrom(type) => TypeName.Binary,
             // 二进制（文件）集合
-            _ when IsFormFileCollection(type) => DataTypes.BinaryCollection,
+            _ when IsFormFileCollection(type) => TypeName.BinaryCollection,
             // 记录值（字典）
-            _ when type.IsDictionary() => DataTypes.Record,
+            _ when type.IsDictionary() => TypeName.Record,
             // 元组值
-            _ when typeof(ITuple).IsAssignableFrom(type) => DataTypes.Tuple,
+            _ when typeof(ITuple).IsAssignableFrom(type) => TypeName.Tuple,
             // 数组
-            _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => DataTypes.Array,
+            _ when type.IsArray || (typeof(IEnumerable).IsAssignableFrom(type) && type.IsGenericType && type.GenericTypeArguments.Length == 1) => TypeName.Array,
             // 对象
-            _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => DataTypes.Object,
+            _ when type != typeof(object) && type.IsClass && Type.GetTypeCode(type) == TypeCode.Object => TypeName.Object,
             // 结构
-            _ when type.IsValueType && !type.IsPrimitive && !type.IsEnum => DataTypes.Struct,
+            _ when type.IsValueType && !type.IsPrimitive && !type.IsEnum => TypeName.Struct,
             // Any
-            _ => DataTypes.Any
+            _ => TypeName.Any
         };
     }
 
