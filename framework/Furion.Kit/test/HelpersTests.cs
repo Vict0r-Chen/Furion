@@ -22,6 +22,10 @@ public class HelpersTests
         var json = Kit.Helpers.SerializeObject(new
         {
             Name = "百小僧"
+        }, new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         });
 
         Assert.Equal("{\"name\":\"百小僧\"}", json);

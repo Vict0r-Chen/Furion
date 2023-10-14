@@ -163,10 +163,10 @@ public abstract class ValidatorBase
             return null;
         }
 
-        return new()
-        {
+        return
+        [
             new (FormatErrorMessage(name, value),new[] { name })
-        };
+        ];
     }
 
     /// <summary>

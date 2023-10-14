@@ -35,6 +35,6 @@ public class LinqExpressionExtensionsTests
         Assert.Equal(list1, list);
 
         var list2 = list.WhereIf(true, u => u > 1).ToList();
-        Assert.Equal(new List<int> { 2, 3 }, list2);
+        Assert.Equal([2, 3], list2);
     }
 }

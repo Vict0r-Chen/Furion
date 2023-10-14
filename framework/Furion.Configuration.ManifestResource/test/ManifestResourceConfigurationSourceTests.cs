@@ -26,14 +26,14 @@ public class ManifestResourceConfigurationSourceTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var manifestResourceConfigurationSource = new ManifestResourceConfigurationSource(new(), null!);
+            var manifestResourceConfigurationSource = new ManifestResourceConfigurationSource([], null!);
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var manifestResourceConfigurationSource = new ManifestResourceConfigurationSource(new(), new(new()));
+        var manifestResourceConfigurationSource = new ManifestResourceConfigurationSource([], new(new()));
 
         Assert.NotNull(manifestResourceConfigurationSource);
         Assert.NotNull(manifestResourceConfigurationSource._manifestResourceConfigurationModels);
@@ -46,10 +46,10 @@ public class ManifestResourceConfigurationSourceTests
     {
         var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(GetType().Assembly, "Furion.Configuration.ManifestResource.Tests.embed.json");
 
-        var manifestResourceConfigurationSource = new ManifestResourceConfigurationSource(new()
-        {
+        var manifestResourceConfigurationSource = new ManifestResourceConfigurationSource(
+        [
             manifestResourceConfigurationModel
-        }, new(new()));
+        ], new(new()));
 
         var configurationBuilder = new ConfigurationBuilder();
         var cbuilder = manifestResourceConfigurationSource.Build(configurationBuilder);

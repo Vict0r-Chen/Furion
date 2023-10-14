@@ -1,6 +1,6 @@
 import { Space, Tooltip } from "antd";
 import React, { MouseEventHandler } from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";
 import IconFont from "../../../components/iconfont";

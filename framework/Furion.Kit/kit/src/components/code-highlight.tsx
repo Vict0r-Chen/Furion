@@ -1,7 +1,7 @@
 import { Highlight, HighlightProps, themes } from "prism-react-renderer";
 import Prism from "prismjs";
 import React from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
 require("prismjs/components/prism-csharp");
 

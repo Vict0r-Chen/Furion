@@ -86,11 +86,12 @@
             Kit 模块帮助类
             </summary>
         </member>
-        <member name="M:Furion.Kit.Helpers.SerializeObject(System.Object)">
+        <member name="M:Furion.Kit.Helpers.SerializeObject(System.Object,System.Text.Json.JsonSerializerOptions)">
             <summary>
             序列化对象
             </summary>
             <param name="data"><see cref="T:System.Object"/></param>
+            <param name="jsonSerializerOptions"><see cref="T:System.Text.Json.JsonSerializerOptions"/></param>
             <returns><see cref="T:System.String"/></returns>
         </member>
         <member name="T:Furion.Kit.DiagnosticListenerBase`1">
@@ -123,6 +124,9 @@
             <summary>
             诊断监听类别
             </summary>
+        </member>
+        <member name="F:Furion.Kit.DiagnosticListenerBase`1._serializerOptions">
+            <inheritdoc cref="T:System.Text.Json.JsonSerializerOptions"/>
         </member>
         <member name="M:Furion.Kit.DiagnosticListenerBase`1.#ctor(System.String,System.Int32)">
             <summary>

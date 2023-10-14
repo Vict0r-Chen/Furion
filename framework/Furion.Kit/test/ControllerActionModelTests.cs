@@ -36,7 +36,7 @@ public class ControllerActionModelTests
         var app = builder.Build();
         var provider = app.Services.GetRequiredService<IActionDescriptorCollectionProvider>();
 
-        var controllerActionDescriptor = provider.ActionDescriptors.Items.First() as ControllerActionDescriptor;
+        var controllerActionDescriptor = provider.ActionDescriptors.Items[0] as ControllerActionDescriptor;
         Assert.NotNull(controllerActionDescriptor);
 
         var controllerActionModel = new ControllerActionModel(controllerActionDescriptor);

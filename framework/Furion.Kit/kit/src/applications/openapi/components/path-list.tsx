@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useContext } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../../components/iconfont";
 import SearchBox from "../../../components/searchbox";
 import SiderSticky from "../../../components/sider-sticky";

@@ -36,5 +36,5 @@ public sealed class OpenApiDocument
     /// <summary>
     /// 模型定义
     /// </summary>
-    public ConcurrentDictionary<string, object> Schemas { get; init; }
+    public ConcurrentDictionary<string, OpenApiSchema> Schemas { get; init; }
 }

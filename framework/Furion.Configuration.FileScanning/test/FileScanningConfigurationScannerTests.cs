@@ -409,7 +409,7 @@ public class FileScanningConfigurationScannerTests
 
     [Theory]
     [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\assets\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
-    [InlineData("C:/Workspace/furion.net/furion/framework/Furion.Configuration.FileScanning/test/assets/appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
+    [InlineData("C:/Workspace/furion.net/Furion/framework/Furion.Configuration.FileScanning/test/assets/appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\assets\\appsettings.json")]
     [InlineData("C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\appsettings.json", "C:\\Workspace\\furion.net\\Furion\\framework\\Furion.Configuration.FileScanning\\test\\bin\\Debug\\net8.0\\appsettings.json")]
     public void ResolvePublicationFile(string filePath, string publicationFile)
     {

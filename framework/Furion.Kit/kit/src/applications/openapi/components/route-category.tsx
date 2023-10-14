@@ -1,6 +1,6 @@
 import { Space } from "antd";
 import React, { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";

@@ -19,23 +19,12 @@ namespace Furion.OpenApi;
 /// </summary>
 public sealed class OpenApiSchema
 {
-    /// <summary>
-    /// 参数名
-    /// </summary>
-    public string? Name { get; set; }
+    /// <inheritdoc cref="OpenApi.TypeName"/>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public TypeName TypeName { get; set; }
 
     /// <summary>
-    /// 类型
+    /// 属性/成员集合
     /// </summary>
-    public string? Type { get; set; }
-
-    /// <summary>
-    /// 位置
-    /// </summary>
-    public string? In { get; set; }
-
-    /// <summary>
-    /// 必填
-    /// </summary>
-    public bool Required { get; set; }
+    public IDictionary<string, object>? Properties { get; set; }
 }

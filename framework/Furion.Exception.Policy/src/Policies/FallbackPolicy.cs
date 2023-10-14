@@ -106,7 +106,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     public FallbackPolicy<TResult> Handle<TException>()
         where TException : System.Exception
     {
-        HandleExceptions ??= new();
+        HandleExceptions ??= [];
         HandleExceptions.Add(typeof(TException));
 
         return this;
@@ -162,7 +162,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
     public FallbackPolicy<TResult> HandleInner<TException>()
         where TException : System.Exception
     {
-        HandleInnerExceptions ??= new();
+        HandleInnerExceptions ??= [];
         HandleInnerExceptions.Add(typeof(TException));
 
         return this;
@@ -220,7 +220,7 @@ public class FallbackPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(resultCondition);
 
-        ResultConditions ??= new();
+        ResultConditions ??= [];
         ResultConditions.Add(resultCondition);
 
         return this;

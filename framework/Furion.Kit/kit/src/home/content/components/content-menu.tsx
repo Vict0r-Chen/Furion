@@ -1,6 +1,6 @@
 import { Dropdown, DropdownProps } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../../components/iconfont";
 
 const Container = styled.div``;

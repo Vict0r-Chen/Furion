@@ -1,7 +1,7 @@
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import React, { MouseEventHandler } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: inline-block;

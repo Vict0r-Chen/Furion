@@ -45,6 +45,9 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
     /// </summary>
     internal readonly string _listenerCategory;
 
+    /// <inheritdoc cref="JsonSerializerOptions"/>
+    internal readonly JsonSerializerOptions _serializerOptions;
+
     /// <summary>
     /// <inheritdoc cref="DiagnosticListenerBase{T}" />
     /// </summary>
@@ -61,6 +64,12 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
         {
             FullMode = BoundedChannelFullMode.Wait
         });
+
+        _serializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
     }
 
     /// <summary>
@@ -168,7 +177,7 @@ internal abstract class DiagnosticListenerBase<TData> : IDisposable
                 var data = await ReadAsync(cancellationToken);
 
                 // 持续推送至连接客户端
-                await httpContext.Response.WriteAsync("data: " + Helpers.SerializeObject(data) + "\n\n", cancellationToken);
+                await httpContext.Response.WriteAsync("data: " + Helpers.SerializeObject(data, _serializerOptions) + "\n\n", cancellationToken);
             }
             catch { }
         }

@@ -1,6 +1,6 @@
 import { FloatButton } from "antd";
 import React, { useId } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const Container = styled.div`
   overflow-y: auto;

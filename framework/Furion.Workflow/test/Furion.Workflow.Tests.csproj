@@ -4,4 +4,8 @@
 		<ProjectReference Include="..\src\Furion.Workflow.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0-rc.2.23480.2" />
+	</ItemGroup>
+
 </Project>

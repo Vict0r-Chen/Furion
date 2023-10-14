@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
 const { Text } = Typography;
 

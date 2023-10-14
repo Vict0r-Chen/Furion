@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../../components/iconfont";
 
 const HeaderIcon = styled(IconFont)`

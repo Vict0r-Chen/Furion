@@ -1,6 +1,6 @@
 import { Badge, Button, Dropdown, Empty, Popover, Tabs, TabsProps } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Header from "..";
 import IconFont from "../../../components/iconfont";
 

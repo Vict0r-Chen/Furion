@@ -12,21 +12,28 @@
 // 在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任负责，
 // 无论是因合同、侵权或其他方式引起的，与软件或其使用或其他交易有关。
 
-namespace Furion.Kit;
+namespace Furion.OpenApi;
 
 /// <summary>
-/// Kit 模块帮助类
+/// 开放接口枚举
 /// </summary>
-internal static class Helpers
+public sealed class OpenApiEnum
 {
     /// <summary>
-    /// 序列化对象
+    /// 枚举名
     /// </summary>
-    /// <param name="data"><see cref="object"/></param>
-    /// <param name="jsonSerializerOptions"><see cref="JsonSerializerOptions"/></param>
-    /// <returns><see cref="string"/></returns>
-    internal static string SerializeObject(object? data, JsonSerializerOptions? jsonSerializerOptions = null)
-    {
-        return JsonSerializer.Serialize(data, jsonSerializerOptions);
-    }
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// 枚举值
+    /// </summary>
+    public int Value { get; set; }
+
+    /// <summary>
+    /// 注释/备注/描述
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <inheritdoc cref="OpenApiObsolete"/>
+    public OpenApiObsolete? Obsolete { get; set; }
 }

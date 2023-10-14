@@ -17,7 +17,7 @@ namespace Furion.Component.Tests;
 [DependsOn<BComponent, CComponent, DComponent>]
 public class AComponent : ComponentBase
 {
-    public List<string> Items { get; set; } = new();
+    public List<string> Items { get; set; } = [];
 
     [ComponentProps]
     public Action<ComponentOptionsClass1>? CustomProps { get; set; }

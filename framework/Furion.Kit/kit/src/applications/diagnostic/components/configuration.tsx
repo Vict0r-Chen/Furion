@@ -2,7 +2,7 @@ import { SyncOutlined } from "@ant-design/icons";
 import { Alert, Empty, FloatButton, Space, Spin, Tabs, TabsProps } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 import projectConfig from "../../../project.config";

@@ -1,7 +1,7 @@
 import { Space, Tag } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 

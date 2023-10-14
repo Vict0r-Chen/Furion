@@ -529,13 +529,13 @@ public class FallbackPolicyTests
         var policy = new FallbackPolicy<object>();
 
         Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), null!, null!));
-        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), null!));
-        Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), new(), new System.Exception()));
-        Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), new() { typeof(System.Exception) }, new InvalidOperationException()));
-        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new() { typeof(NotSupportedException) }, new InvalidOperationException()));
+        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), [], null!));
+        Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), [], new System.Exception()));
+        Assert.True(policy.CanHandleException(new FallbackPolicyContext<object>(), [typeof(System.Exception)], new InvalidOperationException()));
+        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), [typeof(NotSupportedException)], new InvalidOperationException()));
 
         policy.HandleResult(context => context.Exception?.Message.Length > 0);
-        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), new() { typeof(System.Exception) }, new InvalidOperationException()));
+        Assert.False(policy.CanHandleException(new FallbackPolicyContext<object>(), [typeof(System.Exception)], new InvalidOperationException()));
     }
 
     [Fact]

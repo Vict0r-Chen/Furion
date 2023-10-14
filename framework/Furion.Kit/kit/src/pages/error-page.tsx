@@ -1,7 +1,7 @@
 import { Button, Result } from "antd";
 import React from "react";
 import { useNavigate, useRouteError } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Layout from "../home/layout";
 
 const Container = styled.div`

@@ -57,7 +57,7 @@ public class TopologicalGraphTests
         var sortedList = topologicalGraph.Sort();
 
         Assert.NotNull(sortedList);
-        Assert.Equal(new List<Type> { typeof(TopologicalGraph4), typeof(TopologicalGraph5), typeof(TopologicalGraph2), typeof(TopologicalGraph6), typeof(TopologicalGraph3), typeof(TopologicalGraph1) }, sortedList);
+        Assert.Equal([typeof(TopologicalGraph4), typeof(TopologicalGraph5), typeof(TopologicalGraph2), typeof(TopologicalGraph6), typeof(TopologicalGraph3), typeof(TopologicalGraph1)], sortedList);
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class TopologicalGraphTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            topologicalGraph.VisitNode(typeof(TopologicalGraph1), new(), null!);
+            topologicalGraph.VisitNode(typeof(TopologicalGraph1), [], null!);
         });
     }
 
@@ -176,7 +176,7 @@ public class TopologicalGraphTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            topologicalGraph.HasCycleHelper(typeof(TopologicalGraph1), new(), null!);
+            topologicalGraph.HasCycleHelper(typeof(TopologicalGraph1), [], null!);
         });
     }
 

@@ -26,14 +26,14 @@ public class ManifestResourceConfigurationProviderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(new(), null!);
+            var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider([], null!);
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(new(), new(new()));
+        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider([], new(new()));
 
         Assert.NotNull(manifestResourceConfigurationProvider);
         Assert.NotNull(manifestResourceConfigurationProvider._manifestResourceConfigurationModels);
@@ -46,10 +46,10 @@ public class ManifestResourceConfigurationProviderTests
     {
         var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(GetType().Assembly, "Furion.Configuration.ManifestResource.Tests.embed.json");
 
-        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(new()
-        {
+        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(
+        [
             manifestResourceConfigurationModel
-        }, new(new()));
+        ], new(new()));
         manifestResourceConfigurationProvider.Load();
 
         var keys = manifestResourceConfigurationProvider.GetChildKeys(Enumerable.Empty<string>(), null);
@@ -66,10 +66,10 @@ public class ManifestResourceConfigurationProviderTests
     {
         var manifestResourceConfigurationModel = new ManifestResourceConfigurationModel(GetType().Assembly, "Furion.Configuration.ManifestResource.Tests.embed.json");
 
-        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(new()
-        {
+        var manifestResourceConfigurationProvider = new ManifestResourceConfigurationProvider(
+        [
             manifestResourceConfigurationModel
-        }, new(new()));
+        ], new(new()));
 
         var output = manifestResourceConfigurationProvider.ToString();
         Assert.Equal("ManifestResourceConfigurationProvider for 'Furion.Configuration.ManifestResource.Tests'", output);

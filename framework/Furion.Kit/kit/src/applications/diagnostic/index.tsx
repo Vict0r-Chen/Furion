@@ -1,16 +1,16 @@
 import {
-  Button,
-  Dropdown,
-  Form,
-  Input,
-  Modal,
-  Popover,
-  Space,
-  Tabs,
-  TabsProps,
+    Button,
+    Dropdown,
+    Form,
+    Input,
+    Modal,
+    Popover,
+    Space,
+    Tabs,
+    TabsProps,
 } from "antd";
 import React, { useContext, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Flexbox from "../../components/flexbox";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";

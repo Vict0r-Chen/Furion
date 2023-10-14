@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import A from "../../components/a";
 import Flexbox from "../../components/flexbox";
 import { FlushDivider } from "../../components/flush-divider";

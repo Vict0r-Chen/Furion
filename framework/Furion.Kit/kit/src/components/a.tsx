@@ -1,4 +1,4 @@
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
 const A = styled.a<{ $hoverDecoration?: boolean }>`
   color: unset !important;

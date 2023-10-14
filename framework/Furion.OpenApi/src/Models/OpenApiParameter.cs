@@ -22,7 +22,7 @@ public sealed class OpenApiParameter : OpenApiModel
     /// <summary>
     /// 绑定源
     /// </summary>
-    public string? BindingSource { get; set; }
+    public string? Binding { get; set; }
 
     /// <summary>
     /// 验证格式

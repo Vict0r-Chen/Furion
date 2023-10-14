@@ -26,14 +26,14 @@ public class RemotedConfigurationProviderTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var remotedConfigurationProvider = new RemotedConfigurationProvider(new(), null!);
+            var remotedConfigurationProvider = new RemotedConfigurationProvider([], null!);
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var remotedConfigurationProvider = new RemotedConfigurationProvider(new(), new(new(), new Dictionary<string, string>()));
+        var remotedConfigurationProvider = new RemotedConfigurationProvider([], new(new(), new Dictionary<string, string>()));
 
         Assert.NotNull(remotedConfigurationProvider);
         Assert.NotNull(remotedConfigurationProvider._remotedConfigurationModels);
@@ -62,10 +62,10 @@ public class RemotedConfigurationProviderTests
 
         var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/return-json", HttpMethod.Get);
 
-        var remotedConfigurationProvider = new RemotedConfigurationProvider(new()
-        {
+        var remotedConfigurationProvider = new RemotedConfigurationProvider(
+        [
             remotedConfigurationModel
-        }, new(new(), new Dictionary<string, string>()));
+        ], new(new(), new Dictionary<string, string>()));
         remotedConfigurationProvider.Load();
 
         var keys = remotedConfigurationProvider.GetChildKeys(Enumerable.Empty<string>(), null);
@@ -82,10 +82,10 @@ public class RemotedConfigurationProviderTests
     {
         var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:7115/return-json", HttpMethod.Get);
 
-        var remotedConfigurationProvider = new RemotedConfigurationProvider(new()
-        {
+        var remotedConfigurationProvider = new RemotedConfigurationProvider(
+        [
             remotedConfigurationModel
-        }, new(new(), new Dictionary<string, string>()));
+        ], new(new(), new Dictionary<string, string>()));
 
         var output = remotedConfigurationProvider.ToString();
         Assert.Equal("RemotedConfigurationProvider for 'http://localhost:7115/return-json'", output);

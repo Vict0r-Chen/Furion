@@ -1,6 +1,6 @@
 import { Tooltip } from "antd";
 import { MouseEventHandler } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import A from "../../../components/a";
 import IconFont from "../../../components/iconfont";
 

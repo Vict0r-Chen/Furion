@@ -15,9 +15,9 @@
 namespace Furion.OpenApi;
 
 /// <summary>
-/// 开放接口参数解析器
+/// 开放接口请求体解析器
 /// </summary>
-internal sealed class OpenApiParameterParser
+internal sealed class OpenApiRequestBodyParser
 {
     /// <inheritdoc cref="ApiParameterDescription"/>
     internal readonly ApiParameterDescription _apiParameterDescription;
@@ -28,11 +28,11 @@ internal sealed class OpenApiParameterParser
     internal readonly ConcurrentDictionary<string, OpenApiSchema> _schemas;
 
     /// <summary>
-    /// <inheritdoc cref="OpenApiParameterParser"/>
+    /// <inheritdoc cref="OpenApiRequestBodyParser"/>
     /// </summary>
     /// <param name="apiParameterDescription"><see cref="ApiParameterDescription"/></param>
     /// <param name="schemas">开放接口架构缓存集合</param>
-    internal OpenApiParameterParser(ApiParameterDescription apiParameterDescription
+    internal OpenApiRequestBodyParser(ApiParameterDescription apiParameterDescription
         , ConcurrentDictionary<string, OpenApiSchema> schemas)
     {
         // 空检查
@@ -52,9 +52,8 @@ internal sealed class OpenApiParameterParser
         // 获取接口参数绑定源
         var bindingSource = _apiParameterDescription.Source;
 
-        return bindingSource == BindingSource.Path
-            || bindingSource == BindingSource.Query
-            || bindingSource == BindingSource.Header;
+        return bindingSource == BindingSource.Form
+            || bindingSource == BindingSource.Body;
     }
 
     /// <summary>
@@ -69,17 +68,17 @@ internal sealed class OpenApiParameterParser
             return null;
         }
 
+        // 获取参数绑定源
+        var bindingSource = _apiParameterDescription.Source;
+
         // 获取模型元数据
         var modelMetadata = _apiParameterDescription.ModelMetadata;
 
-        // 检查参数模型元数据是否为空或被禁止模型绑定
+        // 检查参数模型元数据是否为空或禁止模型绑定
         if (modelMetadata is null or { IsBindingAllowed: false })
         {
             return null;
         }
-
-        // 获取参数绑定源
-        var bindingSource = _apiParameterDescription.Source;
 
         // 解析模型元数据并返回开放接口参数
         var openApiParameter = OpenApiModelParser.Parse<OpenApiParameter>(modelMetadata, _schemas);

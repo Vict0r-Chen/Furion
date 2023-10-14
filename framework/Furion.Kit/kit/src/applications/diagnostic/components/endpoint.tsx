@@ -1,7 +1,7 @@
 import { Alert, Button, Empty, Skeleton, Typography } from "antd";
 import { useLiveQuery } from "dexie-react-hooks";
 import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { database } from "../../../databases";
 import { EndpointDiagnosticModel } from "../../../databases/types/endpoint.diagnostic";
 import projectConfig from "../../../project.config";

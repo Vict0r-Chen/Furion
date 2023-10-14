@@ -1,6 +1,6 @@
 import { Divider, Space } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Flexbox from "./flexbox";
 
 const Container = styled(Flexbox)`

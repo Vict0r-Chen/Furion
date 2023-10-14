@@ -21,7 +21,7 @@ public class HelpersTests
     [Fact]
     public void RuleSetSeparator_ReturnOK()
     {
-        Assert.Equal(new[] { ',', ';' }, Helpers._ruleSetSeparator);
+        Assert.Equal(new[] { ',', ';' }, Helpers.RuleSetSeparator);
     }
 
     [Fact]

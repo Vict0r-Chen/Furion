@@ -76,7 +76,7 @@ public abstract class AbstractValidator<T> : IObjectValidator<T>
         ArgumentNullException.ThrowIfNull(setAction);
 
         // 根据分隔符切割规则集并逐条配置
-        foreach (var ruleSetItem in ruleSet.Split(Helpers._ruleSetSeparator, StringSplitOptions.RemoveEmptyEntries))
+        foreach (var ruleSetItem in ruleSet.Split(Helpers.RuleSetSeparator, StringSplitOptions.RemoveEmptyEntries))
         {
             // 设置当前规则集
             _ruleSet = ruleSetItem;

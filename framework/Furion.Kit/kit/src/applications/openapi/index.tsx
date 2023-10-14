@@ -1,7 +1,7 @@
 import { Button, Space, Tabs, TabsProps } from "antd";
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../components/iconfont";
 import TextBox from "../../components/textbox";
 import { OpenApiModel } from "../../databases/types/openapi";

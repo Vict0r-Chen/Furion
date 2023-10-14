@@ -182,7 +182,7 @@
             数据验证模块帮助类
             </summary>
         </member>
-        <member name="F:Furion.Validation.Helpers._ruleSetSeparator">
+        <member name="F:Furion.Validation.Helpers.RuleSetSeparator">
             <summary>
             规则集分隔符
             </summary>

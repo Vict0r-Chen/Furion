@@ -25,7 +25,7 @@ internal sealed class OpenApiModelParser
     /// <summary>
     /// 开放接口架构缓存集合
     /// </summary>
-    internal readonly ConcurrentDictionary<string, object> _schemas;
+    internal readonly ConcurrentDictionary<string, OpenApiSchema> _schemas;
 
     /// <summary>
     /// <inheritdoc cref="OpenApiModelParser"/>
@@ -33,7 +33,7 @@ internal sealed class OpenApiModelParser
     /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
     /// <param name="schemas">开放接口架构缓存集合</param>
     internal OpenApiModelParser(ModelMetadata modelMetadata
-        , ConcurrentDictionary<string, object> schemas)
+        , ConcurrentDictionary<string, OpenApiSchema> schemas)
     {
         // 获取默认模型元数据
         var defaultModelMetadata = modelMetadata as DefaultModelMetadata;
@@ -53,7 +53,7 @@ internal sealed class OpenApiModelParser
     /// <param name="modelMetadata"><see cref="ModelMetadata"/></param>
     /// <param name="schemas">开放接口架构缓存集合</param>
     /// <returns><typeparamref name="TOpenApiModel"/></returns>
-    internal static TOpenApiModel Parse<TOpenApiModel>(ModelMetadata modelMetadata, ConcurrentDictionary<string, object> schemas)
+    internal static TOpenApiModel Parse<TOpenApiModel>(ModelMetadata modelMetadata, ConcurrentDictionary<string, OpenApiSchema> schemas)
         where TOpenApiModel : OpenApiModel, new()
     {
         // 空检查
@@ -140,24 +140,25 @@ internal sealed class OpenApiModelParser
             // 遍历枚举定义集合
             foreach (var item in values)
             {
-                // 获取枚举名称、枚举值和枚举字段成员
+                // 获取枚举名、枚举值和枚举字段成员
                 var name = item.ToString()!;
-                var value = (object)(int)item;
+                var value = (int)item;
                 var field = modelType.GetField(name)!;
 
                 // 添加到枚举开放接口属性集合中
-                properties.Add(name, new
+                properties.Add(name, new OpenApiEnum
                 {
-                    value,
+                    Name = name,
+                    Value = value,
+                    Description = field.GetCustomAttribute<DescriptionAttribute>()?.Description,
                     Obsolete = GetObsoleteOrNull(field.GetCustomAttribute<ObsoleteAttribute>()),
-                    field.GetCustomAttribute<DescriptionAttribute>()?.Description
                 });
             }
 
-            return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
+            return new()
             {
-                { "dataType", $"{TypeName.Enum}" },
-                { "properties", properties }
+                TypeName = TypeName.Enum,
+                Properties = properties
             };
         });
 
@@ -208,10 +209,10 @@ internal sealed class OpenApiModelParser
                 properties.Add(openApiModel.Name.ToLowerFirstLetter()!, openApiModel);
             }
 
-            return new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
+            return new()
             {
-                { "dataType", $"{TypeName.Object}" },
-                { "properties", properties }
+                TypeName = TypeName.Object,
+                Properties = properties
             };
         });
 

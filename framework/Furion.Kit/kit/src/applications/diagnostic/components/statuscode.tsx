@@ -1,6 +1,6 @@
 import { Space, Tooltip } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 

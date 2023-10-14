@@ -1,6 +1,6 @@
 import { Button, Space, message } from "antd";
 import React, { useContext } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import banner from "../../../assets/banner.png";
 import banner1 from "../../../assets/banner1.jpeg";
 import banner2 from "../../../assets/banner2.jpeg";

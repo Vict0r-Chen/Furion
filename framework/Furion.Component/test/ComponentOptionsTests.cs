@@ -129,7 +129,7 @@ public class ComponentOptionsTests
         var componentOptionsClass1 = new ComponentOptionsClass1();
         optionsAction1(componentOptionsClass1);
         Assert.Equal(2, componentOptionsClass1.Items.Count);
-        Assert.Equal(new List<string> { "action1", "action2" }, componentOptionsClass1.Items);
+        Assert.Equal(["action1", "action2"], componentOptionsClass1.Items);
 
         var optionsAction2 = componentOptions.GetPropsAction<ComponentOptionsClass2>();
         Assert.NotNull(optionsAction2);
@@ -137,7 +137,7 @@ public class ComponentOptionsTests
         var componentOptionsClass2 = new ComponentOptionsClass2();
         optionsAction2(componentOptionsClass2);
         Assert.Single(componentOptionsClass2.Items);
-        Assert.Equal(new List<string> { "action3" }, componentOptionsClass2.Items);
+        Assert.Equal(["action3"], componentOptionsClass2.Items);
     }
 
     [Fact]
@@ -186,7 +186,7 @@ public class ComponentOptionsTests
         var componentOptionsClass1 = new ComponentOptionsClass1();
         optionsAction1(componentOptionsClass1);
         Assert.Equal(2, componentOptionsClass1.Items.Count);
-        Assert.Equal(new List<string> { "action1", "action2" }, componentOptionsClass1.Items);
+        Assert.Equal(["action1", "action2"], componentOptionsClass1.Items);
 
         var optionsAction2 = componentOptions.GetPropsAction(typeof(ComponentOptionsClass2)) as Action<ComponentOptionsClass2>;
         Assert.NotNull(optionsAction2);
@@ -194,7 +194,7 @@ public class ComponentOptionsTests
         var componentOptionsClass2 = new ComponentOptionsClass2();
         optionsAction2(componentOptionsClass2);
         Assert.Single(componentOptionsClass2.Items);
-        Assert.Equal(new List<string> { "action3" }, componentOptionsClass2.Items);
+        Assert.Equal(["action3"], componentOptionsClass2.Items);
     }
 
     [Fact]

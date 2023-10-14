@@ -36,8 +36,8 @@ public class IDictionaryExtensionsTests
         dic.AddOrUpdate("key2", 1);
 
         Assert.Equal(2, dic.Count);
-        Assert.Equal(new List<object> { 1, 2 }, dic["key1"]);
-        Assert.Equal(new List<object> { 1 }, dic["key2"]);
+        Assert.Equal([1, 2], dic["key1"]);
+        Assert.Equal([1], dic["key2"]);
     }
 
     [Fact]
@@ -69,9 +69,9 @@ public class IDictionaryExtensionsTests
         dic.AddOrUpdate(dic2);
 
         Assert.Equal(3, dic.Count);
-        Assert.Equal(new List<object> { 1, 2, 3, 4 }, dic["key1"]);
-        Assert.Equal(new List<object> { 1, 2 }, dic["key2"]);
-        Assert.Equal(new List<object> { 1 }, dic["key3"]);
+        Assert.Equal([1, 2, 3, 4], dic["key1"]);
+        Assert.Equal([1, 2], dic["key2"]);
+        Assert.Equal([1], dic["key3"]);
     }
 
     [Fact]

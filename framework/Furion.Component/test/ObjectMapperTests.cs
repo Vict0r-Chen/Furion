@@ -39,7 +39,7 @@ public class ObjectMapperTests
             Name = "Furion",
             Age = 3,
             Address = "广东省中山市",
-            Tags = new() { "Furion", "百小僧" }
+            Tags = ["Furion", "百小僧"]
         };
 
         var object2 = new ObjectMapper2();
@@ -49,7 +49,7 @@ public class ObjectMapperTests
         Assert.Equal("Furion", object2.Name);
         Assert.Equal(3, object2.Age);
         Assert.Null(object2.Address);
-        Assert.Equal(new List<string> { "Furion", "百小僧" }, object2.Tags);
+        Assert.Equal(["Furion", "百小僧"], object2.Tags);
         Assert.Null(object2.Custom);
     }
 }

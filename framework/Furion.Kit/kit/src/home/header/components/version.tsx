@@ -1,5 +1,5 @@
 import { Space } from "antd";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import A from "../../../components/a";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";

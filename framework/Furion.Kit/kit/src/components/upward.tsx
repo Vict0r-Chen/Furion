@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const Upward = styled.div`
   transition: transform 0.2s;

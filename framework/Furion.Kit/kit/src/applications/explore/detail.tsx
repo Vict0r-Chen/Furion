@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Mdx from "../../mdxs/index.mdx";
 
 const Container = styled.div``;

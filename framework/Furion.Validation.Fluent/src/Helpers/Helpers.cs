@@ -22,7 +22,7 @@ internal static class Helpers
     /// <summary>
     /// 规则集分隔符
     /// </summary>
-    internal static readonly char[] _ruleSetSeparator = [',', ';'];
+    internal static readonly char[] RuleSetSeparator = [',', ';'];
 
     /// <summary>
     /// 检查验证器类型合法性

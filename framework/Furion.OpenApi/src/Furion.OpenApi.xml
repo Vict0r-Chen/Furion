@@ -142,6 +142,29 @@
             模型定义
             </summary>
         </member>
+        <member name="T:Furion.OpenApi.OpenApiEnum">
+            <summary>
+            开放接口枚举
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiEnum.Name">
+            <summary>
+            枚举名
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiEnum.Value">
+            <summary>
+            枚举值
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiEnum.Description">
+            <summary>
+            注释/备注/描述
+            </summary>
+        </member>
+        <member name="P:Furion.OpenApi.OpenApiEnum.Obsolete">
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiObsolete"/>
+        </member>
         <member name="T:Furion.OpenApi.OpenApiGroup">
             <summary>
             开放接口分组
@@ -193,7 +216,7 @@
             </summary>
         </member>
         <member name="P:Furion.OpenApi.OpenApiModel.Obsolete">
-            <inheritdoc cref="T:Furion.OpenApi.OpenApiObsolete"/>/>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiObsolete"/>
         </member>
         <member name="P:Furion.OpenApi.OpenApiModel.TypeName">
             <inheritdoc cref="T:Furion.OpenApi.TypeName"/>
@@ -226,7 +249,7 @@
             开放接口参数
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiParameter.BindingSource">
+        <member name="P:Furion.OpenApi.OpenApiParameter.Binding">
             <summary>
             绑定源
             </summary>
@@ -246,24 +269,12 @@
             开放接口架构
             </summary>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiSchema.Name">
-            <summary>
-            参数名
-            </summary>
+        <member name="P:Furion.OpenApi.OpenApiSchema.TypeName">
+            <inheritdoc cref="T:Furion.OpenApi.TypeName"/>
         </member>
-        <member name="P:Furion.OpenApi.OpenApiSchema.Type">
+        <member name="P:Furion.OpenApi.OpenApiSchema.Properties">
             <summary>
-            类型
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiSchema.In">
-            <summary>
-            位置
-            </summary>
-        </member>
-        <member name="P:Furion.OpenApi.OpenApiSchema.Required">
-            <summary>
-            必填
+            属性/成员集合
             </summary>
         </member>
         <member name="T:Furion.OpenApi.OpenApiTag">
@@ -330,14 +341,14 @@
             开放接口架构缓存集合
             </summary>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiModelParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
+        <member name="M:Furion.OpenApi.OpenApiModelParser.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,Furion.OpenApi.OpenApiSchema})">
             <summary>
             <inheritdoc cref="T:Furion.OpenApi.OpenApiModelParser"/>
             </summary>
             <param name="modelMetadata"><see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata"/></param>
             <param name="schemas">开放接口架构缓存集合</param>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse``1(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
+        <member name="M:Furion.OpenApi.OpenApiModelParser.Parse``1(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata,System.Collections.Concurrent.ConcurrentDictionary{System.String,Furion.OpenApi.OpenApiSchema})">
             <summary>
             解析模型元数据并返回开放接口模型
             </summary>
@@ -399,19 +410,57 @@
         <member name="F:Furion.OpenApi.OpenApiParameterParser._apiParameterDescription">
             <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/>
         </member>
-        <member name="F:Furion.OpenApi.OpenApiParameterParser._definitions">
+        <member name="F:Furion.OpenApi.OpenApiParameterParser._schemas">
             <summary>
-            开放接口架构定义集合
+            开放接口架构缓存集合
             </summary>
         </member>
-        <member name="M:Furion.OpenApi.OpenApiParameterParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Object})">
+        <member name="M:Furion.OpenApi.OpenApiParameterParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription,System.Collections.Concurrent.ConcurrentDictionary{System.String,Furion.OpenApi.OpenApiSchema})">
             <summary>
             <inheritdoc cref="T:Furion.OpenApi.OpenApiParameterParser"/>
             </summary>
             <param name="apiParameterDescription"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/></param>
-            <param name="definitions">开放接口架构定义集合</param>
+            <param name="schemas">开放接口架构缓存集合</param>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiParameterParser.CanParse">
+            <summary>
+            检查是否可以执行解析程序
+            </summary>
+            <returns><see cref="T:System.Boolean"/></returns>
         </member>
         <member name="M:Furion.OpenApi.OpenApiParameterParser.Parse">
+            <summary>
+            解析接口参数描述器并返回开放接口参数
+            </summary>
+            <returns><see cref="T:Furion.OpenApi.OpenApiParameter"/></returns>
+        </member>
+        <member name="T:Furion.OpenApi.OpenApiRequestBodyParser">
+            <summary>
+            开放接口请求体解析器
+            </summary>
+        </member>
+        <member name="F:Furion.OpenApi.OpenApiRequestBodyParser._apiParameterDescription">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/>
+        </member>
+        <member name="F:Furion.OpenApi.OpenApiRequestBodyParser._schemas">
+            <summary>
+            开放接口架构缓存集合
+            </summary>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiRequestBodyParser.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription,System.Collections.Concurrent.ConcurrentDictionary{System.String,Furion.OpenApi.OpenApiSchema})">
+            <summary>
+            <inheritdoc cref="T:Furion.OpenApi.OpenApiRequestBodyParser"/>
+            </summary>
+            <param name="apiParameterDescription"><see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiParameterDescription"/></param>
+            <param name="schemas">开放接口架构缓存集合</param>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiRequestBodyParser.CanParse">
+            <summary>
+            检查是否可以执行解析程序
+            </summary>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:Furion.OpenApi.OpenApiRequestBodyParser.Parse">
             <summary>
             解析接口参数描述器并返回开放接口参数
             </summary>

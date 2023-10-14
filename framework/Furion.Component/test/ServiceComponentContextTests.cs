@@ -127,7 +127,7 @@ public class ServiceComponentContextTests
 
         propsAction = serviceComponentContext.GetProps<ComponentOptionsClass1>();
         Assert.NotNull(propsAction);
-        Assert.Equal(new List<string> { "action1", "action2" }, propsAction.Items);
+        Assert.Equal(["action1", "action2"], propsAction.Items);
     }
 
     [Fact]
@@ -175,7 +175,7 @@ public class ServiceComponentContextTests
         var componentOptionsClass1 = new ComponentOptionsClass1();
         optionsAction1(componentOptionsClass1);
         Assert.Equal(2, componentOptionsClass1.Items.Count);
-        Assert.Equal(new List<string> { "action1", "action2" }, componentOptionsClass1.Items);
+        Assert.Equal(["action1", "action2"], componentOptionsClass1.Items);
 
         var optionsAction2 = serviceComponentContext.GetPropsAction<ComponentOptionsClass2>();
         Assert.NotNull(optionsAction2);
@@ -183,6 +183,6 @@ public class ServiceComponentContextTests
         var componentOptionsClass2 = new ComponentOptionsClass2();
         optionsAction2(componentOptionsClass2);
         Assert.Single(componentOptionsClass2.Items);
-        Assert.Equal(new List<string> { "action3" }, componentOptionsClass2.Items);
+        Assert.Equal(["action3"], componentOptionsClass2.Items);
     }
 }

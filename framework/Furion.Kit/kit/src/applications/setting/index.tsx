@@ -1,16 +1,16 @@
 import { useLingui } from "@lingui/react";
 import {
-  Button,
-  Checkbox,
-  Input,
-  Popconfirm,
-  Radio,
-  Select,
-  Space,
-  message,
+    Button,
+    Checkbox,
+    Input,
+    Popconfirm,
+    Radio,
+    Select,
+    Space,
+    message,
 } from "antd";
 import { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import AnchorBox from "../../components/anchor-box";
 import Category from "../../components/category";
 import Flexbox from "../../components/flexbox";

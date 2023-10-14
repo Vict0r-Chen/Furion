@@ -26,14 +26,14 @@ public class RemotedConfigurationSourceTests
 
         Assert.Throws<ArgumentNullException>(() =>
         {
-            var remotedConfigurationSource = new RemotedConfigurationSource(new(), null!);
+            var remotedConfigurationSource = new RemotedConfigurationSource([], null!);
         });
     }
 
     [Fact]
     public void New_ReturnOK()
     {
-        var remotedConfigurationSource = new RemotedConfigurationSource(new(), new(new(), new Dictionary<string, string>()));
+        var remotedConfigurationSource = new RemotedConfigurationSource([], new(new(), new Dictionary<string, string>()));
 
         Assert.NotNull(remotedConfigurationSource);
         Assert.NotNull(remotedConfigurationSource._remotedConfigurationModels);
@@ -62,10 +62,10 @@ public class RemotedConfigurationSourceTests
 
         var remotedConfigurationModel = new RemotedConfigurationModel($"http://localhost:{port}/return-json", HttpMethod.Get);
 
-        var remotedConfigurationSource = new RemotedConfigurationSource(new()
-        {
+        var remotedConfigurationSource = new RemotedConfigurationSource(
+        [
             remotedConfigurationModel
-        }, new(new(), new Dictionary<string, string>()));
+        ], new(new(), new Dictionary<string, string>()));
 
         var configurationBuilder = new ConfigurationBuilder();
         var cbuilder = remotedConfigurationSource.Build(configurationBuilder);

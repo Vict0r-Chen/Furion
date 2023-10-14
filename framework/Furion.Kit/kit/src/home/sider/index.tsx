@@ -1,7 +1,7 @@
 import { Space } from "antd";
 import React, { useRef } from "react";
 import Draggable from "react-draggable";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 import Flexbox from "../../components/flexbox";
 import { FlushDivider } from "../../components/flush-divider";
 import useResize from "../../hooks/useResize";

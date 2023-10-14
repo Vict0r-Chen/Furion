@@ -1,6 +1,6 @@
 import { Empty, Space } from "antd";
 import React, { useContext } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Category from "../../../components/category";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";

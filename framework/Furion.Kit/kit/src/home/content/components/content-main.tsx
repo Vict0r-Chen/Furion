@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const ContentMain = styled.div<{ $width?: number; $backgroundColor?: string }>`
   width: 100%;

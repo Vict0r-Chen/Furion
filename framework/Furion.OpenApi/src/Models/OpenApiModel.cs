@@ -44,7 +44,7 @@ public class OpenApiModel
     /// </summary>
     public bool Nullable { get; set; }
 
-    /// <inheritdoc cref="OpenApiObsolete"/>/>
+    /// <inheritdoc cref="OpenApiObsolete"/>
     public OpenApiObsolete? Obsolete { get; set; }
 
     /// <inheritdoc cref="OpenApi.TypeName"/>

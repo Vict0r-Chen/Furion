@@ -1,11 +1,11 @@
 import { FloatButton } from "antd";
 import React, { useId, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import { FlushDivider } from "../../../components/flush-divider";
 import {
-  OpenApiDescription,
-  OpenApiGroup,
+    OpenApiDescription,
+    OpenApiGroup,
 } from "../../../databases/types/openapi";
 import OpenApiGroupContext from "../contexts";
 import ApiDetail from "./api-detail";

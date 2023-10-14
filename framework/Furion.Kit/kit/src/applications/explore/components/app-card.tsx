@@ -1,6 +1,6 @@
 import { Button, Skeleton, Tag } from "antd";
 import React, { MouseEventHandler } from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import Upward from "../../../components/upward";
 

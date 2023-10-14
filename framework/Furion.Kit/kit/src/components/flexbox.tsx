@@ -1,4 +1,4 @@
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 
 interface FlexboxProps {
   direction?: "column" | "column-reverse" | "row" | "row-reverse";

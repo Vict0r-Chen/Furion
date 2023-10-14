@@ -61,7 +61,7 @@ public class EntryComponentTests
         Assert.Equal(resultDependencies, entryComponent._dependencies);
 
         Assert.NotNull(entryComponent._sortedDependencies);
-        Assert.Equal(new List<Type> { typeof(FComponent), typeof(EComponent), typeof(DComponent), typeof(CComponent), typeof(BComponent), typeof(AComponent) }, entryComponent._sortedDependencies);
+        Assert.Equal([typeof(FComponent), typeof(EComponent), typeof(DComponent), typeof(CComponent), typeof(BComponent), typeof(AComponent)], entryComponent._sortedDependencies);
 
         Assert.NotNull(entryComponent._dependencyGraph);
     }

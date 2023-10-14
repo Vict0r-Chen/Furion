@@ -1,6 +1,6 @@
 import { Space } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Flexbox from "../../components/flexbox";
 import { FlushDivider } from "../../components/flush-divider";
 import ToolbarIcon from "./components/toolbar-icon";

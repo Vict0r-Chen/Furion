@@ -1,6 +1,6 @@
 import { Button, Carousel, Dropdown, Space, Tabs, TabsProps } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Category from "../../../components/category";
 import IconFont from "../../../components/iconfont";
 import SearchBox from "../../../components/searchbox";

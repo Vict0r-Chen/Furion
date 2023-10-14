@@ -1,6 +1,6 @@
 import { Image, ImageProps } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const Img = styled(Image)`
   height: 100%;

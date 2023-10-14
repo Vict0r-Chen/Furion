@@ -112,7 +112,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     public RetryPolicy<TResult> Handle<TException>()
         where TException : System.Exception
     {
-        HandleExceptions ??= new();
+        HandleExceptions ??= [];
         HandleExceptions.Add(typeof(TException));
 
         return this;
@@ -168,7 +168,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
     public RetryPolicy<TResult> HandleInner<TException>()
         where TException : System.Exception
     {
-        HandleInnerExceptions ??= new();
+        HandleInnerExceptions ??= [];
         HandleInnerExceptions.Add(typeof(TException));
 
         return this;
@@ -226,7 +226,7 @@ public class RetryPolicy<TResult> : PolicyBase<TResult>
         // 空检查
         ArgumentNullException.ThrowIfNull(resultCondition);
 
-        ResultConditions ??= new();
+        ResultConditions ??= [];
         ResultConditions.Add(resultCondition);
 
         return this;

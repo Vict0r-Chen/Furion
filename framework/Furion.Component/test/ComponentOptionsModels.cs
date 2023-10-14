@@ -16,12 +16,12 @@ namespace Furion.Component.Tests;
 
 public class ComponentOptionsClass1
 {
-    public List<string> Items { get; set; } = new();
+    public List<string> Items { get; set; } = [];
 }
 
 public class ComponentOptionsClass2
 {
-    public List<string> Items { get; set; } = new();
+    public List<string> Items { get; set; } = [];
 }
 
 public class ComponentOptionsClass3

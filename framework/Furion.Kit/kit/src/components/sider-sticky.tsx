@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const SiderSticky = styled.div<{ $top?: number; $width?: number }>`
   position: sticky;

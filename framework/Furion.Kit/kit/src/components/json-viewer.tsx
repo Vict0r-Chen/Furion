@@ -1,6 +1,6 @@
 import JsonView, { JsonViewProps } from "@uiw/react-json-view";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 import { TriangleSolidArrow } from "@uiw/react-json-view/triangle-solid-arrow";
 

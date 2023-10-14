@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { CSS } from "styled-components/dist/types";
 
 const Container = styled.div`

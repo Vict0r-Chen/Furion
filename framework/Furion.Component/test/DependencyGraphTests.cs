@@ -144,12 +144,12 @@ public class DependencyGraphTests
 
         var dependencyGraph = new DependencyGraph(dependencies);
 
-        Assert.Equal(new List<Type>(), dependencyGraph.FindAllAncestors(typeof(DependencyGraph1)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph2)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph3)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph1), typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph4)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph5)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph3), typeof(DependencyGraph1) }, dependencyGraph.FindAllAncestors(typeof(DependencyGraph6)));
+        Assert.Equal([], dependencyGraph.FindAllAncestors(typeof(DependencyGraph1)));
+        Assert.Equal([typeof(DependencyGraph1)], dependencyGraph.FindAllAncestors(typeof(DependencyGraph2)));
+        Assert.Equal([typeof(DependencyGraph1)], dependencyGraph.FindAllAncestors(typeof(DependencyGraph3)));
+        Assert.Equal([typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph1), typeof(DependencyGraph1)], dependencyGraph.FindAllAncestors(typeof(DependencyGraph4)));
+        Assert.Equal([typeof(DependencyGraph2), typeof(DependencyGraph1)], dependencyGraph.FindAllAncestors(typeof(DependencyGraph5)));
+        Assert.Equal([typeof(DependencyGraph3), typeof(DependencyGraph1)], dependencyGraph.FindAllAncestors(typeof(DependencyGraph6)));
     }
 
     [Fact]
@@ -182,12 +182,12 @@ public class DependencyGraphTests
 
         var dependencyGraph = new DependencyGraph(dependencies);
 
-        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph4), typeof(DependencyGraph5), typeof(DependencyGraph4), typeof(DependencyGraph6), }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph1)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph5) }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph2)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph6) }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph3)));
-        Assert.Equal(new List<Type> { }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph4)));
-        Assert.Equal(new List<Type> { }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph5)));
-        Assert.Equal(new List<Type> { }, dependencyGraph.FindAllDescendants(typeof(DependencyGraph6)));
+        Assert.Equal([typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph4), typeof(DependencyGraph5), typeof(DependencyGraph4), typeof(DependencyGraph6),], dependencyGraph.FindAllDescendants(typeof(DependencyGraph1)));
+        Assert.Equal([typeof(DependencyGraph4), typeof(DependencyGraph5)], dependencyGraph.FindAllDescendants(typeof(DependencyGraph2)));
+        Assert.Equal([typeof(DependencyGraph4), typeof(DependencyGraph6)], dependencyGraph.FindAllDescendants(typeof(DependencyGraph3)));
+        Assert.Equal([], dependencyGraph.FindAllDescendants(typeof(DependencyGraph4)));
+        Assert.Equal([], dependencyGraph.FindAllDescendants(typeof(DependencyGraph5)));
+        Assert.Equal([], dependencyGraph.FindAllDescendants(typeof(DependencyGraph6)));
     }
 
     [Fact]
@@ -220,12 +220,12 @@ public class DependencyGraphTests
 
         var dependencyGraph = new DependencyGraph(dependencies);
 
-        Assert.Equal(new List<Type>(), dependencyGraph.FindAncestors(typeof(DependencyGraph1)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph2)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph3)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph4)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph5)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph3), typeof(DependencyGraph1) }, dependencyGraph.FindAncestors(typeof(DependencyGraph6)));
+        Assert.Equal([], dependencyGraph.FindAncestors(typeof(DependencyGraph1)));
+        Assert.Equal([typeof(DependencyGraph1)], dependencyGraph.FindAncestors(typeof(DependencyGraph2)));
+        Assert.Equal([typeof(DependencyGraph1)], dependencyGraph.FindAncestors(typeof(DependencyGraph3)));
+        Assert.Equal([typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph1)], dependencyGraph.FindAncestors(typeof(DependencyGraph4)));
+        Assert.Equal([typeof(DependencyGraph2), typeof(DependencyGraph1)], dependencyGraph.FindAncestors(typeof(DependencyGraph5)));
+        Assert.Equal([typeof(DependencyGraph3), typeof(DependencyGraph1)], dependencyGraph.FindAncestors(typeof(DependencyGraph6)));
     }
 
     [Fact]
@@ -258,11 +258,11 @@ public class DependencyGraphTests
 
         var dependencyGraph = new DependencyGraph(dependencies);
 
-        Assert.Equal(new List<Type> { typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph4), typeof(DependencyGraph5), typeof(DependencyGraph6), }, dependencyGraph.FindDescendants(typeof(DependencyGraph1)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph5) }, dependencyGraph.FindDescendants(typeof(DependencyGraph2)));
-        Assert.Equal(new List<Type> { typeof(DependencyGraph4), typeof(DependencyGraph6) }, dependencyGraph.FindDescendants(typeof(DependencyGraph3)));
-        Assert.Equal(new List<Type> { }, dependencyGraph.FindDescendants(typeof(DependencyGraph4)));
-        Assert.Equal(new List<Type> { }, dependencyGraph.FindDescendants(typeof(DependencyGraph5)));
-        Assert.Equal(new List<Type> { }, dependencyGraph.FindDescendants(typeof(DependencyGraph6)));
+        Assert.Equal([typeof(DependencyGraph2), typeof(DependencyGraph3), typeof(DependencyGraph4), typeof(DependencyGraph5), typeof(DependencyGraph6),], dependencyGraph.FindDescendants(typeof(DependencyGraph1)));
+        Assert.Equal([typeof(DependencyGraph4), typeof(DependencyGraph5)], dependencyGraph.FindDescendants(typeof(DependencyGraph2)));
+        Assert.Equal([typeof(DependencyGraph4), typeof(DependencyGraph6)], dependencyGraph.FindDescendants(typeof(DependencyGraph3)));
+        Assert.Equal([], dependencyGraph.FindDescendants(typeof(DependencyGraph4)));
+        Assert.Equal([], dependencyGraph.FindDescendants(typeof(DependencyGraph5)));
+        Assert.Equal([], dependencyGraph.FindDescendants(typeof(DependencyGraph6)));
     }
 }

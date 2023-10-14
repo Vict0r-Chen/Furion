@@ -1,7 +1,7 @@
 import { FloatButton } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import ContentMain from "./components/content-main";
 import ContentMenu from "./components/content-menu";
 import ContentTitle from "./components/content-title";

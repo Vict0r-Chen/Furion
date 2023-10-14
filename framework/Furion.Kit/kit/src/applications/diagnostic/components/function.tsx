@@ -1,6 +1,6 @@
 import { Badge } from "antd";
 import React, { MouseEventHandler } from "react";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 import IconFont from "../../../components/iconfont";
 import TextBox from "../../../components/textbox";
 import Upward from "../../../components/upward";

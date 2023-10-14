@@ -1,6 +1,6 @@
 import { Empty } from "antd";
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Main from "./main";
 
 const Container = styled.div``;

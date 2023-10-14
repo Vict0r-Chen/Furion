@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import React, { useContext } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import banner from "../../../assets/banner.png";
 import Flexbox from "../../../components/flexbox";
 import IconFont from "../../../components/iconfont";

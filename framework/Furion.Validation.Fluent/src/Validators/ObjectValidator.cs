@@ -106,7 +106,7 @@ public sealed class ObjectValidator<T> : IObjectValidator<T>
         // 初始化属性验证器
         var validator = new PropertyValidator<T, TProperty>(this, propertyExpression)
         {
-            RuleSet = ruleSet?.Split(Helpers._ruleSetSeparator, StringSplitOptions.RemoveEmptyEntries)
+            RuleSet = ruleSet?.Split(Helpers.RuleSetSeparator, StringSplitOptions.RemoveEmptyEntries)
         };
 
         // 将属性验证器添加到集合中

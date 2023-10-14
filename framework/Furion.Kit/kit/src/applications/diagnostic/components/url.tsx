@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 import TextBox from "../../../components/textbox";
 
 const Url = styled(TextBox)`

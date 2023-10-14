@@ -1,5 +1,5 @@
 import { Popover, Space } from "antd";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Flexbox from "../../../components/flexbox";
 import HttpMethod from "../../../components/http-method";
 import IconFont from "../../../components/iconfont";
