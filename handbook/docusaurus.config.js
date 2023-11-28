@@ -6,7 +6,7 @@ module.exports = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "百签科技（广东）有限公司",
+  organizationName: "Furion",
   projectName: "Furion",
   scripts: [],
   themeConfig: {
@@ -22,8 +22,7 @@ module.exports = {
     },
     announcementBar: {
       id: "vip",
-      content:
-        "⭐️ 开通 VIP 服务仅需 499 元/年，尊享 365 天项目无忧 <a href='/docs/subscribe' style='background-color:rgb(199, 29, 36);color:#ffffff;padding:1px 10px;border-radius:3px;text-decoration:none;display:inline-block;margin:0 5px;font-size:12px;cursor:pointer;'>立即开通</a>⭐️",
+      content: "Hello Furion",
       backgroundColor: "#4623d9",
       textColor: "yellow",
       isCloseable: false,
@@ -175,7 +174,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `版权 © 2020-present 百小僧, 百签科技（广东）有限公司`,
+      copyright: `Furion`,
       logo: {
         src: "img/chinadotnet.png",
         href: "https://gitee.com/dotnetchina",

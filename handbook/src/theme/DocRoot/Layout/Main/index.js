@@ -63,31 +63,8 @@ function Item({ url, title, logoUrl, desc }) {
 
 function Notice() {
   const { colorMode, setLightTheme, setDarkTheme } = useColorMode();
-  const isDarkTheme = colorMode === "dark";
-
   return (
-    <div className={clsx(styles.notice, isDarkTheme && styles.noticeDark)}>
-      <div style={{ marginBottom: 1 }}>
-        <Link to={useBaseUrl("/docs/upgrade")}>
-          🚀 Furion v4.9.1.7 版本已发布。
-        </Link>
-      </div>
-      <div style={{ fontWeight: 600 }}>
-        ⭐️ 开通 VIP 服务仅需 499 元/年，尊享 365 天项目无忧{" "}
-        <Link to={useBaseUrl("/docs/subscribe")} className={styles.tip}>
-          <Popover
-            trigger="hover"
-            placement="bottom"
-            content={<PayContent />}
-            autoAdjustOverflow
-          >
-            <span style={{ display: "block", width: "100%", height: "100%" }}>
-              立即开通
-            </span>
-          </Popover>
-        </Link>{" "}
-        ⭐️
-      </div>
-    </div>
+    <>
+    </>
   );
 }
